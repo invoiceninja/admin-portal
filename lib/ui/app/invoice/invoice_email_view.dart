@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -159,11 +160,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final invoice = widget.viewModel.invoice;
     final client = viewModel.client;
     final state = viewModel.state;
-    final settings = SettingsEntity(
-      clientSettings: client.settings,
-      groupSettings: state.groupState.get(client.groupId).settings,
-      companySettings: state.company.settings,
-    );
+    final settings = getClientSettings(state, client);
     final contacts = invoice.invitations
         .map((invitation) => client.contacts.firstWhere(
             (contact) => contact.id == invitation.contactId,

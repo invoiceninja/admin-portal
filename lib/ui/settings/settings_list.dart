@@ -120,11 +120,10 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsOnlinePayments,
               viewModel: widget.viewModel,
             ),
-            if (showAll)
-              SettingsListTile(
-                section: kSettingsTaxSettings,
-                viewModel: widget.viewModel,
-              ),
+            SettingsListTile(
+              section: kSettingsTaxSettings,
+              viewModel: widget.viewModel,
+            ),
             if (showAll)
               SettingsListTile(
                 section: kSettingsProducts,

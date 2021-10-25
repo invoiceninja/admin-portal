@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -1110,11 +1111,7 @@ void editEntity({
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
             final client = state.clientState.get(invoice.clientId);
-            final settings = SettingsEntity(
-              clientSettings: client.settings,
-              groupSettings: state.groupState.get(client.groupId).settings,
-              companySettings: state.company.settings,
-            );
+            final settings = getClientSettings(state, client);
 
             if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
                 invoice.isPaid) {

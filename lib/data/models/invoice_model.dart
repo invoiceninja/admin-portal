@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -119,6 +120,8 @@ abstract class InvoiceEntity extends Object
     EntityType entityType,
   }) {
     final company = state?.company;
+    final settings = getClientSettings(state, client);
+
     double exchangeRate = 1;
     if ((client?.currencyId ?? '').isNotEmpty) {
       exchangeRate = getExchangeRate(
@@ -148,22 +151,22 @@ abstract class InvoiceEntity extends Object
       footer: '',
       designId: '',
       taxName1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? company?.settings?.defaultTaxName1 ?? ''
+          ? settings.defaultTaxName1 ?? ''
           : '',
       taxRate1: (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? company?.settings?.defaultTaxRate1 ?? 0.0
+          ? settings.defaultTaxRate1 ?? 0.0
           : 0,
       taxName2: (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? company?.settings?.defaultTaxName2 ?? ''
+          ? settings.defaultTaxName2 ?? ''
           : '',
       taxRate2: (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? company?.settings?.defaultTaxRate2 ?? 0.0
+          ? settings.defaultTaxRate2 ?? 0.0
           : 0,
       taxName3: (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? company?.settings?.defaultTaxName3 ?? ''
+          ? settings.defaultTaxName3 ?? ''
           : '',
       taxRate3: (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? company?.settings?.defaultTaxRate3 ?? 0.0
+          ? settings.defaultTaxRate3 ?? 0.0
           : 0,
       isAmountDiscount: false,
       partial: 0.0,

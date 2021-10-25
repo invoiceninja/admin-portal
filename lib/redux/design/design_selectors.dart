@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -68,12 +69,7 @@ bool hasDesignChanges(
 String getDesignIdForClientByEntity(
     {AppState state, String clientId, EntityType entityType}) {
   final client = state.clientState.get(clientId);
-  final group = state.groupState.get(client.groupId);
-  final settings = SettingsEntity(
-    clientSettings: client.settings,
-    groupSettings: group.settings,
-    companySettings: state.company.settings,
-  );
+  final settings = getClientSettings(state, client);
   switch (entityType) {
     case EntityType.invoice:
       return settings.defaultInvoiceDesignId;

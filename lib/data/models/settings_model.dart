@@ -59,6 +59,24 @@ abstract class SettingsEntity
       defaultValidUntil: clientSettings?.defaultValidUntil ??
           groupSettings?.defaultValidUntil ??
           companySettings?.defaultValidUntil,
+      defaultTaxRate1: clientSettings?.defaultTaxRate1 ??
+          groupSettings?.defaultTaxRate1 ??
+          companySettings?.defaultTaxRate1,
+      defaultTaxName1: clientSettings?.defaultTaxName1 ??
+          groupSettings?.defaultTaxName1 ??
+          companySettings?.defaultTaxName1,
+      defaultTaxRate2: clientSettings?.defaultTaxRate2 ??
+          groupSettings?.defaultTaxRate2 ??
+          companySettings?.defaultTaxRate2,
+      defaultTaxName2: clientSettings?.defaultTaxName2 ??
+          groupSettings?.defaultTaxName2 ??
+          companySettings?.defaultTaxName2,
+      defaultTaxRate3: clientSettings?.defaultTaxRate3 ??
+          groupSettings?.defaultTaxRate3 ??
+          companySettings?.defaultTaxRate3,
+      defaultTaxName3: clientSettings?.defaultTaxName3 ??
+          groupSettings?.defaultTaxName3 ??
+          companySettings?.defaultTaxName3,
     );
   }
 

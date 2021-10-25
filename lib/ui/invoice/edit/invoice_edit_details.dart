@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
@@ -137,11 +138,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
 
     final client = state.clientState.get(invoice.clientId);
-    final settings = SettingsEntity(
-      clientSettings: client.settings,
-      groupSettings: state.groupState.get(client.groupId).settings,
-      companySettings: state.company.settings,
-    );
+    final settings = getClientSettings(state, client);
     final terms = widget.entityType == EntityType.quote
         ? settings.defaultValidUntil
         : settings.defaultPaymentTerms;
