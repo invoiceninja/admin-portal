@@ -263,10 +263,13 @@ abstract class InvoiceEntity extends Object
         .toList()));
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
+    client ??= ClientEntity();
+
     final exchangeRate = getExchangeRate(state.staticState.currencyMap,
         fromCurrencyId: state.company.currencyId,
         toCurrencyId: client.currencyId);
     final settings = getClientSettings(state, client);
+
     return rebuild((b) => b
       ..exchangeRate = exchangeRate
       ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
