@@ -128,12 +128,11 @@ class EntityHeader extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 8),
+                              vertical: 5, horizontal: 8),
                           child: Text(
-                            (entity.isArchived
-                                    ? localization.archived
-                                    : localization.deleted)
-                                .toUpperCase(),
+                            entity.isArchived
+                                ? localization.archived
+                                : localization.deleted,
                             style: TextStyle(fontSize: 14, color: Colors.white),
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
