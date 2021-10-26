@@ -96,7 +96,7 @@ ReportResult paymentReport(
           value = staticState.paymentTypeMap[payment.typeId]?.name ?? '';
           break;
         case PaymentReportFields.amount:
-          value = payment.amount;
+          value = payment.completedAmount;
           break;
         case PaymentReportFields.client:
           value = client.displayName;
@@ -138,7 +138,7 @@ ReportResult paymentReport(
           value = payment.exchangeRate;
           break;
         case PaymentReportFields.converted_amount:
-          value = payment.amount * payment.exchangeRate;
+          value = payment.completedAmount * payment.exchangeRate;
           break;
       }
 
