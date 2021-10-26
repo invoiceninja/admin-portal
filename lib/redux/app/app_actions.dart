@@ -1391,7 +1391,6 @@ void selectEntity({
         (state.prefState.longPressSelectionIsDefault ?? true) ||
             state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
-        !isInMultiselect &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
     } else {
