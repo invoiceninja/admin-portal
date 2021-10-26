@@ -65,7 +65,7 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.amount:
         return Align(
             alignment: Alignment.centerRight,
-            child: Text(formatNumber(payment.amount, context,
+            child: Text(formatNumber(payment.amount - payment.refunded, context,
                 clientId: payment.clientId)));
       case PaymentFields.convertedAmount:
         return Align(
