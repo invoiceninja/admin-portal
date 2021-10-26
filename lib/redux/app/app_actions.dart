@@ -307,6 +307,7 @@ void viewEntitiesByType({
           case EntityType.settings:
             action = ViewSettings(
               company: store.state.company,
+              user: store.state.user,
               clearFilter: true,
             );
             break;
