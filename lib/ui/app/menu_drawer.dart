@@ -74,7 +74,10 @@ class MenuDrawer extends StatelessWidget {
           )
         : Image.asset('assets/images/icon.png', width: MenuDrawer.LOGO_WIDTH);
 
-    Widget _companyListItem(CompanyEntity company) {
+    Widget _companyListItem(
+      CompanyEntity company, {
+      bool showAccentColor = true,
+    }) {
       final userCompany = state.userCompanyStates
           .firstWhere(
               (userCompanyState) => userCompanyState.company.id == company.id)
@@ -94,7 +97,8 @@ class MenuDrawer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (userCompany.settings.accentColor != null &&
+          if (showAccentColor &&
+              userCompany.settings.accentColor != null &&
               state.companies.length > 1)
             Container(
               padding: const EdgeInsets.only(right: 2),
@@ -174,6 +178,10 @@ class MenuDrawer extends StatelessWidget {
             child: AppDropdownButton<String>(
               key: ValueKey(kSelectCompanyDropdownKey),
               value: viewModel.selectedCompanyIndex,
+              selectedItemBuilder: (context) => state.companies
+                  .map((company) =>
+                      _companyListItem(company, showAccentColor: false))
+                  .toList(),
               items: [
                 ...state.companies
                     .map((CompanyEntity company) => DropdownMenuItem<String>(
