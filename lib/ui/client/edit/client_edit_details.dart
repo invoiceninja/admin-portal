@@ -111,12 +111,40 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   }
 
   void _setContactControllers(Contact contact) {
-    if (_nameController.text.isEmpty) {
-      _nameController.text = contact.displayName ?? '';
-    }
-    if (contact.phones.isNotEmpty) {
-      _phoneController.text = contact.phones.first.value;
-    }
+    final viewModel = widget.viewModel;
+    final client = viewModel.client;
+
+    final contactEmail =
+        contact.emails.isNotEmpty ? contact.emails.first : null;
+    final contactPhone =
+        contact.phones.isNotEmpty ? contact.phones.first : null;
+    final contactAddress = contact.postalAddresses.isNotEmpty
+        ? contact.postalAddresses.first
+        : null;
+
+    final countryMap = viewModel.state.staticState.countryMap;
+    String countryId;
+
+    countryMap.keys.forEach((countryId) {
+      final country = countryMap[countryId];
+      if (country.name.toLowerCase() == contactAddress.country.toLowerCase()) {
+        countryId = country.id;
+      }
+    });
+
+    widget.viewModel.onChanged(client.rebuild((b) => b
+      ..name = contact.company ?? ''
+      ..address1 = contactAddress.street ?? ''
+      ..city = contactAddress.city ?? ''
+      ..state = contactAddress.region ?? ''
+      ..postalCode = contactAddress.postcode ?? ''
+      ..countryId = countryId
+      ..contacts[0] = client.contacts[0].rebuild((b) => b
+        ..firstName = contact.givenName ?? ''
+        ..lastName = contact.familyName ?? ''
+        ..email = contactEmail.value ?? ''
+        ..phone = contactPhone.value ?? '')
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch));
   }
 
   @override
