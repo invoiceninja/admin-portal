@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -199,6 +200,16 @@ abstract class CompanyGatewayEntity extends Object
 
   bool get isCustom => gatewayId == kGatewayCustom;
 
+  bool get isConnected {
+    if (gatewayId != kGatewayStripeConnect) {
+      return true;
+    }
+
+    final accountId = (parsedConfig['account_id'] ?? '').toString();
+
+    return accountId.isNotEmpty;
+  }
+
   bool supportsCard(int cardType) => acceptedCreditCards & cardType > 0;
 
   CompanyGatewayEntity addCard(int cardType) =>
@@ -261,6 +272,16 @@ abstract class CompanyGatewayEntity extends Object
     if (!isDeleted && !multiselect) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
+      }
+    }
+
+    if (userCompany.canEditEntity(this)) {
+      if (gatewayId == kGatewayStripeConnect && !isConnected) {
+        actions.add(EntityAction.disconnect);
+      }
+
+      if (gatewayId == kGatewayStripe && !kReleaseMode) {
+        actions.add(EntityAction.disconnect);
       }
     }
 

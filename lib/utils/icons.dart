@@ -79,6 +79,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.content_copy;
     case EntityAction.apply:
       return Icons.payment;
+    case EntityAction.disconnect:
+      return MdiIcons.lanDisconnect;
     default:
       return null;
   }
