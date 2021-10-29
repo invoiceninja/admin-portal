@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'disconnected_gateway': 'Successfully disconnected gateway',
       'disconnect': 'Disconnect',
       'add_to_invoices': 'Add to Invoices',
       'acss': 'ACSS',
@@ -62760,6 +62761,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disconnect =>
       _localizedValues[localeCode]['disconnect'] ??
       _localizedValues['en']['disconnect'];
+
+  String get disconnectedGateway =>
+      _localizedValues[localeCode]['disconnected_gateway'] ??
+      _localizedValues['en']['disconnected_gateway'];
 
   // STARTER: lang field - do not remove comment
 

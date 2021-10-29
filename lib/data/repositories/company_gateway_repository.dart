@@ -57,6 +57,17 @@ class CompanyGatewayRepository {
     return companyGatewayResponse.data.toList();
   }
 
+  Future<void> disconnect(Credentials credentials, String id, String password,
+      String idToken) async {
+    final url = credentials.url + '/stripe/disconnect/$id';
+    await webClient.post(
+      url,
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
+  }
+
   Future<CompanyGatewayEntity> saveData(
       Credentials credentials, CompanyGatewayEntity companyGateway) async {
     final data = serializers.serializeWith(
