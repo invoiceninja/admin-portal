@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,10 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:contacts_service/contacts_service.dart';
 
 class VendorEditContacts extends StatefulWidget {
   const VendorEditContacts({
@@ -252,21 +248,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     }
   }
 
-  void _setContactControllers(Contact contact) {
-    if (_firstNameController.text.isEmpty) {
-      _firstNameController.text = contact.givenName ?? '';
-    }
-    if (_lastNameController.text.isEmpty) {
-      _lastNameController.text = contact.familyName ?? '';
-    }
-    if (_emailController.text.isEmpty && contact.emails.isNotEmpty) {
-      _emailController.text = contact.emails.first.value;
-    }
-    if (_phoneController.text.isEmpty && contact.phones.isNotEmpty) {
-      _phoneController.text = contact.phones.first.value;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -280,26 +261,6 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
           controller: _firstNameController,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
-          decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-              ? InputDecoration(
-                  labelText: localization.firstName,
-                  suffixIcon: IconButton(
-                      alignment: Alignment.bottomCenter,
-                      color: Theme.of(context).cardColor,
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () async {
-                        final contact = await getDeviceContact();
-                        if (contact != null) {
-                          setState(() {
-                            _setContactControllers(contact);
-                          });
-                        }
-                      }),
-                )
-              : null,
         ),
         DecoratedFormField(
           controller: _lastNameController,
