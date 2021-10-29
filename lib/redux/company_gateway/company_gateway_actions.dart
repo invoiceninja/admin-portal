@@ -303,19 +303,23 @@ void handleCompanyGatewayAction(BuildContext context,
       completer.future.then((value) {
         store.dispatch(RefreshData());
       });
-      passwordCallback(
-        context: context,
-        callback: (password, idToken) {
-          store.dispatch(
-            DisconnectCompanyGatewayRequest(
-              completer: completer,
-              companyGatewayId: companyGateway.id,
-              password: password,
-              idToken: idToken,
-            ),
-          );
-        },
-      );
+      confirmCallback(
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(
+                  DisconnectCompanyGatewayRequest(
+                    completer: completer,
+                    companyGatewayId: companyGateway.id,
+                    password: password,
+                    idToken: idToken,
+                  ),
+                );
+              },
+            );
+          });
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {

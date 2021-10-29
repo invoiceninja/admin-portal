@@ -269,18 +269,12 @@ abstract class CompanyGatewayEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted && !multiselect && userCompany.canEditEntity(this)) {
+      if (includeEdit) {
         actions.add(EntityAction.edit);
       }
-    }
 
-    if (userCompany.canEditEntity(this)) {
       if (gatewayId == kGatewayStripeConnect && !isConnected) {
-        actions.add(EntityAction.disconnect);
-      }
-
-      if (gatewayId == kGatewayStripe && !kReleaseMode) {
         actions.add(EntityAction.disconnect);
       }
     }
