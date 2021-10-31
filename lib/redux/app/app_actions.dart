@@ -79,7 +79,9 @@ class RefreshClient {
 
 class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 
-class PopLastHistory {}
+class PopLastHistory implements PersistUI {}
+
+class DismissNativeWarning implements PersistUI {}
 
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});

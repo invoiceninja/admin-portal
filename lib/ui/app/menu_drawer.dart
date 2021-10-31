@@ -765,19 +765,21 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 )
-              else if (!state.dismissedNativeWarning)
+              else if (kIsWeb && !state.dismissedNativeWarning)
                 IconButton(
                   onPressed: () => showMessageDialog(
                     context: context,
                     message: isMobileOS()
                         ? localization.recommendMobile
                         : localization.recommendDesktop,
-                    onDismiss: () {
-                      //
-                    },
+                    onDismiss: () => store.dispatch(DismissNativeWarning()),
                     secondaryActions: [
                       TextButton(
+                        autofocus: true,
                         onPressed: () {
+                          final platform = getNativePlatform();
+                          final url = getNativeAppUrl(platform);
+                          launch(url);
                           Navigator.of(context).pop();
                         },
                         child: Text(localization.download.toUpperCase()),
