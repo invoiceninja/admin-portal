@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'recommend_desktop':
+          'We recommend using the desktop app for the best performance',
+      'recommend_mobile':
+          'We recommend using the mobile app for the best performance',
       'disconnected_gateway': 'Successfully disconnected gateway',
       'disconnect': 'Disconnect',
       'add_to_invoices': 'Add to Invoices',
@@ -62765,6 +62769,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disconnectedGateway =>
       _localizedValues[localeCode]['disconnected_gateway'] ??
       _localizedValues['en']['disconnected_gateway'];
+
+  String get recommendDesktop =>
+      _localizedValues[localeCode]['recommend_desktop'] ??
+      _localizedValues['en']['recommend_desktop'];
+
+  String get recommendMobile =>
+      _localizedValues[localeCode]['recommend_mobile'] ??
+      _localizedValues['en']['recommend_mobile'];
 
   // STARTER: lang field - do not remove comment
 

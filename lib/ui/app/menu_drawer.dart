@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
@@ -764,9 +765,25 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 )
-              else if (!state.dismissedNativeWarning && false)
+              else if (!state.dismissedNativeWarning)
                 IconButton(
-                  onPressed: () => null,
+                  onPressed: () => showMessageDialog(
+                    context: context,
+                    message: isMobileOS()
+                        ? localization.recommendMobile
+                        : localization.recommendDesktop,
+                    onDismiss: () {
+                      //
+                    },
+                    secondaryActions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(localization.download.toUpperCase()),
+                      ),
+                    ],
+                  ),
                   icon: Icon(
                     Icons.warning,
                     color: Colors.orange,

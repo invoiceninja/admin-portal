@@ -54,6 +54,7 @@ void showMessageDialog({
   @required BuildContext context,
   @required String message,
   List<TextButton> secondaryActions,
+  Function onDismiss,
 }) {
   showDialog<MessageDialog>(
       context: context,
@@ -61,6 +62,7 @@ void showMessageDialog({
         return MessageDialog(
           message,
           secondaryActions: secondaryActions,
+          onDismiss: onDismiss,
         );
       });
 }
