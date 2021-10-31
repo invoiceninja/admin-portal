@@ -74,8 +74,10 @@ class _LoginState extends State<LoginView> {
     if (kIsWeb) {
       final authState = widget.viewModel.authState;
       _isSelfHosted = authState.isSelfHost;
-      if (_isSelfHosted || WebUtils.getHtmlValue('login') == 'true') {
+      if (_isSelfHosted) {
         _emailLogin = true;
+        _createAccount = false;
+      } else if (WebUtils.getHtmlValue('login') == 'true') {
         _createAccount = false;
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
