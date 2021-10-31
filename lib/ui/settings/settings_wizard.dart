@@ -191,16 +191,21 @@ class _SettingsWizardState extends State<SettingsWizard> {
           });
 
           setState(() => _isSaving = true);
-          store.dispatch(
-            SaveAuthUserRequest(
-              completer: completer,
-              user: state.user.rebuild((b) => b
-                ..firstName = _firstNameController.text.trim()
-                ..lastName = _lastNameController.text.trim()),
-              password: password,
-              idToken: idToken,
-            ),
-          );
+
+          if (state.companies.length > 1) {
+            completer.complete();
+          } else {
+            store.dispatch(
+              SaveAuthUserRequest(
+                completer: completer,
+                user: state.user.rebuild((b) => b
+                  ..firstName = _firstNameController.text.trim()
+                  ..lastName = _lastNameController.text.trim()),
+                password: password,
+                idToken: idToken,
+              ),
+            );
+          }
         });
   }
 
@@ -341,8 +346,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
                             ),
                             companyName,
                             if (state.isHosted) subdomain,
-                            firstName,
-                            lastName,
+                            if (state.companies.length == 1) ...[
+                              firstName,
+                              lastName,
+                            ],
                             language,
                             currency,
                             SizedBox(height: 16),
@@ -377,13 +384,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                         state.isHosted ? subdomain : darkMode),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Expanded(child: firstName),
-                                SizedBox(width: kTableColumnGap),
-                                Expanded(child: lastName),
-                              ],
-                            ),
+                            if (state.companies.length == 1)
+                              Row(
+                                children: [
+                                  Expanded(child: firstName),
+                                  SizedBox(width: kTableColumnGap),
+                                  Expanded(child: lastName),
+                                ],
+                              ),
                             Row(
                               children: [
                                 Expanded(child: language),

@@ -154,6 +154,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'persistData',
       serializers.serialize(object.persistData,
           specifiedType: const FullType(bool)),
+      'persistUI',
+      serializers.serialize(object.persistUI,
+          specifiedType: const FullType(bool)),
       'longPressSelectionIsDefault',
       serializers.serialize(object.longPressSelectionIsDefault,
           specifiedType: const FullType(bool)),
@@ -246,6 +249,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'persistData':
           result.persistData = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'persistUI':
+          result.persistUI = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'longPressSelectionIsDefault':
@@ -535,6 +542,8 @@ class _$PrefState extends PrefState {
   @override
   final bool persistData;
   @override
+  final bool persistUI;
+  @override
   final bool longPressSelectionIsDefault;
   @override
   final bool requireAuthentication;
@@ -564,6 +573,7 @@ class _$PrefState extends PrefState {
       this.enableDarkMode,
       this.isFilterVisible,
       this.persistData,
+      this.persistUI,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.rowsPerPage,
@@ -596,6 +606,7 @@ class _$PrefState extends PrefState {
         isFilterVisible, 'PrefState', 'isFilterVisible');
     BuiltValueNullFieldError.checkNotNull(
         persistData, 'PrefState', 'persistData');
+    BuiltValueNullFieldError.checkNotNull(persistUI, 'PrefState', 'persistUI');
     BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
         'PrefState', 'longPressSelectionIsDefault');
     BuiltValueNullFieldError.checkNotNull(
@@ -634,6 +645,7 @@ class _$PrefState extends PrefState {
         enableDarkMode == other.enableDarkMode &&
         isFilterVisible == other.isFilterVisible &&
         persistData == other.persistData &&
+        persistUI == other.persistUI &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         rowsPerPage == other.rowsPerPage &&
@@ -664,27 +676,29 @@ class _$PrefState extends PrefState {
                                                                     $jc(
                                                                         $jc(
                                                                             $jc(
-                                                                                0,
-                                                                                appLayout
+                                                                                $jc(
+                                                                                    0,
+                                                                                    appLayout
+                                                                                        .hashCode),
+                                                                                moduleLayout
                                                                                     .hashCode),
-                                                                            moduleLayout
+                                                                            menuSidebarMode
                                                                                 .hashCode),
-                                                                        menuSidebarMode
+                                                                        historySidebarMode
                                                                             .hashCode),
-                                                                    historySidebarMode
+                                                                    useSidebarEditor
                                                                         .hashCode),
-                                                                useSidebarEditor
+                                                                customColors
                                                                     .hashCode),
-                                                            customColors
+                                                            isPreviewVisible
                                                                 .hashCode),
-                                                        isPreviewVisible
-                                                            .hashCode),
-                                                    isMenuVisible.hashCode),
-                                                showKanban.hashCode),
-                                            isHistoryVisible.hashCode),
-                                        enableDarkMode.hashCode),
-                                    isFilterVisible.hashCode),
-                                persistData.hashCode),
+                                                        isMenuVisible.hashCode),
+                                                    showKanban.hashCode),
+                                                isHistoryVisible.hashCode),
+                                            enableDarkMode.hashCode),
+                                        isFilterVisible.hashCode),
+                                    persistData.hashCode),
+                                persistUI.hashCode),
                             longPressSelectionIsDefault.hashCode),
                         requireAuthentication.hashCode),
                     rowsPerPage.hashCode),
@@ -709,6 +723,7 @@ class _$PrefState extends PrefState {
           ..add('enableDarkMode', enableDarkMode)
           ..add('isFilterVisible', isFilterVisible)
           ..add('persistData', persistData)
+          ..add('persistUI', persistUI)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('rowsPerPage', rowsPerPage)
@@ -786,6 +801,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool get persistData => _$this._persistData;
   set persistData(bool persistData) => _$this._persistData = persistData;
 
+  bool _persistUI;
+  bool get persistUI => _$this._persistUI;
+  set persistUI(bool persistUI) => _$this._persistUI = persistUI;
+
   bool _longPressSelectionIsDefault;
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
   set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
@@ -836,6 +855,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _enableDarkMode = $v.enableDarkMode;
       _isFilterVisible = $v.isFilterVisible;
       _persistData = $v.persistData;
+      _persistUI = $v.persistUI;
       _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
       _requireAuthentication = $v.requireAuthentication;
       _rowsPerPage = $v.rowsPerPage;
@@ -885,6 +905,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, 'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, 'PrefState', 'persistData'),
+              persistUI: BuiltValueNullFieldError.checkNotNull(persistUI, 'PrefState', 'persistUI'),
               longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, 'PrefState', 'longPressSelectionIsDefault'),
               requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, 'PrefState', 'requireAuthentication'),
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),

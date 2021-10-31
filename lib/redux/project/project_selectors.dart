@@ -169,9 +169,7 @@ List<String> filteredProjectsSelector(
     }
 
     if (!project.matchesFilter(projectListState.filter) &&
-        !client.displayName
-            .toLowerCase()
-            .contains(projectListState.filter.toLowerCase())) {
+        !client.matchesName(projectListState.filter)) {
       return false;
     }
 

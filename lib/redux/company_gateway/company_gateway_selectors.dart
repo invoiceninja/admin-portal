@@ -1,7 +1,9 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -153,4 +155,22 @@ EntityStats paymentStatsForCompanyGateway(
   });
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+bool hasUnconnectedStripeAccount(AppState state) =>
+    getUnconnectedStripeAccount(state) != null;
+
+CompanyGatewayEntity getUnconnectedStripeAccount(AppState state) {
+  CompanyGatewayEntity unconnectedGateway;
+
+  state.companyGatewayState.map.forEach((id, gateway) {
+    if (gateway.gatewayId == kGatewayStripeConnect && gateway.isActive) {
+      final accountId = (gateway.parsedConfig['account_id'] ?? '').toString();
+      if (accountId.isEmpty) {
+        unconnectedGateway = gateway;
+      }
+    }
+  });
+
+  return unconnectedGateway;
 }

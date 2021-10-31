@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -78,7 +79,9 @@ class RefreshClient {
 
 class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 
-class PopLastHistory {}
+class PopLastHistory implements PersistUI {}
+
+class DismissNativeWarning implements PersistUI {}
 
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
@@ -134,6 +137,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.colorTheme,
     this.customColors,
     this.persistData,
+    this.persistUi,
   });
 
   final AppLayout appLayout;
@@ -151,6 +155,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final int rowsPerPage;
   final String colorTheme;
   final bool persistData;
+  final bool persistUi;
   final BuiltMap<String, String> customColors;
 }
 
@@ -304,6 +309,7 @@ void viewEntitiesByType({
           case EntityType.settings:
             action = ViewSettings(
               company: store.state.company,
+              user: store.state.user,
               clearFilter: true,
             );
             break;
@@ -639,6 +645,7 @@ void createEntityByType({
         ProjectEntity project;
         VendorEntity vendor;
         UserEntity user;
+        GroupEntity group;
 
         if (applyFilter && filterEntityType != null) {
           switch (filterEntityType) {
@@ -655,6 +662,9 @@ void createEntityByType({
             case EntityType.user:
               user = state.userState.get(filterEntityId);
               break;
+            case EntityType.group:
+              group = state.groupState.get(filterEntityId);
+              break;
           }
         }
 
@@ -664,6 +674,7 @@ void createEntityByType({
                 client: ClientEntity(
                   state: state,
                   user: user,
+                  group: group,
                 ),
                 force: force));
             break;
@@ -1057,6 +1068,7 @@ void editEntity({
   @required BaseEntity entity,
   int subIndex,
   bool force = false,
+  bool fullScreen = true,
   Completer completer,
 }) {
   final store = StoreProvider.of<AppState>(context);
@@ -1069,9 +1081,11 @@ void editEntity({
       context: context,
       force: force,
       callback: () {
-        if (state.prefState.isDesktop &&
-            !state.prefState.isEditorFullScreen(entityType)) {
-          store.dispatch(ToggleEditorLayout(entityType));
+        if (state.prefState.isDesktop) {
+          final isFullScreen = state.prefState.isEditorFullScreen(entityType);
+          if (isFullScreen && !fullScreen || !isFullScreen && fullScreen) {
+            store.dispatch(ToggleEditorLayout(entityType));
+          }
         }
 
         switch (entityType) {
@@ -1100,11 +1114,7 @@ void editEntity({
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
             final client = state.clientState.get(invoice.clientId);
-            final settings = SettingsEntity(
-              clientSettings: client.settings,
-              groupSettings: state.groupState.get(client.groupId).settings,
-              companySettings: state.company.settings,
-            );
+            final settings = getClientSettings(state, client);
 
             if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
                 invoice.isPaid) {
@@ -1384,7 +1394,6 @@ void selectEntity({
         (state.prefState.longPressSelectionIsDefault ?? true) ||
             state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
-        !isInMultiselect &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
     } else {

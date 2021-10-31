@@ -1,13 +1,16 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -17,7 +20,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -73,7 +75,10 @@ class MenuDrawer extends StatelessWidget {
           )
         : Image.asset('assets/images/icon.png', width: MenuDrawer.LOGO_WIDTH);
 
-    Widget _companyListItem(CompanyEntity company) {
+    Widget _companyListItem(
+      CompanyEntity company, {
+      bool showAccentColor = true,
+    }) {
       final userCompany = state.userCompanyStates
           .firstWhere(
               (userCompanyState) => userCompanyState.company.id == company.id)
@@ -93,7 +98,8 @@ class MenuDrawer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (userCompany.settings.accentColor != null &&
+          if (showAccentColor &&
+              userCompany.settings.accentColor != null &&
               state.companies.length > 1)
             Container(
               padding: const EdgeInsets.only(right: 2),
@@ -173,6 +179,10 @@ class MenuDrawer extends StatelessWidget {
             child: AppDropdownButton<String>(
               key: ValueKey(kSelectCompanyDropdownKey),
               value: viewModel.selectedCompanyIndex,
+              selectedItemBuilder: (context) => state.companies
+                  .map((company) =>
+                      _companyListItem(company, showAccentColor: false))
+                  .toList(),
               items: [
                 ...state.companies
                     .map((CompanyEntity company) => DropdownMenuItem<String>(
@@ -204,7 +214,7 @@ class MenuDrawer extends StatelessWidget {
                 ),
               ],
               onChanged: (dynamic value) {
-                if (value == 'logout') {
+                if (value == 'logout' && !state.isLoading && !state.isSaving) {
                   viewModel.onLogoutTap(context);
                 } else if (!state.isLoaded ||
                     state.isLoading ||
@@ -746,6 +756,40 @@ class SidebarFooter extends StatelessWidget {
                     color: Theme.of(context).accentColor,
                   ),
                   onPressed: () => _showUpdate(context),
+                )
+              else if (state.isHosted && hasUnconnectedStripeAccount(state))
+                IconButton(
+                  onPressed: () => _showConnectStripe(context),
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.orange,
+                  ),
+                )
+              else if (kIsWeb && !state.dismissedNativeWarning)
+                IconButton(
+                  onPressed: () => showMessageDialog(
+                    context: context,
+                    message: isMobileOS()
+                        ? localization.recommendMobile
+                        : localization.recommendDesktop,
+                    onDismiss: () => store.dispatch(DismissNativeWarning()),
+                    secondaryActions: [
+                      TextButton(
+                        autofocus: true,
+                        onPressed: () {
+                          final platform = getNativePlatform();
+                          final url = getNativeAppUrl(platform);
+                          launch(url);
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(localization.download.toUpperCase()),
+                      ),
+                    ],
+                  ),
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.orange,
+                  ),
                 ),
             if (isHosted(context) && !isPaidAccount(context) && !isApple())
               IconButton(
@@ -755,6 +799,7 @@ class SidebarFooter extends StatelessWidget {
                 icon: Icon(Icons.arrow_circle_up),
                 color: Colors.green,
                 onPressed: () async {
+                  /*
                   if (isHosted(context) &&
                       !kIsWeb &&
                       (Platform.isIOS || Platform.isAndroid)) {
@@ -764,6 +809,7 @@ class SidebarFooter extends StatelessWidget {
                           return UpgradeDialog();
                         });
                   }
+                  */
 
                   if (isHosted(context)) {
                     launch(state.userCompany.ninjaPortalUrl);
@@ -958,6 +1004,25 @@ void _showUpdate(BuildContext context) {
     barrierDismissible: false,
     builder: (BuildContext context) => UpdateDialog(),
   );
+}
+
+void _showConnectStripe(BuildContext context) {
+  final localization = AppLocalization.of(context);
+  showMessageDialog(
+      context: context,
+      message: localization.unauthorizedStripeWarning,
+      secondaryActions: [
+        TextButton(
+          child: Text(localization.viewSettings.toUpperCase()),
+          onPressed: () {
+            final context = navigatorKey.currentContext;
+            Navigator.of(context).pop();
+            final store = StoreProvider.of<AppState>(context);
+            final gateway = getUnconnectedStripeAccount(store.state);
+            editEntity(context: context, entity: gateway);
+          },
+        ),
+      ]);
 }
 
 void _showAbout(BuildContext context) async {
@@ -1183,6 +1248,27 @@ void _showAbout(BuildContext context) async {
                       color: Colors.purple,
                       onPressed: () => launch(getRateAppURL(context)),
                     ),
+                  SizedBox(height: 22),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        tooltip: 'Facebook',
+                        onPressed: () => launch(kFacebookUrl),
+                        icon: Icon(MdiIcons.facebook),
+                      ),
+                      IconButton(
+                        tooltip: 'Twitter',
+                        onPressed: () => launch(kTwitterUrl),
+                        icon: Icon(MdiIcons.twitter),
+                      ),
+                      IconButton(
+                        tooltip: 'YouTube',
+                        onPressed: () => launch(kYouTubeUrl),
+                        icon: Icon(MdiIcons.youtube),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

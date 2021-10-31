@@ -53,6 +53,17 @@ enum InvoiceReportFields {
   reminder3_sent,
   reminder_last_sent,
   exchange_rate,
+  public_notes,
+  private_notes,
+  client_vat_number,
+  client_city,
+  client_postal_code,
+  tax_rate1,
+  tax_rate2,
+  tax_rate3,
+  tax_name1,
+  tax_name2,
+  tax_name3,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -133,7 +144,7 @@ ReportResult invoiceReport(
           value = invoice.balanceOrAmount * 1 / invoice.exchangeRate;
           break;
         case InvoiceReportFields.client:
-          value = client?.displayName ?? '';
+          value = client.displayName;
           break;
         case InvoiceReportFields.client_balance:
           value = client.balance;
@@ -245,6 +256,39 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_country:
           value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
+        case InvoiceReportFields.client_postal_code:
+          value = client.postalCode;
+          break;
+        case InvoiceReportFields.client_vat_number:
+          value = client.vatNumber;
+          break;
+        case InvoiceReportFields.tax_name1:
+          value = invoice.taxName1;
+          break;
+        case InvoiceReportFields.tax_rate1:
+          value = invoice.taxRate1;
+          break;
+        case InvoiceReportFields.tax_name2:
+          value = invoice.taxName2;
+          break;
+        case InvoiceReportFields.tax_rate2:
+          value = invoice.taxRate2;
+          break;
+        case InvoiceReportFields.tax_name3:
+          value = invoice.taxName1;
+          break;
+        case InvoiceReportFields.tax_rate3:
+          value = invoice.taxRate1;
+          break;
+        case InvoiceReportFields.public_notes:
+          value = invoice.publicNotes;
+          break;
+        case InvoiceReportFields.private_notes:
+          value = invoice.privateNotes;
+          break;
+        case InvoiceReportFields.client_city:
+          value = client.city;
           break;
       }
 

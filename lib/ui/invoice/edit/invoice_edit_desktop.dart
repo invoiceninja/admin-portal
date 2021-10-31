@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -212,12 +213,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
 
-    final settings = SettingsEntity(
-      clientSettings: client.settings,
-      groupSettings: state.groupState.get(client.groupId).settings,
-      companySettings: state.company.settings,
-    );
-
+    final settings = getClientSettings(state, client);
     final terms = entityType == EntityType.quote
         ? settings.defaultValidUntil
         : settings.defaultPaymentTerms;

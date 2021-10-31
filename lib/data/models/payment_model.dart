@@ -440,8 +440,14 @@ abstract class PaymentEntity extends Object
       paymentables.where((p) => p.entityType == EntityType.credit).toList();
 
   String get invoiceId {
-    final invoicePaymentables =
-        paymentables.firstWhere((p) => p.entityType == EntityType.invoice);
+    final invoicePaymentables = paymentables.firstWhere(
+        (p) => p.entityType == EntityType.invoice,
+        orElse: () => null);
+
+    if (invoicePaymentables == null) {
+      return null;
+    }
+
     return invoicePaymentables.isEmpty ? null : invoicePaymentables.invoiceId;
   }
 

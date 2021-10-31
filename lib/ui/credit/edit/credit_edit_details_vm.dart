@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -82,13 +81,7 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, credit, client) {
-        if (client != null) {
-          final exchangeRate = getExchangeRate(state.staticState.currencyMap,
-              fromCurrencyId: company.currencyId,
-              toCurrencyId: client.currencyId);
-          store.dispatch(UpdateCredit(
-              credit.rebuild((b) => b..exchangeRate = exchangeRate)));
-        }
+        store.dispatch(UpdateCredit(credit.applyClient(state, client)));
         store.dispatch(UpdateCreditClient(client: client));
       },
       onAddClientPressed: (context, completer) {

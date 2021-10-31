@@ -113,9 +113,7 @@ List<String> filteredCreditsSelector(
       return false;
     }
     if (!credit.matchesFilter(creditListState.filter) &&
-        !client.displayName
-            .toLowerCase()
-            .contains(creditListState.filter.toLowerCase())) {
+        !client.matchesName(creditListState.filter)) {
       return false;
     }
 

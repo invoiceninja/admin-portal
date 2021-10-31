@@ -141,10 +141,12 @@ class EntityPresenter {
     return value;
   }
 
-  String presentCustomField(String value) {
+  String presentCustomField(BuildContext context, String value) {
     if (['yes', 'no'].contains(value)) {
       final localization = AppLocalization.of(context);
       return localization.lookup(value);
+    } else if (RegExp('^\\d{4}-\\d{2}-\\d{2}\$').hasMatch(value)) {
+      return formatDate(value, context);
     }
 
     return value;

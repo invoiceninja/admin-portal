@@ -654,6 +654,9 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       );
       break;
     case EntityAction.download:
+      launch(invoice.invitationDownloadLink);
+      break;
+    case EntityAction.bulkDownload:
       store.dispatch(DownloadInvoicesRequest(
           snackBarCompleter<Null>(context, localization.exportedData),
           invoiceIds));

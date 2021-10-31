@@ -54,6 +54,7 @@ void showMessageDialog({
   @required BuildContext context,
   @required String message,
   List<TextButton> secondaryActions,
+  Function onDismiss,
 }) {
   showDialog<MessageDialog>(
       context: context,
@@ -61,6 +62,7 @@ void showMessageDialog({
         return MessageDialog(
           message,
           secondaryActions: secondaryActions,
+          onDismiss: onDismiss,
         );
       });
 }
@@ -161,8 +163,8 @@ void confirmCallback({
 }
 
 void passwordCallback({
-  BuildContext context,
-  Function(String, String) callback,
+  @required BuildContext context,
+  @required Function(String, String) callback,
   bool alwaysRequire = false,
   bool skipOAuth = false,
 }) {

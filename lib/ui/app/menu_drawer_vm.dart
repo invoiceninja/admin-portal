@@ -109,12 +109,13 @@ class MenuDrawerVM {
                   section: uiState.subRoute,
                   force: true,
                 ));
+              }
 
-                if (uiState.isEditing || uiState.isViewing) {
-                  store.dispatch(UpdateCurrentRoute(uiState.currentRoute
-                      .replaceFirst('_edit', '')
-                      .replaceFirst('_view', '')));
-                }
+              if (uiState.isEditing ||
+                  uiState.isViewing ||
+                  uiState.isEmailing ||
+                  uiState.isPDF) {
+                store.dispatch(UpdateCurrentRoute(uiState.baseRoute));
               }
             });
       },

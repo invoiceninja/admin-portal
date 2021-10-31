@@ -535,6 +535,7 @@ abstract class TaskEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   @nullable
+  @BuiltValueField(compare: false)
   bool get showAsRunning;
 
   @override

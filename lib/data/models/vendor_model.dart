@@ -70,6 +70,7 @@ class VendorFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
+  static const String contacts = 'contacts';
 }
 
 abstract class VendorEntity extends Object
@@ -325,6 +326,9 @@ abstract class VendorEntity extends Object
 
     return response;
   }
+
+  bool matchesName(String filter) =>
+      name.toLowerCase().contains(filter.toLowerCase());
 
   @override
   bool matchesFilter(String filter) {

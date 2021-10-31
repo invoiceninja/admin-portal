@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -83,7 +84,7 @@ class FilterListTile extends StatelessWidget {
               color: Colors.grey,
               width: .5,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
           ),
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {

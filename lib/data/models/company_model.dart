@@ -128,6 +128,7 @@ abstract class CompanyEntity extends Object
       documents: BuiltList<DocumentEntity>(),
       subscriptions: BuiltList<SubscriptionEntity>(),
       systemLogs: BuiltList<SystemLogEntity>(),
+      clientRegistrationFields: BuiltList<RegistrationFieldEntity>(),
     );
   }
 
@@ -305,6 +306,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'system_logs')
   BuiltList<SystemLogEntity> get systemLogs;
+
+  @BuiltValueField(wireName: 'client_registration_fields')
+  BuiltList<RegistrationFieldEntity> get clientRegistrationFields;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
@@ -562,7 +566,8 @@ abstract class CompanyEntity extends Object
     ..reportIncludeDrafts = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
-    ..recurringExpenses.replace(BuiltList<ExpenseEntity>());
+    ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
+    ..clientRegistrationFields.replace(BuiltList<RegistrationFieldEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -951,8 +956,12 @@ abstract class ReportSettingsEntity
   BuiltList<String> get columns;
 
   // ignore: unused_element
-  static void _initializeBuilder(ReportSettingsEntityBuilder builder) =>
-      builder..sortColumn = '';
+  static void _initializeBuilder(ReportSettingsEntityBuilder builder) => builder
+    ..sortColumn = ''
+    ..sortAscending = true
+    ..sortTotalsAscending = true
+    ..sortTotalsIndex = 0
+    ..columns.replace(BuiltList<String>());
 
   static Serializer<ReportSettingsEntity> get serializer =>
       _$reportSettingsEntitySerializer;
@@ -973,4 +982,27 @@ abstract class CompanyItemResponse
 
   static Serializer<CompanyItemResponse> get serializer =>
       _$companyItemResponseSerializer;
+}
+
+abstract class RegistrationFieldEntity
+    implements Built<RegistrationFieldEntity, RegistrationFieldEntityBuilder> {
+  factory RegistrationFieldEntity(bool reportErrors) {
+    return _$RegistrationFieldEntity._(
+      key: '',
+      required: false,
+    );
+  }
+
+  RegistrationFieldEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get key;
+
+  bool get required;
+
+  static Serializer<RegistrationFieldEntity> get serializer =>
+      _$registrationFieldEntitySerializer;
 }

@@ -91,7 +91,8 @@ class _PaymentViewState extends State<PaymentView> {
                         statusLabel: localization
                             .lookup('payment_status_${payment.statusId}'),
                         label: localization.amount,
-                        value: formatNumber(payment.amount, context,
+                        value: formatNumber(
+                            payment.amount - payment.refunded, context,
                             clientId: client.id),
                         secondLabel: localization.applied,
                         secondValue: formatNumber(payment.applied, context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -36,6 +37,7 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.updatedAt,
       VendorFields.archivedAt,
       VendorFields.documents,
+      VendorFields.contacts,
     ];
   }
 
@@ -76,15 +78,26 @@ class VendorPresenter extends EntityPresenter {
         return Text(
             state.staticState.currencyMap[vendor.currencyId]?.name ?? '');
       case VendorFields.customValue1:
-        return Text(presentCustomField(vendor.customValue1));
+        return Text(presentCustomField(context, vendor.customValue1));
       case VendorFields.customValue2:
-        return Text(presentCustomField(vendor.customValue2));
+        return Text(presentCustomField(context, vendor.customValue2));
       case VendorFields.customValue3:
-        return Text(presentCustomField(vendor.customValue3));
+        return Text(presentCustomField(context, vendor.customValue3));
       case VendorFields.customValue4:
-        return Text(presentCustomField(vendor.customValue4));
+        return Text(presentCustomField(context, vendor.customValue4));
       case VendorFields.documents:
         return Text('${vendor.documents.length}');
+      case VendorFields.contacts:
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+          child: Flexible(
+            child: Text(
+              vendor.contacts.map((contact) => contact.fullName).join(', '),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
     }
 
     return super.getField(field: field, context: context);

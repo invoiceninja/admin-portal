@@ -80,18 +80,21 @@ class WebClient {
     if (multipartFiles != null) {
       response = await _uploadFiles(url, token, multipartFiles, data: data);
     } else {
+      final headers = _getHeaders(
+        url,
+        token,
+        secret: secret,
+        password: password,
+        idToken: idToken,
+      );
+      //print('Headers: $headers');
+
       final client = http.Client();
       response = await client
           .post(
             Uri.parse(url),
             body: data,
-            headers: _getHeaders(
-              url,
-              token,
-              secret: secret,
-              password: password,
-              idToken: idToken,
-            ),
+            headers: headers,
           )
           .timeout(
             Duration(

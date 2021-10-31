@@ -146,9 +146,7 @@ List<String> filteredInvoicesSelector(
       return false;
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.displayName
-            .toLowerCase()
-            .contains(invoiceListState.filter.toLowerCase())) {
+        !client.matchesName(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

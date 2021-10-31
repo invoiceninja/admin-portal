@@ -140,7 +140,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
       },
       onExit: (event) => setState(() => _isHovered = false),
       child: InkWell(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(kBorderRadius),
         child: Opacity(
           opacity: widget.isCorrectOrder ? 1 : .7,
           child: Card(
@@ -150,7 +150,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                       ? state.accentColor
                       : Colors.transparent,
                   width: 1),
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(kBorderRadius),
             ),
             color: Theme.of(context).backgroundColor,
             child: Column(
@@ -199,7 +199,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           onTap: task.isNew
                               ? null
                               : () {
-                                  if (state.taskUIState.selectedId == task.id) {
+                                  if (state.taskUIState.selectedId == task.id &&
+                                      !state.uiState.isEditing) {
                                     viewEntityById(
                                         entityId: '',
                                         entityType: EntityType.task,
@@ -224,7 +225,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           onTap: task.isNew
                               ? null
                               : () {
-                                  editEntity(context: context, entity: task);
+                                  editEntity(
+                                      context: context,
+                                      entity: task,
+                                      fullScreen: false);
                                 },
                         ),
                       ),
@@ -303,7 +307,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                               } else if (value == localization.view) {
                                 viewEntity(entity: task);
                               } else if (value == localization.edit) {
-                                editEntity(context: context, entity: task);
+                                editEntity(
+                                    context: context,
+                                    entity: task,
+                                    fullScreen: false);
                               }
                             },
                           )

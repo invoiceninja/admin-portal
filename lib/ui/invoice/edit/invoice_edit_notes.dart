@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -83,12 +84,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = state.clientState.get(invoice.clientId);
-
-    final settings = SettingsEntity(
-      clientSettings: client.settings,
-      groupSettings: state.groupState.get(client.groupId).settings,
-      companySettings: state.company.settings,
-    );
+    final settings = getClientSettings(state, client);
 
     return ScrollableListView(
       children: <Widget>[

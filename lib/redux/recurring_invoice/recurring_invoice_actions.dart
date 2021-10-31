@@ -162,10 +162,15 @@ class RemoveRecurringInvoiceContact implements PersistUI {
 }
 
 class SaveRecurringInvoiceRequest implements StartSaving {
-  SaveRecurringInvoiceRequest({this.completer, this.recurringInvoice});
+  SaveRecurringInvoiceRequest({
+    this.completer,
+    this.recurringInvoice,
+    this.action,
+  });
 
   final Completer completer;
   final InvoiceEntity recurringInvoice;
+  final EntityAction action;
 }
 
 class SaveRecurringInvoiceSuccess

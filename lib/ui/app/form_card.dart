@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
@@ -46,7 +47,11 @@ class FormCard extends StatelessWidget {
       child: FocusTraversalGroup(
         child: Card(
           elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kBorderRadius),
+          ),
           child: AppBorder(
+            hideBorder: !isDarkMode(context),
             child: Padding(
               padding: internalPadding ?? const EdgeInsets.all(16),
               child: child != null

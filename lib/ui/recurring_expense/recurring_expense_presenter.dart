@@ -129,13 +129,13 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text(
             state.invoiceState.map[expense.invoiceId]?.listDisplayName ?? '');
       case RecurringExpenseFields.customValue1:
-        return Text(presentCustomField(expense.customValue1));
+        return Text(presentCustomField(context, expense.customValue1));
       case RecurringExpenseFields.customValue2:
-        return Text(presentCustomField(expense.customValue2));
+        return Text(presentCustomField(context, expense.customValue2));
       case RecurringExpenseFields.customValue3:
-        return Text(presentCustomField(expense.customValue3));
+        return Text(presentCustomField(context, expense.customValue3));
       case RecurringExpenseFields.customValue4:
-        return Text(presentCustomField(expense.customValue4));
+        return Text(presentCustomField(context, expense.customValue4));
       case RecurringExpenseFields.documents:
         return Text('${expense.documents.length}');
       case RecurringExpenseFields.remainingCycles:

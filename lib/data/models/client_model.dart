@@ -69,8 +69,10 @@ class ClientFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String contacts = 'contacts';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
+  static const String contactPhone = 'contact_phone';
   static const String state = 'state';
   static const String phone = 'phone';
   static const String website = 'website';
@@ -102,7 +104,12 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({String id, AppState state, UserEntity user}) {
+  factory ClientEntity({
+    String id,
+    AppState state,
+    UserEntity user,
+    GroupEntity group,
+  }) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -132,7 +139,7 @@ abstract class ClientEntity extends Object
       shippingAddress2: '',
       shippingCity: '',
       shippingState: '',
-      groupId: '',
+      groupId: group?.id ?? '',
       shippingPostalCode: '',
       shippingCountryId: '',
       customValue1: '',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -42,6 +43,8 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.custom4,
       ClientFields.documents,
       ClientFields.group,
+      ClientFields.contactPhone,
+      ClientFields.contacts,
     ];
   }
 
@@ -58,6 +61,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
         return Text(client.primaryContact.email);
+      case ClientFields.contactPhone:
+        return Text(client.primaryContact.phone);
       case ClientFields.address1:
         return Text(client.address1);
       case ClientFields.address2:
@@ -102,13 +107,13 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.phone:
         return Text(client.phone);
       case ClientFields.custom1:
-        return Text(presentCustomField(client.customValue1));
+        return Text(presentCustomField(context, client.customValue1));
       case ClientFields.custom2:
-        return Text(presentCustomField(client.customValue2));
+        return Text(presentCustomField(context, client.customValue2));
       case ClientFields.custom3:
-        return Text(presentCustomField(client.customValue3));
+        return Text(presentCustomField(context, client.customValue3));
       case ClientFields.custom4:
-        return Text(presentCustomField(client.customValue4));
+        return Text(presentCustomField(context, client.customValue4));
       case ClientFields.publicNotes:
         return Text(client.publicNotes);
       case ClientFields.privateNotes:
@@ -119,6 +124,17 @@ class ClientPresenter extends EntityPresenter {
         return Text('${client.documents.length}');
       case ClientFields.group:
         return Text(state.groupState.get(client.groupId).name);
+      case ClientFields.contacts:
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+          child: Flexible(
+            child: Text(
+              client.contacts.map((contact) => contact.fullName).join(', '),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
     }
 
     return super.getField(field: field, context: context);

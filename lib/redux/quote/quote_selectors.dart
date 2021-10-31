@@ -64,9 +64,7 @@ List<String> filteredQuotesSelector(
     } else if (!quote.matchesStatuses(quoteListState.statusFilters)) {
       return false;
     } else if (!quote.matchesFilter(quoteListState.filter) &&
-        !client.displayName
-            .toLowerCase()
-            .contains(quoteListState.filter.toLowerCase())) {
+        !client.matchesName(quoteListState.filter)) {
       return false;
     }
 

@@ -118,7 +118,8 @@ class EntityHeader extends StatelessWidget {
                         color: entity.isArchived
                             ? Colors.orange
                             : prefState.colorThemeModel.colorDanger,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(kBorderRadius)),
                       ),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
@@ -127,12 +128,11 @@ class EntityHeader extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 8),
+                              vertical: 5, horizontal: 8),
                           child: Text(
-                            (entity.isArchived
-                                    ? localization.archived
-                                    : localization.deleted)
-                                .toUpperCase(),
+                            entity.isArchived
+                                ? localization.archived
+                                : localization.deleted,
                             style: TextStyle(fontSize: 14, color: Colors.white),
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,

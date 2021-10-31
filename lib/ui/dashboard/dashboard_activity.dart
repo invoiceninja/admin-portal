@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 
@@ -16,12 +17,16 @@ class DashboardActivity extends StatelessWidget {
     final company = viewModel.state.company;
     final activities = company.activities;
 
-    return ScrollableListViewBuilder(
-      itemCount: activities.length,
-      itemBuilder: (BuildContext context, index) {
-        final activity = activities[index];
-        return ActivityListTile(activity: activity);
-      },
+    return Material(
+      color: Theme.of(context).backgroundColor,
+      child: ScrollableListViewBuilder(
+        itemCount: activities.length,
+        separatorBuilder: (context, index) => ListDivider(),
+        itemBuilder: (BuildContext context, index) {
+          final activity = activities[index];
+          return ActivityListTile(activity: activity);
+        },
+      ),
     );
   }
 }

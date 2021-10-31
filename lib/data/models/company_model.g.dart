@@ -20,6 +20,8 @@ Serializer<ReportSettingsEntity> _$reportSettingsEntitySerializer =
     new _$ReportSettingsEntitySerializer();
 Serializer<CompanyItemResponse> _$companyItemResponseSerializer =
     new _$CompanyItemResponseSerializer();
+Serializer<RegistrationFieldEntity> _$registrationFieldEntitySerializer =
+    new _$RegistrationFieldEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -243,6 +245,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.systemLogs,
           specifiedType: const FullType(
               BuiltList, const [const FullType(SystemLogEntity)])),
+      'client_registration_fields',
+      serializers.serialize(object.clientRegistrationFields,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(RegistrationFieldEntity)])),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
@@ -650,6 +656,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(SystemLogEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'client_registration_fields':
+          result.clientRegistrationFields.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(RegistrationFieldEntity)
+              ])) as BuiltList<Object>);
           break;
         case 'custom_fields':
           result.customFields.replace(serializers.deserialize(value,
@@ -1275,6 +1287,58 @@ class _$CompanyItemResponseSerializer
   }
 }
 
+class _$RegistrationFieldEntitySerializer
+    implements StructuredSerializer<RegistrationFieldEntity> {
+  @override
+  final Iterable<Type> types = const [
+    RegistrationFieldEntity,
+    _$RegistrationFieldEntity
+  ];
+  @override
+  final String wireName = 'RegistrationFieldEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, RegistrationFieldEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'key',
+      serializers.serialize(object.key, specifiedType: const FullType(String)),
+      'required',
+      serializers.serialize(object.required,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  RegistrationFieldEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new RegistrationFieldEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'key':
+          result.key = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'required':
+          result.required = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableCustomSurchargeTaxes1;
@@ -1399,6 +1463,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<SystemLogEntity> systemLogs;
   @override
+  final BuiltList<RegistrationFieldEntity> clientRegistrationFields;
+  @override
   final BuiltMap<String, String> customFields;
   @override
   final String slackWebhookUrl;
@@ -1512,6 +1578,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.subscriptions,
       this.paymentTerms,
       this.systemLogs,
+      this.clientRegistrationFields,
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
@@ -1649,6 +1716,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(
         systemLogs, 'CompanyEntity', 'systemLogs');
     BuiltValueNullFieldError.checkNotNull(
+        clientRegistrationFields, 'CompanyEntity', 'clientRegistrationFields');
+    BuiltValueNullFieldError.checkNotNull(
         customFields, 'CompanyEntity', 'customFields');
     BuiltValueNullFieldError.checkNotNull(
         slackWebhookUrl, 'CompanyEntity', 'slackWebhookUrl');
@@ -1759,6 +1828,7 @@ class _$CompanyEntity extends CompanyEntity {
         subscriptions == other.subscriptions &&
         paymentTerms == other.paymentTerms &&
         systemLogs == other.systemLogs &&
+        clientRegistrationFields == other.clientRegistrationFields &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
@@ -1806,7 +1876,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1892,6 +1962,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('subscriptions', subscriptions)
           ..add('paymentTerms', paymentTerms)
           ..add('systemLogs', systemLogs)
+          ..add('clientRegistrationFields', clientRegistrationFields)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
@@ -2238,6 +2309,14 @@ class CompanyEntityBuilder
   set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
       _$this._systemLogs = systemLogs;
 
+  ListBuilder<RegistrationFieldEntity> _clientRegistrationFields;
+  ListBuilder<RegistrationFieldEntity> get clientRegistrationFields =>
+      _$this._clientRegistrationFields ??=
+          new ListBuilder<RegistrationFieldEntity>();
+  set clientRegistrationFields(
+          ListBuilder<RegistrationFieldEntity> clientRegistrationFields) =>
+      _$this._clientRegistrationFields = clientRegistrationFields;
+
   MapBuilder<String, String> _customFields;
   MapBuilder<String, String> get customFields =>
       _$this._customFields ??= new MapBuilder<String, String>();
@@ -2420,6 +2499,7 @@ class CompanyEntityBuilder
       _subscriptions = $v.subscriptions.toBuilder();
       _paymentTerms = $v.paymentTerms.toBuilder();
       _systemLogs = $v.systemLogs.toBuilder();
+      _clientRegistrationFields = $v.clientRegistrationFields.toBuilder();
       _customFields = $v.customFields.toBuilder();
       _slackWebhookUrl = $v.slackWebhookUrl;
       _googleAnalyticsKey = $v.googleAnalyticsKey;
@@ -2541,6 +2621,7 @@ class CompanyEntityBuilder
               subscriptions: subscriptions.build(),
               paymentTerms: paymentTerms.build(),
               systemLogs: systemLogs.build(),
+              clientRegistrationFields: clientRegistrationFields.build(),
               customFields: customFields.build(),
               slackWebhookUrl: BuiltValueNullFieldError.checkNotNull(slackWebhookUrl, 'CompanyEntity', 'slackWebhookUrl'),
               googleAnalyticsKey: BuiltValueNullFieldError.checkNotNull(googleAnalyticsKey, 'CompanyEntity', 'googleAnalyticsKey'),
@@ -2622,6 +2703,8 @@ class CompanyEntityBuilder
         paymentTerms.build();
         _$failedField = 'systemLogs';
         systemLogs.build();
+        _$failedField = 'clientRegistrationFields';
+        clientRegistrationFields.build();
         _$failedField = 'customFields';
         customFields.build();
 
@@ -3671,6 +3754,104 @@ class CompanyItemResponseBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$RegistrationFieldEntity extends RegistrationFieldEntity {
+  @override
+  final String key;
+  @override
+  final bool required;
+
+  factory _$RegistrationFieldEntity(
+          [void Function(RegistrationFieldEntityBuilder) updates]) =>
+      (new RegistrationFieldEntityBuilder()..update(updates)).build();
+
+  _$RegistrationFieldEntity._({this.key, this.required}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        key, 'RegistrationFieldEntity', 'key');
+    BuiltValueNullFieldError.checkNotNull(
+        required, 'RegistrationFieldEntity', 'required');
+  }
+
+  @override
+  RegistrationFieldEntity rebuild(
+          void Function(RegistrationFieldEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  RegistrationFieldEntityBuilder toBuilder() =>
+      new RegistrationFieldEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is RegistrationFieldEntity &&
+        key == other.key &&
+        required == other.required;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, key.hashCode), required.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('RegistrationFieldEntity')
+          ..add('key', key)
+          ..add('required', required))
+        .toString();
+  }
+}
+
+class RegistrationFieldEntityBuilder
+    implements
+        Builder<RegistrationFieldEntity, RegistrationFieldEntityBuilder> {
+  _$RegistrationFieldEntity _$v;
+
+  String _key;
+  String get key => _$this._key;
+  set key(String key) => _$this._key = key;
+
+  bool _required;
+  bool get required => _$this._required;
+  set required(bool required) => _$this._required = required;
+
+  RegistrationFieldEntityBuilder();
+
+  RegistrationFieldEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _key = $v.key;
+      _required = $v.required;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(RegistrationFieldEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$RegistrationFieldEntity;
+  }
+
+  @override
+  void update(void Function(RegistrationFieldEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$RegistrationFieldEntity build() {
+    final _$result = _$v ??
+        new _$RegistrationFieldEntity._(
+            key: BuiltValueNullFieldError.checkNotNull(
+                key, 'RegistrationFieldEntity', 'key'),
+            required: BuiltValueNullFieldError.checkNotNull(
+                required, 'RegistrationFieldEntity', 'required'));
     replace(_$result);
     return _$result;
   }

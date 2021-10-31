@@ -49,110 +49,116 @@ class DeviceSettingsVM {
     @required this.onRowsPerPageChanged,
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
+    @required this.onPersistUiChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
     return DeviceSettingsVM(
-        state: store.state,
-        onRefreshTap: (BuildContext context) =>
-            showRefreshDataDialog(context: context, includeStatic: true),
-        onLogoutTap: (BuildContext context) {
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).endedAllSessions);
-          store.dispatch(UserLogoutAll(completer: completer));
-        },
-        onDarkModeChanged: (BuildContext context, bool value) async {
-          store.dispatch(UpdateUserPreferences(
-              enableDarkMode: value,
-              colorTheme: value ? kColorThemeDark : kColorThemeLight,
-              customColors: value
-                  ? BuiltMap<String, String>()
-                  : BuiltMap<String, String>(PrefState.CONTRAST_COLORS)));
-          store.dispatch(UpdatedSetting());
-          AppBuilder.of(context).rebuild();
-        },
-        onLongPressSelectionIsDefault:
-            (BuildContext context, bool value) async {
-          store.dispatch(
-              UpdateUserPreferences(longPressSelectionIsDefault: value));
-        },
-        onMenuModeChanged: (context, value) async {
-          if (store.state.prefState.menuSidebarMode == value) {
-            return;
-          }
+      state: store.state,
+      onRefreshTap: (BuildContext context) =>
+          showRefreshDataDialog(context: context, includeStatic: true),
+      onLogoutTap: (BuildContext context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).endedAllSessions);
+        store.dispatch(UserLogoutAll(completer: completer));
+      },
+      onDarkModeChanged: (BuildContext context, bool value) async {
+        store.dispatch(UpdateUserPreferences(
+            enableDarkMode: value,
+            colorTheme: value ? kColorThemeDark : kColorThemeLight,
+            customColors: value
+                ? BuiltMap<String, String>()
+                : BuiltMap<String, String>(PrefState.CONTRAST_COLORS)));
+        store.dispatch(UpdatedSetting());
+        AppBuilder.of(context).rebuild();
+      },
+      onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
+        store.dispatch(
+            UpdateUserPreferences(longPressSelectionIsDefault: value));
+      },
+      onMenuModeChanged: (context, value) async {
+        if (store.state.prefState.menuSidebarMode == value) {
+          return;
+        }
 
-          store.dispatch(UpdateUserPreferences(menuMode: value));
-        },
-        onHistoryModeChanged: (context, value) async {
-          if (store.state.prefState.historySidebarMode == value) {
-            return;
-          }
+        store.dispatch(UpdateUserPreferences(menuMode: value));
+      },
+      onHistoryModeChanged: (context, value) async {
+        if (store.state.prefState.historySidebarMode == value) {
+          return;
+        }
 
-          store.dispatch(UpdateUserPreferences(historyMode: value));
-        },
-        onColorThemeChanged: (context, value) async {
-          if (store.state.prefState.colorTheme != value) {
-            store.dispatch(UpdateUserPreferences(colorTheme: value));
-          }
-        },
-        onRowsPerPageChanged: (context, value) {
-          store.dispatch(UpdateUserPreferences(rowsPerPage: value));
-        },
-        onLayoutChanged: (BuildContext context, AppLayout value) async {
-          if (store.state.prefState.appLayout == value) {
-            return;
-          }
-          store.dispatch(UpdateUserPreferences(appLayout: value));
-          AppBuilder.of(context).rebuild();
-          WidgetsBinding.instance.addPostFrameCallback((duration) {
-            if (value == AppLayout.mobile) {
-              store.dispatch(ViewDashboard());
-            } else {
-              store.dispatch(ViewMainScreen(addDelay: true));
-            }
-          });
-        },
-        onRequireAuthenticationChanged:
-            (BuildContext context, bool value) async {
-          bool authenticated = false;
-          try {
-            authenticated = await LocalAuthentication().authenticate(
-                localizedReason:
-                    AppLocalization.of(context).authenticateToChangeSetting,
-                biometricOnly: true,
-                useErrorDialogs: true,
-                stickyAuth: false);
-          } catch (e) {
-            print(e);
-          }
-          if (authenticated) {
-            store.dispatch(UpdateUserPreferences(requireAuthentication: value));
-          } else {}
-        },
-        //authenticationSupported: LocalAuthentication().canCheckBiometrics,
-        // TODO remove this once issue is resolved:
-        // https://github.com/flutter/flutter/issues/24339
-        authenticationSupported: Future<bool>(
-          () async {
-            bool enable = false;
-            try {
-              enable = await LocalAuthentication().canCheckBiometrics;
-            } catch (e) {
-              // do nothing
-            }
-            return enable;
-          },
-        ),
-        onCustomColorsChanged: (context, customColors) {
-          store.dispatch(UpdateUserPreferences(customColors: customColors));
-          store.dispatch(UpdatedSetting());
-        },
-        onPersistDataChanged: (context, value) {
-          store.dispatch(UpdateUserPreferences(persistData: value));
-          if (value) {
-            store.dispatch(UserLoginSuccess());
+        store.dispatch(UpdateUserPreferences(historyMode: value));
+      },
+      onColorThemeChanged: (context, value) async {
+        if (store.state.prefState.colorTheme != value) {
+          store.dispatch(UpdateUserPreferences(colorTheme: value));
+        }
+      },
+      onRowsPerPageChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(rowsPerPage: value));
+      },
+      onLayoutChanged: (BuildContext context, AppLayout value) async {
+        if (store.state.prefState.appLayout == value) {
+          return;
+        }
+        store.dispatch(UpdateUserPreferences(appLayout: value));
+        AppBuilder.of(context).rebuild();
+        WidgetsBinding.instance.addPostFrameCallback((duration) {
+          if (value == AppLayout.mobile) {
+            store.dispatch(ViewDashboard());
+          } else {
+            store.dispatch(ViewMainScreen(addDelay: true));
           }
         });
+      },
+      onRequireAuthenticationChanged: (BuildContext context, bool value) async {
+        bool authenticated = false;
+        try {
+          authenticated = await LocalAuthentication().authenticate(
+              localizedReason:
+                  AppLocalization.of(context).authenticateToChangeSetting,
+              biometricOnly: true,
+              useErrorDialogs: true,
+              stickyAuth: false);
+        } catch (e) {
+          print(e);
+        }
+        if (authenticated) {
+          store.dispatch(UpdateUserPreferences(requireAuthentication: value));
+        } else {}
+      },
+      //authenticationSupported: LocalAuthentication().canCheckBiometrics,
+      // TODO remove this once issue is resolved:
+      // https://github.com/flutter/flutter/issues/24339
+      authenticationSupported: Future<bool>(
+        () async {
+          bool enable = false;
+          try {
+            enable = await LocalAuthentication().canCheckBiometrics;
+          } catch (e) {
+            // do nothing
+          }
+          return enable;
+        },
+      ),
+      onCustomColorsChanged: (context, customColors) {
+        store.dispatch(UpdateUserPreferences(customColors: customColors));
+        store.dispatch(UpdatedSetting());
+      },
+      onPersistDataChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(persistData: value));
+        if (value) {
+          store.dispatch(UserLoginSuccess());
+        }
+      },
+      onPersistUiChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(persistUi: value));
+        if (value) {
+          store.dispatch(PersistUI());
+        }
+      },
+    );
   }
 
   final AppState state;
@@ -167,6 +173,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
+  final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, int) onRowsPerPageChanged;
   final Future<bool> authenticationSupported;
 }

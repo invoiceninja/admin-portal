@@ -41,5 +41,17 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>LSApplicationCategoryType</key>
+    <string>public.app-category.business</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The photo library is used to upload documents</string>
+	<key>NSCameraUsageDescription</key>
+	<string>The camera is used to upload documents</string>
+	<key>NSContactsUsageDescription</key>
+	<string>The contacts list is used to create clients</string>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
 </dict>
 </plist>

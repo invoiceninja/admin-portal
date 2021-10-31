@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HealthCheckDialog extends StatefulWidget {
@@ -102,7 +101,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'System Health',
                   subtitle:
-                      'Email: ${toTitleCase(_response.emailDriver)}\nQueue: ${toTitleCase(_response.queue)}\nPDF: ${_response.pdfEngine.replaceFirst(' PDF Generator', '')}',
+                      'Email: ${_response.emailDriver}\nQueue: ${_response.queue}\nPDF: ${_response.pdfEngine.replaceFirst(' Generator', '')}',
                   isValid: _response.systemHealth,
                 ),
                 _HealthListTile(

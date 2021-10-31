@@ -22,6 +22,8 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -74,6 +76,8 @@ class _LoginState extends State<LoginView> {
       _isSelfHosted = authState.isSelfHost;
       if (_isSelfHosted) {
         _emailLogin = true;
+        _createAccount = false;
+      } else if (WebUtils.getHtmlValue('login') == 'true') {
         _createAccount = false;
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {

@@ -199,6 +199,16 @@ abstract class CompanyGatewayEntity extends Object
 
   bool get isCustom => gatewayId == kGatewayCustom;
 
+  bool get isConnected {
+    if (gatewayId != kGatewayStripeConnect) {
+      return true;
+    }
+
+    final accountId = (parsedConfig['account_id'] ?? '').toString();
+
+    return accountId.isNotEmpty;
+  }
+
   bool supportsCard(int cardType) => acceptedCreditCards & cardType > 0;
 
   CompanyGatewayEntity addCard(int cardType) =>
@@ -258,9 +268,13 @@ abstract class CompanyGatewayEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted && !multiselect && userCompany.canEditEntity(this)) {
+      if (includeEdit) {
         actions.add(EntityAction.edit);
+      }
+
+      if (gatewayId == kGatewayStripeConnect && !isConnected) {
+        actions.add(EntityAction.disconnect);
       }
     }
 

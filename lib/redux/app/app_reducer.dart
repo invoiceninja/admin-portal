@@ -55,6 +55,8 @@ AppState appReducer(AppState state, dynamic action) {
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
     ..isSaving = savingReducer(state.isSaving, action)
+    ..dismissedNativeWarning =
+        dismissedNativeWarningReducer(state.dismissedNativeWarning, action)
     ..lastError = lastErrorReducer(state.lastError, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
@@ -129,5 +131,11 @@ final lastErrorReducer = combineReducers<String>([
   }),
   TypedReducer<String, RefreshDataFailure>((state, action) {
     return '${action.error}';
+  }),
+]);
+
+final dismissedNativeWarningReducer = combineReducers<bool>([
+  TypedReducer<bool, DismissNativeWarning>((state, action) {
+    return true;
   }),
 ]);

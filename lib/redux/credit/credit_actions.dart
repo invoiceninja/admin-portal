@@ -536,7 +536,7 @@ Future handleCreditAction(
         filterEntity: state.clientState.map[credit.clientId],
       );
       break;
-    case EntityAction.download:
+    case EntityAction.bulkDownload:
       store.dispatch(DownloadCreditsRequest(
           snackBarCompleter<Null>(context, localization.exportedData),
           creditIds));

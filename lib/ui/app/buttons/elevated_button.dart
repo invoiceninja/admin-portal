@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 
 class AppButton extends StatelessWidget {
@@ -22,7 +23,8 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           primary: color ?? Theme.of(context).buttonColor,
           padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(kBorderRadius)),
           elevation: 4,
           textStyle: TextStyle(
             color: Colors.white,
@@ -33,7 +35,10 @@ class AppButton extends StatelessWidget {
               text: label,
               alignment: MainAxisAlignment.center,
             )
-          : Text(label, overflow: TextOverflow.ellipsis),
+          : SizedBox(
+              child: Text(label, overflow: TextOverflow.ellipsis),
+              height: 24,
+            ),
       onPressed: onPressed,
     );
 

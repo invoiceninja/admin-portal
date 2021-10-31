@@ -56,6 +56,7 @@ PrefState prefReducer(
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
       ..persistData = persistDataReducer(state.persistData, action)
+      ..persistUI = persistUIReducer(state.persistUI, action)
       ..showKanban = showKanbanReducer(state.showKanban, action)
       ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
       ..longPressSelectionIsDefault =
@@ -246,6 +247,12 @@ Reducer<bool> darkModeReducer = combineReducers([
 Reducer<bool> persistDataReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((persistData, action) {
     return action.persistData ?? persistData;
+  }),
+]);
+
+Reducer<bool> persistUIReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((persistUI, action) {
+    return action.persistUi ?? persistUI;
   }),
 ]);
 
@@ -543,7 +550,7 @@ BuiltList<HistoryRecord> _addToHistory(
   }
 
   if (record.entityType == EntityType.settings) {
-    if ((record.id ?? '').endsWith('_edit')) {
+    if ((record.id ?? '').endsWith('/edit')) {
       return list;
     }
   }

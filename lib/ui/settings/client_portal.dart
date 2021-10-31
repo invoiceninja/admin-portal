@@ -77,7 +77,9 @@ class _ClientPortalState extends State<ClientPortal>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
+        vsync: this,
+        length: settingsUIState.isFiltered ? 4 : 5,
+        initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -238,11 +240,15 @@ class _ClientPortalState extends State<ClientPortal>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        isScrollable: isMobile(context),
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.settings,
           ),
+          if (!state.settingsUIState.isFiltered)
+            Tab(
+              text: localization.registration,
+            ),
           Tab(
             text: localization.authorization,
           ),
@@ -387,42 +393,6 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortalTasks = value)),
                   ),
-                ],
-              ),
-              FormCard(
-                isLast: true,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (!state.settingsUIState.isFiltered) ...[
-                    BoolDropdownButton(
-                      label: localization.clientRegistration,
-                      helpLabel: localization.clientRegistrationHelp,
-                      value: company.clientCanRegister,
-                      iconData: MdiIcons.login,
-                      onChanged: (value) => viewModel.onCompanyChanged(
-                          company.rebuild((b) => b..clientCanRegister = value)),
-                    ),
-                    if (state.company.clientCanRegister ?? false) ...[
-                      SizedBox(height: 16),
-                      ListDivider(),
-                      ListTile(
-                        title: Text(localization.registrationUrl),
-                        subtitle: Text(
-                          registrationUrl,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Icon(Icons.content_copy),
-                        onTap: () {
-                          Clipboard.setData(
-                              ClipboardData(text: registrationUrl));
-                          showToast(localization.copiedToClipboard
-                              .replaceFirst(':value ', registrationUrl));
-                        },
-                      ),
-                      ListDivider(),
-                    ],
-                  ],
                   BoolDropdownButton(
                       label: localization.documentUpload,
                       helpLabel: localization.documentUploadHelp,
@@ -458,8 +428,13 @@ class _ClientPortalState extends State<ClientPortal>
                             .replaceFirst(':value ', company.companyKey));
                       },
                     ),
-                    ListDivider(),
                   ],
+                ],
+              ),
+              FormCard(
+                isLast: true,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   DecoratedFormField(
                     controller: _termsController,
                     label: localization.termsOfService,
@@ -474,6 +449,59 @@ class _ClientPortalState extends State<ClientPortal>
               )
             ],
           ),
+          if (!state.settingsUIState.isFiltered)
+            ScrollableListView(
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.clientRegistration,
+                      helpLabel: localization.clientRegistrationHelp,
+                      value: company.clientCanRegister,
+                      iconData: MdiIcons.login,
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                          company.rebuild((b) => b..clientCanRegister = value)),
+                    ),
+                    if (state.company.clientCanRegister ?? false) ...[
+                      SizedBox(height: 16),
+                      ListDivider(),
+                      ListTile(
+                        title: Text(localization.registrationUrl),
+                        subtitle: Text(
+                          registrationUrl,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        trailing: Icon(Icons.content_copy),
+                        onTap: () {
+                          Clipboard.setData(
+                              ClipboardData(text: registrationUrl));
+                          showToast(localization.copiedToClipboard
+                              .replaceFirst(':value ', registrationUrl));
+                        },
+                      ),
+                      ListDivider(),
+                    ],
+                  ],
+                ),
+                FormCard(
+                  isLast: true,
+                  children: company.clientRegistrationFields
+                      .map((field) => SwitchListTile(
+                          activeColor: Theme.of(context).accentColor,
+                          title: Text(localization.lookup(field.key)),
+                          value: field.required,
+                          onChanged: (value) {
+                            final index =
+                                company.clientRegistrationFields.indexOf(field);
+                            viewModel.onCompanyChanged(company.rebuild((b) => b
+                              ..clientRegistrationFields[index] = field.rebuild(
+                                  (b) => b..required = !field.required)));
+                          }))
+                      .toList(),
+                ),
+              ],
+            ),
           ScrollableListView(
             children: <Widget>[
               FormCard(

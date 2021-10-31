@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.59';
+const String kClientVersion = '5.0.62';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -35,6 +35,11 @@ const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
 
+const String kTwitterUrl = 'https://twitter.com/invoiceninja';
+const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
+const String kYouTubeUrl =
+    'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
+
 const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain';
@@ -46,8 +51,7 @@ const String kDocsStripeConnectUrl =
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
     'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
-const String kZapierURL =
-    'https://zapier.com/developer/public-invite/95884/5e4368b9efb9d377dc0a0b0465b7c1a7/';
+const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
 
@@ -98,9 +102,10 @@ const double kDrawerWidth = 270;
 const double kTableColumnGap = 16;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
-const double kDashboardPanelHeight = 548; // TODO remove this
+const double kDashboardPanelHeight = 545; // TODO remove this
 const double kDashboardPanelHeightWeb = 541; // TODO remove this
 const double kListNumberWidth = 100;
+const double kBorderRadius = 2;
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
@@ -247,10 +252,13 @@ const String kGatewayTypeCredit = '10';
 const String kGatewayTypeKBC = '11';
 const String kGatewayTypeBancontact = '12';
 const String kGatewayTypeIDeal = '13';
-const String kGatewayTypeGiropay = '14';
-const String kGatewayTypePrzelewy24 = '15';
-const String kGatewayTypeFPX = '16';
+const String kGatewayTypeHosted = '14';
+const String kGatewayTypeGiropay = '15';
+const String kGatewayTypePrzelewy24 = '16';
 const String kGatewayTypeEPS = '17';
+const String kGatewayTypeFPX = '18';
+const String kGatewayTypeACSS = '19';
+const String kGatewayTypeBECS = '20';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -266,10 +274,13 @@ const kGatewayTypes = {
   kGatewayTypeKBC: 'kbc',
   kGatewayTypeBancontact: 'bancontact',
   kGatewayTypeIDeal: 'ideal',
+  kGatewayTypeHosted: 'hosted',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
   kGatewayTypeFPX: 'fpx',
   kGatewayTypeEPS: 'eps',
+  kGatewayTypeACSS: 'acss',
+  kGatewayTypeBECS: 'becs',
 };
 
 const String kNotificationChannelEmail = 'email';
@@ -386,33 +397,33 @@ const String kReminderScheduleAfterDueDate = 'after_due_date';
 
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsPaymentTerms = 'payment_terms';
-const String kSettingsPaymentTermView = 'payment_term_view';
-const String kSettingsPaymentTermEdit = 'payment_term_edit';
+const String kSettingsPaymentTermView = 'payment_term/view';
+const String kSettingsPaymentTermEdit = 'payment_term/edit';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
 const String kSettingsOnlinePayments = 'online_payments';
 const String kSettingsCompanyGateways = 'company_gateways';
-const String kSettingsCompanyGatewaysView = 'company_gateways_view';
-const String kSettingsCompanyGatewaysEdit = 'company_gateways_edit';
+const String kSettingsCompanyGatewaysView = 'company_gateways/view';
+const String kSettingsCompanyGatewaysEdit = 'company_gateways/edit';
 const String kSettingsTaxSettings = 'tax_settings';
 const String kSettingsTaxRates = 'tax_settings_rates';
-const String kSettingsTaxRatesView = 'tax_settings_rates_view';
-const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
+const String kSettingsTaxRatesView = 'tax_settings_rates/view';
+const String kSettingsTaxRatesEdit = 'tax_settings_rates/edit';
 const String kSettingsProducts = 'product_settings';
 const String kSettingsTasks = 'task_settings';
 const String kSettingsExpenses = 'expense_settings';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';
-const String kSettingsGroupSettingsView = 'group_settings_view';
-const String kSettingsGroupSettingsEdit = 'group_settings_edit';
+const String kSettingsGroupSettingsView = 'group_settings/view';
+const String kSettingsGroupSettingsEdit = 'group_settings/edit';
 const String kSettingsSubscriptions = 'subscriptions';
-const String kSettingsSubscriptionsView = 'subscriptions_view';
-const String kSettingsSubscriptionsEdit = 'subscriptions_edit';
+const String kSettingsSubscriptionsView = 'subscriptions/view';
+const String kSettingsSubscriptionsEdit = 'subscriptions/edit';
 const String kSettingsCustomFields = 'custom_fields';
 const String kSettingsCustomDesigns = 'custom_designs';
-const String kSettingsCustomDesignsView = 'custom_designs_view';
-const String kSettingsCustomDesignsEdit = 'custom_designs_edit';
+const String kSettingsCustomDesignsView = 'custom_designs/view';
+const String kSettingsCustomDesignsEdit = 'custom_designs/edit';
 const String kSettingsGeneratedNumbers = 'generated_numbers';
 const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
@@ -424,21 +435,21 @@ const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
 const String kSettingsDataVisualizations = 'data_visualizations';
 const String kSettingsApiTokens = 'api_tokens';
 const String kSettingsUserManagement = 'user_management';
-const String kSettingsUserManagementView = 'user_management_view';
-const String kSettingsUserManagementEdit = 'user_management_edit';
+const String kSettingsUserManagementView = 'user_management/view';
+const String kSettingsUserManagementEdit = 'user_management/edit';
 const String kSettingsAccountManagement = 'account_management';
 const String kSettingsTokens = 'tokens';
-const String kSettingsTokenView = 'token_view';
-const String kSettingsTokenEdit = 'token_edit';
+const String kSettingsTokenView = 'token/view';
+const String kSettingsTokenEdit = 'token/edit';
 const String kSettingsWebhooks = 'webhook';
-const String kSettingsWebhookView = 'webhook_view';
-const String kSettingsWebhookEdit = 'webhook_edit';
+const String kSettingsWebhookView = 'webhook/view';
+const String kSettingsWebhookEdit = 'webhook/edit';
 const String kSettingsExpenseCategories = 'expense_category';
-const String kSettingsExpenseCategoryView = 'expense_category_view';
-const String kSettingsExpenseCategoryEdit = 'expense_category_edit';
+const String kSettingsExpenseCategoryView = 'expense_category/view';
+const String kSettingsExpenseCategoryEdit = 'expense_category/edit';
 const String kSettingsTaskStatuses = 'task_status';
-const String kSettingsTaskStatusView = 'task_status_view';
-const String kSettingsTaskStatusEdit = 'task_status_edit';
+const String kSettingsTaskStatusView = 'task_status/view';
+const String kSettingsTaskStatusEdit = 'task_status/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,
@@ -454,6 +465,7 @@ const List<String> kAdvancedSettings = [
 ];
 
 const String kReportClient = 'client';
+const String kReportContact = 'contact';
 const String kReportCredit = 'credit';
 const String kReportDocument = 'document';
 const String kReportExpense = 'expense';

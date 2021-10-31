@@ -44,6 +44,18 @@ enum CreditReportFields {
   tax_amount,
   net_amount,
   net_remaining,
+  exchange_rate,
+  public_notes,
+  private_notes,
+  client_vat_number,
+  client_city,
+  client_postal_code,
+  tax_rate1,
+  tax_rate2,
+  tax_rate3,
+  tax_name1,
+  tax_name2,
+  tax_name3,
 }
 
 var memoizedCreditReport = memo6((
@@ -211,6 +223,42 @@ ReportResult creditReport(
           break;
         case CreditReportFields.client_country:
           value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
+        case CreditReportFields.exchange_rate:
+          value = credit.exchangeRate;
+          break;
+        case CreditReportFields.client_postal_code:
+          value = client.postalCode;
+          break;
+        case CreditReportFields.client_vat_number:
+          value = client.vatNumber;
+          break;
+        case CreditReportFields.tax_name1:
+          value = credit.taxName1;
+          break;
+        case CreditReportFields.tax_rate1:
+          value = credit.taxRate1;
+          break;
+        case CreditReportFields.tax_name2:
+          value = credit.taxName2;
+          break;
+        case CreditReportFields.tax_rate2:
+          value = credit.taxRate2;
+          break;
+        case CreditReportFields.tax_name3:
+          value = credit.taxName1;
+          break;
+        case CreditReportFields.tax_rate3:
+          value = credit.taxRate1;
+          break;
+        case CreditReportFields.public_notes:
+          value = credit.publicNotes;
+          break;
+        case CreditReportFields.private_notes:
+          value = credit.privateNotes;
+          break;
+        case CreditReportFields.client_city:
+          value = client.city;
           break;
       }
 

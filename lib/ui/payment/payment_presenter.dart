@@ -65,7 +65,7 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.amount:
         return Align(
             alignment: Alignment.centerRight,
-            child: Text(formatNumber(payment.amount, context,
+            child: Text(formatNumber(payment.amount - payment.refunded, context,
                 clientId: payment.clientId)));
       case PaymentFields.convertedAmount:
         return Align(
@@ -76,13 +76,13 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.status:
         return EntityStatusChip(entity: payment);
       case PaymentFields.customValue1:
-        return Text(presentCustomField(payment.customValue1));
+        return Text(presentCustomField(context, payment.customValue1));
       case PaymentFields.customValue2:
-        return Text(presentCustomField(payment.customValue2));
+        return Text(presentCustomField(context, payment.customValue2));
       case PaymentFields.customValue3:
-        return Text(presentCustomField(payment.customValue3));
+        return Text(presentCustomField(context, payment.customValue3));
       case PaymentFields.customValue4:
-        return Text(presentCustomField(payment.customValue4));
+        return Text(presentCustomField(context, payment.customValue4));
       case PaymentFields.refunded:
         return Text(formatNumber(payment.refunded, context,
             clientId: payment.clientId));

@@ -162,7 +162,9 @@ List<String> filteredRecurringExpensesSelector(
     }
 
     return expense.matchesFilter(expenseListState.filter) ||
-        expenseCategory.matchesFilter(expenseListState.filter);
+        expenseCategory.matchesFilter(expenseListState.filter) ||
+        client.matchesName(expenseListState.filter) ||
+        vendor.matchesName(expenseListState.filter);
   }).toList();
 
   list.sort((expenseAId, expenseBId) {

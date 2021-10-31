@@ -11,14 +11,20 @@ class AppBorder extends StatelessWidget {
     @required this.child,
     this.isTop,
     this.isLeft,
+    this.hideBorder = false,
   });
 
   final Widget child;
   final bool isTop;
   final bool isLeft;
+  final bool hideBorder;
 
   @override
   Widget build(BuildContext context) {
+    if (hideBorder) {
+      return child;
+    }
+
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
@@ -31,7 +37,8 @@ class AppBorder extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-          borderRadius: isAllSides ? BorderRadius.circular(5) : null,
+          borderRadius:
+              isAllSides ? BorderRadius.circular(kBorderRadius) : null,
           border: isAllSides
               ? Border.all(
                   width: borderWidth,

@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/contact_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
@@ -249,6 +250,15 @@ class ReportsScreenVM {
           state.productState.map,
           state.quoteState.map,
           state.clientState.map,
+          state.staticState,
+        );
+        break;
+      case kReportContact:
+        reportResult = memoizedContactReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.clientState.map,
+          state.userState.map,
           state.staticState,
         );
         break;

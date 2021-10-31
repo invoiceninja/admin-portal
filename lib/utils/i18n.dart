@@ -15,6 +15,28 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'recommend_desktop':
+          'We recommend using the desktop app for the best performance',
+      'recommend_mobile':
+          'We recommend using the mobile app for the best performance',
+      'disconnected_gateway': 'Successfully disconnected gateway',
+      'disconnect': 'Disconnect',
+      'add_to_invoices': 'Add to Invoices',
+      'acss': 'ACSS',
+      'becs': 'BECS',
+      'bulk_download': 'Download',
+      'persist_data_help':
+          'Save data locally to enable the app to start faster, disabling may improve performance in large accounts',
+      'persist_ui': 'Persist UI',
+      'persist_ui_help':
+          'Save UI state locally to enable the app to start at the last location, disabling may improve performance',
+      'client_postal_code': 'Client Postal Code',
+      'client_vat_number': 'Client VAT Number',
+      'has_tasks': 'Has Tasks',
+      'registration': 'Registration',
+      'unauthorized_stripe_warning':
+          'Please authorize Stripe to accept online payments.',
+      'view_expense': 'View Expense',
       'view_statement': 'View Statement',
       'sepa': 'SEPA',
       'ideal': 'iDEAL',
@@ -39,8 +61,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'bulk_email_quote': 'Email Quote',
       'bulk_email_credit': 'Email Credit',
       'from_name': 'From Name',
-      'enabling_may_degrade_performance': 'Enabling may degrade performance',
-      'disabling_may_improve_performance': 'Disabling may improve performance',
       'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
       'recurring_expenses': 'Recurring Expenses',
@@ -62609,14 +62629,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['clone_to_expense'] ??
       _localizedValues['en']['clone_to_expense'];
 
-  String get enablingMayDegradePerformance =>
-      _localizedValues[localeCode]['enabling_may_degrade_performance'] ??
-      _localizedValues['en']['enabling_may_degrade_performance'];
-
-  String get disablingMayImprovePerformance =>
-      _localizedValues[localeCode]['disabling_may_improve_performance'] ??
-      _localizedValues['en']['disabling_may_improve_performance'];
-
   String get fromName =>
       _localizedValues[localeCode]['from_name'] ??
       _localizedValues['en']['from_name'];
@@ -62704,6 +62716,68 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['view_statement'] ??
       _localizedValues['en']['view_statement'];
 
+  String get viewExpense =>
+      _localizedValues[localeCode]['view_expense'] ??
+      _localizedValues['en']['view_expense'];
+
+  String get unauthorizedStripeWarning =>
+      _localizedValues[localeCode]['unauthorized_stripe_warning'] ??
+      _localizedValues['en']['unauthorized_stripe_warning'];
+
+  String get registration =>
+      _localizedValues[localeCode]['registration'] ??
+      _localizedValues['en']['registration'];
+
+  String get hasTasks =>
+      _localizedValues[localeCode]['has_tasks'] ??
+      _localizedValues['en']['has_tasks'];
+
+  String get clientPostalCode =>
+      _localizedValues[localeCode]['client_postal_code'] ??
+      _localizedValues['en']['client_postal_code'];
+
+  String get clientVatNumber =>
+      _localizedValues[localeCode]['client_vat_number'] ??
+      _localizedValues['en']['client_vat_number'];
+
+  String get persistDataHelp =>
+      _localizedValues[localeCode]['persist_data_help'] ??
+      _localizedValues['en']['persist_data_help'];
+
+  String get persistUiHelp =>
+      _localizedValues[localeCode]['persist_ui_help'] ??
+      _localizedValues['en']['persist_ui_help'];
+
+  String get persistUi =>
+      _localizedValues[localeCode]['persist_ui'] ??
+      _localizedValues['en']['persist_ui'];
+
+  String get acss =>
+      _localizedValues[localeCode]['acss'] ?? _localizedValues['en']['acss'];
+
+  String get becs =>
+      _localizedValues[localeCode]['becs'] ?? _localizedValues['en']['becs'];
+
+  String get addToInvoices =>
+      _localizedValues[localeCode]['add_to_invoices'] ??
+      _localizedValues['en']['add_to_invoices'];
+
+  String get disconnect =>
+      _localizedValues[localeCode]['disconnect'] ??
+      _localizedValues['en']['disconnect'];
+
+  String get disconnectedGateway =>
+      _localizedValues[localeCode]['disconnected_gateway'] ??
+      _localizedValues['en']['disconnected_gateway'];
+
+  String get recommendDesktop =>
+      _localizedValues[localeCode]['recommend_desktop'] ??
+      _localizedValues['en']['recommend_desktop'];
+
+  String get recommendMobile =>
+      _localizedValues[localeCode]['recommend_mobile'] ??
+      _localizedValues['en']['recommend_mobile'];
+
   // STARTER: lang field - do not remove comment
 
   String lookup(String key) {
@@ -62719,7 +62793,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
     final value = _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
-        key;
+        '';
 
     if (value.isEmpty) {
       print('## ERROR: localization key not found - $key');

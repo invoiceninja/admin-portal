@@ -60,6 +60,7 @@ List<String> filteredTokensSelector(
     if (!token.matchesStates(tokenListState.stateFilters)) {
       return false;
     }
+
     return token.matchesFilter(tokenListState.filter);
   }).toList();
 

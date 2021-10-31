@@ -26,6 +26,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
@@ -249,25 +250,32 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            final fileName =
-                                localization.lookup('${invoice.entityType}') +
-                                    '_' +
-                                    (invoice.number.isEmpty
-                                        ? localization.pending
-                                        : invoice.number) +
-                                    '.pdf';
-                            if (kIsWeb) {
-                              WebUtils.downloadBinaryFile(
-                                  fileName, _response.bodyBytes);
+                            if (_response == null) {
+                              launch(invoice.invitationDownloadLink);
                             } else {
-                              final directory =
-                                  await getExternalStorageDirectory();
-                              final filePath =
-                                  '${directory.path}/${invoice.invoiceId}.pdf';
-                              final pdfData = file.File(filePath);
-                              pdfData.writeAsBytes(_response.bodyBytes);
-                              await FlutterShare.shareFile(
-                                  title: fileName, filePath: filePath);
+                              final fileName =
+                                  localization.lookup('${invoice.entityType}') +
+                                      '_' +
+                                      (invoice.number.isEmpty
+                                          ? localization.pending
+                                          : invoice.number) +
+                                      '.pdf';
+                              if (kIsWeb) {
+                                WebUtils.downloadBinaryFile(
+                                    fileName, _response.bodyBytes);
+                              } else if (isDesktopOS()) {
+                                // TODO download file on desktop once suppoted
+                                launch(invoice.invitationDownloadLink);
+                              } else {
+                                final directory =
+                                    await getExternalStorageDirectory();
+                                final filePath =
+                                    '${directory.path}/${invoice.invoiceId}.pdf';
+                                final pdfData = file.File(filePath);
+                                pdfData.writeAsBytes(_response.bodyBytes);
+                                await FlutterShare.shareFile(
+                                    title: fileName, filePath: filePath);
+                              }
                             }
                           },
                   ),
@@ -282,7 +290,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 ],
               )
             : null,
-        body: _isLoading
+        body: _isLoading || _response == null
             ? LoadingIndicator()
             : kIsWeb
                 ? HtmlElementView(viewType: _pdfString)
