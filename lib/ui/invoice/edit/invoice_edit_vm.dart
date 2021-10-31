@@ -138,6 +138,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           if (invoice.isOld &&
               !hasInvoiceChanges(invoice, state.invoiceState.map) &&
               [
+                EntityAction.newPayment,
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
               ].contains(action)) {
@@ -172,8 +173,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([EntityAction.emailInvoice, EntityAction.viewPdf]
-                  .contains(action)) {
+              if ([
+                EntityAction.newPayment,
+                EntityAction.emailInvoice,
+                EntityAction.viewPdf,
+              ].contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }
             }).catchError((Object error) {

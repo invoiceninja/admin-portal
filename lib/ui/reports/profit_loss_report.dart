@@ -139,7 +139,7 @@ ReportResult profitAndLossReport(
           value = staticState.countryMap[vendor?.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.amount:
-          value = payment?.amount;
+          value = payment?.completedAmount;
           break;
         case ProfitAndLossReportFields.date:
           value = payment?.date;

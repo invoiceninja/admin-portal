@@ -56,76 +56,74 @@ class _TaxSettingsState extends State<TaxSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          FormCard(
-            children: <Widget>[
-              NumberOfRatesSelector(
-                label: localization.invoiceTaxRates,
-                numberOfRates: company.numberOfInvoiceTaxRates,
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..numberOfInvoiceTaxRates = value)),
-              ),
-              NumberOfRatesSelector(
-                label: localization.itemTaxRates,
-                numberOfRates: company.numberOfItemTaxRates,
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..numberOfItemTaxRates = value)),
-              ),
-              SizedBox(height: 16),
-              BoolDropdownButton(
-                iconData: MdiIcons.percent,
-                label: localization.inclusiveTaxes,
-                value: settings.enableInclusiveTaxes,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableInclusiveTaxes = value)),
-                helpLabel:
-                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
-              ),
-            ],
-          ),
-          if (company.enableFirstInvoiceTaxRate &&
-              state.taxRateState.list.isNotEmpty)
+          if (!state.settingsUIState.isFiltered)
             FormCard(
               children: <Widget>[
+                NumberOfRatesSelector(
+                  label: localization.invoiceTaxRates,
+                  numberOfRates: company.numberOfInvoiceTaxRates,
+                  onChanged: (value) => viewModel.onCompanyChanged(company
+                      .rebuild((b) => b..numberOfInvoiceTaxRates = value)),
+                ),
+                NumberOfRatesSelector(
+                  label: localization.itemTaxRates,
+                  numberOfRates: company.numberOfItemTaxRates,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..numberOfItemTaxRates = value)),
+                ),
+                SizedBox(height: 16),
+                BoolDropdownButton(
+                  iconData: MdiIcons.percent,
+                  label: localization.inclusiveTaxes,
+                  value: settings.enableInclusiveTaxes,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableInclusiveTaxes = value)),
+                  helpLabel:
+                      '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
+                ),
+              ],
+            ),
+          FormCard(
+            children: <Widget>[
+              TaxRateDropdown(
+                onSelected: (taxRate) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..defaultTaxName1 = taxRate.name
+                      ..defaultTaxRate1 = taxRate.rate)),
+                labelText: localization.defaultTaxRate,
+                initialTaxName: settings.defaultTaxName1,
+                initialTaxRate: settings.defaultTaxRate1,
+              ),
+              if (company.enableSecondInvoiceTaxRate)
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..defaultTaxName1 = taxRate.name
-                        ..defaultTaxRate1 = taxRate.rate)),
+                        ..defaultTaxName2 = taxRate.name
+                        ..defaultTaxRate2 = taxRate.rate)),
                   labelText: localization.defaultTaxRate,
-                  initialTaxName: settings.defaultTaxName1,
-                  initialTaxRate: settings.defaultTaxRate1,
+                  initialTaxName: settings.defaultTaxName2,
+                  initialTaxRate: settings.defaultTaxRate2,
                 ),
-                if (company.enableSecondInvoiceTaxRate)
-                  TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultTaxName2 = taxRate.name
-                          ..defaultTaxRate2 = taxRate.rate)),
-                    labelText: localization.defaultTaxRate,
-                    initialTaxName: settings.defaultTaxName2,
-                    initialTaxRate: settings.defaultTaxRate2,
-                  ),
-                if (company.enableThirdInvoiceTaxRate)
-                  TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultTaxName3 = taxRate.name
-                          ..defaultTaxRate3 = taxRate.rate)),
-                    labelText: localization.defaultTaxRate,
-                    initialTaxName: settings.defaultTaxName3,
-                    initialTaxRate: settings.defaultTaxRate3,
-                  ),
-              ],
+              if (company.enableThirdInvoiceTaxRate)
+                TaxRateDropdown(
+                  onSelected: (taxRate) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..defaultTaxName3 = taxRate.name
+                        ..defaultTaxRate3 = taxRate.rate)),
+                  labelText: localization.defaultTaxRate,
+                  initialTaxName: settings.defaultTaxName3,
+                  initialTaxRate: settings.defaultTaxRate3,
+                ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButton(
+              iconData: Icons.settings,
+              label: localization.configureRates.toUpperCase(),
+              onPressed: () => viewModel.onConfigureRatesPressed(context),
             ),
-          if (!state.uiState.settingsUIState.isFiltered)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppButton(
-                iconData: Icons.settings,
-                label: localization.configureRates.toUpperCase(),
-                onPressed: () => viewModel.onConfigureRatesPressed(context),
-              ),
-            ),
+          ),
         ],
       ),
     );

@@ -99,6 +99,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       actions: [
         EntityAction.viewPdf,
         EntityAction.emailInvoice,
+        if (!invoice.isPaid) EntityAction.newPayment,
         if (!invoice.isSent) EntityAction.markSent,
         if (!invoice.isPaid) EntityAction.markPaid,
       ],

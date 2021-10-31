@@ -76,6 +76,7 @@ class ReportsScreen extends StatelessWidget {
 
     final reports = [
       kReportClient,
+      kReportContact,
       if (state.company.isModuleEnabled(EntityType.invoice)) ...[
         kReportInvoice,
         kReportInvoiceItem,

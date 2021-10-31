@@ -22,15 +22,14 @@ class ColorTheme {
 
 Map<String, ColorTheme> colorThemesMap = {
   kColorThemeLight: ColorTheme(
-    colorPrimary: const Color(0xff1266F1),
-    colorInfo: const Color(0xff39C0ED),
-    colorSuccess: const Color(0xff00B74A),
-    colorWarning: const Color(0xffffA900),
-    colorDanger: const Color(0xffF93154),
+    colorPrimary: const Color(0xff324da1),
+    colorInfo: const Color(0xff57a6e4),
+    colorSuccess: const Color(0xff4c9a1c),
+    colorWarning: const Color(0xffcd8900),
+    colorDanger: const Color(0xffb93700),
   ),
   kColorThemeDark: ColorTheme(
     colorPrimary: const Color(0xff0c45a3),
-    //colorInfo: const Color(0xff505f73),
     colorInfo: const Color(0xff298aab),
     colorSuccess: const Color(0xff407535),
     colorWarning: const Color(0xffa87000),

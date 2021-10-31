@@ -345,7 +345,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               ],
             )
           : null,
-      body: _isLoading
+      body: _isLoading || _response == null
           ? LoadingIndicator()
           : kIsWeb
               ? HtmlElementView(viewType: _pdfString)

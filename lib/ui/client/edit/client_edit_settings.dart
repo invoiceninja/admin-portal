@@ -157,14 +157,26 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             onSavePressed: viewModel.onSavePressed,
           ),
         if (company.isModuleEnabled(EntityType.invoice)) ...[
-          SizedBox(height: 20),
-          SwitchListTile(
-            activeColor: Theme.of(context).accentColor,
-            title: Text(localization.emailReminders),
-            subtitle: Text(localization.enabled),
-            value: client.settings.sendReminders ?? true,
-            onChanged: (value) => viewModel.onChanged(client.rebuild((b) =>
-                b..settings.sendReminders = value == true ? null : false)),
+          AppDropdownButton<bool>(
+            blankValue: null,
+            showBlank: true,
+            labelText: localization.sendReminders,
+            value: client.settings.sendReminders,
+            onChanged: (dynamic value) {
+              viewModel.onChanged(
+                client.rebuild((b) => b..settings.sendReminders = value),
+              );
+            },
+            items: [
+              DropdownMenuItem<bool>(
+                child: Text(localization.enabled),
+                value: true,
+              ),
+              DropdownMenuItem<bool>(
+                child: Text(localization.disabled),
+                value: false,
+              ),
+            ],
           ),
         ],
       ],

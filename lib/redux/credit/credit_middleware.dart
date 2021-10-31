@@ -346,8 +346,8 @@ Middleware<AppState> _downloadCredits(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DownloadCreditsRequest;
     repository
-        .bulkAction(
-            store.state.credentials, action.creditIds, EntityAction.download)
+        .bulkAction(store.state.credentials, action.creditIds,
+            EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadCreditsSuccess());
       if (action.completer != null) {

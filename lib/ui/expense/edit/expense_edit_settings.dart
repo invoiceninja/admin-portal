@@ -106,6 +106,25 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     });
   }
 
+  void _calculateExchangeRate() {
+    if (_convertedAmount == 0) {
+      return;
+    }
+
+    final viewModel = widget.viewModel;
+    final expense = viewModel.expense;
+    final amount = expense.grossAmount;
+    final exchangeRate = _convertedAmount / amount;
+
+    _exchangeRateController.removeListener(_onChanged);
+    _exchangeRateController.text = formatNumber(exchangeRate, context,
+        formatNumberType: FormatNumberType.inputMoney);
+    _exchangeRateController.addListener(_onChanged);
+
+    viewModel.onChanged(expense.rebuild((b) => b..exchangeRate = exchangeRate));
+    _convertedAmount = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -229,7 +248,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             _setCurrency(currency),
                       ),
                       DecoratedFormField(
-                        key: ValueKey('__${expense.invoiceCurrencyId}__'),
+                        key: ValueKey('__rate_${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
@@ -237,23 +256,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         isPercent: true,
                       ),
                       Focus(
-                        onFocusChange: (hasFocus) {
-                          if (_convertedAmount == 0) {
-                            return;
-                          }
-
-                          final amount = expense.grossAmount;
-                          final exchangeRate = _convertedAmount / amount;
-                          _exchangeRateController.removeListener(_onChanged);
-                          _exchangeRateController.text = formatNumber(
-                              exchangeRate, context,
-                              formatNumberType: FormatNumberType.inputMoney);
-                          _exchangeRateController.addListener(_onChanged);
-
-                          viewModel.onChanged(expense
-                              .rebuild((b) => b..exchangeRate = exchangeRate));
-                          _convertedAmount = 0;
-                        },
+                        onFocusChange: (hasFocus) => _calculateExchangeRate(),
                         child: DecoratedFormField(
                           key: ValueKey(
                               '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__'),
@@ -269,7 +272,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                           onChanged: (value) {
                             _convertedAmount = parseDouble(value);
                           },
-                          onSavePressed: viewModel.onSavePressed,
+                          onSavePressed: (context) {
+                            _calculateExchangeRate();
+                            viewModel.onSavePressed(context);
+                          },
                         ),
                       ),
                       SizedBox(height: 16),

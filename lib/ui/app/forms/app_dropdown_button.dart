@@ -8,6 +8,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     @required this.value,
     @required this.onChanged,
     @required this.items,
+    this.selectedItemBuilder,
     this.labelText,
     this.showBlank,
     this.blankValue = '',
@@ -21,6 +22,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final bool showBlank;
   final bool enabled;
   final dynamic blankValue;
+  final DropdownButtonBuilder selectedItemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class AppDropdownButton<T> extends StatelessWidget {
         isExpanded: true,
         isDense: labelText != null,
         onChanged: enabled ? onChanged : null,
+        selectedItemBuilder: selectedItemBuilder,
         items: [
           if (_showBlank || isEmpty)
             DropdownMenuItem<T>(

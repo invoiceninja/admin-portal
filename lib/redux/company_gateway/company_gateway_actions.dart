@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewCompanyGatewayList implements StopLoading {
@@ -173,6 +174,28 @@ class DeleteCompanyGatewayFailure implements StopSaving {
   final List<CompanyGatewayEntity> companyGateways;
 }
 
+class DisconnectCompanyGatewayRequest implements StartSaving {
+  DisconnectCompanyGatewayRequest({
+    @required this.completer,
+    @required this.companyGatewayId,
+    @required this.password,
+    @required this.idToken,
+  });
+
+  final Completer completer;
+  final String companyGatewayId;
+  final String password;
+  final String idToken;
+}
+
+class DisconnectCompanyGatewaySuccess implements StopSaving, PersistData {}
+
+class DisconnectCompanyGatewayFailure implements StopSaving {
+  DisconnectCompanyGatewayFailure(this.error);
+
+  final Object error;
+}
+
 class RestoreCompanyGatewayRequest implements StartSaving {
   RestoreCompanyGatewayRequest(this.completer, this.companyGatewayIds);
 
@@ -273,6 +296,30 @@ void handleCompanyGatewayAction(BuildContext context,
           : localization.deletedCompanyGateway;
       store.dispatch(DeleteCompanyGatewayRequest(
           snackBarCompleter<Null>(context, message), companyGatewayIds));
+      break;
+    case EntityAction.disconnect:
+      final completer =
+          snackBarCompleter<Null>(context, localization.disconnectedGateway);
+      completer.future.then((value) {
+        store.dispatch(RefreshData());
+      });
+      confirmCallback(
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(
+                  DisconnectCompanyGatewayRequest(
+                    completer: completer,
+                    companyGatewayId: companyGateway.id,
+                    password: password,
+                    idToken: idToken,
+                  ),
+                );
+              },
+            );
+          });
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {

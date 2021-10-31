@@ -75,12 +75,14 @@ class _UpdateDialogState extends State<UpdateDialog> {
                         maxLines: 2,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                        '• ${localization.currentVersion}: v${account.currentVersion}'),
-                    SizedBox(height: 6),
-                    Text(
-                        '• ${localization.latestVersion}: v${account.latestVersion}'),
+                    if (account.isUpdateAvailable) ...[
+                      SizedBox(height: 20),
+                      Text(
+                          '• ${localization.currentVersion}: v${account.currentVersion}'),
+                      SizedBox(height: 6),
+                      Text(
+                          '• ${localization.latestVersion}: v${account.latestVersion}'),
+                    ],
                     if (account.isDocker) ...[
                       SizedBox(height: 20),
                       Text(localization.toUpdateRun + ':'),

@@ -776,7 +776,6 @@ class _$TaskEntity extends TaskEntity {
         statusId == other.statusId &&
         statusOrder == other.statusOrder &&
         documents == other.documents &&
-        showAsRunning == other.showAsRunning &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -808,18 +807,18 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
-                                                                                rate.hashCode),
-                                                                            projectId.hashCode),
-                                                                        timeLog.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    statusId.hashCode),
-                                                statusOrder.hashCode),
-                                            documents.hashCode),
-                                        showAsRunning.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode),
+                                                                                clientId.hashCode),
+                                                                            rate.hashCode),
+                                                                        projectId.hashCode),
+                                                                    timeLog.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                statusId.hashCode),
+                                            statusOrder.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),

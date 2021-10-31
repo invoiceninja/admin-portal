@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
   final archiveCompanyGateway = _archiveCompanyGateway(repository);
   final deleteCompanyGateway = _deleteCompanyGateway(repository);
   final restoreCompanyGateway = _restoreCompanyGateway(repository);
+  final disconnectCompanyGateway = _disconnectCompanyGateway(repository);
 
   return [
     TypedMiddleware<AppState, ViewCompanyGatewayList>(viewCompanyGatewayList),
@@ -41,6 +42,8 @@ List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
         deleteCompanyGateway),
     TypedMiddleware<AppState, RestoreCompanyGatewayRequest>(
         restoreCompanyGateway),
+    TypedMiddleware<AppState, DisconnectCompanyGatewayRequest>(
+        disconnectCompanyGateway),
   ];
 }
 
@@ -166,6 +169,30 @@ Middleware<AppState> _restoreCompanyGateway(
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _disconnectCompanyGateway(
+    CompanyGatewayRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DisconnectCompanyGatewayRequest;
+    repository
+        .disconnect(store.state.credentials, action.companyGatewayId,
+            action.password, action.idToken)
+        .then((_) {
+      store.dispatch(DisconnectCompanyGatewaySuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisconnectCompanyGatewayFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

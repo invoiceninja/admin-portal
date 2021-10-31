@@ -339,8 +339,8 @@ Middleware<AppState> _downloadQuotes(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DownloadQuotesRequest;
     repository
-        .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.download)
+        .bulkAction(store.state.credentials, action.invoiceIds,
+            EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadQuotesSuccess());
       if (action.completer != null) {

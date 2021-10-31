@@ -176,7 +176,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 ],
               ),
               FormCard(
-                isLast: true,
                 children: <Widget>[
                   FutureBuilder(
                     future: viewModel.authenticationSupported,
@@ -197,28 +196,29 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       }
                     },
                   ),
-                  /*
                   SwitchListTile(
-                    title: Text(localization.fullWidthEditor),
-                    value: prefState.fullWidthEditor,
+                    title: Text(localization.persistUi),
+                    subtitle: Text(localization.persistUiHelp),
+                    value: prefState.persistUI,
                     onChanged: (value) =>
-                        viewModel.onFullWidthEditorChanged(context, value),
-                    secondary: Icon(getEntityIcon(EntityType.invoice)),
+                        viewModel.onPersistUiChanged(context, value),
                     activeColor: Theme.of(context).accentColor,
+                    secondary: Icon(Icons.save_alt),
                   ),
-                   */
                   SwitchListTile(
-                    //leading: Icon(Icons.save_alt),
                     title: Text(localization.persistData),
-                    subtitle: Text(prefState.persistData
-                        ? localization.disablingMayImprovePerformance
-                        : localization.enablingMayDegradePerformance),
+                    subtitle: Text(localization.persistDataHelp),
                     value: prefState.persistData,
                     onChanged: (value) =>
                         viewModel.onPersistDataChanged(context, value),
                     activeColor: Theme.of(context).accentColor,
                     secondary: Icon(Icons.save_alt),
                   ),
+                ],
+              ),
+              FormCard(
+                isLast: true,
+                children: <Widget>[
                   Builder(builder: (BuildContext context) {
                     return ListTile(
                       leading: Icon(Icons.refresh),

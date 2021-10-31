@@ -27,6 +27,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       longPressSelectionIsDefault: true,
       showKanban: false,
       persistData: false,
+      persistUI: true,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
       customColors: BuiltMap<String, String>(CONTRAST_COLORS),
@@ -97,6 +98,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isFilterVisible;
 
   bool get persistData;
+
+  bool get persistUI;
 
   bool get longPressSelectionIsDefault;
 
@@ -175,6 +178,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..isPreviewVisible = false
     ..isFilterVisible = false
     ..persistData = false
+    ..persistUI = true
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;
 

@@ -195,13 +195,28 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get subRoute {
     final parts =
         currentRoute.split('/').where((part) => part.isNotEmpty).toList();
-    return parts.length > 1 ? parts[1] : '';
+    if (parts.length == 3) {
+      return '${parts[1]}/${parts[2]}';
+    } else {
+      return parts.length > 1 ? parts[1] : '';
+    }
+  }
+
+  String get baseRoute {
+    String route = currentRoute;
+    route = route.replaceAll('/edit', '');
+    route = route.replaceAll('/view', '');
+    route = route.replaceAll('/pdf', '');
+    route = route.replaceAll('/email', '');
+    return route;
   }
 
   String get baseSubRoute {
     String route = subRoute;
-    route = route.replaceAll('_edit', '');
-    route = route.replaceAll('_view', '');
+    route = route.replaceAll('/edit', '');
+    route = route.replaceAll('/view', '');
+    route = route.replaceAll('/pdf', '');
+    route = route.replaceAll('/email', '');
     return route;
   }
 
@@ -218,11 +233,11 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing =>
-      currentRoute.endsWith('_edit') ||
-      currentRoute.endsWith('/edit') ||
-      currentRoute.endsWith('refund');
+      currentRoute.endsWith('/edit') || currentRoute.endsWith('refund');
 
   bool get isEmailing => currentRoute.endsWith('/email');
+
+  bool get isPDF => currentRoute.endsWith('/pdf');
 
   bool get isViewing => !isEditing && !isEmailing;
 

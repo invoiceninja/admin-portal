@@ -161,8 +161,8 @@ void confirmCallback({
 }
 
 void passwordCallback({
-  BuildContext context,
-  Function(String, String) callback,
+  @required BuildContext context,
+  @required Function(String, String) callback,
   bool alwaysRequire = false,
   bool skipOAuth = false,
 }) {

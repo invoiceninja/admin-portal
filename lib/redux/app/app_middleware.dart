@@ -258,7 +258,8 @@ Middleware<AppState> _createLoadState(
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
-          uiState.currentRoute.isNotEmpty) {
+          uiState.currentRoute.isNotEmpty &&
+          prefState.persistUI) {
         final NavigatorState navigator = navigatorKey.currentState;
         final routes = _getRoutes(appState);
         if (appState.prefState.appLayout == AppLayout.mobile) {
@@ -308,22 +309,15 @@ Middleware<AppState> _createLoadState(
       }
 
       if (token.isNotEmpty) {
-        final Completer<Null> completer = Completer<Null>();
-        completer.future.then((_) {
-          if (calculateLayout(action.context) == AppLayout.mobile) {
-            store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
-            WidgetsBinding.instance.addPostFrameCallback((duration) {
-              store.dispatch(ViewDashboard());
-            });
-          } else {
-            store.dispatch(ViewMainScreen());
-          }
-          AppBuilder.of(action.context).rebuild();
-        }).catchError((Object error) {
-          print('## ERROR (app_middleware - refresh): $error');
-          store.dispatch(UserLogout());
+        if (calculateLayout(action.context) == AppLayout.mobile) {
+          store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
+        } else {
+          store.dispatch(ViewMainScreen());
+        }
+        WidgetsBinding.instance.addPostFrameCallback((duration) {
+          store.dispatch(ViewDashboard());
         });
-        store.dispatch(RefreshData(completer: completer, clearData: true));
+        AppBuilder.of(action.context).rebuild();
       } else {
         store.dispatch(UserLogout());
       }
@@ -417,7 +411,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    uiRepository.saveUIState(store.state.uiState);
+    if (store.state.prefState.persistUI) {
+      uiRepository.saveUIState(store.state.uiState);
+    }
   };
 }
 

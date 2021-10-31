@@ -127,6 +127,22 @@ List<String> filteredClientsSelector(
   return list;
 }
 
+SettingsEntity getClientSettings(AppState state, ClientEntity client) {
+  if (state == null) {
+    return SettingsEntity();
+  }
+
+  client ??= ClientEntity();
+  final company = state.company;
+  final group = state.groupState.get(client.groupId);
+
+  return SettingsEntity(
+    clientSettings: client.settings,
+    groupSettings: group.settings,
+    companySettings: company.settings,
+  );
+}
+
 bool hasClientChanges(
         ClientEntity client, BuiltMap<String, ClientEntity> clientMap) =>
     client.isNew ? client.isChanged : client != clientMap[client.id];
