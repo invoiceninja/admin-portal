@@ -64,6 +64,7 @@ class ExpenseFields {
   static const String taxAmount = 'tax_amount';
   static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
+  static const String paymentType = 'payment_type';
   static const String exchangeRate = 'exchange_rate';
   static const String invoiceCurrencyId = 'invoice_currency_id';
   static const String taxRate1 = 'tax_rate1';

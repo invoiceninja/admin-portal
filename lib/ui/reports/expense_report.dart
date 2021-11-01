@@ -17,6 +17,7 @@ enum ExpenseReportFields {
   currency,
   date,
   payment_date,
+  payment_type,
   tax_rate1,
   tax_rate2,
   tax_rate3,
@@ -135,6 +136,10 @@ ReportResult expenseReport(
         case ExpenseReportFields.payment_date:
           value = expense.paymentDate;
           break;
+        case ExpenseReportFields.payment_type:
+          value = staticState
+                  .paymentTypeMap[expense.paymentTypeId]?.listDisplayName ??
+              '';
           break;
         case ExpenseReportFields.tax_rate1:
           value = expense.taxRate1;
