@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -168,7 +170,29 @@ void passwordCallback({
   bool alwaysRequire = false,
   bool skipOAuth = false,
 }) {
-  final state = StoreProvider.of<AppState>(context).state;
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final localization = AppLocalization.of(context);
+
+  if (state.user.oauthProvider.isEmpty) {
+    skipOAuth = true;
+  }
+
+  if (alwaysRequire && !state.user.hasPassword) {
+    showMessageDialog(
+        context: context,
+        message: localization.pleaseSetAPassword,
+        secondaryActions: [
+          TextButton(
+              onPressed: () {
+                store.dispatch(ViewSettings(section: kSettingsUserDetails));
+                Navigator.of(context).pop();
+              },
+              child: Text(localization.setPassword.toUpperCase()))
+        ]);
+    return;
+  }
+
   if (state.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null, null);
     return;
@@ -177,7 +201,7 @@ void passwordCallback({
     return;
   }
 
-  if (state.user.oauthProvider.isEmpty || skipOAuth) {
+  if (skipOAuth) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,

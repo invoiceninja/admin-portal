@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'please_set_a_password': 'Please set an account password',
+      'set_password': 'Set Password',
       'recommend_desktop':
           'We recommend using the desktop app for the best performance',
       'recommend_mobile':
@@ -62777,6 +62779,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get recommendMobile =>
       _localizedValues[localeCode]['recommend_mobile'] ??
       _localizedValues['en']['recommend_mobile'];
+
+  String get pleaseSetAPassword =>
+      _localizedValues[localeCode]['please_set_a_password'] ??
+      _localizedValues['en']['please_set_a_password'];
+
+  String get setPassword =>
+      _localizedValues[localeCode]['set_password'] ??
+      _localizedValues['en']['set_password'];
 
   // STARTER: lang field - do not remove comment
 
