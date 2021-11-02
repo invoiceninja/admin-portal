@@ -168,15 +168,11 @@ void passwordCallback({
   @required BuildContext context,
   @required Function(String, String) callback,
   bool alwaysRequire = false,
-  bool skipOAuth = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-
-  if (state.user.oauthProvider.isEmpty) {
-    skipOAuth = true;
-  }
+  final skipOAuth = state.user.oauthProvider.isEmpty;
 
   if (alwaysRequire && !state.user.hasPassword) {
     showMessageDialog(
@@ -194,9 +190,6 @@ void passwordCallback({
   }
 
   if (state.hasRecentlyEnteredPassword && !alwaysRequire) {
-    callback(null, null);
-    return;
-  } else if (!state.user.hasPassword && skipOAuth) {
     callback(null, null);
     return;
   }
