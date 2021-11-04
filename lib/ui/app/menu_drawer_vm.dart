@@ -92,12 +92,10 @@ class MenuDrawerVM {
               store.dispatch(ClearEntityFilter());
               store.dispatch(DiscardChanges());
               store.dispatch(SelectCompany(companyIndex: index));
-              if (store.state.isStale) {
-                if (!store.state.isLoaded && store.state.company.isLarge) {
-                  store.dispatch(LoadClients());
-                } else {
-                  store.dispatch(RefreshData());
-                }
+              if (store.state.company.isLarge && !store.state.isLoaded) {
+                store.dispatch(LoadClients());
+              } else if (store.state.isStale) {
+                store.dispatch(RefreshData());
               }
               AppBuilder.of(context).rebuild();
 
