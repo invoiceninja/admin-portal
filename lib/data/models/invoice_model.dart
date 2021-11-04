@@ -509,10 +509,21 @@ abstract class InvoiceEntity extends Object
 
   double get netAmount => amount - taxAmount;
 
-  double get netBalance => balance - (taxAmount * balance / amount);
+  double get netBalance {
+    if (amount == 0) {
+      return 0;
+    }
 
-  double get netBalanceOrAmount =>
-      balanceOrAmount - (taxAmount * balanceOrAmount / amount);
+    return balance - (taxAmount * balance / amount);
+  }
+
+  double get netBalanceOrAmount {
+    if (amount == 0) {
+      return 0;
+    }
+
+    return balanceOrAmount - (taxAmount * balanceOrAmount / amount);
+  }
 
   @nullable
   @BuiltValueField(compare: false)

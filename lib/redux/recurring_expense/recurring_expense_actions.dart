@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
-class ViewRecurringExpenseList implements StopLoading {
+class ViewRecurringExpenseList implements PersistUI {
   ViewRecurringExpenseList({
     this.force = false,
   });

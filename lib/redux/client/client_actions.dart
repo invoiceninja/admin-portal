@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewClientList implements StopLoading {
+class ViewClientList implements PersistUI {
   ViewClientList({
     this.force = false,
   });
