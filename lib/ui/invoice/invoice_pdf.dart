@@ -244,41 +244,42 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                             EntityAction.emailEntityType(invoice.entityType));
                       },
                     ),
-                  AppTextButton(
-                    isInHeader: true,
-                    label: localization.download,
-                    onPressed: _response == null
-                        ? null
-                        : () async {
-                            if (_response == null) {
-                              launch(invoice.invitationDownloadLink);
-                            } else {
-                              final fileName =
-                                  localization.lookup('${invoice.entityType}') +
-                                      '_' +
-                                      (invoice.number.isEmpty
-                                          ? localization.pending
-                                          : invoice.number) +
-                                      '.pdf';
-                              if (kIsWeb) {
-                                WebUtils.downloadBinaryFile(
-                                    fileName, _response.bodyBytes);
-                              } else if (isDesktopOS()) {
-                                // TODO download file on desktop once suppoted
+                  if (!invoice.isRecurring)
+                    AppTextButton(
+                      isInHeader: true,
+                      label: localization.download,
+                      onPressed: _response == null
+                          ? null
+                          : () async {
+                              if (_response == null) {
                                 launch(invoice.invitationDownloadLink);
                               } else {
-                                final directory =
-                                    await getExternalStorageDirectory();
-                                final filePath =
-                                    '${directory.path}/${invoice.invoiceId}.pdf';
-                                final pdfData = file.File(filePath);
-                                pdfData.writeAsBytes(_response.bodyBytes);
-                                await FlutterShare.shareFile(
-                                    title: fileName, filePath: filePath);
+                                final fileName = localization
+                                        .lookup('${invoice.entityType}') +
+                                    '_' +
+                                    (invoice.number.isEmpty
+                                        ? localization.pending
+                                        : invoice.number) +
+                                    '.pdf';
+                                if (kIsWeb) {
+                                  WebUtils.downloadBinaryFile(
+                                      fileName, _response.bodyBytes);
+                                } else if (isDesktopOS()) {
+                                  // TODO download file on desktop once suppoted
+                                  launch(invoice.invitationDownloadLink);
+                                } else {
+                                  final directory =
+                                      await getExternalStorageDirectory();
+                                  final filePath =
+                                      '${directory.path}/${invoice.invoiceId}.pdf';
+                                  final pdfData = file.File(filePath);
+                                  pdfData.writeAsBytes(_response.bodyBytes);
+                                  await FlutterShare.shareFile(
+                                      title: fileName, filePath: filePath);
+                                }
                               }
-                            }
-                          },
-                  ),
+                            },
+                    ),
                   if (isDesktop(context))
                     TextButton(
                       child: Text(localization.close,
