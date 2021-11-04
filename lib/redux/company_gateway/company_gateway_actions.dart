@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewCompanyGatewayList implements StopLoading {
+class ViewCompanyGatewayList implements PersistUI {
   ViewCompanyGatewayList({this.force = false});
 
   final bool force;

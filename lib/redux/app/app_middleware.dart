@@ -27,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -405,6 +406,8 @@ Middleware<AppState> _createPersistData(
   };
 }
 
+final _persistUIDebouncer =
+    Debouncer(milliseconds: kMillisecondsToDebounceWrite);
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as PersistUI;
@@ -412,7 +415,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
     next(action);
 
     if (store.state.prefState.persistUI) {
-      uiRepository.saveUIState(store.state.uiState);
+      _persistUIDebouncer.run(() {
+        uiRepository.saveUIState(store.state.uiState);
+      });
     }
   };
 }
