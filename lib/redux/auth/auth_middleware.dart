@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -302,6 +303,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
           data: data,
         ));
       }
+
+      AppBuilder.of(navigatorKey.currentContext).rebuild();
     }).catchError((Object error) {
       final message = _parseError('$error');
       if (action.completer != null) {
