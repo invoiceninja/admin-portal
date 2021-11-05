@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
@@ -26,9 +24,6 @@ class AppDropdownButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
-    final _showBlank = showBlank ?? state.settingsUIState.isFiltered;
-
     dynamic checkedValue = value;
     final values = items.toList().map((option) => option.value).toList();
     if (!values.contains(value)) {
@@ -44,7 +39,7 @@ class AppDropdownButton<T> extends StatelessWidget {
         onChanged: enabled ? onChanged : null,
         selectedItemBuilder: selectedItemBuilder,
         items: [
-          if (_showBlank || isEmpty)
+          if (showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
               child: SizedBox(),

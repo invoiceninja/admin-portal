@@ -156,7 +156,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               ],
             ],
           ),
-          if (settings.enablePortalTasks != false)
+          if ((settings.enablePortalTasks ?? false) != false)
             FormCard(
               children: [
                 AppDropdownButton<String>(
