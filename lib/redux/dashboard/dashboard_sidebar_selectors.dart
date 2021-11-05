@@ -189,8 +189,8 @@ List<TaskEntity> _runningTasks({
     }
   });
 
-  tasks.sort((taskA, taskB) =>
-      (taskB.startTimestamp ?? 0).compareTo(taskA.startTimestamp ?? 0));
+  tasks.sort(
+      (taskA, taskB) => (taskB.updatedAt ?? 0).compareTo(taskA.updatedAt ?? 0));
 
   return tasks;
 }
@@ -218,8 +218,8 @@ List<TaskEntity> _recentTasks({
     }
   });
 
-  tasks.sort((taskA, taskB) =>
-      (taskB.startTimestamp ?? 0).compareTo(taskA.startTimestamp ?? 0));
+  tasks.sort(
+      (taskA, taskB) => (taskB.updatedAt ?? 0).compareTo(taskA.updatedAt ?? 0));
 
   return tasks;
 }
