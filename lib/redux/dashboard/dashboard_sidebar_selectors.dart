@@ -190,7 +190,7 @@ List<TaskEntity> _runningTasks({
   });
 
   tasks.sort((taskA, taskB) =>
-      (taskA.startTimestamp ?? 0).compareTo(taskB.startTimestamp ?? 0));
+      (taskB.startTimestamp ?? 0).compareTo(taskA.startTimestamp ?? 0));
 
   return tasks;
 }
@@ -219,7 +219,7 @@ List<TaskEntity> _recentTasks({
   });
 
   tasks.sort((taskA, taskB) =>
-      (taskA.startTimestamp ?? 0).compareTo(taskB.startTimestamp ?? 0));
+      (taskB.startTimestamp ?? 0).compareTo(taskA.startTimestamp ?? 0));
 
   return tasks;
 }
