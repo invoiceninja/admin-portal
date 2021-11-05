@@ -76,7 +76,9 @@ class _DashboardScreenState extends State<DashboardScreen>
             index * (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
       ..addListener(onScrollListener);
 
-    if (!state.isDemo && (state.company.settings.name ?? '').isEmpty) {
+    if (!state.isDemo &&
+        (state.company.settings.name ?? '').isEmpty &&
+        state.company.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
             context: context,
