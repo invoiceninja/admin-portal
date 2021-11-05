@@ -587,20 +587,28 @@ List<ChartDataGroup> chartTasks(
             if (invoiceMap.containsKey(task.invoiceId) &&
                 invoiceMap[task.invoiceId].isPaid) {
               totals[STATUS_PAID][date] += amount;
-              counts[STATUS_PAID]++;
               paidData.entityMap[date].add(task.id);
             } else {
               totals[STATUS_INVOICED][date] += amount;
-              counts[STATUS_INVOICED]++;
               invoicedData.entityMap[date].add(task.id);
             }
           } else {
             totals[STATUS_LOGGED][date] += amount;
-            counts[STATUS_LOGGED]++;
             loggedData.entityMap[date].add(task.id);
           }
         });
       });
+
+      if (task.isInvoiced) {
+        if (invoiceMap.containsKey(task.invoiceId) &&
+            invoiceMap[task.invoiceId].isPaid) {
+          counts[STATUS_PAID]++;
+        } else {
+          counts[STATUS_INVOICED]++;
+        }
+      } else {
+        counts[STATUS_LOGGED]++;
+      }
     }
   });
 
