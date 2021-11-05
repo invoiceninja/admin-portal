@@ -102,8 +102,8 @@ const double kDrawerWidth = 270;
 const double kTableColumnGap = 16;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
-const double kDashboardPanelHeight = 545; // TODO remove this
-const double kDashboardPanelHeightWeb = 541; // TODO remove this
+const double kDashboardPanelHeight = 543; // TODO remove this
+const double kDashboardPanelHeightWeb = 539; // TODO remove this
 const double kListNumberWidth = 100;
 const double kBorderRadius = 2;
 
