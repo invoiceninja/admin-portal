@@ -835,7 +835,10 @@ abstract class InvoiceEntity extends Object
         if (multiselect) {
           actions.add(EntityAction.bulkDownload);
         } else {
-          actions.addAll([EntityAction.viewPdf, EntityAction.download]);
+          actions.add(EntityAction.viewPdf);
+          if (!isRecurring) {
+            actions.add(EntityAction.download);
+          }
         }
       }
 

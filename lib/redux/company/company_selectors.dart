@@ -131,17 +131,25 @@ String localeSelector(AppState state) {
 }
 
 String portalRegistrationUrlSelector(AppState state) {
-  String url = state.account.defaultUrl;
+  String url;
+
+  final account = state.account;
+  final company = state.company;
+
+  if (company.portalMode == kClientPortalModeDomain) {
+    url = company.portalDomain;
+  } else {
+    url = account.defaultUrl;
+
+    if (state.isHosted) {
+      url = url.replaceFirst('//', '//${company.subdomain}.');
+    }
+  }
 
   url += '/client/register';
 
-  if (state.companies.length > 1 &&
-      state.company.id != state.account.defaultCompanyId) {
-    url += '/' + state.company.companyKey;
-  }
-
-  if (state.isHosted) {
-    url = url.replaceFirst('//', '//${state.company.subdomain}.');
+  if (state.companies.length > 1 && company.id != account.defaultCompanyId) {
+    url += '/' + company.companyKey;
   }
 
   return url;
