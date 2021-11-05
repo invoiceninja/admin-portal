@@ -10,7 +10,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     @required this.items,
     this.selectedItemBuilder,
     this.labelText,
-    this.showBlank,
+    this.showBlank = false,
     this.blankValue = '',
     this.enabled = true,
   }) : super(key: key);
