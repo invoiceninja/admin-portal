@@ -1311,7 +1311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_groups': 'Successfully restored :value groups',
       'archived_group': 'Successfully archived group',
       'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored  group',
+      'restored_group': 'Successfully restored group',
       'upload_logo': 'Upload Logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
