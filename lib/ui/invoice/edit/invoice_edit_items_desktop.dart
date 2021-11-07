@@ -150,6 +150,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lastIndex++;
     }
 
+    final tableFontColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+        '';
+
     final tableHeaderColor = state.prefState
             .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
@@ -209,6 +213,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       ),
       IconButton(
         icon: Icon(_isReordering ? Icons.close : Icons.swap_vert),
+        color: tableFontColor.isNotEmpty
+            ? convertHexStringToColor(tableFontColor)
+            : null,
         onPressed: includedLineItems.where((item) => !item.isEmpty).length < 2
             ? null
             : () {
@@ -226,15 +233,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           onReorder: (int oldIndex, int newIndex) {
             viewModel.onMovedInvoiceItem(oldIndex, newIndex);
           },
-          header: ReorderableTableRow(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: tableHeaderColumns,
-            decoration: tableHeaderColor.isNotEmpty
-                ? BoxDecoration(
-                    color: convertHexStringToColor(tableHeaderColor),
-                  )
-                : null,
+          header: DecoratedBox(
+            decoration: BoxDecoration(
+              color: tableHeaderColor.isNotEmpty
+                  ? convertHexStringToColor(tableHeaderColor)
+                  : null,
+            ),
+            child: ReorderableTableRow(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: tableHeaderColumns,
+            ),
           ),
           children: [
             for (var index = 0; index < lineItems.length; index++)
@@ -252,7 +261,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     Text(lineItems[index].productKey ?? ''),
                     Text(
                       lineItems[index].notes ?? '',
-                      maxLines: 3,
+                      maxLines: 2, // TODO change to 1
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (company.hasCustomField(customField1))
@@ -266,20 +275,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
                     if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
                     if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
-                    Text(formatNumber(lineItems[index].cost, context,
-                            formatNumberType: FormatNumberType.inputMoney,
-                            clientId: invoice.clientId) ??
-                        ''),
+                    Text(
+                      formatNumber(lineItems[index].cost, context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                              clientId: invoice.clientId) ??
+                          '',
+                      textAlign: TextAlign.right,
+                    ),
                     if (company.enableProductQuantity || widget.isTasks)
-                      Text(formatNumber(lineItems[index].quantity, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId) ??
-                          ''),
+                      Text(
+                        formatNumber(lineItems[index].quantity, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
                     if (company.enableProductDiscount)
-                      Text(formatNumber(lineItems[index].discount, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId) ??
-                          ''),
+                      Text(
+                        formatNumber(lineItems[index].discount, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
                     Text(
                       formatNumber(lineItems[index].total(invoice, precision),
                               context,
