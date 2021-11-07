@@ -208,7 +208,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         isNumeric: true,
       ),
       IconButton(
-        icon: Icon(_isReordering ? Icons.close : Icons.reorder_outlined),
+        icon: Icon(_isReordering ? Icons.close : Icons.swap_vert),
         onPressed: () {
           setState(() => _isReordering = !_isReordering);
         },
