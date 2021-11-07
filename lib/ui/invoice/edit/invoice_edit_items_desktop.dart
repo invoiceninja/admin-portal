@@ -266,20 +266,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
                     if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
                     if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
-                    Text(formatNumber(lineItems[index].cost, context,
-                            formatNumberType: FormatNumberType.inputMoney,
-                            clientId: invoice.clientId) ??
-                        ''),
+                    Text(
+                      formatNumber(lineItems[index].cost, context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                              clientId: invoice.clientId) ??
+                          '',
+                      textAlign: TextAlign.right,
+                    ),
                     if (company.enableProductQuantity || widget.isTasks)
-                      Text(formatNumber(lineItems[index].quantity, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId) ??
-                          ''),
+                      Text(
+                        formatNumber(lineItems[index].quantity, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
                     if (company.enableProductDiscount)
-                      Text(formatNumber(lineItems[index].discount, context,
-                              formatNumberType: FormatNumberType.inputAmount,
-                              clientId: invoice.clientId) ??
-                          ''),
+                      Text(
+                        formatNumber(lineItems[index].discount, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
                     Text(
                       formatNumber(lineItems[index].total(invoice, precision),
                               context,
