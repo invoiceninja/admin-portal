@@ -252,7 +252,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     Text(lineItems[index].productKey ?? ''),
                     Text(
                       lineItems[index].notes ?? '',
-                      maxLines: 3,
+                      maxLines: 2, // TODO change to 1
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (company.hasCustomField(customField1))
