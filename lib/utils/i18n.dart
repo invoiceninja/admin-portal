@@ -84,6 +84,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'persist_data': 'Persist Data',
       'customer_count': 'Customer Count',
       'verify_customers': 'Verify Customers',
+      'google_analytics': 'Google Analytics',
       'google_analytics_tracking_id': 'Google Analytics Tracking ID',
       'decimal_comma': 'Decimal Comma',
       'use_comma_as_decimal_place': 'Use comma as decimal place in forms',
@@ -1309,6 +1310,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_groups': 'Successfully archived :value groups',
       'deleted_groups': 'Successfully deleted :value groups',
       'restored_groups': 'Successfully restored :value groups',
+      'archived_group': 'Successfully archived group',
+      'deleted_group': 'Successfully deleted group',
+      'restored_group': 'Successfully restored group',
       'upload_logo': 'Upload Logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
@@ -62550,6 +62554,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get googleAnalyticsTrackingId =>
       _localizedValues[localeCode]['google_analytics_tracking_id'] ??
       _localizedValues['en']['google_analytics_tracking_id'];
+
+  String get googleAnalytics =>
+      _localizedValues[localeCode]['google_analytics'] ??
+      _localizedValues['en']['google_analytics'];
 
   String get useCommaAsDecimalPlace =>
       _localizedValues[localeCode]['use_comma_as_decimal_place'] ??

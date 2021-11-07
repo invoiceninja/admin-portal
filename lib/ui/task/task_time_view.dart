@@ -30,7 +30,8 @@ class TaskTimeListTile extends StatelessWidget {
 
     final state = StoreProvider.of<AppState>(context).state;
     final title = DateFormat('EEE MMM d, yyy', localeSelector(state))
-        .format(taskTime.startDate);
+        .format(taskTime.startDate.toLocal());
+
     final subtitle = '$startDateString - $endDateString';
     final duration = formatDuration(taskTime.duration);
 

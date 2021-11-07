@@ -1248,7 +1248,12 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
     return;
   }
 
-  if ([EntityAction.archive, EntityAction.delete].contains(action) && autoPop) {
+  if ([
+        EntityAction.archive,
+        EntityAction.delete,
+        EntityAction.remove,
+      ].contains(action) &&
+      autoPop) {
     if (isMobile(navigatorKey.currentContext)) {
       navigatorKey.currentState.pop();
     } else if (entities.first.entityType.isSetting) {
