@@ -124,7 +124,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         'client_id': client.id,
         'start_date': kIsWeb ? '2019-01-01' : startDate,
         'end_date': kIsWeb ? '2022-01-01' : endDate,
-        'show_payments': _showPayments,
+        'show_payments_table': _showPayments,
         'show_aging_table': _showAging,
       }),
       rawResponse: true,

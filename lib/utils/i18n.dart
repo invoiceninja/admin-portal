@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'direct_debit': 'Direct Debit',
       'please_set_a_password': 'Please set an account password',
       'set_password': 'Set Password',
       'recommend_desktop':
@@ -62795,6 +62796,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get setPassword =>
       _localizedValues[localeCode]['set_password'] ??
       _localizedValues['en']['set_password'];
+
+  String get directDebit =>
+      _localizedValues[localeCode]['direct_debit'] ??
+      _localizedValues['en']['direct_debit'];
 
   // STARTER: lang field - do not remove comment
 
