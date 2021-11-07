@@ -257,7 +257,7 @@ const String kGatewayTypeHosted = '14';
 const String kGatewayTypeGiropay = '15';
 const String kGatewayTypePrzelewy24 = '16';
 const String kGatewayTypeEPS = '17';
-const String kGatewayTypeFPX = '18';
+const String kGatewayTypeDirectDebit = '18';
 const String kGatewayTypeACSS = '19';
 const String kGatewayTypeBECS = '20';
 
@@ -278,7 +278,7 @@ const kGatewayTypes = {
   kGatewayTypeHosted: 'hosted',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
-  kGatewayTypeFPX: 'fpx',
+  kGatewayTypeDirectDebit: 'fpx',
   kGatewayTypeEPS: 'eps',
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
