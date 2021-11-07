@@ -285,7 +285,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           '',
                       textAlign: TextAlign.right,
                     ),
-                    Icon(Icons.drag_handle),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Icon(Icons.drag_handle),
+                    ),
                   ],
                 )
           ],
