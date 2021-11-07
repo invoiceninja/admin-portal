@@ -209,9 +209,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       ),
       IconButton(
         icon: Icon(_isReordering ? Icons.close : Icons.swap_vert),
-        onPressed: () {
-          setState(() => _isReordering = !_isReordering);
-        },
+        onPressed: includedLineItems.where((item) => !item.isEmpty).length < 2
+            ? null
+            : () {
+                setState(() => _isReordering = !_isReordering);
+              },
       )
     ];
 
