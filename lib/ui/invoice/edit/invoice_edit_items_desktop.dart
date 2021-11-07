@@ -222,7 +222,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           ignorePrimaryScrollController: true,
           columnWidths: columnWidths,
           onReorder: (int oldIndex, int newIndex) {
-            print('## REORDER: $oldIndex => $newIndex');
+            viewModel.onMovedInvoiceItem(oldIndex, newIndex);
           },
           header: ReorderableTableRow(
             mainAxisSize: MainAxisSize.max,
