@@ -189,14 +189,26 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             (company.settings.enableInclusiveTaxes
                 ? ' - ${localization.inclusive}'
                 : '')),
-      TableHeader(widget.isTasks ? localization.rate : localization.unitCost),
+      TableHeader(
+        widget.isTasks ? localization.rate : localization.unitCost,
+        isNumeric: true,
+      ),
       if (company.enableProductQuantity || widget.isTasks)
         TableHeader(
-            widget.isTasks ? localization.hours : localization.quantity),
-      if (company.enableProductDiscount) TableHeader(localization.discount),
-      TableHeader(localization.lineTotal),
+          widget.isTasks ? localization.hours : localization.quantity,
+          isNumeric: true,
+        ),
+      if (company.enableProductDiscount)
+        TableHeader(
+          localization.discount,
+          isNumeric: true,
+        ),
+      TableHeader(
+        localization.lineTotal,
+        isNumeric: true,
+      ),
       IconButton(
-        icon: Icon(Icons.reorder_outlined),
+        icon: Icon(_isReordering ? Icons.close : Icons.reorder_outlined),
         onPressed: () {
           setState(() => _isReordering = !_isReordering);
         },
@@ -224,101 +236,58 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           ),
           children: [
             for (var index = 0; index < lineItems.length; index++)
-              if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
-                      widget.isTasks) ||
-                  (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
-                      !widget.isTasks) ||
-                  lineItems[index].isEmpty)
+              if (((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
+                          widget.isTasks) ||
+                      (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
+                          !widget.isTasks)) &&
+                  !lineItems[index].isEmpty)
                 ReorderableTableRow(
-                    key: ValueKey(
-                        '__line_item_${index}_${lineItems[index].createdAt}__'),
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(lineItems[index].productKey ?? ''),
-                      Text(
-                        lineItems[index].notes ?? '',
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (company.hasCustomField(customField1))
-                        Text(lineItems[index].customValue1 ?? ''),
-                      if (company.hasCustomField(customField2))
-                        Text(lineItems[index].customValue2 ?? ''),
-                      if (company.hasCustomField(customField3))
-                        Text(lineItems[index].customValue3 ?? ''),
-                      if (company.hasCustomField(customField4))
-                        Text(lineItems[index].customValue4 ?? ''),
-                      if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
-                      if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
-                      if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
-                      Text(formatNumber(lineItems[index].cost, context,
-                              formatNumberType: FormatNumberType.inputMoney,
+                  key: ValueKey(
+                      '__line_item_${index}_${lineItems[index].createdAt}__'),
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(lineItems[index].productKey ?? ''),
+                    Text(
+                      lineItems[index].notes ?? '',
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (company.hasCustomField(customField1))
+                      Text(lineItems[index].customValue1 ?? ''),
+                    if (company.hasCustomField(customField2))
+                      Text(lineItems[index].customValue2 ?? ''),
+                    if (company.hasCustomField(customField3))
+                      Text(lineItems[index].customValue3 ?? ''),
+                    if (company.hasCustomField(customField4))
+                      Text(lineItems[index].customValue4 ?? ''),
+                    if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
+                    if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
+                    if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
+                    Text(formatNumber(lineItems[index].cost, context,
+                            formatNumberType: FormatNumberType.inputMoney,
+                            clientId: invoice.clientId) ??
+                        ''),
+                    if (company.enableProductQuantity || widget.isTasks)
+                      Text(formatNumber(lineItems[index].quantity, context,
+                              formatNumberType: FormatNumberType.inputAmount,
                               clientId: invoice.clientId) ??
                           ''),
-                      if (company.enableProductQuantity || widget.isTasks)
-                        Text(formatNumber(lineItems[index].quantity, context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.clientId) ??
-                            ''),
-                      if (company.enableProductDiscount)
-                        Text(formatNumber(lineItems[index].discount, context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.clientId) ??
-                            ''),
-                      Text(
-                        formatNumber(lineItems[index].total(invoice, precision),
-                                context,
-                                clientId: invoice.clientId) ??
-                            '',
-                        textAlign: TextAlign.right,
-                      ),
-                      PopupMenuButton<String>(
-                        icon: Icon(Icons.more_vert),
-                        enabled: !lineItems[index].isEmpty,
-                        itemBuilder: (BuildContext context) {
-                          final sectionIndex =
-                              includedLineItems.indexOf(lineItems[index]);
-                          final options = {
-                            if (sectionIndex > 0)
-                              localization.moveTop: MdiIcons.chevronDoubleUp,
-                            if (sectionIndex > 1)
-                              localization.moveUp: MdiIcons.chevronUp,
-                            if (sectionIndex < includedLineItems.length - 2)
-                              localization.moveDown: MdiIcons.chevronDown,
-                            if (sectionIndex < includedLineItems.length - 1)
-                              localization.moveBottom:
-                                  MdiIcons.chevronDoubleDown,
-                            localization.remove: Icons.clear,
-                          };
-
-                          return options.keys
-                              .map((option) => PopupMenuItem<String>(
-                                    child: IconText(
-                                      icon: options[option],
-                                      text: option,
-                                    ),
-                                    value: option,
-                                  ))
-                              .toList();
-                        },
-                        onSelected: (String action) {
-                          if (action == localization.moveTop) {
-                            viewModel.onMovedInvoiceItem(index, 0);
-                          } else if (action == localization.moveUp) {
-                            viewModel.onMovedInvoiceItem(index, index - 1);
-                          } else if (action == localization.moveDown) {
-                            viewModel.onMovedInvoiceItem(index, index + 1);
-                          } else if (action == localization.moveBottom) {
-                            viewModel.onMovedInvoiceItem(
-                                index, lineItems.length - 2);
-                          } else if (action == localization.remove) {
-                            viewModel.onRemoveInvoiceItemPressed(index);
-                          }
-                          _updateTable();
-                        },
-                      )
-                    ])
+                    if (company.enableProductDiscount)
+                      Text(formatNumber(lineItems[index].discount, context,
+                              formatNumberType: FormatNumberType.inputAmount,
+                              clientId: invoice.clientId) ??
+                          ''),
+                    Text(
+                      formatNumber(lineItems[index].total(invoice, precision),
+                              context,
+                              clientId: invoice.clientId) ??
+                          '',
+                      textAlign: TextAlign.right,
+                    ),
+                    Icon(Icons.drag_handle),
+                  ],
+                )
           ],
         ),
       );
