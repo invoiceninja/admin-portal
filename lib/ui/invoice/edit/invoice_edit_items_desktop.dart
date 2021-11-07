@@ -150,6 +150,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lastIndex++;
     }
 
+    final tableFontColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+        '';
+
     final tableHeaderColor = state.prefState
             .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
@@ -209,6 +213,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       ),
       IconButton(
         icon: Icon(_isReordering ? Icons.close : Icons.swap_vert),
+        color: tableFontColor.isNotEmpty
+            ? convertHexStringToColor(tableFontColor)
+            : null,
         onPressed: includedLineItems.where((item) => !item.isEmpty).length < 2
             ? null
             : () {
@@ -226,15 +233,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           onReorder: (int oldIndex, int newIndex) {
             viewModel.onMovedInvoiceItem(oldIndex, newIndex);
           },
-          header: ReorderableTableRow(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: tableHeaderColumns,
-            decoration: tableHeaderColor.isNotEmpty
-                ? BoxDecoration(
-                    color: convertHexStringToColor(tableHeaderColor),
-                  )
-                : null,
+          header: DecoratedBox(
+            decoration: BoxDecoration(
+              color: tableHeaderColor.isNotEmpty
+                  ? convertHexStringToColor(tableHeaderColor)
+                  : null,
+            ),
+            child: ReorderableTableRow(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: tableHeaderColumns,
+            ),
           ),
           children: [
             for (var index = 0; index < lineItems.length; index++)
