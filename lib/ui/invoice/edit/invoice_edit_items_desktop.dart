@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:reorderables/reorderables.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -40,6 +41,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
+  bool _isReordering = false;
   int _updatedAt;
   int _autocompleteFocusIndex = -1;
 
@@ -152,59 +154,186 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
 
+    final columnWidths = {
+      0: FlexColumnWidth(1.3),
+      1: FlexColumnWidth(2.2),
+      lastIndex: FixedColumnWidth(40),
+    };
+
+    final tableHeaderColumns = [
+      TableHeader(
+        localization.item,
+        isFirst: true,
+      ),
+      TableHeader(localization.description),
+      if (company.hasCustomField(customField1))
+        TableHeader(company.getCustomFieldLabel(customField1)),
+      if (company.hasCustomField(customField2))
+        TableHeader(company.getCustomFieldLabel(customField2)),
+      if (company.hasCustomField(customField3))
+        TableHeader(company.getCustomFieldLabel(customField3)),
+      if (company.hasCustomField(customField4))
+        TableHeader(company.getCustomFieldLabel(customField4)),
+      if (hasTax1)
+        TableHeader(localization.tax +
+            (company.settings.enableInclusiveTaxes
+                ? ' - ${localization.inclusive}'
+                : '')),
+      if (hasTax2)
+        TableHeader(localization.tax +
+            (company.settings.enableInclusiveTaxes
+                ? ' - ${localization.inclusive}'
+                : '')),
+      if (hasTax3)
+        TableHeader(localization.tax +
+            (company.settings.enableInclusiveTaxes
+                ? ' - ${localization.inclusive}'
+                : '')),
+      TableHeader(widget.isTasks ? localization.rate : localization.unitCost),
+      if (company.enableProductQuantity || widget.isTasks)
+        TableHeader(
+            widget.isTasks ? localization.hours : localization.quantity),
+      if (company.enableProductDiscount) TableHeader(localization.discount),
+      TableHeader(localization.lineTotal),
+      IconButton(
+        icon: Icon(Icons.reorder_outlined),
+        onPressed: () {
+          setState(() => _isReordering = !_isReordering);
+        },
+      )
+    ];
+
+    if (_isReordering) {
+      return FormCard(
+        padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
+        child: ReorderableTable(
+          ignorePrimaryScrollController: true,
+          columnWidths: columnWidths,
+          onReorder: (int oldIndex, int newIndex) {
+            print('## REORDER: $oldIndex => $newIndex');
+          },
+          header: ReorderableTableRow(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: tableHeaderColumns,
+            decoration: tableHeaderColor.isNotEmpty
+                ? BoxDecoration(
+                    color: convertHexStringToColor(tableHeaderColor),
+                  )
+                : null,
+          ),
+          children: [
+            for (var index = 0; index < lineItems.length; index++)
+              if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
+                      widget.isTasks) ||
+                  (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
+                      !widget.isTasks) ||
+                  lineItems[index].isEmpty)
+                ReorderableTableRow(
+                    key: ValueKey(
+                        '__line_item_${index}_${lineItems[index].createdAt}__'),
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(lineItems[index].productKey ?? ''),
+                      Text(
+                        lineItems[index].notes ?? '',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (company.hasCustomField(customField1))
+                        Text(lineItems[index].customValue1 ?? ''),
+                      if (company.hasCustomField(customField2))
+                        Text(lineItems[index].customValue2 ?? ''),
+                      if (company.hasCustomField(customField3))
+                        Text(lineItems[index].customValue3 ?? ''),
+                      if (company.hasCustomField(customField4))
+                        Text(lineItems[index].customValue4 ?? ''),
+                      if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
+                      if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
+                      if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
+                      Text(formatNumber(lineItems[index].cost, context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                              clientId: invoice.clientId) ??
+                          ''),
+                      if (company.enableProductQuantity || widget.isTasks)
+                        Text(formatNumber(lineItems[index].quantity, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            ''),
+                      if (company.enableProductDiscount)
+                        Text(formatNumber(lineItems[index].discount, context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.clientId) ??
+                            ''),
+                      Text(
+                        formatNumber(lineItems[index].total(invoice, precision),
+                                context,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
+                      PopupMenuButton<String>(
+                        icon: Icon(Icons.more_vert),
+                        enabled: !lineItems[index].isEmpty,
+                        itemBuilder: (BuildContext context) {
+                          final sectionIndex =
+                              includedLineItems.indexOf(lineItems[index]);
+                          final options = {
+                            if (sectionIndex > 0)
+                              localization.moveTop: MdiIcons.chevronDoubleUp,
+                            if (sectionIndex > 1)
+                              localization.moveUp: MdiIcons.chevronUp,
+                            if (sectionIndex < includedLineItems.length - 2)
+                              localization.moveDown: MdiIcons.chevronDown,
+                            if (sectionIndex < includedLineItems.length - 1)
+                              localization.moveBottom:
+                                  MdiIcons.chevronDoubleDown,
+                            localization.remove: Icons.clear,
+                          };
+
+                          return options.keys
+                              .map((option) => PopupMenuItem<String>(
+                                    child: IconText(
+                                      icon: options[option],
+                                      text: option,
+                                    ),
+                                    value: option,
+                                  ))
+                              .toList();
+                        },
+                        onSelected: (String action) {
+                          if (action == localization.moveTop) {
+                            viewModel.onMovedInvoiceItem(index, 0);
+                          } else if (action == localization.moveUp) {
+                            viewModel.onMovedInvoiceItem(index, index - 1);
+                          } else if (action == localization.moveDown) {
+                            viewModel.onMovedInvoiceItem(index, index + 1);
+                          } else if (action == localization.moveBottom) {
+                            viewModel.onMovedInvoiceItem(
+                                index, lineItems.length - 2);
+                          } else if (action == localization.remove) {
+                            viewModel.onRemoveInvoiceItemPressed(index);
+                          }
+                          _updateTable();
+                        },
+                      )
+                    ])
+          ],
+        ),
+      );
+    }
+
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
-        columnWidths: {
-          0: FlexColumnWidth(1.3),
-          1: FlexColumnWidth(2.2),
-          lastIndex: FixedColumnWidth(40),
-        },
+        columnWidths: columnWidths,
         // TODO change to top once we can set maxLines to 2
         defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(
-            children: [
-              TableHeader(
-                localization.item,
-                isFirst: true,
-              ),
-              TableHeader(localization.description),
-              if (company.hasCustomField(customField1))
-                TableHeader(company.getCustomFieldLabel(customField1)),
-              if (company.hasCustomField(customField2))
-                TableHeader(company.getCustomFieldLabel(customField2)),
-              if (company.hasCustomField(customField3))
-                TableHeader(company.getCustomFieldLabel(customField3)),
-              if (company.hasCustomField(customField4))
-                TableHeader(company.getCustomFieldLabel(customField4)),
-              if (hasTax1)
-                TableHeader(localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : '')),
-              if (hasTax2)
-                TableHeader(localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : '')),
-              if (hasTax3)
-                TableHeader(localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : '')),
-              TableHeader(
-                  widget.isTasks ? localization.rate : localization.unitCost),
-              if (company.enableProductQuantity || widget.isTasks)
-                TableHeader(widget.isTasks
-                    ? localization.hours
-                    : localization.quantity),
-              if (company.enableProductDiscount)
-                TableHeader(localization.discount),
-              TableHeader(localization.lineTotal),
-              TableHeader(''),
-            ],
+            children: tableHeaderColumns,
             decoration: tableHeaderColor.isNotEmpty
                 ? BoxDecoration(
                     color: convertHexStringToColor(tableHeaderColor),
