@@ -44,6 +44,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   int _updatedAt;
   int _autocompleteFocusIndex = -1;
 
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.isTasks != widget.isTasks) {
+      _isReordering = false;
+    }
+  }
+
   void _updateTable() {
     setState(() {
       _updatedAt = DateTime.now().millisecondsSinceEpoch;
