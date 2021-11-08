@@ -10,6 +10,7 @@ class ExpensePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       ExpenseFields.status,
+      ExpenseFields.number,
       ExpenseFields.vendor,
       ExpenseFields.client,
       ExpenseFields.expenseDate,

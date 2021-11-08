@@ -13,6 +13,7 @@ class RecurringExpensePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       RecurringExpenseFields.status,
+      RecurringExpenseFields.number,
       RecurringExpenseFields.vendor,
       RecurringExpenseFields.client,
       RecurringExpenseFields.frequency,

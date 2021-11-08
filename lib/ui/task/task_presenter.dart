@@ -13,6 +13,7 @@ class TaskPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       TaskFields.status,
+      TaskFields.number,
       TaskFields.client,
       TaskFields.project,
       TaskFields.description,
