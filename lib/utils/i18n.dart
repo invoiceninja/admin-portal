@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'giropay': 'Giropay',
       'direct_debit': 'Direct Debit',
       'please_set_a_password': 'Please set an account password',
       'set_password': 'Set Password',
