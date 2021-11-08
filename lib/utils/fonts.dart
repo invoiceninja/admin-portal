@@ -608,6 +608,7 @@ final kGoogleFonts = [
   {'value': 'Sancreek', 'label': 'Sancreek'},
   {'value': 'Sansita_One', 'label': 'Sansita One'},
   {'value': 'Sarala', 'label': 'Sarala'},
+  {'value': 'Sarabun', 'label': 'Sarabun'},
   {'value': 'Sarina', 'label': 'Sarina'},
   {'value': 'Sarpanch', 'label': 'Sarpanch'},
   {'value': 'Satisfy', 'label': 'Satisfy'},
