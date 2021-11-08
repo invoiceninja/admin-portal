@@ -64,7 +64,6 @@ dependencies:
   pointer_interceptor: ^0.9.0
   contacts_service: ^0.6.1
   filepicker_windows: ^2.0.0
-  reorderables: ^0.4.1
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 
