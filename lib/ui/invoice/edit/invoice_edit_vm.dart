@@ -57,7 +57,7 @@ abstract class AbstractInvoiceEditVM {
   final int invoiceItemIndex;
   final InvoiceEntity origInvoice;
   final Function(BuildContext, [EntityAction]) onSavePressed;
-  final Function(List<InvoiceItemEntity>, String) onItemsAdded;
+  final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
 }
@@ -70,7 +70,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
     Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(List<InvoiceItemEntity>, String) onItemsAdded,
+    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
   }) : super(
@@ -190,11 +190,12 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           }
         });
       },
-      onItemsAdded: (items, clientId) {
-        if (clientId != null && clientId.isNotEmpty) {
+      onItemsAdded: (items, clientId, projectId) {
+        if ((clientId ?? '').isNotEmpty || (projectId ?? '').isNotEmpty) {
           final client = state.clientState.get(clientId);
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
-            ..clientId = clientId
+            ..clientId = clientId ?? ''
+            ..projectId = projectId ?? ''
             ..invitations.replace(BuiltList<InvitationEntity>(client
                 .emailContacts
                 .map((contact) => InvitationEntity(contactId: contact.id))

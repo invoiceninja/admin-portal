@@ -58,6 +58,7 @@ class InvoiceFields {
   static const String balanceDue = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
+  static const String project = 'project';
   static const String statusId = 'status_id';
   static const String status = 'status';
   static const String number = 'number';

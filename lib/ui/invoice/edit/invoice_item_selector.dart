@@ -23,7 +23,7 @@ class InvoiceItemSelector extends StatefulWidget {
     this.excluded,
   });
 
-  final Function(List<InvoiceItemEntity>, [String]) onItemsSelected;
+  final Function(List<InvoiceItemEntity>, [String, String]) onItemsSelected;
   final String clientId;
   final List<BaseEntity> excluded;
   final bool showTasksAndExpenses;
