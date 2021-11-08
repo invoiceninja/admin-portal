@@ -139,7 +139,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
               final item = filteredLineItems[index];
               return Padding(
                 key: ObjectKey(item),
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
                     Expanded(child: Text(lineItems[index].productKey ?? '')),
