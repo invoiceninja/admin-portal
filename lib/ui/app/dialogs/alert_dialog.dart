@@ -45,7 +45,7 @@ class MessageDialog extends StatelessWidget {
                           Row(
                             children: secondaryActions
                                 .map((action) => Padding(
-                                      padding: const EdgeInsets.only(right: 10),
+                                      padding: const EdgeInsets.only(right: 16),
                                       child: action,
                                     ))
                                 .toList(),

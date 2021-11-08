@@ -784,6 +784,9 @@ class SidebarFooter extends StatelessWidget {
                         },
                         child: Text(localization.download.toUpperCase()),
                       ),
+                      TextButton(
+                          onPressed: () => launch(kDocsPerformance),
+                          child: Text(localization.learnMore.toUpperCase()))
                     ],
                   ),
                   icon: Icon(
