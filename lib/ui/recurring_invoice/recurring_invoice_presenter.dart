@@ -13,6 +13,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       RecurringInvoiceFields.status,
+      RecurringInvoiceFields.number,
       RecurringInvoiceFields.invoiceNumber,
       RecurringInvoiceFields.client,
       RecurringInvoiceFields.amount,
