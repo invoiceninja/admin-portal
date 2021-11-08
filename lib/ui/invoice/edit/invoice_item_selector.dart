@@ -65,6 +65,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
+    String projectId;
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
@@ -79,6 +80,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         );
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;
+        projectId ??= task.projectId;
         items.add(convertTaskToInvoiceItem(task: task, context: context));
       } else if (entity.entityType == EntityType.expense) {
         final expense = entity as ExpenseEntity;
@@ -91,7 +93,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     _updateClientId();
 
-    widget.onItemsSelected(items, _filterClientId);
+    widget.onItemsSelected(items, _filterClientId, projectId);
     Navigator.pop(context);
   }
 

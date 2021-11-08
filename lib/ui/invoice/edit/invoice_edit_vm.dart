@@ -193,9 +193,10 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
       onItemsAdded: (items, clientId, projectId) {
         if ((clientId ?? '').isNotEmpty || (projectId ?? '').isNotEmpty) {
           final client = state.clientState.get(clientId);
+          print('## SET PROJECT: $projectId');
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
             ..clientId = clientId ?? ''
-            ..projectId = projectId ?? ''
+            //..projectId = projectId ?? ''
             ..invitations.replace(BuiltList<InvitationEntity>(client
                 .emailContacts
                 .map((contact) => InvitationEntity(contactId: contact.id))
