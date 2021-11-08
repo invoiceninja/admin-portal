@@ -151,36 +151,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   children: [
-                    Expanded(child: Text(lineItems[index].productKey ?? '')),
+                    Expanded(child: Text(item.productKey ?? '')),
                     Expanded(
                       flex: 2,
                       child: Text(
-                        lineItems[index].notes ?? '',
+                        item.notes ?? '',
                         maxLines: 2, // TODO change to 1
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     if (company.hasCustomField(customField1))
-                      Expanded(
-                          child: Text(lineItems[index].customValue1 ?? '')),
+                      Expanded(child: Text(item.customValue1 ?? '')),
                     if (company.hasCustomField(customField2))
-                      Expanded(
-                          child: Text(lineItems[index].customValue2 ?? '')),
+                      Expanded(child: Text(item.customValue2 ?? '')),
                     if (company.hasCustomField(customField3))
-                      Expanded(
-                          child: Text(lineItems[index].customValue3 ?? '')),
+                      Expanded(child: Text(item.customValue3 ?? '')),
                     if (company.hasCustomField(customField4))
-                      Expanded(
-                          child: Text(lineItems[index].customValue4 ?? '')),
-                    if (hasTax1)
-                      Expanded(child: Text(lineItems[index].taxName1 ?? '')),
-                    if (hasTax2)
-                      Expanded(child: Text(lineItems[index].taxName2 ?? '')),
-                    if (hasTax3)
-                      Expanded(child: Text(lineItems[index].taxName3 ?? '')),
+                      Expanded(child: Text(item.customValue4 ?? '')),
+                    if (hasTax1) Expanded(child: Text(item.taxName1 ?? '')),
+                    if (hasTax2) Expanded(child: Text(item.taxName2 ?? '')),
+                    if (hasTax3) Expanded(child: Text(item.taxName3 ?? '')),
                     Expanded(
                       child: Text(
-                        formatNumber(lineItems[index].cost, context,
+                        formatNumber(item.cost, context,
                                 formatNumberType: FormatNumberType.inputMoney,
                                 clientId: invoice.clientId) ??
                             '',
@@ -190,7 +183,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     if (company.enableProductQuantity || widget.isTasks)
                       Expanded(
                         child: Text(
-                          formatNumber(lineItems[index].quantity, context,
+                          formatNumber(item.quantity, context,
                                   formatNumberType:
                                       FormatNumberType.inputAmount,
                                   clientId: invoice.clientId) ??
@@ -201,7 +194,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     if (company.enableProductDiscount)
                       Expanded(
                         child: Text(
-                          formatNumber(lineItems[index].discount, context,
+                          formatNumber(item.discount, context,
                                   formatNumberType:
                                       FormatNumberType.inputAmount,
                                   clientId: invoice.clientId) ??
@@ -211,8 +204,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ),
                     Expanded(
                       child: Text(
-                        formatNumber(lineItems[index].total(invoice, precision),
-                                context,
+                        formatNumber(item.total(invoice, precision), context,
                                 clientId: invoice.clientId) ??
                             '',
                         textAlign: TextAlign.right,
