@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:reorderables/reorderables.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -116,6 +115,123 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final customField4 =
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
+    if (_isReordering) {
+      final filteredLineItems =
+          includedLineItems.where((item) => !item.isEmpty).toList();
+      return FormCard(
+        padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    setState(() => _isReordering = false);
+                  },
+                  icon: Icon(Icons.close))
+            ],
+          ),
+          ReorderableListView.builder(
+            shrinkWrap: true,
+            primary: false,
+            itemCount: filteredLineItems.length,
+            itemBuilder: (context, index) {
+              final item = filteredLineItems[index];
+              return Padding(
+                key: ObjectKey(item),
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    Expanded(child: Text(lineItems[index].productKey ?? '')),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        lineItems[index].notes ?? '',
+                        maxLines: 2, // TODO change to 1
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (company.hasCustomField(customField1))
+                      Expanded(
+                          child: Text(lineItems[index].customValue1 ?? '')),
+                    if (company.hasCustomField(customField2))
+                      Expanded(
+                          child: Text(lineItems[index].customValue2 ?? '')),
+                    if (company.hasCustomField(customField3))
+                      Expanded(
+                          child: Text(lineItems[index].customValue3 ?? '')),
+                    if (company.hasCustomField(customField4))
+                      Expanded(
+                          child: Text(lineItems[index].customValue4 ?? '')),
+                    if (hasTax1)
+                      Expanded(child: Text(lineItems[index].taxName1 ?? '')),
+                    if (hasTax2)
+                      Expanded(child: Text(lineItems[index].taxName2 ?? '')),
+                    if (hasTax3)
+                      Expanded(child: Text(lineItems[index].taxName3 ?? '')),
+                    Expanded(
+                      child: Text(
+                        formatNumber(lineItems[index].cost, context,
+                                formatNumberType: FormatNumberType.inputMoney,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    if (company.enableProductQuantity || widget.isTasks)
+                      Expanded(
+                        child: Text(
+                          formatNumber(lineItems[index].quantity, context,
+                                  formatNumberType:
+                                      FormatNumberType.inputAmount,
+                                  clientId: invoice.clientId) ??
+                              '',
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    if (company.enableProductDiscount)
+                      Expanded(
+                        child: Text(
+                          formatNumber(lineItems[index].discount, context,
+                                  formatNumberType:
+                                      FormatNumberType.inputAmount,
+                                  clientId: invoice.clientId) ??
+                              '',
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    Expanded(
+                      child: Text(
+                        formatNumber(lineItems[index].total(invoice, precision),
+                                context,
+                                clientId: invoice.clientId) ??
+                            '',
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                    SizedBox(width: 60),
+                  ],
+                ),
+              );
+            },
+            onReorder: (oldIndex, newIndex) {
+              // https://stackoverflow.com/a/54164333/497368
+              // These two lines are workarounds for ReorderableListView problems
+              if (newIndex > filteredLineItems.length) {
+                newIndex = filteredLineItems.length;
+              }
+
+              if (oldIndex < newIndex) {
+                newIndex--;
+              }
+
+              viewModel.onMovedInvoiceItem(oldIndex, newIndex);
+            },
+          )
+        ],
+      );
+    }
+
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems
           .add(InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : 0));
@@ -157,12 +273,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final tableHeaderColor = state.prefState
             .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
-
-    final columnWidths = {
-      0: FlexColumnWidth(1.3),
-      1: FlexColumnWidth(2.2),
-      lastIndex: FixedColumnWidth(40),
-    };
 
     final tableHeaderColumns = [
       TableHeader(
@@ -224,102 +334,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       )
     ];
 
-    if (_isReordering) {
-      return FormCard(
-        padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
-        child: ReorderableTable(
-          ignorePrimaryScrollController: true,
-          columnWidths: columnWidths,
-          onReorder: (int oldIndex, int newIndex) {
-            viewModel.onMovedInvoiceItem(oldIndex, newIndex);
-          },
-          header: DecoratedBox(
-            decoration: BoxDecoration(
-              color: tableHeaderColor.isNotEmpty
-                  ? convertHexStringToColor(tableHeaderColor)
-                  : null,
-            ),
-            child: ReorderableTableRow(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: tableHeaderColumns,
-            ),
-          ),
-          children: [
-            for (var index = 0; index < lineItems.length; index++)
-              if (((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
-                          widget.isTasks) ||
-                      (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
-                          !widget.isTasks)) &&
-                  !lineItems[index].isEmpty)
-                ReorderableTableRow(
-                  key: ValueKey(
-                      '__line_item_${index}_${lineItems[index].createdAt}__'),
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(lineItems[index].productKey ?? ''),
-                    Text(
-                      lineItems[index].notes ?? '',
-                      maxLines: 2, // TODO change to 1
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (company.hasCustomField(customField1))
-                      Text(lineItems[index].customValue1 ?? ''),
-                    if (company.hasCustomField(customField2))
-                      Text(lineItems[index].customValue2 ?? ''),
-                    if (company.hasCustomField(customField3))
-                      Text(lineItems[index].customValue3 ?? ''),
-                    if (company.hasCustomField(customField4))
-                      Text(lineItems[index].customValue4 ?? ''),
-                    if (hasTax1) Text(lineItems[index].taxName1 ?? ''),
-                    if (hasTax2) Text(lineItems[index].taxName2 ?? ''),
-                    if (hasTax3) Text(lineItems[index].taxName3 ?? ''),
-                    Text(
-                      formatNumber(lineItems[index].cost, context,
-                              formatNumberType: FormatNumberType.inputMoney,
-                              clientId: invoice.clientId) ??
-                          '',
-                      textAlign: TextAlign.right,
-                    ),
-                    if (company.enableProductQuantity || widget.isTasks)
-                      Text(
-                        formatNumber(lineItems[index].quantity, context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.clientId) ??
-                            '',
-                        textAlign: TextAlign.right,
-                      ),
-                    if (company.enableProductDiscount)
-                      Text(
-                        formatNumber(lineItems[index].discount, context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.clientId) ??
-                            '',
-                        textAlign: TextAlign.right,
-                      ),
-                    Text(
-                      formatNumber(lineItems[index].total(invoice, precision),
-                              context,
-                              clientId: invoice.clientId) ??
-                          '',
-                      textAlign: TextAlign.right,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Icon(Icons.drag_handle),
-                    ),
-                  ],
-                )
-          ],
-        ),
-      );
-    }
-
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
-        columnWidths: columnWidths,
+        columnWidths: {
+          0: FlexColumnWidth(1.3),
+          1: FlexColumnWidth(2.2),
+          lastIndex: FixedColumnWidth(40),
+        },
         // TODO change to top once we can set maxLines to 2
         defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
         key: ValueKey('__datatable_${_updatedAt}__'),

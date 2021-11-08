@@ -873,13 +873,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.0"
-  reorderables:
-    dependency: "direct main"
-    description:
-      name: reorderables
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.1"
   rounded_loading_button:
     dependency: "direct main"
     description:
