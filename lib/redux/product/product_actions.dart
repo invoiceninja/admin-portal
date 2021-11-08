@@ -89,7 +89,7 @@ class LoadProductsFailure implements StopLoading {
   }
 }
 
-class LoadProductsSuccess implements PersistData, StopLoading {
+class LoadProductsSuccess implements StopLoading {
   LoadProductsSuccess(this.products);
 
   final BuiltList<ProductEntity> products;
