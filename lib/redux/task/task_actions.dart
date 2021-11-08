@@ -364,7 +364,7 @@ void handleTaskAction(
       for (var each in tasks) {
         final task = each as TaskEntity;
         if (task.projectId.isNotEmpty) {
-          //projectId = task.projectId;
+          projectId = task.projectId;
           break;
         }
       }
@@ -372,9 +372,10 @@ void handleTaskAction(
       if (items.isNotEmpty) {
         createEntity(
             context: context,
-            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-              ..lineItems.addAll(items)
-              ..projectId = projectId));
+            entity: InvoiceEntity(state: state, client: client)
+                .rebuild((b) => b..lineItems.addAll(items)
+                    //..projectId = projectId
+                    ));
       }
       break;
     case EntityAction.clone:
