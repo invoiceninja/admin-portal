@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.63';
+const String kClientVersion = '5.0.64';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -48,7 +48,8 @@ const String kDocsCustomFieldsUrl =
     'https://invoiceninja.github.io/docs/custom-fields';
 const String kDocsStripeConnectUrl =
     'https://invoiceninja.github.io/docs/hosted-stripe';
-const String kDocsPerformance = 'https://invoiceninja.github.io/docs/introduction/#performance';
+const String kDocsPerformance =
+    'https://invoiceninja.github.io/docs/introduction/#performance';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =

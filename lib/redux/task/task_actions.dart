@@ -360,6 +360,7 @@ void handleTaskAction(
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();
 
+      /*
       String projectId = '';
       for (var each in tasks) {
         final task = each as TaskEntity;
@@ -368,6 +369,7 @@ void handleTaskAction(
           break;
         }
       }
+      */
 
       if (items.isNotEmpty) {
         createEntity(
