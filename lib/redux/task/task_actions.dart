@@ -360,11 +360,21 @@ void handleTaskAction(
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();
 
+      String projectId = '';
+      for (var each in tasks) {
+        final task = each as TaskEntity;
+        if (task.projectId.isNotEmpty) {
+          //projectId = task.projectId;
+          break;
+        }
+      }
+
       if (items.isNotEmpty) {
         createEntity(
             context: context,
-            entity: InvoiceEntity(state: state, client: client)
-                .rebuild((b) => b..lineItems.addAll(items)));
+            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+              ..lineItems.addAll(items)
+              ..projectId = projectId));
       }
       break;
     case EntityAction.clone:
