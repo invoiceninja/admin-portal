@@ -784,6 +784,9 @@ class SidebarFooter extends StatelessWidget {
                         },
                         child: Text(localization.download.toUpperCase()),
                       ),
+                      TextButton(
+                          onPressed: () => launch(kDocsPerformance),
+                          child: Text(localization.learnMore.toUpperCase()))
                     ],
                   ),
                   icon: Icon(
@@ -1261,6 +1264,11 @@ void _showAbout(BuildContext context) async {
                         tooltip: 'Twitter',
                         onPressed: () => launch(kTwitterUrl),
                         icon: Icon(MdiIcons.twitter),
+                      ),
+                      IconButton(
+                        tooltip: 'GitHub',
+                        onPressed: () => launch(kGitHubUrl),
+                        icon: Icon(MdiIcons.github),
                       ),
                       IconButton(
                         tooltip: 'YouTube',

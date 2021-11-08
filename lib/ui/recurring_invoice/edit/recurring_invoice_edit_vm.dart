@@ -46,7 +46,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>, String) onItemsAdded,
+    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
   }) : super(
@@ -131,7 +131,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           }
         });
       },
-      onItemsAdded: (items, clientId) {
+      onItemsAdded: (items, clientId, projectId) {
         if (items.length == 1) {
           store.dispatch(
               EditRecurringInvoiceItem(recurringInvoice.lineItems.length));

@@ -162,8 +162,8 @@ class _QuoteEditState extends State<QuoteEdit>
                           : viewModel.state.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
-                  onItemsSelected: (items, [clientId]) {
-                    viewModel.onItemsAdded(items, clientId);
+                  onItemsSelected: (items, [clientId, projectId]) {
+                    viewModel.onItemsAdded(items, clientId, projectId);
                     if (!isFullscreen) {
                       _controller.animateTo(kItemScreen);
                     }

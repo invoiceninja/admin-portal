@@ -17,7 +17,7 @@ class EntityPresenter {
   BaseEntity entity;
   BuildContext context;
 
-  String title({bool isShort = false}) {
+  String get title {
     final localization = AppLocalization.of(context);
     final type = localization.lookup('${entity.entityType}');
     var name = entity.listDisplayName;
@@ -30,18 +30,15 @@ class EntityPresenter {
     }
 
     if ([
-          EntityType.client,
-          EntityType.vendor,
-          EntityType.project,
-          EntityType.user,
-          EntityType.product,
-        ].contains(entity.entityType) ||
-        isShort) {
+      EntityType.client,
+      EntityType.vendor,
+      EntityType.project,
+      EntityType.user,
+      EntityType.product,
+    ].contains(entity.entityType)) {
       return name;
-    } else if (isMobile(context)) {
-      return '$type $name';
     } else {
-      return '$type  ›  $name';
+      return '$type $name';
     }
   }
 

@@ -138,6 +138,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
+      'project_id',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(String)),
       'subscription_id',
       serializers.serialize(object.subscriptionId,
           specifiedType: const FullType(String)),
@@ -437,6 +440,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'subscription_id':
@@ -1387,6 +1394,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String clientId;
   @override
+  final String projectId;
+  @override
   final String subscriptionId;
   @override
   final String statusId;
@@ -1525,6 +1534,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.balance,
       this.paidToDate,
       this.clientId,
+      this.projectId,
       this.subscriptionId,
       this.statusId,
       this.number,
@@ -1597,6 +1607,8 @@ class _$InvoiceEntity extends InvoiceEntity {
         paidToDate, 'InvoiceEntity', 'paidToDate');
     BuiltValueNullFieldError.checkNotNull(
         clientId, 'InvoiceEntity', 'clientId');
+    BuiltValueNullFieldError.checkNotNull(
+        projectId, 'InvoiceEntity', 'projectId');
     BuiltValueNullFieldError.checkNotNull(
         subscriptionId, 'InvoiceEntity', 'subscriptionId');
     BuiltValueNullFieldError.checkNotNull(
@@ -1701,6 +1713,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         balance == other.balance &&
         paidToDate == other.paidToDate &&
         clientId == other.clientId &&
+        projectId == other.projectId &&
         subscriptionId == other.subscriptionId &&
         statusId == other.statusId &&
         number == other.number &&
@@ -1787,7 +1800,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
                                                                                 remainingCycles.hashCode),
                                                                             dueDateDays.hashCode),
                                                                         invoiceId.hashCode),
@@ -1816,6 +1829,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('balance', balance)
           ..add('paidToDate', paidToDate)
           ..add('clientId', clientId)
+          ..add('projectId', projectId)
           ..add('subscriptionId', subscriptionId)
           ..add('statusId', statusId)
           ..add('number', number)
@@ -1904,6 +1918,10 @@ class InvoiceEntityBuilder
   String _clientId;
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
+
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
 
   String _subscriptionId;
   String get subscriptionId => _$this._subscriptionId;
@@ -2202,6 +2220,7 @@ class InvoiceEntityBuilder
       _balance = $v.balance;
       _paidToDate = $v.paidToDate;
       _clientId = $v.clientId;
+      _projectId = $v.projectId;
       _subscriptionId = $v.subscriptionId;
       _statusId = $v.statusId;
       _number = $v.number;
@@ -2297,14 +2316,15 @@ class InvoiceEntityBuilder
                   paidToDate, 'InvoiceEntity', 'paidToDate'),
               clientId: BuiltValueNullFieldError.checkNotNull(
                   clientId, 'InvoiceEntity', 'clientId'),
+              projectId: BuiltValueNullFieldError.checkNotNull(
+                  projectId, 'InvoiceEntity', 'projectId'),
               subscriptionId: BuiltValueNullFieldError.checkNotNull(
                   subscriptionId, 'InvoiceEntity', 'subscriptionId'),
               statusId: BuiltValueNullFieldError.checkNotNull(
                   statusId, 'InvoiceEntity', 'statusId'),
               number: BuiltValueNullFieldError.checkNotNull(
                   number, 'InvoiceEntity', 'number'),
-              discount: BuiltValueNullFieldError.checkNotNull(
-                  discount, 'InvoiceEntity', 'discount'),
+              discount: BuiltValueNullFieldError.checkNotNull(discount, 'InvoiceEntity', 'discount'),
               poNumber: BuiltValueNullFieldError.checkNotNull(poNumber, 'InvoiceEntity', 'poNumber'),
               date: BuiltValueNullFieldError.checkNotNull(date, 'InvoiceEntity', 'date'),
               dueDate: BuiltValueNullFieldError.checkNotNull(dueDate, 'InvoiceEntity', 'dueDate'),

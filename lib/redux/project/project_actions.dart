@@ -273,7 +273,9 @@ void handleProjectAction(
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state, client: client)
-              .rebuild((b) => b..lineItems.addAll(items)));
+              .rebuild((b) => b..lineItems.addAll(items)
+                  //..projectId = project.id
+                  ));
       break;
     case EntityAction.newExpense:
       createEntity(

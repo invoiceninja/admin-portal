@@ -58,6 +58,7 @@ class InvoiceFields {
   static const String balanceDue = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
+  static const String project = 'project';
   static const String statusId = 'status_id';
   static const String status = 'status';
   static const String number = 'number';
@@ -143,6 +144,7 @@ abstract class InvoiceEntity extends Object
       discount: 0,
       taxAmount: 0,
       poNumber: '',
+      projectId: '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
       publicNotes: '',
@@ -249,6 +251,7 @@ abstract class InvoiceEntity extends Object
     ..paidToDate = 0
     ..remainingCycles = -1
     ..invoiceId = ''
+    ..projectId = ''
     ..subscriptionId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -310,6 +313,9 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
+
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
 
   @BuiltValueField(wireName: 'subscription_id')
   String get subscriptionId;
@@ -1203,6 +1209,7 @@ abstract class InvoiceEntity extends Object
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
+    ..projectId = ''
     ..autoBillEnabled = false
     ..subscriptionId = '';
 

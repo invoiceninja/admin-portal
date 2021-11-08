@@ -69,6 +69,8 @@ class PersistPrefs {}
 
 class PersistData {}
 
+class ClearPersistedData {}
+
 class PersistStatic {}
 
 class RefreshClient {

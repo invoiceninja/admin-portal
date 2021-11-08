@@ -125,8 +125,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
     if (_isReordering) {
-      final filteredLineItems =
-          includedLineItems.where((item) => !item.isEmpty).toList();
       return FormCard(
         padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
         children: [
@@ -143,91 +141,99 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           ReorderableListView.builder(
             shrinkWrap: true,
             primary: false,
-            itemCount: filteredLineItems.length,
+            buildDefaultDragHandles: false,
+            itemCount: lineItems.length,
             itemBuilder: (context, index) {
-              final item = filteredLineItems[index];
-              return Padding(
+              final item = lineItems[index];
+
+              if ((item.typeId == InvoiceItemEntity.TYPE_TASK &&
+                      !widget.isTasks) ||
+                  (item.typeId != InvoiceItemEntity.TYPE_TASK &&
+                      widget.isTasks)) {
+                return SizedBox(key: ObjectKey(item));
+              }
+
+              return ReorderableDragStartListener(
+                index: index,
                 key: ObjectKey(item),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    Expanded(child: Text(lineItems[index].productKey ?? '')),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        lineItems[index].notes ?? '',
-                        maxLines: 2, // TODO change to 1
-                        overflow: TextOverflow.ellipsis,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    children: [
+                      Expanded(child: Text(item.productKey ?? '')),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          item.notes ?? '',
+                          maxLines: 2, // TODO change to 1
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                    if (company.hasCustomField(customField1))
-                      Expanded(
-                          child: Text(lineItems[index].customValue1 ?? '')),
-                    if (company.hasCustomField(customField2))
-                      Expanded(
-                          child: Text(lineItems[index].customValue2 ?? '')),
-                    if (company.hasCustomField(customField3))
-                      Expanded(
-                          child: Text(lineItems[index].customValue3 ?? '')),
-                    if (company.hasCustomField(customField4))
-                      Expanded(
-                          child: Text(lineItems[index].customValue4 ?? '')),
-                    if (hasTax1)
-                      Expanded(child: Text(lineItems[index].taxName1 ?? '')),
-                    if (hasTax2)
-                      Expanded(child: Text(lineItems[index].taxName2 ?? '')),
-                    if (hasTax3)
-                      Expanded(child: Text(lineItems[index].taxName3 ?? '')),
-                    Expanded(
-                      child: Text(
-                        formatNumber(lineItems[index].cost, context,
-                                formatNumberType: FormatNumberType.inputMoney,
-                                clientId: invoice.clientId) ??
-                            '',
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    if (company.enableProductQuantity || widget.isTasks)
+                      if (company.hasCustomField(customField1))
+                        Expanded(child: Text(item.customValue1 ?? '')),
+                      if (company.hasCustomField(customField2))
+                        Expanded(child: Text(item.customValue2 ?? '')),
+                      if (company.hasCustomField(customField3))
+                        Expanded(child: Text(item.customValue3 ?? '')),
+                      if (company.hasCustomField(customField4))
+                        Expanded(child: Text(item.customValue4 ?? '')),
+                      if (hasTax1) Expanded(child: Text(item.taxName1 ?? '')),
+                      if (hasTax2) Expanded(child: Text(item.taxName2 ?? '')),
+                      if (hasTax3) Expanded(child: Text(item.taxName3 ?? '')),
                       Expanded(
                         child: Text(
-                          formatNumber(lineItems[index].quantity, context,
-                                  formatNumberType:
-                                      FormatNumberType.inputAmount,
+                          formatNumber(item.cost, context,
+                                  formatNumberType: FormatNumberType.inputMoney,
                                   clientId: invoice.clientId) ??
                               '',
                           textAlign: TextAlign.right,
                         ),
                       ),
-                    if (company.enableProductDiscount)
+                      if (company.enableProductQuantity || widget.isTasks)
+                        Expanded(
+                          child: Text(
+                            formatNumber(item.quantity, context,
+                                    formatNumberType:
+                                        FormatNumberType.inputAmount,
+                                    clientId: invoice.clientId) ??
+                                '',
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      if (company.enableProductDiscount)
+                        Expanded(
+                          child: Text(
+                            formatNumber(item.discount, context,
+                                    formatNumberType:
+                                        FormatNumberType.inputAmount,
+                                    clientId: invoice.clientId) ??
+                                '',
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
                       Expanded(
                         child: Text(
-                          formatNumber(lineItems[index].discount, context,
-                                  formatNumberType:
-                                      FormatNumberType.inputAmount,
+                          formatNumber(item.total(invoice, precision), context,
                                   clientId: invoice.clientId) ??
                               '',
                           textAlign: TextAlign.right,
                         ),
                       ),
-                    Expanded(
-                      child: Text(
-                        formatNumber(lineItems[index].total(invoice, precision),
-                                context,
-                                clientId: invoice.clientId) ??
-                            '',
-                        textAlign: TextAlign.right,
-                      ),
-                    ),
-                    SizedBox(width: 60),
-                  ],
+                      SizedBox(width: 16),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Icon(Icons.drag_handle),
+                      )
+                    ],
+                  ),
                 ),
               );
             },
             onReorder: (oldIndex, newIndex) {
               // https://stackoverflow.com/a/54164333/497368
               // These two lines are workarounds for ReorderableListView problems
-              if (newIndex > filteredLineItems.length) {
-                newIndex = filteredLineItems.length;
+              if (newIndex > lineItems.length) {
+                newIndex = lineItems.length;
               }
 
               if (oldIndex < newIndex) {

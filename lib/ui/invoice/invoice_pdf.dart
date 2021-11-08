@@ -222,9 +222,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(EntityPresenter()
-                          .initialize(invoice, context)
-                          .title()),
+                      child: Text(
+                          EntityPresenter().initialize(invoice, context).title),
                     ),
                     if (isDesktop(context)) ...activitySelector,
                     if (isDesktop(context)) ...pageSelector,
