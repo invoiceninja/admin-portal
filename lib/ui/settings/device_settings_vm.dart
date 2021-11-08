@@ -150,6 +150,8 @@ class DeviceSettingsVM {
         store.dispatch(UpdateUserPreferences(persistData: value));
         if (value) {
           store.dispatch(UserLoginSuccess());
+        } else {
+          store.dispatch(ClearPersistedData());
         }
       },
       onPersistUiChanged: (context, value) {

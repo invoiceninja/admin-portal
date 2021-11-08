@@ -150,6 +150,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
 
   final persistPrefs = _createPersistPrefs();
 
+  final clearDataState = _createClearData(companyRepositories);
+
   final deleteState = _createDeleteState(
     authRepository,
     uiRepository,
@@ -170,6 +172,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, PersistUI>(persistUI),
     TypedMiddleware<AppState, PersistPrefs>(persistPrefs),
     TypedMiddleware<AppState, ViewMainScreen>(viewMainScreen),
+    TypedMiddleware<AppState, ClearPersistedData>(clearDataState),
   ];
 }
 
@@ -597,6 +600,16 @@ Middleware<AppState> _createViewMainScreen() {
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       navigatorKey.currentState.pushNamed(MainScreen.route);
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createClearData(
+  List<PersistenceRepository> companyRepositories,
+) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    companyRepositories.forEach((repo) => repo.delete());
 
     next(action);
   };
