@@ -35,6 +35,7 @@ const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
 
+const String kGitHubUrl = 'https://github.com/invoiceninja';
 const String kTwitterUrl = 'https://twitter.com/invoiceninja';
 const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =

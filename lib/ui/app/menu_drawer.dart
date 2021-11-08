@@ -1263,6 +1263,11 @@ void _showAbout(BuildContext context) async {
                         icon: Icon(MdiIcons.twitter),
                       ),
                       IconButton(
+                        tooltip: 'GitHub',
+                        onPressed: () => launch(kGitHubUrl),
+                        icon: Icon(MdiIcons.github),
+                      ),
+                      IconButton(
                         tooltip: 'YouTube',
                         onPressed: () => launch(kYouTubeUrl),
                         icon: Icon(MdiIcons.youtube),
