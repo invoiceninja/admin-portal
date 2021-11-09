@@ -106,6 +106,8 @@ class EntityAction extends EnumClass {
     return toSnakeCase(super.toString());
   }
 
+  bool get isEmail => toString().startsWith('email');
+
   String toApiParam() {
     final value = toString();
 
