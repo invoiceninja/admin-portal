@@ -114,7 +114,7 @@ class _InvoiceViewState extends State<InvoiceView>
     if (invoice.isRecurringInvoice) {
       secondAction = invoice.isRunning ? EntityAction.stop : EntityAction.start;
     } else if (invoice.isCredit) {
-      secondAction = EntityAction.emailCredit;
+      secondAction = EntityAction.applyCredit;
     } else if (invoice.isQuote) {
       secondAction = EntityAction.emailQuote;
     } else {
