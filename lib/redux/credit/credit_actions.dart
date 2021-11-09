@@ -535,6 +535,7 @@ Future handleCreditAction(
       createEntity(
         context: context,
         entity: PaymentEntity(state: state).rebuild((b) => b
+          ..isForCredit = true
           ..typeId = kPaymentTypeCredit
           ..clientId = credit.clientId
           ..credits.addAll(credits

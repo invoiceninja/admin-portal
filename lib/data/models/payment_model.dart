@@ -197,6 +197,9 @@ abstract class PaymentEntity extends Object
   bool get isForInvoice;
 
   @nullable
+  bool get isForCredit;
+
+  @nullable
   bool get isApplying;
 
   @nullable

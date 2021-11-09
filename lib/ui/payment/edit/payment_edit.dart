@@ -219,7 +219,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                if (payment.isForInvoice != true)
+                if (payment.isForInvoice != true && payment.isForCredit != true)
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
