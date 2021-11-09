@@ -1057,16 +1057,17 @@ abstract class InvoiceEntity extends Object
       remainingCycles == -1 ? 'endless' : remainingCycles;
 
   String get calculatedStatusId {
-    if (isPastDue && !isCancelledOrReversed) {
-      return kInvoiceStatusPastDue;
-    }
-
-    if (isPending) {
-      return kRecurringInvoiceStatusPending;
-    }
-
-    if (isViewed && isUnpaid) {
-      return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
+    if (isRecurring) {
+      if (isPending) {
+        return kRecurringInvoiceStatusPending;
+      }
+    } else {
+      if (isPastDue && !isCancelledOrReversed) {
+        return kInvoiceStatusPastDue;
+      }
+      if (isViewed && isUnpaid) {
+        return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
+      }
     }
 
     return statusId;
