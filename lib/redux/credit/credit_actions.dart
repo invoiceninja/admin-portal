@@ -185,10 +185,15 @@ class DeleteCreditItem implements PersistUI {
 }
 
 class SaveCreditRequest implements StartSaving {
-  SaveCreditRequest({this.completer, this.credit});
+  SaveCreditRequest({
+    @required this.completer,
+    @required this.credit,
+    @required this.action,
+  });
 
   final Completer completer;
   final InvoiceEntity credit;
+  final EntityAction action;
 }
 
 class SaveCreditSuccess implements StopSaving, PersistData, PersistUI {

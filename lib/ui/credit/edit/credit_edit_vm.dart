@@ -96,8 +96,11 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
-            store.dispatch(
-                SaveCreditRequest(completer: completer, credit: credit));
+            store.dispatch(SaveCreditRequest(
+              completer: completer,
+              credit: credit,
+              action: action,
+            ));
             return completer.future.then((savedCredit) {
               showToast(credit.isNew
                   ? localization.createdCredit
