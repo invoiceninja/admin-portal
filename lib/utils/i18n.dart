@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'credit_is_more_than_invoice':
+          'The credit amount can not be more than the invoice amount',
       'giropay': 'Giropay',
       'direct_debit': 'Direct Debit',
       'please_set_a_password': 'Please set an account password',
@@ -62806,6 +62808,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get applyCredit =>
       _localizedValues[localeCode]['apply_credit'] ??
       _localizedValues['en']['apply_credit'];
+
+  String get creditIsMoreThanInvoice =>
+      _localizedValues[localeCode]['credit_is_more_than_invoice'] ??
+      _localizedValues['en']['credit_is_more_than_invoice'];
 
   // STARTER: lang field - do not remove comment
 

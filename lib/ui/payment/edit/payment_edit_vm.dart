@@ -83,7 +83,9 @@ class PaymentEditVM {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.negativePaymentError);
+                  return ErrorDialog(payment.isForCredit
+                      ? localization.creditIsMoreThanInvoice
+                      : localization.negativePaymentError);
                 });
             return null;
           }
