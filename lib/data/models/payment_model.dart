@@ -56,6 +56,7 @@ class PaymentFields {
   static const String clientId = 'client_id';
   static const String invoiceId = 'invoice_id';
   static const String invoiceNumber = 'invoice_number';
+  static const String creditNumber = 'credit_number';
   static const String privateNotes = 'private_notes';
   static const String exchangeRate = 'exchange_rate';
   static const String convertedAmount = 'converted_amount';
