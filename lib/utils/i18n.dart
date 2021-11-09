@@ -573,6 +573,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'taxes': 'Taxes',
       'surcharge': 'Surcharge',
       'apply_payment': 'Apply Payment',
+      'apply_credit': 'Apply Credit',
       'apply': 'Apply',
       'unapplied': 'Unapplied',
       'select_label': 'Select Label',
@@ -62801,6 +62802,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get directDebit =>
       _localizedValues[localeCode]['direct_debit'] ??
       _localizedValues['en']['direct_debit'];
+
+  String get applyCredit =>
+      _localizedValues[localeCode]['apply_credit'] ??
+      _localizedValues['en']['apply_credit'];
 
   // STARTER: lang field - do not remove comment
 

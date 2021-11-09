@@ -393,11 +393,11 @@ abstract class PaymentEntity extends Object
           }
 
           if (applied < amount) {
-            actions.add(EntityAction.apply);
+            actions.add(EntityAction.applyPayment);
           }
 
           if (completedAmount > 0) {
-            actions.add(EntityAction.refund);
+            actions.add(EntityAction.refundPayment);
           }
         }
 

@@ -57,7 +57,8 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToRecurring = _$cloneToRecurring;
   static const EntityAction convertToInvoice = _$convertToInvoice;
   static const EntityAction approve = _$approve;
-  static const EntityAction apply = _$apply;
+  static const EntityAction applyCredit = _$applyCredit;
+  static const EntityAction applyPayment = _$applyPayment;
   static const EntityAction download = _$download;
   static const EntityAction bulkDownload = _$bulkDownload;
   static const EntityAction emailInvoice = _$emailInvoice;
@@ -83,7 +84,7 @@ class EntityAction extends EnumClass {
   static const EntityAction clientPortal = _$clientPortal;
   static const EntityAction newPayment = _$newPayment;
   static const EntityAction settings = _$settings;
-  static const EntityAction refund = _$refund;
+  static const EntityAction refundPayment = _$refundPayment;
   static const EntityAction viewPdf = _$viewPdf;
   static const EntityAction viewStatement = _$viewStatement;
   static const EntityAction more = _$more;

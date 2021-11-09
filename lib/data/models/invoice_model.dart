@@ -868,7 +868,11 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isPayable && userCompany.canCreate(EntityType.payment)) {
-          actions.add(EntityAction.newPayment);
+          if (isCredit) {
+            actions.add(EntityAction.applyCredit);
+          } else {
+            actions.add(EntityAction.newPayment);
+          }
         }
 
         if (!isSent && !isRecurring) {

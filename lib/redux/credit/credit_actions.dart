@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -530,10 +531,11 @@ Future handleCreditAction(
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
       break;
-    case EntityAction.newPayment:
+    case EntityAction.applyCredit:
       createEntity(
         context: context,
         entity: PaymentEntity(state: state).rebuild((b) => b
+          ..typeId = kPaymentTypeCredit
           ..clientId = credit.clientId
           ..credits.addAll(credits
               .map((credit) => PaymentableEntity.fromCredit(credit))

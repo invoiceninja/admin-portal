@@ -22,7 +22,8 @@ const EntityAction _$cloneToRecurring =
 const EntityAction _$convertToInvoice =
     const EntityAction._('convertToInvoice');
 const EntityAction _$approve = const EntityAction._('approve');
-const EntityAction _$apply = const EntityAction._('apply');
+const EntityAction _$applyCredit = const EntityAction._('applyCredit');
+const EntityAction _$applyPayment = const EntityAction._('applyPayment');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$bulkDownload = const EntityAction._('bulkDownload');
 const EntityAction _$emailInvoice = const EntityAction._('emailInvoice');
@@ -52,7 +53,7 @@ const EntityAction _$newVendor = const EntityAction._('newVendor');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
-const EntityAction _$refund = const EntityAction._('refund');
+const EntityAction _$refundPayment = const EntityAction._('refundPayment');
 const EntityAction _$viewPdf = const EntityAction._('viewPdf');
 const EntityAction _$viewStatement = const EntityAction._('viewStatement');
 const EntityAction _$more = const EntityAction._('more');
@@ -100,8 +101,10 @@ EntityAction _$valueOf(String name) {
       return _$convertToInvoice;
     case 'approve':
       return _$approve;
-    case 'apply':
-      return _$apply;
+    case 'applyCredit':
+      return _$applyCredit;
+    case 'applyPayment':
+      return _$applyPayment;
     case 'download':
       return _$download;
     case 'bulkDownload':
@@ -152,8 +155,8 @@ EntityAction _$valueOf(String name) {
       return _$newPayment;
     case 'settings':
       return _$settings;
-    case 'refund':
-      return _$refund;
+    case 'refundPayment':
+      return _$refundPayment;
     case 'viewPdf':
       return _$viewPdf;
     case 'viewStatement':
@@ -205,7 +208,8 @@ final BuiltSet<EntityAction> _$values =
   _$cloneToRecurring,
   _$convertToInvoice,
   _$approve,
-  _$apply,
+  _$applyCredit,
+  _$applyPayment,
   _$download,
   _$bulkDownload,
   _$emailInvoice,
@@ -231,7 +235,7 @@ final BuiltSet<EntityAction> _$values =
   _$clientPortal,
   _$newPayment,
   _$settings,
-  _$refund,
+  _$refundPayment,
   _$viewPdf,
   _$viewStatement,
   _$more,

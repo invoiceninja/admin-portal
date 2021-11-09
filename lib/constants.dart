@@ -130,6 +130,7 @@ const String kPaymentTypeMasterCard = '6';
 const String kPaymentTypeAmEx = '7';
 const String kPaymentTypeDiners = '9';
 const String kPaymentTypeDiscover = '8';
+const String kPaymentTypeCredit = '32';
 
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
