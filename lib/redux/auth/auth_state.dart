@@ -50,6 +50,11 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       return true;
     }
 
+    // Handle if a user logs in with their subdomain
+    if (cleanUrl.endsWith('.invoicing.co')) {
+      return true;
+    }
+
     return false;
   }
 
