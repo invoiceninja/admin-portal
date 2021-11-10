@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'click_selected': 'Click Selected',
+      'hide_preview': 'Hide Preview',
+      'edit_record': 'Edit Record',
+      'credit_is_more_than_invoice':
+          'The credit amount can not be more than the invoice amount',
       'giropay': 'Giropay',
       'direct_debit': 'Direct Debit',
       'please_set_a_password': 'Please set an account password',
@@ -573,6 +578,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'taxes': 'Taxes',
       'surcharge': 'Surcharge',
       'apply_payment': 'Apply Payment',
+      'apply_credit': 'Apply Credit',
       'apply': 'Apply',
       'unapplied': 'Unapplied',
       'select_label': 'Select Label',
@@ -62801,6 +62807,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get directDebit =>
       _localizedValues[localeCode]['direct_debit'] ??
       _localizedValues['en']['direct_debit'];
+
+  String get applyCredit =>
+      _localizedValues[localeCode]['apply_credit'] ??
+      _localizedValues['en']['apply_credit'];
+
+  String get creditIsMoreThanInvoice =>
+      _localizedValues[localeCode]['credit_is_more_than_invoice'] ??
+      _localizedValues['en']['credit_is_more_than_invoice'];
+
+  String get clickSelected =>
+      _localizedValues[localeCode]['click_selected'] ??
+      _localizedValues['en']['click_selected'];
+
+  String get editRecord =>
+      _localizedValues[localeCode]['edit_record'] ??
+      _localizedValues['en']['edit_record'];
+
+  String get hidePreview =>
+      _localizedValues[localeCode]['hide_preview'] ??
+      _localizedValues['en']['hide_preview'];
 
   // STARTER: lang field - do not remove comment
 

@@ -436,8 +436,6 @@ abstract class CompanyEntity extends Object
 
   bool get hasTaxes => hasInvoiceTaxes || hasItemTaxes;
 
-  bool get isMigrated => companyKey.length == 32;
-
   bool get isSmall => !isLarge;
 
   bool get hasCustomSurcharge =>

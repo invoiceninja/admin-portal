@@ -140,6 +140,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.customColors,
     this.persistData,
     this.persistUi,
+    this.tapSelectedToEdit,
   });
 
   final AppLayout appLayout;
@@ -158,6 +159,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final String colorTheme;
   final bool persistData;
   final bool persistUi;
+  final bool tapSelectedToEdit;
   final BuiltMap<String, String> customColors;
 }
 
@@ -1404,9 +1406,7 @@ void selectEntity({
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
     } else {
-      showEntityActionsDialog(
-        entities: [entity],
-      );
+      editEntity(context: context, entity: entity);
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
@@ -1429,8 +1429,10 @@ void selectEntity({
       entityUIState.selectedId == entity.id) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
-    } else {
+    } else if (state.prefState.tapSelectedToEdit) {
       editEntity(context: context, entity: entity);
+    } else if (state.prefState.isModuleTable) {
+      store.dispatch(TogglePreviewSidebar());
     }
   } else {
     ClientEntity client;

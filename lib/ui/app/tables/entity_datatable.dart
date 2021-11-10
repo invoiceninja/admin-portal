@@ -11,7 +11,9 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityDataTableSource extends AppDataTableSource {
   EntityDataTableSource(
@@ -95,10 +97,17 @@ class EntityDataTableSource extends AppDataTableSource {
           DataCell(
             Row(
               children: <Widget>[
+                if (!state.prefState.tapSelectedToEdit)
+                  IconButton(
+                    tooltip: AppLocalization.of(context).editRecord,
+                    onPressed: () =>
+                        editEntity(context: context, entity: entity),
+                    icon: Icon(MdiIcons.circleEditOutline),
+                  ),
                 ActionMenuButton(
                   entityActions: entity.getActions(
                       userCompany: state.userCompany,
-                      includeEdit: true,
+                      includeEdit: state.prefState.tapSelectedToEdit,
                       client: entity is BelongsToClient
                           ? state.clientState
                               .map[(entity as BelongsToClient)?.clientId]

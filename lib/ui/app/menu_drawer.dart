@@ -1,45 +1,46 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/flutter_version.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/health_check_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/.env.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -538,10 +539,9 @@ class _DrawerTileState extends State<DrawerTile> {
       route = widget.entityType.name;
     }
 
-    final isSelected =
-        uiState.currentRoute.startsWith('/${toSnakeCase(route)}') &&
-            (state.uiState.filterEntityType == null ||
-                !state.prefState.isFilterVisible);
+    final isSelected = (uiState.currentRoute == '/${toSnakeCase(route)}') &&
+        (state.uiState.filterEntityType == null ||
+            !state.prefState.isFilterVisible);
 
     final prefState = state.prefState;
     final inactiveColor = prefState
@@ -1274,6 +1274,11 @@ void _showAbout(BuildContext context) async {
                         tooltip: 'YouTube',
                         onPressed: () => launch(kYouTubeUrl),
                         icon: Icon(MdiIcons.youtube),
+                      ),
+                      IconButton(
+                        tooltip: 'Slack',
+                        onPressed: () => launch(kSlackUrl),
+                        icon: Icon(MdiIcons.slack),
                       ),
                     ],
                   ),

@@ -867,16 +867,20 @@ abstract class InvoiceEntity extends Object
           }
         }
 
-        if (isPayable && userCompany.canCreate(EntityType.payment)) {
-          actions.add(EntityAction.newPayment);
-        }
-
         if (!isSent && !isRecurring) {
           actions.add(EntityAction.markSent);
         }
 
         if (isPayable && isInvoice) {
           actions.add(EntityAction.markPaid);
+        }
+
+        if (isPayable && userCompany.canCreate(EntityType.payment)) {
+          if (isCredit) {
+            actions.add(EntityAction.applyCredit);
+          } else {
+            actions.add(EntityAction.newPayment);
+          }
         }
 
         if (isQuote && (invoiceId ?? '').isEmpty) {

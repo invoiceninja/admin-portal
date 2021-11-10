@@ -56,6 +56,7 @@ class PaymentFields {
   static const String clientId = 'client_id';
   static const String invoiceId = 'invoice_id';
   static const String invoiceNumber = 'invoice_number';
+  static const String creditNumber = 'credit_number';
   static const String privateNotes = 'private_notes';
   static const String exchangeRate = 'exchange_rate';
   static const String convertedAmount = 'converted_amount';
@@ -194,6 +195,9 @@ abstract class PaymentEntity extends Object
 
   @nullable
   bool get isForInvoice;
+
+  @nullable
+  bool get isForCredit;
 
   @nullable
   bool get isApplying;
@@ -392,11 +396,11 @@ abstract class PaymentEntity extends Object
           }
 
           if (applied < amount) {
-            actions.add(EntityAction.apply);
+            actions.add(EntityAction.applyPayment);
           }
 
           if (completedAmount > 0) {
-            actions.add(EntityAction.refund);
+            actions.add(EntityAction.refundPayment);
           }
         }
 

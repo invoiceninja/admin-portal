@@ -220,6 +220,13 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.isForCredit;
+    if (value != null) {
+      result
+        ..add('isForCredit')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.isApplying;
     if (value != null) {
       result
@@ -378,6 +385,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'isForInvoice':
           result.isForInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'isForCredit':
+          result.isForCredit = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isApplying':
@@ -774,6 +785,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool isForInvoice;
   @override
+  final bool isForCredit;
+  @override
   final bool isApplying;
   @override
   final bool sendEmail;
@@ -830,6 +843,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.companyGatewayId,
       this.currencyId,
       this.isForInvoice,
+      this.isForCredit,
       this.isApplying,
       this.sendEmail,
       this.gatewayRefund,
@@ -935,6 +949,7 @@ class _$PaymentEntity extends PaymentEntity {
         companyGatewayId == other.companyGatewayId &&
         currencyId == other.currencyId &&
         isForInvoice == other.isForInvoice &&
+        isForCredit == other.isForCredit &&
         isApplying == other.isApplying &&
         sendEmail == other.sendEmail &&
         gatewayRefund == other.gatewayRefund &&
@@ -972,12 +987,12 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode), vendorId.hashCode),
-                                                                                invitationId.hashCode),
-                                                                            clientContactId.hashCode),
-                                                                        companyGatewayId.hashCode),
-                                                                    currencyId.hashCode),
-                                                                isForInvoice.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode), vendorId.hashCode), invitationId.hashCode),
+                                                                                clientContactId.hashCode),
+                                                                            companyGatewayId.hashCode),
+                                                                        currencyId.hashCode),
+                                                                    isForInvoice.hashCode),
+                                                                isForCredit.hashCode),
                                                             isApplying.hashCode),
                                                         sendEmail.hashCode),
                                                     gatewayRefund.hashCode),
@@ -1021,6 +1036,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('companyGatewayId', companyGatewayId)
           ..add('currencyId', currencyId)
           ..add('isForInvoice', isForInvoice)
+          ..add('isForCredit', isForCredit)
           ..add('isApplying', isApplying)
           ..add('sendEmail', sendEmail)
           ..add('gatewayRefund', gatewayRefund)
@@ -1143,6 +1159,10 @@ class PaymentEntityBuilder
   bool get isForInvoice => _$this._isForInvoice;
   set isForInvoice(bool isForInvoice) => _$this._isForInvoice = isForInvoice;
 
+  bool _isForCredit;
+  bool get isForCredit => _$this._isForCredit;
+  set isForCredit(bool isForCredit) => _$this._isForCredit = isForCredit;
+
   bool _isApplying;
   bool get isApplying => _$this._isApplying;
   set isApplying(bool isApplying) => _$this._isApplying = isApplying;
@@ -1237,6 +1257,7 @@ class PaymentEntityBuilder
       _companyGatewayId = $v.companyGatewayId;
       _currencyId = $v.currencyId;
       _isForInvoice = $v.isForInvoice;
+      _isForCredit = $v.isForCredit;
       _isApplying = $v.isApplying;
       _sendEmail = $v.sendEmail;
       _gatewayRefund = $v.gatewayRefund;
@@ -1306,6 +1327,7 @@ class PaymentEntityBuilder
               companyGatewayId: BuiltValueNullFieldError.checkNotNull(companyGatewayId, 'PaymentEntity', 'companyGatewayId'),
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'PaymentEntity', 'currencyId'),
               isForInvoice: isForInvoice,
+              isForCredit: isForCredit,
               isApplying: isApplying,
               sendEmail: sendEmail,
               gatewayRefund: gatewayRefund,

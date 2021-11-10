@@ -65,19 +65,30 @@ class CreditRepository {
   }
 
   Future<InvoiceEntity> saveData(
-      Credentials credentials, InvoiceEntity credit) async {
+    Credentials credentials,
+    InvoiceEntity credit,
+    EntityAction action,
+  ) async {
     credit = credit.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, credit);
+    String url;
     dynamic response;
 
     if (credit.isNew) {
-      response = await webClient.post(
-          credentials.url + '/credits?include=history,activities',
-          credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/credits?include=history,activities';
     } else {
-      final url =
+      url =
           '${credentials.url}/credits/${credit.id}?include=history,activities';
+    }
+
+    if (action == EntityAction.markSent) {
+      url += '&mark_sent=true';
+    }
+
+    if (credit.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

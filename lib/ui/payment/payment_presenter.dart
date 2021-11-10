@@ -28,6 +28,7 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.privateNotes,
       PaymentFields.exchangeRate,
       PaymentFields.convertedAmount,
+      PaymentFields.creditNumber,
       PaymentFields.customValue1,
       PaymentFields.customValue2,
       PaymentFields.customValue3,
@@ -49,9 +50,16 @@ class PaymentPresenter extends EntityPresenter {
         return Text(
             state.staticState.paymentTypeMap[payment.typeId]?.name ?? '');
       case PaymentFields.invoiceNumber:
-        final numbers = payment.paymentables
+        final numbers = payment.invoicePaymentables
             .map((paymentable) =>
                 state.invoiceState.map[paymentable.invoiceId]?.number ?? '')
+            .toList()
+            .join(', ');
+        return Text(numbers);
+      case PaymentFields.creditNumber:
+        final numbers = payment.creditPaymentables
+            .map((paymentable) =>
+                state.creditState.map[paymentable.creditId]?.number ?? '')
             .toList()
             .join(', ');
         return Text(numbers);

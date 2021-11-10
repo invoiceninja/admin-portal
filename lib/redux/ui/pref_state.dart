@@ -25,6 +25,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       colorTheme: kColorThemeLight,
       isFilterVisible: false,
       longPressSelectionIsDefault: true,
+      tapSelectedToEdit: false,
       showKanban: false,
       persistData: false,
       persistUI: true,
@@ -105,6 +106,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get requireAuthentication;
 
+  bool get tapSelectedToEdit;
+
   int get rowsPerPage;
 
   String get colorTheme;
@@ -177,6 +180,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showKanban = false
     ..isPreviewVisible = false
     ..isFilterVisible = false
+    ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true
     ..colorTheme =

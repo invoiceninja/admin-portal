@@ -163,6 +163,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'requireAuthentication',
       serializers.serialize(object.requireAuthentication,
           specifiedType: const FullType(bool)),
+      'tapSelectedToEdit',
+      serializers.serialize(object.tapSelectedToEdit,
+          specifiedType: const FullType(bool)),
       'rowsPerPage',
       serializers.serialize(object.rowsPerPage,
           specifiedType: const FullType(int)),
@@ -261,6 +264,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'requireAuthentication':
           result.requireAuthentication = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'tapSelectedToEdit':
+          result.tapSelectedToEdit = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'rowsPerPage':
@@ -548,6 +555,8 @@ class _$PrefState extends PrefState {
   @override
   final bool requireAuthentication;
   @override
+  final bool tapSelectedToEdit;
+  @override
   final int rowsPerPage;
   @override
   final String colorTheme;
@@ -576,6 +585,7 @@ class _$PrefState extends PrefState {
       this.persistUI,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
+      this.tapSelectedToEdit,
       this.rowsPerPage,
       this.colorTheme,
       this.sortFields,
@@ -611,6 +621,8 @@ class _$PrefState extends PrefState {
         'PrefState', 'longPressSelectionIsDefault');
     BuiltValueNullFieldError.checkNotNull(
         requireAuthentication, 'PrefState', 'requireAuthentication');
+    BuiltValueNullFieldError.checkNotNull(
+        tapSelectedToEdit, 'PrefState', 'tapSelectedToEdit');
     BuiltValueNullFieldError.checkNotNull(
         rowsPerPage, 'PrefState', 'rowsPerPage');
     BuiltValueNullFieldError.checkNotNull(
@@ -648,6 +660,7 @@ class _$PrefState extends PrefState {
         persistUI == other.persistUI &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
+        tapSelectedToEdit == other.tapSelectedToEdit &&
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
         sortFields == other.sortFields &&
@@ -675,32 +688,22 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    appLayout
-                                                                                        .hashCode),
-                                                                                moduleLayout
-                                                                                    .hashCode),
-                                                                            menuSidebarMode
-                                                                                .hashCode),
-                                                                        historySidebarMode
-                                                                            .hashCode),
-                                                                    useSidebarEditor
-                                                                        .hashCode),
-                                                                customColors
-                                                                    .hashCode),
-                                                            isPreviewVisible
-                                                                .hashCode),
-                                                        isMenuVisible.hashCode),
-                                                    showKanban.hashCode),
-                                                isHistoryVisible.hashCode),
-                                            enableDarkMode.hashCode),
-                                        isFilterVisible.hashCode),
-                                    persistData.hashCode),
-                                persistUI.hashCode),
-                            longPressSelectionIsDefault.hashCode),
-                        requireAuthentication.hashCode),
+                                                                            $jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode),
+                                                                                menuSidebarMode.hashCode),
+                                                                            historySidebarMode.hashCode),
+                                                                        useSidebarEditor.hashCode),
+                                                                    customColors.hashCode),
+                                                                isPreviewVisible.hashCode),
+                                                            isMenuVisible.hashCode),
+                                                        showKanban.hashCode),
+                                                    isHistoryVisible.hashCode),
+                                                enableDarkMode.hashCode),
+                                            isFilterVisible.hashCode),
+                                        persistData.hashCode),
+                                    persistUI.hashCode),
+                                longPressSelectionIsDefault.hashCode),
+                            requireAuthentication.hashCode),
+                        tapSelectedToEdit.hashCode),
                     rowsPerPage.hashCode),
                 colorTheme.hashCode),
             sortFields.hashCode),
@@ -726,6 +729,7 @@ class _$PrefState extends PrefState {
           ..add('persistUI', persistUI)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
+          ..add('tapSelectedToEdit', tapSelectedToEdit)
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
           ..add('sortFields', sortFields)
@@ -815,6 +819,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set requireAuthentication(bool requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
+  bool _tapSelectedToEdit;
+  bool get tapSelectedToEdit => _$this._tapSelectedToEdit;
+  set tapSelectedToEdit(bool tapSelectedToEdit) =>
+      _$this._tapSelectedToEdit = tapSelectedToEdit;
+
   int _rowsPerPage;
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
@@ -858,6 +867,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _persistUI = $v.persistUI;
       _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
       _requireAuthentication = $v.requireAuthentication;
+      _tapSelectedToEdit = $v.tapSelectedToEdit;
       _rowsPerPage = $v.rowsPerPage;
       _colorTheme = $v.colorTheme;
       _sortFields = $v.sortFields.toBuilder();
@@ -908,6 +918,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               persistUI: BuiltValueNullFieldError.checkNotNull(persistUI, 'PrefState', 'persistUI'),
               longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, 'PrefState', 'longPressSelectionIsDefault'),
               requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, 'PrefState', 'requireAuthentication'),
+              tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(tapSelectedToEdit, 'PrefState', 'tapSelectedToEdit'),
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               sortFields: sortFields.build(),

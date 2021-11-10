@@ -97,6 +97,7 @@ class _CreditEditState extends State<CreditEdit>
       actions: [
         EntityAction.viewPdf,
         EntityAction.emailCredit,
+        if (!invoice.isSent) EntityAction.markSent,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

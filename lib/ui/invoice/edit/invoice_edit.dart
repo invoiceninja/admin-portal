@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEdit extends StatefulWidget {
@@ -75,6 +77,26 @@ class _InvoiceEditState extends State<InvoiceEdit>
          */
 
     if (!isValid) {
+      return;
+    }
+
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final client = viewModel.state.clientState.get(invoice.clientId);
+    final localization = AppLocalization.of(context);
+
+    if (action.isEmail && !client.hasEmailAddress) {
+      showMessageDialog(
+          context: context,
+          message: localization.clientEmailNotSet,
+          secondaryActions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  editEntity(context: context, entity: client);
+                },
+                child: Text(localization.editClient.toUpperCase()))
+          ]);
       return;
     }
 

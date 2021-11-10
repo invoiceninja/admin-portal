@@ -35,7 +35,8 @@ const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
 
-const String kGitHubUrl = 'https://github.com/invoiceninja/';
+const String kSlackUrl = 'http://slack.invoiceninja.com';
+const String kGitHubUrl = 'https://github.com/invoiceninja';
 const String kTwitterUrl = 'https://twitter.com/invoiceninja';
 const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
@@ -130,6 +131,7 @@ const String kPaymentTypeMasterCard = '6';
 const String kPaymentTypeAmEx = '7';
 const String kPaymentTypeDiners = '9';
 const String kPaymentTypeDiscover = '8';
+const String kPaymentTypeCredit = '32';
 
 const String kPlanFree = '';
 const String kPlanPro = 'pro';

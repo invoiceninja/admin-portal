@@ -89,9 +89,10 @@ class EntityTopFilter extends StatelessWidget {
                           ],
                         ),
                       ),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.centerLeft,
                         child: OverflowView.flexible(
                           spacing: 4,
                           children: <Widget>[
