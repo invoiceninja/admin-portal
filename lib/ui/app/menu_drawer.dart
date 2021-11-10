@@ -538,10 +538,9 @@ class _DrawerTileState extends State<DrawerTile> {
       route = widget.entityType.name;
     }
 
-    final isSelected =
-        uiState.currentRoute.startsWith('/${toSnakeCase(route)}') &&
-            (state.uiState.filterEntityType == null ||
-                !state.prefState.isFilterVisible);
+    final isSelected = (uiState.currentRoute == '/${toSnakeCase(route)}') &&
+        (state.uiState.filterEntityType == null ||
+            !state.prefState.isFilterVisible);
 
     final prefState = state.prefState;
     final inactiveColor = prefState
