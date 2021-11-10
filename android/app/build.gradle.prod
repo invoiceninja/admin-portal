@@ -79,8 +79,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.firebase:firebase-core:17.2.0'
-    implementation platform('com.google.firebase:firebase-bom:28.4.2')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.guava:guava:27.0.1-android' // https://stackoverflow.com/a/56639924/497368
     implementation 'androidx.multidex:multidex:2.0.1' // https://stackoverflow.com/a/55592039/497368
 }
