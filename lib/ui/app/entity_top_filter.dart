@@ -89,7 +89,7 @@ class EntityTopFilter extends StatelessWidget {
                           ],
                         ),
                       ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 12),
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerLeft,

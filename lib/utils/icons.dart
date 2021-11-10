@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
     case EntityAction.edit:
-      return Icons.edit;
+      return MdiIcons.circleEditOutline;
     case EntityAction.viewStatement:
     case EntityAction.viewPdf:
     case EntityAction.bulkDownload:
