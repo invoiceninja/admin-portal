@@ -107,6 +107,7 @@ class EntityDataTableSource extends AppDataTableSource {
                 ActionMenuButton(
                   entityActions: entity.getActions(
                       userCompany: state.userCompany,
+                      includeEdit: state.prefState.tapSelectedToEdit,
                       client: entity is BelongsToClient
                           ? state.clientState
                               .map[(entity as BelongsToClient)?.clientId]
