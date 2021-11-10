@@ -1433,7 +1433,7 @@ void selectEntity({
       store.dispatch(PreviewEntity());
     } else if (state.prefState.tapSelectedToEdit) {
       editEntity(context: context, entity: entity);
-    } else {
+    } else if (state.prefState.isModuleTable) {
       store.dispatch(TogglePreviewSidebar());
     }
   } else {
