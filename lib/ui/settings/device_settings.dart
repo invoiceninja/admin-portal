@@ -152,7 +152,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         viewModel.onTapSelectedChanged(context, value);
                       },
                       enabledLabel: localization.editRecord,
-                      disabledLabel: localization.noAction,
+                      disabledLabel: localization.hidePreview,
                     )
                   else
                     BoolDropdownButton(

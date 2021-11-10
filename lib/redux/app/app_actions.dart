@@ -1433,6 +1433,8 @@ void selectEntity({
       store.dispatch(PreviewEntity());
     } else if (state.prefState.tapSelectedToEdit) {
       editEntity(context: context, entity: entity);
+    } else {
+      store.dispatch(TogglePreviewSidebar());
     }
   } else {
     ClientEntity client;
