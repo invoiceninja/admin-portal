@@ -1406,9 +1406,7 @@ void selectEntity({
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
     } else {
-      showEntityActionsDialog(
-        entities: [entity],
-      );
+      editEntity(context: context, entity: entity);
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
