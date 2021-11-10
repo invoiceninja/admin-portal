@@ -20,6 +20,7 @@ abstract class AccountEntity
       isDocker: false,
       isSchedulerRunning: false,
       disableAutoUpdate: false,
+      isMigrated: false,
       defaultCompanyId: '',
       trialPlan: '',
       trialStarted: '',
@@ -63,6 +64,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'is_docker')
   bool get isDocker;
 
+  @BuiltValueField(wireName: 'is_migrated')
+  bool get isMigrated;
+
   @BuiltValueField(wireName: 'is_scheduler_running')
   bool get isSchedulerRunning;
 
@@ -88,6 +92,7 @@ abstract class AccountEntity
     ..isDocker = false
     ..isSchedulerRunning = false
     ..disableAutoUpdate = false
+    ..isMigrated = false
     ..trialPlan = ''
     ..trialStarted = ''
     ..defaultCompanyId = '';

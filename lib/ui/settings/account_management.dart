@@ -300,7 +300,7 @@ class _AccountOverview extends StatelessWidget {
     String secondLabel;
 
     if (state.isHosted && (account.plan.isEmpty || account.isTrial)) {
-      final clientLimit = viewModel.company.isMigrated ? 100 : 50;
+      final clientLimit = viewModel.state.account.isMigrated ? 100 : 50;
       secondLabel = localization.clients;
       secondValue = '${viewModel.state.clientState.list.length} / $clientLimit';
     } else if (account.planExpires.isNotEmpty) {
