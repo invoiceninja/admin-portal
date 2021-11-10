@@ -172,9 +172,9 @@ void passwordCallback({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final skipOAuth = state.user.oauthProvider.isEmpty;
+  final user = state.user;
 
-  if (alwaysRequire && !state.user.hasPassword) {
+  if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
         context: context,
         message: localization.pleaseSetAPassword,
@@ -194,7 +194,7 @@ void passwordCallback({
     return;
   }
 
-  if (skipOAuth) {
+  if (user.oauthProvider.isEmpty) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,
@@ -210,7 +210,7 @@ void passwordCallback({
   try {
     GoogleOAuth.signIn((idToken, accessToken) {
       if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
-          !state.user.hasPassword) {
+          !user.hasPassword) {
         callback(null, idToken);
       } else {
         showDialog<AlertDialog>(
