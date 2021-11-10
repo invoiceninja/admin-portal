@@ -53,7 +53,6 @@ class MessageDialog extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: TextButton(
-                            autofocus: true,
                             onPressed: () {
                               Navigator.of(context).pop();
                               if (onDismiss != null) {
