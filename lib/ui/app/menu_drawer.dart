@@ -1275,6 +1275,11 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => launch(kYouTubeUrl),
                         icon: Icon(MdiIcons.youtube),
                       ),
+                      IconButton(
+                        tooltip: 'Slack',
+                        onPressed: () => launch(kSlackUrl),
+                        icon: Icon(MdiIcons.slack),
+                      ),
                     ],
                   ),
                 ],
