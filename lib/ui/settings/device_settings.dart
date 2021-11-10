@@ -144,15 +144,27 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       disabledLabel: localization.showOrHide,
                     ),
                   ],
-                  BoolDropdownButton(
-                    label: localization.listLongPress,
-                    value: !prefState.longPressSelectionIsDefault,
-                    onChanged: (value) {
-                      viewModel.onLongPressSelectionIsDefault(context, !value);
-                    },
-                    enabledLabel: localization.showActions,
-                    disabledLabel: localization.startMultiselect,
-                  ),
+                  if (isDesktop(context))
+                    BoolDropdownButton(
+                      label: localization.clickSelected,
+                      value: prefState.tapSelectedToEdit,
+                      onChanged: (value) {
+                        viewModel.onTapSelectedChanged(context, value);
+                      },
+                      enabledLabel: localization.editRecord,
+                      disabledLabel: localization.noAction,
+                    )
+                  else
+                    BoolDropdownButton(
+                      label: localization.listLongPress,
+                      value: !prefState.longPressSelectionIsDefault,
+                      onChanged: (value) {
+                        viewModel.onLongPressSelectionIsDefault(
+                            context, !value);
+                      },
+                      enabledLabel: localization.showActions,
+                      disabledLabel: localization.startMultiselect,
+                    ),
                   AppDropdownButton<int>(
                     blankValue: null,
                     labelText: localization.rowsPerPage,

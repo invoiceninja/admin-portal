@@ -61,6 +61,8 @@ PrefState prefReducer(
       ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
       ..longPressSelectionIsDefault =
           longPressReducer(state.longPressSelectionIsDefault, action)
+      ..tapSelectedToEdit =
+          tapSelectedToEditReducer(state.tapSelectedToEdit, action)
       ..requireAuthentication =
           requireAuthenticationReducer(state.requireAuthentication, action)
       ..colorTheme = colorThemeReducer(state.colorTheme, action)
@@ -272,6 +274,12 @@ Reducer<bool> longPressReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
+  }),
+]);
+
+Reducer<bool> tapSelectedToEditReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((tapSelectedToEdit, action) {
+    return action.tapSelectedToEdit ?? tapSelectedToEdit;
   }),
 ]);
 

@@ -50,6 +50,7 @@ class DeviceSettingsVM {
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
     @required this.onPersistUiChanged,
+    @required this.onTapSelectedChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -89,6 +90,9 @@ class DeviceSettingsVM {
         }
 
         store.dispatch(UpdateUserPreferences(historyMode: value));
+      },
+      onTapSelectedChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(tapSelectedToEdit: value));
       },
       onColorThemeChanged: (context, value) async {
         if (store.state.prefState.colorTheme != value) {
@@ -173,6 +177,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
   final Function(BuildContext, String) onColorThemeChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
+  final Function(BuildContext, bool) onTapSelectedChanged;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;

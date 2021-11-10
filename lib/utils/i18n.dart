@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'click_selected': 'Click Selected',
+      'no_action': 'No Action',
+      'edit_record': 'Edit Record',
       'credit_is_more_than_invoice':
           'The credit amount can not be more than the invoice amount',
       'giropay': 'Giropay',
@@ -62812,6 +62815,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get creditIsMoreThanInvoice =>
       _localizedValues[localeCode]['credit_is_more_than_invoice'] ??
       _localizedValues['en']['credit_is_more_than_invoice'];
+
+  String get clickSelected =>
+      _localizedValues[localeCode]['click_selected'] ??
+      _localizedValues['en']['click_selected'];
+
+  String get noAction =>
+      _localizedValues[localeCode]['no_action'] ??
+      _localizedValues['en']['no_action'];
+
+  String get editRecord =>
+      _localizedValues[localeCode]['edit_record'] ??
+      _localizedValues['en']['edit_record'];
 
   // STARTER: lang field - do not remove comment
 
