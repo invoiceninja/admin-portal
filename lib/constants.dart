@@ -82,7 +82,6 @@ enum AppEnvironment {
 }
 
 const String kSharedPrefs = 'shared_prefs';
-const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
 

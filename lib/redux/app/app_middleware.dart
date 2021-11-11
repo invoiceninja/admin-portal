@@ -193,30 +193,12 @@ Middleware<AppState> _createLoadState(
 
     try {
       final state = store.state;
-      final prefs = await SharedPreferences.getInstance();
-      final appVersion = prefs.getString(kSharedPrefAppVersion);
-
-      //final packageInfo = await PackageInfo.fromPlatform();
-      //prefs.setString(kSharedPrefAppVersion, packageInfo.version);
-      prefs.setString(kSharedPrefAppVersion, kClientVersion);
-
-      //if (appVersion != packageInfo.version) {
-      if (appVersion != kClientVersion) {
-        authRepository.delete();
-        uiRepository.delete();
-        staticRepository.delete();
-
-        for (var i = 0; i < companyRepositories.length; i++) {
-          companyRepositories[i].delete();
-        }
-
-        throw 'New app version - clearing state';
-      }
-
       final prefState = state.prefState;
+
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
+
       for (var i = 0; i < companyRepositories.length; i++) {
         var companyState = UserCompanyState(state.reportErrors);
         try {
