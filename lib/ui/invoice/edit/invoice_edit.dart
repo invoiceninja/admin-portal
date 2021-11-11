@@ -85,7 +85,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final client = viewModel.state.clientState.get(invoice.clientId);
     final localization = AppLocalization.of(context);
 
-    if (action.isEmail && !client.hasEmailAddress) {
+    if (action != null && action.isEmail && !client.hasEmailAddress) {
       showMessageDialog(
           context: context,
           message: localization.clientEmailNotSet,
