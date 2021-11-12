@@ -109,7 +109,7 @@ class _EntityListTileState extends State<EntityListTile> {
               onLongPress: () =>
                   inspectEntity(entity: widget.entity, longPress: true),
               title: Text(
-                EntityPresenter().initialize(widget.entity, context).title,
+                EntityPresenter().initialize(widget.entity, context).title(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

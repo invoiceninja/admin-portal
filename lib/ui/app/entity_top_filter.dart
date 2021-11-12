@@ -78,7 +78,7 @@ class EntityTopFilter extends StatelessWidget {
                               child: Text(
                                 EntityPresenter()
                                     .initialize(filterEntity, context)
-                                    .title,
+                                    .title(),
                                 style: TextStyle(
                                     fontSize: 17, color: state.headerTextColor),
                                 overflow: TextOverflow.ellipsis,

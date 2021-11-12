@@ -42,7 +42,7 @@ class ViewScaffold extends StatelessWidget {
       title = '';
     } else {
       final presenter = EntityPresenter().initialize(entity, context);
-      title = presenter.title;
+      title = presenter.title(isNarrow: isMobile(context));
     }
 
     Widget leading;
