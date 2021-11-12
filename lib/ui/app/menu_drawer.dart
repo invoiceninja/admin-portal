@@ -1178,7 +1178,7 @@ void _showAbout(BuildContext context) async {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Text(localization.desktop + ' • Beta'),
+                                    Text(localization.desktop),
                                     AppButton(
                                       label: 'Windows',
                                       iconData: MdiIcons.microsoftWindows,
@@ -1244,7 +1244,8 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => _showUpdate(context),
                       ),
                   ],
-                  if (daysActive > 100)
+                  // TODO remove macOS check
+                  if (daysActive > 100 && !isMacOS())
                     AppButton(
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,

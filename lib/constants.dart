@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.66';
+const String kClientVersion = '5.0.67';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -82,7 +82,6 @@ enum AppEnvironment {
 }
 
 const String kSharedPrefs = 'shared_prefs';
-const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
 

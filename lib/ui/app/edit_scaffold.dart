@@ -146,6 +146,7 @@ class EditScaffold extends StatelessWidget {
                   isHeader: true,
                   isCancelEnabled: isCancelEnabled,
                   saveLabel: saveLabel,
+                  cancelLabel: localization.back,
                   onSavePressed: (context) {
                     // Clear focus now to prevent un-focus after save from
                     // marking the form as changed and to hide the keyboard
