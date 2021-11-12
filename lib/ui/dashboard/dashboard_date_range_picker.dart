@@ -28,6 +28,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    print('## LOADING SETTINGS');
     _settings = DashboardSettings.fromState(widget.state);
 
     if (_settings.dateRange != DateRange.custom) {
@@ -95,15 +96,21 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                       : DatePicker(
                           selectedDate: _settings.startDate,
                           labelText: localization.startDate,
-                          onSelected: (date) => _settings.startDate = date,
-                        ),
+                          onSelected: (date) {
+                            setState(() {
+                              _settings.startDate = date;
+                            });
+                          }),
                   _settings.dateRange != DateRange.custom
                       ? Container()
                       : DatePicker(
                           selectedDate: _settings.endDate,
                           labelText: localization.endDate,
-                          onSelected: (date) => _settings.endDate = date,
-                        ),
+                          onSelected: (date) {
+                            setState(() {
+                              _settings.endDate = date;
+                            });
+                          }),
                   SizedBox(height: 6.0),
                   _settings.enableComparison
                       ? Column(
@@ -132,17 +139,22 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                                 : DatePicker(
                                     labelText: localization.startDate,
                                     selectedDate: _settings.compareStartDate,
-                                    onSelected: (date) =>
-                                        _settings.compareStartDate = date,
-                                  ),
+                                    onSelected: (date) {
+                                      setState(() {
+                                        _settings.compareStartDate = date;
+                                      });
+                                    }),
                             _settings.compareDateRange !=
                                     DateRangeComparison.customRange
                                 ? Container()
                                 : DatePicker(
                                     labelText: localization.endDate,
                                     selectedDate: _settings.compareEndDate,
-                                    onSelected: (date) =>
-                                        _settings.compareEndDate = date,
+                                    onSelected: (date) {
+                                      setState(() {
+                                        _settings.compareEndDate = date;
+                                      });
+                                    },
                                   ),
                           ],
                         )
