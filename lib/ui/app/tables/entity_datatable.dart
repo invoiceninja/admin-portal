@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -97,13 +98,15 @@ class EntityDataTableSource extends AppDataTableSource {
           DataCell(
             Row(
               children: <Widget>[
-                if (!state.prefState.tapSelectedToEdit)
-                  IconButton(
-                    tooltip: AppLocalization.of(context).editRecord,
-                    onPressed: () =>
-                        editEntity(context: context, entity: entity),
-                    icon: Icon(MdiIcons.circleEditOutline),
+                IconButton(
+                  tooltip: AppLocalization.of(context).editRecord,
+                  onPressed: () => editEntity(context: context, entity: entity),
+                  icon: GestureDetector(
+                    child: Icon(MdiIcons.circleEditOutline),
+                    onLongPress: () => handleEntityAction(
+                        entity, EntityAction.toggleMultiselect),
                   ),
+                ),
                 ActionMenuButton(
                   entityActions: entity.getActions(
                       userCompany: state.userCompany,
