@@ -8,6 +8,7 @@ import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
+import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 
@@ -223,11 +224,13 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
+  ScrollController _controller;
   final Map<int, DataRow> _rows = <int, DataRow>{};
 
   @override
   void initState() {
     super.initState();
+    _controller = ScrollController();
     _firstRowIndex = PageStorage.of(context)?.readState(context) as int ??
         widget.initialFirstRowIndex ??
         0;
@@ -247,6 +250,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
   @override
   void dispose() {
+    _controller.dispose();
     widget.source.removeListener(_handleDataSourceChanged);
     super.dispose();
   }
@@ -470,23 +474,27 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                 ),
               ),
                */
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                dragStartBehavior: widget.dragStartBehavior,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: constraints.minWidth),
-                  child: AppDataTable(
-                    key: _tableKey,
-                    columns: widget.columns,
-                    sortColumnIndex: widget.sortColumnIndex,
-                    sortAscending: widget.sortAscending,
-                    onSelectAll: widget.onSelectAll,
-                    dataRowHeight: widget.dataRowHeight,
-                    headingRowHeight: widget.headingRowHeight,
-                    horizontalMargin: widget.horizontalMargin,
-                    columnSpacing: widget.columnSpacing,
-                    showCheckboxColumn: widget.showCheckboxColumn,
-                    rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+              Scrollbar(
+                controller: _controller,
+                child: SingleChildScrollView(
+                  controller: _controller,
+                  scrollDirection: Axis.horizontal,
+                  dragStartBehavior: widget.dragStartBehavior,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.minWidth),
+                    child: AppDataTable(
+                      key: _tableKey,
+                      columns: widget.columns,
+                      sortColumnIndex: widget.sortColumnIndex,
+                      sortAscending: widget.sortAscending,
+                      onSelectAll: widget.onSelectAll,
+                      dataRowHeight: widget.dataRowHeight,
+                      headingRowHeight: widget.headingRowHeight,
+                      horizontalMargin: widget.horizontalMargin,
+                      columnSpacing: widget.columnSpacing,
+                      showCheckboxColumn: widget.showCheckboxColumn,
+                      rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                    ),
                   ),
                 ),
               ),
