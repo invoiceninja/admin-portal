@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -23,6 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DocumentGrid extends StatelessWidget {
@@ -221,10 +221,7 @@ class DocumentTile extends StatelessWidget {
 
                                   await File(filePath)
                                       .writeAsBytes(response.bodyBytes);
-                                  await FlutterShare.shareFile(
-                                    title: '${localization.name}',
-                                    filePath: filePath,
-                                  );
+                                  await Share.shareFiles([filePath]);
                                 }
                               } else if (value == localization.delete) {
                                 confirmCallback(
