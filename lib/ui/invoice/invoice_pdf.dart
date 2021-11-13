@@ -273,7 +273,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                   final filePath =
                                       '${directory.path}/${invoice.invoiceId}.pdf';
                                   final pdfData = file.File(filePath);
-                                  pdfData.writeAsBytes(_response.bodyBytes);
+                                  await pdfData
+                                      .writeAsBytes(_response.bodyBytes);
                                   await Share.shareFiles([filePath]);
                                 }
                               }
