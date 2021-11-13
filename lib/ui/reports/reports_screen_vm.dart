@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io' as file;
-import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +37,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:share/share.dart';
 
 import 'credit_report.dart';
 
@@ -424,10 +424,7 @@ class ReportsScreenVM {
             final filePath = '${directory.path}/$filename';
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
-            await FlutterShare.shareFile(
-                title: filename,
-                //text: 'Example share text',
-                filePath: filePath);
+            await Share.shareFiles([filePath]);
           }
         });
   }

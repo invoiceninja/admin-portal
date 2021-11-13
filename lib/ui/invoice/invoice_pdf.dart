@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as file;
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -26,6 +25,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePdfView extends StatefulWidget {
@@ -274,8 +274,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                       '${directory.path}/${invoice.invoiceId}.pdf';
                                   final pdfData = file.File(filePath);
                                   pdfData.writeAsBytes(_response.bodyBytes);
-                                  await FlutterShare.shareFile(
-                                      title: fileName, filePath: filePath);
+                                  await Share.shareFiles([filePath]);
                                 }
                               }
                             },
