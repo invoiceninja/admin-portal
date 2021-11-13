@@ -38,7 +38,9 @@ class EntityList extends StatefulWidget {
     @required this.onClearMultiselect,
     this.presenter,
     this.tableColumns,
-  }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
+  }) : super(
+            key: ValueKey(
+                '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType).listUIState.tableHashCode}__'));
 
   final AppState state;
   final EntityType entityType;
@@ -209,16 +211,6 @@ class _EntityListState extends State<EntityList> {
         }
 
         final rowsPerPage = state.prefState.rowsPerPage;
-        final listStateHash = listUIState.custom1Filters.hashCode ^
-            listUIState.custom2Filters.hashCode ^
-            listUIState.custom3Filters.hashCode ^
-            listUIState.custom4Filters.hashCode ^
-            listUIState.stateFilters.hashCode ^
-            listUIState.statusFilters.hashCode ^
-            listUIState.filterClearedAt.hashCode ^
-            listUIState.filter.hashCode ^
-            listUIState.sortAscending.hashCode ^
-            listUIState.sortField.hashCode;
 
         return Column(
           mainAxisSize: MainAxisSize.max,
@@ -241,8 +233,6 @@ class _EntityListState extends State<EntityList> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(
-                    key: ValueKey(
-                        '__${uiState.filterEntityId}_${uiState.filterEntityType}_${listStateHash}__'),
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);

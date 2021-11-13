@@ -28,6 +28,18 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   @memoized
   int get hashCode;
 
+  int get tableHashCode =>
+      custom1Filters.hashCode ^
+      custom2Filters.hashCode ^
+      custom3Filters.hashCode ^
+      custom4Filters.hashCode ^
+      stateFilters.hashCode ^
+      statusFilters.hashCode ^
+      filterClearedAt.hashCode ^
+      filter.hashCode ^
+      sortAscending.hashCode ^
+      sortField.hashCode;
+
   @nullable
   String get filter;
 
