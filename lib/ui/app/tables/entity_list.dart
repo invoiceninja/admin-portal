@@ -289,6 +289,14 @@ class _EntityListState extends State<EntityList> {
                     rowsPerPage: state.prefState.rowsPerPage,
                     onPageChanged: (row) => _firstRowIndex = row,
                     initialFirstRowIndex: _firstRowIndex,
+                    availableRowsPerPage: [
+                      10,
+                      25,
+                      50,
+                    ],
+                    onRowsPerPageChanged: (value) {
+                      store.dispatch(UpdateUserPreferences(rowsPerPage: value));
+                    },
                   ),
                 ),
               ),

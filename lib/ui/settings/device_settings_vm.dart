@@ -46,7 +46,6 @@ class DeviceSettingsVM {
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
     @required this.onColorThemeChanged,
-    @required this.onRowsPerPageChanged,
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
     @required this.onPersistUiChanged,
@@ -98,9 +97,6 @@ class DeviceSettingsVM {
         if (store.state.prefState.colorTheme != value) {
           store.dispatch(UpdateUserPreferences(colorTheme: value));
         }
-      },
-      onRowsPerPageChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(rowsPerPage: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
@@ -181,6 +177,5 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;
-  final Function(BuildContext, int) onRowsPerPageChanged;
   final Future<bool> authenticationSupported;
 }
