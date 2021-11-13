@@ -345,7 +345,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
-      final prefState = store.state.prefState;
       final isList =
           widget.entityType.isSetting || state.prefState.isModuleList;
 
@@ -465,8 +464,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         ? Theme.of(context).accentColor
                         : null,
                   ),
-                if (!widget.entityType.isSetting &&
-                    (prefState.isPreviewVisible || isMobile(context)))
+                if (!widget.entityType.isSetting)
                   IconButton(
                     tooltip:
                         isList ? localization.showTable : localization.showList,

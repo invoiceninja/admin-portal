@@ -141,13 +141,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isNotMobile => !isMobile;
 
-  bool get isModuleList {
-    if (isDesktop && !isPreviewVisible) {
-      return false;
-    }
-
-    return moduleLayout == ModuleLayout.list;
-  }
+  bool get isModuleList => moduleLayout == ModuleLayout.list;
 
   bool get isModuleTable => !isModuleList;
 

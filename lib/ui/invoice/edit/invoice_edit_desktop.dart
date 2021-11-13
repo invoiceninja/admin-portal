@@ -266,7 +266,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               child: Text(
                                 EntityPresenter()
                                     .initialize(client, context)
-                                    .title,
+                                    .title(),
                                 style: Theme.of(context).textTheme.headline6,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

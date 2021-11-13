@@ -42,7 +42,7 @@ class ViewScaffold extends StatelessWidget {
       title = '';
     } else {
       final presenter = EntityPresenter().initialize(entity, context);
-      title = presenter.title;
+      title = presenter.title(isNarrow: isMobile(context));
     }
 
     Widget leading;
@@ -56,7 +56,7 @@ class ViewScaffold extends StatelessWidget {
           );
         } else {
           leading = IconButton(
-            icon: Icon(Icons.clear),
+            icon: Icon(Icons.close),
             onPressed: () {
               store.dispatch(UpdateUserPreferences(isFilterVisible: false));
             },
@@ -67,9 +67,11 @@ class ViewScaffold extends StatelessWidget {
             tooltip: localization.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
-      } else if (isDesktop(context) && !entity.entityType.isSetting) {
+      } else if (isDesktop(context) &&
+          !entity.entityType.isSetting &&
+          state.prefState.isModuleTable) {
         leading = IconButton(
-          icon: Icon(Icons.clear),
+          icon: Icon(Icons.close),
           onPressed: () {
             store.dispatch(UpdateUserPreferences(isPreviewVisible: false));
           },

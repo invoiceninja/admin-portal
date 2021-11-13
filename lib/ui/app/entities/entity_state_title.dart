@@ -11,7 +11,7 @@ class EntityStateTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     String titleText = '';
     if (entity.isOld) {
-      titleText = EntityPresenter().initialize(entity, context).title;
+      titleText = EntityPresenter().initialize(entity, context).title();
     }
 
     return Text(
