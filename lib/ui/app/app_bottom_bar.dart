@@ -345,7 +345,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
-      final prefState = store.state.prefState;
       final isList =
           widget.entityType.isSetting || state.prefState.isModuleList;
 
