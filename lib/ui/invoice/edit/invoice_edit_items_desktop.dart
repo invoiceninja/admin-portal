@@ -124,77 +124,113 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final customField4 =
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
+    final tableFontColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+        '';
+
+    final tableHeaderColor = state.prefState
+            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+        '';
+
     if (_isReordering) {
       return FormCard(
         padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(child: Text(localization.item)),
-              Expanded(child: Text(localization.description)),
-              if (company.hasCustomField(customField1))
+          DecoratedBox(
+            decoration: tableHeaderColor.isNotEmpty
+                ? BoxDecoration(
+                    color: convertHexStringToColor(tableHeaderColor),
+                  )
+                : BoxDecoration(),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
                 Expanded(
-                    child: Text(company.getCustomFieldLabel(customField1))),
-              if (company.hasCustomField(customField2))
+                  child: TableHeader(
+                    localization.item,
+                    isFirst: true,
+                  ),
+                ),
                 Expanded(
-                    child: Text(company.getCustomFieldLabel(customField2))),
-              if (company.hasCustomField(customField3))
-                Expanded(
-                    child: Text(company.getCustomFieldLabel(customField3))),
-              if (company.hasCustomField(customField4))
-                Expanded(
-                    child: Text(company.getCustomFieldLabel(customField4))),
-              if (hasTax1)
-                Expanded(
-                    child: Text(localization.tax +
+                  child: TableHeader(localization.description),
+                  flex: 2,
+                ),
+                if (company.hasCustomField(customField1))
+                  Expanded(
+                      child: TableHeader(
+                          company.getCustomFieldLabel(customField1))),
+                if (company.hasCustomField(customField2))
+                  Expanded(
+                      child: TableHeader(
+                          company.getCustomFieldLabel(customField2))),
+                if (company.hasCustomField(customField3))
+                  Expanded(
+                      child: TableHeader(
+                          company.getCustomFieldLabel(customField3))),
+                if (company.hasCustomField(customField4))
+                  Expanded(
+                      child: TableHeader(
+                          company.getCustomFieldLabel(customField4))),
+                if (hasTax1)
+                  Expanded(
+                    child: TableHeader(localization.tax +
                         (company.settings.enableInclusiveTaxes
                             ? ' - ${localization.inclusive}'
-                            : ''))),
-              if (hasTax2)
+                            : '')),
+                  ),
+                if (hasTax2)
+                  Expanded(
+                    child: TableHeader(localization.tax +
+                        (company.settings.enableInclusiveTaxes
+                            ? ' - ${localization.inclusive}'
+                            : '')),
+                  ),
+                if (hasTax3)
+                  Expanded(
+                    child: TableHeader(localization.tax +
+                        (company.settings.enableInclusiveTaxes
+                            ? ' - ${localization.inclusive}'
+                            : '')),
+                  ),
                 Expanded(
-                  child: Text(localization.tax +
-                      (company.settings.enableInclusiveTaxes
-                          ? ' - ${localization.inclusive}'
-                          : '')),
-                ),
-              if (hasTax3)
-                Expanded(
-                  child: Text(localization.tax +
-                      (company.settings.enableInclusiveTaxes
-                          ? ' - ${localization.inclusive}'
-                          : '')),
-                ),
-              Expanded(
-                child: Text(
-                  widget.isTasks ? localization.rate : localization.unitCost,
-                  textAlign: TextAlign.right,
-                ),
-              ),
-              if (company.enableProductQuantity || widget.isTasks)
-                Expanded(
-                  child: Text(
-                    widget.isTasks ? localization.hours : localization.quantity,
-                    textAlign: TextAlign.right,
+                  child: TableHeader(
+                    widget.isTasks ? localization.rate : localization.unitCost,
+                    isNumeric: true,
                   ),
                 ),
-              if (company.enableProductDiscount)
+                if (company.enableProductQuantity || widget.isTasks)
+                  Expanded(
+                    child: TableHeader(
+                      widget.isTasks
+                          ? localization.hours
+                          : localization.quantity,
+                      isNumeric: true,
+                    ),
+                  ),
+                if (company.enableProductDiscount)
+                  Expanded(
+                    child: TableHeader(
+                      localization.discount,
+                      isNumeric: true,
+                    ),
+                  ),
                 Expanded(
-                  child: Text(
-                    localization.discount,
-                    textAlign: TextAlign.right,
+                  child: TableHeader(
+                    localization.lineTotal,
+                    isNumeric: true,
                   ),
                 ),
-              Expanded(
-                child: Text(localization.lineTotal, textAlign: TextAlign.right),
-              ),
-              SizedBox(width: 16),
-              IconButton(
-                  onPressed: () {
-                    setState(() => _isReordering = false);
-                  },
-                  icon: Icon(Icons.close))
-            ],
+                SizedBox(width: 16),
+                IconButton(
+                    color: tableFontColor.isNotEmpty
+                        ? convertHexStringToColor(tableFontColor)
+                        : null,
+                    onPressed: () {
+                      setState(() => _isReordering = false);
+                    },
+                    icon: Icon(Icons.close))
+              ],
+            ),
           ),
           ReorderableListView.builder(
             shrinkWrap: true,
@@ -339,14 +375,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lastIndex++;
     }
 
-    final tableFontColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
-        '';
-
-    final tableHeaderColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
-        '';
-
     final tableHeaderColumns = [
       TableHeader(
         localization.item,
@@ -395,7 +423,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         isNumeric: true,
       ),
       IconButton(
-        icon: Icon(_isReordering ? Icons.close : Icons.swap_vert),
+        icon: Icon(Icons.swap_vert),
         color: tableFontColor.isNotEmpty
             ? convertHexStringToColor(tableFontColor)
             : null,
@@ -425,7 +453,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 ? BoxDecoration(
                     color: convertHexStringToColor(tableHeaderColor),
                   )
-                : null,
+                : BoxDecoration(),
           ),
           for (var index = 0; index < lineItems.length; index++)
             if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
