@@ -248,13 +248,14 @@ class ReportsScreen extends StatelessWidget {
                   },
                 );
               }),
-              AppTextButton(
-                label: localization.export,
-                isInHeader: true,
-                onPressed: () {
-                  viewModel.onExportPressed(context);
-                },
-              ),
+              if (supportsFileDownload())
+                AppTextButton(
+                  label: localization.export,
+                  isInHeader: true,
+                  onPressed: () {
+                    viewModel.onExportPressed(context);
+                  },
+                ),
             ],
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(

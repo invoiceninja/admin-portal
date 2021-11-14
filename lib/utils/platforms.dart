@@ -11,6 +11,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
+// TODO remove this function
+bool supportsFileDownload() => !isDesktopOS();
+
+// TODO remove this function
+bool supportsFileUpload() => !isMacOS() && !isLinux();
+
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 
 bool isMobileOS() => isAndroid() || isIOS();
