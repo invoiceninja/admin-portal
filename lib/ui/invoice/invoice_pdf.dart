@@ -267,6 +267,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                 } else if (isDesktopOS()) {
                                   // TODO download file on desktop once suppoted
                                   launch(invoice.invitationDownloadLink);
+                                  // TODO remove this
+                                } else if (isIOS()) {
+                                  launch(invoice.invitationDownloadLink);
                                 } else {
                                   final directory =
                                       await getExternalStorageDirectory();
