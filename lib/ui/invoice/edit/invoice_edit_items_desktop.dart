@@ -131,6 +131,64 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Expanded(child: Text(localization.item)),
+              Expanded(child: Text(localization.description)),
+              if (company.hasCustomField(customField1))
+                Expanded(
+                    child: Text(company.getCustomFieldLabel(customField1))),
+              if (company.hasCustomField(customField2))
+                Expanded(
+                    child: Text(company.getCustomFieldLabel(customField2))),
+              if (company.hasCustomField(customField3))
+                Expanded(
+                    child: Text(company.getCustomFieldLabel(customField3))),
+              if (company.hasCustomField(customField4))
+                Expanded(
+                    child: Text(company.getCustomFieldLabel(customField4))),
+              if (hasTax1)
+                Expanded(
+                    child: Text(localization.tax +
+                        (company.settings.enableInclusiveTaxes
+                            ? ' - ${localization.inclusive}'
+                            : ''))),
+              if (hasTax2)
+                Expanded(
+                  child: Text(localization.tax +
+                      (company.settings.enableInclusiveTaxes
+                          ? ' - ${localization.inclusive}'
+                          : '')),
+                ),
+              if (hasTax3)
+                Expanded(
+                  child: Text(localization.tax +
+                      (company.settings.enableInclusiveTaxes
+                          ? ' - ${localization.inclusive}'
+                          : '')),
+                ),
+              Expanded(
+                child: Text(
+                  widget.isTasks ? localization.rate : localization.unitCost,
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              if (company.enableProductQuantity || widget.isTasks)
+                Expanded(
+                  child: Text(
+                    widget.isTasks ? localization.hours : localization.quantity,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              if (company.enableProductDiscount)
+                Expanded(
+                  child: Text(
+                    localization.discount,
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+              Expanded(
+                child: Text(localization.lineTotal, textAlign: TextAlign.right),
+              ),
+              SizedBox(width: 16),
               IconButton(
                   onPressed: () {
                     setState(() => _isReordering = false);
