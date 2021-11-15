@@ -30,7 +30,8 @@ const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app/';
-const String kMacOSUrl = 'https://download.invoiceninja.com/macos';
+const String kMacOSUrl =
+    'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1503970375';
 const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
