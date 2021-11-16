@@ -24,22 +24,32 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final button = ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: color ?? Theme.of(context).colorScheme.secondary,
-          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(kBorderRadius)),
-          elevation: 4,
-          textStyle: TextStyle(
-            color: Colors.white,
-          )),
+        primary: color ?? Theme.of(context).colorScheme.secondary,
+        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(kBorderRadius)),
+        elevation: 4,
+        textStyle: TextStyle(
+          color: Colors.white,
+        ),
+      ),
       child: iconData != null
           ? IconText(
               icon: iconData,
               text: label,
               alignment: MainAxisAlignment.center,
+              style: TextStyle(
+                color: Colors.white,
+              ),
             )
           : SizedBox(
-              child: Text(label, overflow: TextOverflow.ellipsis),
+              child: Text(
+                label,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               height: 24,
             ),
       onPressed: onPressed,

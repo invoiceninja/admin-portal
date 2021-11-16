@@ -286,6 +286,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ? ThemeData(
                         colorScheme: ColorScheme.dark().copyWith(
                           secondary: accentColor,
+                          primary: accentColor,
                         ),
                         pageTransitionsTheme: pageTransitionsTheme,
                         indicatorColor: accentColor,
