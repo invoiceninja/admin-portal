@@ -31,21 +31,21 @@ dependencies:
   built_value: ^8.1.2
   built_collection: ^5.1.0
   memoize: ^3.0.0
-  cached_network_image: 3.0.0
+  cached_network_image: 3.0.0 # imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
   url_launcher: ^6.0.9
   share: ^2.0.4
   intl: ^0.17.0
   flutter_slidable: ^0.6.0
-  charts_flutter: ^0.11.0
+  charts_flutter: ^0.12.0
   qr_flutter: ^4.0.0
   local_auth: ^1.1.6
   sentry_flutter: ^5.1.0
   image_picker: ^0.8.3+1
-  flutter_colorpicker: 0.4.0
+  flutter_colorpicker: ^0.5.0
   flutter_json_viewer: ^1.0.1
   webview_flutter: ^2.0.10
   timeago: ^3.1.0
-  native_pdf_view: ^4.1.0
+  native_pdf_view: ^5.0.0
   # flutter_typeahead: 1.8.0
   flutter_typeahead:
     git:
@@ -62,6 +62,7 @@ dependencies:
   boardview: ^0.2.2
   pointer_interceptor: ^0.9.0
   contacts_service: ^0.6.1
+  super_editor: ^0.1.0
   filepicker_windows: ^2.0.0
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
@@ -87,3 +88,16 @@ flutter:
     - assets/images/logo_dark.png
     - assets/images/google_logo.png
     - assets/images/payment_types/
+
+msix_config:
+  display_name: Invoice Ninja
+  publisher_display_name: Invoice Ninja
+  identity_name: InvoiceNinja.InvoiceNinja
+  msix_version: 5.0.67.0
+  publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
+  architecture: x64
+  capabilities: 'internetClient'
+  store: true
+  logo_path: assets/images/logo_light.png
+  start_menu_icon_path: assets/images/icon.png
+  tile_icon_path: assets/images/icon.png

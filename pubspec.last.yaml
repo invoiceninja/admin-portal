@@ -59,7 +59,7 @@ dependencies:
   permission_handler: ^8.1.4+2
   file_picker: ^3.0.4
   draggable_scrollbar: ^0.1.0
-  boardview: 0.2.0
+  boardview: ^0.2.2
   pointer_interceptor: ^0.9.0
   contacts_service: ^0.6.1
   super_editor: ^0.1.0
@@ -68,8 +68,8 @@ dependencies:
   # idb_shim: ^1.11.1+1
 
 dev_dependencies:
-  #flutter_driver:
-  #  sdk: flutter
+  flutter_driver:
+    sdk: flutter
   test: ^1.6.3
   flutter_test:
     sdk: flutter
@@ -88,3 +88,16 @@ flutter:
     - assets/images/logo_dark.png
     - assets/images/google_logo.png
     - assets/images/payment_types/
+
+msix_config:
+  display_name: Invoice Ninja
+  publisher_display_name: Invoice Ninja
+  identity_name: InvoiceNinja.InvoiceNinja
+  msix_version: 5.0.67.0
+  publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
+  architecture: x64
+  capabilities: 'internetClient'
+  store: true
+  logo_path: assets/images/logo_light.png
+  start_menu_icon_path: assets/images/icon.png
+  tile_icon_path: assets/images/icon.png
