@@ -284,9 +284,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 locale: locale,
                 theme: state.prefState.enableDarkMode
                     ? ThemeData(
+                        colorScheme: ColorScheme.dark().copyWith(
+                          secondary: accentColor,
+                        ),
                         pageTransitionsTheme: pageTransitionsTheme,
-                        brightness: Brightness.dark,
-                        accentColor: accentColor,
                         indicatorColor: accentColor,
                         textSelectionTheme: TextSelectionThemeData(
                           selectionHandleColor: accentColor,
@@ -297,16 +298,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         cardColor: const Color(0xFF1B1C1E),
                         bottomAppBarColor: const Color(0xFF1B1C1E),
                         primaryColorDark: Colors.black,
-                        buttonColor: accentColor,
                         textButtonTheme:
                             TextButtonThemeData(style: textButtonTheme),
                         outlinedButtonTheme:
                             OutlinedButtonThemeData(style: outlinedButtonTheme),
                       )
                     : ThemeData(
+                        colorScheme: ColorScheme.fromSwatch()
+                            .copyWith(secondary: accentColor),
                         pageTransitionsTheme: pageTransitionsTheme,
                         primaryColor: accentColor,
-                        accentColor: accentColor,
                         indicatorColor: accentColor,
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: accentColor,
@@ -322,9 +323,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         primaryColorLight: hasAccentColor
                             ? accentColor
                             : const Color(0xFF5dabf4),
-                        buttonColor: hasAccentColor
-                            ? accentColor
-                            : const Color(0xFF0D5D91),
                         scaffoldBackgroundColor: const Color(0xFFE4E8EB),
                         tabBarTheme: TabBarTheme(
                           labelColor:
@@ -333,31 +331,17 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               ? Colors.white.withOpacity(.65)
                               : Colors.black.withOpacity(.65),
                         ),
-                        /*
-                        buttonTheme: ButtonThemeData(
-                          textTheme: ButtonTextTheme.primary,
-                          colorScheme: ColorScheme.light(
-                            //primary: hasAccentColor ? Colors.white : Colors.black,
-                          ),
-                        ),
-                         */
                         iconTheme: IconThemeData(
                           color: hasAccentColor ? null : accentColor,
                         ),
                         appBarTheme: AppBarTheme(
-                          brightness: Brightness.light,
                           color: hasAccentColor ? accentColor : Colors.white,
                           iconTheme: IconThemeData(
                             color: hasAccentColor ? Colors.white : accentColor,
                           ),
-                          textTheme: TextTheme(
-                            headline6:
-                                Theme.of(context).textTheme.headline6.copyWith(
-                                      color: hasAccentColor
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                          ),
+                          titleTextStyle: TextStyle(
+                              color:
+                                  hasAccentColor ? Colors.white : Colors.black),
                         ),
                         textButtonTheme:
                             TextButtonThemeData(style: textButtonTheme),
