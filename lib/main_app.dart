@@ -341,6 +341,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             color: hasAccentColor ? Colors.white : accentColor,
                           ),
                           titleTextStyle: TextStyle(
+                              fontSize: 20,
                               color:
                                   hasAccentColor ? Colors.white : Colors.black),
                         ),

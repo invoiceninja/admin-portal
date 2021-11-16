@@ -56,7 +56,6 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 // STARTER: import - do not remove comment
 
-
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
