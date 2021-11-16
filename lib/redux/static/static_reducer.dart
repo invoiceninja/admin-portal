@@ -1,6 +1,9 @@
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
-import 'package:redux/redux.dart';
 
 Reducer<StaticState> staticReducer = combineReducers([
   TypedReducer<StaticState, LoadStaticSuccess>(staticLoadedReducer),

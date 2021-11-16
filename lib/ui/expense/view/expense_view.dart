@@ -1,22 +1,27 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_schedule.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({

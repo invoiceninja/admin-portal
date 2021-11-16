@@ -1,5 +1,7 @@
+// Dart imports:
 import 'dart:math';
 
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';

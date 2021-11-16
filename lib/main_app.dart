@@ -1,11 +1,20 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:redux/redux.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -35,6 +44,10 @@ import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
@@ -42,7 +55,15 @@ import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -52,50 +73,35 @@ import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:redux/redux.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
-
-import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
-import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
-import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
-import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+// STARTER: import - do not remove comment
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 

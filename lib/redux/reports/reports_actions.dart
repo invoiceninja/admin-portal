@@ -1,5 +1,10 @@
-import 'package:built_collection/built_collection.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewReports implements PersistUI {

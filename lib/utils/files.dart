@@ -1,10 +1,17 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+
 // ignore: unused_import
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';

@@ -1,7 +1,10 @@
+// Package imports:
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:version/version.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 part 'account_model.g.dart';
 

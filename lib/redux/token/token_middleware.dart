@@ -1,18 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
-import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/token_repository.dart';
 
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/token_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 
 List<Middleware<AppState>> createStoreTokensMiddleware([
   TokenRepository repository = const TokenRepository(),

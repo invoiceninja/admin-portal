@@ -1,9 +1,13 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:archive/archive.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:archive/archive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:idb_shim/idb.dart';

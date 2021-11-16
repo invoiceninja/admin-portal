@@ -1,12 +1,17 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+// Package imports:
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:redux/redux.dart';
 
 class WebUtils {
   static String get browserUrl {

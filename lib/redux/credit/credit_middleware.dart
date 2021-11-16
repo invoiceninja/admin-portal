@@ -1,19 +1,23 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
-import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
-import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
-import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/credit_repository.dart';
 
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/credit_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 
 List<Middleware<AppState>> createStoreCreditsMiddleware([
   CreditRepository repository = const CreditRepository(),

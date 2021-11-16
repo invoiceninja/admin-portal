@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:built_value/built_value.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 

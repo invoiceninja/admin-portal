@@ -1,13 +1,23 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:redux/redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -37,10 +47,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({

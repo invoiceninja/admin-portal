@@ -1,8 +1,14 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
@@ -19,7 +25,6 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({

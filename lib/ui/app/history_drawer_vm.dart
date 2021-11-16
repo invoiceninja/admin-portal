@@ -1,10 +1,15 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/app/history_drawer.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/history_drawer.dart';
 
 class HistoryDrawerBuilder extends StatelessWidget {
   const HistoryDrawerBuilder({Key key}) : super(key: key);

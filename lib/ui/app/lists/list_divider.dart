@@ -1,9 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
-import 'package:redux/redux.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class ListDivider extends StatelessWidget {
   @override

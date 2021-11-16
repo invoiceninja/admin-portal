@@ -1,9 +1,12 @@
-import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
-import 'package:invoiceninja_flutter/redux/static/static_state.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:memoize/memoize.dart';
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownRecurringExpenseList = memo9(

@@ -1,8 +1,11 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/font_model.dart';
-import 'package:memoize/memoize.dart';
 
 var memoizedCountryList = memo1(
     (BuiltMap<String, CountryEntity> countryMap) => countryList(countryMap));

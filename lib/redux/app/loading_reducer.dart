@@ -1,5 +1,8 @@
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+// Package imports:
 import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, StartLoading>(_setLoading),

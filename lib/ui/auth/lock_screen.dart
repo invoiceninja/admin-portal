@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'package:invoiceninja_flutter/utils/localization.dart';
+// Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LockScreen extends StatelessWidget {
   const LockScreen({@required this.onAuthenticatePressed});

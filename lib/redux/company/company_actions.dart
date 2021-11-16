@@ -1,9 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:http/http.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 

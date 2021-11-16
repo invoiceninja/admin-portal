@@ -1,16 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
+
+// Package imports:
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
-import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/subscription_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
 
 List<Middleware<AppState>> createStoreSubscriptionsMiddleware([
   SubscriptionRepository repository = const SubscriptionRepository(),

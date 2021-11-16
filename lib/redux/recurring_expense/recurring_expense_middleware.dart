@@ -1,16 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
+
+// Package imports:
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/recurring_expense_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
 
 List<Middleware<AppState>> createStoreRecurringExpensesMiddleware([
   RecurringExpenseRepository repository = const RecurringExpenseRepository(),

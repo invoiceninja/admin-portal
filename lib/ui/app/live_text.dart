@@ -1,4 +1,7 @@
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
 import 'package:flutter/widgets.dart';
 
 class LiveText extends StatefulWidget {

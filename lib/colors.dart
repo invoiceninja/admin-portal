@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'constants.dart';
 import 'data/models/static/color_theme_model.dart';
 

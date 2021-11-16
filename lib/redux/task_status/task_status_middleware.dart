@@ -1,16 +1,21 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
+
+// Package imports:
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
-import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/task_status_repository.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 
 List<Middleware<AppState>> createStoreTaskStatusesMiddleware([
   TaskStatusRepository repository = const TaskStatusRepository(),

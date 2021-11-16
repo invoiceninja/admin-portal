@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+
+// Package imports:
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HelpLink extends StatelessWidget {
   const HelpLink({

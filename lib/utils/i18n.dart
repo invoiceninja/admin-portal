@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 abstract class LocaleCodeAware {

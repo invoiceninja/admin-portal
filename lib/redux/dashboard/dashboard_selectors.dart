@@ -1,5 +1,9 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:charts_common/common.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -7,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
-import 'package:memoize/memoize.dart';
 
 class ChartDataGroup {
   ChartDataGroup(this.name);
