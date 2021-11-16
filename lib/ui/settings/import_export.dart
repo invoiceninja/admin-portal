@@ -333,13 +333,13 @@ class _FileImportState extends State<_FileImport> {
     if (widget.importType == ImportType.json) {
       children.addAll([
         SwitchListTile(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importSettings),
           value: _importJsonSettings,
           onChanged: (value) => setState(() => _importJsonSettings = value),
         ),
         SwitchListTile(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importData),
           value: _importJsonData,
           onChanged: (value) => setState(() => _importJsonData = value),
@@ -428,7 +428,7 @@ class __FileMapperState extends State<_FileMapper> {
 
     final List<Widget> children = [
       SwitchListTile(
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
         title: Text(AppLocalization.of(context).firstRowAsColumnNames),
         value: _useFirstRowAsHeaders,
         onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),

@@ -94,7 +94,8 @@ class ProjectListItem extends StatelessWidget {
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
                                         onCheckboxChanged(value),
-                                    activeColor: Theme.of(context).accentColor,
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               )
@@ -175,7 +176,7 @@ class ProjectListItem extends StatelessWidget {
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
                           onChanged: (value) => onCheckboxChanged(value),
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
                     : null,

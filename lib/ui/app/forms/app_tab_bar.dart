@@ -29,7 +29,7 @@ class AppTabBar extends StatelessWidget {
       tabs: tabs,
       controller: controller,
       isScrollable: isScrollable,
-      indicatorColor: Theme.of(context).accentColor,
+      indicatorColor: Theme.of(context).colorScheme.secondary,
       onTap: onTap,
     );
 

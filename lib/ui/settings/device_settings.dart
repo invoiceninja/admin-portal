@@ -186,7 +186,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           secondary: Icon(prefState.requireAuthentication
                               ? MdiIcons.lock
                               : MdiIcons.lockOpen),
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                         );
                       } else {
                         return SizedBox();
@@ -199,7 +199,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.persistUI,
                     onChanged: (value) =>
                         viewModel.onPersistUiChanged(context, value),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
                   SwitchListTile(
@@ -208,7 +208,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.persistData,
                     onChanged: (value) =>
                         viewModel.onPersistDataChanged(context, value),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
                 ],
@@ -264,7 +264,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   secondary: Icon(kIsWeb
                       ? Icons.lightbulb_outline
                       : MdiIcons.themeLightDark),
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                 ),
                 SizedBox(height: 16),
                 AppDropdownButton<String>(

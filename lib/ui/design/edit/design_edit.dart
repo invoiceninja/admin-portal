@@ -473,7 +473,7 @@ class _DesignSettingsState extends State<DesignSettings> {
             if (kIsWeb || isMobileOS()) ...[
               SizedBox(height: 16),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.draftMode),
                 subtitle: Text(localization.draftModeHelp),
                 value: widget.draftMode,

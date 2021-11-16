@@ -76,6 +76,7 @@ dev_dependencies:
   built_value_generator: ^8.1.1
   faker: ^2.0.0
   msix: ^2.1.3
+  import_sorter: ^4.6.0
 
 flutter:
 

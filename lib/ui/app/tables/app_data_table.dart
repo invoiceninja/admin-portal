@@ -693,14 +693,14 @@ class AppDataTable extends StatelessWidget {
       tableColumns[0] = FixedColumnWidth(
           horizontalMargin + Checkbox.width + horizontalMargin / 2.0);
       tableRows[0].children[0] = _buildCheckbox(
-        color: theme.accentColor,
+        color: theme.colorScheme.secondary,
         checked: allChecked,
         onCheckboxChanged: _handleSelectAll,
       );
       rowIndex = 1;
       for (final DataRow row in rows) {
         tableRows[rowIndex].children[0] = _buildCheckbox(
-          color: theme.accentColor,
+          color: theme.colorScheme.secondary,
           checked: row.selected,
           onRowTap: () => row.onSelectChanged != null
               ? row.onSelectChanged(!row.selected)

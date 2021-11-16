@@ -69,7 +69,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
             : null,

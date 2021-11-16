@@ -693,8 +693,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           padding:
                                               const EdgeInsets.only(top: 8),
                                           child: SwitchListTile(
-                                            activeColor:
-                                                Theme.of(context).accentColor,
+                                            activeColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             title: Text(
                                                 localization.inclusiveTaxes),
                                             dense: true,
@@ -719,8 +720,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           padding:
                                               const EdgeInsets.only(top: 8),
                                           child: SwitchListTile(
-                                            activeColor:
-                                                Theme.of(context).accentColor,
+                                            activeColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                             title: Text(
                                                 localization.autoBillEnabled),
                                             dense: true,

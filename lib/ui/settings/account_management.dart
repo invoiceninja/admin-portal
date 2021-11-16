@@ -195,7 +195,7 @@ class _AccountManagementState extends State<AccountManagement>
                   controlAffinity: ListTileControlAffinity.leading,
                   title: Text(localization.lookup(kModules[module])),
                   value: company.enabledModules & module != 0,
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (value) {
                     int enabledModules = company.enabledModules;
                     if (value) {
@@ -361,7 +361,7 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.activateCompany),
               subtitle: Text(localization.activateCompanyHelp),
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(
               value: company.markdownEnabled,
@@ -371,7 +371,7 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.enableMarkdown),
               subtitle: Text(localization.enableMarkdownHelp),
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(
               value: company.reportIncludeDrafts,
@@ -381,7 +381,7 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.includeDrafts),
               subtitle: Text(localization.includeDraftsHelp),
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
             ),
           ],
         ),

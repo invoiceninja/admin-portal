@@ -56,7 +56,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.shouldBeInvoiced),
                 value: company.markExpensesInvoiceable ?? false,
                 subtitle: Text(localization.shouldBeInvoicedHelp),
@@ -64,7 +64,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                     company.rebuild((b) => b..markExpensesInvoiceable = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.markPaid),
                 value: company.markExpensesPaid ?? false,
                 subtitle: Text(localization.markPaidHelp),
@@ -72,7 +72,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                     company.rebuild((b) => b..markExpensesPaid = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
                 value: company.invoiceExpenseDocuments ?? false,
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
@@ -94,7 +94,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
                 SizedBox(height: 16),
                 SwitchListTile(
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.inclusiveTaxes),
                   value: company.expenseInclusiveTaxes ?? false,
                   subtitle: Text(

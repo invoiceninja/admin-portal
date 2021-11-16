@@ -494,7 +494,7 @@ class _ClientPortalState extends State<ClientPortal>
                   isLast: true,
                   children: company.clientRegistrationFields
                       .map((field) => SwitchListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.lookup(field.key)),
                           value: field.required,
                           onChanged: (value) {

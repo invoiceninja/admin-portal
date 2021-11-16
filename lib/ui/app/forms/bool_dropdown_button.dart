@@ -51,7 +51,7 @@ class BoolDropdownButton extends StatelessWidget {
           secondary:
               iconData != null && isDesktop(context) ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           subtitle: helpLabel != null ? Text(helpLabel) : null,
         ),
       );
@@ -104,7 +104,8 @@ class BoolDropdownButton extends StatelessWidget {
                                 value: false,
                                 onChanged: (value) => null,
                                 groupValue: value,
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(falseLabel),
@@ -125,7 +126,8 @@ class BoolDropdownButton extends StatelessWidget {
                                 value: true,
                                 onChanged: (value) => null,
                                 groupValue: value,
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(trueLabel),

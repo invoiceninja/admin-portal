@@ -82,7 +82,7 @@ class _ContactListTile extends StatelessWidget {
       onTap: onTap,
       leading: IgnorePointer(
         child: Checkbox(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           value: invitation != null,
           onChanged: (value) => null,
         ),

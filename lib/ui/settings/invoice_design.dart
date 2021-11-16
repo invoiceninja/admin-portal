@@ -165,7 +165,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllInvoiceDesigns,
                           onChanged: (value) => setState(
@@ -192,7 +192,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllQuoteDesigns,
                           onChanged: (value) => setState(
@@ -219,7 +219,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllCreditDesigns,
                           onChanged: (value) => setState(

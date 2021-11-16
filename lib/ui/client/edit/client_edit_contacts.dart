@@ -359,7 +359,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addToInvoices),
                 value: _sendEmail,
                 onChanged: (value) {

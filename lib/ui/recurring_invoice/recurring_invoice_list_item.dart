@@ -102,8 +102,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                       onChanged: (value) => null,
-                                      activeColor:
-                                          Theme.of(context).accentColor,
+                                      activeColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                   )
                                 : ActionMenuButton(
@@ -185,7 +186,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                             onChanged: (value) => null,
-                            activeColor: Theme.of(context).accentColor,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
                           ),
                         )
                       : null,

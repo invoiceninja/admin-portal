@@ -279,7 +279,7 @@ class _UserEditState extends State<UserEdit>
                     value: userCompany.isAdmin ?? false,
                     onChanged: (value) => viewModel.onUserChanged(
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ),
@@ -450,7 +450,7 @@ class _PermissionCheckbox extends StatelessWidget {
           ? true
           : (userCompany.permissions ?? '').contains(permission),
       onChanged: checkAll ? null : onChanged,
-      activeColor: Theme.of(context).accentColor,
+      activeColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

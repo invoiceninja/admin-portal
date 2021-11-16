@@ -379,7 +379,7 @@ class _EntityListState extends State<EntityList> {
                             handleEntitiesActions(
                                 entities, EntityAction.toggleMultiselect);
                           },
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           value: entityList.length ==
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
@@ -448,11 +448,10 @@ class _EntityListState extends State<EntityList> {
                                           value: action,
                                           child: Row(
                                             children: <Widget>[
-                                              Icon(
-                                                getEntityActionIcon(action),
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                              ),
+                                              Icon(getEntityActionIcon(action),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
                                               SizedBox(width: 16.0),
                                               Text(AppLocalization.of(context)
                                                       .lookup(

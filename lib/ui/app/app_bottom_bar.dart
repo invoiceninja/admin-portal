@@ -148,7 +148,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       title: Text(AppLocalization.of(context).lookup('$state')),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       dense: true,
                       onChanged: (value) {
                         widget.onSelectedState(state, value);
@@ -189,7 +189,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           Text(AppLocalization.of(context).lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       dense: true,
                       onChanged: (value) {
                         widget.onSelectedStatus(status, value);
@@ -239,7 +239,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                                   : AppLocalization.of(context).descending)
                               : null,
                           groupValue: listUIState.sortField,
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           onChanged: (String value) {
                             if (value == null &&
                                 listUIState.sortField == field) {
@@ -411,7 +411,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   color: store.state
                           .getListState(widget.entityType)
                           .hasStateFilters
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).colorScheme.secondary
                       : null,
                 ),
                 if (widget.statuses.isNotEmpty)
@@ -422,7 +422,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     color: store.state
                             .getListState(widget.entityType)
                             .hasStatusFilters
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 if (widget.customValues1.isNotEmpty)
@@ -433,7 +433,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     color: store.state
                             .getListState(widget.entityType)
                             .hasCustom1Filters
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 if (widget.customValues2.isNotEmpty)
@@ -444,7 +444,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     color: store.state
                             .getListState(widget.entityType)
                             .hasCustom2Filters
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 if (widget.customValues3.isNotEmpty)
@@ -455,7 +455,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     color: store.state
                             .getListState(widget.entityType)
                             .hasCustom3Filters
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 if (widget.customValues4.isNotEmpty)
@@ -466,7 +466,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     color: store.state
                             .getListState(widget.entityType)
                             .hasCustom4Filters
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
                 if (!widget.entityType.isSetting)
@@ -556,7 +556,7 @@ class CustomFieldSelector extends StatelessWidget {
                   title: Text(customField),
                   controlAffinity: ListTileControlAffinity.leading,
                   value: customFilters.contains(customField),
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   dense: true,
                   onChanged: (value) => onSelected(customField),
                 );

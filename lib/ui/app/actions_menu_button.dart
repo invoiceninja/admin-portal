@@ -50,7 +50,7 @@ class ActionMenuButton extends StatelessWidget {
             children: <Widget>[
               Icon(
                 getEntityActionIcon(action),
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               SizedBox(width: 16.0),
               Expanded(

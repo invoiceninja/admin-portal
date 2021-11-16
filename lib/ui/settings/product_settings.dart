@@ -54,7 +54,7 @@ class _ProductSettingsState extends State<ProductSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductDiscount),
                 value: company.enableProductDiscount,
                 subtitle: Text(localization.showProductDiscountHelp),
@@ -62,7 +62,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                     company.rebuild((b) => b..enableProductDiscount = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductCost),
                 value: company.enableProductCost,
                 subtitle: Text(localization.showCostHelp),
@@ -70,7 +70,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                     company.rebuild((b) => b..enableProductCost = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductQuantity),
                 value: company.enableProductQuantity,
                 subtitle: Text(localization.showProductQuantityHelp),
@@ -78,7 +78,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                     company.rebuild((b) => b..enableProductQuantity = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.defaultQuantity),
                 value: company.defaultQuantity,
                 subtitle: Text(localization.defaultQuantityHelp),
@@ -92,7 +92,7 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: <Widget>[
               /*
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductDetails),
                 value: company.showProductDetails,
                 subtitle: Text(localization.showProductDetailsHelp),
@@ -101,7 +101,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               ),
                */
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.fillProducts),
                 value: company.fillProducts,
                 subtitle: Text(localization.fillProductsHelp),
@@ -109,7 +109,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                     company.rebuild((b) => b..fillProducts = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.updateProducts),
                 value: company.updateProducts,
                 subtitle: Text(localization.updateProductsHelp),
@@ -117,7 +117,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                     company.rebuild((b) => b..updateProducts = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertProducts),
                 value: company.convertProductExchangeRate ?? false,
                 subtitle: Text(localization.convertProductsHelp),

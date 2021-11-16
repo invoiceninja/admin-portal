@@ -414,7 +414,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                   children: [
                     IgnorePointer(
                       child: Checkbox(
-                        activeColor: Theme.of(context).accentColor,
+                        activeColor: Theme.of(context).colorScheme.secondary,
                         value: widget.taxesEnabled ?? false,
                         onChanged: (value) => null,
                       ),

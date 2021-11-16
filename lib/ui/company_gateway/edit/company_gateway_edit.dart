@@ -243,7 +243,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   SwitchListTile(
                       title: Text(localization
                           .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       value: companyGateway
                           .getSettingsForGatewayTypeId(gatewayTypeId)
                           .isEnabled,
@@ -267,7 +267,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     ),
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.clientName),
                     value: companyGateway.requireClientName,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -275,7 +275,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.clientPhone),
                     value: companyGateway.requireClientPhone,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -283,7 +283,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.contactName),
                     value: companyGateway.requireContactName,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -291,7 +291,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.contactEmail),
                     value: companyGateway.requireContactEmail,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -299,7 +299,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.postalCode),
                     value: companyGateway.requirePostalCode,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -307,7 +307,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.cvv),
                     value: companyGateway.requireCvv,
                     onChanged: (value) => viewModel.onChanged(
@@ -315,7 +315,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.billingAddress),
                     value: companyGateway.requireBillingAddress,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -323,7 +323,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.shippingAddress),
                     value: companyGateway.requireShippingAddress,
                     onChanged: (value) => viewModel.onChanged(companyGateway
@@ -332,7 +332,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   ),
                   SizedBox(height: 16),
                   SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.updateAddress),
                     subtitle: Text(localization.updateAddressHelp),
                     value: companyGateway.updateDetails,
@@ -445,7 +445,7 @@ class CardListTile extends StatelessWidget {
 
     return CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
-      activeColor: Theme.of(context).accentColor,
+      activeColor: Theme.of(context).colorScheme.secondary,
       title: Text(staticState.paymentTypeMap[paymentType]?.name ?? ''),
       value: companyGateway.supportsCard(cardType),
       onChanged: (value) => viewModel.onChanged(value
@@ -611,7 +611,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
     } else if (widget.defaultValue.runtimeType == bool) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
         title: Text(toTitleCase(widget.field)),
         value: widget.value ?? false,
         onChanged: (value) => widget.onChanged(value),
@@ -745,7 +745,7 @@ class _LimitEditorState extends State<LimitEditor> {
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: const EdgeInsets.all(0),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(isDesktop(context)
                         ? localization.enableMin
                         : localization.enable),
@@ -780,7 +780,7 @@ class _LimitEditorState extends State<LimitEditor> {
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: const EdgeInsets.all(0),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(isDesktop(context)
                         ? localization.enableMax
                         : localization.enable),
@@ -959,7 +959,7 @@ class _FeesEditorState extends State<FeesEditor> {
                   ..feesAndLimitsMap[widget.gatewayTypeId] =
                       settings.rebuild((b) => b..adjustFeePercent = value))),
             title: Text(localization.adjustFeePercent),
-            activeColor: Theme.of(context).accentColor,
+            activeColor: Theme.of(context).colorScheme.secondary,
             subtitle: Text(localization.adjustFeePercentHelp),
           ),
         ),

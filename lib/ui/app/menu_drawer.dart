@@ -760,7 +760,7 @@ class SidebarFooter extends StatelessWidget {
                   tooltip: localization.updateAvailable,
                   icon: Icon(
                     Icons.warning,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   onPressed: () => _showUpdate(context),
                 )
@@ -934,7 +934,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
               state.prefState.isFilterVisible
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
-                  ? Icon(Icons.warning, color: Theme.of(context).accentColor)
+                  ? Icon(Icons.warning,
+                      color: Theme.of(context).colorScheme.secondary)
                   : Icon(Icons.info_outline),
               onSelected: (value) {
                 if (value == localization.updateAvailable) {
@@ -951,7 +952,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(
                         Icons.warning,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       title: Text(localization.updateAvailable),
                     ),
@@ -1400,7 +1401,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                         setState(() => _includeLogs = value);
                       },
                       title: Text(localization.includeRecentErrors),
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                     ),
                   ]
                 ]),

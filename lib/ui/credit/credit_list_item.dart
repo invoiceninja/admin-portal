@@ -98,7 +98,8 @@ class CreditListItem extends StatelessWidget {
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
                                         onCheckboxChanged(value),
-                                    activeColor: Theme.of(context).accentColor,
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
@@ -179,7 +180,7 @@ class CreditListItem extends StatelessWidget {
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
                           onChanged: (value) => onCheckboxChanged(value),
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
                     : null,
