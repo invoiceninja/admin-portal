@@ -62,7 +62,7 @@ class DismissibleEntity extends StatelessWidget {
     return Slidable(
       key: Key('__${entity.entityKey}_${entity.entityState}__'),
       startActionPane: ActionPane(
-        motion: const ScrollMotion(),
+        motion: const DrawerMotion(),
         children: [
           if (showCheckbox)
             SlidableAction(
@@ -84,7 +84,7 @@ class DismissibleEntity extends StatelessWidget {
         ],
       ),
       endActionPane: ActionPane(
-        motion: const ScrollMotion(),
+        motion: const DrawerMotion(),
         children: [
           entity.isActive
               ? SlidableAction(
