@@ -528,7 +528,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptInvoiceTerms,
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
                     value: settings.showAcceptInvoiceTerms,
-                    iconData: MdiIcons.checkBoxOutline,
+                    iconData: MdiIcons.checkboxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptInvoiceTerms = value)),
                   ),
@@ -536,7 +536,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
                     value: settings.showAcceptQuoteTerms,
-                    iconData: MdiIcons.checkBoxOutline,
+                    iconData: MdiIcons.checkboxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptQuoteTerms = value)),
                   ),

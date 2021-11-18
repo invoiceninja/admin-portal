@@ -229,8 +229,9 @@ UserState _restoreUserSuccess(UserState userState, RestoreUserSuccess action) {
 }
 
 UserState _removeUserSuccess(UserState userState, RemoveUserSuccess action) {
-  return userState
-      .rebuild((b) => b..map.remove(action.userId)..list.remove(action.userId));
+  return userState.rebuild((b) => b
+    ..map.remove(action.userId)
+    ..list.remove(action.userId));
 }
 
 UserState _addUser(UserState userState, AddUserSuccess action) {

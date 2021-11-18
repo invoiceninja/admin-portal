@@ -27,10 +27,11 @@ Future<MultipartFile> pickFile(
       allowedExtensions: allowedExtensions,
     );
   } else if (isWindows()) {
-    return WebUtils.pickFile(
-        fileIndex: fileIndex,
-        allowedExtensions: allowedExtensions,
-        fileType: fileType);
+    return _pickFile(
+      fileIndex: fileIndex,
+      fileType: fileType,
+      allowedExtensions: allowedExtensions,
+    );
   } else {
     final permission = await (fileType == FileType.image && Platform.isIOS
         ? Permission.photos.status

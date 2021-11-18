@@ -33,11 +33,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 
 // STARTER: import - do not remove comment
 
-
-
-
-
-
 part 'company_state.g.dart';
 
 abstract class UserCompanyState

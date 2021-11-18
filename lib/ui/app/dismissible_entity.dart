@@ -60,26 +60,34 @@ class DismissibleEntity extends StatelessWidget {
     }
 
     return Slidable(
-      actionPane: SlidableDrawerActionPane(),
+      //actionPane: SlidableDrawerActionPane(),
       key: Key('__${entity.entityKey}_${entity.entityState}__'),
-      actions: <Widget>[
-        if (showCheckbox)
-          IconSlideAction(
-            caption: localization.select,
-            color: Colors.teal,
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        dismissible: DismissiblePane(onDismissed: () {
+          //
+        }),
+        children: [
+          if (showCheckbox)
+            SlidableAction(
+              onPressed: (context) =>
+                  handleEntityAction(entity, EntityAction.toggleMultiselect),
+              icon: Icons.check_box,
+              label: localization.select,
+              backgroundColor: Colors.teal,
+              foregroundColor: Colors.white,
+            ),
+          SlidableAction(
+            label: localization.more,
+            backgroundColor: Colors.black45,
             foregroundColor: Colors.white,
-            icon: Icons.check_box,
-            onTap: () =>
-                handleEntityAction(entity, EntityAction.toggleMultiselect),
+            icon: Icons.more_vert,
+            onPressed: (context) =>
+                handleEntityAction(entity, EntityAction.more),
           ),
-        IconSlideAction(
-          caption: localization.more,
-          color: Colors.black45,
-          foregroundColor: Colors.white,
-          icon: Icons.more_vert,
-          onTap: () => handleEntityAction(entity, EntityAction.more),
-        ),
-      ],
+        ],
+      ),
+      /*
       secondaryActions: <Widget>[
         entity.isActive
             ? IconSlideAction(
@@ -112,6 +120,7 @@ class DismissibleEntity extends StatelessWidget {
                 onTap: () => handleEntityAction(entity, EntityAction.delete),
               ),
       ],
+      */
       child: widget,
     );
   }

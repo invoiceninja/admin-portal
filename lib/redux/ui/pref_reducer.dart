@@ -41,8 +41,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
 
-
-
 PrefState prefReducer(
     PrefState state, dynamic action, String selectedCompanyId) {
   return state.rebuild(

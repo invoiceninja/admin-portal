@@ -151,7 +151,7 @@ IconData getEntityIcon(EntityType entityType) {
 IconData getFileTypeIcon(String type) {
   switch (type) {
     case 'pdf':
-      return MdiIcons.filePdf;
+      return MdiIcons.filePdfBox;
     case 'psd':
       return MdiIcons.fileImage;
     case 'txt':

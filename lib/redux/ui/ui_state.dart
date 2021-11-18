@@ -39,7 +39,6 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 // STARTER: import - do not remove comment
 
-
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {

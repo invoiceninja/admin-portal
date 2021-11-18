@@ -68,7 +68,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
 
-
 class PersistUI {}
 
 class PersistPrefs {}

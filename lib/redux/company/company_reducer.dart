@@ -36,7 +36,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 
 // STARTER: import - do not remove comment
 
-
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
   if (action is DeleteCompanySuccess) {
     return UserCompanyState(false);

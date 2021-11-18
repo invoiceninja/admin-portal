@@ -5,8 +5,6 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 // Package imports:
-import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -67,13 +65,6 @@ class WebUtils {
             'Changes you made may not be saved.';
       }
     });
-  }
-
-  static Future<MultipartFile> pickFile(
-      {String fileIndex,
-      FileType fileType,
-      List<String> allowedExtensions}) async {
-    return null;
   }
 
 /*

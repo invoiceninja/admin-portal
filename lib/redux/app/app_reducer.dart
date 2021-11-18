@@ -33,7 +33,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
 
-
 // We create the State reducer by combining many smaller reducers into one!
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {

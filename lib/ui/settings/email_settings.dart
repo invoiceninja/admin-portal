@@ -327,7 +327,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
-                iconData: MdiIcons.filePdf,
+                iconData: MdiIcons.filePdfBox,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..pdfEmailAttachment = value)),
               ),
