@@ -60,13 +60,9 @@ class DismissibleEntity extends StatelessWidget {
     }
 
     return Slidable(
-      //actionPane: SlidableDrawerActionPane(),
       key: Key('__${entity.entityKey}_${entity.entityState}__'),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
-        dismissible: DismissiblePane(onDismissed: () {
-          //
-        }),
         children: [
           if (showCheckbox)
             SlidableAction(
@@ -87,40 +83,45 @@ class DismissibleEntity extends StatelessWidget {
           ),
         ],
       ),
-      /*
-      secondaryActions: <Widget>[
-        entity.isActive
-            ? IconSlideAction(
-                caption: localization.archive,
-                color: Colors.orange,
-                foregroundColor: Colors.white,
-                icon: Icons.archive,
-                onTap: () => handleEntityAction(entity, EntityAction.archive),
-              )
-            : IconSlideAction(
-                caption: localization.restore,
-                color: Colors.blue,
-                foregroundColor: Colors.white,
-                icon: Icons.restore,
-                onTap: () => handleEntityAction(entity, EntityAction.restore),
-              ),
-        entity.isDeleted
-            ? IconSlideAction(
-                caption: localization.restore,
-                color: Colors.blue,
-                foregroundColor: Colors.white,
-                icon: Icons.restore,
-                onTap: () => handleEntityAction(entity, EntityAction.restore),
-              )
-            : IconSlideAction(
-                caption: localization.delete,
-                color: Colors.red,
-                foregroundColor: Colors.white,
-                icon: Icons.delete,
-                onTap: () => handleEntityAction(entity, EntityAction.delete),
-              ),
-      ],
-      */
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          entity.isActive
+              ? SlidableAction(
+                  label: localization.archive,
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white,
+                  icon: Icons.archive,
+                  onPressed: (context) =>
+                      handleEntityAction(entity, EntityAction.archive),
+                )
+              : SlidableAction(
+                  label: localization.restore,
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  icon: Icons.restore,
+                  onPressed: (context) =>
+                      handleEntityAction(entity, EntityAction.restore),
+                ),
+          entity.isDeleted
+              ? SlidableAction(
+                  label: localization.restore,
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  icon: Icons.restore,
+                  onPressed: (context) =>
+                      handleEntityAction(entity, EntityAction.restore),
+                )
+              : SlidableAction(
+                  label: localization.delete,
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                  onPressed: (context) =>
+                      handleEntityAction(entity, EntityAction.delete),
+                ),
+        ],
+      ),
       child: widget,
     );
   }
