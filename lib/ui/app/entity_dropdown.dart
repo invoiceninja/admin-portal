@@ -250,6 +250,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
           }
 
           widget.onSelected(entity);
+
+          _focusNode.requestFocus();
+
+          WidgetsBinding.instance.addPostFrameCallback((duration) {
+            _textController.selection = TextSelection.fromPosition(
+                TextPosition(offset: _textController.text.length));
+          });
         },
         fieldViewBuilder: (BuildContext context,
             TextEditingController textEditingController,
