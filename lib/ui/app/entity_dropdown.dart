@@ -327,7 +327,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
       alignment: Alignment.centerRight,
       children: <Widget>[
         InkWell(
-          //key: ValueKey('__stack_${widget.labelText}__'),
           onTap: () => _showOptions(),
           child: IgnorePointer(
             child: TextFormField(

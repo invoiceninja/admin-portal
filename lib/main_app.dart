@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -262,6 +263,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             child: WebSocketRefresh(
               companyId: state.company?.id,
               child: MaterialApp(
+                scrollBehavior: MyCustomScrollBehavior(),
                 navigatorKey: navigatorKey,
                 supportedLocales: kLanguages
                     .map(
@@ -551,4 +553,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       ),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }
