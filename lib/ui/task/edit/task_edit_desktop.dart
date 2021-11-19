@@ -164,6 +164,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                 children: [
                   if (!task.isInvoiced) ...[
                     EntityDropdown(
+                      autofocus: true,
                       entityType: EntityType.client,
                       labelText: localization.client,
                       entityId: task.clientId,

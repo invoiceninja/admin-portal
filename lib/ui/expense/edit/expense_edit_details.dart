@@ -147,7 +147,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 autocorrect: false,
               ),
             EntityDropdown(
-              //autofocus: true,
+              autofocus: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
