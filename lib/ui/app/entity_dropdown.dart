@@ -11,19 +11,20 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    @required Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.onSelected,
@@ -38,7 +39,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
-  }) : super(key: key);
+  });
 
   final EntityType entityType;
   final List<String> entityList;
@@ -78,6 +79,15 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     if (!_focusNode.hasFocus && !hasValue) {
       _textController.text = '';
+    }
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.entityId != oldWidget.entityId) {
+      _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
     }
   }
 
@@ -262,6 +272,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<SelectableEntity> onSelected,
             Iterable<SelectableEntity> options) {
+          final highlightedIndex = AutocompleteHighlightedOption.of(context);
+
           return Theme(
             data: theme,
             child: Align(
@@ -277,7 +289,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          color: Theme.of(context).cardColor,
+                          color: highlightedIndex == index
+                              ? convertHexStringToColor(
+                                  state.prefState.enableDarkMode
+                                      ? kDefaultDarkSelectedColor
+                                      : kDefaultLightSelectedColor)
+                              : Theme.of(context).cardColor,
                           child: _EntityListTile(
                             onTap: (entity) => onSelected(entity),
                             entity: options.elementAt(index),

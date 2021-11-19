@@ -138,7 +138,6 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           onSavePressed: viewModel.onSavePressed,
         ),
         EntityDropdown(
-          key: ValueKey('__country_${client.countryId}__'),
           entityType: EntityType.country,
           entityList: memoizedCountryList(viewModel.staticState.countryMap),
           labelText: localization.country,

@@ -120,7 +120,6 @@ class ClientEditNotesState extends State<ClientEditNotes> {
           showBlank: true,
         ),
         EntityDropdown(
-          key: ValueKey('__industry_${client.industryId}__'),
           entityType: EntityType.industry,
           entityList: memoizedIndustryList(viewModel.staticState.industryMap),
           labelText: localization.industry,

@@ -252,7 +252,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 isLast: true,
                 children: <Widget>[
                   EntityDropdown(
-                    key: ValueKey('__products_${subscription.productIds}__'),
                     entityType: EntityType.product,
                     entityList: dropdownProductsSelector(state.productState.map,
                         state.productState.list, state.userState.map),
@@ -291,8 +290,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     height: 16,
                   ),
                   EntityDropdown(
-                    key: ValueKey(
-                        '__recuring_products_${subscription.recurringProductIds}__'),
                     entityType: EntityType.product,
                     entityList: dropdownProductsSelector(state.productState.map,
                         state.productState.list, state.userState.map),

@@ -142,7 +142,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
               FormCard(
                 children: <Widget>[
                   EntityDropdown(
-                    key: ValueKey('__currency_${settings.currencyId}__'),
                     entityType: EntityType.currency,
                     entityList:
                         memoizedCurrencyList(state.staticState.currencyMap),
@@ -171,7 +170,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       url: kTransifexURL,
                       label: localization.helpTranslate,
                       child: EntityDropdown(
-                        key: ValueKey('__language_${settings.languageId}__'),
                         entityType: EntityType.language,
                         entityList:
                             memoizedLanguageList(state.staticState.languageMap),
@@ -183,7 +181,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       ),
                     ),
                   EntityDropdown(
-                    key: ValueKey('__timezone_${settings.timezoneId}__'),
                     entityType: EntityType.timezone,
                     entityList:
                         memoizedTimezoneList(state.staticState.timezoneMap),
@@ -194,7 +191,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..timezoneId = timezone?.id)),
                   ),
                   EntityDropdown(
-                    key: ValueKey('__date_format_${settings.dateFormatId}__'),
                     entityType: EntityType.dateFormat,
                     entityList:
                         memoizedDateFormatList(state.staticState.dateFormatMap),

@@ -319,7 +319,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
       children: <Widget>[
         Expanded(
           child: EntityDropdown(
-            key: ValueKey('__invoice_${paymentable.invoiceId}__'),
             allowClearing: false,
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
