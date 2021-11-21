@@ -368,13 +368,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  flutter_keyboard_visibility:
-    dependency: transitive
-    description:
-      name: flutter_keyboard_visibility
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -420,15 +413,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_typeahead:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "18806780bb7750d837b1c61ac25da680d14f8a45"
-      url: "git://github.com/hillelcoren/flutter_typeahead.git"
-    source: git
-    version: "1.8.3"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
