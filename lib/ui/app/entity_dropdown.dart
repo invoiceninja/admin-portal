@@ -302,7 +302,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                       ? kDefaultDarkSelectedColor
                                       : kDefaultLightSelectedColor)
                               : Theme.of(context).cardColor,
-                          child: _EntityListTile(
+                          child: EntityAutocompleteListTile(
                             onTap: (entity) => onSelected(entity),
                             entity: options.elementAt(index),
                             filter: _filter,
@@ -456,7 +456,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];
           final entity = widget.entityMap[entityId];
-          return _EntityListTile(
+          return EntityAutocompleteListTile(
             entity: entity,
             filter: _filter,
             onTap: (entity) => _selectEntity(entity),
@@ -482,12 +482,12 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
   }
 }
 
-class _EntityListTile extends StatelessWidget {
-  const _EntityListTile({
+class EntityAutocompleteListTile extends StatelessWidget {
+  const EntityAutocompleteListTile({
     @required this.entity,
-    @required this.filter,
-    @required this.overrideSuggestedLabel,
-    @required this.overrideSuggestedAmount,
+    this.filter,
+    this.overrideSuggestedLabel,
+    this.overrideSuggestedAmount,
     this.onTap,
   });
 
