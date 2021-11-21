@@ -418,6 +418,7 @@ class DashboardPanels extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: kTopBottomBarHeight),
           child: ScrollableListViewBuilder(
+            scrollController: scrollController,
             itemCount: entityTypes.length + 1,
             itemBuilder: (context, index) {
               if (index == entityTypes.length) {
