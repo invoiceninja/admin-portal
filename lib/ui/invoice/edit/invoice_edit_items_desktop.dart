@@ -497,6 +497,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                         textEditingValue.text.toLowerCase()))
                                 .toList();
 
+                            if (options.length == 1 &&
+                                options[0].productKey.toLowerCase() ==
+                                    lineItems[index].productKey.toLowerCase()) {
+                              return <ProductEntity>[];
+                            }
+
                             return options;
                           },
                           displayStringForOption: (product) =>
