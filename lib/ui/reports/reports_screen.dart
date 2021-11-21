@@ -1040,14 +1040,22 @@ class ReportResult {
                             itemCount: options.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
-                                  color: highlightedIndex == index
-                                      ? convertHexStringToColor(
-                                          //state.prefState.enableDarkMode
-                                          true
-                                              ? kDefaultDarkSelectedColor
-                                              : kDefaultLightSelectedColor)
-                                      : Theme.of(context).cardColor,
-                                  child: Text(options.elementAt(index)));
+                                color: highlightedIndex == index
+                                    ? convertHexStringToColor(
+                                        store.state.prefState.enableDarkMode
+                                            ? kDefaultDarkSelectedColor
+                                            : kDefaultLightSelectedColor)
+                                    : Theme.of(context).cardColor,
+                                child: ListTile(
+                                  title: Text(options.elementAt(index),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
+                                  onTap: () => onSelected(
+                                    options.elementAt(index),
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         ),
