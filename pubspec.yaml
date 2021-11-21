@@ -55,7 +55,7 @@ dependencies:
   flutter_launcher_icons: ^0.9.1
   overflow_view: ^0.3.1
   flutter_styled_toast: ^2.0.0
-  permission_handler: ^8.1.4+2
+  permission_handler: ^8.3.0
   file_picker: ^4.2.3
   draggable_scrollbar: ^0.1.0
   boardview: ^0.2.2
