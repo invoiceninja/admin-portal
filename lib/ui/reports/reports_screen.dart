@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -19,18 +18,21 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -366,6 +368,7 @@ class ReportDataTable extends StatefulWidget {
 class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
       _textEditingControllers = {};
+  final Map<String, Map<String, FocusNode>> _textEditingFocusNodes = {};
   ReportDataTableSource dataTableSource;
 
   @override
@@ -378,6 +381,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
         viewModel: viewModel,
         context: context,
         textEditingControllers: _textEditingControllers,
+        textEditingFocusNodes: _textEditingFocusNodes,
         onFilterChanged: (column, value) {
           final reportState = widget.viewModel.reportState;
           viewModel.onReportFiltersChanged(context,
@@ -411,6 +415,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     for (var column in reportResult.columns) {
       if (_textEditingControllers[reportState.report] == null) {
         _textEditingControllers[reportState.report] = {};
+        _textEditingFocusNodes[reportState.report] = {};
       }
       if (!_textEditingControllers[reportState.report].containsKey(column)) {
         final textEditingController = TextEditingController();
@@ -423,6 +428,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
         }
         _textEditingControllers[reportState.report][column] =
             textEditingController;
+        _textEditingFocusNodes[reportState.report][column] = FocusNode();
       }
     }
 
@@ -441,6 +447,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     _textEditingControllers.keys.forEach((i) {
       _textEditingControllers[i].keys.forEach((j) {
         _textEditingControllers[i][j].dispose();
+        _textEditingFocusNodes[i][j].dispose();
       });
     });
     super.dispose();
@@ -587,6 +594,7 @@ class ReportDataTableSource extends DataTableSource {
   ReportDataTableSource({
     @required this.context,
     @required this.textEditingControllers,
+    @required this.textEditingFocusNodes,
     @required this.onFilterChanged,
     @required this.viewModel,
   });
@@ -594,6 +602,7 @@ class ReportDataTableSource extends DataTableSource {
   ReportsScreenVM viewModel;
   final BuildContext context;
   final Map<String, Map<String, TextEditingController>> textEditingControllers;
+  final Map<String, Map<String, FocusNode>> textEditingFocusNodes;
   final Function(String, String) onFilterChanged;
 
   @override
@@ -622,6 +631,7 @@ class ReportDataTableSource extends DataTableSource {
       return reportResult.tableFilters(
           context,
           textEditingControllers[viewModel.reportState.report],
+          textEditingFocusNodes[viewModel.reportState.report],
           (column, value) => onFilterChanged(column, value));
     } else {
       return reportResult.tableRow(context, viewModel, index);
@@ -826,8 +836,10 @@ class ReportResult {
   DataRow tableFilters(
       BuildContext context,
       Map<String, TextEditingController> textEditingControllers,
+      Map<String, FocusNode> textEditingFocusNodes,
       Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
+    final theme = Theme.of(context);
     final store = StoreProvider.of<AppState>(context);
     final reportState = store.state.uiState.reportsUIState;
 
@@ -959,15 +971,11 @@ class ReportResult {
           ))
         else
           DataCell(
-            TypeAheadFormField(
-              noItemsFoundBuilder: (context) => SizedBox(),
-              suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                constraints: BoxConstraints(
-                  minWidth: 300,
-                ),
-              ),
-              suggestionsCallback: (filter) {
-                filter = filter.toLowerCase();
+            RawAutocomplete<String>(
+              textEditingController: textEditingControllers[column],
+              focusNode: textEditingFocusNodes[column],
+              optionsBuilder: (TextEditingValue textEditingValue) {
+                final filter = textEditingValue.text.toLowerCase();
                 final index = columns.indexOf(column);
                 return data
                     .where((row) =>
@@ -983,55 +991,71 @@ class ReportResult {
                     .toSet()
                     .toList();
               },
-              itemBuilder: (context, String value) {
-                // TODO fix this
-                /*
-                          return Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Text('$value'),
-                          );
-                           */
-                return Listener(
-                  child: Container(
-                    color: Theme.of(context).cardColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Text('$value'),
-                    ),
-                  ),
-                  onPointerDown: (_) {
-                    textEditingControllers[column].text = value;
-                    onFilterChanged(column, value);
-                  },
-                );
-              },
-              onSuggestionSelected: (String value) {
+              onSelected: (value) {
                 textEditingControllers[column].text = value;
                 onFilterChanged(column, value);
               },
-              textFieldConfiguration: TextFieldConfiguration(
-                controller: textEditingControllers != null
-                    ? textEditingControllers[column]
-                    : null,
-                decoration: InputDecoration(
-                    suffixIcon: textEditingControllers == null
-                        ? null
-                        : (textEditingControllers[column]?.text ?? '').isEmpty
-                            ? null
-                            : IconButton(
-                                icon: Icon(
-                                  Icons.clear,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  textEditingControllers[column].text = '';
-                                  onFilterChanged(column, '');
-                                },
-                              )),
-              ),
-              autoFlipDirection: true,
-              animationStart: 1,
-              debounceDuration: Duration(seconds: 0),
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted) {
+                return DecoratedFormField(
+                  decoration: textEditingController.text.isEmpty
+                      ? null
+                      : InputDecoration(
+                          suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.clear,
+                            color: Colors.grey,
+                          ),
+                          onPressed: () {
+                            textEditingControllers[column].text = '';
+                            onFilterChanged(column, '');
+                          },
+                        )),
+                  controller: textEditingController,
+                  focusNode: focusNode,
+                  onFieldSubmitted: (String value) {
+                    onFieldSubmitted();
+                  },
+                );
+              },
+              optionsViewBuilder: (BuildContext context,
+                  AutocompleteOnSelected<String> onSelected,
+                  Iterable<String> options) {
+                final highlightedIndex =
+                    AutocompleteHighlightedOption.of(context);
+                return Theme(
+                  data: theme,
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Material(
+                      elevation: 4,
+                      child: AppBorder(
+                        child: Container(
+                          color: Theme.of(context).cardColor,
+                          width: 250,
+                          constraints: BoxConstraints(maxHeight: 270),
+                          child: ScrollableListViewBuilder(
+                            itemCount: options.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                  color: highlightedIndex == index
+                                      ? convertHexStringToColor(
+                                          //state.prefState.enableDarkMode
+                                          true
+                                              ? kDefaultDarkSelectedColor
+                                              : kDefaultLightSelectedColor)
+                                      : Theme.of(context).cardColor,
+                                  child: Text(options.elementAt(index)));
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
     ]);

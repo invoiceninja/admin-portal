@@ -85,6 +85,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
 
     final hasValue = (widget.initialValue ?? '').isNotEmpty ||
         (widget.controller?.text ?? '').isNotEmpty;
+
     final calcKeyboardType = widget.isMoney || widget.isPercent
         ? TextInputType.numberWithOptions(decimal: true, signed: true)
         : (widget.maxLines ?? 0) > 1
