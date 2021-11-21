@@ -306,13 +306,11 @@ class ReportsScreenVM {
           ));
         },
         onReportFiltersChanged: (context, filterMap) {
-          Timer(Duration(milliseconds: 100), () {
-            store.dispatch(UpdateReportSettings(
-              report: report,
-              filters: filterMap,
-              selectedGroup: '',
-            ));
-          });
+          store.dispatch(UpdateReportSettings(
+            report: report,
+            filters: filterMap,
+            selectedGroup: '',
+          ));
         },
         onReportColumnsChanged: (context, columns) {
           final settings = state.userCompany.settings.rebuild((b) => b

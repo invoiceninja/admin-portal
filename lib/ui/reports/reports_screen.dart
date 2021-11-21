@@ -992,8 +992,14 @@ class ReportResult {
                     .toList();
               },
               onSelected: (value) {
-                textEditingControllers[column].text = value;
+                final textEditingController = textEditingControllers[column];
+                textEditingController.text = value;
                 onFilterChanged(column, value);
+                textEditingFocusNodes[column].requestFocus();
+                WidgetsBinding.instance.addPostFrameCallback((duration) {
+                  textEditingController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: textEditingController.text.length));
+                });
               },
               fieldViewBuilder: (BuildContext context,
                   TextEditingController textEditingController,
@@ -1011,6 +1017,7 @@ class ReportResult {
                           onPressed: () {
                             textEditingControllers[column].text = '';
                             onFilterChanged(column, '');
+                            textEditingFocusNodes[column].unfocus();
                           },
                         )),
                   controller: textEditingController,
