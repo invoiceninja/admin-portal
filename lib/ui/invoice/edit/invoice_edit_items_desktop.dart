@@ -477,7 +477,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   children: [
                     Focus(
                       onFocusChange: (hasFocus) {
-                        print('## onFocusChange - hasFocus: $hasFocus');
                         _autocompleteFocusIndex = index;
                         _onFocusChange();
                       },
@@ -490,8 +489,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           initialValue: TextEditingValue(
                               text: lineItems[index].productKey),
                           optionsBuilder: (TextEditingValue textEditingValue) {
-                            print(
-                                '## optionsBuilder - filter: ${textEditingValue.text}');
                             final options = productIds
                                 .map((productId) => productState.map[productId])
                                 .where((product) => product.productKey
@@ -569,7 +566,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 onFieldSubmitted();
                               },
                               onChanged: (value) {
-                                print('## Set filter to $value');
                                 _onChanged(
                                     lineItems[index]
                                         .rebuild((b) => b..productKey = value),
