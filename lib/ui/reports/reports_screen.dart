@@ -977,7 +977,7 @@ class ReportResult {
               optionsBuilder: (TextEditingValue textEditingValue) {
                 final filter = textEditingValue.text.toLowerCase();
                 final index = columns.indexOf(column);
-                return data
+                final options = data
                     .where((row) =>
                         row[index]
                             .renderText(context, column)
@@ -990,6 +990,8 @@ class ReportResult {
                     .map((row) => row[index].renderText(context, column))
                     .toSet()
                     .toList();
+
+                return options;
               },
               onSelected: (value) {
                 final textEditingController = textEditingControllers[column];
