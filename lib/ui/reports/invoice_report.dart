@@ -67,6 +67,7 @@ enum InvoiceReportFields {
   tax_name1,
   tax_name2,
   tax_name3,
+  currency,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -292,6 +293,10 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_city:
           value = client.city;
+          break;
+        case InvoiceReportFields.currency:
+          value =
+              staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
       }
 

@@ -59,6 +59,7 @@ enum CreditReportFields {
   tax_name1,
   tax_name2,
   tax_name3,
+  currency,
 }
 
 var memoizedCreditReport = memo6((
@@ -262,6 +263,10 @@ ReportResult creditReport(
           break;
         case CreditReportFields.client_city:
           value = client.city;
+          break;
+        case CreditReportFields.currency:
+          value =
+              staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
       }
 

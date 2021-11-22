@@ -34,6 +34,7 @@ enum QuoteItemReportFields {
   taxRates,
   taxAmount,
   netTotal,
+  currency,
 }
 
 var memoizedQuoteItemReport = memo6((
@@ -169,6 +170,11 @@ ReportResult lineItemReport(
             break;
           case QuoteItemReportFields.netTotal:
             value = lineItem.netTotal(invoice, precision);
+            break;
+          case QuoteItemReportFields.currency:
+            value =
+                staticState.currencyMap[client.currencyId]?.listDisplayName ??
+                    '';
             break;
         }
 

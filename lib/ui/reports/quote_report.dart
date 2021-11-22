@@ -56,6 +56,7 @@ enum QuoteReportFields {
   tax_name1,
   tax_name2,
   tax_name3,
+  currency,
 }
 
 var memoizedQuoteReport = memo7((
@@ -256,6 +257,10 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_city:
           value = client.city;
+          break;
+        case QuoteReportFields.currency:
+          value =
+              staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
       }
 
