@@ -1059,7 +1059,7 @@ class ReportResult {
                                   title: Text(options.elementAt(index),
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline6),
+                                          .subtitle1),
                                   onTap: () => onSelected(
                                     options.elementAt(index),
                                   ),
