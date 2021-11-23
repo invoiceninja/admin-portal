@@ -269,7 +269,6 @@ class MenuDrawer extends StatelessWidget {
                             ? convertHexStringToColor(inactiveColor)
                             : Theme.of(context).cardColor,
                         child: ScrollableListView(
-                          hideMobileThumb: true,
                           children: <Widget>[
                             if (state.account.debugEnabled && kReleaseMode)
                               if (state.isMenuCollapsed)
