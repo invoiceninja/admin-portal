@@ -117,6 +117,7 @@ class EntityType extends EnumClass {
         return [
           EntityType.task,
           EntityType.expense,
+          EntityType.invoice,
         ];
       case EntityType.group:
         return [
