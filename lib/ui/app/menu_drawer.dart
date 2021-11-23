@@ -796,7 +796,7 @@ class SidebarFooter extends StatelessWidget {
                     ],
                   ),
                   icon: Icon(
-                    Icons.warning,
+                    Icons.notification_important,
                     color: Colors.orange,
                   ),
                 ),
