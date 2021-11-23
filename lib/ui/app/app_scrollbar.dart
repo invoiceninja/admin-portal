@@ -26,7 +26,6 @@ class _AppScrollbarState extends State<AppScrollbar> {
       return Scrollbar(
         child: widget.child,
         controller: widget.controller,
-        thickness: 16,
       );
     } else {
       return MouseRegion(
