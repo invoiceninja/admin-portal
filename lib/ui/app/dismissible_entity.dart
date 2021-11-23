@@ -103,23 +103,15 @@ class DismissibleEntity extends StatelessWidget {
                   onPressed: (context) =>
                       handleEntityAction(entity, EntityAction.restore),
                 ),
-          entity.isDeleted
-              ? SlidableAction(
-                  label: localization.restore,
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  icon: Icons.restore,
-                  onPressed: (context) =>
-                      handleEntityAction(entity, EntityAction.restore),
-                )
-              : SlidableAction(
-                  label: localization.delete,
-                  backgroundColor: Colors.red,
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  onPressed: (context) =>
-                      handleEntityAction(entity, EntityAction.delete),
-                ),
+          if (!entity.isDeleted)
+            SlidableAction(
+              label: localization.delete,
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+              onPressed: (context) =>
+                  handleEntityAction(entity, EntityAction.delete),
+            ),
         ],
       ),
       child: widget,
