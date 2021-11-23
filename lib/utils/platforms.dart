@@ -175,11 +175,19 @@ String getPlatform(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android';
 
 String getRateAppURL(BuildContext context) {
+  if (kIsWeb) {
+    return kCapterralUrl;
+  }
+
   switch (Theme.of(context).platform) {
     case TargetPlatform.android:
       return kGoogleStoreUrl;
     case TargetPlatform.iOS:
       return kAppleStoreUrl;
+    case TargetPlatform.macOS:
+      return kMacOSUrl;
+    case TargetPlatform.windows:
+      return kWindowsUrl;
     default:
       return kCapterralUrl;
   }

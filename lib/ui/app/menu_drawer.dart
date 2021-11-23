@@ -1251,8 +1251,7 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => _showUpdate(context),
                       ),
                   ],
-                  // TODO remove macOS check
-                  if (daysActive > 100 && !isMacOS())
+                  if (daysActive > 100)
                     AppButton(
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
