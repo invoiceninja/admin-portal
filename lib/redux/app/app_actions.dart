@@ -90,6 +90,8 @@ class PopLastHistory implements PersistUI {}
 
 class DismissNativeWarning implements PersistUI {}
 
+class DismissNativeWarningPermanently implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
 

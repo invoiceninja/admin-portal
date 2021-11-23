@@ -31,6 +31,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isFilterVisible: false,
       longPressSelectionIsDefault: true,
       tapSelectedToEdit: false,
+      hideDesktopWarning: false,
       showKanban: false,
       persistData: false,
       persistUI: true,
@@ -117,6 +118,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get colorTheme;
 
+  bool get hideDesktopWarning;
+
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
@@ -179,6 +182,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showKanban = false
     ..isPreviewVisible = false
     ..isFilterVisible = false
+    ..hideDesktopWarning = false
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true

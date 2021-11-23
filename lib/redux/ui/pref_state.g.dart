@@ -172,6 +172,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'colorTheme',
       serializers.serialize(object.colorTheme,
           specifiedType: const FullType(String)),
+      'hideDesktopWarning',
+      serializers.serialize(object.hideDesktopWarning,
+          specifiedType: const FullType(bool)),
       'sortFields',
       serializers.serialize(object.sortFields,
           specifiedType: const FullType(BuiltMap, const [
@@ -277,6 +280,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'colorTheme':
           result.colorTheme = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'hideDesktopWarning':
+          result.hideDesktopWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'sortFields':
           result.sortFields.replace(serializers.deserialize(value,
@@ -561,6 +568,8 @@ class _$PrefState extends PrefState {
   @override
   final String colorTheme;
   @override
+  final bool hideDesktopWarning;
+  @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -588,6 +597,7 @@ class _$PrefState extends PrefState {
       this.tapSelectedToEdit,
       this.rowsPerPage,
       this.colorTheme,
+      this.hideDesktopWarning,
       this.sortFields,
       this.companyPrefs})
       : super._() {
@@ -628,6 +638,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         colorTheme, 'PrefState', 'colorTheme');
     BuiltValueNullFieldError.checkNotNull(
+        hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
+    BuiltValueNullFieldError.checkNotNull(
         sortFields, 'PrefState', 'sortFields');
     BuiltValueNullFieldError.checkNotNull(
         companyPrefs, 'PrefState', 'companyPrefs');
@@ -663,6 +675,7 @@ class _$PrefState extends PrefState {
         tapSelectedToEdit == other.tapSelectedToEdit &&
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
+        hideDesktopWarning == other.hideDesktopWarning &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
@@ -688,24 +701,24 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode),
-                                                                                menuSidebarMode.hashCode),
-                                                                            historySidebarMode.hashCode),
-                                                                        useSidebarEditor.hashCode),
-                                                                    customColors.hashCode),
-                                                                isPreviewVisible.hashCode),
-                                                            isMenuVisible.hashCode),
-                                                        showKanban.hashCode),
-                                                    isHistoryVisible.hashCode),
-                                                enableDarkMode.hashCode),
-                                            isFilterVisible.hashCode),
-                                        persistData.hashCode),
-                                    persistUI.hashCode),
-                                longPressSelectionIsDefault.hashCode),
-                            requireAuthentication.hashCode),
-                        tapSelectedToEdit.hashCode),
-                    rowsPerPage.hashCode),
-                colorTheme.hashCode),
+                                                                            $jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode),
+                                                                                historySidebarMode.hashCode),
+                                                                            useSidebarEditor.hashCode),
+                                                                        customColors.hashCode),
+                                                                    isPreviewVisible.hashCode),
+                                                                isMenuVisible.hashCode),
+                                                            showKanban.hashCode),
+                                                        isHistoryVisible.hashCode),
+                                                    enableDarkMode.hashCode),
+                                                isFilterVisible.hashCode),
+                                            persistData.hashCode),
+                                        persistUI.hashCode),
+                                    longPressSelectionIsDefault.hashCode),
+                                requireAuthentication.hashCode),
+                            tapSelectedToEdit.hashCode),
+                        rowsPerPage.hashCode),
+                    colorTheme.hashCode),
+                hideDesktopWarning.hashCode),
             sortFields.hashCode),
         companyPrefs.hashCode));
   }
@@ -732,6 +745,7 @@ class _$PrefState extends PrefState {
           ..add('tapSelectedToEdit', tapSelectedToEdit)
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
+          ..add('hideDesktopWarning', hideDesktopWarning)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -832,6 +846,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   String get colorTheme => _$this._colorTheme;
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
 
+  bool _hideDesktopWarning;
+  bool get hideDesktopWarning => _$this._hideDesktopWarning;
+  set hideDesktopWarning(bool hideDesktopWarning) =>
+      _$this._hideDesktopWarning = hideDesktopWarning;
+
   MapBuilder<EntityType, PrefStateSortField> _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
       _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
@@ -870,6 +889,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _tapSelectedToEdit = $v.tapSelectedToEdit;
       _rowsPerPage = $v.rowsPerPage;
       _colorTheme = $v.colorTheme;
+      _hideDesktopWarning = $v.hideDesktopWarning;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
       _$v = null;
@@ -921,6 +941,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(tapSelectedToEdit, 'PrefState', 'tapSelectedToEdit'),
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
+              hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {

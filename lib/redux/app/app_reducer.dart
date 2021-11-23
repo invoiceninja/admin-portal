@@ -140,4 +140,7 @@ final dismissedNativeWarningReducer = combineReducers<bool>([
   TypedReducer<bool, DismissNativeWarning>((state, action) {
     return true;
   }),
+  TypedReducer<bool, DismissNativeWarningPermanently>((state, action) {
+    return true;
+  }),
 ]);

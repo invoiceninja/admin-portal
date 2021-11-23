@@ -55,6 +55,8 @@ PrefState prefReducer(
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
       ..historySidebarMode =
           historySidebarReducer(state.historySidebarMode, action)
+      ..hideDesktopWarning =
+          hideDesktopWarningReducer(state.hideDesktopWarning, action)
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
@@ -195,6 +197,12 @@ Reducer<bool> historyVisibleReducer = combineReducers([
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
+  }),
+]);
+
+Reducer<bool> hideDesktopWarningReducer = combineReducers([
+  TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
+    return true;
   }),
 ]);
 
