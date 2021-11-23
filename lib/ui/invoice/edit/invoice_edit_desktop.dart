@@ -100,7 +100,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
 
     _focusNode = FocusScopeNode();
-    _optionTabController = TabController(vsync: this, length: 5);
+    _optionTabController = TabController(vsync: this, length: 3);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
     _scrollController = ScrollController();
@@ -582,63 +582,68 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         left: kMobileDialogPadding),
                     children: <Widget>[
                       AppTabBar(
-                        isScrollable: true,
                         controller: _optionTabController,
                         tabs: [
-                          Tab(
-                              text: entityType == EntityType.credit
-                                  ? localization.creditTerms
-                                  : entityType == EntityType.quote
-                                      ? localization.quoteTerms
-                                      : localization.invoiceTerms),
-                          Tab(
-                              text: entityType == EntityType.credit
-                                  ? localization.creditFooter
-                                  : entityType == EntityType.quote
-                                      ? localization.quoteFooter
-                                      : localization.invoiceFooter),
-                          Tab(text: localization.publicNotes),
-                          Tab(text: localization.privateNotes),
+                          Tab(text: localization.terms),
+                          Tab(text: localization.notes),
                           Tab(text: localization.settings),
                         ],
                       ),
                       SizedBox(
-                        height: 125,
+                        height: 200,
                         child: TabBarView(
                           controller: _optionTabController,
                           children: <Widget>[
-                            DecoratedFormField(
-                              maxLines: 6,
-                              controller: _termsController,
-                              keyboardType: TextInputType.multiline,
-                              label: '',
-                              hint: invoice.isOld && !invoice.isRecurringInvoice
-                                  ? ''
-                                  : settings
-                                      .getDefaultTerms(invoice.entityType),
+                            Column(
+                              children: [
+                                DecoratedFormField(
+                                  maxLines: 3,
+                                  controller: _termsController,
+                                  keyboardType: TextInputType.multiline,
+                                  label: entityType == EntityType.credit
+                                      ? localization.creditTerms
+                                      : entityType == EntityType.quote
+                                          ? localization.quoteTerms
+                                          : localization.invoiceTerms,
+                                  hint: invoice.isOld &&
+                                          !invoice.isRecurringInvoice
+                                      ? ''
+                                      : settings
+                                          .getDefaultTerms(invoice.entityType),
+                                ),
+                                DecoratedFormField(
+                                  maxLines: 3,
+                                  controller: _footerController,
+                                  keyboardType: TextInputType.multiline,
+                                  label: entityType == EntityType.credit
+                                      ? localization.creditFooter
+                                      : entityType == EntityType.quote
+                                          ? localization.quoteFooter
+                                          : localization.invoiceFooter,
+                                  hint: invoice.isOld &&
+                                          !invoice.isRecurringInvoice
+                                      ? ''
+                                      : settings
+                                          .getDefaultFooter(invoice.entityType),
+                                ),
+                              ],
                             ),
-                            DecoratedFormField(
-                              maxLines: 6,
-                              controller: _footerController,
-                              keyboardType: TextInputType.multiline,
-                              label: '',
-                              hint: invoice.isOld && !invoice.isRecurringInvoice
-                                  ? ''
-                                  : settings
-                                      .getDefaultFooter(invoice.entityType),
-                            ),
-                            DecoratedFormField(
-                              maxLines: 6,
-                              controller: _publicNotesController,
-                              keyboardType: TextInputType.multiline,
-                              label: '',
-                              hint: client.publicNotes,
-                            ),
-                            DecoratedFormField(
-                              maxLines: 6,
-                              controller: _privateNotesController,
-                              keyboardType: TextInputType.multiline,
-                              label: '',
+                            Column(
+                              children: [
+                                DecoratedFormField(
+                                  maxLines: 3,
+                                  controller: _publicNotesController,
+                                  keyboardType: TextInputType.multiline,
+                                  label: localization.publicNotes,
+                                  hint: client.publicNotes,
+                                ),
+                                DecoratedFormField(
+                                  maxLines: 3,
+                                  controller: _privateNotesController,
+                                  keyboardType: TextInputType.multiline,
+                                  label: localization.privateNotes,
+                                ),
+                              ],
                             ),
                             Column(
                               children: [
