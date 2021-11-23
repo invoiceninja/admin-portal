@@ -167,6 +167,12 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isWarning: true,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
+                  ),
+                if (_response.trailingSlash)
+                  _HealthListTile(
+                    title: 'APP_URL has trailing slash',
+                    subtitle: 'Remove the slash in the .env file',
+                    isWarning: true,
                   )
               ],
             ),

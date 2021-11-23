@@ -1264,14 +1264,14 @@ void _showAbout(BuildContext context) async {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        tooltip: 'Facebook',
-                        onPressed: () => launch(kFacebookUrl),
-                        icon: Icon(MdiIcons.facebook),
-                      ),
-                      IconButton(
                         tooltip: 'Twitter',
                         onPressed: () => launch(kTwitterUrl),
                         icon: Icon(MdiIcons.twitter),
+                      ),
+                      IconButton(
+                        tooltip: 'Facebook',
+                        onPressed: () => launch(kFacebookUrl),
+                        icon: Icon(MdiIcons.facebook),
                       ),
                       IconButton(
                         tooltip: 'GitHub',
