@@ -1,14 +1,18 @@
+// Dart imports:
+//import 'dart:convert';
+//import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-/*
-import 'dart:io';
-import 'dart:convert';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-*/
+// Package imports:
+//import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
+//import 'package:invoiceninja_flutter/data/web_client.dart';
+//import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+//import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class WebSocketRefresh extends StatefulWidget {
   const WebSocketRefresh({

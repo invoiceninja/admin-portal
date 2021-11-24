@@ -1,11 +1,21 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:redux/redux.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -35,6 +45,10 @@ import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
@@ -42,7 +56,15 @@ import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -52,50 +74,35 @@ import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:redux/redux.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/view/recurring_expense_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen_vm.dart';
-
-import 'package:invoiceninja_flutter/ui/subscription/subscription_screen.dart';
-import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/subscription/subscription_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
-import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense_category/expense_category_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
-import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+// STARTER: import - do not remove comment
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -256,6 +263,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             child: WebSocketRefresh(
               companyId: state.company?.id,
               child: MaterialApp(
+                scrollBehavior: MyCustomScrollBehavior(),
                 navigatorKey: navigatorKey,
                 supportedLocales: kLanguages
                     .map(
@@ -278,9 +286,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 locale: locale,
                 theme: state.prefState.enableDarkMode
                     ? ThemeData(
+                        colorScheme: ColorScheme.dark().copyWith(
+                          secondary: accentColor,
+                          primary: accentColor,
+                        ),
                         pageTransitionsTheme: pageTransitionsTheme,
-                        brightness: Brightness.dark,
-                        accentColor: accentColor,
                         indicatorColor: accentColor,
                         textSelectionTheme: TextSelectionThemeData(
                           selectionHandleColor: accentColor,
@@ -291,16 +301,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         cardColor: const Color(0xFF1B1C1E),
                         bottomAppBarColor: const Color(0xFF1B1C1E),
                         primaryColorDark: Colors.black,
-                        buttonColor: accentColor,
                         textButtonTheme:
                             TextButtonThemeData(style: textButtonTheme),
                         outlinedButtonTheme:
                             OutlinedButtonThemeData(style: outlinedButtonTheme),
                       )
                     : ThemeData(
+                        colorScheme: ColorScheme.fromSwatch()
+                            .copyWith(secondary: accentColor),
                         pageTransitionsTheme: pageTransitionsTheme,
                         primaryColor: accentColor,
-                        accentColor: accentColor,
                         indicatorColor: accentColor,
                         textSelectionTheme: TextSelectionThemeData(
                           selectionColor: accentColor,
@@ -316,9 +326,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         primaryColorLight: hasAccentColor
                             ? accentColor
                             : const Color(0xFF5dabf4),
-                        buttonColor: hasAccentColor
-                            ? accentColor
-                            : const Color(0xFF0D5D91),
                         scaffoldBackgroundColor: const Color(0xFFE4E8EB),
                         tabBarTheme: TabBarTheme(
                           labelColor:
@@ -327,31 +334,18 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               ? Colors.white.withOpacity(.65)
                               : Colors.black.withOpacity(.65),
                         ),
-                        /*
-                        buttonTheme: ButtonThemeData(
-                          textTheme: ButtonTextTheme.primary,
-                          colorScheme: ColorScheme.light(
-                            //primary: hasAccentColor ? Colors.white : Colors.black,
-                          ),
-                        ),
-                         */
                         iconTheme: IconThemeData(
                           color: hasAccentColor ? null : accentColor,
                         ),
                         appBarTheme: AppBarTheme(
-                          brightness: Brightness.light,
                           color: hasAccentColor ? accentColor : Colors.white,
                           iconTheme: IconThemeData(
                             color: hasAccentColor ? Colors.white : accentColor,
                           ),
-                          textTheme: TextTheme(
-                            headline6:
-                                Theme.of(context).textTheme.headline6.copyWith(
-                                      color: hasAccentColor
-                                          ? Colors.white
-                                          : Colors.black,
-                                    ),
-                          ),
+                          titleTextStyle: TextStyle(
+                              fontSize: 20,
+                              color:
+                                  hasAccentColor ? Colors.white : Colors.black),
                         ),
                         textButtonTheme:
                             TextButtonThemeData(style: textButtonTheme),
@@ -559,4 +553,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       ),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

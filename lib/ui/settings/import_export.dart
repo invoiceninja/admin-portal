@@ -1,18 +1,25 @@
+// Dart imports:
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
-import 'package:file_picker/file_picker.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -24,7 +31,6 @@ import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ImportExport extends StatefulWidget {
   const ImportExport({
@@ -327,13 +333,13 @@ class _FileImportState extends State<_FileImport> {
     if (widget.importType == ImportType.json) {
       children.addAll([
         SwitchListTile(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importSettings),
           value: _importJsonSettings,
           onChanged: (value) => setState(() => _importJsonSettings = value),
         ),
         SwitchListTile(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importData),
           value: _importJsonData,
           onChanged: (value) => setState(() => _importJsonData = value),
@@ -422,7 +428,7 @@ class __FileMapperState extends State<_FileMapper> {
 
     final List<Widget> children = [
       SwitchListTile(
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
         title: Text(AppLocalization.of(context).firstRowAsColumnNames),
         value: _useFirstRowAsHeaders,
         onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),

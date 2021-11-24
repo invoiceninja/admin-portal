@@ -1,14 +1,21 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
+
+// Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:http/http.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class ProductRepository {

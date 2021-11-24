@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:memoize/memoize.dart';
 
 var memoizedUpcomingInvoices = memo2((
   BuiltMap<String, InvoiceEntity> invoiceMap,

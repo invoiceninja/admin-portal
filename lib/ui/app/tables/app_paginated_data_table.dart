@@ -2,12 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Dart imports:
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
-import 'package:flutter/widgets.dart';
-import 'package:flutter/rendering.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart' show DragStartBehavior;
+import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 
@@ -474,6 +478,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
               ),
                */
               Scrollbar(
+                showTrackOnHover: true,
                 controller: _controller,
                 child: SingleChildScrollView(
                   controller: _controller,

@@ -1,13 +1,20 @@
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
@@ -168,11 +175,19 @@ String getPlatform(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android';
 
 String getRateAppURL(BuildContext context) {
+  if (kIsWeb) {
+    return kCapterralUrl;
+  }
+
   switch (Theme.of(context).platform) {
     case TargetPlatform.android:
       return kGoogleStoreUrl;
     case TargetPlatform.iOS:
       return kAppleStoreUrl;
+    case TargetPlatform.macOS:
+      return kMacOSUrl;
+    case TargetPlatform.windows:
+      return kWindowsUrl;
     default:
       return kCapterralUrl;
   }

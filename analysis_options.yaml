@@ -84,7 +84,7 @@ linter:
     # - comment_references # blocked on https://github.com/dart-lang/dartdoc/issues/1153
     # - constant_identifier_names # https://github.com/dart-lang/linter/issues/204
     - control_flow_in_finally
-    - directives_ordering
+    # - directives_ordering
     - empty_catches
     - empty_constructor_bodies
     - empty_statements

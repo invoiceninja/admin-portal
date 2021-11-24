@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 abstract class LocaleCodeAware {
@@ -15,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'remind_me': 'Remind Me',
+      'instant_bank_pay': 'Instant Bank Pay',
       'click_selected': 'Click Selected',
       'hide_preview': 'Hide Preview',
       'edit_record': 'Edit Record',
@@ -62827,6 +62830,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get hidePreview =>
       _localizedValues[localeCode]['hide_preview'] ??
       _localizedValues['en']['hide_preview'];
+
+  String get instantBankPay =>
+      _localizedValues[localeCode]['instant_bank_pay'] ??
+      _localizedValues['en']['instant_bank_pay'];
+
+  String get remindMe =>
+      _localizedValues[localeCode]['remind_me'] ??
+      _localizedValues['en']['remind_me'];
 
   // STARTER: lang field - do not remove comment
 

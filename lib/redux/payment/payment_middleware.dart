@@ -1,19 +1,23 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
-import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/payment_repository.dart';
 
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/payment_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 
 List<Middleware<AppState>> createStorePaymentsMiddleware([
   PaymentRepository repository = const PaymentRepository(),

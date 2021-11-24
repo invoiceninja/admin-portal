@@ -1,5 +1,11 @@
-import 'package:invoiceninja_flutter/.env.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
@@ -12,7 +18,6 @@ import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
   ClientRepository repository = const ClientRepository(),

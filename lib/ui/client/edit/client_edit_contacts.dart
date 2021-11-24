@@ -1,6 +1,9 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -356,7 +359,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addToInvoices),
                 value: _sendEmail,
                 onChanged: (value) {

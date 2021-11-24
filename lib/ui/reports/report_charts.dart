@@ -1,5 +1,10 @@
-import 'package:charts_flutter/flutter.dart' as charts;
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:charts_flutter/flutter.dart' as charts;
+
+// Project imports:
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';

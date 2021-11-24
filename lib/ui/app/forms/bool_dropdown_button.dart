@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -46,7 +51,7 @@ class BoolDropdownButton extends StatelessWidget {
           secondary:
               iconData != null && isDesktop(context) ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           subtitle: helpLabel != null ? Text(helpLabel) : null,
         ),
       );
@@ -99,7 +104,8 @@ class BoolDropdownButton extends StatelessWidget {
                                 value: false,
                                 onChanged: (value) => null,
                                 groupValue: value,
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(falseLabel),
@@ -120,7 +126,8 @@ class BoolDropdownButton extends StatelessWidget {
                                 value: true,
                                 onChanged: (value) => null,
                                 groupValue: value,
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor:
+                                    Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(trueLabel),

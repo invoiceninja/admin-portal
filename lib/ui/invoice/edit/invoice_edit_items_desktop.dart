@@ -1,7 +1,16 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:invoiceninja_flutter/data/models/product_model.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -20,7 +29,6 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -40,6 +48,7 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
+  TextEditingController _textEditingController;
   bool _isReordering = false;
   int _updatedAt;
   int _autocompleteFocusIndex = -1;
@@ -89,6 +98,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final theme = Theme.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = state.company;
@@ -465,91 +475,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   key: ValueKey(
                       '__line_item_${index}_${lineItems[index].createdAt}__'),
                   children: [
-                    /*
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: Autocomplete<ProductEntity>(
-                        //key: ValueKey('__line_item_${index}_name__'),
-                        optionsBuilder: (TextEditingValue textEditingValue) {
-                          final options = productIds
-                              .map((productId) => productState.map[productId])
-                              .where((product) => product.productKey
-                                  .toLowerCase()
-                                  .contains(_filter.toLowerCase()))
-                              .toList();
-/*
-                          if (options.length == 1 &&
-                              options[0].productKey.toLowerCase() ==
-                                  _filter.toLowerCase()) {
-                            return <ProductEntity>[];
-                          }
-                          */
-
-                          return options;
-                        },
-                        displayStringForOption: (product) => product.productKey,
-                        onSelected: (product) {
-                          final item = lineItems[index];
-                          final client =
-                              state.clientState.get(invoice.clientId);
-                          final currency =
-                              state.staticState.currencyMap[client.currencyId];
-
-                          double cost = product.price;
-                          if (company.convertProductExchangeRate &&
-                              invoice.clientId != null &&
-                              client.currencyId != company.currencyId) {
-                            cost = round(cost * invoice.exchangeRate,
-                                currency.precision);
-                          }
-
-                          final updatedItem = item.rebuild((b) => b
-                            ..productKey = product.productKey
-                            ..notes = item.isTask ? item.notes : product.notes
-                            ..cost =
-                                item.isTask && item.cost != 0 ? item.cost : cost
-                            ..quantity = item.isTask || item.quantity != 0
-                                ? item.quantity
-                                : viewModel.state.company.defaultQuantity
-                                    ? 1
-                                    : product.quantity
-                            ..customValue1 = product.customValue1
-                            ..customValue2 = product.customValue2
-                            ..customValue3 = product.customValue3
-                            ..customValue4 = product.customValue4
-                            ..taxName1 = company.numberOfItemTaxRates >= 1 ? product.taxName1 : ''
-                            ..taxRate1 = company.numberOfItemTaxRates >= 1 ? product.taxRate1 : 0
-                            ..taxName2 = company.numberOfItemTaxRates >= 2 ? product.taxName2 : ''
-                            ..taxRate2 = company.numberOfItemTaxRates >= 2 ? product.taxRate2 : 0
-                            ..taxName3 = company.numberOfItemTaxRates >= 3 ? product.taxName3 : ''
-                            ..taxRate3 = company.numberOfItemTaxRates >= 3 ? product.taxRate3 : 0);
-                          _onChanged(updatedItem, index);
-                          _updateTable();
-                        },
-                        fieldViewBuilder: (BuildContext context,
-                            TextEditingController textEditingController,
-                            FocusNode focusNode,
-                            VoidCallback onFieldSubmitted) {
-                          return DecoratedFormField(
-                            showClear: false,
-                            autofocus: false,
-                            controller: textEditingController,
-                            focusNode: focusNode,
-                            onFieldSubmitted: (String value) {
-                              onFieldSubmitted();
-                            },
-                            onChanged: (value) {
-                              _filter = value;
-                              _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..productKey = value),
-                                  index);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    */
                     Focus(
                       onFocusChange: (hasFocus) {
                         _autocompleteFocusIndex = index;
@@ -557,185 +482,148 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       },
                       skipTraversal: true,
                       child: Padding(
-                          padding:
-                              const EdgeInsets.only(right: kTableColumnGap),
-                          child: TypeAheadFormField<String>(
-                            key: ValueKey('__line_item_${index}_name__'),
-                            initialValue: lineItems[index].productKey,
-                            noItemsFoundBuilder: (context) => SizedBox(),
-                            suggestionsCallback: (pattern) {
-                              return productIds
-                                  .where((productId) => productState
-                                      .map[productId].productKey
-                                      .toLowerCase()
-                                      .contains(pattern.toLowerCase()))
-                                  .toList();
-                              /*
-                          return productIds
-                              .where((productId) => productState.map[productId]
-                                  .matchesFilter(pattern))
-                              .toList();
-                           */
-                            },
-                            itemBuilder: (context, productId) {
-                              // TODO fix this
-                              /*
-                          return ListTile(
-                            title: Text(productState.map[suggestion].productKey),
-                          );
-                           */
-                              return Listener(
-                                child: Container(
-                                  color: Theme.of(context).cardColor,
-                                  child: ListTile(
-                                    title: Text(
-                                        productState.map[productId].productKey),
+                        padding: const EdgeInsets.only(right: kTableColumnGap),
+                        child: RawAutocomplete<ProductEntity>(
+                          key: ValueKey('__line_item_${index}_name__'),
+                          textEditingController: _textEditingController,
+                          initialValue: TextEditingValue(
+                              text: lineItems[index].productKey),
+                          optionsBuilder: (TextEditingValue textEditingValue) {
+                            final options = productIds
+                                .map((productId) => productState.map[productId])
+                                .where((product) => product.productKey
+                                    .toLowerCase()
+                                    .contains(
+                                        textEditingValue.text.toLowerCase()))
+                                .toList();
+
+                            if (options.length == 1 &&
+                                options[0].productKey.toLowerCase() ==
+                                    lineItems[index].productKey.toLowerCase()) {
+                              return <ProductEntity>[];
+                            }
+
+                            return options;
+                          },
+                          displayStringForOption: (product) =>
+                              product.productKey,
+                          onSelected: (product) {
+                            final item = lineItems[index];
+                            final client =
+                                state.clientState.get(invoice.clientId);
+                            final currency = state
+                                .staticState.currencyMap[client.currencyId];
+
+                            double cost = product.price;
+                            if (company.convertProductExchangeRate &&
+                                invoice.clientId != null &&
+                                client.currencyId != company.currencyId) {
+                              cost = round(cost * invoice.exchangeRate,
+                                  currency.precision);
+                            }
+
+                            final updatedItem = item.rebuild((b) => b
+                              ..productKey = product.productKey
+                              ..notes = item.isTask ? item.notes : product.notes
+                              ..productCost = item.productCost
+                              ..cost = item.isTask && item.cost != 0
+                                  ? item.cost
+                                  : cost
+                              ..quantity = item.isTask || item.quantity != 0
+                                  ? item.quantity
+                                  : viewModel.state.company.defaultQuantity
+                                      ? 1
+                                      : product.quantity
+                              ..customValue1 = product.customValue1
+                              ..customValue2 = product.customValue2
+                              ..customValue3 = product.customValue3
+                              ..customValue4 = product.customValue4
+                              ..taxName1 = company.numberOfItemTaxRates >= 1
+                                  ? product.taxName1
+                                  : ''
+                              ..taxRate1 = company.numberOfItemTaxRates >= 1
+                                  ? product.taxRate1
+                                  : 0
+                              ..taxName2 = company.numberOfItemTaxRates >= 2
+                                  ? product.taxName2
+                                  : ''
+                              ..taxRate2 = company.numberOfItemTaxRates >= 2
+                                  ? product.taxRate2
+                                  : 0
+                              ..taxName3 = company.numberOfItemTaxRates >= 3
+                                  ? product.taxName3
+                                  : ''
+                              ..taxRate3 = company.numberOfItemTaxRates >= 3
+                                  ? product.taxRate3
+                                  : 0);
+                            _onChanged(updatedItem, index, debounce: false);
+                            _updateTable();
+                          },
+                          fieldViewBuilder: (BuildContext context,
+                              TextEditingController textEditingController,
+                              FocusNode focusNode,
+                              VoidCallback onFieldSubmitted) {
+                            return DecoratedFormField(
+                              showClear: false,
+                              autofocus: false,
+                              controller: textEditingController,
+                              focusNode: focusNode,
+                              onFieldSubmitted: (String value) {
+                                onFieldSubmitted();
+                              },
+                              onChanged: (value) {
+                                _onChanged(
+                                    lineItems[index]
+                                        .rebuild((b) => b..productKey = value),
+                                    index);
+                              },
+                            );
+                          },
+                          optionsViewBuilder: (BuildContext context,
+                              AutocompleteOnSelected<ProductEntity> onSelected,
+                              Iterable<SelectableEntity> options) {
+                            final highlightedIndex =
+                                AutocompleteHighlightedOption.of(context);
+                            return Theme(
+                              data: theme,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  elevation: 4,
+                                  child: AppBorder(
+                                    child: Container(
+                                      color: Theme.of(context).cardColor,
+                                      width: 250,
+                                      constraints:
+                                          BoxConstraints(maxHeight: 270),
+                                      child: ScrollableListViewBuilder(
+                                        itemCount: options.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Container(
+                                            color: highlightedIndex == index
+                                                ? convertHexStringToColor(state
+                                                        .prefState
+                                                        .enableDarkMode
+                                                    ? kDefaultDarkSelectedColor
+                                                    : kDefaultLightSelectedColor)
+                                                : Theme.of(context).cardColor,
+                                            child: EntityAutocompleteListTile(
+                                              onTap: (entity) =>
+                                                  onSelected(entity),
+                                              entity: options.elementAt(index),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                onPointerDown: (_) {
-                                  if (!kIsWeb) {
-                                    return;
-                                  }
-
-                                  final item = lineItems[index];
-                                  final product = productState.map[productId];
-                                  final client =
-                                      state.clientState.get(invoice.clientId);
-                                  final currency = state.staticState
-                                      .currencyMap[client.currencyId];
-
-                                  double cost = product.price;
-                                  if (company.convertProductExchangeRate &&
-                                      invoice.clientId != null &&
-                                      client.currencyId != company.currencyId) {
-                                    cost = round(cost * invoice.exchangeRate,
-                                        currency.precision);
-                                  }
-
-                                  final updatedItem = item.rebuild((b) => b
-                                    ..productKey = product.productKey
-                                    ..notes =
-                                        item.isTask || !company.fillProducts
-                                            ? item.notes
-                                            : product.notes
-                                    ..cost = (item.isTask && item.cost != 0) ||
-                                            !company.fillProducts
-                                        ? item.cost
-                                        : cost
-                                    ..productCost = product.cost
-                                    ..quantity =
-                                        item.isTask || item.quantity != 0
-                                            ? item.quantity
-                                            : product.quantity == 0
-                                                ? 1
-                                                : product.quantity
-                                    ..customValue1 = product.customValue1
-                                    ..customValue2 = product.customValue2
-                                    ..customValue3 = product.customValue3
-                                    ..customValue4 = product.customValue4
-                                    ..taxName1 =
-                                        company.numberOfItemTaxRates >= 1
-                                            ? product.taxName1
-                                            : ''
-                                    ..taxRate1 =
-                                        company.numberOfItemTaxRates >= 1
-                                            ? product.taxRate1
-                                            : 0
-                                    ..taxName2 =
-                                        company.numberOfItemTaxRates >= 2
-                                            ? product.taxName2
-                                            : ''
-                                    ..taxRate2 =
-                                        company.numberOfItemTaxRates >= 2
-                                            ? product.taxRate2
-                                            : 0
-                                    ..taxName3 =
-                                        company.numberOfItemTaxRates >= 3
-                                            ? product.taxName3
-                                            : ''
-                                    ..taxRate3 =
-                                        company.numberOfItemTaxRates >= 3
-                                            ? product.taxRate3
-                                            : 0);
-                                  _onChanged(updatedItem, index,
-                                      debounce: false);
-                                  _updateTable();
-                                },
-                              );
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              if (kIsWeb) {
-                                return;
-                              }
-
-                              final item = lineItems[index];
-                              final product = productState.map[suggestion];
-                              final client =
-                                  state.clientState.get(invoice.clientId);
-
-                              double cost = product.price;
-                              if (company.convertProductExchangeRate &&
-                                  invoice.clientId != null &&
-                                  client.currencyId != company.currencyId) {
-                                cost = round(
-                                    cost * invoice.exchangeRate,
-                                    state
-                                        .staticState
-                                        .currencyMap[client?.currencyId ??
-                                            company.currencyId]
-                                        .precision);
-                              }
-                              final updatedItem = item.rebuild((b) => b
-                                ..productKey = product.productKey
-                                ..notes = item.isTask || !company.fillProducts
-                                    ? item.notes
-                                    : product.notes
-                                ..cost = (item.isTask && item.cost != 0) ||
-                                        !company.fillProducts
-                                    ? item.cost
-                                    : cost
-                                ..productCost = product.cost
-                                ..quantity = item.isTask || item.quantity != 0
-                                    ? item.quantity
-                                    : product.quantity == 0
-                                        ? 1
-                                        : product.quantity
-                                ..customValue1 = product.customValue1
-                                ..customValue2 = product.customValue2
-                                ..customValue3 = product.customValue3
-                                ..customValue4 = product.customValue4
-                                ..taxName1 = company.numberOfItemTaxRates >= 1
-                                    ? product.taxName1
-                                    : ''
-                                ..taxRate1 = company.numberOfItemTaxRates >= 1
-                                    ? product.taxRate1
-                                    : 0
-                                ..taxName2 = company.numberOfItemTaxRates >= 2
-                                    ? product.taxName2
-                                    : ''
-                                ..taxRate2 = company.numberOfItemTaxRates >= 2
-                                    ? product.taxRate2
-                                    : 0
-                                ..taxName3 = company.numberOfItemTaxRates >= 3
-                                    ? product.taxName3
-                                    : ''
-                                ..taxRate3 = company.numberOfItemTaxRates >= 3
-                                    ? product.taxRate3
-                                    : 0);
-                              _onChanged(updatedItem, index, debounce: false);
-                              _updateTable();
-                            },
-                            textFieldConfiguration:
-                                TextFieldConfiguration(onChanged: (value) {
-                              _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..productKey = value),
-                                  index);
-                            }),
-                            autoFlipDirection: true,
-                            animationStart: 1,
-                            debounceDuration: Duration(seconds: 0),
-                          )),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                     Focus(
                       onFocusChange: (hasFocus) => _onFocusChange(),

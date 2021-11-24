@@ -1,7 +1,12 @@
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
@@ -26,6 +31,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isFilterVisible: false,
       longPressSelectionIsDefault: true,
       tapSelectedToEdit: false,
+      hideDesktopWarning: false,
       showKanban: false,
       persistData: false,
       persistUI: true,
@@ -112,6 +118,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get colorTheme;
 
+  bool get hideDesktopWarning;
+
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
@@ -174,6 +182,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showKanban = false
     ..isPreviewVisible = false
     ..isFilterVisible = false
+    ..hideDesktopWarning = false
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true

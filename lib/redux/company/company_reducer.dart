@@ -1,38 +1,40 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
+import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
+import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_reducer.dart';
+import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
+import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
+import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_reducer.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/company/company_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
-import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
-import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_reducer.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
+import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
+import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/subscription/subscription_reducer.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_reducer.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_reducer.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_reducer.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
-import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
-import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
-import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
-import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
   if (action is DeleteCompanySuccess) {

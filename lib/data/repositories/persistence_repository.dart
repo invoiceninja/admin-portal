@@ -1,15 +1,23 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
-import 'package:meta/meta.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+
+// Package imports:
+import 'package:meta/meta.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/file_storage.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
-import 'package:invoiceninja_flutter/data/file_storage.dart';
+
 // ignore: unused_import
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';

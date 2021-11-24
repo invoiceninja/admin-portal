@@ -1,18 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
-import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/user_repository.dart';
 
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/user_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
+import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
+import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 
 List<Middleware<AppState>> createStoreUsersMiddleware([
   UserRepository repository = const UserRepository(),

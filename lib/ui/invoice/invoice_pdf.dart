@@ -1,13 +1,24 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as file;
+
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -16,17 +27,14 @@ import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
-import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
@@ -266,6 +274,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                       fileName, _response.bodyBytes);
                                 } else if (isDesktopOS()) {
                                   // TODO download file on desktop once suppoted
+                                  launch(invoice.invitationDownloadLink);
+                                  // TODO remove this
+                                } else if (isIOS()) {
                                   launch(invoice.invitationDownloadLink);
                                 } else {
                                   final directory =

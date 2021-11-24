@@ -1,6 +1,12 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -10,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -21,12 +28,10 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:file_picker/file_picker.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
@@ -325,7 +330,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       showBlank: true,
                     ),
                     EntityDropdown(
-                      key: ValueKey('__industry_${company.industryId}__'),
                       entityType: EntityType.industry,
                       entityList:
                           memoizedIndustryList(state.staticState.industryMap),
@@ -378,7 +382,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(
-                      key: ValueKey('__country_${settings.countryId}__'),
                       entityType: EntityType.country,
                       entityList:
                           memoizedCountryList(state.staticState.countryMap),
@@ -470,8 +473,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               ))
                           .toList()),
                   EntityDropdown(
-                    key: ValueKey(
-                        '__default_payment_type_${settings.defaultPaymentTypeId}__'),
                     entityType: EntityType.paymentType,
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),

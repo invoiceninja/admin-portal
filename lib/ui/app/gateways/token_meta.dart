@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 
 class TokenMeta extends StatelessWidget {

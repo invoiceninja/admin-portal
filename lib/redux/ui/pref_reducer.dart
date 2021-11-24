@@ -1,42 +1,45 @@
+// Dart imports:
 import 'dart:math';
+
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
-
-import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
-
-import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-import 'package:redux/redux.dart';
 
 PrefState prefReducer(
     PrefState state, dynamic action, String selectedCompanyId) {
@@ -52,6 +55,8 @@ PrefState prefReducer(
       ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
       ..historySidebarMode =
           historySidebarReducer(state.historySidebarMode, action)
+      ..hideDesktopWarning =
+          hideDesktopWarningReducer(state.hideDesktopWarning, action)
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
@@ -192,6 +197,12 @@ Reducer<bool> historyVisibleReducer = combineReducers([
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
+  }),
+]);
+
+Reducer<bool> hideDesktopWarningReducer = combineReducers([
+  TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
+    return true;
   }),
 ]);
 

@@ -1,10 +1,17 @@
+// Dart imports:
 import 'dart:ui';
 
-import 'package:invoiceninja_flutter/.env.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
+// Project imports:
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -13,79 +20,79 @@ import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
+import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
+import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
-import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
-import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
-import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
-import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/edit/expense_category_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
-import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
-import 'package:invoiceninja_flutter/redux/token/token_state.dart';
-import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
+import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/edit/recurring_expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_expense/recurring_expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/subscription/edit/subscription_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:timeago/timeago.dart' as timeago;
+
+// STARTER: import - do not remove comment
 
 part 'app_state.g.dart';
 

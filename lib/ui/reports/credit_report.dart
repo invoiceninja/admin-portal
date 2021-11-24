@@ -1,13 +1,16 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/utils/enums.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:memoize/memoize.dart';
 
 enum CreditReportFields {
   amount,
@@ -56,6 +59,7 @@ enum CreditReportFields {
   tax_name1,
   tax_name2,
   tax_name3,
+  currency,
 }
 
 var memoizedCreditReport = memo6((
@@ -259,6 +263,10 @@ ReportResult creditReport(
           break;
         case CreditReportFields.client_city:
           value = client.city;
+          break;
+        case CreditReportFields.currency:
+          value =
+              staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
       }
 

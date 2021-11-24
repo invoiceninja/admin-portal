@@ -1,8 +1,18 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -19,36 +29,32 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja_flutter/redux/design/design_middleware.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_middleware.dart';
 import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_middleware.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_middleware.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_middleware.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
+import 'package:invoiceninja_flutter/redux/token/token_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_middleware.dart';
-
-import 'package:invoiceninja_flutter/redux/subscription/subscription_middleware.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_middleware.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_middleware.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_middleware.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
-import 'package:invoiceninja_flutter/redux/token/token_middleware.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();

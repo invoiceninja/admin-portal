@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 

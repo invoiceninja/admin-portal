@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+
+// Package imports:
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LearnMoreUrl extends StatelessWidget {
   const LearnMoreUrl({

@@ -2,7 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 
 /// A data source for obtaining row data for [PaginatedDataTable] objects.

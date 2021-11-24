@@ -1,7 +1,13 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -31,7 +37,6 @@ class ClientPicker extends StatelessWidget {
     final state = store.state;
 
     return EntityDropdown(
-      key: ValueKey('__client_${clientId}__'),
       entityType: EntityType.client,
       labelText: localization.client,
       entityId: clientId,

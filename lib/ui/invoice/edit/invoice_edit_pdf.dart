@@ -1,16 +1,23 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:native_pdf_view/native_pdf_view.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 
 class InvoiceEditPDF extends StatefulWidget {
   const InvoiceEditPDF({

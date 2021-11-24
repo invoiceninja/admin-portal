@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LoadingDialog extends StatelessWidget {

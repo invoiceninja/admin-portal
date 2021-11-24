@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 
 class SerializationUtils {

@@ -1,11 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -14,8 +21,6 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
@@ -149,7 +154,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             expense.isInvoiced
                 ? SizedBox()
                 : SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.shouldBeInvoiced),
                     subtitle: Text(localization.shouldBeInvoicedHelp),
                     value: expense.shouldBeInvoiced,
@@ -159,7 +164,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     },
                   ),
             SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.markPaid),
               value: _showPaymentFields,
               subtitle: Text(localization.markPaidHelp),
@@ -184,8 +189,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
-                        key: ValueKey(
-                            '__payment_type_${expense.paymentTypeId}__'),
                         entityType: EntityType.paymentType,
                         entityList:
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
@@ -214,7 +217,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   )
                 : SizedBox(),
             SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.convertCurrency),
               subtitle: Text(localization.convertCurrencyHelp),
               value: _showConvertCurrencyFields,
@@ -237,8 +240,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
-                        key: ValueKey(
-                            '__invoice_currency_${expense.invoiceCurrencyId}__'),
                         entityType: EntityType.currency,
                         entityList:
                             memoizedCurrencyList(staticState.currencyMap),
@@ -283,7 +284,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   )
                 : SizedBox(),
             SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 value: expense.invoiceDocuments,
@@ -329,7 +330,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   ),
                   SizedBox(height: 16),
                   SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.inclusiveTaxes),
                     value: expense.usesInclusiveTaxes,
                     subtitle: Text(

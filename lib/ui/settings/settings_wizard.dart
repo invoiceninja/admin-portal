@@ -1,11 +1,17 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
@@ -242,7 +248,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     final currency = EntityDropdown(
-      key: ValueKey('__currency_${_currencyId}__'),
       entityType: EntityType.currency,
       entityList: memoizedCurrencyList(state.staticState.currencyMap),
       labelText: localization.currency,
@@ -254,7 +259,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     final language = EntityDropdown(
-      key: ValueKey('__language_${_languageId}__'),
       entityType: EntityType.language,
       entityList: memoizedLanguageList(state.staticState.languageMap),
       labelText: localization.language,

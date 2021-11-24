@@ -1,10 +1,15 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/client/client_pdf.dart';
 import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/client/client_pdf.dart';
 
 class ClientPdfScreen extends StatelessWidget {
   const ClientPdfScreen({Key key, this.showAppBar = true}) : super(key: key);

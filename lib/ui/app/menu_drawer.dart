@@ -1,13 +1,23 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:redux/redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -37,10 +47,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -263,7 +269,6 @@ class MenuDrawer extends StatelessWidget {
                             ? convertHexStringToColor(inactiveColor)
                             : Theme.of(context).cardColor,
                         child: ScrollableListView(
-                          hideMobileThumb: true,
                           children: <Widget>[
                             if (state.account.debugEnabled && kReleaseMode)
                               if (state.isMenuCollapsed)
@@ -754,7 +759,7 @@ class SidebarFooter extends StatelessWidget {
                   tooltip: localization.updateAvailable,
                   icon: Icon(
                     Icons.warning,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   onPressed: () => _showUpdate(context),
                 )
@@ -766,14 +771,17 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 )
-              else if (kIsWeb && !state.dismissedNativeWarning)
+              else if (kIsWeb &&
+                  !state.dismissedNativeWarning &&
+                  !state.prefState.hideDesktopWarning)
                 IconButton(
                   onPressed: () => showMessageDialog(
                     context: context,
                     message: isMobileOS()
                         ? localization.recommendMobile
                         : localization.recommendDesktop,
-                    onDismiss: () => store.dispatch(DismissNativeWarning()),
+                    onDismiss: () =>
+                        store.dispatch(DismissNativeWarningPermanently()),
                     secondaryActions: [
                       TextButton(
                         autofocus: true,
@@ -786,12 +794,20 @@ class SidebarFooter extends StatelessWidget {
                         child: Text(localization.download.toUpperCase()),
                       ),
                       TextButton(
-                          onPressed: () => launch(kDocsPerformance),
-                          child: Text(localization.learnMore.toUpperCase()))
+                        onPressed: () => launch(kDocsPerformance),
+                        child: Text(localization.learnMore.toUpperCase()),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          store.dispatch(DismissNativeWarning());
+                        },
+                        child: Text(localization.remindMe.toUpperCase()),
+                      ),
                     ],
                   ),
                   icon: Icon(
-                    Icons.warning,
+                    Icons.notification_important,
                     color: Colors.orange,
                   ),
                 ),
@@ -928,7 +944,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
               state.prefState.isFilterVisible
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
-                  ? Icon(Icons.warning, color: Theme.of(context).accentColor)
+                  ? Icon(Icons.warning,
+                      color: Theme.of(context).colorScheme.secondary)
                   : Icon(Icons.info_outline),
               onSelected: (value) {
                 if (value == localization.updateAvailable) {
@@ -945,7 +962,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(
                         Icons.warning,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       title: Text(localization.updateAvailable),
                     ),
@@ -1245,8 +1262,7 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => _showUpdate(context),
                       ),
                   ],
-                  // TODO remove macOS check
-                  if (daysActive > 100 && !isMacOS())
+                  if (daysActive > 100)
                     AppButton(
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
@@ -1258,14 +1274,14 @@ void _showAbout(BuildContext context) async {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        tooltip: 'Facebook',
-                        onPressed: () => launch(kFacebookUrl),
-                        icon: Icon(MdiIcons.facebook),
-                      ),
-                      IconButton(
                         tooltip: 'Twitter',
                         onPressed: () => launch(kTwitterUrl),
                         icon: Icon(MdiIcons.twitter),
+                      ),
+                      IconButton(
+                        tooltip: 'Facebook',
+                        onPressed: () => launch(kFacebookUrl),
+                        icon: Icon(MdiIcons.facebook),
                       ),
                       IconButton(
                         tooltip: 'GitHub',
@@ -1394,7 +1410,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                         setState(() => _includeLogs = value);
                       },
                       title: Text(localization.includeRecentErrors),
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                     ),
                   ]
                 ]),

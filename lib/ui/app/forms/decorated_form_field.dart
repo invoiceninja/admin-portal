@@ -1,11 +1,16 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DecoratedFormField extends StatefulWidget {
   const DecoratedFormField({
@@ -80,6 +85,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
 
     final hasValue = (widget.initialValue ?? '').isNotEmpty ||
         (widget.controller?.text ?? '').isNotEmpty;
+
     final calcKeyboardType = widget.isMoney || widget.isPercent
         ? TextInputType.numberWithOptions(decimal: true, signed: true)
         : (widget.maxLines ?? 0) > 1

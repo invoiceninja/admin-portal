@@ -1,11 +1,17 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:built_collection/built_collection.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -360,7 +366,6 @@ void handleTaskAction(
           .map((task) => convertTaskToInvoiceItem(task: task, context: context))
           .toList();
 
-      /*
       String projectId = '';
       for (var each in tasks) {
         final task = each as TaskEntity;
@@ -369,15 +374,13 @@ void handleTaskAction(
           break;
         }
       }
-      */
 
       if (items.isNotEmpty) {
         createEntity(
             context: context,
-            entity: InvoiceEntity(state: state, client: client)
-                .rebuild((b) => b..lineItems.addAll(items)
-                    //..projectId = projectId
-                    ));
+            entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+              ..lineItems.addAll(items)
+              ..projectId = projectId));
       }
       break;
     case EntityAction.clone:

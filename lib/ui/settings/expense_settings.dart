@@ -1,11 +1,14 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseSettings extends StatefulWidget {
@@ -53,7 +56,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.shouldBeInvoiced),
                 value: company.markExpensesInvoiceable ?? false,
                 subtitle: Text(localization.shouldBeInvoicedHelp),
@@ -61,7 +64,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                     company.rebuild((b) => b..markExpensesInvoiceable = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.markPaid),
                 value: company.markExpensesPaid ?? false,
                 subtitle: Text(localization.markPaidHelp),
@@ -69,7 +72,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                     company.rebuild((b) => b..markExpensesPaid = value)),
               ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
                 value: company.invoiceExpenseDocuments ?? false,
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
@@ -91,7 +94,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
                 SizedBox(height: 16),
                 SwitchListTile(
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.inclusiveTaxes),
                   value: company.expenseInclusiveTaxes ?? false,
                   subtitle: Text(

@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
-import 'package:redux/redux.dart';
 
 DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
   return state.rebuild((b) => b

@@ -1,6 +1,10 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -15,7 +19,6 @@ import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 
 class TaskEditDetails extends StatefulWidget {
   const TaskEditDetails({
@@ -127,7 +130,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
           children: <Widget>[
             if (!task.isInvoiced) ...[
               EntityDropdown(
-                key: ValueKey('__client_${task.clientId}__'),
                 entityType: EntityType.client,
                 labelText: localization.client,
                 entityId: task.clientId,

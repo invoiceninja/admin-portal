@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
@@ -146,7 +151,7 @@ IconData getEntityIcon(EntityType entityType) {
 IconData getFileTypeIcon(String type) {
   switch (type) {
     case 'pdf':
-      return MdiIcons.filePdf;
+      return MdiIcons.filePdfBox;
     case 'psd':
       return MdiIcons.fileImage;
     case 'txt':

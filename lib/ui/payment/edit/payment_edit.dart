@@ -1,26 +1,30 @@
+// Dart imports:
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -197,7 +201,7 @@ class _PaymentEditState extends State<PaymentEdit> {
             children: <Widget>[
               if (payment.isNew) ...[
                 EntityDropdown(
-                  key: ValueKey('__client_${payment.clientId}__'),
+                  autofocus: true,
                   entityType: EntityType.client,
                   labelText: AppLocalization.of(context).client,
                   entityId: payment.clientId,
@@ -265,7 +269,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               if (payment.isApplying != true)
                 EntityDropdown(
-                  key: ValueKey('__type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
@@ -333,7 +336,7 @@ class _PaymentEditState extends State<PaymentEdit> {
             children: [
               if (payment.isNew)
                 SwitchListTile(
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.sendEmail),
                   value: payment.sendEmail ?? false,
                   subtitle: Text(localization.emailReceipt),
@@ -341,7 +344,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       .onChanged(payment.rebuild((b) => b..sendEmail = value)),
                 ),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),
                 value: _showConvertCurrency,
                 onChanged: (value) {
@@ -365,8 +368,6 @@ class _PaymentEditState extends State<PaymentEdit> {
               ),
               if (_showConvertCurrency) ...[
                 EntityDropdown(
-                  key: ValueKey(
-                      '__currency_${payment.exchangeCurrencyId}_${_showConvertCurrency}__'),
                   entityType: EntityType.currency,
                   entityList:
                       memoizedCurrencyList(viewModel.staticState.currencyMap),
@@ -640,7 +641,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         if (widget.entityType == EntityType.invoice)
           Expanded(
             child: EntityDropdown(
-              key: ValueKey('__invoice_${paymentable.invoiceId}__'),
               allowClearing: false,
               entityType: EntityType.invoice,
               labelText: AppLocalization.of(context).invoice,
@@ -671,7 +671,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         if (widget.entityType == EntityType.credit)
           Expanded(
             child: EntityDropdown(
-              key: ValueKey('__credit_${paymentable.creditId}__'),
               allowClearing: false,
               entityType: EntityType.credit,
               labelText: AppLocalization.of(context).credit,

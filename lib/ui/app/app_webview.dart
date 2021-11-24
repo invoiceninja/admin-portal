@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:webview_flutter/webview_flutter.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class AppWebView extends StatelessWidget {
   const AppWebView({this.html});

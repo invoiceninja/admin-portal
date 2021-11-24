@@ -1,8 +1,15 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -21,8 +28,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
@@ -181,7 +186,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           secondary: Icon(prefState.requireAuthentication
                               ? MdiIcons.lock
                               : MdiIcons.lockOpen),
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                         );
                       } else {
                         return SizedBox();
@@ -194,7 +199,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.persistUI,
                     onChanged: (value) =>
                         viewModel.onPersistUiChanged(context, value),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
                   SwitchListTile(
@@ -203,7 +208,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.persistData,
                     onChanged: (value) =>
                         viewModel.onPersistDataChanged(context, value),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
                 ],
@@ -259,7 +264,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   secondary: Icon(kIsWeb
                       ? Icons.lightbulb_outline
                       : MdiIcons.themeLightDark),
-                  activeColor: Theme.of(context).accentColor,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                 ),
                 SizedBox(height: 16),
                 AppDropdownButton<String>(

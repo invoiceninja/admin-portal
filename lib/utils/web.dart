@@ -1,12 +1,15 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:file_picker/file_picker.dart';
-import 'package:http/http.dart';
+
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:redux/redux.dart';
 
 class WebUtils {
   static String get browserUrl {
@@ -62,13 +65,6 @@ class WebUtils {
             'Changes you made may not be saved.';
       }
     });
-  }
-
-  static Future<MultipartFile> pickFile(
-      {String fileIndex,
-      FileType fileType,
-      List<String> allowedExtensions}) async {
-    return null;
   }
 
 /*

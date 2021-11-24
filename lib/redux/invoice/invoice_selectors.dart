@@ -1,7 +1,10 @@
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:memoize/memoize.dart';
+// Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:memoize/memoize.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownInvoiceList = memo7(
@@ -126,6 +129,9 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.group &&
         client.groupId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        invoice.projectId != filterEntityId) {
+      return false;
     } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
@@ -231,6 +237,29 @@ EntityStats invoiceStatsForSubscription(
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
     if (invoice.subscriptionId == subscriptionId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedInvoiceStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+) =>
+    invoiceStatsForProject(projectId, invoiceMap));
+
+EntityStats invoiceStatsForProject(
+    String projectId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.projectId == projectId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {

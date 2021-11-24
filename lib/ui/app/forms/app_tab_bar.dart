@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppTabBar extends StatelessWidget {
@@ -24,7 +29,7 @@ class AppTabBar extends StatelessWidget {
       tabs: tabs,
       controller: controller,
       isScrollable: isScrollable,
-      indicatorColor: Theme.of(context).accentColor,
+      indicatorColor: Theme.of(context).colorScheme.secondary,
       onTap: onTap,
     );
 

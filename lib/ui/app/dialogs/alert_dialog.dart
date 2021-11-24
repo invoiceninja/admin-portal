@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+
+// Package imports:
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MessageDialog extends StatelessWidget {
   const MessageDialog(

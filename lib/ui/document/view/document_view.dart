@@ -1,8 +1,11 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class DocumentView extends StatefulWidget {
   const DocumentView({

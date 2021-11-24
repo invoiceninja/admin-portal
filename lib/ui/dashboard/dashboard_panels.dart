@@ -1,23 +1,30 @@
+// Dart imports:
 import 'dart:math';
-import 'package:charts_common/common.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:charts_common/common.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -398,43 +405,59 @@ class DashboardPanels extends StatelessWidget {
       return LoadingIndicator();
     }
 
+    final entityTypes = [
+      if (company.isModuleEnabled(EntityType.invoice)) EntityType.invoice,
+      if (company.isModuleEnabled(EntityType.invoice)) EntityType.payment,
+      if (company.isModuleEnabled(EntityType.quote)) EntityType.quote,
+      if (company.isModuleEnabled(EntityType.task)) EntityType.task,
+      if (company.isModuleEnabled(EntityType.expense)) EntityType.expense,
+    ];
+
     return Stack(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: kTopBottomBarHeight),
-          child: ScrollableListView(
+          child: ScrollableListViewBuilder(
             scrollController: scrollController,
-            children: <Widget>[
-              if (company.isModuleEnabled(EntityType.invoice))
-                _InvoiceChart(
-                    viewModel: viewModel,
-                    context: context,
-                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                        EntityType.invoice, entityIds)),
-              if (company.isModuleEnabled(EntityType.invoice))
-                _paymentChart(
-                    context: context,
-                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                        EntityType.payment, entityIds)),
-              if (company.isModuleEnabled(EntityType.quote))
-                _quoteChart(
-                    context: context,
-                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                        EntityType.quote, entityIds)),
-              if (company.isModuleEnabled(EntityType.task))
-                _taskChart(
-                    context: context,
-                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                        EntityType.task, entityIds)),
-              if (company.isModuleEnabled(EntityType.expense))
-                _expenseChart(
-                    context: context,
-                    onDateSelected: (entityIds) => viewModel.onSelectionChanged(
-                        EntityType.expense, entityIds)),
-              SizedBox(
-                height: 500,
-              )
-            ],
+            itemCount: entityTypes.length + 1,
+            itemBuilder: (context, index) {
+              if (index == entityTypes.length) {
+                return SizedBox(
+                  height: 500,
+                );
+              }
+
+              switch (entityTypes[index]) {
+                case EntityType.invoice:
+                  return _InvoiceChart(
+                      viewModel: viewModel,
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.invoice, entityIds));
+                case EntityType.payment:
+                  return _paymentChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.payment, entityIds));
+                case EntityType.quote:
+                  return _quoteChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.quote, entityIds));
+                case EntityType.task:
+                  return _taskChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.task, entityIds));
+                case EntityType.expense:
+                  return _expenseChart(
+                      context: context,
+                      onDateSelected: (entityIds) => viewModel
+                          .onSelectionChanged(EntityType.expense, entityIds));
+              }
+
+              return SizedBox();
+            },
           ),
         ),
         _header(context),

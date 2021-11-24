@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
+// Project imports:
 import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
 

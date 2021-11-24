@@ -1,6 +1,11 @@
-import 'package:built_collection/built_collection.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -274,7 +279,7 @@ class _UserEditState extends State<UserEdit>
                     value: userCompany.isAdmin ?? false,
                     onChanged: (value) => viewModel.onUserChanged(
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ),
@@ -445,7 +450,7 @@ class _PermissionCheckbox extends StatelessWidget {
           ? true
           : (userCompany.permissions ?? '').contains(permission),
       onChanged: checkAll ? null : onChanged,
-      activeColor: Theme.of(context).accentColor,
+      activeColor: Theme.of(context).colorScheme.secondary,
     );
   }
 }

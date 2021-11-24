@@ -1,7 +1,14 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/health_check_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -9,7 +16,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HealthCheckDialog extends StatefulWidget {
   @override
@@ -161,6 +167,12 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isWarning: true,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
+                  ),
+                if (_response.trailingSlash)
+                  _HealthListTile(
+                    title: 'APP_URL has trailing slash',
+                    subtitle: 'Remove the slash in the .env file',
+                    isWarning: true,
                   )
               ],
             ),

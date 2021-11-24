@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -81,7 +84,8 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                           Text(localization.compare),
                           Switch(
                             value: _settings.enableComparison,
-                            activeColor: Theme.of(context).accentColor,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
                             onChanged: (value) {
                               setState(
                                   () => _settings.enableComparison = value);

@@ -1,9 +1,16 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:math';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:overflow_view/overflow_view.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -26,7 +33,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:overflow_view/overflow_view.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
@@ -373,7 +379,7 @@ class _EntityListState extends State<EntityList> {
                             handleEntitiesActions(
                                 entities, EntityAction.toggleMultiselect);
                           },
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           value: entityList.length ==
                               (listUIState.selectedIds ?? <String>[]).length,
                         ),
@@ -442,11 +448,10 @@ class _EntityListState extends State<EntityList> {
                                           value: action,
                                           child: Row(
                                             children: <Widget>[
-                                              Icon(
-                                                getEntityActionIcon(action),
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                              ),
+                                              Icon(getEntityActionIcon(action),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary),
                                               SizedBox(width: 16.0),
                                               Text(AppLocalization.of(context)
                                                       .lookup(

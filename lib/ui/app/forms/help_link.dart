@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+
+// Package imports:
 import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HelpLink extends StatelessWidget {
   const HelpLink({
@@ -17,8 +22,8 @@ class HelpLink extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
-    final TextStyle linkStyle =
-        themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
+    final TextStyle linkStyle = themeData.textTheme.bodyText2
+        .copyWith(color: themeData.colorScheme.secondary);
 
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 30),

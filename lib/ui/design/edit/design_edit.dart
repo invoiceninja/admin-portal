@@ -1,10 +1,21 @@
+// Dart imports:
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'package:built_collection/built_collection.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_webview.dart';
@@ -18,16 +29,13 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -465,7 +473,7 @@ class _DesignSettingsState extends State<DesignSettings> {
             if (kIsWeb || isMobileOS()) ...[
               SizedBox(height: 16),
               SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.draftMode),
                 subtitle: Text(localization.draftModeHelp),
                 value: widget.draftMode,

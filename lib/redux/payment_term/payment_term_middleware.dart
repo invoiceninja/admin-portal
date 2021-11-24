@@ -1,18 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/payment_term_repository.dart';
 
+// Package imports:
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/data/repositories/payment_term_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 
 List<Middleware<AppState>> createStorePaymentTermsMiddleware([
   PaymentTermRepository repository = const PaymentTermRepository(),

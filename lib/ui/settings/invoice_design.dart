@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
+// Package imports:
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -16,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -26,10 +32,8 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class InvoiceDesign extends StatefulWidget {
   const InvoiceDesign({
@@ -161,7 +165,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllInvoiceDesigns,
                           onChanged: (value) => setState(
@@ -188,7 +192,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllQuoteDesigns,
                           onChanged: (value) => setState(
@@ -215,7 +219,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: CheckboxListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.updateAllRecords),
                           value: _updateAllCreditDesigns,
                           onChanged: (value) => setState(
@@ -273,7 +277,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   LearnMoreUrl(
                     url: 'https://fonts.google.com',
                     child: EntityDropdown(
-                      key: ValueKey('__primary_font_${settings.primaryFont}__'),
                       entityType: EntityType.font,
                       labelText: localization.primaryFont,
                       entityId: settings.primaryFont,
@@ -283,8 +286,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ),
                   ),
                   EntityDropdown(
-                    key: ValueKey(
-                        '__secondary_fond_${settings.secondaryFont}__'),
                     entityType: EntityType.font,
                     labelText: localization.secondaryFont,
                     entityId: settings.secondaryFont,

@@ -1,16 +1,23 @@
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/data/models/task_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaskEditDetailsScreen extends StatelessWidget {
   const TaskEditDetailsScreen({Key key}) : super(key: key);

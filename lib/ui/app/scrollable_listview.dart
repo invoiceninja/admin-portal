@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 
 class ScrollableListView extends StatefulWidget {
@@ -7,13 +10,11 @@ class ScrollableListView extends StatefulWidget {
     @required this.children,
     this.scrollController,
     this.padding,
-    this.hideMobileThumb = false,
   }) : super(key: key);
 
   final List<Widget> children;
   final ScrollController scrollController;
   final EdgeInsetsGeometry padding;
-  final bool hideMobileThumb;
 
   @override
   _ScrollableListViewState createState() => _ScrollableListViewState();
@@ -38,7 +39,6 @@ class _ScrollableListViewState extends State<ScrollableListView> {
   Widget build(BuildContext context) {
     return AppScrollbar(
       controller: widget.scrollController ?? _scrollController,
-      hideMobileThumb: widget.hideMobileThumb,
       child: ListView(
         padding: widget.padding,
         children: widget.children,

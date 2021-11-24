@@ -1,16 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 class ClientEditSettings extends StatefulWidget {
   const ClientEditSettings({
@@ -92,7 +95,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           : null,
       children: <Widget>[
         EntityDropdown(
-          key: ValueKey('__currency_${client.currencyId}__'),
           entityType: EntityType.currency,
           entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
           labelText: localization.currency,
@@ -101,7 +103,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               .rebuild((b) => b..settings.currencyId = currency?.id ?? '')),
         ),
         EntityDropdown(
-          key: ValueKey('__language_${client.languageId}__'),
           entityType: EntityType.language,
           entityList: memoizedLanguageList(viewModel.staticState.languageMap),
           labelText: localization.language,

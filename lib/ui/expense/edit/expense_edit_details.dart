@@ -1,10 +1,20 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -19,11 +29,6 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
   const ExpenseEditDetails({
@@ -142,8 +147,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 autocorrect: false,
               ),
             EntityDropdown(
-              key: ValueKey('__vendor_${expense.vendorId}__'),
-              //autofocus: true,
+              autofocus: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
@@ -159,7 +163,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             if (!expense.isInvoiced) ...[
               EntityDropdown(
-                key: ValueKey('__client_${expense.clientId}__'),
                 entityType: EntityType.client,
                 labelText: localization.client,
                 entityId: expense.clientId,
@@ -279,7 +282,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 ),
             if (expense.usesInclusiveTaxes) amountField,
             EntityDropdown(
-              key: ValueKey('__currency_${expense.currencyId}__'),
               entityType: EntityType.currency,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,

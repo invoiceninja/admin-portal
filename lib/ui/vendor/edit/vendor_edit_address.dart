@@ -1,13 +1,16 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 class VendorEditAddress extends StatefulWidget {
   const VendorEditAddress({
@@ -125,7 +128,6 @@ class VendorEditAddressState extends State<VendorEditAddress> {
           onSavePressed: viewModel.onSavePressed,
         ),
         EntityDropdown(
-          key: ValueKey('__country_${vendor.countryId}__'),
           entityType: EntityType.country,
           entityList:
               memoizedCountryList(viewModel.state.staticState.countryMap),

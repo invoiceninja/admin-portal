@@ -1,5 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -14,7 +20,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class EditScaffold extends StatelessWidget {
   const EditScaffold({
@@ -146,7 +151,8 @@ class EditScaffold extends StatelessWidget {
                   isHeader: true,
                   isCancelEnabled: isCancelEnabled,
                   saveLabel: saveLabel,
-                  cancelLabel: localization.back,
+                  cancelLabel:
+                      entity == null ? localization.cancel : localization.back,
                   onSavePressed: (context) {
                     // Clear focus now to prevent un-focus after save from
                     // marking the form as changed and to hide the keyboard
@@ -178,7 +184,8 @@ class EditScaffold extends StatelessWidget {
                               children: <Widget>[
                                 Icon(
                                   getEntityActionIcon(action),
-                                  color: Theme.of(context).accentColor,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                                 SizedBox(width: 16.0),
                                 Text(AppLocalization.of(context)

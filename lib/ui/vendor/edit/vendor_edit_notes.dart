@@ -1,14 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 class VendorEditNotes extends StatefulWidget {
   const VendorEditNotes({
@@ -91,7 +94,6 @@ class VendorEditNotesState extends State<VendorEditNotes> {
           : null,
       children: <Widget>[
         EntityDropdown(
-          key: ValueKey('__currency_${vendor.currencyId}__'),
           entityType: EntityType.currency,
           entityList: memoizedCurrencyList(staticState.currencyMap),
           labelText: localization.currency,

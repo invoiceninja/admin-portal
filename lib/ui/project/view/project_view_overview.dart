@@ -1,9 +1,14 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -133,6 +138,17 @@ class _ProjectOverviewState extends State<ProjectOverview> {
             subtitle: memoizedExpenseStatsForProject(
                     project.id, state.expenseState.map)
                 .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.invoice))
+          EntitiesListTile(
+            entity: project,
+            isFilter: widget.isFilter,
+            entityType: EntityType.invoice,
+            title: localization.invoices,
+            subtitle: memoizedInvoiceStatsForProject(
+                    project.id, state.invoiceState.map)
+                .present(localization.active, localization.archived),
+            hideNew: true,
           ),
       ];
 

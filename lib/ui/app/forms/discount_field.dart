@@ -1,6 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
+// Project imports:
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'decorated_form_field.dart';
 
 class DiscountField extends StatelessWidget {

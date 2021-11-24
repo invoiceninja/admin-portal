@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -79,7 +82,7 @@ class _ContactListTile extends StatelessWidget {
       onTap: onTap,
       leading: IgnorePointer(
         child: Checkbox(
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
           value: invitation != null,
           onChanged: (value) => null,
         ),

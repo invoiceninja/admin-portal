@@ -1,6 +1,11 @@
+// Dart imports:
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart' show SynchronousFuture;
+import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/i18n.dart';
 

@@ -30,7 +30,7 @@ const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app/';
-const String kMacOSUrl = 'https://download.invoiceninja.com/macos';
+const String kMacOSUrl = 'https://apps.apple.com/app/id1503970375';
 const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
@@ -264,6 +264,7 @@ const String kGatewayTypeEPS = '17';
 const String kGatewayTypeDirectDebit = '18';
 const String kGatewayTypeACSS = '19';
 const String kGatewayTypeBECS = '20';
+const String kGatewayTypeInstantBankPay = '21';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -286,6 +287,7 @@ const kGatewayTypes = {
   kGatewayTypeEPS: 'eps',
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
+  kGatewayTypeInstantBankPay: 'instant_bank_pay',
 };
 
 const String kNotificationChannelEmail = 'email';

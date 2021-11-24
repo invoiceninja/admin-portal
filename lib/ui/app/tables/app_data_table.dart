@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Dart imports:
 import 'dart:math' as math;
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -691,14 +693,14 @@ class AppDataTable extends StatelessWidget {
       tableColumns[0] = FixedColumnWidth(
           horizontalMargin + Checkbox.width + horizontalMargin / 2.0);
       tableRows[0].children[0] = _buildCheckbox(
-        color: theme.accentColor,
+        color: theme.colorScheme.secondary,
         checked: allChecked,
         onCheckboxChanged: _handleSelectAll,
       );
       rowIndex = 1;
       for (final DataRow row in rows) {
         tableRows[rowIndex].children[0] = _buildCheckbox(
-          color: theme.accentColor,
+          color: theme.colorScheme.secondary,
           checked: row.selected,
           onRowTap: () => row.onSelectChanged != null
               ? row.onSelectChanged(!row.selected)

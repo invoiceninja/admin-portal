@@ -1,22 +1,30 @@
+// Dart imports:
 import 'dart:async';
-import 'package:built_collection/built_collection.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/.env.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    @required Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.onSelected,
@@ -31,7 +39,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
-  }) : super(key: key);
+  });
 
   final EntityType entityType;
   final List<String> entityList;
@@ -71,6 +79,15 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     if (!_focusNode.hasFocus && !hasValue) {
       _textController.text = '';
+    }
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.entityId != oldWidget.entityId) {
+      _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
     }
   }
 
@@ -233,6 +250,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
           }
 
           widget.onSelected(entity);
+
+          _focusNode.requestFocus();
+
+          WidgetsBinding.instance.addPostFrameCallback((duration) {
+            _textController.selection = TextSelection.fromPosition(
+                TextPosition(offset: _textController.text.length));
+          });
         },
         fieldViewBuilder: (BuildContext context,
             TextEditingController textEditingController,
@@ -255,6 +279,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<SelectableEntity> onSelected,
             Iterable<SelectableEntity> options) {
+          final highlightedIndex = AutocompleteHighlightedOption.of(context);
+
           return Theme(
             data: theme,
             child: Align(
@@ -270,8 +296,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          color: Theme.of(context).cardColor,
-                          child: _EntityListTile(
+                          color: highlightedIndex == index
+                              ? convertHexStringToColor(
+                                  state.prefState.enableDarkMode
+                                      ? kDefaultDarkSelectedColor
+                                      : kDefaultLightSelectedColor)
+                              : Theme.of(context).cardColor,
+                          child: EntityAutocompleteListTile(
                             onTap: (entity) => onSelected(entity),
                             entity: options.elementAt(index),
                             filter: _filter,
@@ -296,7 +327,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
       alignment: Alignment.centerRight,
       children: <Widget>[
         InkWell(
-          //key: ValueKey('__stack_${widget.labelText}__'),
           onTap: () => _showOptions(),
           child: IgnorePointer(
             child: TextFormField(
@@ -426,7 +456,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];
           final entity = widget.entityMap[entityId];
-          return _EntityListTile(
+          return EntityAutocompleteListTile(
             entity: entity,
             filter: _filter,
             onTap: (entity) => _selectEntity(entity),
@@ -452,12 +482,12 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
   }
 }
 
-class _EntityListTile extends StatelessWidget {
-  const _EntityListTile({
+class EntityAutocompleteListTile extends StatelessWidget {
+  const EntityAutocompleteListTile({
     @required this.entity,
-    @required this.filter,
-    @required this.overrideSuggestedLabel,
-    @required this.overrideSuggestedAmount,
+    this.filter,
+    this.overrideSuggestedLabel,
+    this.overrideSuggestedAmount,
     this.onTap,
   });
 
@@ -482,10 +512,10 @@ class _EntityListTile extends StatelessWidget {
       title: Row(
         children: <Widget>[
           Expanded(
-            child: Text(label, style: Theme.of(context).textTheme.headline6),
+            child: Text(label, style: Theme.of(context).textTheme.subtitle1),
           ),
           entity.listDisplayAmount != null
-              ? Text(amount, style: Theme.of(context).textTheme.headline6)
+              ? Text(amount, style: Theme.of(context).textTheme.subtitle1)
               : Container(),
         ],
       ),

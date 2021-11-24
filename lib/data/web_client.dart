@@ -1,14 +1,21 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/.env.dart';
+
+// Package imports:
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:version/version.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:version/version.dart';
 
 class WebClient {
   const WebClient();

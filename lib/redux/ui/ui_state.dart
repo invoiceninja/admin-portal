@@ -1,41 +1,43 @@
+// Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_state.dart';
-import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/redux/design/design_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
+import 'package:invoiceninja_flutter/redux/token/token_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
-
-import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
-import 'package:invoiceninja_flutter/redux/token/token_state.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
-import 'package:invoiceninja_flutter/redux/design/design_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'ui_state.g.dart';
 

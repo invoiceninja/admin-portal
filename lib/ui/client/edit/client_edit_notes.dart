@@ -1,15 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 class ClientEditNotes extends StatefulWidget {
   const ClientEditNotes({
@@ -117,7 +120,6 @@ class ClientEditNotesState extends State<ClientEditNotes> {
           showBlank: true,
         ),
         EntityDropdown(
-          key: ValueKey('__industry_${client.industryId}__'),
           entityType: EntityType.industry,
           entityList: memoizedIndustryList(viewModel.staticState.industryMap),
           labelText: localization.industry,

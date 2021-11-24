@@ -1,16 +1,25 @@
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -20,13 +29,10 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -488,7 +494,7 @@ class _ClientPortalState extends State<ClientPortal>
                   isLast: true,
                   children: company.clientRegistrationFields
                       .map((field) => SwitchListTile(
-                          activeColor: Theme.of(context).accentColor,
+                          activeColor: Theme.of(context).colorScheme.secondary,
                           title: Text(localization.lookup(field.key)),
                           value: field.required,
                           onChanged: (value) {
@@ -522,7 +528,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptInvoiceTerms,
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
                     value: settings.showAcceptInvoiceTerms,
-                    iconData: MdiIcons.checkBoxOutline,
+                    iconData: MdiIcons.checkboxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptInvoiceTerms = value)),
                   ),
@@ -530,7 +536,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
                     value: settings.showAcceptQuoteTerms,
-                    iconData: MdiIcons.checkBoxOutline,
+                    iconData: MdiIcons.checkboxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptQuoteTerms = value)),
                   ),
