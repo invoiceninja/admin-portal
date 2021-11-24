@@ -22,7 +22,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
+          #flutter-version: '2.2.3'
+          channel: 'dev'
       - name: Install Sentry
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
@@ -126,7 +127,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: 'dev'
       - name: Setup Flutter
         run: |
           flutter doctor -v
@@ -157,52 +158,5 @@ jobs:
           cp ../build/web/main.dart.js ./public/main.next.dart.js
           git add .
           git commit -m 'Admin Portal - Next'
-          git push
-          cd ..
-
-  build-last:
-    name: Build Web - LAST
-    needs: build-next
-    env:
-      commit_secret: ${{secrets.commit_secret}}
-      commit_email: ${{secrets.commit_email}}
-      commit_name: ${{secrets.commit_name}}
-      api_secret: ${{secrets.api_secret}}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.0.3'
-      - name: Setup Flutter
-        run: |
-          flutter doctor -v
-          cp pubspec.last.yaml pubspec.yaml 
-          rm pubspec.lock
-          flutter pub get
-          flutter config --enable-web
-      - name: Prepare App
-        run: |
-          cp lib/.env.dart.example lib/.env.dart
-          sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
-          echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
-          flutter --version --machine >> lib/flutter_version.dart
-          echo ";" >> lib/flutter_version.dart
-      - name: Build Hosted App
-        run: |
-          flutter build web
-
-          sed -i '/index.html/d' build/web/flutter_service_worker.js
-
-          git config --global user.email ${{secrets.commit_email}}
-          git config --global user.name ${{secrets.commit_name}}
-
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
-          cd invoiceninja
-
-          git checkout v5-develop
-          cp ../build/web/main.dart.js ./public/main.last.dart.js
-          git add .
-          git commit -m 'Admin Portal - Last'
           git push
           cd ..
