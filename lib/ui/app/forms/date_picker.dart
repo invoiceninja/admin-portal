@@ -117,6 +117,7 @@ class _DatePickerState extends State<DatePicker> {
       focusNode: _focusNode,
       validator: widget.validator,
       controller: _textController,
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         labelText: _pendingValue ?? label ?? '',
         suffixIcon:

@@ -39,7 +39,8 @@ class CustomSurcharges extends StatelessWidget {
           DecoratedFormField(
             label: company.getCustomFieldLabel(CustomFieldType.surcharge1),
             controller: surcharge1Controller,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge2) &&
@@ -48,7 +49,8 @@ class CustomSurcharges extends StatelessWidget {
           DecoratedFormField(
             controller: surcharge2Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge3) &&
@@ -57,7 +59,8 @@ class CustomSurcharges extends StatelessWidget {
           DecoratedFormField(
             controller: surcharge3Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge3),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge4) &&
@@ -66,7 +69,8 @@ class CustomSurcharges extends StatelessWidget {
           DecoratedFormField(
             controller: surcharge4Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             onSavePressed: onSavePressed,
           ),
       ],

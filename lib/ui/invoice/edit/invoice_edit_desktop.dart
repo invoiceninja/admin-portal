@@ -403,8 +403,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         DecoratedFormField(
                           label: localization.partialDeposit,
                           controller: _partialController,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
                           onSavePressed: widget.entityViewModel.onSavePressed,
                           validator: (String value) {
                             final amount = parseDouble(_partialController.text);
@@ -463,12 +463,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ? AppLocalization.of(context)
                                 .pleaseEnterAnInvoiceNumber
                             : null,
+                        keyboardType: TextInputType.text,
                         onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                       DecoratedFormField(
                         label: localization.poNumber,
                         controller: _poNumberController,
                         onSavePressed: widget.entityViewModel.onSavePressed,
+                        keyboardType: TextInputType.text,
                       ),
                       DiscountField(
                         controller: _discountController,

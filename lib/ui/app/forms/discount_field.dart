@@ -31,7 +31,8 @@ class DiscountField extends StatelessWidget {
           child: DecoratedFormField(
             label: label ?? localization.discount,
             controller: controller,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
           ),
         ),
         const SizedBox(

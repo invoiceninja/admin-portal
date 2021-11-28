@@ -218,6 +218,7 @@ class _AccountManagementState extends State<AccountManagement>
                   child: DecoratedFormField(
                     label: localization.googleAnalyticsTrackingId,
                     controller: _trackingIdController,
+                    keyboardType: TextInputType.text,
                   ),
                 ),
               ],

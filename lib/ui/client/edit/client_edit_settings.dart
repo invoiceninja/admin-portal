@@ -156,6 +156,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             isMoney: true,
             label: localization.taskRate,
             onSavePressed: viewModel.onSavePressed,
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
           ),
         if (company.isModuleEnabled(EntityType.invoice)) ...[
           AppDropdownButton<bool>(

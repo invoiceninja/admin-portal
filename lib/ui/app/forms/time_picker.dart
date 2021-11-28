@@ -115,6 +115,7 @@ class _TimePickerState extends State<TimePicker> {
       focusNode: _focusNode,
       validator: widget.validator,
       controller: _textController,
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         labelText: _pendingValue ?? widget.labelText ?? '',
         suffixIcon: widget.allowClearing && widget.selectedDateTime != null

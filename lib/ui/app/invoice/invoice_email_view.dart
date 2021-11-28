@@ -269,6 +269,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               controller: _subjectController,
               label: localization.subject,
               onChanged: (_) => _onChanged(),
+              keyboardType: TextInputType.text,
             ),
             DecoratedFormField(
               controller: _bodyController,

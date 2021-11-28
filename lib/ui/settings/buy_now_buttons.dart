@@ -91,6 +91,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
                         ? localization.pleaseEnterAFirstName
                         : null,
                     autovalidate: autoValidate,
+                    keyboardType: TextInputType.text,
                   ),
                 ],
               )

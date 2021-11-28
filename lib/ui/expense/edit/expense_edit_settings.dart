@@ -251,8 +251,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       DecoratedFormField(
                         key: ValueKey('__rate_${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
+                        keyboardType: TextInputType.numberWithOptions(
+                            decimal: true, signed: true),
                         label: localization.exchangeRate,
                         isPercent: true,
                       ),
@@ -269,6 +269,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                                   formatNumberType: FormatNumberType.inputMoney)
                               : '',
                           label: localization.convertedAmount,
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
                           isMoney: true,
                           onChanged: (value) {
                             _convertedAmount = parseDouble(value);

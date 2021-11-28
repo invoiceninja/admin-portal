@@ -172,6 +172,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         : widget.entityType == EntityType.quote
                             ? localization.quoteNumber
                             : localization.invoiceNumber,
+                    keyboardType: TextInputType.text,
                     validator: (String val) => val.trim().isEmpty &&
                             invoice.isOld &&
                             originalInvoice.number.isNotEmpty
@@ -277,7 +278,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               DecoratedFormField(
                 label: localization.partialDeposit,
                 controller: _partialController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
                 validator: (String value) {
                   final amount = parseDouble(_partialController.text);
                   final total = invoice.calculateTotal(
@@ -302,6 +304,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             DecoratedFormField(
               label: localization.poNumber,
               controller: _poNumberController,
+              keyboardType: TextInputType.text,
             ),
             DiscountField(
               controller: _discountController,
@@ -351,25 +354,29 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               DecoratedFormField(
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge1),
                 controller: _surcharge1Controller,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
               ),
             if (company.hasCustomField(CustomFieldType.surcharge2))
               DecoratedFormField(
                 controller: _surcharge2Controller,
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
               ),
             if (company.hasCustomField(CustomFieldType.surcharge3))
               DecoratedFormField(
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge3),
                 controller: _surcharge3Controller,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
               ),
             if (company.hasCustomField(CustomFieldType.surcharge4))
               DecoratedFormField(
                 controller: _surcharge4Controller,
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
               ),
             if (company.enableFirstInvoiceTaxRate ||
                 invoice.taxName1.isNotEmpty)
@@ -428,7 +435,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   formatNumberType: FormatNumberType.inputAmount),
               onChanged: (value) => viewModel.onChanged(
                   invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
             ),
             if (company.hasTaxes)
               Padding(

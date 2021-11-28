@@ -227,8 +227,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     label: paymentTotal == 0
                         ? localization.amount
                         : amountPlaceholder,
@@ -695,7 +695,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               showClear: false,
               controller: _amountController,
               autocorrect: false,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
               label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,
