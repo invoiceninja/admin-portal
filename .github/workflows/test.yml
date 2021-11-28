@@ -15,8 +15,8 @@ jobs:
       # https://github.com/marketplace/actions/flutter-action
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
-          channel: 'stable'
+          #flutter-version: '2.2.3'
+          channel: 'dev'
       - run: flutter pub get
       - run: cp lib/.env.dart.example lib/.env.dart
       - run: flutter analyze
@@ -47,8 +47,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.2.3'
-          channel: 'stable'
+          #flutter-version: '2.2.3'
+          channel: 'dev'
       - name: Setup App
         run: |
           cp lib/.env.dart.example lib/.env.dart
