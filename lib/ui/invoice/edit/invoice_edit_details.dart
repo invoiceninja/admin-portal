@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -411,6 +412,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               onSelected: (value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
             ),
+            if (company.isModuleEnabled(EntityType.project))
+              ProjectPicker(
+                clientId: invoice.clientId,
+                projectId: invoice.projectId,
+                onChanged: (projectId) {
+                  viewModel.onChanged(
+                      invoice.rebuild((b) => b..projectId = projectId));
+                },
+              ),
             DecoratedFormField(
               key: ValueKey('__exchange_rate_${invoice.clientId}__'),
               label: localization.exchangeRate,
