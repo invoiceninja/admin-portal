@@ -3,6 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -223,8 +224,9 @@ abstract class VendorEntity extends Object
 
     switch (sortField) {
       case VendorFields.name:
-        response =
-            vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
+        response = removeDiacritics(vendorA.name)
+            .toLowerCase()
+            .compareTo(removeDiacritics(vendorB.name).toLowerCase());
         break;
       case VendorFields.city:
         response =
