@@ -307,6 +307,7 @@ class _ClientPortalState extends State<ClientPortal>
                         label: localization.subdomain,
                         autovalidate: _autoValidate,
                         controller: _subdomainController,
+                        keyboardType: TextInputType.text,
                         hint: localization.subdomainHelp,
                         validator: (value) {
                           if (value.isEmpty) {
@@ -445,11 +446,13 @@ class _ClientPortalState extends State<ClientPortal>
                     controller: _termsController,
                     label: localization.termsOfService,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     controller: _privacyController,
                     label: localization.privacyPolicy,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                 ],
               )
@@ -582,21 +585,25 @@ class _ClientPortalState extends State<ClientPortal>
                     controller: _customMessageDashboard,
                     label: localization.dashboard,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     controller: _customMessageUnpaidInvoice,
                     label: localization.unpaidInvoice,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     controller: _customMessagePaidInvoice,
                     label: localization.paidInvoice,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     controller: _customMessageUnapprovedQuote,
                     label: localization.unapprovedQuote,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                 ],
               ),
@@ -611,22 +618,26 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.header,
                     controller: _customHeaderController,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     label: localization.footer,
                     controller: _customFooterController,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   DecoratedFormField(
                     label: localization.customCss,
                     controller: _customCssController,
                     maxLines: 6,
+                    keyboardType: TextInputType.multiline,
                   ),
                   if (isSelfHosted(context))
                     DecoratedFormField(
                       label: localization.customJavascript,
                       controller: _customJavaScriptController,
                       maxLines: 6,
+                      keyboardType: TextInputType.multiline,
                     ),
                 ],
               )

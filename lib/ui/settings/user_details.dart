@@ -183,6 +183,7 @@ class _UserDetailsState extends State<UserDetails>
                       : null,
                   autovalidate: autoValidate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
                   label: localization.lastName,
@@ -192,6 +193,7 @@ class _UserDetailsState extends State<UserDetails>
                       : null,
                   autovalidate: autoValidate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
                   label: localization.email,
@@ -201,11 +203,13 @@ class _UserDetailsState extends State<UserDetails>
                       : null,
                   autovalidate: autoValidate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 DecoratedFormField(
                   label: localization.phone,
                   controller: _phoneController,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.phone,
                 ),
                 PasswordFormField(
                   controller: _passwordController,
@@ -500,6 +504,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                             validator: (value) => value.isEmpty
                                 ? AppLocalization.of(context).pleaseEnterAValue
                                 : null,
+                            keyboardType: TextInputType.number,
                             onSavePressed: (context) => _onSavePressed(),
                           ),
                         ),

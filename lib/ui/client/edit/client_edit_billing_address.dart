@@ -119,7 +119,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           controller: _address2Controller,
           label: localization.address2,
           onSavePressed: viewModel.onSavePressed,
-          keyboardType: TextInputType.streetAddress,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           autocorrect: false,

@@ -214,11 +214,13 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.fromName,
                 controller: _fromNameController,
                 onSavePressed: viewModel.onSavePressed,
+                keyboardType: TextInputType.name,
               ),
               DecoratedFormField(
                 label: localization.replyToName,
                 controller: _replyToNameController,
                 onSavePressed: viewModel.onSavePressed,
+                keyboardType: TextInputType.name,
               ),
               DecoratedFormField(
                 label: localization.replyToEmail,
