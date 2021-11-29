@@ -515,8 +515,10 @@ class SettingsSearch extends StatelessWidget {
           'portal_mode',
           'subdomain',
           'domain',
-          'client_registration',
           'document_upload',
+        ],
+        [
+          'client_registration',
         ],
         [
           'enable_portal_password',
