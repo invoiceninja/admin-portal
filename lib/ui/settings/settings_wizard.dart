@@ -230,14 +230,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       controller: _nameController,
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
     );
 
     final firstName = DecoratedFormField(
       label: localization.firstName,
       autovalidate: _autoValidate,
       controller: _firstNameController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.name,
       autofillHints: [AutofillHints.givenName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -247,7 +247,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       label: localization.lastName,
       autovalidate: _autoValidate,
       controller: _lastNameController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.name,
       autofillHints: [AutofillHints.familyName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,

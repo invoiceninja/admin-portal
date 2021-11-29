@@ -567,7 +567,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               showClear: false,
                               autofocus: false,
                               controller: textEditingController,
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.text,
                               focusNode: focusNode,
                               onFieldSubmitted: (String value) {
                                 onFieldSubmitted();

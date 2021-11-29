@@ -107,7 +107,7 @@ class _GroupEditState extends State<GroupEdit> {
                     DecoratedFormField(
                       autofocus: true,
                       label: localization.name,
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       controller: _nameController,
                       onSavePressed: viewModel.onSavePressed,
                       validator: (val) => val.isEmpty || val.trim().isEmpty

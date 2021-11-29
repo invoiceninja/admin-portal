@@ -177,7 +177,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               : null,
           onSavePressed: viewModel.onSavePressed,
           label: localization.name,
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.text,
           decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
               ? InputDecoration(
                   labelText: localization.name,

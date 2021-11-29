@@ -405,7 +405,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               child: DecoratedFormField(
                 label: widget.label,
                 controller: _customFieldController,
-                keyboardType: TextInputType.name,
+                keyboardType: TextInputType.text,
               ),
             ),
             if (widget.showTaxes) ...[

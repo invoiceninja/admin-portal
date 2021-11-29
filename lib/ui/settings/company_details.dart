@@ -256,7 +256,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         : null,
                     autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,

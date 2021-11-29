@@ -461,7 +461,7 @@ class _DesignSettingsState extends State<DesignSettings> {
             DecoratedFormField(
               label: localization.name,
               controller: widget.nameController,
-              keyboardType: TextInputType.name,
+              keyboardType: TextInputType.text,
             ),
             DesignPicker(
                 label: localization.design,

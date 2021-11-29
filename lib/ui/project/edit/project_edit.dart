@@ -158,7 +158,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: _autoValidate,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                     autofocus: true,
                     label: localization.projectName,
                     onSavePressed: viewModel.onSavePressed,

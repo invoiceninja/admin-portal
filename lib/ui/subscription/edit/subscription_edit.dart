@@ -233,7 +233,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     controller: _nameController,
                     label: localization.name,
                     onSavePressed: viewModel.onSavePressed,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
                   ),
                   DynamicSelector(
                     entityType: EntityType.group,
