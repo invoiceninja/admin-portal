@@ -109,6 +109,7 @@ class _TokenEditState extends State<TokenEdit> {
                               ? localization.pleaseEnterAName
                               : null,
                       onSavePressed: viewModel.onSavePressed,
+                      keyboardType: TextInputType.text,
                     ),
                   ],
                 ),

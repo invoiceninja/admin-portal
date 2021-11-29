@@ -107,6 +107,7 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                       controller: _nameController,
                       autovalidate: _autoValidate,
                       label: localization.name,
+                      keyboardType: TextInputType.name,
                       validator: (val) => val.isEmpty || val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,

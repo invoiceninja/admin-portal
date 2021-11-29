@@ -229,7 +229,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   DecoratedFormField(
                     controller: _numberController,
                     label: localization.taskNumber,
-                    isMoney: false,
+                    keyboardType: TextInputType.text,
                   ),
                   DecoratedFormField(
                     key: ValueKey('__rate__'),

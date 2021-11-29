@@ -199,6 +199,7 @@ class _UserEditState extends State<UserEdit>
                         : null,
                     autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.name,
                   ),
                   DecoratedFormField(
                     label: localization.lastName,
@@ -208,6 +209,7 @@ class _UserEditState extends State<UserEdit>
                         : null,
                     autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.name,
                   ),
                   DecoratedFormField(
                     label: localization.email,
@@ -217,11 +219,13 @@ class _UserEditState extends State<UserEdit>
                         : null,
                     autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   DecoratedFormField(
                     label: localization.phone,
                     controller: _phoneController,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.phone,
                   ),
                   /*
                   PasswordFormField(

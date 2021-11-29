@@ -264,11 +264,13 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
           controller: _firstNameController,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
+          keyboardType: TextInputType.name,
         ),
         DecoratedFormField(
           controller: _lastNameController,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.lastName,
+          keyboardType: TextInputType.name,
         ),
         DecoratedFormField(
           controller: _emailController,

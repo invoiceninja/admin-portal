@@ -242,6 +242,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               label: localization.product,
               controller: _productKeyController,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              keyboardType: TextInputType.text,
             ),
             DecoratedFormField(
               keyboardType: TextInputType.multiline,

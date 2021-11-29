@@ -241,6 +241,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   onSavePressed: viewModel.onSavePressed,
                   validator: (value) =>
                       value.isEmpty ? localization.pleaseEnterAValue : null,
+                  keyboardType: TextInputType.text,
                 ),
               if (payment.isNew || payment.isApplying == true)
                 for (var index = 0; index < invoicePaymentables.length; index++)
@@ -297,6 +298,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.text,
                 ),
               CustomField(
                 controller: _custom1Controller,
@@ -382,6 +384,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   controller: _exchangeRateController,
                   label: localization.exchangeRate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
                 Focus(
                   onFocusChange: (hasFocus) {
@@ -421,6 +424,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       _convertedAmount = parseDouble(value);
                     },
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: false),
                   ),
                 ),
               ],

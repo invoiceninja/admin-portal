@@ -159,6 +159,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                             controller: _headerKeyController,
                             onSavePressed: viewModel.onSavePressed,
                             onChanged: (value) => setState(() {}),
+                            keyboardType: TextInputType.text,
                           ),
                         ),
                         SizedBox(
@@ -170,6 +171,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                             controller: _headerValueController,
                             onSavePressed: viewModel.onSavePressed,
                             onChanged: (value) => setState(() {}),
+                            keyboardType: TextInputType.text,
                           ),
                         ),
                         SizedBox(

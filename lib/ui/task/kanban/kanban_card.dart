@@ -90,6 +90,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                 minLines: 2,
                 maxLines: 10,
                 onChanged: (value) => _description = value,
+                keyboardType: TextInputType.multiline,
               ),
               SizedBox(height: 12),
               Row(

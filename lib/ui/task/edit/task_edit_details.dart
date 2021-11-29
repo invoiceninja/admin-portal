@@ -173,6 +173,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
               controller: _numberController,
               label: localization.taskNumber,
               autocorrect: false,
+              keyboardType: TextInputType.text,
             ),
             DecoratedFormField(
               key: ValueKey('__rate__'),

@@ -158,6 +158,7 @@ class _ProductEditState extends State<ProductEdit> {
                       : null,
                   autovalidate: _autoValidate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.text,
                 ),
                 DecoratedFormField(
                   keyboardType: TextInputType.multiline,
