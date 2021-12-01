@@ -850,6 +850,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.viewPdf);
           if (!isRecurring) {
             actions.add(EntityAction.download);
+            //actions.add(EntityAction.printPdf);
           }
         }
       }

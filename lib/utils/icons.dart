@@ -17,6 +17,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.viewPdf:
     case EntityAction.bulkDownload:
       return Icons.picture_as_pdf;
+    case EntityAction.printPdf:
+      return Icons.print;
     case EntityAction.download:
       return Icons.download;
     case EntityAction.clientPortal:
