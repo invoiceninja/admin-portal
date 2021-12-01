@@ -149,7 +149,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       disabledLabel: localization.showOrHide,
                     ),
                   ],
-                  if (isDesktop(context))
+                  if (isDesktop(context)) ...[
                     BoolDropdownButton(
                       label: localization.clickSelected,
                       value: prefState.tapSelectedToEdit,
@@ -158,8 +158,19 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.hidePreview,
-                    )
-                  else
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SwitchListTile(
+                        title: Text(localization.showPdfPreview),
+                        value: prefState.showPdfPreview,
+                        onChanged: (value) =>
+                            viewModel.onShowPdfChanged(context, value),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        secondary: Icon(MdiIcons.filePdfBox),
+                      ),
+                    ),
+                  ] else
                     BoolDropdownButton(
                       label: localization.listLongPress,
                       value: !prefState.longPressSelectionIsDefault,

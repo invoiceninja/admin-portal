@@ -142,6 +142,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'showKanban',
       serializers.serialize(object.showKanban,
           specifiedType: const FullType(bool)),
+      'showPdfPreview',
+      serializers.serialize(object.showPdfPreview,
+          specifiedType: const FullType(bool)),
       'isHistoryVisible',
       serializers.serialize(object.isHistoryVisible,
           specifiedType: const FullType(bool)),
@@ -239,6 +242,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'showKanban':
           result.showKanban = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'showPdfPreview':
+          result.showPdfPreview = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isHistoryVisible':
@@ -548,6 +555,8 @@ class _$PrefState extends PrefState {
   @override
   final bool showKanban;
   @override
+  final bool showPdfPreview;
+  @override
   final bool isHistoryVisible;
   @override
   final bool enableDarkMode;
@@ -587,6 +596,7 @@ class _$PrefState extends PrefState {
       this.isPreviewVisible,
       this.isMenuVisible,
       this.showKanban,
+      this.showPdfPreview,
       this.isHistoryVisible,
       this.enableDarkMode,
       this.isFilterVisible,
@@ -618,6 +628,8 @@ class _$PrefState extends PrefState {
         isMenuVisible, 'PrefState', 'isMenuVisible');
     BuiltValueNullFieldError.checkNotNull(
         showKanban, 'PrefState', 'showKanban');
+    BuiltValueNullFieldError.checkNotNull(
+        showPdfPreview, 'PrefState', 'showPdfPreview');
     BuiltValueNullFieldError.checkNotNull(
         isHistoryVisible, 'PrefState', 'isHistoryVisible');
     BuiltValueNullFieldError.checkNotNull(
@@ -665,6 +677,7 @@ class _$PrefState extends PrefState {
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
+        showPdfPreview == other.showPdfPreview &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
         isFilterVisible == other.isFilterVisible &&
@@ -701,13 +714,13 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode),
-                                                                                historySidebarMode.hashCode),
-                                                                            useSidebarEditor.hashCode),
-                                                                        customColors.hashCode),
-                                                                    isPreviewVisible.hashCode),
-                                                                isMenuVisible.hashCode),
-                                                            showKanban.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode),
+                                                                                useSidebarEditor.hashCode),
+                                                                            customColors.hashCode),
+                                                                        isPreviewVisible.hashCode),
+                                                                    isMenuVisible.hashCode),
+                                                                showKanban.hashCode),
+                                                            showPdfPreview.hashCode),
                                                         isHistoryVisible.hashCode),
                                                     enableDarkMode.hashCode),
                                                 isFilterVisible.hashCode),
@@ -735,6 +748,7 @@ class _$PrefState extends PrefState {
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
+          ..add('showPdfPreview', showPdfPreview)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
           ..add('isFilterVisible', isFilterVisible)
@@ -799,6 +813,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool _showKanban;
   bool get showKanban => _$this._showKanban;
   set showKanban(bool showKanban) => _$this._showKanban = showKanban;
+
+  bool _showPdfPreview;
+  bool get showPdfPreview => _$this._showPdfPreview;
+  set showPdfPreview(bool showPdfPreview) =>
+      _$this._showPdfPreview = showPdfPreview;
 
   bool _isHistoryVisible;
   bool get isHistoryVisible => _$this._isHistoryVisible;
@@ -879,6 +898,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
       _showKanban = $v.showKanban;
+      _showPdfPreview = $v.showPdfPreview;
       _isHistoryVisible = $v.isHistoryVisible;
       _enableDarkMode = $v.enableDarkMode;
       _isFilterVisible = $v.isFilterVisible;
@@ -930,8 +950,9 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
                   isMenuVisible, 'PrefState', 'isMenuVisible'),
               showKanban: BuiltValueNullFieldError.checkNotNull(
                   showKanban, 'PrefState', 'showKanban'),
-              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(
-                  isHistoryVisible, 'PrefState', 'isHistoryVisible'),
+              showPdfPreview: BuiltValueNullFieldError.checkNotNull(
+                  showPdfPreview, 'PrefState', 'showPdfPreview'),
+              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, 'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, 'PrefState', 'persistData'),

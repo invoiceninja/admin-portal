@@ -33,6 +33,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       tapSelectedToEdit: false,
       hideDesktopWarning: false,
       showKanban: false,
+      showPdfPreview: true,
       persistData: false,
       persistUI: true,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -97,6 +98,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isMenuVisible;
 
   bool get showKanban;
+
+  bool get showPdfPreview;
 
   bool get isHistoryVisible;
 
@@ -186,6 +189,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true
+    ..showPdfPreview = true
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;
 
