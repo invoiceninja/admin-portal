@@ -149,7 +149,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       disabledLabel: localization.showOrHide,
                     ),
                   ],
-                  if (isDesktop(context)) ...[
+                  if (isDesktop(context))
                     BoolDropdownButton(
                       label: localization.clickSelected,
                       value: prefState.tapSelectedToEdit,
@@ -158,19 +158,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.hidePreview,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: SwitchListTile(
-                        title: Text(localization.showPdfPreview),
-                        value: prefState.showPdfPreview,
-                        onChanged: (value) =>
-                            viewModel.onShowPdfChanged(context, value),
-                        activeColor: Theme.of(context).colorScheme.secondary,
-                        secondary: Icon(MdiIcons.filePdfBox),
-                      ),
-                    ),
-                  ] else
+                    )
+                  else
                     BoolDropdownButton(
                       label: localization.listLongPress,
                       value: !prefState.longPressSelectionIsDefault,
@@ -204,6 +193,16 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       }
                     },
                   ),
+                  if (isDesktop(context))
+                    SwitchListTile(
+                      title: Text(localization.showPdfPreview),
+                      subtitle: Text(localization.showPdfPreviewHelp),
+                      value: prefState.showPdfPreview,
+                      onChanged: (value) =>
+                          viewModel.onShowPdfChanged(context, value),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      secondary: Icon(MdiIcons.filePdfBox),
+                    ),
                   SwitchListTile(
                     title: Text(localization.persistUi),
                     subtitle: Text(localization.persistUiHelp),

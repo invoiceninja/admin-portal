@@ -907,10 +907,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: _PdfPreview(invoice: invoice),
-            ),
+            if (state.prefState.showPdfPreview)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: _PdfPreview(invoice: invoice),
+              ),
           ],
         ),
       ),
