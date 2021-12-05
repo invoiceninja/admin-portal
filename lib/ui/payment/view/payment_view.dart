@@ -112,7 +112,8 @@ class _PaymentViewState extends State<PaymentView> {
                         EntityListTile(
                           isFilter: widget.isFilter,
                           entity: state.invoiceState.map[paymentable.invoiceId],
-                          subtitle: formatNumber(paymentable.amount, context) +
+                          subtitle: formatNumber(paymentable.amount, context,
+                                  clientId: payment.clientId) +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
@@ -123,7 +124,8 @@ class _PaymentViewState extends State<PaymentView> {
                         EntityListTile(
                           isFilter: widget.isFilter,
                           entity: state.creditState.map[paymentable.creditId],
-                          subtitle: formatNumber(paymentable.amount, context) +
+                          subtitle: formatNumber(paymentable.amount, context,
+                                  clientId: payment.clientId) +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
