@@ -29,6 +29,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
       isFilterVisible: false,
+      textScaleFactor: 1,
       longPressSelectionIsDefault: true,
       tapSelectedToEdit: false,
       hideDesktopWarning: false,
@@ -43,6 +44,11 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   }
 
   PrefState._();
+
+  static const TEXT_SCALING_NORMAL = 1.0;
+  static const TEXT_SCALING_LARGE = 1.2;
+  static const TEXT_SCALING_LARGER = 1.4;
+  static const TEXT_SCALING_LARGEST = 1.6;
 
   static const THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR =
       'sidebar_active_background_color';
@@ -123,6 +129,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get hideDesktopWarning;
 
+  double get textScaleFactor;
+
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
@@ -190,6 +198,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..persistData = false
     ..persistUI = true
     ..showPdfPreview = true
+    ..textScaleFactor = 1
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;
 

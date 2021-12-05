@@ -178,6 +178,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideDesktopWarning',
       serializers.serialize(object.hideDesktopWarning,
           specifiedType: const FullType(bool)),
+      'textScaleFactor',
+      serializers.serialize(object.textScaleFactor,
+          specifiedType: const FullType(double)),
       'sortFields',
       serializers.serialize(object.sortFields,
           specifiedType: const FullType(BuiltMap, const [
@@ -291,6 +294,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'hideDesktopWarning':
           result.hideDesktopWarning = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'textScaleFactor':
+          result.textScaleFactor = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
         case 'sortFields':
           result.sortFields.replace(serializers.deserialize(value,
@@ -579,6 +586,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideDesktopWarning;
   @override
+  final double textScaleFactor;
+  @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -608,6 +617,7 @@ class _$PrefState extends PrefState {
       this.rowsPerPage,
       this.colorTheme,
       this.hideDesktopWarning,
+      this.textScaleFactor,
       this.sortFields,
       this.companyPrefs})
       : super._() {
@@ -652,6 +662,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
     BuiltValueNullFieldError.checkNotNull(
+        textScaleFactor, 'PrefState', 'textScaleFactor');
+    BuiltValueNullFieldError.checkNotNull(
         sortFields, 'PrefState', 'sortFields');
     BuiltValueNullFieldError.checkNotNull(
         companyPrefs, 'PrefState', 'companyPrefs');
@@ -689,6 +701,7 @@ class _$PrefState extends PrefState {
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
+        textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
@@ -714,24 +727,24 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode),
-                                                                                useSidebarEditor.hashCode),
-                                                                            customColors.hashCode),
-                                                                        isPreviewVisible.hashCode),
-                                                                    isMenuVisible.hashCode),
-                                                                showKanban.hashCode),
-                                                            showPdfPreview.hashCode),
-                                                        isHistoryVisible.hashCode),
-                                                    enableDarkMode.hashCode),
-                                                isFilterVisible.hashCode),
-                                            persistData.hashCode),
-                                        persistUI.hashCode),
-                                    longPressSelectionIsDefault.hashCode),
-                                requireAuthentication.hashCode),
-                            tapSelectedToEdit.hashCode),
-                        rowsPerPage.hashCode),
-                    colorTheme.hashCode),
-                hideDesktopWarning.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode),
+                                                                                customColors.hashCode),
+                                                                            isPreviewVisible.hashCode),
+                                                                        isMenuVisible.hashCode),
+                                                                    showKanban.hashCode),
+                                                                showPdfPreview.hashCode),
+                                                            isHistoryVisible.hashCode),
+                                                        enableDarkMode.hashCode),
+                                                    isFilterVisible.hashCode),
+                                                persistData.hashCode),
+                                            persistUI.hashCode),
+                                        longPressSelectionIsDefault.hashCode),
+                                    requireAuthentication.hashCode),
+                                tapSelectedToEdit.hashCode),
+                            rowsPerPage.hashCode),
+                        colorTheme.hashCode),
+                    hideDesktopWarning.hashCode),
+                textScaleFactor.hashCode),
             sortFields.hashCode),
         companyPrefs.hashCode));
   }
@@ -760,6 +773,7 @@ class _$PrefState extends PrefState {
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
+          ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -870,6 +884,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideDesktopWarning(bool hideDesktopWarning) =>
       _$this._hideDesktopWarning = hideDesktopWarning;
 
+  double _textScaleFactor;
+  double get textScaleFactor => _$this._textScaleFactor;
+  set textScaleFactor(double textScaleFactor) =>
+      _$this._textScaleFactor = textScaleFactor;
+
   MapBuilder<EntityType, PrefStateSortField> _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
       _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
@@ -910,6 +929,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _rowsPerPage = $v.rowsPerPage;
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
+      _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
       _$v = null;
@@ -963,6 +983,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
+              textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, 'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {
