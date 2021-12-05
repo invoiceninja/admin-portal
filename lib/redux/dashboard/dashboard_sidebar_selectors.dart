@@ -276,15 +276,23 @@ List<ExpenseEntity> _recentExpenses({
   expenseMap.forEach((index, expense) {
     final client =
         clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
-    if (expense.isNotActive || client.isNotActive) {
+    if (client.isNotActive || expense.isNotActive || expense.isInvoiced) {
       // do noting
     } else {
       expenses.add(expense);
     }
   });
 
-  expenses.sort((expenseA, expenseB) =>
-      (expenseA.date ?? '').compareTo(expenseB.date ?? ''));
+  expenses.sort((expenseA, expenseB) {
+    final expenseAdate = expenseA.date ?? '';
+    final expenseBdate = expenseB.date ?? '';
+
+    if (expenseAdate == expenseBdate) {
+      return expenseB.number.compareTo(expenseA.number);
+    } else {
+      return expenseBdate.compareTo(expenseAdate);
+    }
+  });
 
   return expenses;
 }
