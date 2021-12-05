@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -229,12 +230,15 @@ class _SettingsWizardState extends State<SettingsWizard> {
       controller: _nameController,
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
+      keyboardType: TextInputType.text,
     );
 
     final firstName = DecoratedFormField(
       label: localization.firstName,
       autovalidate: _autoValidate,
       controller: _firstNameController,
+      keyboardType: TextInputType.name,
+      autofillHints: [AutofillHints.givenName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
     );
@@ -243,6 +247,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
       label: localization.lastName,
       autovalidate: _autoValidate,
       controller: _lastNameController,
+      keyboardType: TextInputType.name,
+      autofillHints: [AutofillHints.familyName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
     );
@@ -304,6 +310,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       label: localization.subdomain,
       autovalidate: _autoValidate,
       controller: _subdomainController,
+      keyboardType: TextInputType.text,
       validator: (value) {
         if (value.isEmpty) {
           return localization.pleaseEnterAValue;

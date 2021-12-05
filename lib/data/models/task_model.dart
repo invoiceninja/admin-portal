@@ -6,6 +6,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -629,9 +630,9 @@ abstract class TaskEntity extends Object
       case TaskFields.client:
         final clientA = clientMap[taskA.clientId] ?? ClientEntity();
         final clientB = clientMap[taskB.clientId] ?? ClientEntity();
-        response = clientA.listDisplayName
+        response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
-            .compareTo(clientB.listDisplayName.toLowerCase());
+            .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case TaskFields.projectId:
       case TaskFields.project:

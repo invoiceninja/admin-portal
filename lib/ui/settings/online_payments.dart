@@ -149,6 +149,8 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
                   label: localization.minimumUnderPaymentAmount,
                   controller: _minimumAmountController,
                   isMoney: true,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
                 ),
               ),
           ]),

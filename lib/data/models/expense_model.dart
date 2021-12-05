@@ -3,6 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -412,17 +413,17 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.client:
         final clientA = clientMap[expenseA.clientId] ?? ClientEntity();
         final clientB = clientMap[expenseB.clientId] ?? ClientEntity();
-        response = clientA.listDisplayName
+        response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
-            .compareTo(clientB.listDisplayName.toLowerCase());
+            .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case ExpenseFields.vendorId:
       case ExpenseFields.vendor:
         final vendorA = vendorMap[expenseA.vendorId] ?? VendorEntity();
         final vendorB = vendorMap[expenseB.vendorId] ?? VendorEntity();
-        response = vendorA.listDisplayName
+        response = removeDiacritics(vendorA.listDisplayName)
             .toLowerCase()
-            .compareTo(vendorB.listDisplayName.toLowerCase());
+            .compareTo(removeDiacritics(vendorB.listDisplayName).toLowerCase());
         break;
       case EntityFields.state:
         final stateA =

@@ -100,6 +100,8 @@ class _TaskSettingsState extends State<TaskSettings> {
               label: localization.defaultTaskRate,
               onSavePressed: viewModel.onSavePressed,
               isMoney: true,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
             ),
             if (!viewModel.state.settingsUIState.isFiltered) ...[
               SizedBox(height: 32),

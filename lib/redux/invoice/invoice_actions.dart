@@ -9,6 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+//import 'package:http/http.dart' as http;
+//import 'package:invoiceninja_flutter/data/web_client.dart';
+//import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -703,6 +706,15 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           store.dispatch(RemoveFromInvoiceMultiselect(entity: invoice));
         }
       }
+      break;
+    case EntityAction.printPdf:
+      /*
+      final invitation = invoice.invitations.first;
+      final url = invitation.downloadLink;
+      final http.Response response =
+          await WebClient().get(url, '', rawResponse: true);
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      */
       break;
     case EntityAction.more:
       showEntityActionsDialog(

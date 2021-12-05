@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
@@ -402,8 +403,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         DecoratedFormField(
                           label: localization.partialDeposit,
                           controller: _partialController,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
                           onSavePressed: widget.entityViewModel.onSavePressed,
                           validator: (String value) {
                             final amount = parseDouble(_partialController.text);
@@ -462,12 +463,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ? AppLocalization.of(context)
                                 .pleaseEnterAnInvoiceNumber
                             : null,
+                        keyboardType: TextInputType.text,
                         onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                       DecoratedFormField(
                         label: localization.poNumber,
                         controller: _poNumberController,
                         onSavePressed: widget.entityViewModel.onSavePressed,
+                        keyboardType: TextInputType.text,
                       ),
                       DiscountField(
                         controller: _discountController,
@@ -714,10 +717,25 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           ),
                                         ),
                                       ),
-                                    ] else if (!invoice.isInvoice) ...[
+                                    ] else ...[
                                       SizedBox(width: kTableColumnGap),
                                       Expanded(child: SizedBox()),
                                     ],
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    if (company
+                                        .isModuleEnabled(EntityType.project))
+                                      Expanded(
+                                          child: ProjectPicker(
+                                        clientId: invoice.clientId,
+                                        projectId: invoice.projectId,
+                                        onChanged: (projectId) {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) => b..projectId = projectId));
+                                        },
+                                      )),
                                     if (invoice.isInvoice) ...[
                                       SizedBox(width: kTableColumnGap),
                                       Expanded(
@@ -740,6 +758,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           ),
                                         ),
                                       ),
+                                    ] else ...[
+                                      SizedBox(width: kTableColumnGap),
+                                      Expanded(child: SizedBox()),
                                     ],
                                   ],
                                 )
@@ -886,10 +907,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: _PdfPreview(invoice: invoice),
-            ),
+            if (state.prefState.showPdfPreview)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: _PdfPreview(invoice: invoice),
+              ),
           ],
         ),
       ),

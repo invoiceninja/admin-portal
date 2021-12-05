@@ -242,6 +242,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               label: localization.product,
               controller: _productKeyController,
               onSavePressed: widget.entityViewModel.onSavePressed,
+              keyboardType: TextInputType.text,
             ),
             DecoratedFormField(
               keyboardType: TextInputType.multiline,
@@ -284,15 +285,16 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             DecoratedFormField(
               label: localization.unitCost,
               controller: _costController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
               onSavePressed: widget.entityViewModel.onSavePressed,
             ),
             company.enableProductQuantity
                 ? DecoratedFormField(
                     label: localization.quantity,
                     controller: _qtyController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
@@ -300,8 +302,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ? DecoratedFormField(
                     label: localization.discount,
                     controller: _discountController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),

@@ -179,6 +179,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               : null,
           onSavePressed: viewModel.onSavePressed,
           label: localization.name,
+          keyboardType: TextInputType.text,
           decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
               ? InputDecoration(
                   labelText: localization.name,
@@ -205,6 +206,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             label: localization.number,
             controller: _numberController,
             onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
           ),
         if (memoizedGroupList(state.groupState.map).isNotEmpty)
           DynamicSelector(
@@ -223,11 +225,13 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
           label: localization.idNumber,
           controller: _idNumberController,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           label: localization.vatNumber,
           controller: _vatNumberController,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           label: localization.website,

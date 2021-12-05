@@ -405,6 +405,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               child: DecoratedFormField(
                 label: widget.label,
                 controller: _customFieldController,
+                keyboardType: TextInputType.text,
               ),
             ),
             if (widget.showTaxes) ...[
@@ -473,6 +474,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               label: localization.options,
               controller: _optionsController,
               hint: localization.commaSeparatedList,
+              keyboardType: TextInputType.text,
             ),
           ),
         SizedBox(height: 16),

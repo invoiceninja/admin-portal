@@ -92,6 +92,7 @@ class EntityAction extends EnumClass {
   static const EntityAction viewPdf = _$viewPdf;
   static const EntityAction viewStatement = _$viewStatement;
   static const EntityAction more = _$more;
+  static const EntityAction printPdf = _$printPdf;
   static const EntityAction start = _$start;
   static const EntityAction resume = _$resume;
   static const EntityAction stop = _$stop;

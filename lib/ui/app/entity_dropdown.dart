@@ -269,6 +269,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             autofocus: widget.autofocus ?? false,
             controller: textEditingController,
             focusNode: focusNode,
+            keyboardType: TextInputType.text,
             onFieldSubmitted: (String value) {
               onFieldSubmitted();
             },

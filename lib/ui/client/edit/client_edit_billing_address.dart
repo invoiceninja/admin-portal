@@ -112,30 +112,35 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
               ? localization.billingAddress1
               : localization.address1,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.streetAddress,
         ),
         DecoratedFormField(
           autocorrect: false,
           controller: _address2Controller,
           label: localization.address2,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           autocorrect: false,
           controller: _cityController,
           label: localization.city,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           autocorrect: false,
           controller: _stateController,
           label: localization.state,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           autocorrect: false,
           controller: _postalCodeController,
           label: localization.postalCode,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         EntityDropdown(
           entityType: EntityType.country,

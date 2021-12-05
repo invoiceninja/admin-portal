@@ -177,6 +177,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               : null,
           onSavePressed: viewModel.onSavePressed,
           label: localization.name,
+          keyboardType: TextInputType.text,
           decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
               ? InputDecoration(
                   labelText: localization.name,
@@ -203,6 +204,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             label: localization.number,
             controller: _numberController,
             onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
           ),
         UserPicker(
           userId: vendor.assignedUserId,
@@ -213,11 +215,13 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
           controller: _idNumberController,
           label: localization.idNumber,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _vatNumberController,
           label: localization.vatNumber,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _websiteController,

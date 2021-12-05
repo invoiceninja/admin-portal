@@ -123,7 +123,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
 
     final amountField = DecoratedFormField(
       controller: _amountController,
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      keyboardType:
+          TextInputType.numberWithOptions(decimal: true, signed: true),
       label: localization.amount,
       onSavePressed: viewModel.onSavePressed,
       isMoney: true,
@@ -145,6 +146,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 controller: _numberController,
                 label: localization.expenseNumber,
                 autocorrect: false,
+                keyboardType: TextInputType.text,
               ),
             EntityDropdown(
               autofocus: true,

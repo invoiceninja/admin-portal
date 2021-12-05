@@ -370,7 +370,7 @@ class _EntityListState extends State<EntityList> {
                               MaterialTapTargetSize.shrinkWrap,
                           onChanged: (value) {
                             final endIndex = min(
-                                entityList.length, state.prefState.rowsPerPage);
+                                entityList.length, kMaxEntitiesPerBulkAction);
                             final entities = entityList
                                 .sublist(0, endIndex)
                                 .map<BaseEntity>(

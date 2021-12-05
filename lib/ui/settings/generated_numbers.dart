@@ -284,6 +284,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     DecoratedFormField(
                       label: localization.recurringPrefix,
                       controller: _recurringPrefixController,
+                      keyboardType: TextInputType.text,
                     ),
                   if (company.isModuleEnabled(EntityType.quote))
                     BoolDropdownButton(
@@ -527,10 +528,12 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
             DecoratedFormField(
               label: localization.numberPattern,
               controller: _patternController,
+              keyboardType: TextInputType.text,
             ),
             DecoratedFormField(
               label: localization.numberCounter,
               controller: _counterController,
+              keyboardType: TextInputType.number,
             ),
           ],
         ),

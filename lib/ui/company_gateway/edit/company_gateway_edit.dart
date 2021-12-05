@@ -196,6 +196,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         enabled: false,
                         label: localization.accountId,
                         initialValue: accountId,
+                        keyboardType: TextInputType.text,
                       )
                   else
                     GatewayConfigSettings(
@@ -216,6 +217,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     initialValue: companyGateway.label,
                     onChanged: (String value) => viewModel.onChanged(
                         companyGateway.rebuild((b) => b..label = value.trim())),
+                    keyboardType: TextInputType.text,
                   ),
                 if (state.staticState.gatewayMap[companyGateway.gatewayId]
                         ?.supportsTokenBilling ==
@@ -901,16 +903,22 @@ class _FeesEditorState extends State<FeesEditor> {
           label: localization.feePercent,
           controller: _percentController,
           isPercent: true,
+          keyboardType:
+              TextInputType.numberWithOptions(decimal: true, signed: true),
         ),
         DecoratedFormField(
           label: localization.feeAmount,
           controller: _amountController,
           isMoney: true,
+          keyboardType:
+              TextInputType.numberWithOptions(decimal: true, signed: true),
         ),
         DecoratedFormField(
           label: localization.feeCap,
           controller: _capController,
           isMoney: true,
+          keyboardType:
+              TextInputType.numberWithOptions(decimal: true, signed: true),
         ),
         if (company.enableFirstItemTaxRate)
           TaxRateDropdown(

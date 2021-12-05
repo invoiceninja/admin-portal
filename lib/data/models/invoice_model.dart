@@ -3,6 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -609,8 +610,10 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
     switch (sortField) {
       case InvoiceFields.number:
-        var invoiceANumber = invoiceA.number ?? '';
-        var invoiceBNumber = invoiceB.number ?? '';
+        var invoiceANumber =
+            (invoiceA.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
+        var invoiceBNumber =
+            (invoiceB.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
         invoiceANumber = recurringPrefix.isNotEmpty &&
                 //(invoiceA.recurringId ?? '').isNotEmpty &&
                 invoiceANumber.startsWith(recurringPrefix)
@@ -734,9 +737,9 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.client:
         final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
         final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
-        response = clientA.listDisplayName
+        response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
-            .compareTo(clientB.listDisplayName.toLowerCase());
+            .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case InvoiceFields.isViewed:
         response = invoiceB.isViewed ? 1 : -1;
@@ -847,6 +850,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.viewPdf);
           if (!isRecurring) {
             actions.add(EntityAction.download);
+            //actions.add(EntityAction.printPdf);
           }
         }
       }

@@ -72,6 +72,7 @@ class _DurationPickerState extends State<DurationPicker> {
     return DecoratedFormField(
       controller: _textController,
       focusNode: _focusNode,
+      keyboardType: TextInputType.text,
       onChanged: (value) {
         int seconds = 0;
         if (value.contains(':')) {

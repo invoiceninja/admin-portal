@@ -158,6 +158,7 @@ class _ProductEditState extends State<ProductEdit> {
                       : null,
                   autovalidate: _autoValidate,
                   onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.text,
                 ),
                 DecoratedFormField(
                   keyboardType: TextInputType.multiline,
@@ -168,23 +169,24 @@ class _ProductEditState extends State<ProductEdit> {
                 DecoratedFormField(
                   label: localization.price,
                   controller: _priceController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
                   onSavePressed: viewModel.onSavePressed,
                 ),
                 if (company.enableProductQuantity)
                   DecoratedFormField(
                     label: localization.defaultQuantity,
                     controller: _quantityController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     onSavePressed: viewModel.onSavePressed,
                   ),
                 if (company.enableProductCost)
                   DecoratedFormField(
                     label: localization.cost,
                     controller: _costController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     onSavePressed: viewModel.onSavePressed,
                   ),
                 if (company.enableFirstItemTaxRate ||

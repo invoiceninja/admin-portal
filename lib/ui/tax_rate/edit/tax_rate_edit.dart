@@ -104,12 +104,14 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                     : null,
                 autovalidate: autoValidate,
                 onSavePressed: viewModel.onSavePressed,
+                keyboardType: TextInputType.text,
               ),
               DecoratedFormField(
                 label: localization.rate,
                 controller: _rateController,
                 isPercent: true,
                 onSavePressed: viewModel.onSavePressed,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ],
           )

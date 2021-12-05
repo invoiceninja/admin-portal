@@ -334,6 +334,7 @@ class _LoginState extends State<LoginView> {
                 autofocus: true,
                 label: localization.token,
                 controller: _tokenController,
+                keyboardType: TextInputType.text,
               ),
               AppButton(
                 label: localization.submit.toUpperCase(),
@@ -507,6 +508,7 @@ class _LoginState extends State<LoginView> {
                                 label:
                                     '${localization.oneTimePassword} (${localization.optional})',
                                 onSavePressed: (_) => _submitForm(),
+                                keyboardType: TextInputType.number,
                                 autofillHints: [AutofillHints.oneTimeCode],
                               ),
                             if (_isSelfHosted && !kIsWeb)

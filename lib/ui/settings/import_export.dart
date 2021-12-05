@@ -295,6 +295,7 @@ class _FileImportState extends State<_FileImport> {
 
       final field = DecoratedFormField(
           enabled: false,
+          keyboardType: TextInputType.text,
           key: ValueKey(uploadPart.key +
               (multipartFile != null ? multipartFile.filename : '')),
           label: localization.lookup(uploadPart.value),

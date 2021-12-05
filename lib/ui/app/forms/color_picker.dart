@@ -173,6 +173,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
           controller: _textController,
           label: widget.labelText ?? AppLocalization.of(context).color,
           hint: '#000000',
+          keyboardType: TextInputType.text,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,

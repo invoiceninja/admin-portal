@@ -158,6 +158,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                         ? localization.pleaseEnterAName
                         : null,
                     autovalidate: _autoValidate,
+                    keyboardType: TextInputType.text,
                     autofocus: true,
                     label: localization.projectName,
                     onSavePressed: viewModel.onSavePressed,
@@ -187,6 +188,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                       : DecoratedFormField(
                           controller: _numberController,
                           label: localization.projectNumber,
+                          keyboardType: TextInputType.text,
                           onSavePressed: viewModel.onSavePressed,
                         ),
                   UserPicker(
@@ -203,15 +205,15 @@ class _ProjectEditState extends State<ProjectEdit> {
                     },
                   ),
                   DecoratedFormField(
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     controller: _hoursController,
                     label: localization.budgetedHours,
                     onSavePressed: viewModel.onSavePressed,
                   ),
                   DecoratedFormField(
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
                     controller: _taskRateController,
                     label: localization.taskRate,
                     onSavePressed: viewModel.onSavePressed,

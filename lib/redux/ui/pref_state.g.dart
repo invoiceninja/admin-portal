@@ -142,6 +142,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'showKanban',
       serializers.serialize(object.showKanban,
           specifiedType: const FullType(bool)),
+      'showPdfPreview',
+      serializers.serialize(object.showPdfPreview,
+          specifiedType: const FullType(bool)),
       'isHistoryVisible',
       serializers.serialize(object.isHistoryVisible,
           specifiedType: const FullType(bool)),
@@ -175,6 +178,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideDesktopWarning',
       serializers.serialize(object.hideDesktopWarning,
           specifiedType: const FullType(bool)),
+      'textScaleFactor',
+      serializers.serialize(object.textScaleFactor,
+          specifiedType: const FullType(double)),
       'sortFields',
       serializers.serialize(object.sortFields,
           specifiedType: const FullType(BuiltMap, const [
@@ -241,6 +247,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.showKanban = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'showPdfPreview':
+          result.showPdfPreview = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'isHistoryVisible':
           result.isHistoryVisible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -284,6 +294,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'hideDesktopWarning':
           result.hideDesktopWarning = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'textScaleFactor':
+          result.textScaleFactor = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
         case 'sortFields':
           result.sortFields.replace(serializers.deserialize(value,
@@ -548,6 +562,8 @@ class _$PrefState extends PrefState {
   @override
   final bool showKanban;
   @override
+  final bool showPdfPreview;
+  @override
   final bool isHistoryVisible;
   @override
   final bool enableDarkMode;
@@ -570,6 +586,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideDesktopWarning;
   @override
+  final double textScaleFactor;
+  @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -587,6 +605,7 @@ class _$PrefState extends PrefState {
       this.isPreviewVisible,
       this.isMenuVisible,
       this.showKanban,
+      this.showPdfPreview,
       this.isHistoryVisible,
       this.enableDarkMode,
       this.isFilterVisible,
@@ -598,6 +617,7 @@ class _$PrefState extends PrefState {
       this.rowsPerPage,
       this.colorTheme,
       this.hideDesktopWarning,
+      this.textScaleFactor,
       this.sortFields,
       this.companyPrefs})
       : super._() {
@@ -619,6 +639,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         showKanban, 'PrefState', 'showKanban');
     BuiltValueNullFieldError.checkNotNull(
+        showPdfPreview, 'PrefState', 'showPdfPreview');
+    BuiltValueNullFieldError.checkNotNull(
         isHistoryVisible, 'PrefState', 'isHistoryVisible');
     BuiltValueNullFieldError.checkNotNull(
         enableDarkMode, 'PrefState', 'enableDarkMode');
@@ -639,6 +661,8 @@ class _$PrefState extends PrefState {
         colorTheme, 'PrefState', 'colorTheme');
     BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
+    BuiltValueNullFieldError.checkNotNull(
+        textScaleFactor, 'PrefState', 'textScaleFactor');
     BuiltValueNullFieldError.checkNotNull(
         sortFields, 'PrefState', 'sortFields');
     BuiltValueNullFieldError.checkNotNull(
@@ -665,6 +689,7 @@ class _$PrefState extends PrefState {
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
+        showPdfPreview == other.showPdfPreview &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
         isFilterVisible == other.isFilterVisible &&
@@ -676,6 +701,7 @@ class _$PrefState extends PrefState {
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
+        textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
@@ -701,24 +727,24 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode),
-                                                                                historySidebarMode.hashCode),
-                                                                            useSidebarEditor.hashCode),
-                                                                        customColors.hashCode),
-                                                                    isPreviewVisible.hashCode),
-                                                                isMenuVisible.hashCode),
-                                                            showKanban.hashCode),
-                                                        isHistoryVisible.hashCode),
-                                                    enableDarkMode.hashCode),
-                                                isFilterVisible.hashCode),
-                                            persistData.hashCode),
-                                        persistUI.hashCode),
-                                    longPressSelectionIsDefault.hashCode),
-                                requireAuthentication.hashCode),
-                            tapSelectedToEdit.hashCode),
-                        rowsPerPage.hashCode),
-                    colorTheme.hashCode),
-                hideDesktopWarning.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode),
+                                                                                customColors.hashCode),
+                                                                            isPreviewVisible.hashCode),
+                                                                        isMenuVisible.hashCode),
+                                                                    showKanban.hashCode),
+                                                                showPdfPreview.hashCode),
+                                                            isHistoryVisible.hashCode),
+                                                        enableDarkMode.hashCode),
+                                                    isFilterVisible.hashCode),
+                                                persistData.hashCode),
+                                            persistUI.hashCode),
+                                        longPressSelectionIsDefault.hashCode),
+                                    requireAuthentication.hashCode),
+                                tapSelectedToEdit.hashCode),
+                            rowsPerPage.hashCode),
+                        colorTheme.hashCode),
+                    hideDesktopWarning.hashCode),
+                textScaleFactor.hashCode),
             sortFields.hashCode),
         companyPrefs.hashCode));
   }
@@ -735,6 +761,7 @@ class _$PrefState extends PrefState {
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
+          ..add('showPdfPreview', showPdfPreview)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
           ..add('isFilterVisible', isFilterVisible)
@@ -746,6 +773,7 @@ class _$PrefState extends PrefState {
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
+          ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -800,6 +828,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool get showKanban => _$this._showKanban;
   set showKanban(bool showKanban) => _$this._showKanban = showKanban;
 
+  bool _showPdfPreview;
+  bool get showPdfPreview => _$this._showPdfPreview;
+  set showPdfPreview(bool showPdfPreview) =>
+      _$this._showPdfPreview = showPdfPreview;
+
   bool _isHistoryVisible;
   bool get isHistoryVisible => _$this._isHistoryVisible;
   set isHistoryVisible(bool isHistoryVisible) =>
@@ -851,6 +884,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideDesktopWarning(bool hideDesktopWarning) =>
       _$this._hideDesktopWarning = hideDesktopWarning;
 
+  double _textScaleFactor;
+  double get textScaleFactor => _$this._textScaleFactor;
+  set textScaleFactor(double textScaleFactor) =>
+      _$this._textScaleFactor = textScaleFactor;
+
   MapBuilder<EntityType, PrefStateSortField> _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
       _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
@@ -879,6 +917,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
       _showKanban = $v.showKanban;
+      _showPdfPreview = $v.showPdfPreview;
       _isHistoryVisible = $v.isHistoryVisible;
       _enableDarkMode = $v.enableDarkMode;
       _isFilterVisible = $v.isFilterVisible;
@@ -890,6 +929,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _rowsPerPage = $v.rowsPerPage;
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
+      _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
       _$v = null;
@@ -930,8 +970,9 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
                   isMenuVisible, 'PrefState', 'isMenuVisible'),
               showKanban: BuiltValueNullFieldError.checkNotNull(
                   showKanban, 'PrefState', 'showKanban'),
-              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(
-                  isHistoryVisible, 'PrefState', 'isHistoryVisible'),
+              showPdfPreview: BuiltValueNullFieldError.checkNotNull(
+                  showPdfPreview, 'PrefState', 'showPdfPreview'),
+              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, 'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, 'PrefState', 'persistData'),
@@ -942,6 +983,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
+              textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, 'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {

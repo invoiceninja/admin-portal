@@ -70,6 +70,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
               maxLines: 1,
               onChanged: (value) => _name = value,
               onSavePressed: (context) => _onSavePressed(),
+              keyboardType: TextInputType.text,
             ),
             SizedBox(height: 8),
             Row(

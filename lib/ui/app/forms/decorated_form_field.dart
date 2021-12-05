@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class DecoratedFormField extends StatefulWidget {
   const DecoratedFormField({
     Key key,
+    @required this.keyboardType,
     this.controller,
     this.label,
     this.onSavePressed,
@@ -23,7 +24,6 @@ class DecoratedFormField extends StatefulWidget {
     this.obscureText = false,
     this.onChanged,
     this.validator,
-    this.keyboardType,
     this.minLines,
     this.maxLines,
     this.onFieldSubmitted,
@@ -86,11 +86,6 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
     final hasValue = (widget.initialValue ?? '').isNotEmpty ||
         (widget.controller?.text ?? '').isNotEmpty;
 
-    final calcKeyboardType = widget.isMoney || widget.isPercent
-        ? TextInputType.numberWithOptions(decimal: true, signed: true)
-        : (widget.maxLines ?? 0) > 1
-            ? TextInputType.multiline
-            : widget.keyboardType ?? TextInputType.text;
     final enterShouldSubmit = isDesktop(context) &&
         widget.onSavePressed != null &&
         (widget.maxLines ?? 1) <= 1;
@@ -154,7 +149,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       autofocus: widget.autofocus,
       decoration: inputDecoration,
       validator: widget.validator,
-      keyboardType: calcKeyboardType,
+      keyboardType: widget.keyboardType,
       maxLines: widget.expands ? null : widget.maxLines ?? 1,
       minLines: widget.expands ? null : widget.minLines,
       expands: widget.expands,
@@ -165,7 +160,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
           widget.isMoney || widget.isPercent ? false : widget.autocorrect,
       obscureText: widget.obscureText,
       initialValue: widget.initialValue,
-      textInputAction: calcKeyboardType == TextInputType.multiline
+      textInputAction: widget.keyboardType == TextInputType.multiline
           ? TextInputAction.newline
           : enterShouldSubmit
               ? TextInputAction.done
@@ -180,7 +175,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       onFieldSubmitted: (value) {
         if (widget.onFieldSubmitted != null) {
           return widget.onFieldSubmitted(value);
-        } else if (calcKeyboardType == TextInputType.multiline) {
+        } else if (widget.keyboardType == TextInputType.multiline) {
           return null;
         } else if (enterShouldSubmit) {
           widget.onSavePressed(context);

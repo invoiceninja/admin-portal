@@ -148,6 +148,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.persistData,
     this.persistUi,
     this.tapSelectedToEdit,
+    this.showPdfPreview,
   });
 
   final AppLayout appLayout;
@@ -167,6 +168,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool persistData;
   final bool persistUi;
   final bool tapSelectedToEdit;
+  final bool showPdfPreview;
   final BuiltMap<String, String> customColors;
 }
 

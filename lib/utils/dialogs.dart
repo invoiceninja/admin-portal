@@ -130,6 +130,7 @@ void confirmCallback({
                       onChanged: (value) => _typed = value,
                       hint: typeToConfirm,
                       onSavePressed: (context) => _onPressed(),
+                      keyboardType: TextInputType.text,
                     ),
                     if (askForReason) ...[
                       SizedBox(height: 30),
@@ -138,6 +139,7 @@ void confirmCallback({
                         onChanged: (value) => _reason = value,
                         minLines: 4,
                         maxLines: 4,
+                        keyboardType: TextInputType.multiline,
                       ),
                     ],
                     SizedBox(height: 30),

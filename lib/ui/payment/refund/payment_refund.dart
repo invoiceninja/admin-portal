@@ -114,7 +114,8 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 DecoratedFormField(
                   controller: _amountController,
                   autocorrect: false,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
                   label: localization.amount,
                 ),
               if (payment.paymentables.isNotEmpty)
@@ -354,7 +355,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               enabled: (_invoiceId ?? '').isNotEmpty,
               controller: _amountController,
               autocorrect: false,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
               label: localization.amount,
               autofocus: !hasMultipleInvoices,
               validator: (value) => !hasMultipleInvoices &&

@@ -106,26 +106,31 @@ class VendorEditAddressState extends State<VendorEditAddress> {
           controller: _address1Controller,
           label: localization.address1,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.streetAddress,
         ),
         DecoratedFormField(
           controller: _address2Controller,
           label: localization.address2,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _cityController,
           label: localization.city,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _stateController,
           label: localization.state,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _postalCodeController,
           label: localization.postalCode,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         EntityDropdown(
           entityType: EntityType.country,

@@ -6,6 +6,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -385,14 +386,15 @@ abstract class ClientEntity extends Object
 
     switch (sortField) {
       case ClientFields.name:
-        response = clientA.displayName
+        response = removeDiacritics(clientA.displayName)
             .toLowerCase()
-            .compareTo(clientB.displayName.toLowerCase());
+            .compareTo(removeDiacritics(clientB.displayName).toLowerCase());
         break;
       case ClientFields.contactName:
-        response = clientA.primaryContact.fullName
+        response = removeDiacritics(clientA.primaryContact.fullName)
             .toLowerCase()
-            .compareTo(clientB.primaryContact.fullName.toLowerCase());
+            .compareTo(removeDiacritics(clientB.primaryContact.fullName)
+                .toLowerCase());
         break;
       case ClientFields.contactEmail:
         response = clientA.primaryContact.email

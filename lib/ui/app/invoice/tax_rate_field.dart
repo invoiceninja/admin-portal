@@ -32,6 +32,7 @@ class TaxRateField extends StatelessWidget {
             label: localization.taxName,
             initialValue: initialTaxName,
             onChanged: (value) => onNameChanged(value),
+            keyboardType: TextInputType.text,
           ),
         ),
         SizedBox(
@@ -45,6 +46,8 @@ class TaxRateField extends StatelessWidget {
               context,
               formatNumberType: FormatNumberType.inputMoney,
             ),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             onChanged: (value) => onAmountChanged(parseDouble(value)),
             //textAlign: TextAlign.end,
           ),

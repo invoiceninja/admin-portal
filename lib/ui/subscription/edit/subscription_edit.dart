@@ -233,6 +233,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     controller: _nameController,
                     label: localization.name,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.text,
                   ),
                   DynamicSelector(
                     entityType: EntityType.group,
@@ -372,6 +373,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     label: localization.promoCode,
                     controller: _promoCodeController,
                     onSavePressed: viewModel.onSavePressed,
+                    keyboardType: TextInputType.text,
                   ),
                   DiscountField(
                     label: localization.promoDiscount,
@@ -488,6 +490,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         controller: _postPurchaseHeaderKeyController,
                         onSavePressed: viewModel.onSavePressed,
                         onChanged: (value) => setState(() {}),
+                        keyboardType: TextInputType.text,
                       ),
                     ),
                     SizedBox(
@@ -499,6 +502,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         controller: _postPurchaseHeaderValueController,
                         onSavePressed: viewModel.onSavePressed,
                         onChanged: (value) => setState(() {}),
+                        keyboardType: TextInputType.text,
                       ),
                     ),
                     SizedBox(

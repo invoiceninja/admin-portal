@@ -902,7 +902,8 @@ class ReportResult {
         ].contains(getReportColumnType(column, context)))
           DataCell(TextFormField(
             controller: textEditingControllers[column],
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: true, signed: true),
             decoration: InputDecoration(
                 suffixIcon: textEditingControllers == null
                     ? null
@@ -1008,6 +1009,7 @@ class ReportResult {
                   FocusNode focusNode,
                   VoidCallback onFieldSubmitted) {
                 return DecoratedFormField(
+                  keyboardType: TextInputType.text,
                   decoration: textEditingController.text.isEmpty
                       ? null
                       : InputDecoration(

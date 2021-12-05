@@ -112,26 +112,31 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
               ? localization.shippingAddress1
               : localization.address1,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.streetAddress,
         ),
         DecoratedFormField(
           controller: _shippingAddress2Controller,
           label: localization.address2,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _shippingCityController,
           label: localization.city,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _shippingStateController,
           label: localization.state,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         DecoratedFormField(
           controller: _shippingPostalCodeController,
           label: localization.postalCode,
           onSavePressed: viewModel.onSavePressed,
+          keyboardType: TextInputType.text,
         ),
         EntityDropdown(
           entityType: EntityType.country,

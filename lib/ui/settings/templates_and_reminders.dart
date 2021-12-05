@@ -309,12 +309,13 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   label: localization.subject,
                   controller: _subjectController,
                   hint: _defaultSubject,
+                  keyboardType: TextInputType.text,
                 ),
                 DecoratedFormField(
-                  keyboardType: TextInputType.multiline,
                   label: localization.body,
                   controller: _bodyController,
                   maxLines: 8,
+                  keyboardType: TextInputType.multiline,
                   hint: _defaultBody,
                 ),
               ]),
@@ -554,11 +555,15 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               label: localization.lateFeeAmount,
               controller: _feeAmountController,
               isMoney: true,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
             ),
             DecoratedFormField(
               label: localization.lateFeePercent,
               controller: _feePercentController,
               isPercent: true,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
             ),
           ],
         ),
