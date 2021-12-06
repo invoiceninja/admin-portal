@@ -28,7 +28,11 @@ class FileStorage {
   Future<File> _getLocalFile() async {
     final dir = await getDirectory();
 
-    return File('${dir.path}/invoiceninja__$tag.json');
+    if (kIsWeb || Platform.isAndroid || Platform.isIOS) {
+      return File('${dir.path}/invoiceninja__$tag.json');
+    } else {
+      return File('${dir.path}/invoiceninja/$tag.json');
+    }
   }
 
   /*
