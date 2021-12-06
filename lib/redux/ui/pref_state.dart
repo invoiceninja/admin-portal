@@ -47,8 +47,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   static const TEXT_SCALING_NORMAL = 1.0;
   static const TEXT_SCALING_LARGE = 1.2;
-  static const TEXT_SCALING_LARGER = 1.4;
-  static const TEXT_SCALING_LARGEST = 1.6;
+  static const TEXT_SCALING_EXTRA_LARGE = 1.4;
 
   static const THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR =
       'sidebar_active_background_color';

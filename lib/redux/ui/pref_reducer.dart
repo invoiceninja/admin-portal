@@ -57,6 +57,7 @@ PrefState prefReducer(
           historySidebarReducer(state.historySidebarMode, action)
       ..hideDesktopWarning =
           hideDesktopWarningReducer(state.hideDesktopWarning, action)
+      ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
       ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
@@ -178,6 +179,12 @@ Reducer<bool> menuVisibleReducer = combineReducers([
       default:
         return value;
     }
+  }),
+]);
+
+Reducer<double> textScaleFactorReducer = combineReducers([
+  TypedReducer<double, UpdateUserPreferences>((value, action) {
+    return action.textScaleFactor ?? value;
   }),
 ]);
 
