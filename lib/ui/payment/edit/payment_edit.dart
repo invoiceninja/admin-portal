@@ -134,7 +134,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     if (currency != null) {
       final client = state.clientState.get(payment.clientId);
       exchangeRate = getExchangeRate(state.staticState.currencyMap,
-          fromCurrencyId: currency.id, toCurrencyId: client.currencyId);
+          fromCurrencyId: client.currencyId, toCurrencyId: currency.id);
     }
 
     _exchangeRateController.removeListener(_onChanged);
