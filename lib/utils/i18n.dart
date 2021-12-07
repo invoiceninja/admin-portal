@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'normal': 'Normal',
+      'large': 'Large',
+      'extra_large': 'Extra Large',
       'show_pdf_preview': 'Show PDF Preview',
       'show_pdf_preview_help': 'Display PDF preview while editing invoices',
       'print_pdf': 'Print PDF',
@@ -62853,6 +62856,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get showPdfPreviewHelp =>
       _localizedValues[localeCode]['show_pdf_preview_help'] ??
       _localizedValues['en']['show_pdf_preview_help'];
+
+  String get normal =>
+      _localizedValues[localeCode]['normal'] ??
+      _localizedValues['en']['normal'];
+
+  String get large =>
+      _localizedValues[localeCode]['large'] ??
+      _localizedValues['en']['large'];
+
+  String get extraLarge =>
+      _localizedValues[localeCode]['extra_large'] ??
+      _localizedValues['en']['extra_large'];
 
   // STARTER: lang field - do not remove comment
 

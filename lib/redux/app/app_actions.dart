@@ -136,6 +136,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableDarkMode,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
+    this.textScaleFactor,
     this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
@@ -168,6 +169,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool persistData;
   final bool persistUi;
   final bool tapSelectedToEdit;
+  final double textScaleFactor;
   final bool showPdfPreview;
   final BuiltMap<String, String> customColors;
 }
