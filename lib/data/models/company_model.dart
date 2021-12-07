@@ -750,7 +750,7 @@ abstract class GatewayOptionsEntity
 
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
-  factory UserCompanyEntity(bool reportErrors) {
+  factory UserCompanyEntity(bool reportErrors, {UserSettingsEntity settings}) {
     return _$UserCompanyEntity._(
       isAdmin: false,
       isOwner: false,
@@ -760,6 +760,7 @@ abstract class UserCompanyEntity
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
+      settings: settings,
       account: AccountEntity(reportErrors),
       notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
         ..[kNotificationChannelEmail] =
