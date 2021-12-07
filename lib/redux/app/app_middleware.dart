@@ -204,9 +204,8 @@ Middleware<AppState> _createLoadState(
 
       for (var i = 0; i < companyRepositories.length; i++) {
         var companyState = UserCompanyState(state.reportErrors)
-          ..rebuild((b) => b
-            ..userCompany.replace(
-                UserCompanyEntity(false, settings: UserSettingsEntity())));
+          ..rebuild(
+              (b) => b..userCompany.settings.replace(UserSettingsEntity()));
         try {
           companyState = await companyRepositories[i].loadCompanyState(i);
         } catch (e) {
