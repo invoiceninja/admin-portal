@@ -1049,13 +1049,15 @@ abstract class InvoiceEntity extends Object
   bool get isViewed =>
       invitations.any((invitation) => invitation.viewedDate.isNotEmpty);
 
-  bool get isPaid => statusId == kInvoiceStatusPaid;
+  bool get isPaid => isInvoice && statusId == kInvoiceStatusPaid;
 
-  bool get isReversed => statusId == kInvoiceStatusReversed;
+  bool get isPartial => isInvoice && statusId == kInvoiceStatusPartial;
 
-  bool get isCancelled => statusId == kInvoiceStatusCancelled;
+  bool get isReversed => isInvoice && statusId == kInvoiceStatusReversed;
 
-  bool get isCancelledOrReversed => isCancelled || isReversed;
+  bool get isCancelled => isInvoice && statusId == kInvoiceStatusCancelled;
+
+  bool get isCancelledOrReversed => isInvoice && (isCancelled || isReversed);
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
 
@@ -1076,7 +1078,7 @@ abstract class InvoiceEntity extends Object
       if (isPastDue && !isCancelledOrReversed) {
         return kInvoiceStatusPastDue;
       }
-      if (isViewed && isUnpaid) {
+      if (isViewed && isUnpaid && !isPartial) {
         return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
       }
     }
