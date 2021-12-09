@@ -266,7 +266,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
             validator: widget.validator,
             showClear: showClear,
             label: widget.labelText,
-            autofocus: widget.autofocus ?? false,
+            autofocus:
+                (widget.autofocus ?? false) && (widget.entityId ?? '').isEmpty,
             controller: textEditingController,
             focusNode: focusNode,
             keyboardType: TextInputType.text,
