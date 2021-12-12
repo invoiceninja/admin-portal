@@ -552,8 +552,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               InvoiceDesignScreen(),
                           ClientPortalScreen.route: (context) =>
                               ClientPortalScreen(),
-                          BuyNowButtonsScreen.route: (context) =>
-                              BuyNowButtonsScreen(),
                           EmailSettingsScreen.route: (context) =>
                               EmailSettingsScreen(),
                           TemplatesAndRemindersScreen.route: (context) =>

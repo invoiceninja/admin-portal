@@ -830,9 +830,6 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsClientPortal:
         screen = ClientPortalScreen();
         break;
-      case kSettingsBuyNowButtons:
-        screen = BuyNowButtonsScreen();
-        break;
       case kSettingsEmailSettings:
         screen = EmailSettingsScreen();
         break;

@@ -204,8 +204,6 @@ IconData getSettingIcon(String section) {
       return MdiIcons.sourceBranch;
     case kSettingsClientPortal:
       return MdiIcons.cloud;
-    case kSettingsBuyNowButtons:
-      return MdiIcons.link;
     case kSettingsEmailSettings:
       return Icons.mail;
     case kSettingsTemplatesAndReminders:

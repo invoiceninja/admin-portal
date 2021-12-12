@@ -435,7 +435,6 @@ const String kSettingsGeneratedNumbers = 'generated_numbers';
 const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
 const String kSettingsClientPortal = 'client_portal';
-const String kSettingsBuyNowButtons = 'buy_now_buttons';
 const String kSettingsEmailSettings = 'email_settings';
 const String kSettingsTemplatesAndReminders = 'templates_and_reminders';
 const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
