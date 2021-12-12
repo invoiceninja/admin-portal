@@ -30,6 +30,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 */
 
+import 'package:flutter/material.dart';
+
 class UpgradeDialog extends StatelessWidget {
   const UpgradeDialog({Key key}) : super(key: key);
 
