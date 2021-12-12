@@ -62862,8 +62862,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['normal'];
 
   String get large =>
-      _localizedValues[localeCode]['large'] ??
-      _localizedValues['en']['large'];
+      _localizedValues[localeCode]['large'] ?? _localizedValues['en']['large'];
 
   String get extraLarge =>
       _localizedValues[localeCode]['extra_large'] ??

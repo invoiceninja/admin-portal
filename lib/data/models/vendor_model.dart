@@ -6,7 +6,6 @@ import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';

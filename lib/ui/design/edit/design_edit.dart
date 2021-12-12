@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 

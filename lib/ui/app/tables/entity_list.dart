@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 
 // Package imports:

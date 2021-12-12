@@ -7,7 +7,6 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';

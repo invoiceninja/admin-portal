@@ -9,7 +9,6 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 // TODO remove this class, it's needed to fix this issue:
 // https://github.com/flutter/flutter/issues/21864

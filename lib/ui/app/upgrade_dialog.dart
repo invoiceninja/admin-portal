@@ -1,10 +1,12 @@
 /*
+
 // Dart imports:
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
@@ -25,9 +27,8 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-*/
 
-import 'package:flutter/material.dart';
+*/
 
 class UpgradeDialog extends StatelessWidget {
   const UpgradeDialog({Key key}) : super(key: key);

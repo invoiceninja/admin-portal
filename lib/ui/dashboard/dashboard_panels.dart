@@ -2,13 +2,11 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -19,6 +17,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';

@@ -8,8 +8,6 @@ import 'dart:math' as math;
 // Flutter imports:
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
