@@ -346,8 +346,18 @@ void handleTaskAction(
       break;
     case EntityAction.invoiceTask:
       tasks.sort((taskA, taskB) {
-        final taskATimes = (taskA as TaskEntity).getTaskTimes();
-        final taskBTimes = (taskB as TaskEntity).getTaskTimes();
+        final taskAEntity = taskA as TaskEntity;
+        final taskBEntity = taskB as TaskEntity;
+
+        final taskAProjectId = taskAEntity.projectId ?? '';
+        final taskBProjectId = taskBEntity.projectId ?? '';
+
+        if (taskAProjectId != taskBProjectId) {
+          return taskAProjectId.compareTo(taskBProjectId);
+        }
+
+        final taskATimes = taskAEntity.getTaskTimes();
+        final taskBTimes = taskBEntity.getTaskTimes();
         final taskADate = taskATimes.isEmpty
             ? convertTimestampToDate(taskA.createdAt)
             : taskATimes.first.startDate;
@@ -357,22 +367,33 @@ void handleTaskAction(
         return taskADate.compareTo(taskBDate);
       });
 
-      final items = tasks
-          .where((entity) {
-            final task = entity as TaskEntity;
-            return !task.isDeleted && !task.isRunning && !task.isInvoiced;
-          })
-          .map((task) => convertTaskToInvoiceItem(task: task, context: context))
-          .toList();
-
       String projectId = '';
+      bool hasMultipleProjects = false;
       for (var each in tasks) {
         final task = each as TaskEntity;
         if (task.projectId.isNotEmpty) {
-          projectId = task.projectId;
-          break;
+          if (projectId.isEmpty) {
+            projectId = task.projectId;
+          } else if (task.projectId != projectId) {
+            hasMultipleProjects = true;
+          }
         }
       }
+
+      final items = <InvoiceItemEntity>[];
+      TaskEntity lastTask;
+
+      tasks.where((entity) {
+        final task = entity as TaskEntity;
+        return !task.isDeleted && !task.isRunning && !task.isInvoiced;
+      }).forEach((task) {
+        items.add(convertTaskToInvoiceItem(
+            task: task,
+            context: context,
+            includeProjectHeader: hasMultipleProjects &&
+                (task as TaskEntity).projectId != lastTask?.projectId));
+        lastTask = task;
+      });
 
       if (items.isNotEmpty) {
         createEntity(
