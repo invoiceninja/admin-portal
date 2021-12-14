@@ -56,6 +56,7 @@ enum QuoteReportFields {
   tax_name2,
   tax_name3,
   currency,
+  is_viewed,
 }
 
 var memoizedQuoteReport = memo7((
@@ -261,6 +262,8 @@ ReportResult quoteReport(
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
+        case QuoteReportFields.is_viewed:
+          value = quote.isViewed;
       }
 
       if (!ReportResult.matchField(

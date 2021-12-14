@@ -59,6 +59,7 @@ enum CreditReportFields {
   tax_name2,
   tax_name3,
   currency,
+  is_viewed,
 }
 
 var memoizedCreditReport = memo6((
@@ -267,6 +268,8 @@ ReportResult creditReport(
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
+        case CreditReportFields.is_viewed:
+          value = credit.isViewed;
       }
 
       if (!ReportResult.matchField(

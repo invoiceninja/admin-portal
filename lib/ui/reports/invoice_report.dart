@@ -66,6 +66,7 @@ enum InvoiceReportFields {
   tax_name2,
   tax_name3,
   currency,
+  is_viewed,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -296,6 +297,8 @@ ReportResult invoiceReport(
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
+        case InvoiceReportFields.is_viewed:
+          value = invoice.isViewed;
       }
 
       if (!ReportResult.matchField(
