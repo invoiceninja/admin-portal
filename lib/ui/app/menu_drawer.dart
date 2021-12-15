@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -1103,11 +1104,16 @@ void _showAbout(BuildContext context) async {
                     },
                     onLongPress: () {
                       showMessageDialog(
-                        context: context,
-                        message: FLUTTER_VERSION['channel'].toUpperCase() +
-                            ' • ' +
-                            FLUTTER_VERSION['frameworkVersion'],
-                      );
+                          context: context,
+                          message: FLUTTER_VERSION['channel'].toUpperCase() +
+                              ' • ' +
+                              FLUTTER_VERSION['frameworkVersion'],
+                          secondaryActions: [
+                            TextButton(
+                              child: Text(localization.logout.toUpperCase()),
+                              onPressed: () => store.dispatch(UserLogout()),
+                            ),
+                          ]);
                     },
                   ),
                   SizedBox(height: 8),
