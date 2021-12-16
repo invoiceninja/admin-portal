@@ -231,13 +231,15 @@ abstract class PaymentEntity extends Object
     return statusId;
   }
 
-  int compareTo(
-      {PaymentEntity payment,
-      String sortField,
-      bool sortAscending,
-      BuiltMap<String, InvoiceEntity> invoiceMap,
-      BuiltMap<String, ClientEntity> clientMap,
-      BuiltMap<String, UserEntity> userMap}) {
+  int compareTo({
+    PaymentEntity payment,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
+  }) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : payment;
     final PaymentEntity paymentB = sortAscending ? payment : this;
@@ -314,6 +316,11 @@ abstract class PaymentEntity extends Object
         response = clientA.displayName
             .toLowerCase()
             .compareTo(clientB.displayName.toLowerCase());
+        break;
+      case PaymentFields.type:
+        final typeA = paymentTypeMap[paymentA.typeId] ?? PaymentTypeEntity();
+        final typeB = paymentTypeMap[paymentB.typeId] ?? PaymentTypeEntity();
+        return typeA.name.toLowerCase().compareTo(typeB.name.toLowerCase());
         break;
       case EntityFields.assignedTo:
         final userA = userMap[paymentA.assignedUserId] ?? UserEntity();

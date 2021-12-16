@@ -54,6 +54,7 @@ class PaymentScreenVM {
           state.invoiceState.map,
           state.clientState.map,
           state.userState.map,
+          state.staticState.paymentTypeMap,
           state.paymentListState),
       userCompany: state.userCompany,
       isInMultiselect: state.paymentListState.isInMultiselect(),

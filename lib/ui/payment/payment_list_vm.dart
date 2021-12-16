@@ -94,6 +94,7 @@ class PaymentListVM {
           state.invoiceState.map,
           state.clientState.map,
           state.userState.map,
+          state.staticState.paymentTypeMap,
           state.paymentListState),
       paymentMap: state.paymentState.map,
       clientMap: state.clientState.map,
