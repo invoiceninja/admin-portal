@@ -606,11 +606,16 @@ const List<String> kLanguages = [
   'ru_RU',
   'sl',
   'sq',
-  'sr_RS',
+  'sr',
   'sv',
   'th',
   'tr_TR',
   'bg',
+  'ar',
+  'zh_TW',
+  'lv_LV',
+  'fa',
+  'sk',
 ];
 
 List<String> kCustomLabels = [
