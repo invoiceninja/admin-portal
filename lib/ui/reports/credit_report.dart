@@ -60,6 +60,8 @@ enum CreditReportFields {
   tax_name3,
   currency,
   is_viewed,
+  assigned_to,
+  created_by,
 }
 
 var memoizedCreditReport = memo6((
@@ -270,6 +272,13 @@ ReportResult creditReport(
           break;
         case CreditReportFields.is_viewed:
           value = credit.isViewed;
+          break;
+        case CreditReportFields.assigned_to:
+          value = userMap[credit.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case CreditReportFields.created_by:
+          value = userMap[credit.createdUserId]?.listDisplayName ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(

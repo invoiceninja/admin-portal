@@ -57,6 +57,8 @@ enum QuoteReportFields {
   tax_name3,
   currency,
   is_viewed,
+  assigned_to,
+  created_by,
 }
 
 var memoizedQuoteReport = memo7((
@@ -264,6 +266,13 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.is_viewed:
           value = quote.isViewed;
+          break;
+        case QuoteReportFields.assigned_to:
+          value = userMap[quote.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case QuoteReportFields.created_by:
+          value = userMap[quote.createdUserId]?.listDisplayName ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(

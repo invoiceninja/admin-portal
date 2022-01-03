@@ -67,6 +67,8 @@ enum InvoiceReportFields {
   tax_name3,
   currency,
   is_viewed,
+  assigned_to,
+  created_by,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -299,6 +301,13 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.is_viewed:
           value = invoice.isViewed;
+          break;
+        case InvoiceReportFields.assigned_to:
+          value = userMap[invoice.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case InvoiceReportFields.created_by:
+          value = userMap[invoice.createdUserId]?.listDisplayName ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(

@@ -36,6 +36,8 @@ enum TaskReportFields {
   task3,
   task4,
   status,
+  assigned_to,
+  created_by,
 }
 
 var memoizedTaskReport = memo10((
@@ -199,6 +201,12 @@ ReportResult taskReport(
           break;
         case TaskReportFields.status:
           value = taskStatusMap[task.statusId]?.name ?? '';
+          break;
+        case TaskReportFields.assigned_to:
+          value = userMap[task.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case TaskReportFields.created_by:
+          value = userMap[task.createdUserId]?.listDisplayName ?? '';
           break;
       }
 

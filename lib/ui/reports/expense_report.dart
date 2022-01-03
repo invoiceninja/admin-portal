@@ -36,6 +36,8 @@ enum ExpenseReportFields {
   expense3,
   expense4,
   category,
+  assigned_to,
+  created_by,
 }
 
 var memoizedExpenseReport = memo9((
@@ -192,6 +194,12 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.category:
           value = expenseCategoryMap[expense.categoryId]?.name ?? '';
+          break;
+        case ExpenseReportFields.assigned_to:
+          value = userMap[expense.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case ExpenseReportFields.created_by:
+          value = userMap[expense.createdUserId]?.listDisplayName ?? '';
           break;
       }
 
