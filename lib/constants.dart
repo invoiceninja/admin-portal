@@ -579,6 +579,8 @@ const Map<int, String> kModules = {
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [
+  'ar',
+  'bg',
   'ca',
   'cs',
   'da',
@@ -589,6 +591,7 @@ const List<String> kLanguages = [
   'en_AU',
   'es',
   'es_ES',
+  'fa',
   'fi',
   'fr',
   'fr_CA',
@@ -596,6 +599,7 @@ const List<String> kLanguages = [
   'it',
   'ja',
   'lt',
+  'lv_LV',
   'mk_MK',
   'nb_NO',
   'nl',
@@ -604,18 +608,14 @@ const List<String> kLanguages = [
   'pt_PT',
   'ro',
   'ru_RU',
+  'sk',
   'sl',
   'sq',
   'sr',
   'sv',
   'th',
   'tr_TR',
-  'bg',
-  'ar',
   'zh_TW',
-  'lv_LV',
-  'fa',
-  'sk',
 ];
 
 List<String> kCustomLabels = [
