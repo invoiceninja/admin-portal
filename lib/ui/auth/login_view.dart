@@ -527,6 +527,7 @@ class _LoginState extends State<LoginView> {
                                     '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
                                 autoValidate: _autoValidate,
+                                validate: false,
                                 onSavePressed: (_) => _submitForm(),
                               ),
                             if (_createAccount)
