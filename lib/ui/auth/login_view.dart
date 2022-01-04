@@ -245,9 +245,11 @@ class _LoginState extends State<LoginView> {
     final authState = widget.viewModel.authState;
     final url = _isSelfHosted
         ? _urlController.text
-        : authState.isStaging
-            ? kAppStagingUrl
-            : kAppProductionUrl;
+        : authState.isLargeTest
+            ? kAppLargeTestUrl
+            : authState.isStaging
+                ? kAppStagingUrl
+                : kAppProductionUrl;
 
     if (_emailLogin) {
       if (_recoverPassword) {

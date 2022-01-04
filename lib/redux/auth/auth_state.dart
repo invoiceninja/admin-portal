@@ -65,6 +65,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   bool get isStaging => cleanApiUrl(url) == kAppStagingUrl;
 
+  bool get isLargeTest => cleanApiUrl(url) == kAppLargeTestUrl;
+
   // ignore: unused_element
   static void _initializeBuilder(AuthStateBuilder builder) =>
       builder..referralCode = '';

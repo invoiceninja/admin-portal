@@ -11,6 +11,7 @@ const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
+const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
