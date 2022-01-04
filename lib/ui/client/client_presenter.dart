@@ -111,6 +111,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.state);
       case ClientFields.phone:
         return Text(client.phone);
+      case ClientFields.website:
+        return Text(client.website);
       case ClientFields.custom1:
         return Text(presentCustomField(context, client.customValue1));
       case ClientFields.custom2:
