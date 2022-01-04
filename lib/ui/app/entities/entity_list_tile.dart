@@ -169,6 +169,10 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
       entityType: widget.entityType, filterEntity: widget.entity);
 
   void _onLongPress() {
+    if (widget.entity.isDeleted) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final entity = widget.entity;
@@ -204,6 +208,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                   : widget.subtitle),
               leading: _isHovered &&
                       !widget.hideNew &&
+                      !widget.entity.isDeleted &&
                       state.userCompany.canCreate(widget.entityType)
                   ? IconButton(
                       icon: Icon(Icons.add_circle_outline),
