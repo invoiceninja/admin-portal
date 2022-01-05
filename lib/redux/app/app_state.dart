@@ -211,7 +211,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     var color = userCompany?.settings?.accentColor ?? kDefaultAccentColor;
 
     if (color == '#ffffff' && !prefState.enableDarkMode) {
-      color = '#000000';
+      color = kDefaultAccentColor;
+    } else if (color == '#000000' && prefState.enableDarkMode) {
+      color = kDefaultAccentColor;
     }
 
     return convertHexStringToColor(color);
