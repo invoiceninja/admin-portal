@@ -284,7 +284,7 @@ const kGatewayTypes = {
   kGatewayTypeHosted: 'hosted',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
-  kGatewayTypeDirectDebit: 'fpx',
+  kGatewayTypeDirectDebit: 'direct_debit',
   kGatewayTypeEPS: 'eps',
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
