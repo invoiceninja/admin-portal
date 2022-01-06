@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -73,6 +75,8 @@ class _ContactListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
     return ListTile(
       title: Text(contact.fullName.isNotEmpty
           ? contact.fullName
@@ -86,6 +90,17 @@ class _ContactListTile extends StatelessWidget {
           onChanged: (value) => null,
         ),
       ),
+      trailing: (invitation?.link ?? '').isEmpty
+          ? null
+          : IconButton(
+              tooltip: localization.copyLink,
+              icon: Icon(Icons.copy),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: invitation.link));
+                showToast(localization.copiedToClipboard.replaceFirst(
+                    ':value', invitation.link.substring(0, 40) + '...'));
+              },
+            ),
     );
   }
 }
