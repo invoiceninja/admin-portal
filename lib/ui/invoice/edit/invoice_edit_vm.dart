@@ -147,6 +147,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.newPayment,
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
             handleEntityAction(invoice, action);
           } else {
@@ -183,6 +184,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.newPayment,
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }

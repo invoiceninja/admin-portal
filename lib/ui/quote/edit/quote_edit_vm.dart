@@ -96,6 +96,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               [
                 EntityAction.emailQuote,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
             handleEntityAction(quote, action);
           } else {
@@ -130,6 +131,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               if ([
                 EntityAction.emailQuote,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
                 handleEntityAction(savedQuote, action);
               }

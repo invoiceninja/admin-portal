@@ -559,6 +559,9 @@ Future handleQuoteAction(
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
       break;
+    case EntityAction.download:
+      launch(quote.invitationDownloadLink);
+      break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
           snackBarCompleter<Null>(context, localization.exportedData),
