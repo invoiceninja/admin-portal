@@ -810,6 +810,8 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(':task', task?.description ?? '');
     activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+    activity = activity.replaceFirst(
+        ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
 
     return activity;
