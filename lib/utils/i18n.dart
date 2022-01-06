@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'activity_120': ':user created recurring expense :recurring_expense',
+      'activity_121': ':user updated recurring expense :recurring_expense',
+      'activity_122': ':user archived recurring expense :recurring_expense',
+      'activity_123': ':user deleted recurring expense :recurring_expense',
+      'activity_124': ':user restored recurring expense :recurring_expense',
       'normal': 'Normal',
       'large': 'Large',
       'extra_large': 'Extra Large',

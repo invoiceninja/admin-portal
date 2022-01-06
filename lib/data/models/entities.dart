@@ -760,6 +760,14 @@ abstract class ActivityEntity
       kActivityRestoreRecurringInvoice,
     ].contains(activityTypeId)) {
       return EntityType.recurringInvoice;
+    } else if ([
+      kActivityCreateRecurringExpense,
+      kActivityUpdateRecurringExpense,
+      kActivityArchiveRecurringExpense,
+      kActivityDeleteRecurringExpense,
+      kActivityRestoreRecurringExpense,
+    ].contains(activityTypeId)) {
+      return EntityType.recurringExpense;
     } else {
       print(
           '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');
