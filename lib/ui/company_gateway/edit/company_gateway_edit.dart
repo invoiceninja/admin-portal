@@ -617,13 +617,18 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         onChanged: (value) => widget.onChanged(value),
       );
     } else {
+      final isMultiline = [
+        'text',
+        'appleDomainVerification',
+      ].contains(widget.field);
+
       return DecoratedFormField(
         controller: _textController,
         label: label,
-        maxLines: widget.field == 'text' ? 6 : 1,
+        maxLines: isMultiline ? 6 : 1,
         onChanged: (value) => _onChanged(),
         obscureText: _obscureText(widget.field),
-        keyboardType: widget.field == 'text'
+        keyboardType: isMultiline
             ? TextInputType.multiline
             : TextInputType.visiblePassword,
       );
