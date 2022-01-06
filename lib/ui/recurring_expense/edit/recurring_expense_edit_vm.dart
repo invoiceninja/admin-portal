@@ -82,6 +82,36 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       onChanged: (ExpenseEntity recurringExpense) {
         store.dispatch(UpdateRecurringExpense(recurringExpense));
       },
+      onAddClientPressed: (context, completer) {
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(
+                    UpdateCurrentRoute(RecurringExpenseEditScreen.route));
+              }));
+        completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
+        });
+      },
+      onAddVendorPressed: (context, completer) {
+        createEntity(
+            context: context,
+            entity: VendorEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(
+                    UpdateCurrentRoute(RecurringExpenseEditScreen.route));
+              }));
+        completer.future.then((SelectableEntity expense) {
+          store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
+        });
+      },
       onCancelPressed: (BuildContext context) {
         createEntity(
             context: context,
