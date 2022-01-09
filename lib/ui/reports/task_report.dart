@@ -155,13 +155,13 @@ ReportResult taskReport(
           value = invoice?.listDisplayName ?? '';
           break;
         case TaskReportFields.invoice_amount:
-          value = invoice.amount;
+          value = invoice?.amount ?? '';
           break;
         case TaskReportFields.invoice_date:
-          value = invoice.date;
+          value = invoice.isNew ? '' : invoice.date;
           break;
         case TaskReportFields.invoice_due_date:
-          value = invoice.dueDate;
+          value = invoice.isNew ? '' : invoice.dueDate;
           break;
         case TaskReportFields.duration:
           value = task.calculateDuration().inSeconds;

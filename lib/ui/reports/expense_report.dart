@@ -30,6 +30,7 @@ enum ExpenseReportFields {
   client_shipping_address2,
   invoice,
   invoice_amount,
+  invoice_date,
   vendor,
   expense1,
   expense2,
@@ -176,6 +177,9 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.invoice_amount:
           value = invoice?.amount;
+          break;
+        case ExpenseReportFields.invoice_date:
+          value = invoice.isNew ? '' : invoice.date;
           break;
         case ExpenseReportFields.vendor:
           value = vendor?.listDisplayName;
