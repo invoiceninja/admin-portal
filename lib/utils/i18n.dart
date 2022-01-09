@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_paid': 'Invoice Paid',
       'activity_120': ':user created recurring expense :recurring_expense',
       'activity_121': ':user updated recurring expense :recurring_expense',
       'activity_122': ':user archived recurring expense :recurring_expense',
@@ -488,9 +489,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'force_update': 'Force Update',
       'force_update_help':
           'You are running the latest version but there may be pending fixes available.',
-      'mark_paid_help': 'Track the expense has been paid',
+      'mark_paid_help': 'Track the expense has been paid to the vendor',
       'should_be_invoiced': 'Should be Invoiced',
-      'should_be_invoiced_help': 'Enable the expense to be invoiced',
+      'should_be_invoiced_help':
+          'Enable the expense to be invoiced to your client',
       'add_documents_to_invoice_help': 'Make the documents visible to clients',
       'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
@@ -70907,6 +70909,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get extraLarge =>
       _localizedValues[localeCode]['extra_large'] ??
       _localizedValues['en']['extra_large'];
+
+  String get invoicePaid =>
+      _localizedValues[localeCode]['invoice_paid'] ??
+      _localizedValues['en']['invoice_paid'];
 
   // STARTER: lang field - do not remove comment
 
