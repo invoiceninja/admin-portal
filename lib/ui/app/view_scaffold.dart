@@ -96,7 +96,10 @@ class ViewScaffold extends StatelessWidget {
             centerTitle: false,
             leading: leading,
             automaticallyImplyLeading: isMobile(context),
-            title: CopyToClipboard(value: title),
+            title: CopyToClipboard(
+              value: title,
+              child: Text(title),
+            ),
             bottom: appBarBottom,
             actions: entity.isNew
                 ? []

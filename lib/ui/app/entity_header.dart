@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -38,52 +39,58 @@ class EntityHeader extends StatelessWidget {
     final prefState = store.state.prefState;
 
     Widget _value1() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(label,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: textColor.withOpacity(.65),
-              )),
-          SizedBox(
-            height: 8,
-          ),
-          FittedBox(
-            child: SelectableText(
-              (value ?? '').isEmpty ? ' ' : value,
-              style: TextStyle(
-                fontSize: 30,
-              ),
+      return CopyToClipboard(
+        value: value,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(label,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: textColor.withOpacity(.65),
+                )),
+            SizedBox(
+              height: 8,
             ),
-          )
-        ],
+            FittedBox(
+              child: Text(
+                (value ?? '').isEmpty ? ' ' : value,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            )
+          ],
+        ),
       );
     }
 
     Widget _value2() {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(secondLabel,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: textColor.withOpacity(.65),
-              )),
-          SizedBox(
-            height: 8,
-          ),
-          FittedBox(
-            child: SelectableText(
-              (secondValue ?? '').isEmpty ? ' ' : secondValue,
-              style: TextStyle(
-                fontSize: 30,
-              ),
+      return CopyToClipboard(
+        value: secondValue,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(secondLabel,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: textColor.withOpacity(.65),
+                )),
+            SizedBox(
+              height: 8,
             ),
-          )
-        ],
+            FittedBox(
+              child: Text(
+                (secondValue ?? '').isEmpty ? ' ' : secondValue,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            )
+          ],
+        ),
       );
     }
 
