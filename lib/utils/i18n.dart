@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'remaining': 'Remaining',
       'invoice_paid': 'Invoice Paid',
       'activity_120': ':user created recurring expense :recurring_expense',
       'activity_121': ':user updated recurring expense :recurring_expense',
@@ -70913,6 +70914,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get invoicePaid =>
       _localizedValues[localeCode]['invoice_paid'] ??
       _localizedValues['en']['invoice_paid'];
+
+  String get remaining =>
+      _localizedValues[localeCode]['remaining'] ??
+      _localizedValues['en']['remaining'];
 
   // STARTER: lang field - do not remove comment
 

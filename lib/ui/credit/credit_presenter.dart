@@ -20,7 +20,7 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.client,
       CreditFields.amount,
       CreditFields.date,
-      CreditFields.balance,
+      CreditFields.remaining,
     ];
   }
 
@@ -74,6 +74,7 @@ class CreditPresenter extends EntityPresenter {
           child: Text(
               formatNumber(credit.amount, context, clientId: credit.clientId)),
         );
+      case CreditFields.remaining:
       case CreditFields.balance:
         return Align(
             alignment: Alignment.centerRight,
