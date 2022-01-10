@@ -90,6 +90,48 @@ class DashboardPanels extends StatelessWidget {
         ),
       );
 
+      final dateRange = PopupMenuButton<DateRange>(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Flexible(
+                child: Text(
+                  formatDateRange(settings.startDate(company),
+                      settings.endDate(company), context),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              SizedBox(width: 6.0),
+              Icon(Icons.arrow_drop_down),
+            ],
+          ),
+        ),
+        itemBuilder: (context) => DateRange.values
+            .map((dateRange) => PopupMenuItem(
+                  child: Text(dateRange == DateRange.custom
+                      ? '${localization.more}...'
+                      : localization.lookup(dateRange.toString())),
+                  value: dateRange,
+                ))
+            .toList(),
+        onSelected: (dateRange) {
+          final settings = DashboardSettings.fromState(state.dashboardUIState);
+          if (dateRange == DateRange.custom) {
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              _showDateOptions(context);
+            });
+          } else {
+            settings.dateRange = dateRange;
+            viewModel.onSettingsChanged(settings);
+          }
+        },
+      );
+
       Widget currencySettings = SizedBox();
       if (hasMultipleCurrencies) {
         currencySettings = Padding(
@@ -135,51 +177,12 @@ class DashboardPanels extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
               ),
               SizedBox(width: 4),
-              Expanded(
-                child: PopupMenuButton<DateRange>(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Flexible(
-                          child: Text(
-                            formatDateRange(settings.startDate(company),
-                                settings.endDate(company), context),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .copyWith(fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 6.0),
-                        Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
-                  ),
-                  itemBuilder: (context) => DateRange.values
-                      .map((dateRange) => PopupMenuItem(
-                            child: Text(dateRange == DateRange.custom
-                                ? '${localization.more}...'
-                                : localization.lookup(dateRange.toString())),
-                            value: dateRange,
-                          ))
-                      .toList(),
-                  onSelected: (dateRange) {
-                    final settings =
-                        DashboardSettings.fromState(state.dashboardUIState);
-                    if (dateRange == DateRange.custom) {
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        _showDateOptions(context);
-                      });
-                    } else {
-                      settings.dateRange = dateRange;
-                      viewModel.onSettingsChanged(settings);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(width: 8),
+              if (isDesktop(context)) ...[
+                dateRange,
+                Spacer(),
+              ] else ...[
+                Expanded(child: dateRange),
+              ],
               if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
                 IconButton(
                   icon: Icon(MdiIcons.tuneVariant),
