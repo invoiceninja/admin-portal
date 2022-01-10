@@ -223,6 +223,13 @@ String formatNumber(
     }
 
     formatted = formatter.format(value < 0 ? value * -1 : value);
+
+    // Ugly workaround to prevent showing negative zero values
+    if (formatted == '-0.00') {
+      formatted = '0.00';
+    } else if (formatted == '-0,00') {
+      formatted = '0,00';
+    }
   }
 
   final prefix = value < 0 ? '-' : '';
