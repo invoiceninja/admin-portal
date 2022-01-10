@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -95,7 +96,7 @@ class ViewScaffold extends StatelessWidget {
             centerTitle: false,
             leading: leading,
             automaticallyImplyLeading: isMobile(context),
-            title: Text(title),
+            title: CopyToClipboard(value: title),
             bottom: appBarBottom,
             actions: entity.isNew
                 ? []
