@@ -191,6 +191,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
+      Debouncer.complete();
       widget.viewModel.onDoneContactPressed(context);
       Navigator.of(context).pop();
     } else {
