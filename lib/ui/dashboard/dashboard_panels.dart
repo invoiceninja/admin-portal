@@ -2,13 +2,11 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -19,6 +17,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -91,6 +90,48 @@ class DashboardPanels extends StatelessWidget {
         ),
       );
 
+      final dateRange = PopupMenuButton<DateRange>(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Flexible(
+                child: Text(
+                  formatDateRange(settings.startDate(company),
+                      settings.endDate(company), context),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontSize: 16),
+                ),
+              ),
+              SizedBox(width: 6.0),
+              Icon(Icons.arrow_drop_down),
+            ],
+          ),
+        ),
+        itemBuilder: (context) => DateRange.values
+            .map((dateRange) => PopupMenuItem(
+                  child: Text(dateRange == DateRange.custom
+                      ? '${localization.more}...'
+                      : localization.lookup(dateRange.toString())),
+                  value: dateRange,
+                ))
+            .toList(),
+        onSelected: (dateRange) {
+          final settings = DashboardSettings.fromState(state.dashboardUIState);
+          if (dateRange == DateRange.custom) {
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              _showDateOptions(context);
+            });
+          } else {
+            settings.dateRange = dateRange;
+            viewModel.onSettingsChanged(settings);
+          }
+        },
+      );
+
       Widget currencySettings = SizedBox();
       if (hasMultipleCurrencies) {
         currencySettings = Padding(
@@ -136,51 +177,12 @@ class DashboardPanels extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
               ),
               SizedBox(width: 4),
-              Expanded(
-                child: PopupMenuButton<DateRange>(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Flexible(
-                          child: Text(
-                            formatDateRange(settings.startDate(company),
-                                settings.endDate(company), context),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .copyWith(fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 6.0),
-                        Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
-                  ),
-                  itemBuilder: (context) => DateRange.values
-                      .map((dateRange) => PopupMenuItem(
-                            child: Text(dateRange == DateRange.custom
-                                ? '${localization.more}...'
-                                : localization.lookup(dateRange.toString())),
-                            value: dateRange,
-                          ))
-                      .toList(),
-                  onSelected: (dateRange) {
-                    final settings =
-                        DashboardSettings.fromState(state.dashboardUIState);
-                    if (dateRange == DateRange.custom) {
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        _showDateOptions(context);
-                      });
-                    } else {
-                      settings.dateRange = dateRange;
-                      viewModel.onSettingsChanged(settings);
-                    }
-                  },
-                ),
-              ),
-              SizedBox(width: 8),
+              if (isDesktop(context)) ...[
+                dateRange,
+                Spacer(),
+              ] else ...[
+                Expanded(child: dateRange),
+              ],
               if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
                 IconButton(
                   icon: Icon(MdiIcons.tuneVariant),

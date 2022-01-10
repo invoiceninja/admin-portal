@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -246,9 +245,11 @@ class _LoginState extends State<LoginView> {
     final authState = widget.viewModel.authState;
     final url = _isSelfHosted
         ? _urlController.text
-        : authState.isStaging
-            ? kAppStagingUrl
-            : kAppProductionUrl;
+        : authState.isLargeTest
+            ? kAppLargeTestUrl
+            : authState.isStaging
+                ? kAppStagingUrl
+                : kAppProductionUrl;
 
     if (_emailLogin) {
       if (_recoverPassword) {
@@ -528,6 +529,7 @@ class _LoginState extends State<LoginView> {
                                     '${localization.secret} (${localization.optional})',
                                 controller: _secretController,
                                 autoValidate: _autoValidate,
+                                validate: false,
                                 onSavePressed: (_) => _submitForm(),
                               ),
                             if (_createAccount)

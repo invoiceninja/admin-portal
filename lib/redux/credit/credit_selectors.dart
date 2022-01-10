@@ -38,7 +38,7 @@ List<String> dropdownCreditSelector(
         !clientMap[credit.clientId].isActive) {
       return false;
     }
-    if (credit.balance == 0) {
+    if (credit.balanceOrAmount == 0) {
       return false;
     }
     return credit.isActive && credit.isUnpaid;

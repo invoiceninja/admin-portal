@@ -1,15 +1,11 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DecoratedFormField extends StatefulWidget {
@@ -118,12 +114,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
     } else {
       var icon = widget.suffixIcon ?? iconButton;
       if (icon == null) {
-        if (widget.isMoney) {
-          final state = StoreProvider.of<AppState>(context).state;
-          icon = Icon(state.company.currencyId == kCurrencyEuro
-              ? Icons.euro
-              : Icons.attach_money);
-        } else if (widget.isPercent) {
+        if (widget.isPercent) {
           icon = Icon(
             MdiIcons.percent,
             size: 16,

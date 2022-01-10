@@ -24,6 +24,9 @@ bool supportsFileDownload() => !isDesktopOS();
 // TODO remove this function
 bool supportsFileUpload() => !isMacOS() && !isLinux();
 
+// TODO remove this function
+bool supportsInlineBrowser() => !isDesktopOS();
+
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 
 bool isMobileOS() => isAndroid() || isIOS();

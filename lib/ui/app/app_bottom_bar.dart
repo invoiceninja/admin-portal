@@ -41,6 +41,8 @@ class AppBottomBar extends StatefulWidget {
     this.customValues4 = const [],
     this.hideListOptions = false,
     this.iconButtons = const [],
+    this.onPaymentTypeChanged,
+    this.paymentTypes = const [],
   });
 
   final EntityType entityType;
@@ -62,6 +64,8 @@ class AppBottomBar extends StatefulWidget {
   final List<String> defaultTableColumns;
   final bool hideListOptions;
   final List<IconButton> iconButtons;
+  final List<PaymentTypeEntity> paymentTypes;
+  final Function onPaymentTypeChanged;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -71,6 +75,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   PersistentBottomSheetController _sortController;
   PersistentBottomSheetController _filterStateController;
   PersistentBottomSheetController _filterStatusController;
+  PersistentBottomSheetController _filterPaymentTypeController;
   PersistentBottomSheetController _filterCustom1Controller;
   PersistentBottomSheetController _filterCustom2Controller;
   PersistentBottomSheetController _filterCustom3Controller;
@@ -79,10 +84,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
   int kSortPanel = 0;
   int kFilterStatePanel = 1;
   int kFilterStatusPanel = 2;
-  int kCustom1Panel = 3;
-  int kCustom2Panel = 4;
-  int kCustom3Panel = 5;
-  int kCustom4Panel = 6;
+  int kFilterPaymentTypePanel = 3;
+  int kCustom1Panel = 4;
+  int kCustom2Panel = 5;
+  int kCustom3Panel = 6;
+  int kCustom4Panel = 7;
 
   int closeBottomSheet() {
     if (_filterStateController != null) {
@@ -93,6 +99,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
     if (_filterStatusController != null) {
       _filterStatusController.close();
       return kFilterStatusPanel;
+    }
+
+    if (_filterPaymentTypeController != null) {
+      _filterPaymentTypeController.close();
+      return kFilterPaymentTypePanel;
     }
 
     if (_sortController != null) {

@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -281,8 +280,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<SelectableEntity> onSelected,
             Iterable<SelectableEntity> options) {
-          final highlightedIndex = AutocompleteHighlightedOption.of(context);
-
           return Theme(
             data: theme,
             child: Align(
@@ -297,23 +294,33 @@ class _EntityDropdownState extends State<EntityDropdown> {
                     child: ScrollableListViewBuilder(
                       itemCount: options.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          color: highlightedIndex == index
-                              ? convertHexStringToColor(
-                                  state.prefState.enableDarkMode
-                                      ? kDefaultDarkSelectedColor
-                                      : kDefaultLightSelectedColor)
-                              : Theme.of(context).cardColor,
-                          child: EntityAutocompleteListTile(
-                            onTap: (entity) => onSelected(entity),
-                            entity: options.elementAt(index),
-                            filter: _filter,
-                            overrideSuggestedAmount:
-                                widget.overrideSuggestedAmount,
-                            overrideSuggestedLabel:
-                                widget.overrideSuggestedLabel,
-                          ),
-                        );
+                        return Builder(builder: (BuildContext context) {
+                          final highlightedIndex =
+                              AutocompleteHighlightedOption.of(context);
+                          if (highlightedIndex == index) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
+                              Scrollable.ensureVisible(context);
+                            });
+                          }
+                          return Container(
+                            color: highlightedIndex == index
+                                ? convertHexStringToColor(
+                                    state.prefState.enableDarkMode
+                                        ? kDefaultDarkSelectedColor
+                                        : kDefaultLightSelectedColor)
+                                : Theme.of(context).cardColor,
+                            child: EntityAutocompleteListTile(
+                              onTap: (entity) => onSelected(entity),
+                              entity: options.elementAt(index),
+                              filter: _filter,
+                              overrideSuggestedAmount:
+                                  widget.overrideSuggestedAmount,
+                              overrideSuggestedLabel:
+                                  widget.overrideSuggestedLabel,
+                            ),
+                          );
+                        });
                       },
                     ),
                   ),

@@ -10,6 +10,7 @@ class PasswordFormField extends StatefulWidget {
     this.controller,
     this.autoValidate,
     this.newPassword = true,
+    this.validate = true,
     this.onSavePressed,
     this.labelText,
   });
@@ -18,6 +19,7 @@ class PasswordFormField extends StatefulWidget {
   final Function(BuildContext) onSavePressed;
   final bool autoValidate;
   final bool newPassword;
+  final bool validate;
   final String labelText;
 
   @override
@@ -62,6 +64,10 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         ),
       ),
       validator: (value) {
+        if (!widget.validate) {
+          return null;
+        }
+
         if (value.isEmpty || value.trim().isEmpty) {
           return widget.newPassword
               ? null
@@ -84,9 +90,13 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       },
       obscureText: _isPasswordObscured,
       keyboardType: TextInputType.visiblePassword,
-      autofillHints: [
-        widget.newPassword ? AutofillHints.newPassword : AutofillHints.password,
-      ],
+      autofillHints: widget.validate
+          ? [
+              widget.newPassword
+                  ? AutofillHints.newPassword
+                  : AutofillHints.password,
+            ]
+          : null,
     );
   }
 }

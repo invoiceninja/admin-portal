@@ -665,7 +665,7 @@ List<ChartDataGroup> chartExpenses(
   const STATUS_LOGGED = 'logged';
   const STATUS_PENDING = 'pending';
   const STATUS_INVOICED = 'invoiced';
-  const STATUS_PAID = 'paid';
+  const STATUS_PAID = 'invoice_paid';
 
   final Map<String, int> counts = {
     STATUS_LOGGED: 0,

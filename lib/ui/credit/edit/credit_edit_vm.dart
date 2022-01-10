@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -98,6 +97,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
               [
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
             handleEntityAction(credit, action);
           } else {
@@ -133,6 +133,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
               if ([
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
                 handleEntityAction(savedCredit, action);
               }

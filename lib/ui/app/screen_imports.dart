@@ -46,7 +46,6 @@ export 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
-export 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';

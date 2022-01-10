@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -98,6 +97,7 @@ class _QuoteEditState extends State<QuoteEdit>
       onSavePressed: (context) => _onSavePressed(context),
       actions: [
         EntityAction.viewPdf,
+        EntityAction.download,
         EntityAction.emailQuote,
         if (!invoice.isSent) EntityAction.markSent,
         if (!invoice.isApproved) EntityAction.convertToInvoice,

@@ -13,15 +13,24 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-InvoiceItemEntity convertTaskToInvoiceItem(
-    {BuildContext context, TaskEntity task}) {
+InvoiceItemEntity convertTaskToInvoiceItem({
+  BuildContext context,
+  TaskEntity task,
+  bool includeProjectHeader = false,
+}) {
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.map[task.projectId];
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
 
-  var notes = task.description;
+  var notes = '';
   final dates = <String>{};
+
+  if (project.isOld && includeProjectHeader) {
+    notes += '## ${project.name}\n';
+  }
+
+  notes += task.description;
 
   if (state.company.invoiceTaskDatelog || state.company.invoiceTaskTimelog) {
     if (notes.trim().isNotEmpty) {

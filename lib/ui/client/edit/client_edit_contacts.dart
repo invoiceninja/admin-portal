@@ -1,7 +1,5 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -200,6 +198,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
+      Debouncer.complete();
       widget.viewModel.onDoneContactPressed(context);
       Navigator.of(context).pop();
     } else {

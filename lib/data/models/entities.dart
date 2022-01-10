@@ -760,6 +760,14 @@ abstract class ActivityEntity
       kActivityRestoreRecurringInvoice,
     ].contains(activityTypeId)) {
       return EntityType.recurringInvoice;
+    } else if ([
+      kActivityCreateRecurringExpense,
+      kActivityUpdateRecurringExpense,
+      kActivityArchiveRecurringExpense,
+      kActivityDeleteRecurringExpense,
+      kActivityRestoreRecurringExpense,
+    ].contains(activityTypeId)) {
+      return EntityType.recurringExpense;
     } else {
       print(
           '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');
@@ -802,6 +810,8 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(':task', task?.description ?? '');
     activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+    activity = activity.replaceFirst(
+        ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
 
     return activity;

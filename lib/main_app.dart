@@ -32,9 +32,6 @@ import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
@@ -82,16 +79,12 @@ import 'package:invoiceninja_flutter/ui/task_status/edit/task_status_edit_vm.dar
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen.dart';
 import 'package:invoiceninja_flutter/ui/task_status/task_status_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/task_status/view/task_status_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
-import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
@@ -559,8 +552,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               InvoiceDesignScreen(),
                           ClientPortalScreen.route: (context) =>
                               ClientPortalScreen(),
-                          BuyNowButtonsScreen.route: (context) =>
-                              BuyNowButtonsScreen(),
                           EmailSettingsScreen.route: (context) =>
                               EmailSettingsScreen(),
                           TemplatesAndRemindersScreen.route: (context) =>

@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -148,6 +147,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.newPayment,
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
             handleEntityAction(invoice, action);
           } else {
@@ -184,6 +184,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.newPayment,
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
+                EntityAction.download,
               ].contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }

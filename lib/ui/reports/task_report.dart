@@ -4,10 +4,8 @@ import 'package:memoize/memoize.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
@@ -38,6 +36,8 @@ enum TaskReportFields {
   task3,
   task4,
   status,
+  assigned_to,
+  created_by,
 }
 
 var memoizedTaskReport = memo10((
@@ -155,13 +155,13 @@ ReportResult taskReport(
           value = invoice?.listDisplayName ?? '';
           break;
         case TaskReportFields.invoice_amount:
-          value = invoice.amount;
+          value = invoice?.amount ?? '';
           break;
         case TaskReportFields.invoice_date:
-          value = invoice.date;
+          value = invoice.isNew ? '' : invoice.date;
           break;
         case TaskReportFields.invoice_due_date:
-          value = invoice.dueDate;
+          value = invoice.isNew ? '' : invoice.dueDate;
           break;
         case TaskReportFields.duration:
           value = task.calculateDuration().inSeconds;
@@ -201,6 +201,12 @@ ReportResult taskReport(
           break;
         case TaskReportFields.status:
           value = taskStatusMap[task.statusId]?.name ?? '';
+          break;
+        case TaskReportFields.assigned_to:
+          value = userMap[task.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case TaskReportFields.created_by:
+          value = userMap[task.createdUserId]?.listDisplayName ?? '';
           break;
       }
 

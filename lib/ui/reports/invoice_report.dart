@@ -4,8 +4,6 @@ import 'package:memoize/memoize.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -68,6 +66,9 @@ enum InvoiceReportFields {
   tax_name2,
   tax_name3,
   currency,
+  is_viewed,
+  assigned_to,
+  created_by,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -297,6 +298,15 @@ ReportResult invoiceReport(
         case InvoiceReportFields.currency:
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
+          break;
+        case InvoiceReportFields.is_viewed:
+          value = invoice.isViewed;
+          break;
+        case InvoiceReportFields.assigned_to:
+          value = userMap[invoice.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case InvoiceReportFields.created_by:
+          value = userMap[invoice.createdUserId]?.listDisplayName ?? '';
           break;
       }
 

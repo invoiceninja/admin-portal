@@ -4,13 +4,14 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.68';
+const String kClientVersion = '5.0.69';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
+const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
@@ -283,7 +284,7 @@ const kGatewayTypes = {
   kGatewayTypeHosted: 'hosted',
   kGatewayTypeGiropay: 'giropay',
   kGatewayTypePrzelewy24: 'przelewy24',
-  kGatewayTypeDirectDebit: 'fpx',
+  kGatewayTypeDirectDebit: 'direct_debit',
   kGatewayTypeEPS: 'eps',
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
@@ -435,7 +436,6 @@ const String kSettingsGeneratedNumbers = 'generated_numbers';
 const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
 const String kSettingsClientPortal = 'client_portal';
-const String kSettingsBuyNowButtons = 'buy_now_buttons';
 const String kSettingsEmailSettings = 'email_settings';
 const String kSettingsTemplatesAndReminders = 'templates_and_reminders';
 const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
@@ -580,6 +580,8 @@ const Map<int, String> kModules = {
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
 const List<String> kLanguages = [
+  'ar',
+  'bg',
   'ca',
   'cs',
   'da',
@@ -590,6 +592,7 @@ const List<String> kLanguages = [
   'en_AU',
   'es',
   'es_ES',
+  'fa',
   'fi',
   'fr',
   'fr_CA',
@@ -597,6 +600,7 @@ const List<String> kLanguages = [
   'it',
   'ja',
   'lt',
+  'lv_LV',
   'mk_MK',
   'nb_NO',
   'nl',
@@ -605,13 +609,14 @@ const List<String> kLanguages = [
   'pt_PT',
   'ro',
   'ru_RU',
+  'sk',
   'sl',
   'sq',
-  'sr_RS',
+  'sr',
   'sv',
   'th',
   'tr_TR',
-  'bg',
+  'zh_TW',
 ];
 
 List<String> kCustomLabels = [

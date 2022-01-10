@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -111,6 +110,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.state);
       case ClientFields.phone:
         return Text(client.phone);
+      case ClientFields.website:
+        return Text(client.website);
       case ClientFields.custom1:
         return Text(presentCustomField(context, client.customValue1));
       case ClientFields.custom2:
@@ -130,15 +131,10 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.group:
         return Text(state.groupState.get(client.groupId).name);
       case ClientFields.contacts:
-        return ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
-          child: Flexible(
-            child: Text(
-              client.contacts.map((contact) => contact.fullName).join(', '),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+        return Text(
+          client.contacts.map((contact) => contact.fullName).join('\n'),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         );
     }
 

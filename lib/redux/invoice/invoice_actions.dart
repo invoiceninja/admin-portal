@@ -3,15 +3,11 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
-//import 'package:http/http.dart' as http;
-//import 'package:invoiceninja_flutter/data/web_client.dart';
-//import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -23,6 +19,10 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+//import 'package:http/http.dart' as http;
+//import 'package:invoiceninja_flutter/data/web_client.dart';
+//import 'package:printing/printing.dart';
 
 class ViewInvoiceList implements PersistUI {
   ViewInvoiceList({this.force = false});

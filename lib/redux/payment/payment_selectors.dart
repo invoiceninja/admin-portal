@@ -33,15 +33,16 @@ List<PaymentEntity> paymentsByCreditSelector(String creditId,
   }).toList();
 }
 
-var memoizedDropdownPaymentList = memo5((
+var memoizedDropdownPaymentList = memo6((
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltList<String> paymentList,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
 ) =>
-    dropdownPaymentsSelector(
-        paymentMap, paymentList, invoiceMap, clientMap, userMap));
+    dropdownPaymentsSelector(paymentMap, paymentList, invoiceMap, clientMap,
+        userMap, paymentTypeMap));
 
 List<String> dropdownPaymentsSelector(
   BuiltMap<String, PaymentEntity> paymentMap,
@@ -49,6 +50,7 @@ List<String> dropdownPaymentsSelector(
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
 ) {
   final list =
       paymentList.where((paymentId) => paymentMap[paymentId].isActive).toList();
@@ -58,26 +60,37 @@ List<String> dropdownPaymentsSelector(
     final paymentB = paymentMap[paymentBId];
 
     return paymentA.compareTo(
-        payment: paymentB,
-        sortAscending: true,
-        sortField: PaymentFields.date,
-        invoiceMap: invoiceMap,
-        clientMap: clientMap,
-        userMap: userMap);
+      payment: paymentB,
+      sortAscending: true,
+      sortField: PaymentFields.date,
+      invoiceMap: invoiceMap,
+      clientMap: clientMap,
+      userMap: userMap,
+      paymentTypeMap: paymentTypeMap,
+    );
   });
 
   return list;
 }
 
-var memoizedFilteredPaymentList = memo7((SelectionState selectionState,
+var memoizedFilteredPaymentList = memo8((SelectionState selectionState,
         BuiltMap<String, PaymentEntity> paymentMap,
         BuiltList<String> paymentList,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
         ListUIState paymentListState) =>
-    filteredPaymentsSelector(selectionState, paymentMap, paymentList,
-        invoiceMap, clientMap, userMap, paymentListState));
+    filteredPaymentsSelector(
+      selectionState,
+      paymentMap,
+      paymentList,
+      invoiceMap,
+      clientMap,
+      userMap,
+      paymentTypeMap,
+      paymentListState,
+    ));
 
 List<String> filteredPaymentsSelector(
     SelectionState selectionState,
@@ -86,6 +99,7 @@ List<String> filteredPaymentsSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
     ListUIState paymentListState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
@@ -137,12 +151,14 @@ List<String> filteredPaymentsSelector(
     final paymentA = paymentMap[paymentAId];
     final paymentB = paymentMap[paymentBId];
     return paymentA.compareTo(
-        payment: paymentB,
-        sortAscending: paymentListState.sortAscending,
-        sortField: paymentListState.sortField,
-        invoiceMap: invoiceMap,
-        clientMap: clientMap,
-        userMap: userMap);
+      payment: paymentB,
+      sortAscending: paymentListState.sortAscending,
+      sortField: paymentListState.sortField,
+      invoiceMap: invoiceMap,
+      clientMap: clientMap,
+      userMap: userMap,
+      paymentTypeMap: paymentTypeMap,
+    );
   });
 
   return list;

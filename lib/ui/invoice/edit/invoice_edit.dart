@@ -1,9 +1,7 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -123,6 +121,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       onSavePressed: (context) => _onSavePressed(context),
       actions: [
         EntityAction.viewPdf,
+        EntityAction.download,
         EntityAction.emailInvoice,
         if (!invoice.isPaid) EntityAction.newPayment,
         if (!invoice.isSent) EntityAction.markSent,

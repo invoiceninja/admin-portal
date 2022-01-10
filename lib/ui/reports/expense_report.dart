@@ -4,8 +4,6 @@ import 'package:memoize/memoize.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -32,12 +30,15 @@ enum ExpenseReportFields {
   client_shipping_address2,
   invoice,
   invoice_amount,
+  invoice_date,
   vendor,
   expense1,
   expense2,
   expense3,
   expense4,
   category,
+  assigned_to,
+  created_by,
 }
 
 var memoizedExpenseReport = memo9((
@@ -177,6 +178,9 @@ ReportResult expenseReport(
         case ExpenseReportFields.invoice_amount:
           value = invoice?.amount;
           break;
+        case ExpenseReportFields.invoice_date:
+          value = invoice.isNew ? '' : invoice.date;
+          break;
         case ExpenseReportFields.vendor:
           value = vendor?.listDisplayName;
           break;
@@ -194,6 +198,12 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.category:
           value = expenseCategoryMap[expense.categoryId]?.name ?? '';
+          break;
+        case ExpenseReportFields.assigned_to:
+          value = userMap[expense.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case ExpenseReportFields.created_by:
+          value = userMap[expense.createdUserId]?.listDisplayName ?? '';
           break;
       }
 

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 
 // Package imports:
@@ -175,7 +174,7 @@ class _EntityListState extends State<EntityList> {
             Flexible(
               fit: FlexFit.loose,
               child: entityList.isEmpty
-                  ? HelpText(AppLocalization.of(context).noRecordsFound)
+                  ? HelpText(AppLocalization.of(context).clickPlusToAddItem)
                   : ScrollableListViewBuilder(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       separatorBuilder: (context, index) =>

@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -559,6 +558,9 @@ Future handleQuoteAction(
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
+      break;
+    case EntityAction.download:
+      launch(quote.invitationDownloadLink);
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(

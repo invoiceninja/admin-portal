@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -549,6 +548,9 @@ Future handleCreditAction(
               .toList())),
         filterEntity: state.clientState.map[credit.clientId],
       );
+      break;
+    case EntityAction.download:
+      launch(credit.invitationDownloadLink);
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadCreditsRequest(

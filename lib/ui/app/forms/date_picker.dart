@@ -88,7 +88,7 @@ class _DatePickerState extends State<DatePicker> {
         firstDate = initialDate;
       }
     } else {
-      firstDate = DateTime(2015, 8);
+      firstDate = DateTime(1920, 1);
     }
 
     final DateTime selectedDate = await showDatePicker(

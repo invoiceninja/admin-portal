@@ -4,7 +4,6 @@ import 'package:memoize/memoize.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -60,6 +59,9 @@ enum CreditReportFields {
   tax_name2,
   tax_name3,
   currency,
+  is_viewed,
+  assigned_to,
+  created_by,
 }
 
 var memoizedCreditReport = memo6((
@@ -267,6 +269,15 @@ ReportResult creditReport(
         case CreditReportFields.currency:
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
+          break;
+        case CreditReportFields.is_viewed:
+          value = credit.isViewed;
+          break;
+        case CreditReportFields.assigned_to:
+          value = userMap[credit.assignedUserId]?.listDisplayName ?? '';
+          break;
+        case CreditReportFields.created_by:
+          value = userMap[credit.createdUserId]?.listDisplayName ?? '';
           break;
       }
 

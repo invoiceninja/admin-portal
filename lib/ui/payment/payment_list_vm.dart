@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -95,6 +94,7 @@ class PaymentListVM {
           state.invoiceState.map,
           state.clientState.map,
           state.userState.map,
+          state.staticState.paymentTypeMap,
           state.paymentListState),
       paymentMap: state.paymentState.map,
       clientMap: state.clientState.map,

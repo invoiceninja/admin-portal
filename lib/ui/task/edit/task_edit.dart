@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,6 +10,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -37,7 +37,6 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit>
     with SingleTickerProviderStateMixin {
-  Timer _timer;
   TabController _controller;
   int _updatedAt = 0;
 
@@ -50,9 +49,6 @@ class _TaskEditState extends State<TaskEdit>
   @override
   void initState() {
     super.initState();
-
-    _timer = Timer.periodic(Duration(seconds: 1),
-        (Timer t) => mounted ? setState(() => false) : false);
 
     final index =
         widget.viewModel.taskTimeIndex != null ? kTimesScreen : kDetailsScreen;
@@ -71,8 +67,6 @@ class _TaskEditState extends State<TaskEdit>
 
   @override
   void dispose() {
-    _timer.cancel();
-    _timer = null;
     _controller.dispose();
     super.dispose();
   }
@@ -82,11 +76,7 @@ class _TaskEditState extends State<TaskEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final task = viewModel.task;
-
     final state = viewModel.state;
-    final useSidebarEditor =
-        state.prefState.useSidebarEditor[EntityType.task] ?? false;
-    final store = StoreProvider.of<AppState>(context);
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.task);
 
     return EditScaffold(
@@ -135,64 +125,8 @@ class _TaskEditState extends State<TaskEdit>
                 ],
               ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0,
-        color: Theme.of(context).cardColor,
-        shape: CircularNotchedRectangle(),
-        child: SizedBox(
-          height: kTopBottomBarHeight,
-          child: AppBorder(
-            isTop: true,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (isDesktop(context))
-                  Tooltip(
-                    message: useSidebarEditor
-                        ? localization.fullscreenEditor
-                        : localization.sidebarEditor,
-                    child: InkWell(
-                      onTap: () =>
-                          store.dispatch(ToggleEditorLayout(EntityType.task)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(useSidebarEditor
-                            ? Icons.chevron_left
-                            : Icons.chevron_right),
-                      ),
-                    ),
-                  ),
-                AppBorder(
-                  isLeft: isDesktop(context),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: LiveText(() {
-                        return localization.duration +
-                            ' ' +
-                            formatNumber(
-                                task
-                                    .calculateDuration(
-                                        includeRunning: task.showAsRunning)
-                                    .inSeconds
-                                    .toDouble(),
-                                context,
-                                formatNumberType: FormatNumberType.duration);
-                      },
-                          style: TextStyle(
-                            color: viewModel.state.prefState.enableDarkMode
-                                ? Colors.white
-                                : Colors.black,
-                            fontSize: 20.0,
-                          )),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      bottomNavigationBar: _BottomBar(
+        task: task,
       ),
       floatingActionButton: task.isInvoiced || task.isDeleted
           ? SizedBox()
@@ -211,6 +145,106 @@ class _TaskEditState extends State<TaskEdit>
               ),
               tooltip: task.isRunning ? localization.stop : localization.start,
             ),
+    );
+  }
+}
+
+class _BottomBar extends StatefulWidget {
+  const _BottomBar({
+    Key key,
+    @required this.task,
+  }) : super(key: key);
+
+  final TaskEntity task;
+
+  @override
+  State<_BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<_BottomBar> {
+  Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _timer = Timer.periodic(Duration(seconds: 1),
+        (Timer t) => mounted ? setState(() => false) : false);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _timer = null;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final useSidebarEditor =
+        state.prefState.useSidebarEditor[EntityType.task] ?? false;
+
+    return BottomAppBar(
+      elevation: 0,
+      color: Theme.of(context).cardColor,
+      shape: CircularNotchedRectangle(),
+      child: SizedBox(
+        height: kTopBottomBarHeight,
+        child: AppBorder(
+          isTop: true,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (isDesktop(context))
+                Tooltip(
+                  message: useSidebarEditor
+                      ? localization.fullscreenEditor
+                      : localization.sidebarEditor,
+                  child: InkWell(
+                    onTap: () =>
+                        store.dispatch(ToggleEditorLayout(EntityType.task)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(useSidebarEditor
+                          ? Icons.chevron_left
+                          : Icons.chevron_right),
+                    ),
+                  ),
+                ),
+              AppBorder(
+                isLeft: isDesktop(context),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: LiveText(() {
+                      return localization.duration +
+                          ' ' +
+                          formatNumber(
+                              widget.task
+                                  .calculateDuration(
+                                      includeRunning: widget.task.showAsRunning)
+                                  .inSeconds
+                                  .toDouble(),
+                              context,
+                              formatNumberType: FormatNumberType.duration);
+                    },
+                        style: TextStyle(
+                          color: state.prefState.enableDarkMode
+                              ? Colors.white
+                              : Colors.black,
+                          fontSize: 20.0,
+                        )),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
