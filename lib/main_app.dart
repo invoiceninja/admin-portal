@@ -247,7 +247,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           MediaQueryData windowData =
               MediaQueryData.fromWindow(WidgetsBinding.instance.window);
           windowData = windowData.copyWith(
-              textScaleFactor: state.prefState.textScaleFactor);
+            textScaleFactor: state.prefState.textScaleFactor,
+            alwaysUse24HourFormat:
+                state.company?.settings?.enableMilitaryTime ?? false,
+          );
 
           return StyledToast(
             locale: locale,
