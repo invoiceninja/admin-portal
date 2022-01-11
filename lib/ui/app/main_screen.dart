@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -319,7 +320,8 @@ class MainScreen extends StatelessWidget {
                         children: [
                           Expanded(
                               child: MoveWindow(
-                            child: Row(
+                            child: isMacOS() ? SizedBox() : Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(width: 6),
                                 Image.asset('assets/images/icon.png',
