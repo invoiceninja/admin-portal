@@ -470,7 +470,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                 },
                 initialValue: _selectedDesign?.id),
             // TODO remove this once browser supported on all platforms
-            if (kIsWeb || isMobileOS()) ...[
+            if (!kReleaseMode || kIsWeb || isMobileOS()) ...[
               SizedBox(height: 16),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
@@ -496,29 +496,40 @@ class _DesignSettingsState extends State<DesignSettings> {
           ),
         ),
         if (widget.draftMode)
-          FormCard(
-            child: Actions(
-              actions: {InsertTabIntent: InsertTabAction()},
-              child: Shortcuts(
-                shortcuts: {
-                  LogicalKeySet(LogicalKeyboardKey.tab):
-                      InsertTabIntent(4, widget.htmlController)
-                },
-                child: TextField(
-                  controller: widget.htmlController,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  minLines: 16,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                  style: TextStyle(
-                    fontFeatures: [FontFeature.tabularFigures()],
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 16, left: 30, right: 30),
+                child: Text(
+                  localization.htmlPreviewWarning,
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              FormCard(
+                child: Actions(
+                  actions: {InsertTabIntent: InsertTabAction()},
+                  child: Shortcuts(
+                    shortcuts: {
+                      LogicalKeySet(LogicalKeyboardKey.tab):
+                          InsertTabIntent(4, widget.htmlController)
+                    },
+                    child: TextField(
+                      controller: widget.htmlController,
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.newline,
+                      minLines: 16,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        fontFeatures: [FontFeature.tabularFigures()],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           )
         else
           VariablesHelp(),
