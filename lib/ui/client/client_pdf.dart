@@ -271,25 +271,31 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   ),
                   */
                   Flexible(
-                    child: AppDropdownButton<DateRange>(
-                      labelText: localization.dateRange,
-                      blankValue: null,
-                      //showBlank: true,
-                      value: _dateRange,
-                      onChanged: (dynamic value) {
-                        setState(() {
-                          _dateRange = value;
-                        });
-                        loadPdf();
-                      },
-                      items: DateRange.values
-                          .where((dateRange) => dateRange != DateRange.custom)
-                          .map((dateRange) => DropdownMenuItem<DateRange>(
-                                child: Text(
-                                    localization.lookup(dateRange.toString())),
-                                value: dateRange,
-                              ))
-                          .toList(),
+                    child: Theme(
+                      data: !state.prefState.enableDarkMode &&
+                              state.hasAccentColor
+                          ? ThemeData.dark()
+                          : ThemeData.light(),
+                      child: AppDropdownButton<DateRange>(
+                        labelText: localization.dateRange,
+                        blankValue: null,
+                        //showBlank: true,
+                        value: _dateRange,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _dateRange = value;
+                          });
+                          loadPdf();
+                        },
+                        items: DateRange.values
+                            .where((dateRange) => dateRange != DateRange.custom)
+                            .map((dateRange) => DropdownMenuItem<DateRange>(
+                                  child: Text(localization
+                                      .lookup(dateRange.toString())),
+                                  value: dateRange,
+                                ))
+                            .toList(),
+                      ),
                     ),
                   ),
                   if (isDesktop(context)) ...[
