@@ -1,10 +1,9 @@
 // Flutter imports:
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -221,21 +220,6 @@ class MainScreen extends StatelessWidget {
           print('## Error: main screen route $mainRoute not defined');
       }
 
-      final buttonColors = WindowButtonColors(
-        iconNormal: state.headerTextColor,
-        iconMouseOver: state.headerTextColor,
-        iconMouseDown: state.headerTextColor,
-        mouseOver: Color(prefState.enableDarkMode ? 0xFF222222 : 0xFFDDDDDD),
-        mouseDown: Color(prefState.enableDarkMode ? 0xFF333333 : 0xFFCCCCCC),
-      );
-
-      final closeButtonColors = WindowButtonColors(
-        iconNormal: state.headerTextColor,
-        iconMouseOver: Colors.white,
-        mouseOver: Color(0xFFD32F2F),
-        mouseDown: Color(0xFFB71C1C),
-      );
-
       return WillPopScope(
         onWillPop: () async {
           final state = store.state;
@@ -311,37 +295,7 @@ class MainScreen extends StatelessWidget {
               policy: ReadingOrderTraversalPolicy(),
               child: Column(
                 children: [
-                  Material(
-                    color: !prefState.enableDarkMode && state.hasAccentColor
-                        ? state.accentColor
-                        : null,
-                    child: WindowTitleBarBox(
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: MoveWindow(
-                            child: isMacOS() ? SizedBox() : Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(width: 6),
-                                Image.asset('assets/images/icon.png',
-                                    width: 16),
-                                SizedBox(width: 6),
-                                Text(
-                                  'Invoice Ninja',
-                                  style:
-                                      TextStyle(color: state.headerTextColor),
-                                ),
-                              ],
-                            ),
-                          )),
-                          MinimizeWindowButton(colors: buttonColors),
-                          MaximizeWindowButton(colors: buttonColors),
-                          CloseWindowButton(colors: closeButtonColors),
-                        ],
-                      ),
-                    ),
-                  ),
+                  AppTitleBar(),
                   Expanded(
                     child: ChangeLayoutBanner(
                       appLayout: prefState.appLayout,
