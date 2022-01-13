@@ -1273,8 +1273,8 @@ void _showAbout(BuildContext context) async {
                       onPressed: () => launch(getRateAppURL(context)),
                     ),
                   SizedBox(height: 22),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Wrap(
+                    alignment: WrapAlignment.center,
                     children: [
                       IconButton(
                         tooltip: 'Twitter',

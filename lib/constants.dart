@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.69';
+const String kClientVersion = '5.0.70';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -147,8 +147,8 @@ const double kLighterOpacity = .6;
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
-const int kMaxPostSeconds = 30;
-const int kMaxRawPostSeconds = 180;
+const int kMaxPostSeconds = 60;
+const int kMaxRawPostSeconds = 300;
 const int kMaxEntitiesPerBulkAction = 100;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes

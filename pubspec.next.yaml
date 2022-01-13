@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.69+69
+version: 5.0.70+70
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -58,6 +58,8 @@ dependencies:
   contacts_service: ^0.6.1
   super_editor: ^0.1.0
   diacritic: ^0.1.3
+  bitsdojo_window: ^0.1.1+1
+  # printing: ^5.6.3
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 
@@ -88,7 +90,7 @@ msix_config:
   display_name: Invoice Ninja
   publisher_display_name: Invoice Ninja
   identity_name: InvoiceNinja.InvoiceNinja
-  msix_version: 5.0.69.0
+  msix_version: 5.0.70.0
   publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
   architecture: x64
   capabilities: 'internetClient'

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -292,18 +293,25 @@ class MainScreen extends StatelessWidget {
           child: SafeArea(
             child: FocusTraversalGroup(
               policy: ReadingOrderTraversalPolicy(),
-              child: ChangeLayoutBanner(
-                appLayout: prefState.appLayout,
-                suggestedLayout: AppLayout.desktop,
-                child: Row(children: <Widget>[
-                  if (prefState.showMenu) MenuDrawerBuilder(),
+              child: Column(
+                children: [
+                  AppTitleBar(),
                   Expanded(
-                      child: AppBorder(
-                    child: screen,
-                    isLeft: prefState.showMenu &&
-                        (!state.isFullScreen || showFilterSidebar),
-                  )),
-                ]),
+                    child: ChangeLayoutBanner(
+                      appLayout: prefState.appLayout,
+                      suggestedLayout: AppLayout.desktop,
+                      child: Row(children: <Widget>[
+                        if (prefState.showMenu) MenuDrawerBuilder(),
+                        Expanded(
+                            child: AppBorder(
+                          child: screen,
+                          isLeft: prefState.showMenu &&
+                              (!state.isFullScreen || showFilterSidebar),
+                        )),
+                      ]),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

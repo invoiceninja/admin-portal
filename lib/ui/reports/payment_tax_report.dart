@@ -105,10 +105,6 @@ ReportResult paymentTaxReport(
             final String taxName = taxes[key]['name'];
             final double taxRate = taxes[key]['rate'];
 
-            if (taxRate == null || taxRate == 0) {
-              continue;
-            }
-
             for (var column in columns) {
               dynamic value = '';
 

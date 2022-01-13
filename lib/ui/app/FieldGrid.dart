@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -38,16 +37,8 @@ class FieldGrid extends StatelessWidget {
         if (value != null && value.isNotEmpty) {
           fieldWidgets.add(Material(
             color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                Clipboard.setData(ClipboardData(text: value));
-                showToast(
-                  localization.copiedToClipboard.replaceFirst(
-                    ':value',
-                    value.replaceAll('\n', ' '),
-                  ),
-                );
-              },
+            child: CopyToClipboard(
+              value: value,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

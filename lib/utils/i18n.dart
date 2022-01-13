@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'html_preview_warning':
+          'Note: changes made here are only previewed, they must be applied in the tabs above to be saved',
       'remaining': 'Remaining',
       'invoice_paid': 'Invoice Paid',
       'activity_120': ':user created recurring expense :recurring_expense',
@@ -70918,6 +70920,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get remaining =>
       _localizedValues[localeCode]['remaining'] ??
       _localizedValues['en']['remaining'];
+
+  String get htmlPreviewWarning =>
+      _localizedValues[localeCode]['html_preview_warning'] ??
+      _localizedValues['en']['html_preview_warning'];
 
   // STARTER: lang field - do not remove comment
 

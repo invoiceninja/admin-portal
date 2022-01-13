@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -132,6 +133,17 @@ void main({bool isTesting = false}) async {
       appRunner: () => runApp(InvoiceNinjaApp(store: store)),
     );
   }
+
+  doWhenWindowReady(() {
+    final win = appWindow;
+    win.title = 'Invoice Ninja';
+    //const initialSize = Size(600, 450);
+    //win.minSize = initialSize;
+    //win.size = initialSize;
+    //win.alignment = Alignment.center;
+    //win.maximize();
+    win.show();
+  });
 }
 
 Future<AppState> _initialState(bool isTesting) async {

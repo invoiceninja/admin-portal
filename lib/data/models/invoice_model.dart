@@ -1116,7 +1116,7 @@ abstract class InvoiceEntity extends Object
       }
     }
 
-    if (taxRate1 != 0) {
+    if (taxName1.isNotEmpty) {
       final invoiceTaxAmount = calculateAmount(taxable, taxRate1);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
@@ -1125,7 +1125,7 @@ abstract class InvoiceEntity extends Object
           taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
     }
 
-    if (taxRate2 != 0) {
+    if (taxName2.isNotEmpty) {
       final invoiceTaxAmount = calculateAmount(taxable, taxRate2);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
@@ -1134,7 +1134,7 @@ abstract class InvoiceEntity extends Object
           taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
     }
 
-    if (taxRate3 != 0) {
+    if (taxName3.isNotEmpty) {
       final invoiceTaxAmount = calculateAmount(taxable, taxRate3);
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidToDate / amount * invoiceTaxAmount)
@@ -1146,7 +1146,7 @@ abstract class InvoiceEntity extends Object
     for (final item in lineItems) {
       final itemTaxable = getItemTaxable(item, amount, precision);
 
-      if (item.taxRate1 != 0) {
+      if (item.taxName1.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate1);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
@@ -1158,7 +1158,7 @@ abstract class InvoiceEntity extends Object
             taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
       }
 
-      if (item.taxRate2 != 0) {
+      if (item.taxName2.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate2);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
@@ -1169,7 +1169,7 @@ abstract class InvoiceEntity extends Object
             taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
       }
 
-      if (item.taxRate3 != 0) {
+      if (item.taxName3.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate3);
         final itemPaidAmount = amount != null &&
                 itemTaxAmount != null &&
@@ -1179,6 +1179,10 @@ abstract class InvoiceEntity extends Object
         _calculateTax(
             taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
       }
+    }
+
+    if (taxes.isEmpty) {
+      _calculateTax(taxes, '', 0, 0, 0);
     }
 
     return taxes;

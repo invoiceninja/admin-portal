@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -296,11 +297,14 @@ class _LoginState extends State<LoginView> {
 
     return ScrollableListView(
       children: <Widget>[
-        Container(
-          width: double.infinity,
-          height: 24,
-          color: state.accentColor,
-        ),
+        if (isDesktopOS())
+          AppTitleBar()
+        else
+          Container(
+            width: double.infinity,
+            height: 24,
+            color: state.accentColor,
+          ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 25),
           child: Center(

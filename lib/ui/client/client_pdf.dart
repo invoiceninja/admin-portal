@@ -50,7 +50,6 @@ class ClientPdfView extends StatefulWidget {
 
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = true;
-  String _pdfString;
   http.Response _response;
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
@@ -87,20 +86,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         _isLoading = false;
       });
 
-      if (kIsWeb) {
-        _pdfString =
-            'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-        WebUtils.registerWebView(_pdfString);
+      final document = PdfDocument.openData(_response.bodyBytes);
+      if (_pdfController == null) {
+        _pdfController = PdfController(document: document);
       } else {
-        final document = PdfDocument.openData(_response.bodyBytes);
-        if (_pdfController == null) {
-          _pdfController = PdfController(document: document);
-        } else {
-          // loadDocument is causing an error
-          //_pdfController.loadDocument(document);
-          _pdfController?.dispose();
-          _pdfController = PdfController(document: document);
-        }
+        // loadDocument is causing an error
+        //_pdfController.loadDocument(document);
+        _pdfController?.dispose();
+        _pdfController = PdfController(document: document);
       }
     }).catchError((Object error) {
       _isLoading = false;
@@ -130,8 +123,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       state.credentials.token,
       data: json.encode({
         'client_id': client.id,
-        'start_date': kIsWeb ? '2021-01-01' : startDate,
-        'end_date': kIsWeb ? '2023-01-01' : endDate,
+        'start_date': startDate,
+        'end_date': endDate,
         'show_payments_table': _showPayments,
         'show_aging_table': _showAging,
       }),
@@ -277,8 +270,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     ),
                   ),
                   */
-                  if (!kIsWeb)
-                    Flexible(
+                  Flexible(
+                    child: Theme(
+                      data: !state.prefState.enableDarkMode &&
+                              state.hasAccentColor
+                          ? ThemeData.dark()
+                          : ThemeData.light(),
                       child: AppDropdownButton<DateRange>(
                         labelText: localization.dateRange,
                         blankValue: null,
@@ -300,6 +297,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             .toList(),
                       ),
                     ),
+                  ),
                   if (isDesktop(context)) ...[
                     showPayments,
                     showAging,
@@ -354,26 +352,24 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           : null,
       body: _isLoading || _response == null
           ? LoadingIndicator()
-          : kIsWeb
-              ? HtmlElementView(viewType: _pdfString)
-              : Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: PdfView(
-                    controller: _pdfController,
-                    onDocumentLoaded: (document) {
-                      setState(() {
-                        _pageCount = document?.pagesCount ?? 0;
-                      });
+          : Padding(
+              padding: const EdgeInsets.all(8),
+              child: PdfView(
+                controller: _pdfController,
+                onDocumentLoaded: (document) {
+                  setState(() {
+                    _pageCount = document?.pagesCount ?? 0;
+                  });
+                },
+                onPageChanged: (page) {
+                  setState(
+                    () {
+                      _pageNumber = page;
                     },
-                    onPageChanged: (page) {
-                      setState(
-                        () {
-                          _pageNumber = page;
-                        },
-                      );
-                    },
-                  ),
-                ),
+                  );
+                },
+              ),
+            ),
     );
   }
 }
