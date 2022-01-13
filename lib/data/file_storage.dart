@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:archive/archive.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:idb_shim/idb.dart';
@@ -28,10 +29,10 @@ class FileStorage {
   Future<File> _getLocalFile() async {
     final dir = await getDirectory();
 
-    if (kIsWeb || Platform.isAndroid || Platform.isIOS) {
-      return File('${dir.path}/invoiceninja__$tag.json');
-    } else {
+    if (isWindows() || isLinux()) {
       return File('${dir.path}/invoiceninja/$tag.json');
+    } else {
+      return File('${dir.path}/invoiceninja__$tag.json');
     }
   }
 
