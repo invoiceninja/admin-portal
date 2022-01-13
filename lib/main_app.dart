@@ -267,7 +267,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     child: child,
                   );
                 },
-                useInheritedMediaQuery: true,
                 scrollBehavior: MyCustomScrollBehavior(),
                 navigatorKey: navigatorKey,
                 supportedLocales: kLanguages
