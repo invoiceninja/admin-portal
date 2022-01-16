@@ -162,7 +162,15 @@ class MenuDrawer extends StatelessWidget {
       onSelected: (String companyId) {
         if (companyId == 'logout') {
           viewModel.onLogoutTap(context);
-        } else if (!state.isLoaded || state.isLoading || state.isSaving) {
+        } else if (state.isLoading) {
+          showMessageDialog(
+              context: context, message: localization.waitForLoading);
+          return;
+        } else if (state.isSaving) {
+          showMessageDialog(
+              context: context, message: localization.waitForSaving);
+          return;
+        } else if (!state.isLoaded) {
           showMessageDialog(
               context: context, message: localization.waitForData);
           return;
@@ -221,9 +229,15 @@ class MenuDrawer extends StatelessWidget {
               onChanged: (dynamic value) {
                 if (value == 'logout' && !state.isLoading && !state.isSaving) {
                   viewModel.onLogoutTap(context);
-                } else if (!state.isLoaded ||
-                    state.isLoading ||
-                    state.isSaving) {
+                } else if (state.isLoading) {
+                  showMessageDialog(
+                      context: context, message: localization.waitForLoading);
+                  return;
+                } else if (state.isSaving) {
+                  showMessageDialog(
+                      context: context, message: localization.waitForSaving);
+                  return;
+                } else if (!state.isLoaded) {
                   showMessageDialog(
                       context: context, message: localization.waitForData);
                   return;
