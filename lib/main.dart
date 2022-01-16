@@ -137,11 +137,6 @@ void main({bool isTesting = false}) async {
   doWhenWindowReady(() {
     final win = appWindow;
     win.title = 'Invoice Ninja';
-    //const initialSize = Size(600, 450);
-    //win.minSize = initialSize;
-    //win.size = initialSize;
-    //win.alignment = Alignment.center;
-    //win.maximize();
     win.show();
   });
 }

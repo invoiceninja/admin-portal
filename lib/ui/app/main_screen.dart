@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -295,7 +296,7 @@ class MainScreen extends StatelessWidget {
               policy: ReadingOrderTraversalPolicy(),
               child: Column(
                 children: [
-                  AppTitleBar(),
+                  if (isDesktopOS()) AppTitleBar(),
                   Expanded(
                     child: ChangeLayoutBanner(
                       appLayout: prefState.appLayout,

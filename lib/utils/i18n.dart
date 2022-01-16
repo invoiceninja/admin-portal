@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'wait_for_loading': 'Data loading - please wait for it to complete',
+      'wait_for_saving': 'Data saving - please wait for it to complete',
       'html_preview_warning':
           'Note: changes made here are only previewed, they must be applied in the tabs above to be saved',
       'remaining': 'Remaining',
@@ -70924,6 +70926,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get htmlPreviewWarning =>
       _localizedValues[localeCode]['html_preview_warning'] ??
       _localizedValues['en']['html_preview_warning'];
+
+  String get waitForLoading =>
+      _localizedValues[localeCode]['wait_for_loading'] ??
+      _localizedValues['en']['wait_for_loading'];
+
+  String get waitForSaving =>
+      _localizedValues[localeCode]['wait_for_saving'] ??
+      _localizedValues['en']['wait_for_saving'];
 
   // STARTER: lang field - do not remove comment
 
