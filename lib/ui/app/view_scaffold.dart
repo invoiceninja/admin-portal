@@ -147,8 +147,11 @@ class ViewScaffold extends StatelessWidget {
                     ),
                   ],
           ),
-          body:
-              entity.isNew ? BlankScreen(localization.noRecordSelected) : body,
+          body: SafeArea(
+            child: entity.isNew
+                ? BlankScreen(localization.noRecordSelected)
+                : body,
+          ),
         ),
       ),
     );
