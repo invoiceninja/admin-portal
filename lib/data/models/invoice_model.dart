@@ -878,8 +878,8 @@ abstract class InvoiceEntity extends Object
 
         if (isPayable && isInvoice) {
           actions.add(EntityAction.markPaid);
-        } else if (isCredit && balanceOrAmount > 0) {
-          //actions.add(EntityAction.markPaid);
+        } else if (isCredit && balanceOrAmount < 0) {
+          actions.add(EntityAction.markPaid);
         }
 
         if (isPayable && userCompany.canCreate(EntityType.payment)) {
