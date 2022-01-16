@@ -103,7 +103,7 @@ class RecurringInvoiceListVM {
           handleRecurringInvoiceAction(context, recurringInvoices, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.recurringInvoice) ??
+              ?.getTableColumns(EntityType.recurringInvoice) ??
           RecurringInvoicePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringInvoices(field)),
       onClearMultielsect: () =>

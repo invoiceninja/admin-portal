@@ -98,7 +98,7 @@ class StubListVM {
           handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
               tableColumns:
-                  state.userCompany.settings.getTableColumns(EntityType.stub) ??
+                  state.userCompany.settings?.getTableColumns(EntityType.stub) ??
                       StubPresenter.getDefaultTableFields(state.userCompany),
         onSortColumn: (field) => store.dispatch(SortStubs(field)),
         onClearMultielsect: () => store.dispatch(ClearStubMultiselect()),

@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'marked_credit_as_paid': 'Successfully marked credit as paid',
+      'marked_credits_as_paid': 'Successfully marked credits as paid',
       'wait_for_loading': 'Data loading - please wait for it to complete',
       'wait_for_saving': 'Data saving - please wait for it to complete',
       'html_preview_warning':
@@ -70934,6 +70936,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get waitForSaving =>
       _localizedValues[localeCode]['wait_for_saving'] ??
       _localizedValues['en']['wait_for_saving'];
+
+
+  String get markedCreditAsPaid =>
+      _localizedValues[localeCode]['marked_credit_as_paid'] ??
+      _localizedValues['en']['marked_credit_as_paid'];
+
+  String get markedCreditsAsPaid =>
+      _localizedValues[localeCode]['marked_credits_as_paid'] ??
+      _localizedValues['en']['marked_credits_as_paid'];
 
   // STARTER: lang field - do not remove comment
 

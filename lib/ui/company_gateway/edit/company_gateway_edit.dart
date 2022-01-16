@@ -529,7 +529,6 @@ class GatewayConfigField extends StatefulWidget {
 class _GatewayConfigFieldState extends State<GatewayConfigField> {
   bool autoValidate = false;
   TextEditingController _textController;
-  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -555,9 +554,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      widget.onChanged(_textController.text.trim());
-    });
+    widget.onChanged(_textController.text.trim());
   }
 
   bool _obscureText(String field) {

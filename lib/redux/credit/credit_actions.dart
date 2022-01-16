@@ -277,6 +277,25 @@ class BulkEmailCreditsFailure implements StopSaving {
   final dynamic error;
 }
 
+class MarkCreditsPaidRequest implements StartSaving {
+  MarkCreditsPaidRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class MarkCreditsPaidSuccess implements StopSaving {
+  MarkCreditsPaidSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class MarkCreditsPaidFailure implements StopSaving {
+  MarkCreditsPaidFailure(this.error);
+
+  final dynamic error;
+}
+
 class ArchiveCreditsRequest implements StartSaving {
   ArchiveCreditsRequest(this.completer, this.creditIds);
 
@@ -535,6 +554,15 @@ Future handleCreditAction(
           entity: credit.clone.rebuild((b) => b
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
+      break;
+    case EntityAction.markPaid:
+      store.dispatch(MarkCreditsPaidRequest(
+          snackBarCompleter<Null>(
+              context,
+              credits.length == 1
+                  ? localization.markedCreditAsPaid
+                  : localization.markedCreditsAsPaid),
+          creditIds));
       break;
     case EntityAction.applyCredit:
       createEntity(
