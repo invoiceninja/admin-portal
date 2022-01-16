@@ -4,7 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 Future<Contact> getDeviceContact() async {
   try {
-    final permissionStatus = await Permission.contacts.status;
+    final permissionStatus = await Permission.contacts.request();
     if (permissionStatus == PermissionStatus.granted) {
       return await ContactsService.openDeviceContactPicker();
     } else if ([PermissionStatus.denied, PermissionStatus.permanentlyDenied]

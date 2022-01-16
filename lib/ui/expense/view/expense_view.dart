@@ -168,7 +168,7 @@ class _ExpenseViewState extends State<ExpenseView>
                   if (kIsWeb) {
                     multipartFile = await pickFile();
                   } else {
-                    final status = await Permission.camera.status;
+                    final status = await Permission.camera.request();
                     if (status == PermissionStatus.granted) {
                       final image = await ImagePicker()
                           .pickImage(source: ImageSource.camera);

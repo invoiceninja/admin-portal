@@ -62,7 +62,7 @@ class DocumentGrid extends StatelessWidget {
                       iconData: Icons.camera_alt,
                       label: localization.takePicture,
                       onPressed: () async {
-                        final status = await Permission.camera.status;
+                        final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
                           final image = await ImagePicker()
                               .pickImage(source: ImageSource.camera);
