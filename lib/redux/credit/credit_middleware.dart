@@ -35,6 +35,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
   final restoreCredit = _restoreCredit(repository);
   final emailCredit = _emailCredit(repository);
   final bulkEmailCredits = _bulkEmailCredits(repository);
+  final markPaidCredit = _markPaidCredit(repository);
   final markSentCredit = _markSentCredit(repository);
   final downloadCredits = _downloadCredits(repository);
   final saveDocument = _saveDocument(repository);
@@ -54,6 +55,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
     TypedMiddleware<AppState, EmailCreditRequest>(emailCredit),
     TypedMiddleware<AppState, BulkEmailCreditsRequest>(bulkEmailCredits),
     TypedMiddleware<AppState, MarkSentCreditRequest>(markSentCredit),
+    TypedMiddleware<AppState, MarkCreditsPaidRequest>(markPaidCredit),
     TypedMiddleware<AppState, DownloadCreditsRequest>(downloadCredits),
     TypedMiddleware<AppState, SaveCreditDocumentRequest>(saveDocument),
   ];
@@ -233,6 +235,30 @@ Middleware<AppState> _markSentCredit(CreditRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkSentCreditFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _markPaidCredit(CreditRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MarkCreditsPaidRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.markPaid)
+        .then((invoices) {
+      store.dispatch(MarkCreditsPaidSuccess(invoices));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(MarkCreditsPaidFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
