@@ -10,7 +10,6 @@ import 'package:contacts_service/contacts_service.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -133,7 +132,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
     countryMap.keys.forEach((countryId) {
       final country = countryMap[countryId] ?? CountryEntity();
-      if (country.name.toLowerCase() == contactAddress?.country?.toLowerCase()) {
+      if (country.name.toLowerCase() ==
+          contactAddress?.country?.toLowerCase()) {
         countryId = country.id;
       }
     });
