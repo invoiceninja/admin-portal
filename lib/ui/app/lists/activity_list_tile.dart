@@ -40,6 +40,8 @@ class ActivityListTile extends StatelessWidget {
     final payment = state.paymentState.map[activity.paymentId];
     final task = state.taskState.map[activity.taskId];
     final expense = state.expenseState.map[activity.expenseId];
+    final recurringExpense =
+        state.recurringExpenseState.map[activity.recurringExpenseId];
 
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
@@ -54,6 +56,7 @@ class ActivityListTile extends StatelessWidget {
       expense: expense,
       credit: credit,
       recurringInvoice: recurringInvoice,
+      recurringExpense: recurringExpense,
       vendor: vendor,
     );
 
