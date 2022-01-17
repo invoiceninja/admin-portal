@@ -54,9 +54,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
+  static const STATUS_ALL = 'all';
+  static const STATUS_PAID = 'paid';
+  static const STATUS_UNPAID = 'unpaid';
+
   DateRange _dateRange = DateRange.thisQuarter;
   //String _startDate;
   //String _endDate;
+  String _status = STATUS_ALL;
   bool _showPayments = true;
   bool _showAging = true;
 
@@ -127,6 +132,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         'end_date': endDate,
         'show_payments_table': _showPayments,
         'show_aging_table': _showAging,
+        'status': _status,
       }),
       rawResponse: true,
     );
@@ -272,10 +278,10 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   */
                   Flexible(
                     child: Theme(
-                      data: !state.prefState.enableDarkMode &&
-                              state.hasAccentColor
-                          ? ThemeData.dark()
-                          : ThemeData.light(),
+                      data:
+                          state.prefState.enableDarkMode || state.hasAccentColor
+                              ? ThemeData.dark()
+                              : ThemeData.light(),
                       child: AppDropdownButton<DateRange>(
                         labelText: localization.dateRange,
                         blankValue: null,
@@ -296,6 +302,35 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                 ))
                             .toList(),
                       ),
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Flexible(
+                    child: Theme(
+                      data:
+                          state.prefState.enableDarkMode || state.hasAccentColor
+                              ? ThemeData.dark()
+                              : ThemeData.light(),
+                      child: AppDropdownButton<String>(
+                          labelText: localization.status,
+                          blankValue: null,
+                          value: _status,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _status = value;
+                            });
+                            loadPdf();
+                          },
+                          items: [
+                            STATUS_ALL,
+                            STATUS_PAID,
+                            STATUS_UNPAID,
+                          ]
+                              .map((value) => DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(value)),
+                                    value: value,
+                                  ))
+                              .toList()),
                     ),
                   ),
                   if (isDesktop(context)) ...[

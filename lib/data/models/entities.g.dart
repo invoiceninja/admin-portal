@@ -532,6 +532,13 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.recurringExpenseId;
+    if (value != null) {
+      result
+        ..add('recurring_expense_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.quoteId;
     if (value != null) {
       result
@@ -657,6 +664,10 @@ class _$ActivityEntitySerializer
           break;
         case 'recurring_invoice_id':
           result.recurringInvoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_expense_id':
+          result.recurringExpenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'quote_id':
@@ -1017,6 +1028,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final String recurringInvoiceId;
   @override
+  final String recurringExpenseId;
+  @override
   final String quoteId;
   @override
   final String paymentId;
@@ -1054,6 +1067,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.userId,
       this.invoiceId,
       this.recurringInvoiceId,
+      this.recurringExpenseId,
       this.quoteId,
       this.paymentId,
       this.creditId,
@@ -1096,6 +1110,7 @@ class _$ActivityEntity extends ActivityEntity {
         userId == other.userId &&
         invoiceId == other.invoiceId &&
         recurringInvoiceId == other.recurringInvoiceId &&
+        recurringExpenseId == other.recurringExpenseId &&
         quoteId == other.quoteId &&
         paymentId == other.paymentId &&
         creditId == other.creditId &&
@@ -1132,13 +1147,13 @@ class _$ActivityEntity extends ActivityEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, notes.hashCode),
-                                                                                key.hashCode),
-                                                                            activityTypeId.hashCode),
-                                                                        clientId.hashCode),
-                                                                    userId.hashCode),
-                                                                invoiceId.hashCode),
-                                                            recurringInvoiceId.hashCode),
+                                                                            $jc($jc($jc(0, notes.hashCode), key.hashCode),
+                                                                                activityTypeId.hashCode),
+                                                                            clientId.hashCode),
+                                                                        userId.hashCode),
+                                                                    invoiceId.hashCode),
+                                                                recurringInvoiceId.hashCode),
+                                                            recurringExpenseId.hashCode),
                                                         quoteId.hashCode),
                                                     paymentId.hashCode),
                                                 creditId.hashCode),
@@ -1164,6 +1179,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('userId', userId)
           ..add('invoiceId', invoiceId)
           ..add('recurringInvoiceId', recurringInvoiceId)
+          ..add('recurringExpenseId', recurringExpenseId)
           ..add('quoteId', quoteId)
           ..add('paymentId', paymentId)
           ..add('creditId', creditId)
@@ -1214,6 +1230,11 @@ class ActivityEntityBuilder
   String get recurringInvoiceId => _$this._recurringInvoiceId;
   set recurringInvoiceId(String recurringInvoiceId) =>
       _$this._recurringInvoiceId = recurringInvoiceId;
+
+  String _recurringExpenseId;
+  String get recurringExpenseId => _$this._recurringExpenseId;
+  set recurringExpenseId(String recurringExpenseId) =>
+      _$this._recurringExpenseId = recurringExpenseId;
 
   String _quoteId;
   String get quoteId => _$this._quoteId;
@@ -1280,6 +1301,7 @@ class ActivityEntityBuilder
       _userId = $v.userId;
       _invoiceId = $v.invoiceId;
       _recurringInvoiceId = $v.recurringInvoiceId;
+      _recurringExpenseId = $v.recurringExpenseId;
       _quoteId = $v.quoteId;
       _paymentId = $v.paymentId;
       _creditId = $v.creditId;
@@ -1326,6 +1348,7 @@ class ActivityEntityBuilder
                   userId, 'ActivityEntity', 'userId'),
               invoiceId: invoiceId,
               recurringInvoiceId: recurringInvoiceId,
+              recurringExpenseId: recurringExpenseId,
               quoteId: quoteId,
               paymentId: paymentId,
               creditId: creditId,

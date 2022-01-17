@@ -16,7 +16,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           #flutter-version: '2.2.3'
-          channel: 'dev'
+          channel: 'beta'
       - run: flutter pub get
       - run: cp lib/.env.dart.example lib/.env.dart
       - run: flutter analyze
@@ -48,7 +48,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           #flutter-version: '2.2.3'
-          channel: 'dev'
+          channel: 'beta'
       - name: Setup App
         run: |
           cp lib/.env.dart.example lib/.env.dart

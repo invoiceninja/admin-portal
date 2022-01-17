@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -38,7 +39,6 @@ class TaskTimeListTile extends StatelessWidget {
         .format(taskTime.startDate.toLocal());
 
     final subtitle = '$startDateString - $endDateString';
-    final duration = formatDuration(taskTime.duration);
 
     return Column(
       children: <Widget>[
@@ -47,7 +47,7 @@ class TaskTimeListTile extends StatelessWidget {
           title: Row(
             children: <Widget>[
               Expanded(child: Text(title)),
-              Text(duration),
+              LiveText(() => formatDuration(taskTime.duration)),
             ],
           ),
           subtitle: Text(subtitle),

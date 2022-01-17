@@ -10,7 +10,7 @@ import 'package:contacts_service/contacts_service.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -129,24 +129,25 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     String countryId;
 
     countryMap.keys.forEach((countryId) {
-      final country = countryMap[countryId];
-      if (country.name.toLowerCase() == contactAddress.country.toLowerCase()) {
+      final country = countryMap[countryId] ?? CountryEntity();
+      if (country.name.toLowerCase() ==
+          contactAddress?.country?.toLowerCase()) {
         countryId = country.id;
       }
     });
 
     widget.viewModel.onChanged(vendor.rebuild((b) => b
-      ..name = contact.company ?? ''
-      ..address1 = contactAddress.street ?? ''
-      ..city = contactAddress.city ?? ''
-      ..state = contactAddress.region ?? ''
-      ..postalCode = contactAddress.postcode ?? ''
-      ..countryId = countryId
+      ..name = (contact?.company ?? '').trim()
+      ..address1 = (contactAddress?.street ?? '').trim()
+      ..city = (contactAddress?.city ?? '').trim()
+      ..state = (contactAddress?.region ?? '').trim()
+      ..postalCode = (contactAddress?.postcode ?? '').trim()
+      ..countryId = countryId ?? ''
       ..contacts[0] = vendor.contacts[0].rebuild((b) => b
-        ..firstName = contact.givenName ?? ''
-        ..lastName = contact.familyName ?? ''
-        ..email = contactEmail.value ?? ''
-        ..phone = contactPhone.value ?? '')
+        ..firstName = (contact?.givenName ?? '').trim()
+        ..lastName = (contact?.familyName ?? '').trim()
+        ..email = (contactEmail?.value ?? '').trim()
+        ..phone = (contactPhone?.value ?? '').trim())
       ..updatedAt = DateTime.now().millisecondsSinceEpoch));
   }
 
