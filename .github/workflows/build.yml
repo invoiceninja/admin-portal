@@ -41,12 +41,11 @@ jobs:
           echo ";" >> lib/flutter_version.dart
       - name: Build Hosted App
         run: |
+          flutter build web
 #          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
 #          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
 #          sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
-
 #          flutter build web --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
-          flutter build web
 
           sed -i '/index.html/d' build/web/flutter_service_worker.js
 
