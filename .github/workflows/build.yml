@@ -24,9 +24,9 @@ jobs:
         with:
           #flutter-version: '2.2.3'
           channel: 'beta'
-#      - name: Install Sentry
-#        run: |
-#          curl -sL https://sentry.io/get-cli/ | bash
+      - name: Install Sentry
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
       - name: Setup Flutter
         run: |
           flutter doctor -v
