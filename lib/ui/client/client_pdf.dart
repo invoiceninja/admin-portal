@@ -272,10 +272,10 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   */
                   Flexible(
                     child: Theme(
-                      data: !state.prefState.enableDarkMode &&
-                              state.hasAccentColor
-                          ? ThemeData.dark()
-                          : ThemeData.light(),
+                      data:
+                          state.prefState.enableDarkMode || state.hasAccentColor
+                              ? ThemeData.dark()
+                              : ThemeData.light(),
                       child: AppDropdownButton<DateRange>(
                         labelText: localization.dateRange,
                         blankValue: null,
