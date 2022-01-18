@@ -105,6 +105,10 @@ class EntityType extends EnumClass {
         return [
           EntityType.payment,
         ];
+      case EntityType.quote:
+        return [
+          EntityType.invoice,
+        ];
       case EntityType.recurringInvoice:
         return [
           EntityType.invoice,

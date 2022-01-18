@@ -147,6 +147,9 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.project &&
         invoice.projectId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.quote &&
+        invoice.invoiceId != filterEntityId) {
+      return false;
     } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
