@@ -66,7 +66,7 @@ ReportResult profitAndLossReport(
   final List<List<ReportElement>> data = [];
   BuiltList<ProfitAndLossReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final profitAndLossReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportProfitAndLoss)
           ? reportSettings[kReportProfitAndLoss]

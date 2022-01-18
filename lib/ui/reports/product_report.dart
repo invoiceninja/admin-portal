@@ -48,7 +48,7 @@ ReportResult productReport(
   final List<List<ReportElement>> data = [];
   BuiltList<ProductReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final productReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportProduct)
           ? reportSettings[kReportProduct]

@@ -78,7 +78,7 @@ ReportResult expenseReport(
   final List<List<ReportElement>> data = [];
   BuiltList<ExpenseReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final expenseReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportExpense)
           ? reportSettings[kReportExpense]

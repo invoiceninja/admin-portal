@@ -86,7 +86,7 @@ ReportResult creditReport(
   final List<List<ReportElement>> data = [];
   BuiltList<CreditReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final creditReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportCredit)
           ? reportSettings[kReportCredit]

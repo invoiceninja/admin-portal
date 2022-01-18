@@ -50,7 +50,7 @@ ReportResult taxReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final taxRateReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportInvoiceTax)
           ? reportSettings[kReportInvoiceTax]

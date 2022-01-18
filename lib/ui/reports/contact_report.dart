@@ -86,7 +86,7 @@ ReportResult contactReport(
   final List<List<ReportElement>> data = [];
   BuiltList<ContactReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final clientReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportClient)
           ? reportSettings[kReportClient]

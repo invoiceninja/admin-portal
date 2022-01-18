@@ -52,7 +52,7 @@ ReportResult paymentReport(
   final List<List<ReportElement>> data = [];
   BuiltList<PaymentReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final paymentReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportPayment)
           ? reportSettings[kReportPayment]
