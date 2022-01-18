@@ -131,30 +131,29 @@ class _DesignEditState extends State<DesignEdit>
     super.dispose();
   }
 
-  void _onChanged() {
-    final design = widget.viewModel.design
-        .rebuild((b) => b..name = _nameController.text.trim());
+  void _onChanged({bool debounce = true}) {
+    final design = widget.viewModel.design.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..design.replace(BuiltMap<String, String>({
+        kDesignHeader: _headerController.text.trim(),
+        kDesignBody: _bodyController.text.trim(),
+        kDesignFooter: _footerController.text.trim(),
+        kDesignProducts: _productsController.text.trim(),
+        kDesignTasks: _tasksController.text.trim() ?? '',
+        kDesignIncludes: _includesController.text.trim()
+      })));
 
     if (design != widget.viewModel.design) {
-      widget.viewModel.onChanged(design);
-    }
-
-    _debouncer.run(() {
-      final design = widget.viewModel.design.rebuild((b) => b
-        ..design.replace(BuiltMap<String, String>({
-          kDesignHeader: _headerController.text.trim(),
-          kDesignBody: _bodyController.text.trim(),
-          kDesignFooter: _footerController.text.trim(),
-          kDesignProducts: _productsController.text.trim(),
-          kDesignTasks: _tasksController.text.trim() ?? '',
-          kDesignIncludes: _includesController.text.trim()
-        })));
-
-      if (design != widget.viewModel.design) {
+      if (debounce) {
+        _debouncer.run(() {
+          widget.viewModel.onChanged(design);
+          _loadPreview(context, design);
+        });
+      } else {
         widget.viewModel.onChanged(design);
         _loadPreview(context, design);
       }
-    });
+    }
   }
 
   void _onHtmlChanged() {
@@ -178,7 +177,7 @@ class _DesignEditState extends State<DesignEdit>
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
-    _onChanged();
+    _onChanged(debounce: false);
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) async {
