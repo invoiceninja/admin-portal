@@ -19,7 +19,6 @@ class RecurringInvoicePresenter extends EntityPresenter {
     return [
       RecurringInvoiceFields.status,
       RecurringInvoiceFields.number,
-      RecurringInvoiceFields.invoiceNumber,
       RecurringInvoiceFields.client,
       RecurringInvoiceFields.amount,
       RecurringInvoiceFields.remainingCycles,
@@ -57,7 +56,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
     switch (field) {
       case RecurringInvoiceFields.status:
         return EntityStatusChip(entity: invoice);
-      case RecurringInvoiceFields.invoiceNumber:
+      case RecurringInvoiceFields.number:
         return Text((invoice.number ?? '').isEmpty
             ? localization.pending
             : invoice.number);
