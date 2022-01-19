@@ -387,8 +387,7 @@ Middleware<AppState> _createPersistData(
   };
 }
 
-final _persistUIDebouncer =
-    Debouncer(milliseconds: kMillisecondsToDebounceWrite);
+final _persistUIDebouncer = PersistUIDebouncer();
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as PersistUI;
