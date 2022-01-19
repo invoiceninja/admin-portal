@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class AuthRepository {
@@ -36,6 +37,7 @@ class AuthRepository {
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,
+      'platform': getPlatformName(),
     };
 
     if ((url ?? '').isEmpty) {
@@ -60,6 +62,7 @@ class AuthRepository {
       'id_token': idToken,
       //'access_token': accessToken,
       'provider': 'google',
+      'platform': getPlatformName(),
     };
 
     return sendRequest(
