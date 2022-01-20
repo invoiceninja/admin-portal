@@ -194,7 +194,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
-  bool _sendEmail = false;
+  ContactEntity _contact;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
@@ -227,7 +227,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final contact = widget.contact;
+    final contact = _contact = widget.contact;
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
@@ -237,7 +237,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _custom2Controller.text = contact.customValue2;
     _custom3Controller.text = contact.customValue3;
     _custom4Controller.text = contact.customValue4;
-    _sendEmail = contact.sendEmail;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -257,7 +256,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final contact = widget.contact.rebuild((b) => b
+    final contact = _contact = widget.contact.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
@@ -362,13 +361,15 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             child: SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addToInvoices),
-                value: _sendEmail,
+                value: _contact.sendEmail,
                 onChanged: (value) {
+                  setState(() =>
+                      _contact = _contact.rebuild((b) => b..sendEmail = value));
+
                   viewModel.onChangedContact(
-                    widget.contact.rebuild((b) => b..sendEmail = value),
+                    _contact.rebuild((b) => b..sendEmail = value),
                     widget.index,
                   );
-                  setState(() => _sendEmail = value);
                 }),
           ),
       ],
