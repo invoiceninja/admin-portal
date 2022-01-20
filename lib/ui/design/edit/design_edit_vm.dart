@@ -29,7 +29,9 @@ class DesignEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return DesignEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.design.updatedAt),
+          // TODO this was commented out to prevent crashing on Windows
+          // after creating a new design
+          // key: ValueKey(viewModel.design.updatedAt),
         );
       },
     );
