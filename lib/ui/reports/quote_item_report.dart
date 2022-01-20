@@ -59,7 +59,7 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<QuoteItemReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final lineItemReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportQuoteItem)
           ? reportSettings[kReportQuoteItem]

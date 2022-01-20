@@ -254,6 +254,15 @@ class InvoiceOverview extends StatelessWidget {
           entity: relatedInvoice,
         ));
       }
+    } else {
+      final relatedInvoice =
+          memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
+      if (relatedInvoice != null) {
+        widgets.add(EntityListTile(
+          isFilter: isFilter,
+          entity: relatedInvoice,
+        ));
+      }
     }
 
     if (paymentMap.isNotEmpty) {

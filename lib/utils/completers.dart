@@ -124,3 +124,27 @@ class Debouncer {
     callback();
   }
 }
+
+class PersistUIDebouncer {
+  PersistUIDebouncer();
+
+  static VoidCallback action;
+  static Timer timer;
+
+  void run(VoidCallback action) {
+    if (timer == null) {
+      Debouncer.action = action;
+    } else {
+      timer.cancel();
+      Debouncer.action = action;
+    }
+
+    timer = Timer(Duration(milliseconds: kMillisecondsToDebounceWrite), () {
+      if (action != null) {
+        action();
+      }
+      Debouncer.action = null;
+      Debouncer.timer = null;
+    });
+  }
+}

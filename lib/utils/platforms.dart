@@ -119,6 +119,28 @@ String getPlatformLetter() {
   return 'U';
 }
 
+String getPlatformName() {
+  if (kIsWeb) {
+    return 'Web';
+  } else {
+    if (Platform.isIOS) {
+      return 'iOS';
+    } else if (Platform.isAndroid) {
+      return 'Android';
+    } else if (Platform.isWindows) {
+      return 'Windows';
+    } else if (Platform.isLinux) {
+      return 'Linux';
+    } else if (Platform.isMacOS) {
+      return 'macOS';
+    } else if (Platform.isFuchsia) {
+      return 'Fuchsia';
+    }
+  }
+
+  return 'Unknown';
+}
+
 String getNativePlatform() {
   String userAgent = WebUtils.getHtmlValue('user-agent') ?? '';
   userAgent = userAgent.toLowerCase();

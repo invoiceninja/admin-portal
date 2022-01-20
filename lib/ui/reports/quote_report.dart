@@ -85,7 +85,7 @@ ReportResult quoteReport(
   final List<List<ReportElement>> data = [];
   BuiltList<QuoteReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final quoteReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportQuote)
           ? reportSettings[kReportQuote]

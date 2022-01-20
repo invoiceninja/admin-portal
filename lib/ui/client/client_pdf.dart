@@ -365,7 +365,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                 fileName, _response.bodyBytes);
                           } else {
                             final directory =
-                                await getExternalStorageDirectory();
+                                await getApplicationDocumentsDirectory();
                             final filePath =
                                 '${directory.path}/${client.number}.pdf';
                             final pdfData = file.File(filePath);

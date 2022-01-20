@@ -279,7 +279,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                   launch(invoice.invitationDownloadLink);
                                 } else {
                                   final directory =
-                                      await getExternalStorageDirectory();
+                                      await getApplicationDocumentsDirectory();
                                   final filePath =
                                       '${directory.path}/${invoice.invoiceId}.pdf';
                                   final pdfData = file.File(filePath);

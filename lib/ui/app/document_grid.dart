@@ -207,15 +207,8 @@ class DocumentTile extends StatelessWidget {
                                   launch(state.account.defaultUrl +
                                       document.downloadUrl);
                                 } else {
-                                  Directory directory;
-                                  if (Platform.isAndroid) {
-                                    directory =
-                                        await getExternalStorageDirectory();
-                                  } else {
-                                    directory =
-                                        await getApplicationDocumentsDirectory();
-                                  }
-
+                                  final directory =
+                                      await getApplicationDocumentsDirectory();
                                   final String folder =
                                       '${directory.path}/documents';
                                   await Directory(folder)

@@ -93,7 +93,7 @@ ReportResult invoiceReport(
   final List<List<ReportElement>> data = [];
   BuiltList<InvoiceReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final invoiceReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportInvoice)
           ? reportSettings[kReportInvoice]

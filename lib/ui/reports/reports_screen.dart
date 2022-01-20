@@ -1229,9 +1229,13 @@ class ReportResult {
     final rows = <DataRow>[];
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final reportSettings = state.userCompany.settings
-            ?.reportSettings[state.uiState.reportsUIState.report] ??
-        ReportSettingsEntity();
+    final reportState = state.uiState.reportsUIState;
+    final settings = state.userCompany.settings;
+    final reportSettings = settings != null &&
+            settings.reportSettings.containsKey(reportState.report)
+        ? settings.reportSettings[reportState.report]
+        : ReportSettingsEntity();
+
     final Map<String, Map<String, double>> totals = {};
 
     final allColumns = <String>[];

@@ -80,7 +80,7 @@ ReportResult taskReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaskReportFields> columns;
 
-  final reportSettings = userCompany.settings.reportSettings;
+  final reportSettings = userCompany.settings?.reportSettings;
   final taskReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportTask)
           ? reportSettings[kReportTask]

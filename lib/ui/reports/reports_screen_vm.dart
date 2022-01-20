@@ -422,10 +422,12 @@ class ReportsScreenVM {
 
           if (!kReleaseMode) {
             print('## DATA: $csvData');
-          } else if (kIsWeb) {
+          }
+
+          if (kIsWeb) {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
-            final directory = await getExternalStorageDirectory();
+            final directory = await getApplicationDocumentsDirectory();
             final filePath = '${directory.path}/$filename';
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
