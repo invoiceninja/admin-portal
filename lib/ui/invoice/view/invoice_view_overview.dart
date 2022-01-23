@@ -212,6 +212,7 @@ class InvoiceOverview extends StatelessWidget {
       EntityListTile(
         isFilter: isFilter,
         entity: client,
+        subtitle: client.primaryContact.email,
       ),
     );
 
