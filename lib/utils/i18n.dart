@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'small': 'Small',
       'marked_credit_as_paid': 'Successfully marked credit as paid',
       'marked_credits_as_paid': 'Successfully marked credits as paid',
       'wait_for_loading': 'Data loading - please wait for it to complete',
@@ -73355,6 +73356,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get markedCreditsAsPaid =>
       _localizedValues[localeCode]['marked_credits_as_paid'] ??
       _localizedValues['en']['marked_credits_as_paid'];
+
+  String get small =>
+      _localizedValues[localeCode]['small'] ?? _localizedValues['en']['small'];
 
   // STARTER: lang field - do not remove comment
 
