@@ -1,0 +1,28 @@
+name: invoiceninja
+version: '1.0'
+summary: Online Invoicing
+description: Create invoices, accept payments, track expenses & time-tasks
+confinement: strict
+base: core18
+grade: stable
+
+slots:
+  invoiceninja-flutter:
+    interface: dbus
+    bus: session
+    name: com.invoiceninja.app
+    
+apps:
+  invoiceninja-flutter:
+    command: invoiceninja_flutter
+    extensions: [flutter-stable]
+    plugs:
+    - network
+    slots:
+      - invoiceninja-flutter
+
+parts:
+  invoiceninja-flutter:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart
