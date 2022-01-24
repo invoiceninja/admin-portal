@@ -14,13 +14,12 @@ slots:
     
 apps:
   invoiceninja-flutter:
-    command: invoiceninja-flutter
+    command: invoiceninja_flutter
     extensions: [flutter-dev]
     plugs:
     - network
     slots:
       - dbus-invoiceninja-flutter
-
 parts:
   invoiceninja-flutter:
     source: .
