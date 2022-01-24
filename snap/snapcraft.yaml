@@ -15,7 +15,7 @@ slots:
 apps:
   invoiceninja-flutter:
     command: invoiceninja_flutter
-    extensions: [flutter-stable]
+    extensions: [flutter-dev]
     plugs:
     - network
     slots:
