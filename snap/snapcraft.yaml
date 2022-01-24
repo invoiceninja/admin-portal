@@ -7,7 +7,7 @@ base: core18
 grade: stable
 
 slots:
-  invoiceninja-flutter:
+  dbus-invoiceninja-flutter:
     interface: dbus
     bus: session
     name: com.invoiceninja.app
@@ -19,7 +19,7 @@ apps:
     plugs:
     - network
     slots:
-      - invoiceninja-flutter
+      - dbus-invoiceninja-flutter
 
 parts:
   invoiceninja-flutter:
