@@ -19,7 +19,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   bool includeProjectHeader = false,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
-  final project = state.projectState.map[task.projectId];
+  final project = state.projectState.get(task.projectId);
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
 
