@@ -8,7 +8,7 @@ grade: stable
 
 apps:
   invoiceninja-flutter:
-    command: invoiceninja_flutter
+    command: Invoice_Ninja
     extensions: [flutter-master]
 
 parts:
