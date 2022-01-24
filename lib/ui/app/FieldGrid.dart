@@ -24,7 +24,7 @@ class FieldGrid extends StatelessWidget {
         Widget text = Text(
           value.replaceAll('\n', ' '),
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 16),
         );
 
         if (value.contains('\n')) {

@@ -45,6 +45,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   PrefState._();
 
+  static const TEXT_SCALING_SMALL = 0.8;
   static const TEXT_SCALING_NORMAL = 1.0;
   static const TEXT_SCALING_LARGE = 1.2;
   static const TEXT_SCALING_EXTRA_LARGE = 1.4;

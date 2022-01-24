@@ -186,6 +186,10 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         },
                         items: [
                           DropdownMenuItem(
+                            child: Text(localization.small),
+                            value: PrefState.TEXT_SCALING_SMALL,
+                          ),
+                          DropdownMenuItem(
                             child: Text(localization.normal),
                             value: PrefState.TEXT_SCALING_NORMAL,
                           ),
