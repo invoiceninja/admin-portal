@@ -6,23 +6,13 @@ confinement: strict
 base: core18
 grade: stable
 
-slots:
-  dbus-invoiceninja-flutter:
-    interface: dbus
-    bus: session
-    name: com.invoiceninja.app
-    
 apps:
-  invoiceninja-flutter:
-    command: invoiceninja-flutter
-    extensions: [flutter-master]
-    plugs:
-    - network
-    slots:
-      - dbus-invoiceninja-flutter
+ invoiceninja-flutter:
+ command: invoiceninja_flutter
+ extensions: [flutter-master]
 
 parts:
-  invoiceninja-flutter:
-    source: .
-    plugin: flutter
-    flutter-target: lib/main.dart
+ invoiceninja-flutter:
+ plugin: flutter
+ source: .
+ flutter-target: lib/main.dart
