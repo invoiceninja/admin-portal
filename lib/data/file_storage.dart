@@ -29,7 +29,7 @@ class FileStorage {
   Future<File> _getLocalFile() async {
     final dir = await getDirectory();
 
-    if (isWindows() || isLinux()) {
+    if (isWindows()) {
       return File('${dir.path}/invoiceninja/$tag.json');
     } else {
       return File('${dir.path}/invoiceninja__$tag.json');
