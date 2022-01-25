@@ -32,7 +32,7 @@ const String kGoogleStoreUrl =
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app/';
 const String kMacOSUrl = 'https://apps.apple.com/app/id1503970375';
-const String kLinuxUrl = 'https://download.invoiceninja.com/linux';
+const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
     'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
 
