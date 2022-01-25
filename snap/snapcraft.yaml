@@ -1,5 +1,5 @@
 name: invoiceninja
-version: '1.0.8'
+version: '1.0.9'
 summary: Online Invoicing
 description: Create invoices, accept payments, track expenses & time-tasks
 confinement: strict
