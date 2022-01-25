@@ -135,7 +135,7 @@ void main({bool isTesting = false}) async {
     );
   }
 
-  if (isDesktopOS() && !isMacOS()) {
+  if (isWindows()) {
     doWhenWindowReady(() {
       final win = appWindow;
       win.title = 'Invoice Ninja';
