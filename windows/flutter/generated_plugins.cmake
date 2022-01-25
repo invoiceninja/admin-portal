@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  bitsdojo_window_windows
   native_pdf_renderer
   sentry_flutter
   url_launcher_windows
