@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Invoice Ninja
 Comment=Online Invoicing
-Exec=${SNAP}/bin/Invoice_Ninja
-Icon=${SNAP}/meta/gui/Invoice_Ninja.png
+Exec=invoiceninja-flutter
+Icon=${SNAP}/meta/gui/invoiceninja-flutter.png
 Terminal=false
 Type=Application
 Categories=Office;
