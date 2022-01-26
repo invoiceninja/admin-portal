@@ -296,7 +296,7 @@ class MainScreen extends StatelessWidget {
               policy: ReadingOrderTraversalPolicy(),
               child: Column(
                 children: [
-                  if (isDesktopOS()) AppTitleBar(),
+                  if (isWindows()) AppTitleBar(),
                   Expanded(
                     child: ChangeLayoutBanner(
                       appLayout: prefState.appLayout,

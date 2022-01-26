@@ -3,10 +3,8 @@ import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -135,13 +133,15 @@ void main({bool isTesting = false}) async {
     );
   }
 
-  if (isDesktopOS()) {
+  /*
+  if (isWindows()) {
     doWhenWindowReady(() {
       final win = appWindow;
       win.title = 'Invoice Ninja';
       win.show();
     });
   }
+  */
 }
 
 Future<AppState> _initialState(bool isTesting) async {
