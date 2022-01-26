@@ -206,7 +206,7 @@ abstract class CalculateInvoiceTotal {
     double itemTax = 0.0;
 
     lineItems.forEach((item) {
-      final double qty = round(item.quantity, 4);
+      final double qty = round(item.quantity, 5);
       final double cost = round(item.cost, 4);
       final double itemDiscount = round(item.discount, precision);
       final double taxRate1 = round(item.taxRate1, 3);
@@ -278,7 +278,7 @@ abstract class CalculateInvoiceTotal {
     var total = 0.0;
 
     lineItems.forEach((item) {
-      final double qty = round(item.quantity, 4);
+      final double qty = round(item.quantity, 5);
       final double cost = round(item.cost, 4);
       final double discount = round(item.discount, precision);
 
