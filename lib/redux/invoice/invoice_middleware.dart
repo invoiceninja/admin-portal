@@ -38,7 +38,6 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final bulkEmailInvoices = _bulkEmailInvoices(repository);
   final markInvoiceSent = _markInvoiceSent(repository);
   final markInvoicePaid = _markInvoicePaid(repository);
-  final reverseInvoices = _reverseInvoices(repository);
   final cancelInvoices = _cancelInvoices(repository);
   final downloadInvoices = _downloadInvoices(repository);
   final saveDocument = _saveDocument(repository);
@@ -59,7 +58,6 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, BulkEmailInvoicesRequest>(bulkEmailInvoices),
     TypedMiddleware<AppState, MarkInvoicesSentRequest>(markInvoiceSent),
     TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
-    TypedMiddleware<AppState, ReverseInvoicesRequest>(reverseInvoices),
     TypedMiddleware<AppState, CancelInvoicesRequest>(cancelInvoices),
     TypedMiddleware<AppState, DownloadInvoicesRequest>(downloadInvoices),
     TypedMiddleware<AppState, SaveInvoiceDocumentRequest>(saveDocument),
@@ -164,30 +162,6 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(CancelInvoicesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
-    });
-
-    next(action);
-  };
-}
-
-Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ReverseInvoicesRequest;
-    repository
-        .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.reverse)
-        .then((List<InvoiceEntity> invoices) {
-      store.dispatch(ReverseInvoicesSuccess(invoices));
-      store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ReverseInvoicesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

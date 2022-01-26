@@ -304,25 +304,6 @@ class MarkInvoicesPaidFailure implements StopSaving {
   final dynamic error;
 }
 
-class ReverseInvoicesRequest implements StartSaving {
-  ReverseInvoicesRequest(this.completer, this.invoiceIds);
-
-  final Completer completer;
-  final List<String> invoiceIds;
-}
-
-class ReverseInvoicesSuccess implements StopSaving {
-  ReverseInvoicesSuccess(this.invoices);
-
-  final List<InvoiceEntity> invoices;
-}
-
-class ReverseInvoicesFailure implements StopSaving {
-  ReverseInvoicesFailure(this.error);
-
-  final Object error;
-}
-
 class CancelInvoicesRequest implements StartSaving {
   CancelInvoicesRequest(this.completer, this.invoiceIds);
 
@@ -549,13 +530,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           invoiceIds));
       break;
     case EntityAction.reverse:
-      store.dispatch(ReverseInvoicesRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization.reversedInvoice
-                  : localization.reversedInvoices),
-          invoiceIds));
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: invoice.clientId,
+          entityType: EntityType.credit);
+      createEntity(
+          context: context,
+          entity: invoice.clone.rebuild((b) => b
+            ..invoiceId = invoice.id
+            ..entityType = EntityType.credit
+            ..designId = designId));
       break;
     case EntityAction.cancel:
       store.dispatch(CancelInvoicesRequest(

@@ -312,7 +312,6 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, MarkInvoicesSentSuccess>(_markInvoicesSentSuccess),
   TypedReducer<InvoiceState, MarkInvoicesPaidSuccess>(_markInvoicesPaidSuccess),
-  TypedReducer<InvoiceState, ReverseInvoicesSuccess>(_reverseInvoicesSuccess),
   TypedReducer<InvoiceState, CancelInvoicesSuccess>(_cancelInvoicesSuccess),
   TypedReducer<InvoiceState, EmailInvoiceSuccess>(_emailInvoiceSuccess),
   TypedReducer<InvoiceState, ArchiveInvoicesSuccess>(_archiveInvoiceSuccess),
@@ -331,15 +330,6 @@ InvoiceState _markInvoicesSentSuccess(
 
 InvoiceState _markInvoicesPaidSuccess(
     InvoiceState invoiceState, MarkInvoicesPaidSuccess action) {
-  return invoiceState.rebuild((b) {
-    for (final invoice in action.invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
-InvoiceState _reverseInvoicesSuccess(
-    InvoiceState invoiceState, ReverseInvoicesSuccess action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
