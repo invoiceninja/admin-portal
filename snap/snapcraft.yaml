@@ -1,5 +1,5 @@
 name: invoiceninja
-version: '1.0.10'
+version: '1.0.11'
 summary: Online Invoicing
 description: Create invoices, accept payments, track expenses & time-tasks
 confinement: strict
@@ -10,6 +10,8 @@ apps:
   invoiceninja:
     command: invoiceninja
     extensions: [flutter-stable]
+    plugs:
+      - network
 
 parts:
   invoiceninja:
