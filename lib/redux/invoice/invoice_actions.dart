@@ -530,6 +530,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           invoiceIds));
       break;
     case EntityAction.reverse:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: invoice.clientId,
+          entityType: EntityType.credit);
+      createEntity(
+          context: context,
+          entity: invoice.clone.rebuild((b) => b
+            ..invoiceId = invoice.id
+            ..entityType = EntityType.credit
+            ..designId = designId));
       break;
     case EntityAction.cancel:
       store.dispatch(CancelInvoicesRequest(
