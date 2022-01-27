@@ -429,9 +429,7 @@ class ReportsScreenVM {
           if (kIsWeb) {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
-            final directory = await (isDesktopOS()
-                ? getDownloadsDirectory()
-                : getApplicationDocumentsDirectory());
+            final directory = await getApplicationDocumentsDirectory();
             final filePath =
                 directory.path + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
