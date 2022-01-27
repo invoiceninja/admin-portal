@@ -439,8 +439,7 @@ class ReportsScreenVM {
             csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
-              showToast(
-                  localization.fileSavedAs.replaceFirst(':value', filePath));
+              showToast(localization.fileSavedInDownloadsFolder);
             } else {
               await Share.shareFiles([filePath]);
             }
