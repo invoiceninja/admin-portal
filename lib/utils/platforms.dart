@@ -19,9 +19,6 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // TODO remove this function
-bool supportsFileDownload() => !isDesktopOS();
-
-// TODO remove this function
 bool supportsFileUpload() => !isMacOS() && !isLinux();
 
 // TODO remove this function

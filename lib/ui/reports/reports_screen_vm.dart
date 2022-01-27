@@ -10,6 +10,8 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
@@ -428,10 +430,17 @@ class ReportsScreenVM {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
             final directory = await getApplicationDocumentsDirectory();
-            final filePath = '${directory.path}/$filename';
+            final filePath =
+                directory.path + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
-            await Share.shareFiles([filePath]);
+
+            if (isDesktopOS()) {
+              showToast(
+                  localization.fileSavedAs.replaceFirst(':value', filePath));
+            } else {
+              await Share.shareFiles([filePath]);
+            }
           }
         });
   }
