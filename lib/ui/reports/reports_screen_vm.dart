@@ -419,8 +419,9 @@ class ReportsScreenVM {
           }
 
           final date = convertDateTimeToSqlDate();
+          final timestamp = DateTime.now().millisecondsSinceEpoch;
           final filename =
-              '${state.uiState.reportsUIState.report}_report_$date.csv';
+              '${state.uiState.reportsUIState.report}_report_${date}_$timestamp.csv';
 
           if (!kReleaseMode) {
             print('## DATA: $csvData');
