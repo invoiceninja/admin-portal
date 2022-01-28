@@ -961,7 +961,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.cancel);
         }
 
-        if (userCompany.canCreate(EntityType.credit)) {
+        if ((isPaid || isPartial) && userCompany.canCreate(EntityType.credit)) {
           actions.add(EntityAction.reverse);
         }
       }
