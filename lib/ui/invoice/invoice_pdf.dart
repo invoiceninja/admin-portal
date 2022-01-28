@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -156,30 +157,36 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final activitySelector = _activityId == null || kIsWeb
         ? <Widget>[]
         : [
-            Flexible(
-              child: IgnorePointer(
-                ignoring: _isLoading,
-                child: AppDropdownButton<String>(
-                    value: _activityId,
-                    onChanged: (dynamic activityId) {
-                      setState(() {
-                        _activityId = activityId;
-                        loadPdf();
-                      });
-                    },
-                    items: invoice.history
-                        .map((history) => DropdownMenuItem(
-                              child: Text(formatNumber(history.amount, context,
-                                      clientId: invoice.clientId) +
-                                  ' • ' +
-                                  formatDate(
-                                      convertTimestampToDateString(
-                                          history.createdAt),
-                                      context,
-                                      showTime: true)),
-                              value: history.activityId,
-                            ))
-                        .toList()),
+            Theme(
+              data: state.prefState.enableDarkMode || state.hasAccentColor
+                  ? ThemeData.dark()
+                  : ThemeData.light(),
+              child: Flexible(
+                child: IgnorePointer(
+                  ignoring: _isLoading,
+                  child: AppDropdownButton<String>(
+                      value: _activityId,
+                      onChanged: (dynamic activityId) {
+                        setState(() {
+                          _activityId = activityId;
+                          loadPdf();
+                        });
+                      },
+                      items: invoice.history
+                          .map((history) => DropdownMenuItem(
+                                child: Text(formatNumber(
+                                        history.amount, context,
+                                        clientId: invoice.clientId) +
+                                    ' • ' +
+                                    formatDate(
+                                        convertTimestampToDateString(
+                                            history.createdAt),
+                                        context,
+                                        showTime: true)),
+                                value: history.activityId,
+                              ))
+                          .toList()),
+                ),
               ),
             ),
           ];
@@ -272,20 +279,29 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                   WebUtils.downloadBinaryFile(
                                       fileName, _response.bodyBytes);
                                 } else if (isDesktopOS()) {
-                                  // TODO download file on desktop once suppoted
-                                  launch(invoice.invitationDownloadLink);
-                                  // TODO remove this
-                                } else if (isIOS()) {
-                                  launch(invoice.invitationDownloadLink);
-                                } else {
-                                  final directory =
-                                      await getApplicationDocumentsDirectory();
-                                  final filePath =
-                                      '${directory.path}/${invoice.invoiceId}.pdf';
+                                  final directory = await (isDesktopOS()
+                                      ? getDownloadsDirectory()
+                                      : getApplicationDocumentsDirectory());
+                                  String filePath =
+                                      '${directory.path}${file.Platform.pathSeparator}$fileName';
+
+                                  if (file.File(filePath).existsSync()) {
+                                    final timestamp =
+                                        DateTime.now().millisecondsSinceEpoch;
+                                    filePath = filePath.replaceFirst(
+                                        '.pdf', '_$timestamp.pdf');
+                                  }
+
                                   final pdfData = file.File(filePath);
                                   await pdfData
                                       .writeAsBytes(_response.bodyBytes);
-                                  await Share.shareFiles([filePath]);
+
+                                  if (isDesktopOS()) {
+                                    showToast(localization
+                                        .fileSavedInDownloadsFolder);
+                                  } else {
+                                    await Share.shareFiles([filePath]);
+                                  }
                                 }
                               }
                             },

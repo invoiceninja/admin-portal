@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -364,13 +365,28 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             WebUtils.downloadBinaryFile(
                                 fileName, _response.bodyBytes);
                           } else {
-                            final directory =
-                                await getApplicationDocumentsDirectory();
-                            final filePath =
-                                '${directory.path}/${client.number}.pdf';
+                            final directory = await (isDesktopOS()
+                                ? getDownloadsDirectory()
+                                : getApplicationDocumentsDirectory());
+                            String filePath =
+                                '${directory.path}${file.Platform.pathSeparator}$fileName';
+
+                            if (file.File(filePath).existsSync()) {
+                              final timestamp =
+                                  DateTime.now().millisecondsSinceEpoch;
+                              filePath = filePath.replaceFirst(
+                                  '.pdf', '_$timestamp.pdf');
+                            }
+
                             final pdfData = file.File(filePath);
-                            pdfData.writeAsBytes(_response.bodyBytes);
-                            await Share.shareFiles([filePath]);
+                            await pdfData.writeAsBytes(_response.bodyBytes);
+
+                            if (isDesktopOS()) {
+                              showToast(
+                                  localization.fileSavedInDownloadsFolder);
+                            } else {
+                              await Share.shareFiles([filePath]);
+                            }
                           }
                         },
                 ),

@@ -20,13 +20,7 @@ Future<MultipartFile> pickFile(
     {String fileIndex,
     FileType fileType,
     List<String> allowedExtensions}) async {
-  if (kIsWeb) {
-    return _pickFile(
-      fileIndex: fileIndex,
-      fileType: fileType,
-      allowedExtensions: allowedExtensions,
-    );
-  } else if (isWindows()) {
+  if (kIsWeb || isDesktopOS()) {
     return _pickFile(
       fileIndex: fileIndex,
       fileType: fileType,
@@ -34,8 +28,8 @@ Future<MultipartFile> pickFile(
     );
   } else {
     final permission = await (fileType == FileType.image && Platform.isIOS
-        ? Permission.photos.status
-        : Permission.storage.status);
+        ? Permission.photos.request()
+        : Permission.storage.request());
 
     if (permission == PermissionStatus.granted) {
       return _pickFile(

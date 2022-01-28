@@ -873,7 +873,8 @@ class SidebarFooter extends StatelessWidget {
                     url += '/basic-settings/#$subRoute';
                   }
                 } else {
-                  url += '/getting-started';
+                  final route = state.uiState.entityTypeRoute.plural;
+                  url += '/' + toSnakeCase(route).replaceAll('_', '-');
                 }
 
                 launch(url);

@@ -28,18 +28,32 @@ enum PaymentReportFields {
   payment4,
   exchange_rate,
   converted_amount,
+  invoices,
+  credits,
 }
 
-var memoizedPaymentReport = memo6((
-  UserCompanyEntity userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    paymentReport(userCompany, reportsUIState, paymentMap, clientMap, userMap,
-        staticState));
+var memoizedPaymentReport = memo8(
+  (
+    UserCompanyEntity userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, InvoiceEntity> creditMap,
+    StaticState staticState,
+  ) =>
+      paymentReport(
+    userCompany,
+    reportsUIState,
+    paymentMap,
+    clientMap,
+    userMap,
+    invoiceMap,
+    creditMap,
+    staticState,
+  ),
+);
 
 ReportResult paymentReport(
   UserCompanyEntity userCompany,
@@ -47,6 +61,8 @@ ReportResult paymentReport(
   BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -73,6 +89,45 @@ ReportResult paymentReport(
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
+  }
+
+  final Map<String, List<String>> paymentInvoiceMap = {};
+  final Map<String, List<String>> paymentCreditMap = {};
+
+  if (columns.contains(PaymentReportFields.invoices)) {
+    for (var paymentId in paymentMap.keys) {
+      final payment = paymentMap[paymentId] ?? PaymentEntity();
+      paymentInvoiceMap[payment.id] = [];
+      if (payment.isDeleted) {
+        continue;
+      }
+      for (var invoicePaymentable in payment.invoicePaymentables) {
+        final invoice =
+            invoiceMap[invoicePaymentable.invoiceId] ?? InvoiceEntity();
+        if (invoice.isDeleted) {
+          continue;
+        }
+        paymentInvoiceMap[payment.id].add(invoice.number);
+      }
+    }
+  }
+
+  if (columns.contains(PaymentReportFields.credits)) {
+    for (var paymentId in paymentMap.keys) {
+      final payment = paymentMap[paymentId] ?? PaymentEntity();
+      paymentCreditMap[payment.id] = [];
+      if (payment.isDeleted) {
+        continue;
+      }
+      for (var creditPaymentable in payment.invoicePaymentables) {
+        final credit =
+            creditMap[creditPaymentable.invoiceId] ?? InvoiceEntity();
+        if (credit.isDeleted) {
+          continue;
+        }
+        paymentCreditMap[payment.id].add(credit.number);
+      }
+    }
   }
 
   for (var paymentId in paymentMap.keys) {
@@ -140,6 +195,12 @@ ReportResult paymentReport(
           break;
         case PaymentReportFields.converted_amount:
           value = payment.completedAmount * payment.exchangeRate;
+          break;
+        case PaymentReportFields.invoices:
+          value = (paymentInvoiceMap[payment.id] ?? []).join(', ');
+          break;
+        case PaymentReportFields.credits:
+          value = (paymentCreditMap[payment.id] ?? []).join(', ');
           break;
       }
 

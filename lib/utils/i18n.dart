@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'file_saved_in_downloads_folder':
+          'The file has been saved in the downloads folder',
       'small': 'Small',
       'marked_credit_as_paid': 'Successfully marked credit as paid',
       'marked_credits_as_paid': 'Successfully marked credits as paid',
@@ -73359,6 +73361,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get small =>
       _localizedValues[localeCode]['small'] ?? _localizedValues['en']['small'];
+
+  String get fileSavedInDownloadsFolder =>
+      _localizedValues[localeCode]['file_saved_in_downloads_folder'] ??
+      _localizedValues['en']['file_saved_in_downloads_folder'];
 
   // STARTER: lang field - do not remove comment
 

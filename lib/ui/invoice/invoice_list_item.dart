@@ -56,7 +56,12 @@ class InvoiceListItem extends StatelessWidget {
     if (invoice.date.isNotEmpty) {
       subtitle = formatDate(invoice.date, context);
     }
-    if (invoice.dueDate.isNotEmpty) {
+    if (invoice.partialDueDate.isNotEmpty && invoice.partial != 0) {
+      if (subtitle.isNotEmpty) {
+        subtitle += ' • ';
+      }
+      subtitle += formatDate(invoice.partialDueDate, context);
+    } else if (invoice.dueDate.isNotEmpty) {
       if (subtitle.isNotEmpty) {
         subtitle += ' • ';
       }
@@ -230,10 +235,7 @@ class InvoiceListItem extends StatelessWidget {
                                             : invoice.number) +
                                         ' • ' +
                                         formatDate(
-                                            invoice.dueDate.isNotEmpty
-                                                ? invoice.dueDate
-                                                : invoice.date,
-                                            context) +
+                                            invoice.primaryDate, context) +
                                         (invoice.documents.isNotEmpty
                                             ? '  📎'
                                             : ''))

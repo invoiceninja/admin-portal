@@ -438,7 +438,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy,
+                    tooltip: localization.filteredBy.replaceFirst(
+                        ':value', widget.customValues1.join(', ')),
                     icon: Icon(Icons.looks_one),
                     onPressed: _showFilterCustom1Sheet,
                     color: store.state
@@ -449,7 +450,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues2.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy,
+                    tooltip: localization.filteredBy.replaceFirst(
+                        ':value', widget.customValues2.join(', ')),
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom2Sheet,
                     color: store.state
@@ -460,7 +462,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues3.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy,
+                    tooltip: localization.filteredBy.replaceFirst(
+                        ':value', widget.customValues3.join(', ')),
                     icon: Icon(Icons.looks_3),
                     onPressed: _showFilterCustom3Sheet,
                     color: store.state
@@ -471,7 +474,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues4.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy,
+                    tooltip: localization.filteredBy.replaceFirst(
+                        ':value', widget.customValues4.join(', ')),
                     icon: Icon(Icons.looks_4),
                     onPressed: _showFilterCustom4Sheet,
                     color: store.state
