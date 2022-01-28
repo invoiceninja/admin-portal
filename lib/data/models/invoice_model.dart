@@ -1002,6 +1002,16 @@ abstract class InvoiceEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  String get primaryDate {
+    if (partialDueDate.isNotEmpty && partial != 0) {
+      return partialDueDate;
+    } else if (dueDate.isNotEmpty && !isPaid) {
+      return dueDate;
+    } else {
+      return date;
+    }
+  }
+
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
