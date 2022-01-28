@@ -156,30 +156,36 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final activitySelector = _activityId == null || kIsWeb
         ? <Widget>[]
         : [
-            Flexible(
-              child: IgnorePointer(
-                ignoring: _isLoading,
-                child: AppDropdownButton<String>(
-                    value: _activityId,
-                    onChanged: (dynamic activityId) {
-                      setState(() {
-                        _activityId = activityId;
-                        loadPdf();
-                      });
-                    },
-                    items: invoice.history
-                        .map((history) => DropdownMenuItem(
-                              child: Text(formatNumber(history.amount, context,
-                                      clientId: invoice.clientId) +
-                                  ' • ' +
-                                  formatDate(
-                                      convertTimestampToDateString(
-                                          history.createdAt),
-                                      context,
-                                      showTime: true)),
-                              value: history.activityId,
-                            ))
-                        .toList()),
+            Theme(
+              data: state.prefState.enableDarkMode || state.hasAccentColor
+                  ? ThemeData.dark()
+                  : ThemeData.light(),
+              child: Flexible(
+                child: IgnorePointer(
+                  ignoring: _isLoading,
+                  child: AppDropdownButton<String>(
+                      value: _activityId,
+                      onChanged: (dynamic activityId) {
+                        setState(() {
+                          _activityId = activityId;
+                          loadPdf();
+                        });
+                      },
+                      items: invoice.history
+                          .map((history) => DropdownMenuItem(
+                                child: Text(formatNumber(
+                                        history.amount, context,
+                                        clientId: invoice.clientId) +
+                                    ' • ' +
+                                    formatDate(
+                                        convertTimestampToDateString(
+                                            history.createdAt),
+                                        context,
+                                        showTime: true)),
+                                value: history.activityId,
+                              ))
+                          .toList()),
+                ),
               ),
             ),
           ];
