@@ -438,7 +438,7 @@ class ReportsScreenVM {
             final filePath =
                 directory.path + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
-            csvFile.writeAsString(csvData);
+            await csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
               showToast(localization.fileSavedInDownloadsFolder);

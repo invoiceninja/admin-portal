@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -278,20 +279,21 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                   WebUtils.downloadBinaryFile(
                                       fileName, _response.bodyBytes);
                                 } else if (isDesktopOS()) {
-                                  // TODO download file on desktop once suppoted
-                                  launch(invoice.invitationDownloadLink);
-                                  // TODO remove this
-                                } else if (isIOS()) {
-                                  launch(invoice.invitationDownloadLink);
-                                } else {
-                                  final directory =
-                                      await getApplicationDocumentsDirectory();
+                                  final directory = await (isDesktopOS()
+                                      ? getDownloadsDirectory()
+                                      : getApplicationDocumentsDirectory());
                                   final filePath =
-                                      '${directory.path}/${invoice.invoiceId}.pdf';
+                                      '${directory.path}${file.Platform.pathSeparator}$fileName';
                                   final pdfData = file.File(filePath);
                                   await pdfData
                                       .writeAsBytes(_response.bodyBytes);
-                                  await Share.shareFiles([filePath]);
+
+                                  if (isDesktopOS()) {
+                                    showToast(localization
+                                        .fileSavedInDownloadsFolder);
+                                  } else {
+                                    await Share.shareFiles([filePath]);
+                                  }
                                 }
                               }
                             },

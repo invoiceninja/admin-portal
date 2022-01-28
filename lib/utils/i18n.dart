@@ -17,7 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'file_saved_in_downloads_folder':
-          'The CSV file has been saved in the downloads folder',
+          'The file has been saved in the downloads folder',
       'small': 'Small',
       'marked_credit_as_paid': 'Successfully marked credit as paid',
       'marked_credits_as_paid': 'Successfully marked credits as paid',
