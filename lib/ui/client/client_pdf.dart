@@ -368,8 +368,16 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             final directory = await (isDesktopOS()
                                 ? getDownloadsDirectory()
                                 : getApplicationDocumentsDirectory());
-                            final filePath =
+                            String filePath =
                                 '${directory.path}${file.Platform.pathSeparator}$fileName';
+
+                            if (file.File(filePath).existsSync()) {
+                              final timestamp =
+                                  DateTime.now().millisecondsSinceEpoch;
+                              filePath = filePath.replaceFirst(
+                                  '.pdf', '_$timestamp.pdf');
+                            }
+
                             final pdfData = file.File(filePath);
                             await pdfData.writeAsBytes(_response.bodyBytes);
 
