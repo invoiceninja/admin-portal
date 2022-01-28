@@ -62,6 +62,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'default_company_id',
       serializers.serialize(object.defaultCompanyId,
           specifiedType: const FullType(String)),
+      'client_count',
+      serializers.serialize(object.clientCount,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -139,6 +142,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.defaultCompanyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'client_count':
+          result.clientCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
       }
     }
 
@@ -177,6 +184,8 @@ class _$AccountEntity extends AccountEntity {
   final bool disableAutoUpdate;
   @override
   final String defaultCompanyId;
+  @override
+  final int clientCount;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -196,7 +205,8 @@ class _$AccountEntity extends AccountEntity {
       this.isMigrated,
       this.isSchedulerRunning,
       this.disableAutoUpdate,
-      this.defaultCompanyId})
+      this.defaultCompanyId,
+      this.clientCount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -226,6 +236,8 @@ class _$AccountEntity extends AccountEntity {
         disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate');
     BuiltValueNullFieldError.checkNotNull(
         defaultCompanyId, 'AccountEntity', 'defaultCompanyId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientCount, 'AccountEntity', 'clientCount');
   }
 
   @override
@@ -253,7 +265,8 @@ class _$AccountEntity extends AccountEntity {
         isMigrated == other.isMigrated &&
         isSchedulerRunning == other.isSchedulerRunning &&
         disableAutoUpdate == other.disableAutoUpdate &&
-        defaultCompanyId == other.defaultCompanyId;
+        defaultCompanyId == other.defaultCompanyId &&
+        clientCount == other.clientCount;
   }
 
   int __hashCode;
@@ -272,21 +285,29 @@ class _$AccountEntity extends AccountEntity {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc($jc(0, id.hashCode),
-                                                            trialPlan.hashCode),
-                                                        trialStarted.hashCode),
-                                                    defaultUrl.hashCode),
-                                                reportErrors.hashCode),
-                                            plan.hashCode),
-                                        planExpires.hashCode),
-                                    latestVersion.hashCode),
-                                currentVersion.hashCode),
-                            debugEnabled.hashCode),
-                        isDocker.hashCode),
-                    isMigrated.hashCode),
-                isSchedulerRunning.hashCode),
-            disableAutoUpdate.hashCode),
-        defaultCompanyId.hashCode));
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    id
+                                                                        .hashCode),
+                                                                trialPlan
+                                                                    .hashCode),
+                                                            trialStarted
+                                                                .hashCode),
+                                                        defaultUrl.hashCode),
+                                                    reportErrors.hashCode),
+                                                plan.hashCode),
+                                            planExpires.hashCode),
+                                        latestVersion.hashCode),
+                                    currentVersion.hashCode),
+                                debugEnabled.hashCode),
+                            isDocker.hashCode),
+                        isMigrated.hashCode),
+                    isSchedulerRunning.hashCode),
+                disableAutoUpdate.hashCode),
+            defaultCompanyId.hashCode),
+        clientCount.hashCode));
   }
 
   @override
@@ -306,7 +327,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('isMigrated', isMigrated)
           ..add('isSchedulerRunning', isSchedulerRunning)
           ..add('disableAutoUpdate', disableAutoUpdate)
-          ..add('defaultCompanyId', defaultCompanyId))
+          ..add('defaultCompanyId', defaultCompanyId)
+          ..add('clientCount', clientCount))
         .toString();
   }
 }
@@ -380,6 +402,10 @@ class AccountEntityBuilder
   set defaultCompanyId(String defaultCompanyId) =>
       _$this._defaultCompanyId = defaultCompanyId;
 
+  int _clientCount;
+  int get clientCount => _$this._clientCount;
+  set clientCount(int clientCount) => _$this._clientCount = clientCount;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -402,6 +428,7 @@ class AccountEntityBuilder
       _isSchedulerRunning = $v.isSchedulerRunning;
       _disableAutoUpdate = $v.disableAutoUpdate;
       _defaultCompanyId = $v.defaultCompanyId;
+      _clientCount = $v.clientCount;
       _$v = null;
     }
     return this;
@@ -445,7 +472,8 @@ class AccountEntityBuilder
             isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, 'AccountEntity', 'isMigrated'),
             isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning'),
             disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate'),
-            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'));
+            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'),
+            clientCount: BuiltValueNullFieldError.checkNotNull(clientCount, 'AccountEntity', 'clientCount'));
     replace(_$result);
     return _$result;
   }
