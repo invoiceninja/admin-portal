@@ -552,7 +552,7 @@ abstract class ClientEntity extends Object
   bool matchesNameOrEmail(String filter) {
     filter = filter.toLowerCase();
 
-    if (displayName.toLowerCase().contains(filter)) {
+    if (name.toLowerCase().contains(filter)) {
       return true;
     }
 
