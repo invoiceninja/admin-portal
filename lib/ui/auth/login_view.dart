@@ -740,6 +740,7 @@ class _LoginState extends State<LoginView> {
       ],
     );
 
+    // TODO remove this, trying to correct Safari issue
     if (!kIsWeb) {
       return SafeArea(child: child);
     } else {
