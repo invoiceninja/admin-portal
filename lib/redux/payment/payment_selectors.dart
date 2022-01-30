@@ -140,7 +140,7 @@ List<String> filteredPaymentsSelector(
     }
 
     if (!payment.matchesFilter(paymentListState.filter) &&
-        !client.matchesName(paymentListState.filter)) {
+        !client.matchesNameOrEmail(paymentListState.filter)) {
       return false;
     }
 

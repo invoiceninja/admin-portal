@@ -116,7 +116,7 @@ List<String> filteredCreditsSelector(
       return false;
     }
     if (!credit.matchesFilter(creditListState.filter) &&
-        !client.matchesName(creditListState.filter)) {
+        !client.matchesNameOrEmail(creditListState.filter)) {
       return false;
     }
 
