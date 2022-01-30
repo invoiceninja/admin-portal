@@ -654,16 +654,16 @@ class _DrawerTileState extends State<DrawerTile> {
               color: textColor,
             ),
           ),
-          title: Text(
-            widget.title,
-            key: ValueKey('menu_${widget.title}'),
-            overflow: TextOverflow.clip,
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  fontSize: 14,
-                  color: textColor,
+          title: state.isMenuCollapsed
+              ? SizedBox()
+              : Text(
+                  widget.title,
+                  key: ValueKey('menu_${widget.title}'),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontSize: 14,
+                        color: textColor,
+                      ),
                 ),
-          ),
           onTap: () {
             if (widget.entityType != null) {
               viewEntitiesByType(
