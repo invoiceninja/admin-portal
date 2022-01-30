@@ -122,6 +122,16 @@ class MenuDrawerVM {
             });
       },
       onAddCompany: (BuildContext context) {
+        if (state.isHosted &&
+            !state.isPaidAccount &&
+            state.companies.length >= state.account.hostedCompanyCount) {
+          showMessageDialog(
+            context: context,
+            message: AppLocalization.of(context).requiresAPaidPlan,
+          );
+          return;
+        }
+
         confirmCallback(
             context: context,
             message: AppLocalization.of(context).addCompany,

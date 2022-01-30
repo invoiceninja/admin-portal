@@ -825,9 +825,7 @@ class SidebarFooter extends StatelessWidget {
                 ),
             if (isHosted(context) && !isPaidAccount(context) && !isApple())
               IconButton(
-                tooltip: isHosted(context)
-                    ? localization.upgrade
-                    : localization.purchaseLicense,
+                tooltip: localization.upgrade,
                 icon: Icon(Icons.arrow_circle_up),
                 color: Colors.green,
                 onPressed: () async {

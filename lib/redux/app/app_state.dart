@@ -772,8 +772,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
-  bool get isPaidAccount =>
-      isSelfHosted ? isWhiteLabeled : (isProPlan || isEnterprisePlan);
+  bool get isPaidAccount => isSelfHosted
+      ? isWhiteLabeled
+      : ((isProPlan || isEnterprisePlan) && !isTrial);
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
