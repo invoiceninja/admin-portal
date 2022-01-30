@@ -27,7 +27,8 @@ abstract class AccountEntity
       defaultCompanyId: '',
       trialPlan: '',
       trialStarted: '',
-      clientCount: 0,
+      hostedClientCount: 0,
+      hostedCompanyCount: 1,
     );
   }
 
@@ -80,8 +81,11 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'default_company_id')
   String get defaultCompanyId;
 
-  @BuiltValueField(wireName: 'client_count')
-  int get clientCount;
+  @BuiltValueField(wireName: 'hosted_client_count')
+  int get hostedClientCount;
+
+  @BuiltValueField(wireName: 'hosted_company_count')
+  int get hostedCompanyCount;
 
   bool get isUpdateAvailable {
     if (!isSchedulerRunning || disableAutoUpdate) {
@@ -103,7 +107,8 @@ abstract class AccountEntity
     ..trialPlan = ''
     ..trialStarted = ''
     ..defaultCompanyId = ''
-    ..clientCount = 0;
+    ..hostedClientCount = 0
+    ..hostedCompanyCount = 1;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }
