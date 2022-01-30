@@ -72,7 +72,7 @@ List<String> filteredRecurringInvoicesSelector(
       return false;
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.matchesName(invoiceListState.filter)) {
+        !client.matchesNameOrEmail(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

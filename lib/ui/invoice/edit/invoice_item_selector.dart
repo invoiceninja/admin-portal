@@ -155,7 +155,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       if (widget.excluded != null && widget.excluded.contains(task)) {
         return false;
       }
-      return task.matchesFilter(_filter) || client.matchesName(_filter);
+      return task.matchesFilter(_filter) || client.matchesNameOrEmail(_filter);
     }).toList();
 
     final expenses = memoizedClientExpenseList(
@@ -167,7 +167,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       if (widget.excluded != null && widget.excluded.contains(expense)) {
         return false;
       }
-      return expense.matchesFilter(_filter) || client.matchesName(_filter);
+      return expense.matchesFilter(_filter) ||
+          client.matchesNameOrEmail(_filter);
     }).toList();
 
     Widget _productList() {

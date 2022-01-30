@@ -273,7 +273,7 @@ List<String> filteredTasksSelector(
     }
 
     if (!task.matchesFilter(taskListState.filter) &&
-        !client.matchesName(taskListState.filter) &&
+        !client.matchesNameOrEmail(taskListState.filter) &&
         !project.matchesName(taskListState.filter)) {
       return false;
     }

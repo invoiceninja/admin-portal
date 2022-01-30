@@ -174,7 +174,7 @@ List<String> filteredProjectsSelector(
     }
 
     if (!project.matchesFilter(projectListState.filter) &&
-        !client.matchesName(projectListState.filter)) {
+        !client.matchesNameOrEmail(projectListState.filter)) {
       return false;
     }
 

@@ -67,7 +67,7 @@ List<String> filteredQuotesSelector(
     } else if (!quote.matchesStatuses(quoteListState.statusFilters)) {
       return false;
     } else if (!quote.matchesFilter(quoteListState.filter) &&
-        !client.matchesName(quoteListState.filter)) {
+        !client.matchesNameOrEmail(quoteListState.filter)) {
       return false;
     }
 

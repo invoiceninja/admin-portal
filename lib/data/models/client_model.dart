@@ -549,8 +549,26 @@ abstract class ClientEntity extends Object
     return response;
   }
 
-  bool matchesName(String filter) =>
-      displayName.toLowerCase().contains(filter.toLowerCase());
+  bool matchesNameOrEmail(String filter) {
+    filter = filter.toLowerCase();
+
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    for (var i = 0; i < contacts.length; i++) {
+      final contact = contacts[i];
+      if (contact.fullName.toLowerCase().contains(filter)) {
+        return true;
+      }
+
+      if (contact.email.toLowerCase().contains(filter)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   @override
   bool matchesFilter(String filter) {
