@@ -275,11 +275,23 @@ void handleExpenseAction(
       );
       break;
     case EntityAction.invoiceExpense:
-      final items = expenses
-          .where((entity) {
-            final expense = entity as ExpenseEntity;
-            return !expense.isDeleted && !expense.isInvoiced;
-          })
+      final availableExpenses = expenses.where((entity) {
+        final expense = entity as ExpenseEntity;
+        return !expense.isDeleted && !expense.isInvoiced;
+      });
+
+      String projectId = '';
+      for (var each in availableExpenses) {
+        final expense = each as ExpenseEntity;
+        if (expense.projectId.isNotEmpty) {
+          if (projectId.isEmpty &&
+              state.projectState.get(expense.projectId).clientId == client.id) {
+            projectId = expense.projectId;
+          }
+        }
+      }
+
+      final items = availableExpenses
           .map((expense) => convertExpenseToInvoiceItem(
                 expense: expense,
                 context: context,
@@ -287,9 +299,13 @@ void handleExpenseAction(
           .toList();
       if (items.isNotEmpty) {
         createEntity(
-            context: context,
-            entity: InvoiceEntity(state: state, client: client)
-                .rebuild((b) => b..lineItems.addAll(items)));
+          context: context,
+          entity: InvoiceEntity(state: state, client: client).rebuild(
+            (b) => b
+              ..lineItems.addAll(items)
+              ..projectId = projectId,
+          ),
+        );
       }
       break;
     case EntityAction.restore:
