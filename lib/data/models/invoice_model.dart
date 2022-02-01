@@ -509,6 +509,7 @@ abstract class InvoiceEntity extends Object
   BuiltList<ActivityEntity> get activities;
 
   bool get isApproved =>
+      isQuote &&
       [kQuoteStatusApproved, kQuoteStatusConverted].contains(statusId);
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
@@ -1086,7 +1087,11 @@ abstract class InvoiceEntity extends Object
       if (isPastDue && !isCancelledOrReversed) {
         return kInvoiceStatusPastDue;
       }
-      if (isViewed && isUnpaid && !isPartial && !isCancelledOrReversed) {
+      if (isViewed &&
+          isUnpaid &&
+          !isPartial &&
+          !isCancelledOrReversed &&
+          !isApproved) {
         return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
       }
     }
