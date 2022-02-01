@@ -1086,7 +1086,7 @@ abstract class InvoiceEntity extends Object
       if (isPastDue && !isCancelledOrReversed) {
         return kInvoiceStatusPastDue;
       }
-      if (isViewed && isUnpaid && !isPartial) {
+      if (isViewed && isUnpaid && !isPartial && !isCancelledOrReversed) {
         return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
       }
     }
