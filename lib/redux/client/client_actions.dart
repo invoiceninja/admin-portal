@@ -433,6 +433,7 @@ void handleClientAction(
     case EntityAction.purge:
       confirmCallback(
           context: context,
+          message: '${localization.purge} - ${client.displayName}',
           callback: (_) {
             passwordCallback(
                 alwaysRequire: true,
