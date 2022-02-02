@@ -34,7 +34,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
 
   if (state.company.invoiceTaskDatelog || state.company.invoiceTaskTimelog) {
     if (notes.trim().isNotEmpty) {
-      notes += '\n\n';
+      notes += '\n';
     }
     task
         .getTaskTimes()

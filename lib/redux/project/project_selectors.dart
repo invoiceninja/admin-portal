@@ -56,9 +56,9 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
     var item = convertExpenseToInvoiceItem(expense: expense, context: context);
 
     if (i == 0) {
-      String notes = '## ${project.name}\n\n';
+      String notes = '## ${project.name}\n';
       if (project.publicNotes.isNotEmpty) {
-        notes += '${project.publicNotes}\n\n';
+        notes += '${project.publicNotes}\n';
         hasShownNotes = true;
       }
       notes += item.notes;
@@ -73,9 +73,9 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
     var item = convertTaskToInvoiceItem(task: task, context: context);
 
     if (i == 0) {
-      String notes = '## ${project.name}\n\n';
+      String notes = '## ${project.name}\n';
       if (project.publicNotes.isNotEmpty && !hasShownNotes) {
-        notes += '${project.publicNotes}\n\n';
+        notes += '${project.publicNotes}\n';
       }
       notes += item.notes;
 
