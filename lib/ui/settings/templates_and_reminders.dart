@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
@@ -285,7 +286,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           if (!enableCustomEmail && state.isTrial)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Text(localization.customEmailsDisabledHelp),
+              child: IconMessage(localization.customEmailsDisabledHelp),
             ),
           DecoratedFormField(
             label: localization.subject,
