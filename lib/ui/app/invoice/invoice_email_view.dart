@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -253,6 +254,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final enableCustomEmail = state.isSelfHosted || state.isPaidAccount;
 
     return SingleChildScrollView(
       child: FormCard(
@@ -264,11 +268,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               _bodyController.text.isEmpty)
             LoadingIndicator(height: 210)
           else ...[
+            if (!enableCustomEmail)
+              IconMessage(localization.customEmailsDisabledHelp),
             DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
               onChanged: (_) => _onChanged(),
               keyboardType: TextInputType.text,
+              enabled: enableCustomEmail,
             ),
             DecoratedFormField(
               controller: _bodyController,
@@ -276,6 +283,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               maxLines: 6,
               keyboardType: TextInputType.multiline,
               onChanged: (_) => _onChanged(),
+              enabled: enableCustomEmail,
             ),
           ]
         ],

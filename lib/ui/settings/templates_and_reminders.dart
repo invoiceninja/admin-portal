@@ -227,6 +227,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final settings = viewModel.settings;
     final template = widget.viewModel.selectedTemplate;
     final company = state.company;
+    final enableCustomEmail = state.isSelfHosted || state.isPaidAccount;
 
     final editor = ScrollableListView(
       children: <Widget>[
@@ -281,11 +282,17 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               );
             }).toList(),
           ),
+          if (!enableCustomEmail && state.isTrial)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Text(localization.customEmailsDisabledHelp),
+            ),
           DecoratedFormField(
             label: localization.subject,
             controller: _subjectController,
             hint: _defaultSubject,
             keyboardType: TextInputType.text,
+            enabled: enableCustomEmail,
           ),
           DecoratedFormField(
             label: localization.body,
@@ -293,6 +300,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             maxLines: 8,
             keyboardType: TextInputType.multiline,
             hint: _defaultBody,
+            enabled: enableCustomEmail,
           ),
         ]),
         if (template == EmailTemplate.reminder1)
