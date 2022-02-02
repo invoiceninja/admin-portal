@@ -57,7 +57,6 @@ abstract class EmailEntityVM {
     @required this.company,
     @required this.invoice,
     @required this.client,
-    @required this.loadClient,
     @required this.onSendPressed,
   });
 
@@ -67,7 +66,6 @@ abstract class EmailEntityVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
-  final Function() loadClient;
   final Function(BuildContext, EmailTemplate, String, String) onSendPressed;
 }
 
@@ -79,7 +77,6 @@ class EmailInvoiceVM extends EmailEntityVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
-    Function loadClient,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
           state: state,
@@ -88,7 +85,6 @@ class EmailInvoiceVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
-          loadClient: loadClient,
           onSendPressed: onSendPressed,
         );
 
@@ -104,9 +100,6 @@ class EmailInvoiceVM extends EmailEntityVM {
       invoice: invoice,
       client: state.clientState.map[invoice.clientId] ??
           ClientEntity(id: invoice.clientId),
-      loadClient: () {
-        store.dispatch(LoadClient(clientId: invoice.clientId));
-      },
       onSendPressed: (context, template, subject, body) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedInvoice,

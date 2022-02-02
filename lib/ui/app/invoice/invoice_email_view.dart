@@ -69,12 +69,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     ];
 
     final viewModel = widget.viewModel;
-    final client = viewModel.client;
     final invoice = viewModel.invoice;
-
-    if (client.isStale) {
-      viewModel.loadClient();
-    }
 
     switch (invoice.entityType) {
       case EntityType.invoice:

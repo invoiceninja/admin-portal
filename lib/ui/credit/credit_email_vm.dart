@@ -66,7 +66,6 @@ class EmailCreditVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
-          loadClient: loadClient,
           onSendPressed: onSendPressed,
         );
 
