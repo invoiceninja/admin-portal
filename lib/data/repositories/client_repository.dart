@@ -67,6 +67,14 @@ class ClientRepository {
     return clientResponse.data.toList();
   }
 
+  Future<bool> purge(Credentials credentials, String id) async {
+    final url = credentials.url + '/clients/$id/purge';
+
+    await webClient.post(url, credentials.token);
+
+    return true;
+  }
+
   Future<ClientEntity> saveData(
       Credentials credentials, ClientEntity client) async {
     client = client.rebuild((b) => b..documents.clear());
