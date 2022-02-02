@@ -2,11 +2,17 @@
 import 'package:flutter/material.dart';
 
 class IconMessage extends StatelessWidget {
-  const IconMessage(this.text, {this.iconData, this.color});
+  const IconMessage(
+    this.text, {
+    this.iconData,
+    this.color,
+    this.trailing,
+  });
 
   final String text;
   final IconData iconData;
   final Color color;
+  final Widget trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +37,10 @@ class IconMessage extends StatelessWidget {
                 ),
               ),
             ),
+            if (trailing != null) ...[
+              SizedBox(width: 16),
+              trailing,
+            ]
           ],
         ),
       ),

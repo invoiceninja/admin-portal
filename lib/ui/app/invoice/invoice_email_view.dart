@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -269,7 +270,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             LoadingIndicator(height: 210)
           else ...[
             if (!enableCustomEmail)
-              IconMessage(localization.customEmailsDisabledHelp),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: IconMessage(
+                  localization.customEmailsDisabledHelp,
+                  trailing: TextButton(
+                    child: Text(
+                      localization.upgrade.toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                  ),
+                ),
+              ),
             DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
@@ -280,7 +295,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             DecoratedFormField(
               controller: _bodyController,
               label: localization.body,
-              maxLines: 6,
+              maxLines: enableCustomEmail ? 6 : 2,
               keyboardType: TextInputType.multiline,
               onChanged: (_) => _onChanged(),
               enabled: enableCustomEmail,
