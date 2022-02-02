@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -222,6 +223,21 @@ class DeleteClientsFailure implements StopSaving {
   final List<ClientEntity> clients;
 }
 
+class PurgeClientRequest implements StartSaving {
+  PurgeClientRequest(this.completer, this.clientId);
+
+  final Completer completer;
+  final String clientId;
+}
+
+class PurgeClientSuccess implements StopSaving, PersistData {}
+
+class PurgeClientFailure implements StopSaving {
+  PurgeClientFailure(this.error);
+
+  final Object error;
+}
+
 class RestoreClientsRequest implements StartSaving {
   RestoreClientsRequest(this.completer, this.clientIds);
 
@@ -413,6 +429,24 @@ void handleClientAction(
           : localization.deletedClient;
       store.dispatch(DeleteClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
+      break;
+    case EntityAction.purge:
+      confirmCallback(
+          context: context,
+          message: '${localization.purge} - ${client.displayName}',
+          callback: (_) {
+            passwordCallback(
+                alwaysRequire: true,
+                context: context,
+                callback: (password, idToken) {
+                  store.dispatch(
+                    PurgeClientRequest(
+                        snackBarCompleter<Null>(
+                            context, localization.purgedClient),
+                        client.id),
+                  );
+                });
+          });
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {

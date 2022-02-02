@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
@@ -227,6 +228,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final settings = viewModel.settings;
     final template = widget.viewModel.selectedTemplate;
     final company = state.company;
+    final enableCustomEmail = state.isSelfHosted || state.isPaidAccount;
 
     final editor = ScrollableListView(
       children: <Widget>[
@@ -281,11 +283,17 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               );
             }).toList(),
           ),
+          if (!enableCustomEmail && state.isTrial)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: IconMessage(localization.customEmailsDisabledHelp),
+            ),
           DecoratedFormField(
             label: localization.subject,
             controller: _subjectController,
             hint: _defaultSubject,
             keyboardType: TextInputType.text,
+            enabled: enableCustomEmail,
           ),
           DecoratedFormField(
             label: localization.body,
@@ -293,6 +301,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             maxLines: 8,
             keyboardType: TextInputType.multiline,
             hint: _defaultBody,
+            enabled: enableCustomEmail,
           ),
         ]),
         if (template == EmailTemplate.reminder1)

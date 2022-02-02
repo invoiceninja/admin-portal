@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -24,6 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -67,12 +69,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     ];
 
     final viewModel = widget.viewModel;
-    final client = viewModel.client;
     final invoice = viewModel.invoice;
-
-    if (client.isStale) {
-      viewModel.loadClient();
-    }
 
     switch (invoice.entityType) {
       case EntityType.invoice:
@@ -253,6 +250,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final enableCustomEmail = state.isSelfHosted || state.isPaidAccount;
 
     return SingleChildScrollView(
       child: FormCard(
@@ -264,18 +264,36 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               _bodyController.text.isEmpty)
             LoadingIndicator(height: 210)
           else ...[
+            if (!enableCustomEmail)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: IconMessage(
+                  localization.customEmailsDisabledHelp,
+                  trailing: TextButton(
+                    child: Text(
+                      localization.upgrade.toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                  ),
+                ),
+              ),
             DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
               onChanged: (_) => _onChanged(),
               keyboardType: TextInputType.text,
+              enabled: enableCustomEmail,
             ),
             DecoratedFormField(
               controller: _bodyController,
               label: localization.body,
-              maxLines: 6,
+              maxLines: enableCustomEmail ? 6 : 2,
               keyboardType: TextInputType.multiline,
               onChanged: (_) => _onChanged(),
+              enabled: enableCustomEmail,
             ),
           ]
         ],

@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'purged_client': 'Successfully purged client',
+      'custom_emails_disabled_help':
+          'To prevent spam we require upgrading to a paid account to customize the email',
       'requires_a_paid_plan': 'Requires a paid plan',
       'file_saved_in_downloads_folder':
           'The file has been saved in the downloads folder',
@@ -73370,6 +73373,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get requiresAPaidPlan =>
       _localizedValues[localeCode]['requires_a_paid_plan'] ??
       _localizedValues['en']['requires_a_paid_plan'];
+
+  String get customEmailsDisabledHelp =>
+      _localizedValues[localeCode]['custom_emails_disabled_help'] ??
+      _localizedValues['en']['custom_emails_disabled_help'];
+
+  String get purgedClient =>
+      _localizedValues[localeCode]['purged_client'] ??
+      _localizedValues['en']['purged_client'];
 
   // STARTER: lang field - do not remove comment
 

@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -31,6 +33,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final saveClient = _saveClient(repository);
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
+  final purgeClient = _purgeClient(repository);
   final restoreClient = _restoreClient(repository);
   final saveDocument = _saveDocument(repository);
 
@@ -44,6 +47,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
     TypedMiddleware<AppState, ArchiveClientsRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientsRequest>(deleteClient),
+    TypedMiddleware<AppState, PurgeClientRequest>(purgeClient),
     TypedMiddleware<AppState, RestoreClientsRequest>(restoreClient),
     TypedMiddleware<AppState, SaveClientDocumentRequest>(saveDocument),
   ];
@@ -138,6 +142,29 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteClientsFailure(prevClients));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _purgeClient(ClientRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PurgeClientRequest;
+    repository.purge(store.state.credentials, action.clientId).then((_) {
+      store.dispatch(PurgeClientSuccess());
+      store.dispatch(RefreshData(
+          clearData: true,
+          completer: Completer<Null>()
+            ..future.then((value) {
+              action.completer.complete(null);
+            })));
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(PurgeClientFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
