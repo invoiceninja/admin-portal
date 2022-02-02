@@ -9,6 +9,7 @@ part of 'models.dart';
 const EntityAction _$edit = const EntityAction._('edit');
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
+const EntityAction _$purge = const EntityAction._('purge');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$remove = const EntityAction._('remove');
 const EntityAction _$clone = const EntityAction._('clone');
@@ -80,6 +81,8 @@ EntityAction _$valueOf(String name) {
       return _$archive;
     case 'delete':
       return _$delete;
+    case 'purge':
+      return _$purge;
     case 'restore':
       return _$restore;
     case 'remove':
@@ -200,6 +203,7 @@ final BuiltSet<EntityAction> _$values =
   _$edit,
   _$archive,
   _$delete,
+  _$purge,
   _$restore,
   _$remove,
   _$clone,
