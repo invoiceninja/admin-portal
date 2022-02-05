@@ -39,6 +39,8 @@ enum ExpenseReportFields {
   category,
   assigned_to,
   created_by,
+  public_notes,
+  private_notes,
 }
 
 var memoizedExpenseReport = memo9((
@@ -204,6 +206,12 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.created_by:
           value = userMap[expense.createdUserId]?.listDisplayName ?? '';
+          break;
+        case ExpenseReportFields.public_notes:
+          value = expense.publicNotes;
+          break;
+        case ExpenseReportFields.private_notes:
+          value = expense.privateNotes;
           break;
       }
 
