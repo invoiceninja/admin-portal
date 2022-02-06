@@ -80,6 +80,7 @@ abstract class CompanyEntity extends Object
       isLarge: false,
       enableShopApi: false,
       convertProductExchangeRate: false,
+      convertRateToClient: true,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
       enableCustomSurchargeTaxes3: false,
@@ -175,6 +176,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
+
+  @BuiltValueField(wireName: 'convert_rate_to_client')
+  bool get convertRateToClient;
 
   @BuiltValueField(wireName: 'fill_products')
   bool get fillProducts;
@@ -563,6 +567,7 @@ abstract class CompanyEntity extends Object
     ..markdownEnabled = true
     ..useCommaAsDecimalPlace = false
     ..reportIncludeDrafts = false
+    ..convertRateToClient = true
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())

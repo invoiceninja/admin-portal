@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'convert_to': 'Convert To',
+      'client_currency': 'Client Currency',
+      'company_currency': 'Company Currency',
       'purged_client': 'Successfully purged client',
       'custom_emails_disabled_help':
           'To prevent spam we require upgrading to a paid account to customize the email',
@@ -1283,7 +1286,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -3238,7 +3241,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Perditesimi i faturës automatikisht do të perditesoje librarine e produktit',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -5187,7 +5190,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -9064,7 +9067,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Ažuriranje računa automatski ažurirati registar proizvoda',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Dobavljač',
@@ -11013,7 +11016,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Změna na faktuře automaticky aktualizuje katalog produktů',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -12962,7 +12965,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'En opdatering af en faktura vil automatisk opdaterer Produkt biblioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Gebyrer',
       'limits': 'Grænser',
       'provider': 'Provider',
@@ -16887,7 +16890,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -32731,7 +32734,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': '商品の変換',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -34680,7 +34683,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Izmaksas',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -36630,7 +36633,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -40533,7 +40536,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Å endre en faktura vil automatisk oppdatere produktbilioteket',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Avgifter',
       'limits': 'Begrensninger',
       'provider': 'Provider',
@@ -42482,7 +42485,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -50331,7 +50334,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Actualizând o factură se va actualiza si librăria de produse',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -66010,7 +66013,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'update_products_help': 'การอัปเดตใบแจ้งหนี้ จะอัปเดตสินค้าโดยอัตโนมัติ',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'ค่าธรรมเนียม',
       'limits': 'จำกัด',
       'provider': 'Provider',
@@ -67961,7 +67964,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Faturayı güncellemek ürün kütüphanesini otomatik olarak dolduracaktır.',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+          'Automatically convert product prices using current exchange rate',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -73381,6 +73384,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get purgedClient =>
       _localizedValues[localeCode]['purged_client'] ??
       _localizedValues['en']['purged_client'];
+
+  String get convertTo =>
+      _localizedValues[localeCode]['convert_to'] ??
+      _localizedValues['en']['convert_to'];
+
+  String get clientCurrency =>
+      _localizedValues[localeCode]['client_currency'] ??
+      _localizedValues['en']['client_currency'];
+
+  String get companyCurrency =>
+      _localizedValues[localeCode]['company_currency'] ??
+      _localizedValues['en']['company_currency'];
 
   // STARTER: lang field - do not remove comment
 

@@ -141,7 +141,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       : store.dispatch(ViewSettings(
                           section: kSettingsCustomDesigns,
                         )),
-                  //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
                 ),
               ),
               FormCard(

@@ -517,8 +517,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             if (company.convertProductExchangeRate &&
                                 invoice.clientId != null &&
                                 client.currencyId != company.currencyId) {
-                              cost = round(cost * invoice.exchangeRate,
-                                  currency.precision);
+                              double exchangeRate = invoice.exchangeRate;
+                              if (!company.convertRateToClient &&
+                                  exchangeRate != 0) {
+                                exchangeRate = 1 / exchangeRate;
+                              }
+                              cost = round(
+                                  cost * exchangeRate, currency.precision);
                             }
 
                             final updatedItem = item.rebuild((b) => b
