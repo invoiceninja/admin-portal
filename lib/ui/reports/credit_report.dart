@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 enum CreditReportFields {
+  id,
   amount,
   balance,
   converted_amount,
@@ -128,6 +129,9 @@ ReportResult creditReport(
       dynamic value = '';
 
       switch (column) {
+        case CreditReportFields.id:
+          value = credit.id;
+          break;
         case CreditReportFields.amount:
           value = credit.amount;
           break;

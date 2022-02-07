@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 
 enum ClientReportFields {
+  id,
   name,
   website,
   currency,
@@ -129,6 +130,9 @@ ReportResult clientReport(
       dynamic value = '';
 
       switch (column) {
+        case ClientReportFields.id:
+          value = client.id;
+          break;
         case ClientReportFields.name:
           value = client.displayName;
           break;

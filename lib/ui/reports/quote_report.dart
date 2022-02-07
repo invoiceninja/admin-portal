@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 
 enum QuoteReportFields {
+  id,
   amount,
   converted_amount,
   client,
@@ -128,6 +129,9 @@ ReportResult quoteReport(
       dynamic value = '';
 
       switch (column) {
+        case QuoteReportFields.id:
+          value = quote.id;
+          break;
         case QuoteReportFields.amount:
           value = quote.amount;
           break;
