@@ -230,7 +230,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
                       CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
                       CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                      CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                      CompanyGatewayEntity.TOKEN_BILLING_OFF
                     ]
                         .map((value) => DropdownMenuItem(
                               child: Text(localization.lookup(value)),
