@@ -735,43 +735,34 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   ),
                                   if (company.hasTaxes)
                                     Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 8),
-                                        child: SwitchListTile(
-                                          activeColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          title:
-                                              Text(localization.inclusiveTaxes),
-                                          dense: true,
-                                          value: invoice.usesInclusiveTaxes,
-                                          onChanged: (value) {
-                                            viewModel.onChanged(invoice.rebuild(
-                                                (b) => b
-                                                  ..usesInclusiveTaxes =
-                                                      value));
-                                          },
-                                        ),
+                                      child: SwitchListTile(
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        title:
+                                            Text(localization.inclusiveTaxes),
+                                        value: invoice.usesInclusiveTaxes,
+                                        onChanged: (value) {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) => b
+                                                ..usesInclusiveTaxes = value));
+                                        },
                                       ),
                                     ),
                                   if (invoice.isInvoice)
                                     Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 8),
-                                        child: SwitchListTile(
-                                          activeColor: Theme.of(context)
-                                              .colorScheme
-                                              .secondary,
-                                          title: Text(
-                                              localization.autoBillEnabled),
-                                          dense: true,
-                                          value: invoice.autoBillEnabled,
-                                          onChanged: (value) {
-                                            viewModel.onChanged(invoice.rebuild(
-                                                (b) => b
-                                                  ..autoBillEnabled = value));
-                                          },
-                                        ),
+                                      child: SwitchListTile(
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        title:
+                                            Text(localization.autoBillEnabled),
+                                        value: invoice.autoBillEnabled,
+                                        onChanged: (value) {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) =>
+                                                  b..autoBillEnabled = value));
+                                        },
                                       ),
                                     ),
                                 ],
