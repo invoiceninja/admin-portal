@@ -91,6 +91,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.lanDisconnect;
     case EntityAction.purge:
       return Icons.delete_forever;
+    case EntityAction.viewInvoice:
+      return MdiIcons.fileAccount;
     default:
       return null;
   }

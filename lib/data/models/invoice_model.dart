@@ -897,8 +897,12 @@ abstract class InvoiceEntity extends Object
           }
         }
 
-        if (isQuote && (invoiceId ?? '').isEmpty) {
-          actions.add(EntityAction.convertToInvoice);
+        if (isQuote) {
+          if ((invoiceId ?? '').isEmpty) {
+            actions.add(EntityAction.convertToInvoice);
+          } else {
+            actions.add(EntityAction.viewInvoice);
+          }
         }
       }
 
