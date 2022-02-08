@@ -674,8 +674,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   ),
                                   if (company
                                       .isModuleEnabled(EntityType.project))
-                                    Expanded(
-                                        child: ProjectPicker(
+                                    ProjectPicker(
                                       clientId: invoice.clientId,
                                       projectId: invoice.projectId,
                                       onChanged: (projectId) {
@@ -698,7 +697,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                               (b) => b..projectId = projectId));
                                         }
                                       },
-                                    )),
+                                    ),
                                   if (company
                                       .isModuleEnabled(EntityType.vendor))
                                     EntityDropdown(
@@ -734,36 +733,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         widget.entityViewModel.onSavePressed,
                                   ),
                                   if (company.hasTaxes)
-                                    Flexible(
-                                      child: SwitchListTile(
-                                        activeColor: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        title:
-                                            Text(localization.inclusiveTaxes),
-                                        value: invoice.usesInclusiveTaxes,
-                                        onChanged: (value) {
-                                          viewModel.onChanged(invoice.rebuild(
-                                              (b) => b
-                                                ..usesInclusiveTaxes = value));
-                                        },
-                                      ),
+                                    SwitchListTile(
+                                      activeColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      title: Text(localization.inclusiveTaxes),
+                                      value: invoice.usesInclusiveTaxes,
+                                      onChanged: (value) {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) =>
+                                                b..usesInclusiveTaxes = value));
+                                      },
                                     ),
                                   if (invoice.isInvoice)
-                                    Flexible(
-                                      child: SwitchListTile(
-                                        activeColor: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        title:
-                                            Text(localization.autoBillEnabled),
-                                        value: invoice.autoBillEnabled,
-                                        onChanged: (value) {
-                                          viewModel.onChanged(invoice.rebuild(
-                                              (b) =>
-                                                  b..autoBillEnabled = value));
-                                        },
-                                      ),
+                                    SwitchListTile(
+                                      activeColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      title: Text(localization.autoBillEnabled),
+                                      value: invoice.autoBillEnabled,
+                                      onChanged: (value) {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) => b..autoBillEnabled = value));
+                                      },
                                     ),
                                 ],
                               );
