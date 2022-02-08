@@ -101,7 +101,7 @@ abstract class CompanyGatewayEntity extends Object
   static const TOKEN_BILLING_ALWAYS = 'always';
   static const TOKEN_BILLING_OPT_IN = 'optin';
   static const TOKEN_BILLING_OPT_OUT = 'optout';
-  static const TOKEN_BILLING_OFF = 'off';
+  static const TOKEN_BILLING_DISABLED = 'disabled';
 
   @override
   @memoized

@@ -473,7 +473,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
                         CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
                         CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                        CompanyGatewayEntity.TOKEN_BILLING_OFF
+                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
                       ]
                           .map((value) => DropdownMenuItem(
                                 child: Text(localization.lookup(value)),
