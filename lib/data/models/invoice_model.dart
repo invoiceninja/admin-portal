@@ -96,6 +96,8 @@ class InvoiceFields {
   static const String exchangeRate = 'exchange_rate';
   static const String isViewed = 'is_viewed';
   static const String autoBillEnabled = 'auto_bill_enabled';
+  static const String contactName = 'contact_name';
+  static const String contactEmail = 'contact_email';
 }
 
 class InvoiceTotalFields {

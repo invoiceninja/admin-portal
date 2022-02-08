@@ -12,6 +12,16 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
+ContactEntity quoteContactSelector(InvoiceEntity quote, ClientEntity client) {
+  var contactIds =
+      quote.invitations.map((invitation) => invitation.contactId).toList();
+  if (contactIds.contains(client.primaryContact.id)) {
+    contactIds = [client.primaryContact.id];
+  }
+  return client.contacts
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
+}
+
 var memoizedFilteredQuoteList = memo6((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,

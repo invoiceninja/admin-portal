@@ -18,6 +18,17 @@ InvoiceEntity invoiceQuoteSelector(
   return invoiceQuote;
 }
 
+ContactEntity invoiceContactSelector(
+    InvoiceEntity invoice, ClientEntity client) {
+  var contactIds =
+      invoice.invitations.map((invitation) => invitation.contactId).toList();
+  if (contactIds.contains(client.primaryContact.id)) {
+    contactIds = [client.primaryContact.id];
+  }
+  return client.contacts
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
+}
+
 var memoizedInvoiceQuoteSelector = memo2(
     (InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) =>
         invoiceQuoteSelector(invoice, quoteMap));

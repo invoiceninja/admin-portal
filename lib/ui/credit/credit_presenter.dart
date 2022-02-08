@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -44,6 +45,8 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.lastSentDate,
       CreditFields.project,
       CreditFields.vendor,
+      CreditFields.contactName,
+      CreditFields.contactEmail,
     ];
   }
 
@@ -116,6 +119,15 @@ class CreditPresenter extends EntityPresenter {
         return Text(state.projectState.get(credit.projectId).listDisplayName);
       case CreditFields.vendor:
         return Text(state.vendorState.get(credit.vendorId).name);
+      case CreditFields.contactName:
+      case CreditFields.contactEmail:
+        final contact = creditContactSelector(
+            credit, state.clientState.get(credit.clientId));
+        if (field == CreditFields.contactName) {
+          return Text(contact?.fullName ?? '');
+        } else {
+          return Text(contact?.email ?? '');
+        }
     }
 
     return super.getField(field: field, context: context);
