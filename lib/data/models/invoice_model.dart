@@ -147,6 +147,7 @@ abstract class InvoiceEntity extends Object
       taxAmount: 0,
       poNumber: '',
       projectId: '',
+      vendorId: '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
       publicNotes: '',
@@ -254,6 +255,7 @@ abstract class InvoiceEntity extends Object
     ..remainingCycles = -1
     ..invoiceId = ''
     ..projectId = ''
+    ..vendorId = ''
     ..subscriptionId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -318,6 +320,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
+
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
 
   @BuiltValueField(wireName: 'subscription_id')
   String get subscriptionId;
@@ -1241,6 +1246,7 @@ abstract class InvoiceEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
     ..projectId = ''
+    ..vendorId = ''
     ..autoBillEnabled = false
     ..subscriptionId = '';
 
