@@ -6,6 +6,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
@@ -437,6 +439,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         invoice.rebuild((b) => b..projectId = projectId));
                   }
                 },
+              ),
+            if (company.isModuleEnabled(EntityType.vendor))
+              EntityDropdown(
+                entityType: EntityType.vendor,
+                entityId: invoice.vendorId,
+                labelText: localization.vendor,
+                entityList: memoizedDropdownVendorList(
+                    state.vendorState.map,
+                    state.vendorState.list,
+                    state.userState.map,
+                    state.staticState),
+                onSelected: (vendor) => viewModel.onChanged(
+                  invoice.rebuild((b) => b.vendorId = vendor.id),
+                ),
               ),
             DecoratedFormField(
               key: ValueKey('__exchange_rate_${invoice.clientId}__'),
