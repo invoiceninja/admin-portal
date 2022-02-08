@@ -42,6 +42,8 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.exchangeRate,
       QuoteFields.isViewed,
       QuoteFields.lastSentDate,
+      QuoteFields.project,
+      QuoteFields.vendor,
     ];
   }
 
@@ -104,6 +106,10 @@ class QuotePresenter extends EntityPresenter {
             formatNumberType: FormatNumberType.double));
       case QuoteFields.isViewed:
         return Text(quote.isViewed ? localization.yes : localization.no);
+      case QuoteFields.project:
+        return Text(state.projectState.get(quote.projectId).listDisplayName);
+      case QuoteFields.vendor:
+        return Text(state.vendorState.get(quote.vendorId).name);
     }
 
     return super.getField(field: field, context: context);

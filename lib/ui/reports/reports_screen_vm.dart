@@ -118,6 +118,8 @@ class ReportsScreenVM {
           state.invoiceState.map,
           state.clientState.map,
           state.userState.map,
+          state.vendorState.map,
+          state.projectState.map,
           state.staticState,
         );
         break;

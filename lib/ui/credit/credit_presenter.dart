@@ -42,6 +42,8 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.exchangeRate,
       CreditFields.isViewed,
       CreditFields.lastSentDate,
+      CreditFields.project,
+      CreditFields.vendor,
     ];
   }
 
@@ -110,6 +112,10 @@ class CreditPresenter extends EntityPresenter {
             formatNumberType: FormatNumberType.double));
       case CreditFields.isViewed:
         return Text(credit.isViewed ? localization.yes : localization.no);
+      case CreditFields.project:
+        return Text(state.projectState.get(credit.projectId).listDisplayName);
+      case CreditFields.vendor:
+        return Text(state.vendorState.get(credit.vendorId).name);
     }
 
     return super.getField(field: field, context: context);

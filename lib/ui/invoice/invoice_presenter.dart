@@ -49,6 +49,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.lastSentDate,
       InvoiceFields.nextSendDate,
       InvoiceFields.project,
+      InvoiceFields.vendor,
     ];
   }
 
@@ -71,6 +72,8 @@ class InvoicePresenter extends EntityPresenter {
             .listDisplayName);
       case InvoiceFields.project:
         return Text(state.projectState.get(invoice.projectId).listDisplayName);
+      case InvoiceFields.vendor:
+        return Text(state.vendorState.get(invoice.vendorId).name);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.lastSentDate:
