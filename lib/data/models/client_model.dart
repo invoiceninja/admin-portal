@@ -680,7 +680,7 @@ abstract class ClientEntity extends Object
 
     actions..addAll(super.getActions(userCompany: userCompany));
 
-    if (!kReleaseMode && userCompany.isAdmin && !multiselect) {
+    if (false && userCompany.isAdmin && !multiselect) {
       actions.add(EntityAction.purge);
     }
 

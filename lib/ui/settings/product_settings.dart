@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/product_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -123,6 +124,19 @@ class _ProductSettingsState extends State<ProductSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(company
                     .rebuild((b) => b..convertProductExchangeRate = value)),
               ),
+              if (false)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: BoolDropdownButton(
+                    label: localization.convertTo,
+                    value: company.convertRateToClient,
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..convertRateToClient = value),
+                    ),
+                    enabledLabel: localization.clientCurrency,
+                    disabledLabel: localization.companyCurrency,
+                  ),
+                )
             ],
           )
         ],

@@ -33,6 +33,8 @@ class InvoiceEditFooter extends StatelessWidget {
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
     final showLayoutToggle = isDesktop(context);
+    final title =
+        '${localization.lookup('${invoice.entityType}_total')}: $total';
 
     return BottomAppBar(
       elevation: 0,
@@ -66,7 +68,9 @@ class InvoiceEditFooter extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(
-                    '${localization.lookup('${invoice.entityType}_total')}: $total',
+                    invoice.number.isEmpty
+                        ? title
+                        : '${invoice.number} • $title',
                     style: TextStyle(
                       color: state.prefState.enableDarkMode
                           ? Colors.white

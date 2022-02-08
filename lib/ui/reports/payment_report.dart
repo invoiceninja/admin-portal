@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 
 enum PaymentReportFields {
+  id,
   number,
   amount,
   client,
@@ -145,6 +146,9 @@ ReportResult paymentReport(
       dynamic value = '';
 
       switch (column) {
+        case PaymentReportFields.id:
+          value = payment.id;
+          break;
         case PaymentReportFields.number:
           value = payment.number;
           break;

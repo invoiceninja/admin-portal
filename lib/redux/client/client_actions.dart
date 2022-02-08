@@ -319,9 +319,10 @@ void handleClientAction(
       store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
-      final url = client.primaryContact?.silentLink ?? '';
-      if (url.isNotEmpty && await canLaunch(url)) {
-        await launch(url);
+      final contact = client.contacts
+          .firstWhere((contact) => contact.link.isNotEmpty, orElse: null);
+      if (contact != null) {
+        launch(contact.silentLink);
       }
       break;
     case EntityAction.settings:

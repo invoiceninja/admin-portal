@@ -66,6 +66,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'convert_products',
       serializers.serialize(object.convertProductExchangeRate,
           specifiedType: const FullType(bool)),
+      'convert_rate_to_client',
+      serializers.serialize(object.convertRateToClient,
+          specifiedType: const FullType(bool)),
       'fill_products',
       serializers.serialize(object.fillProducts,
           specifiedType: const FullType(bool)),
@@ -400,6 +403,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'convert_products':
           result.convertProductExchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'convert_rate_to_client':
+          result.convertRateToClient = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'fill_products':
@@ -1363,6 +1370,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool convertProductExchangeRate;
   @override
+  final bool convertRateToClient;
+  @override
   final bool fillProducts;
   @override
   final bool enableProductCost;
@@ -1528,6 +1537,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.portalDomain,
       this.updateProducts,
       this.convertProductExchangeRate,
+      this.convertRateToClient,
       this.fillProducts,
       this.enableProductCost,
       this.enableProductQuantity,
@@ -1625,6 +1635,8 @@ class _$CompanyEntity extends CompanyEntity {
         updateProducts, 'CompanyEntity', 'updateProducts');
     BuiltValueNullFieldError.checkNotNull(convertProductExchangeRate,
         'CompanyEntity', 'convertProductExchangeRate');
+    BuiltValueNullFieldError.checkNotNull(
+        convertRateToClient, 'CompanyEntity', 'convertRateToClient');
     BuiltValueNullFieldError.checkNotNull(
         fillProducts, 'CompanyEntity', 'fillProducts');
     BuiltValueNullFieldError.checkNotNull(
@@ -1778,6 +1790,7 @@ class _$CompanyEntity extends CompanyEntity {
         portalDomain == other.portalDomain &&
         updateProducts == other.updateProducts &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
+        convertRateToClient == other.convertRateToClient &&
         fillProducts == other.fillProducts &&
         enableProductCost == other.enableProductCost &&
         enableProductQuantity == other.enableProductQuantity &&
@@ -1876,7 +1889,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1912,6 +1925,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('portalDomain', portalDomain)
           ..add('updateProducts', updateProducts)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
+          ..add('convertRateToClient', convertRateToClient)
           ..add('fillProducts', fillProducts)
           ..add('enableProductCost', enableProductCost)
           ..add('enableProductQuantity', enableProductQuantity)
@@ -2044,6 +2058,11 @@ class CompanyEntityBuilder
   bool get convertProductExchangeRate => _$this._convertProductExchangeRate;
   set convertProductExchangeRate(bool convertProductExchangeRate) =>
       _$this._convertProductExchangeRate = convertProductExchangeRate;
+
+  bool _convertRateToClient;
+  bool get convertRateToClient => _$this._convertRateToClient;
+  set convertRateToClient(bool convertRateToClient) =>
+      _$this._convertRateToClient = convertRateToClient;
 
   bool _fillProducts;
   bool get fillProducts => _$this._fillProducts;
@@ -2449,6 +2468,7 @@ class CompanyEntityBuilder
       _portalDomain = $v.portalDomain;
       _updateProducts = $v.updateProducts;
       _convertProductExchangeRate = $v.convertProductExchangeRate;
+      _convertRateToClient = $v.convertRateToClient;
       _fillProducts = $v.fillProducts;
       _enableProductCost = $v.enableProductCost;
       _enableProductQuantity = $v.enableProductQuantity;
@@ -2571,6 +2591,7 @@ class CompanyEntityBuilder
               portalDomain: BuiltValueNullFieldError.checkNotNull(portalDomain, 'CompanyEntity', 'portalDomain'),
               updateProducts: BuiltValueNullFieldError.checkNotNull(updateProducts, 'CompanyEntity', 'updateProducts'),
               convertProductExchangeRate: BuiltValueNullFieldError.checkNotNull(convertProductExchangeRate, 'CompanyEntity', 'convertProductExchangeRate'),
+              convertRateToClient: BuiltValueNullFieldError.checkNotNull(convertRateToClient, 'CompanyEntity', 'convertRateToClient'),
               fillProducts: BuiltValueNullFieldError.checkNotNull(fillProducts, 'CompanyEntity', 'fillProducts'),
               enableProductCost: BuiltValueNullFieldError.checkNotNull(enableProductCost, 'CompanyEntity', 'enableProductCost'),
               enableProductQuantity: BuiltValueNullFieldError.checkNotNull(enableProductQuantity, 'CompanyEntity', 'enableProductQuantity'),

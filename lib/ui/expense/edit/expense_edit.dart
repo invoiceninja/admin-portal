@@ -79,6 +79,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final store = StoreProvider.of<AppState>(context);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
+    final footer = localization.expenseTotal +
+        ': ' +
+        formatNumber(expense.grossAmount, context,
+            currencyId: expense.currencyId);
 
     return EditScaffold(
       isFullscreen: isFullscreen,
@@ -171,10 +175,9 @@ class _ExpenseEditState extends State<ExpenseEdit>
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                          localization.expenseTotal +
-                              ': ' +
-                              formatNumber(expense.grossAmount, context,
-                                  currencyId: expense.currencyId),
+                          expense.number.isEmpty
+                              ? footer
+                              : '${expense.number} • $footer',
                           style: TextStyle(
                             color: viewModel.state.prefState.enableDarkMode
                                 ? Colors.white

@@ -60,7 +60,9 @@ class ClientEditFooter extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(
-                    client.calculateDisplayName,
+                    client.number.isEmpty
+                        ? client.calculateDisplayName
+                        : '${client.number} • ${client.calculateDisplayName}',
                     style: TextStyle(
                       color: state.prefState.enableDarkMode
                           ? Colors.white

@@ -221,16 +221,22 @@ class _BottomBarState extends State<_BottomBar> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: LiveText(() {
-                      return localization.duration +
+                      final task = widget.task;
+                      final title = localization.duration +
                           ' ' +
                           formatNumber(
                               widget.task
                                   .calculateDuration(
-                                      includeRunning: widget.task.showAsRunning)
+                                      includeRunning: task.showAsRunning)
                                   .inSeconds
                                   .toDouble(),
                               context,
                               formatNumberType: FormatNumberType.duration);
+                      if (task.number.isNotEmpty) {
+                        return '${task.number} • $title';
+                      }
+
+                      return title;
                     },
                         style: TextStyle(
                           color: state.prefState.enableDarkMode
