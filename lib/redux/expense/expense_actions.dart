@@ -281,8 +281,12 @@ void handleExpenseAction(
       });
 
       String projectId = '';
+      String vendorId = '';
       for (var each in availableExpenses) {
         final expense = each as ExpenseEntity;
+        if (expense.vendorId.isNotEmpty) {
+          vendorId = expense.vendorId;
+        }
         if (expense.projectId.isNotEmpty) {
           if (projectId.isEmpty &&
               state.projectState.get(expense.projectId).clientId == client.id) {
@@ -303,7 +307,8 @@ void handleExpenseAction(
           entity: InvoiceEntity(state: state, client: client).rebuild(
             (b) => b
               ..lineItems.addAll(items)
-              ..projectId = projectId,
+              ..projectId = projectId
+              ..vendorId = vendorId,
           ),
         );
       }
