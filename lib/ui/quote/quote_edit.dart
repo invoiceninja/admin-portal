@@ -100,7 +100,9 @@ class _QuoteEditState extends State<QuoteEdit>
         EntityAction.download,
         EntityAction.emailQuote,
         if (!invoice.isSent) EntityAction.markSent,
-        if (!invoice.isApproved) EntityAction.convertToInvoice,
+        invoice.invoiceId.isEmpty
+            ? EntityAction.convertToInvoice
+            : EntityAction.viewInvoice,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

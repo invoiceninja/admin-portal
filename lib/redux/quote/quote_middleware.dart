@@ -305,6 +305,9 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
       } else {
         store.dispatch(SaveQuoteSuccess(quote));
       }
+      if (action.action == EntityAction.convertToInvoice) {
+        store.dispatch(RefreshData());
+      }
       action.completer.complete(quote);
     }).catchError((Object error) {
       print(error);

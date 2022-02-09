@@ -474,6 +474,9 @@ Future handleQuoteAction(
           snackBarCompleter<Null>(context, localization.convertedQuote),
           quoteIds));
       break;
+    case EntityAction.viewInvoice:
+      viewEntityById(entityId: quote.invoiceId, entityType: EntityType.invoice);
+      break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(
           snackBarCompleter<Null>(context, localization.markedQuoteAsSent),

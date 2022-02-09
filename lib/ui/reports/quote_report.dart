@@ -130,7 +130,7 @@ ReportResult quoteReport(
 
       switch (column) {
         case QuoteReportFields.id:
-          value = quote.id;
+          value = quote.amount;
           break;
         case QuoteReportFields.amount:
           value = quote.amount;

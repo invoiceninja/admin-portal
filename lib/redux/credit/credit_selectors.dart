@@ -7,6 +7,16 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+ContactEntity creditContactSelector(InvoiceEntity credit, ClientEntity client) {
+  var contactIds =
+      credit.invitations.map((invitation) => invitation.contactId).toList();
+  if (contactIds.contains(client.primaryContact.id)) {
+    contactIds = [client.primaryContact.id];
+  }
+  return client.contacts
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
+}
+
 var memoizedDropdownCreditList = memo6(
     (BuiltMap<String, InvoiceEntity> creditMap,
             BuiltMap<String, ClientEntity> clientMap,

@@ -70,18 +70,30 @@ enum InvoiceReportFields {
   is_viewed,
   assigned_to,
   created_by,
+  project,
+  vendor,
 }
 
-var memoizedInvoiceReport = memo6((
+var memoizedInvoiceReport = memo8((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
-    invoiceReport(userCompany, reportsUIState, invoiceMap, clientMap, userMap,
-        staticState));
+    invoiceReport(
+      userCompany,
+      reportsUIState,
+      invoiceMap,
+      clientMap,
+      userMap,
+      vendorMap,
+      projectMap,
+      staticState,
+    ));
 
 ReportResult invoiceReport(
   UserCompanyEntity userCompany,
@@ -89,6 +101,8 @@ ReportResult invoiceReport(
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -311,6 +325,12 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.created_by:
           value = userMap[invoice.createdUserId]?.listDisplayName ?? '';
+          break;
+        case InvoiceReportFields.project:
+          value = (projectMap[invoice.projectId] ?? ProjectEntity()).name;
+          break;
+        case InvoiceReportFields.vendor:
+          value = (vendorMap[invoice.vendorId] ?? VendorEntity()).name;
           break;
       }
 

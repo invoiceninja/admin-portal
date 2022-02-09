@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 
@@ -591,14 +593,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         ],
                       ),
                       SizedBox(
-                        height: 200,
+                        height: 240,
                         child: TabBarView(
                           controller: _optionTabController,
                           children: <Widget>[
                             Column(
                               children: [
                                 DecoratedFormField(
-                                  maxLines: 3,
+                                  maxLines: 4,
                                   controller: _termsController,
                                   keyboardType: TextInputType.multiline,
                                   label: entityType == EntityType.credit
@@ -613,7 +615,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           .getDefaultTerms(invoice.entityType),
                                 ),
                                 DecoratedFormField(
-                                  maxLines: 3,
+                                  maxLines: 4,
                                   controller: _footerController,
                                   keyboardType: TextInputType.multiline,
                                   label: entityType == EntityType.credit
@@ -632,155 +634,132 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             Column(
                               children: [
                                 DecoratedFormField(
-                                  maxLines: 3,
+                                  maxLines: 4,
                                   controller: _publicNotesController,
                                   keyboardType: TextInputType.multiline,
                                   label: localization.publicNotes,
                                   hint: client.publicNotes,
                                 ),
                                 DecoratedFormField(
-                                  maxLines: 3,
+                                  maxLines: 4,
                                   controller: _privateNotesController,
                                   keyboardType: TextInputType.multiline,
                                   label: localization.privateNotes,
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: DesignPicker(
-                                        initialValue: invoice.designId,
-                                        onSelected: (value) {
-                                          viewModel.onChanged(invoice.rebuild(
-                                              (b) => b..designId = value.id));
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(width: kTableColumnGap),
-                                    Expanded(
-                                      child: UserPicker(
-                                        userId: invoice.assignedUserId,
-                                        onChanged: (userId) => viewModel
-                                            .onChanged(invoice.rebuild((b) =>
-                                                b..assignedUserId = userId)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: DecoratedFormField(
-                                        key: ValueKey(
-                                            '__exchange_rate_${invoice.clientId}__'),
-                                        label: localization.exchangeRate,
-                                        initialValue: formatNumber(
-                                            invoice.exchangeRate, context,
-                                            formatNumberType:
-                                                FormatNumberType.inputMoney),
-                                        onChanged: (value) => viewModel
-                                            .onChanged(invoice.rebuild((b) => b
-                                              ..exchangeRate =
-                                                  parseDouble(value))),
-                                        keyboardType:
-                                            TextInputType.numberWithOptions(
-                                                decimal: true),
-                                        onSavePressed: widget
-                                            .entityViewModel.onSavePressed,
-                                      ),
-                                    ),
-                                    if (company.hasTaxes) ...[
-                                      SizedBox(width: kTableColumnGap),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8),
-                                          child: SwitchListTile(
-                                            activeColor: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                            title: Text(
-                                                localization.inclusiveTaxes),
-                                            dense: true,
-                                            value: invoice.usesInclusiveTaxes,
-                                            onChanged: (value) {
-                                              viewModel.onChanged(
-                                                  invoice.rebuild((b) => b
-                                                    ..usesInclusiveTaxes =
-                                                        value));
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ] else ...[
-                                      SizedBox(width: kTableColumnGap),
-                                      Expanded(child: SizedBox()),
-                                    ],
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    if (company
-                                        .isModuleEnabled(EntityType.project))
-                                      Expanded(
-                                          child: ProjectPicker(
-                                        clientId: invoice.clientId,
-                                        projectId: invoice.projectId,
-                                        onChanged: (projectId) {
-                                          final project =
-                                              state.projectState.get(projectId);
-                                          final client = state.clientState
-                                              .get(project.clientId);
+                            LayoutBuilder(builder: (context, constraints) {
+                              return GridView.count(
+                                physics: NeverScrollableScrollPhysics(),
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: kTableColumnGap,
+                                shrinkWrap: true,
+                                primary: true,
+                                crossAxisCount: 2,
+                                childAspectRatio:
+                                    ((constraints.maxWidth / 2) - 8) / 50,
+                                children: [
+                                  DesignPicker(
+                                    initialValue: invoice.designId,
+                                    onSelected: (value) {
+                                      viewModel.onChanged(invoice.rebuild(
+                                          (b) => b..designId = value.id));
+                                    },
+                                  ),
+                                  UserPicker(
+                                    userId: invoice.assignedUserId,
+                                    onChanged: (userId) => viewModel.onChanged(
+                                        invoice.rebuild(
+                                            (b) => b..assignedUserId = userId)),
+                                  ),
+                                  if (company
+                                      .isModuleEnabled(EntityType.project))
+                                    ProjectPicker(
+                                      clientId: invoice.clientId,
+                                      projectId: invoice.projectId,
+                                      onChanged: (projectId) {
+                                        final project =
+                                            state.projectState.get(projectId);
+                                        final client = state.clientState
+                                            .get(project.clientId);
 
-                                          if (project.isOld &&
-                                              project.clientId !=
-                                                  invoice.clientId) {
-                                            viewModel.onClientChanged(
-                                              context,
-                                              invoice.rebuild((b) =>
-                                                  b..projectId = projectId),
-                                              client,
-                                            );
-                                          } else {
-                                            viewModel.onChanged(invoice.rebuild(
-                                                (b) =>
-                                                    b..projectId = projectId));
-                                          }
-                                        },
-                                      )),
-                                    if (invoice.isInvoice) ...[
-                                      SizedBox(width: kTableColumnGap),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 8),
-                                          child: SwitchListTile(
-                                            activeColor: Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
-                                            title: Text(
-                                                localization.autoBillEnabled),
-                                            dense: true,
-                                            value: invoice.autoBillEnabled,
-                                            onChanged: (value) {
-                                              viewModel.onChanged(
-                                                  invoice.rebuild((b) => b
-                                                    ..autoBillEnabled = value));
-                                            },
-                                          ),
-                                        ),
+                                        if (project.isOld &&
+                                            project.clientId !=
+                                                invoice.clientId) {
+                                          viewModel.onClientChanged(
+                                            context,
+                                            invoice.rebuild((b) =>
+                                                b..projectId = projectId),
+                                            client,
+                                          );
+                                        } else {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) => b..projectId = projectId));
+                                        }
+                                      },
+                                    ),
+                                  if (company
+                                      .isModuleEnabled(EntityType.vendor))
+                                    EntityDropdown(
+                                      entityType: EntityType.vendor,
+                                      entityId: invoice.vendorId,
+                                      labelText: localization.vendor,
+                                      entityList: memoizedDropdownVendorList(
+                                          state.vendorState.map,
+                                          state.vendorState.list,
+                                          state.userState.map,
+                                          state.staticState),
+                                      onSelected: (vendor) =>
+                                          viewModel.onChanged(
+                                        invoice.rebuild(
+                                            (b) => b.vendorId = vendor.id),
                                       ),
-                                    ] else ...[
-                                      SizedBox(width: kTableColumnGap),
-                                      Expanded(child: SizedBox()),
-                                    ],
-                                  ],
-                                )
-                              ],
-                            ),
+                                    ),
+                                  DecoratedFormField(
+                                    key: ValueKey(
+                                        '__exchange_rate_${invoice.clientId}__'),
+                                    label: localization.exchangeRate,
+                                    initialValue: formatNumber(
+                                        invoice.exchangeRate, context,
+                                        formatNumberType:
+                                            FormatNumberType.inputMoney),
+                                    onChanged: (value) => viewModel.onChanged(
+                                        invoice.rebuild((b) => b
+                                          ..exchangeRate = parseDouble(value))),
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    onSavePressed:
+                                        widget.entityViewModel.onSavePressed,
+                                  ),
+                                  if (company.hasTaxes)
+                                    SwitchListTile(
+                                      activeColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      title: Text(localization.inclusiveTaxes),
+                                      value: invoice.usesInclusiveTaxes,
+                                      onChanged: (value) {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) =>
+                                                b..usesInclusiveTaxes = value));
+                                      },
+                                    ),
+                                  if (invoice.isInvoice)
+                                    SwitchListTile(
+                                      activeColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      title: Text(localization.autoBillEnabled),
+                                      value: invoice.autoBillEnabled,
+                                      onChanged: (value) {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) => b..autoBillEnabled = value));
+                                      },
+                                    ),
+                                ],
+                              );
+                            }),
                           ],
                         ),
                       ),

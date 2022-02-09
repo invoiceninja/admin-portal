@@ -514,6 +514,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   InvoiceFields.customValue3,
                   InvoiceFields.customValue4,
                   InvoiceFields.project,
+                  InvoiceFields.vendor,
                 ].map((field) => '\$invoice.$field'),
                 ...[
                   ClientFields.balance,

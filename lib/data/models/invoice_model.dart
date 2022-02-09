@@ -61,6 +61,7 @@ class InvoiceFields {
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String project = 'project';
+  static const String vendor = 'vendor';
   static const String statusId = 'status_id';
   static const String status = 'status';
   static const String number = 'number';
@@ -95,6 +96,8 @@ class InvoiceFields {
   static const String exchangeRate = 'exchange_rate';
   static const String isViewed = 'is_viewed';
   static const String autoBillEnabled = 'auto_bill_enabled';
+  static const String contactName = 'contact_name';
+  static const String contactEmail = 'contact_email';
 }
 
 class InvoiceTotalFields {
@@ -147,6 +150,7 @@ abstract class InvoiceEntity extends Object
       taxAmount: 0,
       poNumber: '',
       projectId: '',
+      vendorId: '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
       publicNotes: '',
@@ -254,6 +258,7 @@ abstract class InvoiceEntity extends Object
     ..remainingCycles = -1
     ..invoiceId = ''
     ..projectId = ''
+    ..vendorId = ''
     ..subscriptionId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -318,6 +323,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
+
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
 
   @BuiltValueField(wireName: 'subscription_id')
   String get subscriptionId;
@@ -891,8 +899,12 @@ abstract class InvoiceEntity extends Object
           }
         }
 
-        if (isQuote && (invoiceId ?? '').isEmpty) {
-          actions.add(EntityAction.convertToInvoice);
+        if (isQuote) {
+          if ((invoiceId ?? '').isEmpty) {
+            actions.add(EntityAction.convertToInvoice);
+          } else {
+            actions.add(EntityAction.viewInvoice);
+          }
         }
       }
 
@@ -1241,6 +1253,7 @@ abstract class InvoiceEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
     ..projectId = ''
+    ..vendorId = ''
     ..autoBillEnabled = false
     ..subscriptionId = '';
 

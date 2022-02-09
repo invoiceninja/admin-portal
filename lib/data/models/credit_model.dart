@@ -74,4 +74,8 @@ class CreditFields {
   static const String taxAmount = 'tax_amount';
   static const String exchangeRate = 'exchange_rate';
   static const String isViewed = 'is_viewed';
+  static const String project = 'project';
+  static const String vendor = 'vendor';
+  static const String contactName = 'contact_name';
+  static const String contactEmail = 'contact_email';
 }

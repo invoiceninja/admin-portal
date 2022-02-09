@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -49,6 +50,9 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.lastSentDate,
       InvoiceFields.nextSendDate,
       InvoiceFields.project,
+      InvoiceFields.vendor,
+      InvoiceFields.contactName,
+      InvoiceFields.contactEmail,
     ];
   }
 
@@ -71,6 +75,8 @@ class InvoicePresenter extends EntityPresenter {
             .listDisplayName);
       case InvoiceFields.project:
         return Text(state.projectState.get(invoice.projectId).listDisplayName);
+      case InvoiceFields.vendor:
+        return Text(state.vendorState.get(invoice.vendorId).name);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.lastSentDate:
@@ -133,6 +139,15 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.autoBillEnabled:
         return Text(localization.lookup(
             invoice.autoBillEnabled ? localization.yes : localization.no));
+      case InvoiceFields.contactName:
+      case InvoiceFields.contactEmail:
+        final contact = invoiceContactSelector(
+            invoice, state.clientState.get(invoice.clientId));
+        if (field == InvoiceFields.contactName) {
+          return Text(contact?.fullName ?? '');
+        } else {
+          return Text(contact?.email ?? '');
+        }
     }
 
     return super.getField(field: field, context: context);

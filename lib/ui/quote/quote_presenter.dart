@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -42,6 +43,10 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.exchangeRate,
       QuoteFields.isViewed,
       QuoteFields.lastSentDate,
+      QuoteFields.project,
+      QuoteFields.vendor,
+      QuoteFields.contactName,
+      QuoteFields.contactEmail,
     ];
   }
 
@@ -104,6 +109,19 @@ class QuotePresenter extends EntityPresenter {
             formatNumberType: FormatNumberType.double));
       case QuoteFields.isViewed:
         return Text(quote.isViewed ? localization.yes : localization.no);
+      case QuoteFields.project:
+        return Text(state.projectState.get(quote.projectId).listDisplayName);
+      case QuoteFields.vendor:
+        return Text(state.vendorState.get(quote.vendorId).name);
+      case QuoteFields.contactName:
+      case QuoteFields.contactEmail:
+        final contact =
+            quoteContactSelector(quote, state.clientState.get(quote.clientId));
+        if (field == QuoteFields.contactName) {
+          return Text(contact?.fullName ?? '');
+        } else {
+          return Text(contact?.email ?? '');
+        }
     }
 
     return super.getField(field: field, context: context);
