@@ -561,8 +561,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       exchangeRate != 0) {
                                     exchangeRate = 1 / exchangeRate;
                                   }
-                                  cost = round(
-                                      cost * exchangeRate, currency.precision);
+                                  cost = round(cost * exchangeRate,
+                                      currency?.precision ?? 2);
                                 }
 
                                 final updatedItem = item.rebuild((b) => b
@@ -582,24 +582,36 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   ..customValue2 = product.customValue2
                                   ..customValue3 = product.customValue3
                                   ..customValue4 = product.customValue4
-                                  ..taxName1 = company.numberOfItemTaxRates >= 1
-                                      ? product.taxName1
-                                      : ''
-                                  ..taxRate1 = company.numberOfItemTaxRates >= 1
-                                      ? product.taxRate1
-                                      : 0
-                                  ..taxName2 = company.numberOfItemTaxRates >= 2
-                                      ? product.taxName2
-                                      : ''
-                                  ..taxRate2 = company.numberOfItemTaxRates >= 2
-                                      ? product.taxRate2
-                                      : 0
-                                  ..taxName3 = company.numberOfItemTaxRates >= 3
-                                      ? product.taxName3
-                                      : ''
-                                  ..taxRate3 = company.numberOfItemTaxRates >= 3
-                                      ? product.taxRate3
-                                      : 0);
+                                  ..taxName1 =
+                                      company.numberOfItemTaxRates >= 1 &&
+                                              product.taxName1.isNotEmpty
+                                          ? product.taxName1
+                                          : item.taxName1
+                                  ..taxRate1 =
+                                      company.numberOfItemTaxRates >= 1 &&
+                                              product.taxName1.isNotEmpty
+                                          ? product.taxRate1
+                                          : item.taxRate1
+                                  ..taxName2 =
+                                      company.numberOfItemTaxRates >= 2 &&
+                                              product.taxName2.isNotEmpty
+                                          ? product.taxName2
+                                          : item.taxName2
+                                  ..taxRate2 =
+                                      company.numberOfItemTaxRates >= 2 &&
+                                              product.taxName2.isNotEmpty
+                                          ? product.taxRate2
+                                          : item.taxRate2
+                                  ..taxName3 =
+                                      company.numberOfItemTaxRates >= 3 &&
+                                              product.taxName3.isNotEmpty
+                                          ? product.taxName3
+                                          : item.taxName3
+                                  ..taxRate3 =
+                                      company.numberOfItemTaxRates >= 3 &&
+                                              product.taxName3.isNotEmpty
+                                          ? product.taxRate3
+                                          : item.taxRate3);
                                 _onChanged(updatedItem, index, debounce: false);
                                 _updateTable();
                               },
