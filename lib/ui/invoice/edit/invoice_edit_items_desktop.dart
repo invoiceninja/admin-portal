@@ -356,63 +356,67 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Row(
                     children: [
-                      ..._columns.map((column) {
-                        if (column == COLUMN_ITEM) {
-                          return Expanded(child: Text(item.productKey ?? ''));
-                        } else if (column == COLUMN_DESCRIPTION) {
-                          return Expanded(
-                            child: Text(
-                              item.notes ?? '',
-                              maxLines: 2, // TODO change to 1
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        } else if (column == COLUMN_CUSTOM1) {
-                          return Expanded(child: Text(item.customValue1 ?? ''));
-                        } else if (column == COLUMN_CUSTOM2) {
-                          return Expanded(child: Text(item.customValue2 ?? ''));
-                        } else if (column == COLUMN_CUSTOM3) {
-                          return Expanded(child: Text(item.customValue3 ?? ''));
-                        } else if (column == COLUMN_CUSTOM4) {
-                          return Expanded(child: Text(item.customValue4 ?? ''));
-                        } else if (column == COLUMN_TAX1) {
-                          return Expanded(child: Text(item.taxName1 ?? ''));
-                        } else if (column == COLUMN_TAX2) {
-                          return Expanded(child: Text(item.taxName2 ?? ''));
-                        } else if (column == COLUMN_TAX3) {
-                          return Expanded(child: Text(item.taxName3 ?? ''));
-                        } else if (column == COLUMN_UNIT_COST) {
-                          return Expanded(
-                              child: Text(
-                            formatNumber(item.cost, context,
-                                    formatNumberType:
-                                        FormatNumberType.inputMoney,
-                                    clientId: invoice.clientId) ??
-                                '',
-                            textAlign: TextAlign.right,
-                          ));
-                        } else if (column == COLUMN_QUANTITY) {
-                          return Expanded(
-                              child: Text(
-                            formatNumber(item.quantity, context,
-                                    formatNumberType:
-                                        FormatNumberType.inputAmount,
-                                    clientId: invoice.clientId) ??
-                                '',
-                            textAlign: TextAlign.right,
-                          ));
-                        } else if (column == COLUMN_DISCOUNT) {
-                          return Expanded(
-                              child: Text(
-                            formatNumber(item.discount, context,
-                                    formatNumberType:
-                                        FormatNumberType.inputAmount,
-                                    clientId: invoice.clientId) ??
-                                '',
-                            textAlign: TextAlign.right,
-                          ));
-                        }
-                      }).toList(),
+                      ..._columns
+                          .map((column) {
+                            if (column == COLUMN_ITEM) {
+                              return Text(item.productKey ?? '');
+                            } else if (column == COLUMN_DESCRIPTION) {
+                              return Text(
+                                item.notes ?? '',
+                                maxLines: 2, // TODO change to 1
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            } else if (column == COLUMN_CUSTOM1) {
+                              return Text(item.customValue1 ?? '');
+                            } else if (column == COLUMN_CUSTOM2) {
+                              return Text(item.customValue2 ?? '');
+                            } else if (column == COLUMN_CUSTOM3) {
+                              return Text(item.customValue3 ?? '');
+                            } else if (column == COLUMN_CUSTOM4) {
+                              return Text(item.customValue4 ?? '');
+                            } else if (column == COLUMN_TAX1) {
+                              return Text(item.taxName1 ?? '');
+                            } else if (column == COLUMN_TAX2) {
+                              return Text(item.taxName2 ?? '');
+                            } else if (column == COLUMN_TAX3) {
+                              return Text(item.taxName3 ?? '');
+                            } else if (column == COLUMN_UNIT_COST) {
+                              return Text(
+                                formatNumber(item.cost, context,
+                                        formatNumberType:
+                                            FormatNumberType.inputMoney,
+                                        clientId: invoice.clientId) ??
+                                    '',
+                                textAlign: TextAlign.right,
+                              );
+                            } else if (column == COLUMN_QUANTITY) {
+                              return Text(
+                                formatNumber(item.quantity, context,
+                                        formatNumberType:
+                                            FormatNumberType.inputAmount,
+                                        clientId: invoice.clientId) ??
+                                    '',
+                                textAlign: TextAlign.right,
+                              );
+                            } else if (column == COLUMN_DISCOUNT) {
+                              return Text(
+                                formatNumber(item.discount, context,
+                                        formatNumberType:
+                                            FormatNumberType.inputAmount,
+                                        clientId: invoice.clientId) ??
+                                    '',
+                                textAlign: TextAlign.right,
+                              );
+                            }
+                          })
+                          .map((widget) => Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: kTableColumnGap),
+                                  child: widget,
+                                ),
+                              ))
+                          .toList(),
                       Expanded(
                         child: Text(
                           formatNumber(item.total(invoice, precision), context,
