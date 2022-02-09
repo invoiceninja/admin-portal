@@ -107,23 +107,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns)
         .map((value) => value.split('.')[1]);
 
-    if (pdfColumns.isEmpty) {
-      pdfColumns = widget.isTasks
-          ? [
-              TaskItemFields.service,
-              TaskItemFields.description,
-              TaskItemFields.rate,
-              TaskItemFields.hours,
-            ]
-          : [
-              ProductItemFields.item,
-              ProductItemFields.description,
-              ProductItemFields.unitCost,
-              ProductItemFields.quantity,
-            ];
+    if (widget.isTasks) {
+      if (pdfColumns.isEmpty) {
+        pdfColumns = [
+          TaskItemFields.service,
+          TaskItemFields.description,
+          TaskItemFields.rate,
+          TaskItemFields.hours,
+        ];
+      } else if (!pdfColumns.contains(TaskItemFields.service)) {
+        pdfColumns = [TaskItemFields.service, ...pdfColumns];
+      }
+    } else {
+      if (pdfColumns.isEmpty) {
+        pdfColumns = [
+          ProductItemFields.item,
+          ProductItemFields.description,
+          ProductItemFields.unitCost,
+          ProductItemFields.quantity,
+        ];
+      } else if (!pdfColumns.contains(ProductItemFields.item)) {
+        pdfColumns = [ProductItemFields.item, ...pdfColumns];
+      }
     }
-
-    _columns.clear();
 
     for (var column in pdfColumns) {
       if (ProductItemFields.item == column ||
