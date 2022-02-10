@@ -41,16 +41,16 @@ class TaskScreen extends StatelessWidget {
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
     final statuses = [
-      if (!state.prefState.showKanban)
-        TaskStatusEntity().rebuild((b) => b
-          ..id = kTaskStatusInvoiced
-          ..name = localization.invoiced),
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusLogged
         ..name = localization.logged),
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusRunning
         ..name = localization.running),
+      if (!state.prefState.showKanban)
+        TaskStatusEntity().rebuild((b) => b
+          ..id = kTaskStatusInvoiced
+          ..name = localization.invoiced),
     ];
 
     return ListScaffold(
