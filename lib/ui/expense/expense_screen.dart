@@ -36,6 +36,22 @@ class ExpenseScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      ExpenseStatusEntity().rebuild((b) => b
+        ..id = kExpenseStatusLogged
+        ..name = localization.logged),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kExpenseStatusPending
+          ..name = localization.pending,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kExpenseStatusInvoiced
+          ..name = localization.invoiced,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.expense,
       onHamburgerLongPress: () => store.dispatch(StartExpenseMultiselect()),
@@ -46,6 +62,13 @@ class ExpenseScreen extends StatelessWidget {
         filter: state.expenseListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterExpenses(value));
+        },
+        statuses: statuses,
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterExpensesByState(state));
+        },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterExpensesByStatus(status));
         },
       ),
       onCheckboxPressed: () {
@@ -86,21 +109,7 @@ class ExpenseScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterExpensesByState(state));
         },
-        statuses: [
-          ExpenseStatusEntity().rebuild((b) => b
-            ..id = kExpenseStatusLogged
-            ..name = localization.logged),
-          ExpenseStatusEntity().rebuild(
-            (b) => b
-              ..id = kExpenseStatusPending
-              ..name = localization.pending,
-          ),
-          ExpenseStatusEntity().rebuild(
-            (b) => b
-              ..id = kExpenseStatusInvoiced
-              ..name = localization.invoiced,
-          ),
-        ],
+        statuses: statuses,
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterExpensesByStatus(status));
         },

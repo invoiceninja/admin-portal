@@ -56,6 +56,9 @@ class ExpenseCategoryScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterExpenseCategories(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterExpenseCategoriesByState(state));
+        },
       ),
       body: ExpenseCategoryListBuilder(),
       bottomNavigationBar: AppBottomBar(
