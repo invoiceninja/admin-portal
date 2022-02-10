@@ -25,7 +25,7 @@ class _SelectRow extends StatelessWidget {
       selected: selected,
       title: child,
       dense: true,
-      contentPadding: EdgeInsets.symmetric(horizontal: 4),
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
       onTap: () {
         onChange(!selected);
         _theState.notify();
