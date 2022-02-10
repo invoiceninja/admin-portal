@@ -102,10 +102,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final customField4 =
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
-    var pdfColumns = company.settings
+    List<String> pdfColumns = company.settings
         .getFieldsForSection(
             widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns)
-        .map((value) => value.split('.')[1]);
+        .map((value) => value.split('.')[1])
+        .toList();
 
     if (widget.isTasks) {
       if (pdfColumns.isEmpty) {
@@ -129,6 +130,23 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       } else if (!pdfColumns.contains(ProductItemFields.item)) {
         pdfColumns = [ProductItemFields.item, ...pdfColumns];
       }
+    }
+
+    if (company.hasCustomField(customField1) &&
+        !pdfColumns.contains(customField1)) {
+      pdfColumns.add(customField1);
+    }
+    if (company.hasCustomField(customField2) &&
+        !pdfColumns.contains(customField2)) {
+      pdfColumns.add(customField2);
+    }
+    if (company.hasCustomField(customField3) &&
+        !pdfColumns.contains(customField3)) {
+      pdfColumns.add(customField3);
+    }
+    if (company.hasCustomField(customField4) &&
+        !pdfColumns.contains(customField4)) {
+      pdfColumns.add(customField4);
     }
 
     for (var column in pdfColumns) {
