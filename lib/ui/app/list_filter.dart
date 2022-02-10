@@ -24,9 +24,9 @@ class ListFilter extends StatefulWidget {
     @required this.filter,
     @required this.onFilterChanged,
     @required this.entityIds,
-    @required this.onSelectedState,
     this.statuses,
     this.onSelectedStatus,
+    this.onSelectedState,
   }) : super(key: key);
 
   final EntityType entityType;
