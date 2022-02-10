@@ -117,10 +117,6 @@ class _ListFilterState extends State<ListFilter> {
 
     final isDashboardOrSettings =
         [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
-    final stateFilters =
-        state.getListState(widget.entityType).stateFilters.toList();
-    final statusFilters =
-        state.getListState(widget.entityType).statusFilters.toList();
 
     Color color;
     if (enableDarkMode) {
@@ -213,7 +209,8 @@ class _ListFilterState extends State<ListFilter> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 13, horizontal: 10),
                 ),
-                selectedValues: stateFilters,
+                selectedValues:
+                    state.getListState(widget.entityType).stateFilters.toList(),
                 whenEmpty: localization.all,
                 menuItembuilder: (dynamic value) {
                   final state = value as EntityState;
@@ -269,7 +266,10 @@ class _ListFilterState extends State<ListFilter> {
                     }
                   },
                   options: widget.statuses,
-                  selectedValues: statusFilters,
+                  selectedValues: state
+                      .getListState(widget.entityType)
+                      .statusFilters
+                      .toList(),
                   whenEmpty: localization.all,
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityStatus;
