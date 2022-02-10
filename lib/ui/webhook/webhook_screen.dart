@@ -47,6 +47,9 @@ class WebhookScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterWebhooks(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterWebhooksByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.webhookListState.isInMultiselect()) {

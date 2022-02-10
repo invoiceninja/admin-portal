@@ -45,6 +45,9 @@ class TaxRateSettingsScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterTaxRates(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterTaxRatesByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.taxRateListState.isInMultiselect()) {

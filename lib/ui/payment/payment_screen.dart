@@ -44,6 +44,9 @@ class PaymentScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterPayments(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterPaymentsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.paymentListState.isInMultiselect()) {

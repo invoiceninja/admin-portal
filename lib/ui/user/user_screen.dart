@@ -45,6 +45,9 @@ class UserScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterUsers(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterUsersByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.userListState.isInMultiselect()) {

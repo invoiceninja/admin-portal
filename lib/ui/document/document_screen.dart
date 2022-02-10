@@ -44,6 +44,9 @@ class DocumentScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterDocuments(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterDocumentsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.documentListState.isInMultiselect()) {

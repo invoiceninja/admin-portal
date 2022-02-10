@@ -36,6 +36,33 @@ class QuoteScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kQuoteStatusDraft
+          ..name = localization.draft,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kQuoteStatusSent
+          ..name = localization.sent,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kQuoteStatusViewed
+          ..name = localization.viewed,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kQuoteStatusApproved
+          ..name = localization.approved,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kQuoteStatusExpired
+          ..name = localization.expired,
+      ),
+    ];
 
     return ListScaffold(
       entityType: EntityType.quote,
@@ -48,6 +75,13 @@ class QuoteScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterQuotes(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterQuotesByState(state));
+        },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterQuotesByStatus(status));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.quoteListState.isInMultiselect()) {
@@ -90,33 +124,7 @@ class QuoteScreen extends StatelessWidget {
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterQuotesByStatus(status));
         },
-        statuses: [
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kQuoteStatusDraft
-              ..name = localization.draft,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kQuoteStatusSent
-              ..name = localization.sent,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kQuoteStatusViewed
-              ..name = localization.viewed,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kQuoteStatusApproved
-              ..name = localization.approved,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kQuoteStatusExpired
-              ..name = localization.expired,
-          ),
-        ],
+        statuses: statuses,
         onCheckboxPressed: () {
           if (store.state.quoteListState.isInMultiselect()) {
             store.dispatch(ClearQuoteMultiselect());

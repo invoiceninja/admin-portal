@@ -46,6 +46,9 @@ class ClientScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterClients(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterClientsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.clientListState.isInMultiselect()) {

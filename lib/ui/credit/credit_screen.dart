@@ -46,6 +46,9 @@ class CreditScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterCredits(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterCreditsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.creditListState.isInMultiselect()) {

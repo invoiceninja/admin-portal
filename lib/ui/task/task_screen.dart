@@ -40,6 +40,18 @@ class TaskScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
+    final statuses = [
+      TaskStatusEntity().rebuild((b) => b
+        ..id = kTaskStatusLogged
+        ..name = localization.logged),
+      TaskStatusEntity().rebuild((b) => b
+        ..id = kTaskStatusRunning
+        ..name = localization.running),
+      if (!state.prefState.showKanban)
+        TaskStatusEntity().rebuild((b) => b
+          ..id = kTaskStatusInvoiced
+          ..name = localization.invoiced),
+    ];
 
     return ListScaffold(
       entityType: EntityType.task,
@@ -51,6 +63,13 @@ class TaskScreen extends StatelessWidget {
         filter: state.taskListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTasks(value));
+        },
+        statuses: statuses,
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterTasksByState(state));
+        },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterTasksByStatus(status));
         },
       ),
       onCheckboxPressed: () {
@@ -120,18 +139,7 @@ class TaskScreen extends StatelessWidget {
           TaskFields.duration,
           TaskFields.updatedAt,
         ],
-        statuses: [
-          if (!state.prefState.showKanban)
-            TaskStatusEntity().rebuild((b) => b
-              ..id = kTaskStatusInvoiced
-              ..name = localization.invoiced),
-          TaskStatusEntity().rebuild((b) => b
-            ..id = kTaskStatusLogged
-            ..name = localization.logged),
-          TaskStatusEntity().rebuild((b) => b
-            ..id = kTaskStatusRunning
-            ..name = localization.running),
-        ],
+        statuses: statuses,
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTasksByState(state));
         },

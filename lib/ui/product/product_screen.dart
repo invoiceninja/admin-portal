@@ -46,6 +46,9 @@ class ProductScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterProducts(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterProductsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.productListState.isInMultiselect()) {

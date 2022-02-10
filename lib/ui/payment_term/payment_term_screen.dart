@@ -49,6 +49,9 @@ class PaymentTermScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterPaymentTerms(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterPaymentTermsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.paymentTermListState.isInMultiselect()) {

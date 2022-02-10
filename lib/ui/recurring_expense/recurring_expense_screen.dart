@@ -49,6 +49,9 @@ class RecurringExpenseScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterRecurringExpenses(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterRecurringExpensesByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.recurringExpenseListState.isInMultiselect()) {
