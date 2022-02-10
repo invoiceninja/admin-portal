@@ -36,6 +36,44 @@ class InvoiceScreen extends StatelessWidget {
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusDraft
+          ..name = localization.draft,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusSent
+          ..name = localization.sent,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusViewed
+          ..name = localization.viewed,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusPartial
+          ..name = localization.partial,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusPaid
+          ..name = localization.paid,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusUnpaid
+          ..name = localization.unpaid,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusPastDue
+          ..name = localization.pastDue,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.invoice,
       onHamburgerLongPress: () => store.dispatch(StartInvoiceMultiselect()),
@@ -46,6 +84,13 @@ class InvoiceScreen extends StatelessWidget {
         filter: state.invoiceListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterInvoices(value));
+        },
+        statuses: statuses,
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterInvoicesByState(state));
+        },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterInvoicesByStatus(status));
         },
       ),
       onCheckboxPressed: () {
@@ -92,43 +137,7 @@ class InvoiceScreen extends StatelessWidget {
             store.dispatch(FilterInvoicesByCustom3(value)),
         onSelectedCustom4: (value) =>
             store.dispatch(FilterInvoicesByCustom4(value)),
-        statuses: [
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusDraft
-              ..name = localization.draft,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusSent
-              ..name = localization.sent,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusViewed
-              ..name = localization.viewed,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusPartial
-              ..name = localization.partial,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusPaid
-              ..name = localization.paid,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusUnpaid
-              ..name = localization.unpaid,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kInvoiceStatusPastDue
-              ..name = localization.pastDue,
-          ),
-        ],
+        statuses: statuses,
         onCheckboxPressed: () {
           if (store.state.invoiceListState.isInMultiselect()) {
             store.dispatch(ClearInvoiceMultiselect());
