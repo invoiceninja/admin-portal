@@ -415,17 +415,18 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
                 ],
-                IconButton(
-                  tooltip: localization.filter,
-                  icon: Icon(Icons.filter_list),
-                  onPressed: _showFilterStateSheet,
-                  color: store.state
-                          .getListState(widget.entityType)
-                          .hasStateFilters
-                      ? Theme.of(context).colorScheme.secondary
-                      : null,
-                ),
-                if (widget.statuses.isNotEmpty)
+                if (isMobile(context))
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.filter_list),
+                    onPressed: _showFilterStateSheet,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasStateFilters
+                        ? Theme.of(context).colorScheme.secondary
+                        : null,
+                  ),
+                if (widget.statuses.isNotEmpty && isMobile(context))
                   IconButton(
                     tooltip: localization.status,
                     icon: Icon(Icons.filter),
