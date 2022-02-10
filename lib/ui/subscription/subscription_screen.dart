@@ -48,6 +48,9 @@ class SubscriptionScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterSubscriptions(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterSubscriptionsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.subscriptionListState.isInMultiselect()) {

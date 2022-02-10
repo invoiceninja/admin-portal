@@ -37,6 +37,34 @@ class RecurringInvoiceScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringInvoiceStatusDraft
+          ..name = localization.draft,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringInvoiceStatusPending
+          ..name = localization.pending,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringInvoiceStatusActive
+          ..name = localization.active,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringInvoiceStatusPaused
+          ..name = localization.paused,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringInvoiceStatusCompleted
+          ..name = localization.completed,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.recurringInvoice,
       onHamburgerLongPress: () =>
@@ -50,6 +78,13 @@ class RecurringInvoiceScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterRecurringInvoices(value));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterRecurringInvoicesByStatus(status));
+        },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterRecurringInvoicesByState(state));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.recurringInvoiceListState.isInMultiselect()) {
@@ -85,33 +120,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
             store.dispatch(StartRecurringInvoiceMultiselect());
           }
         },
-        statuses: [
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kRecurringInvoiceStatusDraft
-              ..name = localization.draft,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kRecurringInvoiceStatusPending
-              ..name = localization.pending,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kRecurringInvoiceStatusActive
-              ..name = localization.active,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kRecurringInvoiceStatusPaused
-              ..name = localization.paused,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
-              ..id = kRecurringInvoiceStatusCompleted
-              ..name = localization.completed,
-          ),
-        ],
+        statuses: statuses,
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,

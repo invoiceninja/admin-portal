@@ -45,6 +45,9 @@ class GroupSettingsScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterGroups(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterGroupsByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.groupListState.isInMultiselect()) {

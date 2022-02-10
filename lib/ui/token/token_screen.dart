@@ -48,6 +48,9 @@ class TokenScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterTokens(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterTokensByState(state));
+        },
       ),
       onCheckboxPressed: () {
         if (store.state.tokenListState.isInMultiselect()) {

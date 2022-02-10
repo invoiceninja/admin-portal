@@ -42,6 +42,9 @@ class StubScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterStubs(value));
         },
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterStubsByState(state));
+        },
       ),
         onCheckboxPressed: () {
           if (store.state.stubListState.isInMultiselect()) {
