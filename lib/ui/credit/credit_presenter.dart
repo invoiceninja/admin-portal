@@ -83,7 +83,7 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.balance:
         return Align(
             alignment: Alignment.centerRight,
-            child: Text(formatNumber(credit.balance, context)));
+            child: Text(formatNumber(credit.balanceOrAmount, context)));
       case CreditFields.customValue1:
         return Text(presentCustomField(context, credit.customValue1));
       case CreditFields.customValue2:
