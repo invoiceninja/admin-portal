@@ -259,8 +259,9 @@ abstract class CalculateInvoiceTotal {
     if (!usesInclusiveTaxes) {
       final double taxAmount1 = round(total * taxRate1 / 100, precision);
       final double taxAmount2 = round(total * taxRate2 / 100, precision);
+      final double taxAmount3 = round(total * taxRate3 / 100, precision);
 
-      total += itemTax + taxAmount1 + taxAmount2;
+      total += itemTax + taxAmount1 + taxAmount2 + taxAmount3;
     }
 
     if (customSurcharge1 != 0.0 && !customTaxes1) {

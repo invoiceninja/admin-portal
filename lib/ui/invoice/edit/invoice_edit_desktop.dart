@@ -843,6 +843,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               invoice.taxName3.isNotEmpty)
                             TaxRateDropdown(
                               onSelected: (taxRate) {
+                                final updatedInvoice =
+                                    invoice.applyTax(taxRate, isThird: true);
+                                print(
+                                    '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
                                 viewModel.onChanged(
                                     invoice.applyTax(taxRate, isThird: true));
                               },
