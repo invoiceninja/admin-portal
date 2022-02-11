@@ -271,8 +271,8 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     repository
         .emailQuote(store.state.credentials, origQuote, action.template,
             action.subject, action.body)
-        .then((void _) {
-      store.dispatch(EmailQuoteSuccess());
+        .then((quote) {
+      store.dispatch(EmailQuoteSuccess(quote));
       if (action.completer != null) {
         action.completer.complete(null);
       }

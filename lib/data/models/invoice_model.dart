@@ -885,17 +885,15 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (isPayable && isInvoice) {
-          actions.add(EntityAction.markPaid);
-        } else if (isCredit && balanceOrAmount < 0) {
-          actions.add(EntityAction.markPaid);
-        }
-
-        if (isPayable && userCompany.canCreate(EntityType.payment)) {
-          if (isCredit) {
-            actions.add(EntityAction.applyCredit);
-          } else {
-            actions.add(EntityAction.newPayment);
+        if (userCompany.canCreate(EntityType.payment)) {
+          if (isPayable && isInvoice) {
+            actions.addAll([EntityAction.markPaid, EntityAction.newPayment]);
+          } else if (isCredit) {
+            if (balanceOrAmount < 0) {
+              actions.add(EntityAction.markPaid);
+            } else if (balanceOrAmount > 0) {
+              actions.add(EntityAction.applyCredit);
+            }
           }
         }
 

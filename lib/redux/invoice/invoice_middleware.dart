@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/data/repositories/invoice_repository.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -208,7 +207,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.delete)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(DeleteInvoicesSuccess(invoices));
-      store.dispatch(LoadClient(clientId: invoices.first.clientId));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -235,7 +234,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.restore)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(RestoreInvoicesSuccess(invoices));
-      store.dispatch(LoadClient(clientId: invoices.first.clientId));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -259,7 +258,7 @@ Middleware<AppState> _markInvoiceSent(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.markSent)
         .then((invoices) {
       store.dispatch(MarkInvoicesSentSuccess(invoices));
-      store.dispatch(LoadClient(clientId: invoices.first.clientId));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -331,7 +330,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
             action.subject, action.body)
         .then((InvoiceEntity invoice) {
       store.dispatch(EmailInvoiceSuccess(invoice: invoice));
-      store.dispatch(LoadClient(clientId: origInvoice.clientId));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }

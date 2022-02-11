@@ -230,7 +230,11 @@ class EmailQuoteRequest implements StartSaving {
   final String body;
 }
 
-class EmailQuoteSuccess implements StopSaving, PersistData {}
+class EmailQuoteSuccess implements StopSaving, PersistData {
+  EmailQuoteSuccess(this.quote);
+
+  final InvoiceEntity quote;
+}
 
 class EmailQuoteFailure implements StopSaving {
   EmailQuoteFailure(this.error);

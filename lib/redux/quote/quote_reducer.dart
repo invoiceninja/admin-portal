@@ -301,6 +301,7 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
+  TypedReducer<QuoteState, EmailQuoteSuccess>(_emailQuoteSuccess),
   TypedReducer<QuoteState, ArchiveQuotesSuccess>(_archiveQuoteSuccess),
   TypedReducer<QuoteState, DeleteQuotesSuccess>(_deleteQuoteSuccess),
   TypedReducer<QuoteState, RestoreQuotesSuccess>(_restoreQuoteSuccess),
@@ -342,6 +343,10 @@ QuoteState _restoreQuoteSuccess(
       b.map[quote.id] = quote;
     }
   });
+}
+
+QuoteState _emailQuoteSuccess(QuoteState quoteState, EmailQuoteSuccess action) {
+  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
 QuoteState _convertQuoteSuccess(
