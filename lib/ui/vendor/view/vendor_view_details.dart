@@ -3,6 +3,8 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
@@ -133,7 +135,9 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      final address = formatAddress(object: vendor);
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final address = formatAddress(state, object: vendor);
 
       if (address.isNotEmpty) {
         listTiles.add(AppListTile(
@@ -144,8 +148,8 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
               _launched = _launchURL(
                   context,
                   getMapURL(context) +
-                      Uri.encodeFull(
-                          formatAddress(object: vendor, delimiter: ',')));
+                      Uri.encodeFull(formatAddress(state,
+                          object: vendor, delimiter: ',')));
             }));
       }
 

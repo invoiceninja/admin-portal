@@ -260,7 +260,7 @@ String formatURL(String url) {
   return 'http://' + url;
 }
 
-String formatAddress(
+String formatAddress(AppState appState,
     {dynamic object, bool isShipping = false, String delimiter = '\n'}) {
   var str = '';
 
@@ -272,6 +272,8 @@ String formatAddress(
   final String state = (isShipping ? object.shippingState : object.state) ?? '';
   final String postalCode =
       (isShipping ? object.shippingPostalCode : object.postalCode) ?? '';
+  final String countryId =
+      (isShipping ? object.shippingCountryId : object.countryId) ?? '';
 
   if (address1.isNotEmpty) {
     str += address1 + delimiter;
@@ -290,6 +292,15 @@ String formatAddress(
 
   if (postalCode.isNotEmpty) {
     str += postalCode;
+  }
+
+  if (countryId.isNotEmpty &&
+      countryId != appState.company.settings.countryId) {
+    if (str.isNotEmpty) {
+      str += delimiter;
+    }
+
+    str += appState.staticState.countryMap[countryId]?.name ?? '';
   }
 
   return str;
