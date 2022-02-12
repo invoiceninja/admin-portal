@@ -300,7 +300,7 @@ String formatAddress(AppState appState,
       str += delimiter;
     }
 
-    str += appState.staticState.countryMap[countryId].name;
+    str += appState.staticState.countryMap[countryId]?.name ?? '';
   }
 
   return str;
