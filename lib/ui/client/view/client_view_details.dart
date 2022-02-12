@@ -4,9 +4,11 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -164,8 +166,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      final billingAddress = formatAddress(object: client);
-      final shippingAddress = formatAddress(object: client, isShipping: true);
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final billingAddress = formatAddress(state, object: client);
+      final shippingAddress =
+          formatAddress(state, object: client, isShipping: true);
 
       if (billingAddress.isNotEmpty) {
         listTiles.add(AppListTile(
@@ -176,8 +181,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
               _launched = _launchURL(
                   context,
                   getMapURL(context) +
-                      Uri.encodeFull(
-                          formatAddress(object: client, delimiter: ',')));
+                      Uri.encodeFull(formatAddress(state,
+                          object: client, delimiter: ',')));
             }));
       }
 
@@ -190,7 +195,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
               _launched = _launchURL(
                   context,
                   getMapURL(context) +
-                      Uri.encodeFull(formatAddress(
+                      Uri.encodeFull(formatAddress(state,
                           object: client, delimiter: ',', isShipping: true)));
             }));
       }

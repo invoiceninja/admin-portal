@@ -134,7 +134,7 @@ class SettingsViewer extends StatelessWidget {
     return FieldGrid({
       localization.name: settings.name,
       localization.address:
-          settings.hasAddress ? formatAddress(object: settings) : null,
+          settings.hasAddress ? formatAddress(state, object: settings) : null,
       localization.phone: settings.phone,
       localization.email: settings.email,
       localization.logo: settings.hasLogo ? localization.enabled : null,
