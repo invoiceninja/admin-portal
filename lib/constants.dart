@@ -69,7 +69,7 @@ const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
     'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
-const String kStatusCheckUrl = 'https://status.invoiceninja.com/';
+const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 const String kGoogleAnalyticsUrl =
     'https://support.google.com/analytics/answer/1037249?hl=en';
 
