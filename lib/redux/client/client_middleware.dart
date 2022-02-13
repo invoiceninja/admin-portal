@@ -154,7 +154,14 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 Middleware<AppState> _purgeClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as PurgeClientRequest;
-    repository.purge(store.state.credentials, action.clientId).then((_) {
+    repository
+        .purge(
+      credentials: store.state.credentials,
+      clientId: action.clientId,
+      password: action.password,
+      idToken: action.idToken,
+    )
+        .then((_) {
       store.dispatch(PurgeClientSuccess());
       store.dispatch(RefreshData(
           clearData: true,

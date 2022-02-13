@@ -67,10 +67,16 @@ class ClientRepository {
     return clientResponse.data.toList();
   }
 
-  Future<bool> purge(Credentials credentials, String id) async {
-    final url = credentials.url + '/clients/$id/purge';
+  Future<bool> purge({
+    @required Credentials credentials,
+    @required String clientId,
+    @required String password,
+    @required String idToken,
+  }) async {
+    final url = credentials.url + '/clients/$clientId/purge';
 
-    await webClient.post(url, credentials.token);
+    await webClient.post(url, credentials.token,
+        password: password, idToken: idToken);
 
     return true;
   }
