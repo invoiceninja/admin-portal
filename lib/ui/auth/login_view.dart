@@ -295,457 +295,456 @@ class _LoginState extends State<LoginView> {
     final double horizontalPadding =
         calculateLayout(context) == AppLayout.desktop ? 40 : 16;
 
-    final child = ScrollableListView(
-      children: <Widget>[
-        if (isDesktopOS())
-          AppTitleBar()
-        else
-          Container(
-            width: double.infinity,
-            height: 24,
-            color: state.accentColor,
-          ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 25),
-          child: Center(
-            child: InkWell(
-              // TODO correct this
-              child: Image.asset(
-                  state.prefState.enableDarkMode
-                      ? 'assets/images/logo_dark.png'
-                      : 'assets/images/logo_light.png',
-                  height: 50),
-              onTap: isApple()
-                  ? null
-                  : () {
-                      launch(kSiteUrl,
-                          forceSafariVC: false, forceWebView: false);
-                    },
-              onLongPress: () {
-                if (kReleaseMode) {
-                  return;
-                }
+    return SafeArea(
+      child: ScrollableListView(
+        children: <Widget>[
+          if (isDesktopOS())
+            AppTitleBar()
+          else
+            Container(
+              width: double.infinity,
+              height: 24,
+              color: state.accentColor,
+            ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 25),
+            child: Center(
+              child: InkWell(
+                // TODO correct this
+                child: Image.asset(
+                    state.prefState.enableDarkMode
+                        ? 'assets/images/logo_dark.png'
+                        : 'assets/images/logo_light.png',
+                    height: 50),
+                onTap: isApple()
+                    ? null
+                    : () {
+                        launch(kSiteUrl,
+                            forceSafariVC: false, forceWebView: false);
+                      },
+                onLongPress: () {
+                  if (kReleaseMode) {
+                    return;
+                  }
 
-                setState(() => _tokenLogin = !_tokenLogin);
-              },
+                  setState(() => _tokenLogin = !_tokenLogin);
+                },
+              ),
             ),
           ),
-        ),
-        if (_tokenLogin)
-          FormCard(
-            forceNarrow: calculateLayout(context) != AppLayout.mobile,
-            children: [
-              DecoratedFormField(
-                autofocus: true,
-                label: localization.token,
-                controller: _tokenController,
-                keyboardType: TextInputType.text,
-              ),
-              AppButton(
-                label: localization.submit.toUpperCase(),
-                onPressed: () {
-                  final Completer<Null> completer = Completer<Null>();
-                  viewModel.onTokenLoginPressed(context, completer,
-                      token: _tokenController.text);
-                },
-              )
-            ],
-          ),
-        AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
-          opacity: viewModel.authState.isAuthenticated ? 0 : 1,
-          child: Form(
-            key: _formKey,
-            child: AutofillGroup(
-              child: FormCard(
-                elevation: 20,
-                forceNarrow: calculateLayout(context) != AppLayout.mobile,
-                internalPadding: const EdgeInsets.all(0),
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      if (!isApple() &&
-                          (!kIsWeb || !state.authState.isSelfHost))
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Material(
-                                color: _createAccount
-                                    ? state.accentColor
-                                    : Colors.transparent,
-                                child: InkWell(
-                                  child: Center(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Text(
-                                      localization.signUp,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              color: _createAccount
-                                                  ? Colors.white
-                                                  : null),
-                                    ),
-                                  )),
-                                  onTap: () {
-                                    setState(() {
-                                      _createAccount = true;
-                                      _isSelfHosted = false;
-                                      _loginError = '';
-                                    });
-                                  },
+          if (_tokenLogin)
+            FormCard(
+              forceNarrow: calculateLayout(context) != AppLayout.mobile,
+              children: [
+                DecoratedFormField(
+                  autofocus: true,
+                  label: localization.token,
+                  controller: _tokenController,
+                  keyboardType: TextInputType.text,
+                ),
+                AppButton(
+                  label: localization.submit.toUpperCase(),
+                  onPressed: () {
+                    final Completer<Null> completer = Completer<Null>();
+                    viewModel.onTokenLoginPressed(context, completer,
+                        token: _tokenController.text);
+                  },
+                )
+              ],
+            ),
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 500),
+            opacity: viewModel.authState.isAuthenticated ? 0 : 1,
+            child: Form(
+              key: _formKey,
+              child: AutofillGroup(
+                child: FormCard(
+                  elevation: 20,
+                  forceNarrow: calculateLayout(context) != AppLayout.mobile,
+                  internalPadding: const EdgeInsets.all(0),
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        if (!isApple() &&
+                            (!kIsWeb || !state.authState.isSelfHost))
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Material(
+                                  color: _createAccount
+                                      ? state.accentColor
+                                      : Colors.transparent,
+                                  child: InkWell(
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Text(
+                                        localization.signUp,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 18,
+                                                color: _createAccount
+                                                    ? Colors.white
+                                                    : null),
+                                      ),
+                                    )),
+                                    onTap: () {
+                                      setState(() {
+                                        _createAccount = true;
+                                        _isSelfHosted = false;
+                                        _loginError = '';
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Material(
-                                color: _createAccount
-                                    ? Colors.transparent
-                                    : state.accentColor,
-                                child: InkWell(
-                                  child: Center(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Text(
-                                      localization.login,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              color: _createAccount
-                                                  ? null
-                                                  : Colors.white),
-                                    ),
-                                  )),
-                                  onTap: () {
-                                    setState(() {
-                                      _createAccount = false;
-                                      _loginError = '';
-                                    });
-                                  },
+                              Expanded(
+                                child: Material(
+                                  color: _createAccount
+                                      ? Colors.transparent
+                                      : state.accentColor,
+                                  child: InkWell(
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Text(
+                                        localization.login,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 18,
+                                                color: _createAccount
+                                                    ? null
+                                                    : Colors.white),
+                                      ),
+                                    )),
+                                    onTap: () {
+                                      setState(() {
+                                        _createAccount = false;
+                                        _loginError = '';
+                                      });
+                                    },
+                                  ),
                                 ),
                               ),
+                            ],
+                          ),
+                        SizedBox(height: 20),
+                        if (!_recoverPassword) ...[
+                          if (!_createAccount &&
+                              (!kIsWeb || !kReleaseMode)) ...[
+                            RuledText(localization.selectPlatform),
+                            AppToggleButtons(
+                              tabLabels: [
+                                localization.hosted,
+                                localization.selfhosted,
+                              ],
+                              selectedIndex: _isSelfHosted ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _isSelfHosted = index == 1;
+                                  _loginError = '';
+                                  if (index == 1) {
+                                    _emailLogin = true;
+                                  }
+                                });
+                              },
                             ),
                           ],
-                        ),
-                      SizedBox(height: 20),
-                      if (!_recoverPassword) ...[
-                        if (!_createAccount && (!kIsWeb || !kReleaseMode)) ...[
-                          RuledText(localization.selectPlatform),
-                          AppToggleButtons(
-                            tabLabels: [
-                              localization.hosted,
-                              localization.selfhosted,
+                          if (!_isSelfHosted && !_hideGoogle) ...[
+                            RuledText(localization.selectMethod),
+                            AppToggleButtons(
+                              tabLabels:
+                                  calculateLayout(context) == AppLayout.mobile
+                                      ? [
+                                          'Google',
+                                          localization.email,
+                                        ]
+                                      : [
+                                          _createAccount
+                                              ? localization.googleSignUp
+                                              : localization.googleSignIn,
+                                          _createAccount
+                                              ? localization.emailSignUp
+                                              : localization.emailSignIn,
+                                        ],
+                              selectedIndex: _emailLogin ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _emailLogin = index == 1;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
+                          ],
+                        ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: horizontalPadding),
+                          child: Column(
+                            children: [
+                              if (_emailLogin)
+                                DecoratedFormField(
+                                  controller: _emailController,
+                                  label: localization.email,
+                                  keyboardType: TextInputType.emailAddress,
+                                  autovalidate: _autoValidate,
+                                  validator: (val) =>
+                                      val.isEmpty || val.trim().isEmpty
+                                          ? localization.pleaseEnterYourEmail
+                                          : null,
+                                  autofillHints: [AutofillHints.email],
+                                  autofocus: true,
+                                  onSavePressed: (_) => _submitForm(),
+                                ),
+                              if (_emailLogin && !_recoverPassword)
+                                PasswordFormField(
+                                  controller: _passwordController,
+                                  autoValidate: false,
+                                  newPassword: _createAccount,
+                                  onSavePressed: (_) => _submitForm(),
+                                ),
+                              if (!_createAccount && !_recoverPassword)
+                                DecoratedFormField(
+                                  controller: _oneTimePasswordController,
+                                  label:
+                                      '${localization.oneTimePassword} (${localization.optional})',
+                                  onSavePressed: (_) => _submitForm(),
+                                  keyboardType: TextInputType.number,
+                                  autofillHints: [AutofillHints.oneTimeCode],
+                                ),
+                              if (_isSelfHosted && !kIsWeb)
+                                DecoratedFormField(
+                                  controller: _urlController,
+                                  label: localization.url,
+                                  validator: (val) =>
+                                      val.isEmpty || val.trim().isEmpty
+                                          ? localization.pleaseEnterYourUrl
+                                          : null,
+                                  keyboardType: TextInputType.url,
+                                  onSavePressed: (_) => _submitForm(),
+                                ),
+                              if (_isSelfHosted && !_recoverPassword)
+                                PasswordFormField(
+                                  labelText:
+                                      '${localization.secret} (${localization.optional})',
+                                  controller: _secretController,
+                                  autoValidate: _autoValidate,
+                                  validate: false,
+                                  onSavePressed: (_) => _submitForm(),
+                                ),
+                              if (_createAccount)
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Column(
+                                    children: <Widget>[
+                                      CheckboxListTile(
+                                        onChanged: (value) => setState(
+                                            () => _termsChecked = value),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: convertHexStringToColor(
+                                            kDefaultAccentColor),
+                                        value: _termsChecked,
+                                        title: RichText(
+                                          text: TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                style: aboutTextStyle,
+                                                text: localization.iAgreeToThe +
+                                                    ' ',
+                                              ),
+                                              LinkTextSpan(
+                                                style: linkStyle,
+                                                url: kTermsOfServiceURL,
+                                                text:
+                                                    localization.termsOfService,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      CheckboxListTile(
+                                        onChanged: (value) => setState(
+                                            () => _privacyChecked = value),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: convertHexStringToColor(
+                                            kDefaultAccentColor),
+                                        value: _privacyChecked,
+                                        title: RichText(
+                                          text: TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                style: aboutTextStyle,
+                                                text: localization.iAgreeToThe +
+                                                    ' ',
+                                              ),
+                                              LinkTextSpan(
+                                                style: linkStyle,
+                                                url: kPrivacyPolicyURL,
+                                                text:
+                                                    localization.privacyPolicy,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ],
-                            selectedIndex: _isSelfHosted ? 1 : 0,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _isSelfHosted = index == 1;
-                                _loginError = '';
-                                if (index == 1) {
-                                  _emailLogin = true;
-                                }
-                              });
-                            },
                           ),
-                        ],
-                        if (!_isSelfHosted && !_hideGoogle) ...[
-                          RuledText(localization.selectMethod),
-                          AppToggleButtons(
-                            tabLabels:
-                                calculateLayout(context) == AppLayout.mobile
-                                    ? [
-                                        'Google',
-                                        localization.email,
-                                      ]
-                                    : [
-                                        _createAccount
-                                            ? localization.googleSignUp
-                                            : localization.googleSignIn,
-                                        _createAccount
-                                            ? localization.emailSignUp
-                                            : localization.emailSignIn,
-                                      ],
-                            selectedIndex: _emailLogin ? 1 : 0,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _emailLogin = index == 1;
-                                _loginError = '';
-                              });
-                            },
-                          ),
-                        ],
+                        ),
                       ],
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: horizontalPadding),
-                        child: Column(
+                    ),
+                    if (_loginError.isNotEmpty &&
+                        !_loginError.contains(OTP_ERROR))
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: 20,
+                            left: horizontalPadding,
+                            right: horizontalPadding),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: SelectableText(
+                                _loginError,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                                icon: Icon(Icons.content_copy),
+                                tooltip: localization.copyError,
+                                onPressed: () {
+                                  Clipboard.setData(
+                                      ClipboardData(text: _loginError));
+                                }),
+                          ],
+                        ),
+                      ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: 20, bottom: 10, left: 16, right: 16),
+                      child: RoundedLoadingButton(
+                        height: 50,
+                        borderRadius: 4,
+                        width: 430,
+                        controller: _buttonController,
+                        color: state.accentColor,
+                        onPressed: () => _submitForm(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             if (_emailLogin)
-                              DecoratedFormField(
-                                controller: _emailController,
-                                label: localization.email,
-                                keyboardType: TextInputType.emailAddress,
-                                autovalidate: _autoValidate,
-                                validator: (val) =>
-                                    val.isEmpty || val.trim().isEmpty
-                                        ? localization.pleaseEnterYourEmail
-                                        : null,
-                                autofillHints: [AutofillHints.email],
-                                autofocus: true,
-                                onSavePressed: (_) => _submitForm(),
+                              Icon(Icons.mail, color: Colors.white)
+                            else
+                              ClipOval(
+                                child: Image.asset(
+                                    'assets/images/google_logo.png',
+                                    width: 30,
+                                    height: 30),
                               ),
-                            if (_emailLogin && !_recoverPassword)
-                              PasswordFormField(
-                                controller: _passwordController,
-                                autoValidate: false,
-                                newPassword: _createAccount,
-                                onSavePressed: (_) => _submitForm(),
-                              ),
-                            if (!_createAccount && !_recoverPassword)
-                              DecoratedFormField(
-                                controller: _oneTimePasswordController,
-                                label:
-                                    '${localization.oneTimePassword} (${localization.optional})',
-                                onSavePressed: (_) => _submitForm(),
-                                keyboardType: TextInputType.number,
-                                autofillHints: [AutofillHints.oneTimeCode],
-                              ),
-                            if (_isSelfHosted && !kIsWeb)
-                              DecoratedFormField(
-                                controller: _urlController,
-                                label: localization.url,
-                                validator: (val) =>
-                                    val.isEmpty || val.trim().isEmpty
-                                        ? localization.pleaseEnterYourUrl
-                                        : null,
-                                keyboardType: TextInputType.url,
-                                onSavePressed: (_) => _submitForm(),
-                              ),
-                            if (_isSelfHosted && !_recoverPassword)
-                              PasswordFormField(
-                                labelText:
-                                    '${localization.secret} (${localization.optional})',
-                                controller: _secretController,
-                                autoValidate: _autoValidate,
-                                validate: false,
-                                onSavePressed: (_) => _submitForm(),
-                              ),
-                            if (_createAccount)
-                              Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Column(
-                                  children: <Widget>[
-                                    CheckboxListTile(
-                                      onChanged: (value) =>
-                                          setState(() => _termsChecked = value),
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      activeColor: convertHexStringToColor(
-                                          kDefaultAccentColor),
-                                      value: _termsChecked,
-                                      title: RichText(
-                                        text: TextSpan(
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              style: aboutTextStyle,
-                                              text: localization.iAgreeToThe +
-                                                  ' ',
-                                            ),
-                                            LinkTextSpan(
-                                              style: linkStyle,
-                                              url: kTermsOfServiceURL,
-                                              text: localization.termsOfService,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    CheckboxListTile(
-                                      onChanged: (value) => setState(
-                                          () => _privacyChecked = value),
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      activeColor: convertHexStringToColor(
-                                          kDefaultAccentColor),
-                                      value: _privacyChecked,
-                                      title: RichText(
-                                        text: TextSpan(
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              style: aboutTextStyle,
-                                              text: localization.iAgreeToThe +
-                                                  ' ',
-                                            ),
-                                            LinkTextSpan(
-                                              style: linkStyle,
-                                              url: kPrivacyPolicyURL,
-                                              text: localization.privacyPolicy,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            SizedBox(width: 10),
+                            Text(
+                              _recoverPassword
+                                  ? localization.recoverPassword
+                                  : _createAccount
+                                      ? (_emailLogin
+                                          ? localization.emailSignUp
+                                          : localization.googleSignUp)
+                                      : (_emailLogin
+                                          ? localization.emailSignIn
+                                          : localization.googleSignIn),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            )
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                  if (_loginError.isNotEmpty &&
-                      !_loginError.contains(OTP_ERROR))
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: 20,
-                          left: horizontalPadding,
-                          right: horizontalPadding),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: SelectableText(
-                              _loginError,
-                              style: TextStyle(
-                                color: Colors.red,
+                    ),
+                    SizedBox(height: 4),
+                    Flex(
+                      direction: calculateLayout(context) == AppLayout.desktop
+                          ? Axis.horizontal
+                          : Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        if (!_createAccount && _emailLogin)
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _recoverPassword = !_recoverPassword;
+                              });
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    if (!_recoverPassword)
+                                      Icon(MdiIcons.lock, size: 16),
+                                    SizedBox(width: 8),
+                                    Text(_recoverPassword
+                                        ? localization.cancel
+                                        : localization.recoverPassword),
+                                  ]),
+                            ),
+                          ),
+                        if (!_recoverPassword && !_isSelfHosted)
+                          InkWell(
+                            onTap: () {
+                              launch(kStatusCheckUrl);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.security, size: 16),
+                                  SizedBox(width: 8),
+                                  Text(localization.checkStatus)
+                                ],
                               ),
                             ),
                           ),
-                          IconButton(
-                              icon: Icon(Icons.content_copy),
-                              tooltip: localization.copyError,
-                              onPressed: () {
-                                Clipboard.setData(
-                                    ClipboardData(text: _loginError));
-                              }),
-                        ],
-                      ),
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 20, bottom: 10, left: 16, right: 16),
-                    child: RoundedLoadingButton(
-                      height: 50,
-                      borderRadius: 4,
-                      width: 430,
-                      controller: _buttonController,
-                      color: state.accentColor,
-                      onPressed: () => _submitForm(),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (_emailLogin)
-                            Icon(Icons.mail, color: Colors.white)
-                          else
-                            ClipOval(
-                              child: Image.asset(
-                                  'assets/images/google_logo.png',
-                                  width: 30,
-                                  height: 30),
-                            ),
-                          SizedBox(width: 10),
-                          Text(
-                            _recoverPassword
-                                ? localization.recoverPassword
-                                : _createAccount
-                                    ? (_emailLogin
-                                        ? localization.emailSignUp
-                                        : localization.googleSignUp)
-                                    : (_emailLogin
-                                        ? localization.emailSignIn
-                                        : localization.googleSignIn),
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Flex(
-                    direction: calculateLayout(context) == AppLayout.desktop
-                        ? Axis.horizontal
-                        : Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      if (!_createAccount && _emailLogin)
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _recoverPassword = !_recoverPassword;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Row(
+                        if (!_recoverPassword && kIsWeb)
+                          InkWell(
+                            onTap: () => launch(getNativeAppUrl(platform)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  if (!_recoverPassword)
-                                    Icon(MdiIcons.lock, size: 16),
+                                children: [
+                                  Icon(getNativeAppIcon(platform), size: 16),
                                   SizedBox(width: 8),
-                                  Text(_recoverPassword
-                                      ? localization.cancel
-                                      : localization.recoverPassword),
-                                ]),
-                          ),
-                        ),
-                      if (!_recoverPassword && !_isSelfHosted)
-                        InkWell(
-                          onTap: () {
-                            launch(kStatusCheckUrl);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.security, size: 16),
-                                SizedBox(width: 8),
-                                Text(localization.checkStatus)
-                              ],
+                                  Text('$platform ${localization.app}')
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      if (!_recoverPassword && kIsWeb)
-                        InkWell(
-                          onTap: () => launch(getNativeAppUrl(platform)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(getNativeAppIcon(platform), size: 16),
-                                SizedBox(width: 8),
-                                Text('$platform ${localization.app}')
-                              ],
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                ],
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
-
-    // TODO remove this, trying to correct Safari issue
-    if (!kIsWeb) {
-      return SafeArea(child: child);
-    } else {
-      return child;
-    }
   }
 }
 
