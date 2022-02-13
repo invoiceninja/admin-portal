@@ -224,10 +224,17 @@ class DeleteClientsFailure implements StopSaving {
 }
 
 class PurgeClientRequest implements StartSaving {
-  PurgeClientRequest(this.completer, this.clientId);
+  PurgeClientRequest({
+    @required this.completer,
+    @required this.clientId,
+    @required this.password,
+    @required this.idToken,
+  });
 
   final Completer completer;
   final String clientId;
+  final String password;
+  final String idToken;
 }
 
 class PurgeClientSuccess implements StopSaving, PersistData {}
@@ -442,9 +449,11 @@ void handleClientAction(
                 callback: (password, idToken) {
                   store.dispatch(
                     PurgeClientRequest(
-                        snackBarCompleter<Null>(
+                        completer: snackBarCompleter<Null>(
                             context, localization.purgedClient),
-                        client.id),
+                        clientId: client.id,
+                        password: password,
+                        idToken: idToken),
                   );
                 });
           });

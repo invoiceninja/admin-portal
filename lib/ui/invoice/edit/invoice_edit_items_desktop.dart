@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/data/models/product_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -116,8 +114,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           TaskItemFields.rate,
           TaskItemFields.hours,
         ];
-      } else if (!pdfColumns.contains(TaskItemFields.service)) {
-        pdfColumns = [TaskItemFields.service, ...pdfColumns];
+      } else {
+        if (!pdfColumns.contains(TaskItemFields.service)) {
+          pdfColumns = [TaskItemFields.service, ...pdfColumns];
+        }
+        if (!pdfColumns.contains(TaskItemFields.rate)) {
+          pdfColumns = [...pdfColumns, TaskItemFields.rate];
+        }
+        if (!pdfColumns.contains(TaskItemFields.hours)) {
+          pdfColumns = [...pdfColumns, TaskItemFields.hours];
+        }
       }
     } else {
       if (pdfColumns.isEmpty) {
@@ -127,8 +133,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           ProductItemFields.unitCost,
           ProductItemFields.quantity,
         ];
-      } else if (!pdfColumns.contains(ProductItemFields.item)) {
-        pdfColumns = [ProductItemFields.item, ...pdfColumns];
+      } else {
+        if (!pdfColumns.contains(ProductItemFields.item)) {
+          pdfColumns = [ProductItemFields.item, ...pdfColumns];
+        }
+        if (!pdfColumns.contains(ProductItemFields.unitCost)) {
+          pdfColumns = [...pdfColumns, ProductItemFields.unitCost];
+        }
+        if (!pdfColumns.contains(ProductItemFields.quantity) &&
+            company.enableProductQuantity) {
+          pdfColumns = [...pdfColumns, ProductItemFields.quantity];
+        }
       }
     }
 
