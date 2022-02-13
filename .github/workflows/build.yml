@@ -23,7 +23,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           #flutter-version: '2.2.3'
-          channel: 'beta'
+          channel: 'stable'
       - name: Install Sentry
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
@@ -127,7 +127,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: 'stable'
       - name: Setup Flutter
         run: |
           flutter doctor -v

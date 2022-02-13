@@ -415,7 +415,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
                 ],
-                if (isMobile(context))
+                if (isMobile(context) ||
+                    widget.entityType == EntityType.companyGateway)
                   IconButton(
                     tooltip: localization.filter,
                     icon: Icon(Icons.filter_list),
