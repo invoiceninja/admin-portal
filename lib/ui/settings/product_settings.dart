@@ -124,19 +124,18 @@ class _ProductSettingsState extends State<ProductSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(company
                     .rebuild((b) => b..convertProductExchangeRate = value)),
               ),
-              if (false)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: BoolDropdownButton(
-                    label: localization.convertTo,
-                    value: company.convertRateToClient,
-                    onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..convertRateToClient = value),
-                    ),
-                    enabledLabel: localization.clientCurrency,
-                    disabledLabel: localization.companyCurrency,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: BoolDropdownButton(
+                  label: localization.convertTo,
+                  value: company.convertRateToClient,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..convertRateToClient = value),
                   ),
-                )
+                  enabledLabel: localization.clientCurrency,
+                  disabledLabel: localization.companyCurrency,
+                ),
+              )
             ],
           )
         ],
