@@ -129,12 +129,14 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     subtitle: 'Not enabled',
                   ),
                   */
+                /*
                 if (_response.pendingJobs > 0)
                   _HealthListTile(
                     title: 'Pending Jobs',
                     subtitle: 'Count: ${_response.pendingJobs}',
                     isWarning: true,
                   ),
+                  */
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
                     /*

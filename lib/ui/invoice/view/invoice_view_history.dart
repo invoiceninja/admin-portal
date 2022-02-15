@@ -56,13 +56,26 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       itemBuilder: (BuildContext context, index) {
         final activity = activityList[index];
         final history = activity.history;
-        final user = viewModel.state.userState.get(activity.userId);
+
+        final state = viewModel.state;
+        final client = state.clientState.get(activity.clientId);
+        final contact = client.getContact(activity.contactId);
+        final user = state.userState.get(activity.userId);
+
+        String personName;
+        if (contact != null) {
+          personName = contact.fullName;
+        } else if (user.isOld) {
+          personName = user.fullName;
+        } else {
+          personName = client.name;
+        }
 
         return ListTile(
           title: Text(
             formatNumber(history.amount, context, clientId: invoice.clientId) +
                 ' • ' +
-                user.listDisplayName,
+                personName,
           ),
           subtitle: Text(formatDate(
                 convertTimestampToDateString(history.createdAt),

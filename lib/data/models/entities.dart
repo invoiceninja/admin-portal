@@ -800,8 +800,7 @@ abstract class ActivityEntity
   }) {
     ContactEntity contact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
-      contact = client.contacts
-          .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+      contact = client.getContact(contactId);
     }
 
     activity =

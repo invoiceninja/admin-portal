@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'is_paid': 'Is Paid',
+      'age_group_paid': 'Paid',
       'id': 'Id',
       'convert_to': 'Convert To',
       'client_currency': 'Client Currency',
@@ -23,7 +25,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purged_client': 'Successfully purged client',
       'custom_emails_disabled_help':
           'To prevent spam we require upgrading to a paid account to customize the email',
-      'requires_a_paid_plan': 'Requires a paid plan',
+      'upgrade_to_add_company': 'Upgrade your plan to add companies',
       'file_saved_in_downloads_folder':
           'The file has been saved in the downloads folder',
       'small': 'Small',
@@ -73374,9 +73376,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['file_saved_in_downloads_folder'] ??
       _localizedValues['en']['file_saved_in_downloads_folder'];
 
-  String get requiresAPaidPlan =>
-      _localizedValues[localeCode]['requires_a_paid_plan'] ??
-      _localizedValues['en']['requires_a_paid_plan'];
+  String get upgradeToAddCompany =>
+      _localizedValues[localeCode]['upgrade_to_add_company'] ??
+      _localizedValues['en']['upgrade_to_add_company'];
 
   String get customEmailsDisabledHelp =>
       _localizedValues[localeCode]['custom_emails_disabled_help'] ??
@@ -73398,8 +73400,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['company_currency'] ??
       _localizedValues['en']['company_currency'];
 
+  String get ageGroupPaid =>
+      _localizedValues[localeCode]['age_group_paid'] ??
+      _localizedValues['en']['age_group_paid'];
+
   String get id =>
       _localizedValues[localeCode]['id'] ?? _localizedValues['en']['id'];
+
+  String get isPaid =>
+      _localizedValues[localeCode]['is_paid'] ??
+      _localizedValues['en']['is_paid'];
 
   // STARTER: lang field - do not remove comment
 

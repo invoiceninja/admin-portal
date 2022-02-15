@@ -734,6 +734,9 @@ abstract class ClientEntity extends Object
 
   String get languageId => settings.languageId;
 
+  ContactEntity getContact(String contactId) => contacts
+      .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+
   bool get hasNameSet {
     if (contacts.isEmpty) {
       return false;

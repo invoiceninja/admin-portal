@@ -127,7 +127,7 @@ class MenuDrawerVM {
             state.companies.length >= state.account.hostedCompanyCount) {
           showMessageDialog(
             context: context,
-            message: AppLocalization.of(context).requiresAPaidPlan,
+            message: AppLocalization.of(context).upgradeToAddCompany,
           );
           return;
         }

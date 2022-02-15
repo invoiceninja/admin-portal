@@ -80,7 +80,7 @@ class _DesignEditState extends State<DesignEdit>
     _htmlController.addListener(_onHtmlChanged);
     _focusNode = FocusScopeNode();
     _tabController = TabController(
-        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 7 : 6);
+        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 6 : 5);
   }
 
   @override
@@ -241,7 +241,7 @@ class _DesignEditState extends State<DesignEdit>
                   Tab(text: localization.body),
                   Tab(text: localization.header),
                   Tab(text: localization.footer),
-                  Tab(text: localization.products),
+                  //Tab(text: localization.products),
                   //Tab(text: localization.tasks),
                   Tab(text: localization.includes),
                 ],
@@ -291,7 +291,7 @@ class _DesignEditState extends State<DesignEdit>
                     DesignSection(textController: _bodyController),
                     DesignSection(textController: _headerController),
                     DesignSection(textController: _footerController),
-                    DesignSection(textController: _productsController),
+                    //DesignSection(textController: _productsController),
                     //DesignSection(textController: _tasksController),
                     DesignSection(textController: _includesController),
                   ])
@@ -311,7 +311,7 @@ class _DesignEditState extends State<DesignEdit>
                               Tab(text: localization.body),
                               Tab(text: localization.header),
                               Tab(text: localization.footer),
-                              Tab(text: localization.products),
+                              //Tab(text: localization.products),
                               //Tab(text: localization.tasks),
                               Tab(text: localization.includes),
                             ],
@@ -335,8 +335,7 @@ class _DesignEditState extends State<DesignEdit>
                                     textController: _headerController),
                                 DesignSection(
                                     textController: _footerController),
-                                DesignSection(
-                                    textController: _productsController),
+                                //DesignSection(textController: _productsController),
                                 //DesignSection(textController: _productsController),
                                 DesignSection(
                                     textController: _includesController),
