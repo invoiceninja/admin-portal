@@ -665,9 +665,15 @@ class ReportResult {
       if (filter.isNotEmpty) {
         if (column == 'age') {
           final min = kAgeGroups[filter];
-          final max = min + 30;
-          if (value < min || value >= max) {
-            return false;
+          if (filter == kAgeGroupPaid) {
+            return value == -1;
+          } else if (filter == kAgeGroup120) {
+            return value > min;
+          } else {
+            final max = min + 30;
+            if (value < min || value >= max) {
+              return false;
+            }
           }
         } else if (value.runtimeType == int || value.runtimeType == double) {
           if (!ReportResult.matchAmount(filter: filter, amount: value)) {
@@ -889,7 +895,9 @@ class ReportResult {
             },
             items: kAgeGroups.keys
                 .map((ageGroup) => DropdownMenuItem(
-                      child: Text(localization.lookup(ageGroup)),
+                      child: Text(ageGroup == kAgeGroupPaid
+                          ? localization.paid
+                          : localization.lookup(ageGroup)),
                       value: ageGroup,
                     ))
                 .toList(),
@@ -1125,9 +1133,6 @@ class ReportResult {
           value = value + ' (' + values['count'].floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
           value = formatNumber(values[column], context);
-        } else if (columnType == ReportColumnType.age) {
-          value = formatNumber(values[column], context,
-              formatNumberType: FormatNumberType.int);
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values[column].toInt()));
         }
@@ -1246,8 +1251,8 @@ class ReportResult {
         final cell = row[j];
         final column = columns[j];
         final canTotal = cell is ReportNumberValue ||
-            cell is ReportAgeValue ||
-            cell is ReportDurationValue;
+            cell is ReportDurationValue ||
+            cell is ReportAgeValue;
 
         String currencyId = '';
         if (canTotal) {
@@ -1451,7 +1456,7 @@ class ReportAgeValue extends ReportElement {
   String get stringValue => '$value';
 
   @override
-  double get doubleValue => value.toDouble();
+  double get doubleValue => value == -1 ? 0 : value.toDouble();
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -1460,7 +1465,7 @@ class ReportAgeValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    return '$value';
+    return value == -1 ? AppLocalization.of(context).paid : '$value';
   }
 }
 

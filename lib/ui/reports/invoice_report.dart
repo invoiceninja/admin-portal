@@ -212,7 +212,7 @@ ReportResult invoiceReport(
           value = invoice.reminderLastSent;
           break;
         case InvoiceReportFields.age:
-          value = invoice.age;
+          value = invoice.isPaid ? -1 : invoice.age;
           break;
         case InvoiceReportFields.due_date:
           value = invoice.dueDate;
