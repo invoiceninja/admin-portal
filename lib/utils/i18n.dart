@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'is_paid': 'Is Paid',
       'age_group_paid': 'Paid',
       'id': 'Id',
       'convert_to': 'Convert To',
@@ -73405,6 +73406,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get id =>
       _localizedValues[localeCode]['id'] ?? _localizedValues['en']['id'];
+
+  String get isPaid =>
+      _localizedValues[localeCode]['is_paid'] ??
+      _localizedValues['en']['is_paid'];
 
   // STARTER: lang field - do not remove comment
 

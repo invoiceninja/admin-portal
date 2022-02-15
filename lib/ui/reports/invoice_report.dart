@@ -72,6 +72,7 @@ enum InvoiceReportFields {
   created_by,
   project,
   vendor,
+  is_paid,
 }
 
 var memoizedInvoiceReport = memo8((
@@ -331,6 +332,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.vendor:
           value = (vendorMap[invoice.vendorId] ?? VendorEntity()).name;
+          break;
+        case InvoiceReportFields.is_paid:
+          value = invoice.isPaid;
           break;
       }
 
