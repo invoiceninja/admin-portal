@@ -506,7 +506,9 @@ GroupTotals calculateReportTotals({
 
       if (groupCell is ReportAgeValue) {
         final age = groupCell.doubleValue;
-        if (age < 30) {
+        if (groupCell.value == -1) {
+          group = kAgeGroupPaid;
+        } else if (age < 30) {
           group = kAgeGroup0;
         } else if (age < 60) {
           group = kAgeGroup30;

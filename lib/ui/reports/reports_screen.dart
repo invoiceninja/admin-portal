@@ -895,9 +895,7 @@ class ReportResult {
             },
             items: kAgeGroups.keys
                 .map((ageGroup) => DropdownMenuItem(
-                      child: Text(ageGroup == kAgeGroupPaid
-                          ? localization.paid
-                          : localization.lookup(ageGroup)),
+                      child: Text(localization.lookup(ageGroup)),
                       value: ageGroup,
                     ))
                 .toList(),
