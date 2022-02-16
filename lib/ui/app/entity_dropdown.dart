@@ -81,12 +81,30 @@ class _EntityDropdownState extends State<EntityDropdown> {
     }
   }
 
+  String _getEntityLabel(SelectableEntity entity) {
+    if (entity == null) {
+      return '';
+    }
+
+    var value = entity.listDisplayName;
+
+    if (!(entity is BaseEntity)) {
+      return value;
+    }
+
+    if ((entity as BaseEntity).isDeleted) {
+      value += ' - ' + AppLocalization.of(context).deleted;
+    }
+
+    return value;
+  }
+
   @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.entityId != oldWidget.entityId) {
-      _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
+      _textController.text = _getEntityLabel(_entityMap[widget.entityId]);
     }
   }
 
@@ -102,7 +120,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       if (widget.overrideSuggestedLabel != null) {
         _textController.text = widget.overrideSuggestedLabel(entity);
       } else {
-        _textController.text = entity?.listDisplayName ?? '';
+        _textController.text = _getEntityLabel(entity);
       }
     }
 
