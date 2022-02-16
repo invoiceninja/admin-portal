@@ -278,7 +278,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                 if (kIsWeb) {
                                   WebUtils.downloadBinaryFile(
                                       fileName, _response.bodyBytes);
-                                } else if (isDesktopOS()) {
+                                } else {
                                   final directory = await (isDesktopOS()
                                       ? getDownloadsDirectory()
                                       : getApplicationDocumentsDirectory());

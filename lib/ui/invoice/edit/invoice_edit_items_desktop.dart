@@ -164,6 +164,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       pdfColumns.add(customField4);
     }
 
+    _columns.clear();
+
     for (var column in pdfColumns) {
       if (ProductItemFields.item == column ||
           TaskItemFields.service == column) {
