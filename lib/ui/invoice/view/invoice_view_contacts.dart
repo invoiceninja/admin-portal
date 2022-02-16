@@ -78,9 +78,14 @@ class _InvitationListTile extends StatelessWidget {
         break;
     }
 
+    var contactName = contact.fullNameOrEmail;
+    if (contactName.isEmpty) {
+      contactName = client.displayName;
+    }
+
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      title: Text(contact.fullNameOrEmail),
+      title: Text(contactName),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
