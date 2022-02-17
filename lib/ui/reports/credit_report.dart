@@ -63,6 +63,10 @@ enum CreditReportFields {
   is_viewed,
   assigned_to,
   created_by,
+  client_phone,
+  contact_email,
+  contact_phone,
+  contact_name,
 }
 
 var memoizedCreditReport = memo6((
@@ -114,6 +118,8 @@ ReportResult creditReport(
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
     final client = clientMap[credit.clientId] ?? ClientEntity();
+    final contact = client.getContact(credit.invitations.first.contactId);
+
     if (credit.isDeleted || client.isDeleted) {
       continue;
     }
@@ -282,6 +288,18 @@ ReportResult creditReport(
           break;
         case CreditReportFields.created_by:
           value = userMap[credit.createdUserId]?.listDisplayName ?? '';
+          break;
+        case CreditReportFields.client_phone:
+          value = client.phone;
+          break;
+        case CreditReportFields.contact_email:
+          value = contact?.email ?? '';
+          break;
+        case CreditReportFields.contact_name:
+          value = contact?.fullName ?? '';
+          break;
+        case CreditReportFields.contact_phone:
+          value = contact?.phone ?? '';
           break;
       }
 
