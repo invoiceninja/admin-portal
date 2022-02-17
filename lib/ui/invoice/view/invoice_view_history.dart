@@ -64,9 +64,12 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
         String personName;
         if (contact != null) {
-          personName = contact.fullName;
+          personName = contact.fullNameOrEmail;
         } else if (user.isOld) {
           personName = user.fullName;
+          if (personName.isEmpty) {
+            personName = AppLocalization.of(context).system;
+          }
         } else {
           personName = client.name;
         }
