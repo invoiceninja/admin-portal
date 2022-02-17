@@ -449,6 +449,15 @@ abstract class CompanyEntity extends Object
       hasCustomField(CustomFieldType.surcharge3) ||
       hasCustomField(CustomFieldType.surcharge4);
 
+  bool hasCustomProductField(String label) {
+    return [
+      getCustomFieldLabel(CustomFieldType.product1).toLowerCase(),
+      getCustomFieldLabel(CustomFieldType.product2).toLowerCase(),
+      getCustomFieldLabel(CustomFieldType.product3).toLowerCase(),
+      getCustomFieldLabel(CustomFieldType.product4).toLowerCase(),
+    ].contains(label.toLowerCase());
+  }
+
   String getCustomFieldLabel(String field) {
     field = field.replaceFirst('\$', '');
 
