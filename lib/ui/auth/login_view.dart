@@ -513,7 +513,7 @@ class _LoginState extends State<LoginView> {
                                 DecoratedFormField(
                                   controller: _oneTimePasswordController,
                                   label:
-                                      '${localization.oneTimePassword} (${localization.optional})',
+                                      '2FA - ${localization.oneTimePassword} (${localization.optional})',
                                   onSavePressed: (_) => _submitForm(),
                                   keyboardType: TextInputType.number,
                                   autofillHints: [AutofillHints.oneTimeCode],

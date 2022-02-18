@@ -73,6 +73,10 @@ enum InvoiceReportFields {
   project,
   vendor,
   is_paid,
+  client_phone,
+  contact_email,
+  contact_phone,
+  contact_name,
 }
 
 var memoizedInvoiceReport = memo8((
@@ -137,6 +141,8 @@ ReportResult invoiceReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId] ?? ClientEntity();
+    final contact = client.getContact(invoice.invitations.first.contactId);
+
     if (invoice.isDeleted || client.isDeleted) {
       continue;
     }
@@ -335,6 +341,18 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.is_paid:
           value = invoice.isPaid;
+          break;
+        case InvoiceReportFields.client_phone:
+          value = client.phone;
+          break;
+        case InvoiceReportFields.contact_email:
+          value = contact?.email ?? '';
+          break;
+        case InvoiceReportFields.contact_name:
+          value = contact?.fullName ?? '';
+          break;
+        case InvoiceReportFields.contact_phone:
+          value = contact?.phone ?? '';
           break;
       }
 

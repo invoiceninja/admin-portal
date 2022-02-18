@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -22,6 +23,8 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   final project = state.projectState.get(task.projectId);
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
+  final localization = AppLocalization.of(context);
+  final company = state.company;
 
   var notes = '';
   final dates = <String>{};
@@ -67,6 +70,37 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     notes = notes.trim();
   }
 
+  String customValue1 = '';
+  String customValue2 = '';
+  String customValue3 = '';
+  String customValue4 = '';
+
+  final fieldLabel1 = company.getCustomFieldLabel(CustomFieldType.task1);
+  final fieldLabel2 = company.getCustomFieldLabel(CustomFieldType.task2);
+  final fieldLabel3 = company.getCustomFieldLabel(CustomFieldType.task3);
+  final fieldLabel4 = company.getCustomFieldLabel(CustomFieldType.task4);
+
+  final customValues = {
+    company.getCustomFieldLabel(CustomFieldType.task1): task.customValue1,
+    company.getCustomFieldLabel(CustomFieldType.task2): task.customValue2,
+    company.getCustomFieldLabel(CustomFieldType.task3): task.customValue3,
+    company.getCustomFieldLabel(CustomFieldType.task4): task.customValue4,
+    localization.project: state.projectState.get(task.projectId).name,
+  };
+
+  for (var label in customValues.keys) {
+    final value = customValues[label];
+    if (fieldLabel1.toLowerCase() == label.toLowerCase()) {
+      customValue1 = value;
+    } else if (fieldLabel2.toLowerCase() == label.toLowerCase()) {
+      customValue2 = value;
+    } else if (fieldLabel3.toLowerCase() == label.toLowerCase()) {
+      customValue3 = value;
+    } else if (fieldLabel4.toLowerCase() == label.toLowerCase()) {
+      customValue4 = value;
+    }
+  }
+
   return InvoiceItemEntity().rebuild((b) => b
     ..typeId = InvoiceItemEntity.TYPE_TASK
     ..taskId = task.id
@@ -79,10 +113,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       group: group,
     )
     ..quantity = round(task.calculateDuration().inSeconds / 3600, 3)
-    ..customValue1 = task.customValue1
-    ..customValue2 = task.customValue2
-    ..customValue3 = task.customValue3
-    ..customValue4 = task.customValue4);
+    ..customValue1 = customValue1
+    ..customValue2 = customValue2
+    ..customValue3 = customValue3
+    ..customValue4 = customValue4);
 }
 
 var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,

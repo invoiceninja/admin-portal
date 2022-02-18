@@ -380,6 +380,7 @@ void handleTaskAction(
         }
       }
 
+      final company = state.company;
       final items = <InvoiceItemEntity>[];
       TaskEntity lastTask;
 
@@ -391,6 +392,7 @@ void handleTaskAction(
             task: task,
             context: context,
             includeProjectHeader: hasMultipleProjects &&
+                !company.hasCustomProductField(localization.project) &&
                 (task as TaskEntity).projectId != lastTask?.projectId));
         lastTask = task;
       });

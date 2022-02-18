@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -19,6 +21,42 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
   final state = StoreProvider.of<AppState>(context).state;
   final company = state.company;
   final categoryMap = state.expenseCategoryState.map;
+  final localization = AppLocalization.of(context);
+
+  String customValue1 = '';
+  String customValue2 = '';
+  String customValue3 = '';
+  String customValue4 = '';
+
+  final fieldLabel1 = company.getCustomFieldLabel(CustomFieldType.product1);
+  final fieldLabel2 = company.getCustomFieldLabel(CustomFieldType.product2);
+  final fieldLabel3 = company.getCustomFieldLabel(CustomFieldType.product3);
+  final fieldLabel4 = company.getCustomFieldLabel(CustomFieldType.product4);
+
+  final customValues = {
+    company.getCustomFieldLabel(CustomFieldType.expense1): expense.customValue1,
+    company.getCustomFieldLabel(CustomFieldType.expense2): expense.customValue2,
+    company.getCustomFieldLabel(CustomFieldType.expense3): expense.customValue3,
+    company.getCustomFieldLabel(CustomFieldType.expense4): expense.customValue4,
+    localization.category:
+        state.expenseCategoryState.get(expense.categoryId).name,
+    localization.vendor: state.vendorState.get(expense.vendorId).name,
+    localization.date: formatDate(expense.date, context),
+    localization.project: state.projectState.get(expense.projectId).name,
+  };
+
+  for (var label in customValues.keys) {
+    final value = customValues[label];
+    if (fieldLabel1.toLowerCase() == label.toLowerCase()) {
+      customValue1 = value;
+    } else if (fieldLabel2.toLowerCase() == label.toLowerCase()) {
+      customValue2 = value;
+    } else if (fieldLabel3.toLowerCase() == label.toLowerCase()) {
+      customValue3 = value;
+    } else if (fieldLabel4.toLowerCase() == label.toLowerCase()) {
+      customValue4 = value;
+    }
+  }
 
   return InvoiceItemEntity().rebuild((b) => b
     ..typeId = InvoiceItemEntity.TYPE_EXPENSE
@@ -29,10 +67,10 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..cost = company.settings.enableInclusiveTaxes
         ? expense.convertedAmount
         : expense.convertedNetAmount
-    ..customValue1 = expense.customValue1
-    ..customValue2 = expense.customValue2
-    ..customValue3 = expense.customValue3
-    ..customValue4 = expense.customValue4
+    ..customValue1 = customValue1
+    ..customValue2 = customValue2
+    ..customValue3 = customValue3
+    ..customValue4 = customValue4
     ..taxName1 = company.numberOfItemTaxRates >= 1 ? expense.taxName1 : ''
     ..taxRate1 =
         company.numberOfItemTaxRates >= 1 ? expense.calculatetaxRate1 : 0

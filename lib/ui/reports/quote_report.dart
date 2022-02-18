@@ -60,6 +60,10 @@ enum QuoteReportFields {
   is_viewed,
   assigned_to,
   created_by,
+  client_phone,
+  contact_email,
+  contact_phone,
+  contact_name,
 }
 
 var memoizedQuoteReport = memo7((
@@ -112,6 +116,7 @@ ReportResult quoteReport(
   for (var quoteId in quoteMap.keys) {
     final quote = quoteMap[quoteId];
     final client = clientMap[quote.clientId] ?? ClientEntity();
+    final contact = client.getContact(quote.invitations.first.contactId);
     //final vendor = vendorMap[quote.vendorId];
 
     if (quote.isDeleted || client.isDeleted) {
@@ -276,6 +281,18 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.created_by:
           value = userMap[quote.createdUserId]?.listDisplayName ?? '';
+          break;
+        case QuoteReportFields.client_phone:
+          value = client.phone;
+          break;
+        case QuoteReportFields.contact_email:
+          value = contact?.email ?? '';
+          break;
+        case QuoteReportFields.contact_name:
+          value = contact?.fullName ?? '';
+          break;
+        case QuoteReportFields.contact_phone:
+          value = contact?.phone ?? '';
           break;
       }
 

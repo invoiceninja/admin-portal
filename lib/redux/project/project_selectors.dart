@@ -40,8 +40,18 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
   });
 
   tasks.sort((taskA, taskB) {
-    final taskADate = taskA.getTaskTimes().first.startDate;
-    final taskBDate = taskB.getTaskTimes().first.startDate;
+    final taskTimesA = taskA.getTaskTimes();
+    final taskTimesB = taskB.getTaskTimes();
+
+    final taskADate = taskTimesA.isEmpty ? null : taskTimesA.first.startDate;
+    final taskBDate = taskTimesB.isEmpty ? null : taskTimesB.first.startDate;
+
+    if (taskADate == null) {
+      return 1;
+    } else if (taskBDate == null) {
+      return -1;
+    }
+
     return taskADate.compareTo(taskBDate);
   });
 
