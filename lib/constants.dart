@@ -266,6 +266,7 @@ const String kGatewayTypeDirectDebit = '18';
 const String kGatewayTypeACSS = '19';
 const String kGatewayTypeBECS = '20';
 const String kGatewayTypeInstantBankPay = '21';
+const String kGatewayTypeFPX = '22';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -289,6 +290,7 @@ const kGatewayTypes = {
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
   kGatewayTypeInstantBankPay: 'instant_bank_pay',
+  kGatewayTypeFPX: 'fpx',
 };
 
 const String kNotificationChannelEmail = 'email';
