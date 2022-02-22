@@ -501,7 +501,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         final paymentTerm =
                             state.paymentTermState.map[paymentTermId];
                         return DropdownMenuItem<String>(
-                          child: Text(paymentTerm.name),
+                          child: Text(paymentTerm.numDays == 0
+                              ? localization.dueOnReceipt
+                              : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
                       }).toList(),
@@ -523,7 +525,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         final paymentTerm =
                             state.paymentTermState.map[paymentTermId];
                         return DropdownMenuItem<String>(
-                          child: Text(paymentTerm.name),
+                          child: Text(paymentTerm.numDays == 0
+                              ? localization.dueOnReceipt
+                              : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
                       }).toList(),
