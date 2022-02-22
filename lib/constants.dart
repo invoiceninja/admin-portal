@@ -55,7 +55,7 @@ const String kDocsPerformance =
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
-    'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
+    'https://invoiceninja.github.io/docs/developer-guide/';
 const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
