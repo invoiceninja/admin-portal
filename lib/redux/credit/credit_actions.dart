@@ -507,13 +507,18 @@ Future handleCreditAction(
             credit: credit,
             context: context));
       } else {
-        store.dispatch(BulkEmailCreditsRequest(
-            snackBarCompleter<Null>(
-                context,
-                creditIds.length == 1
-                    ? localization.emailedCredit
-                    : localization.emailedCredits),
-            creditIds));
+        confirmCallback(
+            context: context,
+            message: localization.bulkEmailCredit,
+            callback: (_) {
+              store.dispatch(BulkEmailCreditsRequest(
+                  snackBarCompleter<Null>(
+                      context,
+                      creditIds.length == 1
+                          ? localization.emailedCredit
+                          : localization.emailedCredits),
+                  creditIds));
+            });
       }
       break;
     case EntityAction.cloneToOther:

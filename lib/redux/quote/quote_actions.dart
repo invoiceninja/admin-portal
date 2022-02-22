@@ -518,13 +518,18 @@ Future handleQuoteAction(
             quote: quote,
             context: context));
       } else {
-        store.dispatch(BulkEmailQuotesRequest(
-            snackBarCompleter<Null>(
-                context,
-                quoteIds.length == 1
-                    ? localization.emailedQuote
-                    : localization.emailedQuotes),
-            quoteIds));
+        confirmCallback(
+            context: context,
+            message: localization.bulkEmailQuote,
+            callback: (_) {
+              store.dispatch(BulkEmailQuotesRequest(
+                  snackBarCompleter<Null>(
+                      context,
+                      quoteIds.length == 1
+                          ? localization.emailedQuote
+                          : localization.emailedQuotes),
+                  quoteIds));
+            });
       }
       break;
     case EntityAction.cloneToOther:
