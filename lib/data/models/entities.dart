@@ -816,9 +816,9 @@ abstract class ActivityEntity
         contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
     activity = activity.replaceFirst(
         ':payment', payment?.transactionReferenceOrNumber ?? '');
-    activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
-    activity = activity.replaceFirst(':task', task?.description ?? '');
-    activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');
+    activity = activity.replaceFirst(':credit', credit?.number ?? '');
+    activity = activity.replaceFirst(':task', task?.number ?? '');
+    activity = activity.replaceFirst(':expense', expense?.number ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
     activity = activity.replaceFirst(
         ':recurring_expense', vendor?.name ?? ''); // TODO implement

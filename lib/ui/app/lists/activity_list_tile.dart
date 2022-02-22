@@ -128,7 +128,7 @@ class ActivityListTile extends StatelessWidget {
                     : '') +
                 formatDate(
                     convertTimestampToDateString(activity.updatedAt), context,
-                    showTime: true) +
+                    showTime: true, showSeconds: false) +
                 ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip : '')),
           ),
         ],
