@@ -83,23 +83,21 @@ class DocumentGrid extends StatelessWidget {
                     width: 14,
                   ),
                 ],
-                if (supportsFileUpload())
-                  Expanded(
-                    child: AppButton(
-                      iconData: Icons.insert_drive_file,
-                      label: localization.uploadFile,
-                      onPressed: () async {
-                        final multipartFile = await pickFile(
-                            fileIndex: 'documents[]',
-                            allowedExtensions:
-                                DocumentEntity.ALLOWED_EXTENSIONS);
+                Expanded(
+                  child: AppButton(
+                    iconData: Icons.insert_drive_file,
+                    label: localization.uploadFile,
+                    onPressed: () async {
+                      final multipartFile = await pickFile(
+                          fileIndex: 'documents[]',
+                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS);
 
-                        if (multipartFile != null) {
-                          onUploadDocument(multipartFile);
-                        }
-                      },
-                    ),
+                      if (multipartFile != null) {
+                        onUploadDocument(multipartFile);
+                      }
+                    },
                   ),
+                ),
               ],
             ),
           )
