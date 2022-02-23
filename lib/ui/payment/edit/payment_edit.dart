@@ -718,7 +718,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             width: kTableColumnGap,
           ),
           IconButton(
-            icon: Icon(Icons.clear),
+            icon: Icon(Icons.clear, color: Colors.grey),
             tooltip: localization.remove,
             onPressed: paymentable.isEmpty
                 ? null
