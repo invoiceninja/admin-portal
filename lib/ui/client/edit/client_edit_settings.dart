@@ -119,7 +119,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                 .map((paymentTermId) {
               final paymentTerm = state.paymentTermState.map[paymentTermId];
               return DropdownMenuItem<String>(
-                child: Text(paymentTerm.name),
+                child: Text(paymentTerm.numDays == 0
+                    ? localization.dueOnReceipt
+                    : paymentTerm.name),
                 value: paymentTerm.numDays.toString(),
               );
             }).toList(),
@@ -139,7 +141,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                 .map((paymentTermId) {
               final paymentTerm = state.paymentTermState.map[paymentTermId];
               return DropdownMenuItem<String>(
-                child: Text(paymentTerm.name),
+                child: Text(paymentTerm.numDays == 0
+                    ? localization.dueOnReceipt
+                    : paymentTerm.name),
                 value: paymentTerm.numDays.toString(),
               );
             }).toList(),

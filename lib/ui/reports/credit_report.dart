@@ -53,6 +53,7 @@ enum CreditReportFields {
   client_vat_number,
   client_city,
   client_postal_code,
+  client_website,
   tax_rate1,
   tax_rate2,
   tax_rate3,
@@ -300,6 +301,9 @@ ReportResult creditReport(
           break;
         case CreditReportFields.contact_phone:
           value = contact?.phone ?? '';
+          break;
+        case CreditReportFields.client_website:
+          value = client.website;
           break;
       }
 

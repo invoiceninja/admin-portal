@@ -319,7 +319,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           labelText: (invoice.lastSentDate ?? '').isNotEmpty
                               ? localization.nextSendDate
                               : localization.startDate,
-                          onSelected: (date) {
+                          onSelected: (date, _) {
                             viewModel.onChanged(
                                 invoice.rebuild((b) => b..nextSendDate = date));
                           },
@@ -383,7 +383,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   ? localization.quoteDate
                                   : localization.invoiceDate,
                           selectedDate: invoice.date,
-                          onSelected: (date) {
+                          onSelected: (date, _) {
                             viewModel.onChanged(
                                 invoice.rebuild((b) => b..date = date));
                           },
@@ -395,7 +395,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               : localization.validUntil,
                           selectedDate: invoice.dueDate,
                           message: termsString,
-                          onSelected: (date) {
+                          onSelected: (date, _) {
                             viewModel.onChanged(
                                 invoice.rebuild((b) => b..dueDate = date));
                           },
@@ -421,7 +421,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           DatePicker(
                             labelText: localization.partialDueDate,
                             selectedDate: invoice.partialDueDate,
-                            onSelected: (date) {
+                            onSelected: (date, _) {
                               viewModel.onChanged(invoice
                                   .rebuild((b) => b..partialDueDate = date));
                             },

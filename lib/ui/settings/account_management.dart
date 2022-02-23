@@ -325,7 +325,6 @@ class _AccountOverview extends StatelessWidget {
                   : localization.lookup(account.plan),
           secondLabel: secondLabel,
           secondValue: secondValue,
-          message: account.isTrial ? localization.freeTrialHelp : null,
         ),
         if (state.company.id != state.account.defaultCompanyId)
           Padding(
@@ -346,7 +345,10 @@ class _AccountOverview extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: IconText(
                   icon: MdiIcons.openInNew,
-                  text: localization.changePlan.toUpperCase(),
+                  text: (account.isEligibleForTrial
+                          ? localization.startFreeTrial
+                          : localization.changePlan)
+                      .toUpperCase(),
                 ),
               ),
               onPressed: () => launch(state.userCompany.ninjaPortalUrl),

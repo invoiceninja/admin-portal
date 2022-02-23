@@ -203,7 +203,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 labelText: (invoice.lastSentDate ?? '').isNotEmpty
                     ? localization.nextSendDate
                     : localization.startDate,
-                onSelected: (date) => viewModel
+                onSelected: (date, _) => viewModel
                     .onChanged(invoice.rebuild((b) => b..nextSendDate = date)),
                 selectedDate: invoice.nextSendDate,
                 firstDate: DateTime.now(),
@@ -261,7 +261,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         ? localization.quoteDate
                         : localization.invoiceDate,
                 selectedDate: invoice.date,
-                onSelected: (date) {
+                onSelected: (date, _) {
                   viewModel.onChanged(invoice.rebuild((b) => b..date = date));
                 },
               ),
@@ -271,7 +271,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     : localization.validUntil,
                 selectedDate: invoice.dueDate,
                 message: termsString,
-                onSelected: (date) {
+                onSelected: (date, _) {
                   viewModel
                       .onChanged(invoice.rebuild((b) => b..dueDate = date));
                 },
@@ -296,7 +296,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 DatePicker(
                   labelText: localization.partialDueDate,
                   selectedDate: invoice.partialDueDate,
-                  onSelected: (date) {
+                  onSelected: (date, _) {
                     viewModel.onChanged(
                         invoice.rebuild((b) => b..partialDueDate = date));
                   },

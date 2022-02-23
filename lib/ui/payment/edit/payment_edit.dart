@@ -263,7 +263,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   autoValidate: autoValidate,
                   labelText: localization.paymentDate,
                   selectedDate: payment.date,
-                  onSelected: (date) {
+                  onSelected: (date, _) {
                     viewModel.onChanged(payment.rebuild((b) => b..date = date));
                   },
                 ),
@@ -718,7 +718,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             width: kTableColumnGap,
           ),
           IconButton(
-            icon: Icon(Icons.clear),
+            icon: Icon(Icons.clear, color: Colors.grey),
             tooltip: localization.remove,
             onPressed: paymentable.isEmpty
                 ? null

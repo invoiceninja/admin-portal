@@ -55,7 +55,7 @@ const String kDocsPerformance =
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
-    'https://app.swaggerhub.com/apis/invoiceninja/invoiceninja';
+    'https://invoiceninja.github.io/docs/developer-guide/';
 const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
@@ -266,6 +266,7 @@ const String kGatewayTypeDirectDebit = '18';
 const String kGatewayTypeACSS = '19';
 const String kGatewayTypeBECS = '20';
 const String kGatewayTypeInstantBankPay = '21';
+const String kGatewayTypeFPX = '22';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -289,6 +290,7 @@ const kGatewayTypes = {
   kGatewayTypeACSS: 'acss',
   kGatewayTypeBECS: 'becs',
   kGatewayTypeInstantBankPay: 'instant_bank_pay',
+  kGatewayTypeFPX: 'fpx',
 };
 
 const String kNotificationChannelEmail = 'email';
@@ -527,11 +529,15 @@ const kPaymentStatuses = {
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
+const String kExpenseStatusUnpaid = '4';
+const String kExpenseStatusPaid = '5';
 
 const kExpenseStatuses = {
   kExpenseStatusLogged: 'logged',
   kExpenseStatusPending: 'pending',
   kExpenseStatusInvoiced: 'invoiced',
+  kExpenseStatusUnpaid: 'unpaid',
+  kExpenseStatusPaid: 'paid',
 };
 
 const String kDefaultCurrencyId = '1';

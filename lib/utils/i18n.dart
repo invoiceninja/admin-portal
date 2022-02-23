@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'load_pdf': 'Load PDF',
+      'start_free_trial': 'Start Free Trial',
+      'start_free_trial_message':
+          'Start your FREE 14 day trial of the pro plan',
+      'due_on_receipt': 'Due on Receipt',
       'is_paid': 'Is Paid',
       'age_group_paid': 'Paid',
       'id': 'Id',
@@ -159,12 +164,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -2103,12 +2104,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -4060,12 +4057,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -6009,12 +6002,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -7935,12 +7924,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -9887,12 +9872,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -11836,12 +11817,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -13785,12 +13762,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -15760,12 +15733,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -17712,12 +17681,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Vaadake rakendus üle',
       'check_status': 'Kontrolli olekut',
       'free_trial': 'Tasuta prooviversioon',
-      'free_trial_help':
-          'Kõik kontod saavad Pro-paketi kahenädalase prooviperioodi. Kui prooviperiood lõppeb, muutub teie konto automaatselt tasuta paketiks.',
       'free_trial_ends_in_days':
-          'Pro-paketi prooviperiood lõpeb :kogus päeva pärast, klõpsake versiooniuuendamiseks.',
+          'Pro-paketi prooviperiood lõpeb :kogus päeva pärast',
       'free_trial_ends_today':
-          'Täna on Pro-paketi prooviversiooni viimane päev, klõpsake versiooniuuendamiseks.',
+          'Täna on Pro-paketi prooviversiooni viimane päev',
       'change_email': 'Muuda meiliaadressi',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -19662,12 +19629,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -21612,12 +21575,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -23579,12 +23538,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -25622,12 +25577,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'App bewerten',
       'check_status': 'Status prüfen',
       'free_trial': 'Kostenlose Testversion',
-      'free_trial_help':
-          'Alle Konten erhalten eine zweiwöchige Testversion des Pro-Tarifs. Nach Ablauf der Testversion wechselt Ihr Konto automatisch in den kostenlosen Tarif.',
       'free_trial_ends_in_days':
-          'Die Testversion des Pro-Plans endet in :count Tagen, klicken Sie zum Upgrade.',
-      'free_trial_ends_today':
-          'Heute ist der letzte Tag des Pro-Tarifs, klicken Sie zum Upgrade.',
+          'Die Testversion des Pro-Plans endet in :count Tagen',
+      'free_trial_ends_today': 'Heute ist der letzte Tag des Pro-Tarifs',
       'change_email': 'E-Mail ändern',
       'client_portal_domain_hint':
           'Konfigurieren Sie optional eine separate Kunden-Portal-Domäne',
@@ -27633,12 +27585,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -29632,12 +29580,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -31608,12 +31552,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -33553,12 +33493,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -35503,12 +35439,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -37453,12 +37385,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -39407,12 +39335,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -41355,12 +41279,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -43304,12 +43224,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -45253,12 +45169,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -47220,12 +47132,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -49203,12 +49111,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -51155,12 +51059,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -53105,12 +53005,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -55062,12 +54958,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -57017,12 +56909,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -58970,12 +58858,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -60930,12 +60814,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -62925,12 +62805,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -64885,10 +64761,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
       'free_trial_ends_today':
           'Today is the last day of the Pro plan trial, click to upgrade.',
       'change_email': 'Change Email',
@@ -66832,12 +66705,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'review_app': 'Review App',
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
-      'free_trial_help':
-          'All accounts receive a two week trial of the Pro plan, once the trial ends your account will automatically change to the free plan.',
-      'free_trial_ends_in_days':
-          'The Pro plan trial ends in :count days, click to upgrade.',
-      'free_trial_ends_today':
-          'Today is the last day of the Pro plan trial, click to upgrade.',
+      'free_trial_ends_in_days': 'The Pro plan trial ends in :count days',
+      'free_trial_ends_today': 'Today is the last day of the Pro plan trial',
       'change_email': 'Change Email',
       'client_portal_domain_hint':
           'Optionally configure a separate client portal domain',
@@ -72917,10 +72786,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['free_trial'] ??
       _localizedValues['en']['free_trial'];
 
-  String get freeTrialHelp =>
-      _localizedValues[localeCode]['free_trial_help'] ??
-      _localizedValues['en']['free_trial_help'];
-
   String get freeTrialEndsInDays =>
       _localizedValues[localeCode]['free_trial_ends_in_days'] ??
       _localizedValues['en']['free_trial_ends_in_days'];
@@ -73410,6 +73275,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get isPaid =>
       _localizedValues[localeCode]['is_paid'] ??
       _localizedValues['en']['is_paid'];
+
+  String get dueOnReceipt =>
+      _localizedValues[localeCode]['due_on_receipt'] ??
+      _localizedValues['en']['due_on_receipt'];
+
+  String get startFreeTrialMessage =>
+      _localizedValues[localeCode]['start_free_trial_message'] ??
+      _localizedValues['en']['start_free_trial_message'];
+
+  String get startFreeTrial =>
+      _localizedValues[localeCode]['start_free_trial'] ??
+      _localizedValues['en']['start_free_trial'];
+
+  String get loadPdf =>
+      _localizedValues[localeCode]['load_pdf'] ??
+      _localizedValues['en']['load_pdf'];
 
   // STARTER: lang field - do not remove comment
 

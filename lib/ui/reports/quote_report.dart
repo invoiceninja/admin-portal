@@ -50,6 +50,7 @@ enum QuoteReportFields {
   client_vat_number,
   client_city,
   client_postal_code,
+  client_website,
   tax_rate1,
   tax_rate2,
   tax_rate3,
@@ -293,6 +294,9 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.contact_phone:
           value = contact?.phone ?? '';
+          break;
+        case QuoteReportFields.client_website:
+          value = client.website;
           break;
       }
 

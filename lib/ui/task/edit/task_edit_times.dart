@@ -133,7 +133,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               selectedDate: _taskTime.startDate == null
                   ? null
                   : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
-              onSelected: (date) {
+              onSelected: (date, _) {
                 setState(() {
                   _taskTime = _taskTime.copyWithStartDate(date,
                       syncDates: !showEndDate);
@@ -175,7 +175,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                 selectedDate: _taskTime.startDate == null
                     ? null
                     : convertDateTimeToSqlDate(_taskTime.endDate.toLocal()),
-                onSelected: (date) {
+                onSelected: (date, _) {
                   setState(() {
                     _taskTime = _taskTime.copyWithEndDate(date);
                     viewModel.onUpdatedTaskTime(_taskTime, widget.index);

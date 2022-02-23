@@ -341,6 +341,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   ),
                 ],
               ),
+              // TODO enable once supported in backend
+              /*
               if (gateway?.isOffsite != true)
                 FormCard(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -380,6 +382,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     ),
                   ],
                 )
+                */
             ],
           ),
           if (enabledGatewayIds.isEmpty)

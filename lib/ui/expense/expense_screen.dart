@@ -50,6 +50,16 @@ class ExpenseScreen extends StatelessWidget {
           ..id = kExpenseStatusInvoiced
           ..name = localization.invoiced,
       ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kExpenseStatusPaid
+          ..name = localization.paid,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kExpenseStatusUnpaid
+          ..name = localization.unpaid,
+      ),
     ];
 
     return ListScaffold(

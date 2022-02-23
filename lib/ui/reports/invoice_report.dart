@@ -60,6 +60,7 @@ enum InvoiceReportFields {
   client_vat_number,
   client_city,
   client_postal_code,
+  client_website,
   tax_rate1,
   tax_rate2,
   tax_rate3,
@@ -353,6 +354,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.contact_phone:
           value = contact?.phone ?? '';
+          break;
+        case InvoiceReportFields.client_website:
+          value = client.website;
           break;
       }
 

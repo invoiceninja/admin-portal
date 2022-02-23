@@ -198,7 +198,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                   DatePicker(
                     labelText: localization.dueDate,
                     selectedDate: project.dueDate,
-                    onSelected: (date) {
+                    onSelected: (date, _) {
                       viewModel
                           .onChanged(project.rebuild((b) => b..dueDate = date));
                     },

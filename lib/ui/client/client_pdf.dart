@@ -12,6 +12,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
@@ -50,7 +54,7 @@ class ClientPdfView extends StatefulWidget {
 }
 
 class _ClientPdfViewState extends State<ClientPdfView> {
-  bool _isLoading = true;
+  bool _isLoading = false;
   http.Response _response;
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
@@ -60,8 +64,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   static const STATUS_UNPAID = 'unpaid';
 
   DateRange _dateRange = DateRange.thisQuarter;
-  //String _startDate;
-  //String _endDate;
+  String _startDate =
+      convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
+  String _endDate = convertDateTimeToSqlDate();
   String _status = STATUS_ALL;
   bool _showPayments = true;
   bool _showAging = true;
@@ -78,10 +83,15 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     loadPdf();
   }
 
   void loadPdf() {
+    if (_isLoading) {
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
@@ -102,7 +112,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         _pdfController = PdfController(document: document);
       }
     }).catchError((Object error) {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 
@@ -118,23 +130,35 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
     String startDate = '';
     String endDate = '';
+
     if (_dateRange != null) {
-      startDate =
-          calculateStartDate(company: state.company, dateRange: _dateRange);
-      endDate = calculateEndDate(company: state.company, dateRange: _dateRange);
+      startDate = calculateStartDate(
+          company: state.company,
+          dateRange: _dateRange,
+          customStartDate: _startDate,
+          customEndDate: _endDate);
+      endDate = calculateEndDate(
+          company: state.company,
+          dateRange: _dateRange,
+          customStartDate: _startDate,
+          customEndDate: _endDate);
     }
+
+    final data = json.encode({
+      'client_id': client.id,
+      'start_date': startDate,
+      'end_date': endDate,
+      'show_payments_table': _showPayments,
+      'show_aging_table': _showAging,
+      'status': _status,
+    });
+
+    print('## DATA: $data');
 
     response = await webClient.post(
       url,
       state.credentials.token,
-      data: json.encode({
-        'client_id': client.id,
-        'start_date': startDate,
-        'end_date': endDate,
-        'show_payments_table': _showPayments,
-        'show_aging_table': _showAging,
-        'status': _status,
-      }),
+      data: data,
       rawResponse: true,
     );
 
@@ -292,10 +316,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           setState(() {
                             _dateRange = value;
                           });
-                          loadPdf();
+
+                          if (value != DateRange.custom) {
+                            loadPdf();
+                          }
                         },
                         items: DateRange.values
-                            .where((dateRange) => dateRange != DateRange.custom)
                             .map((dateRange) => DropdownMenuItem<DateRange>(
                                   child: Text(localization
                                       .lookup(dateRange.toString())),
@@ -401,26 +427,77 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               ],
             )
           : null,
-      body: _isLoading || _response == null
-          ? LoadingIndicator()
-          : Padding(
-              padding: const EdgeInsets.all(8),
-              child: PdfView(
-                controller: _pdfController,
-                onDocumentLoaded: (document) {
-                  setState(() {
-                    _pageCount = document?.pagesCount ?? 0;
-                  });
-                },
-                onPageChanged: (page) {
-                  setState(
-                    () {
-                      _pageNumber = page;
-                    },
-                  );
-                },
+      body: Column(
+        children: [
+          if (_dateRange == DateRange.custom)
+            Container(
+              width: double.infinity,
+              color: Theme.of(context).backgroundColor,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  Container(
+                    width: 180,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: DatePicker(
+                      labelText: localization.startDate,
+                      onSelected: (value, _) {
+                        setState(() {
+                          _startDate = value;
+                        });
+                      },
+                      selectedDate: _startDate,
+                    ),
+                  ),
+                  Container(
+                    width: 180,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: DatePicker(
+                      labelText: localization.endDate,
+                      onSelected: (value, _) {
+                        setState(() {
+                          _endDate = value;
+                        });
+                      },
+                      selectedDate: _endDate,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: AppButton(
+                      label: localization.loadPdf,
+                      onPressed: () => loadPdf(),
+                    ),
+                  )
+                ],
               ),
             ),
+          Expanded(
+            child: _isLoading || _response == null
+                ? LoadingIndicator()
+                : Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: PdfView(
+                      controller: _pdfController,
+                      onDocumentLoaded: (document) {
+                        setState(() {
+                          _pageCount = document?.pagesCount ?? 0;
+                        });
+                      },
+                      onPageChanged: (page) {
+                        setState(
+                          () {
+                            _pageNumber = page;
+                          },
+                        );
+                      },
+                    ),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -201,7 +201,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       DatePicker(
                         labelText: localization.date,
                         selectedDate: expense.paymentDate,
-                        onSelected: (date) {
+                        onSelected: (date, _) {
                           viewModel.onChanged(
                               expense.rebuild((b) => b..paymentDate = date));
                         },

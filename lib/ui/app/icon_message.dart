@@ -28,7 +28,7 @@ class IconMessage extends StatelessWidget {
               color: Colors.white,
             ),
             SizedBox(width: 16),
-            Flexible(
+            Expanded(
               child: Text(
                 text,
                 maxLines: null,

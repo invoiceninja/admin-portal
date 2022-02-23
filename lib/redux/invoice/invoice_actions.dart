@@ -591,13 +591,18 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             invoice: invoice,
             context: context));
       } else {
-        store.dispatch(BulkEmailInvoicesRequest(
-            snackBarCompleter<Null>(
-                context,
-                invoiceIds.length == 1
-                    ? localization.emailedInvoice
-                    : localization.emailedInvoices),
-            invoiceIds));
+        confirmCallback(
+            context: context,
+            message: localization.bulkEmailInvoice,
+            callback: (_) {
+              store.dispatch(BulkEmailInvoicesRequest(
+                  snackBarCompleter<Null>(
+                      context,
+                      invoiceIds.length == 1
+                          ? localization.emailedInvoice
+                          : localization.emailedInvoices),
+                  invoiceIds));
+            });
       }
       break;
     case EntityAction.cloneToOther:

@@ -100,7 +100,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                       : DatePicker(
                           selectedDate: _settings.startDate,
                           labelText: localization.startDate,
-                          onSelected: (date) {
+                          onSelected: (date, _) {
                             setState(() {
                               _settings.startDate = date;
                             });
@@ -110,7 +110,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                       : DatePicker(
                           selectedDate: _settings.endDate,
                           labelText: localization.endDate,
-                          onSelected: (date) {
+                          onSelected: (date, _) {
                             setState(() {
                               _settings.endDate = date;
                             });
@@ -143,7 +143,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                                 : DatePicker(
                                     labelText: localization.startDate,
                                     selectedDate: _settings.compareStartDate,
-                                    onSelected: (date) {
+                                    onSelected: (date, _) {
                                       setState(() {
                                         _settings.compareStartDate = date;
                                       });
@@ -154,7 +154,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                                 : DatePicker(
                                     labelText: localization.endDate,
                                     selectedDate: _settings.compareEndDate,
-                                    onSelected: (date) {
+                                    onSelected: (date, _) {
                                       setState(() {
                                         _settings.compareEndDate = date;
                                       });

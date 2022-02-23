@@ -107,7 +107,7 @@ class _CustomFieldState extends State<CustomField> {
       case kFieldTypeDate:
         return DatePicker(
           labelText: widget.hideFieldLabel ? null : fieldLabel,
-          onSelected: (date) {
+          onSelected: (date, _) {
             _controller.text = date;
             Debouncer.complete();
             if (widget.onChanged != null) {

@@ -294,7 +294,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             DatePicker(
               labelText: localization.date,
               selectedDate: expense.date,
-              onSelected: (date) {
+              onSelected: (date, _) {
                 viewModel.onChanged(expense.rebuild((b) => b..date = date));
               },
             ),
@@ -351,7 +351,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 labelText: (expense.lastSentDate ?? '').isNotEmpty
                     ? localization.nextSendDate
                     : localization.startDate,
-                onSelected: (date) {
+                onSelected: (date, _) {
                   viewModel.onChanged(
                       expense.rebuild((b) => b..nextSendDate = date));
                 },

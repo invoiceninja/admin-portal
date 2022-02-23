@@ -101,12 +101,12 @@ String calculateStartDate({
       final date = addYears(firstDayOfYear, (1 + offset) * -1);
       return convertDateTimeToSqlDate(date);
     default:
-      final startDate = customStartDate.isEmpty
+      final startDate = (customStartDate == null || customStartDate.isEmpty)
           ? DateTime.now()
-          : DateTime.parse(customStartDate);
-      final endDate = customEndDate.isEmpty
+          : (DateTime.tryParse(customStartDate) ?? DateTime.now());
+      final endDate = (customEndDate == null || customEndDate.isEmpty)
           ? DateTime.now()
-          : DateTime.parse(customEndDate);
+          : (DateTime.tryParse(customEndDate) ?? DateTime.now());
       final days = endDate.difference(startDate).inDays;
       return convertDateTimeToSqlDate(
           startDate.subtract(Duration(days: days * offset)));
@@ -160,12 +160,12 @@ String calculateEndDate({
           addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     default:
-      final startDate = customStartDate.isEmpty
+      final startDate = (customStartDate == null || customStartDate.isEmpty)
           ? DateTime.now()
-          : DateTime.parse(customStartDate);
-      final endDate = customEndDate.isEmpty
+          : (DateTime.tryParse(customStartDate) ?? DateTime.now());
+      final endDate = (customEndDate == null || customEndDate.isEmpty)
           ? DateTime.now()
-          : DateTime.parse(customEndDate);
+          : (DateTime.tryParse(customEndDate) ?? DateTime.now());
       final days = endDate.difference(startDate).inDays;
       return convertDateTimeToSqlDate(
           endDate.subtract(Duration(days: days * offset)));

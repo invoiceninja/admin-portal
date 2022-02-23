@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:version/version.dart';
 
 // Project imports:
@@ -96,6 +97,8 @@ abstract class AccountEntity
   }
 
   bool get isTrial => trialPlan.isNotEmpty;
+
+  bool get isEligibleForTrial => trialStarted.isEmpty && plan == kPlanFree;
 
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
