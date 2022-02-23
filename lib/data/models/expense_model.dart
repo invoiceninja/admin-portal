@@ -609,6 +609,10 @@ abstract class ExpenseEntity extends Object
           !isInvoiced &&
           !isPending) {
         return true;
+      } else if (status.id == kExpenseStatusUnpaid && paymentDate.isEmpty) {
+        return true;
+      } else if (status.id == kExpenseStatusPaid && paymentDate.isNotEmpty) {
+        return true;
       }
     }
 

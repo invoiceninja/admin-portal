@@ -529,11 +529,15 @@ const kPaymentStatuses = {
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
+const String kExpenseStatusUnpaid = '4';
+const String kExpenseStatusPaid = '5';
 
 const kExpenseStatuses = {
   kExpenseStatusLogged: 'logged',
   kExpenseStatusPending: 'pending',
   kExpenseStatusInvoiced: 'invoiced',
+  kExpenseStatusUnpaid: 'unpaid',
+  kExpenseStatusPaid: 'paid',
 };
 
 const String kDefaultCurrencyId = '1';
