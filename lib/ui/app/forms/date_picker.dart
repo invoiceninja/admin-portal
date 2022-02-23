@@ -26,7 +26,7 @@ class DatePicker extends StatefulWidget {
 
   final String labelText;
   final String selectedDate;
-  final Function(String) onSelected;
+  final Function(String, bool) onSelected;
   final Function validator;
   final bool autoValidate;
   final bool allowClearing;
@@ -102,7 +102,7 @@ class _DatePickerState extends State<DatePicker> {
     if (selectedDate != null) {
       final date = convertDateTimeToSqlDate(selectedDate);
       _textController.text = formatDate(date, context);
-      widget.onSelected(date);
+      widget.onSelected(date, false);
     }
   }
 
@@ -126,7 +126,7 @@ class _DatePickerState extends State<DatePicker> {
                     icon: Icon(Icons.clear),
                     onPressed: () {
                       _textController.text = '';
-                      widget.onSelected('');
+                      widget.onSelected('', false);
                     },
                   )
                 : IconButton(
@@ -136,7 +136,7 @@ class _DatePickerState extends State<DatePicker> {
       ),
       onChanged: (value) {
         if (value.isEmpty) {
-          widget.onSelected('');
+          widget.onSelected('', false);
         } else {
           String date = '';
           if (isAllDigits(value) || value.length <= 5) {
@@ -227,7 +227,7 @@ class _DatePickerState extends State<DatePicker> {
           }
 
           if ((date ?? '').isNotEmpty) {
-            widget.onSelected(date);
+            widget.onSelected(date, true);
           }
 
           setState(() {

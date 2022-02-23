@@ -134,7 +134,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 autoValidate: autoValidate,
                 labelText: localization.refundDate,
                 selectedDate: payment.date,
-                onSelected: (date) {
+                onSelected: (date, _) {
                   viewModel.onChanged(payment.rebuild((b) => b..date = date));
                 },
               ),

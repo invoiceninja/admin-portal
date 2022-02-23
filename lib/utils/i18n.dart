@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'load_pdf': 'Load PDF',
       'start_free_trial': 'Start Free Trial',
       'start_free_trial_message':
           'Start your FREE 14 day trial of the pro plan',
@@ -73286,6 +73287,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get startFreeTrial =>
       _localizedValues[localeCode]['start_free_trial'] ??
       _localizedValues['en']['start_free_trial'];
+
+  String get loadPdf =>
+      _localizedValues[localeCode]['load_pdf'] ??
+      _localizedValues['en']['load_pdf'];
 
   // STARTER: lang field - do not remove comment
 

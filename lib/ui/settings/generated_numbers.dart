@@ -332,7 +332,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     DatePicker(
                       labelText: localization.nextReset,
                       selectedDate: settings.resetCounterDate,
-                      onSelected: (value) => viewModel.onSettingsChanged(
+                      onSelected: (value, _) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..resetCounterDate = value)),
                     ),
                 ],

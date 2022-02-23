@@ -263,7 +263,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   autoValidate: autoValidate,
                   labelText: localization.paymentDate,
                   selectedDate: payment.date,
-                  onSelected: (date) {
+                  onSelected: (date, _) {
                     viewModel.onChanged(payment.rebuild((b) => b..date = date));
                   },
                 ),

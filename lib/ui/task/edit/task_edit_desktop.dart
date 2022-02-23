@@ -324,7 +324,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           ? null
                           : convertDateTimeToSqlDate(
                               taskTimes[index].startDate.toLocal()),
-                      onSelected: (date) {
+                      onSelected: (date, _) {
                         final taskTime = taskTimes[index]
                             .copyWithStartDate(date, syncDates: !showEndDate);
                         viewModel.onUpdatedTaskTime(taskTime, index);
@@ -361,7 +361,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                             ? null
                             : convertDateTimeToSqlDate(
                                 taskTimes[index].endDate.toLocal()),
-                        onSelected: (date) {
+                        onSelected: (date, _) {
                           final taskTime =
                               taskTimes[index].copyWithEndDate(date);
                           viewModel.onUpdatedTaskTime(taskTime, index);
