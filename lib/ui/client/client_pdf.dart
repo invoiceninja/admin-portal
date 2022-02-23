@@ -14,7 +14,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
@@ -144,6 +143,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           customEndDate: _endDate);
     }
 
+    if (_dateRange != DateRange.custom) {
+      _startDate = startDate;
+      _endDate = endDate;
+    }
+
     final data = json.encode({
       'client_id': client.id,
       'start_date': startDate,
@@ -152,8 +156,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       'show_aging_table': _showAging,
       'status': _status,
     });
-
-    print('## DATA: $data');
 
     response = await webClient.post(
       url,
