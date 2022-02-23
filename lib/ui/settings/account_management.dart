@@ -345,7 +345,10 @@ class _AccountOverview extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: IconText(
                   icon: MdiIcons.openInNew,
-                  text: localization.changePlan.toUpperCase(),
+                  text: (account.isEligibleForTrial
+                          ? localization.startFreeTrial
+                          : localization.changePlan)
+                      .toUpperCase(),
                 ),
               ),
               onPressed: () => launch(state.userCompany.ninjaPortalUrl),
