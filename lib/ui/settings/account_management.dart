@@ -325,7 +325,6 @@ class _AccountOverview extends StatelessWidget {
                   : localization.lookup(account.plan),
           secondLabel: secondLabel,
           secondValue: secondValue,
-          message: account.isTrial ? localization.freeTrialHelp : null,
         ),
         if (state.company.id != state.account.defaultCompanyId)
           Padding(
