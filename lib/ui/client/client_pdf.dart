@@ -143,6 +143,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           customEndDate: _endDate);
     }
 
+    if (_dateRange != DateRange.custom) {
+      _startDate = startDate;
+      _endDate = endDate;
+    }
+
     final data = json.encode({
       'client_id': client.id,
       'start_date': startDate,
