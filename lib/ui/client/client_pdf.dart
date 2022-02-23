@@ -157,8 +157,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       'status': _status,
     });
 
-    print('## DATA: $data');
-
     response = await webClient.post(
       url,
       state.credentials.token,
