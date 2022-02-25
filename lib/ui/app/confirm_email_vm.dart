@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -33,6 +34,7 @@ class ConfirmEmailVM {
     this.state,
     this.onRefreshPressed,
     this.onResendPressed,
+    this.onLogoutPressed,
     this.onUseLastPressed,
     this.onChangeEmail,
   });
@@ -40,6 +42,7 @@ class ConfirmEmailVM {
   final AppState state;
   final Function onResendPressed;
   final Function onRefreshPressed;
+  final Function onLogoutPressed;
   final Function(BuildContext, String, String, String) onChangeEmail;
   final Function(BuildContext) onUseLastPressed;
 
@@ -50,6 +53,9 @@ class ConfirmEmailVM {
       state: state,
       onRefreshPressed: () {
         store.dispatch(RefreshData());
+      },
+      onLogoutPressed: () {
+        store.dispatch(UserLogout());
       },
       onResendPressed: () {
         store.dispatch(ResendConfirmation());

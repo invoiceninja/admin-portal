@@ -193,11 +193,11 @@ class _SettingsListState extends State<SettingsList> {
               viewModel: widget.viewModel,
             ),
             SettingsListTile(
-              section: kSettingsEmailSettings,
+              section: kSettingsClientPortal,
               viewModel: widget.viewModel,
             ),
             SettingsListTile(
-              section: kSettingsClientPortal,
+              section: kSettingsEmailSettings,
               viewModel: widget.viewModel,
             ),
             SettingsListTile(
@@ -367,6 +367,7 @@ class SettingsSearch extends StatelessWidget {
           'timezone',
           'date_format',
           'military_time',
+          'decimal_comma',
           'first_month_of_the_year',
         ],
         [
@@ -390,10 +391,13 @@ class SettingsSearch extends StatelessWidget {
       kSettingsTaxRates: [
         [
           'tax_rates',
+          'inclusive_taxes',
         ],
       ],
       kSettingsProducts: [
         [
+          'show_product_discount',
+          'show_product_cost',
           'fill_products',
           'update_products',
           'convert_products',
@@ -415,6 +419,7 @@ class SettingsSearch extends StatelessWidget {
         [
           'should_be_invoiced',
           'mark_paid',
+          'inclusive_taxes',
         ],
       ],
       kSettingsExpenseCategories: [
@@ -440,9 +445,9 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsDeviceSettings: [
         [
-          'rows_per_page',
           'long_press_multiselect',
           'biometric_authentication',
+          'show_pdf_preview',
           'refresh_data',
         ],
         [
@@ -454,7 +459,7 @@ class SettingsSearch extends StatelessWidget {
         [
           'activate_company',
           'enable_markdown',
-          'decimal_comma',
+          'include_drafts',
           'api_tokens',
           'api_webhooks',
           'purge_data',

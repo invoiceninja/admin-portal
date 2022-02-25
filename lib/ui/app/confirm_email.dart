@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ConfirmEmail extends StatelessWidget {
   const ConfirmEmail({
@@ -47,11 +45,8 @@ class ConfirmEmail extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 16, bottom: 80),
                     child: HelpText(state.user.email),
                   ),
-                  Flex(
-                    direction: calculateLayout(context) == AppLayout.desktop
-                        ? Axis.horizontal
-                        : Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    alignment: WrapAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
@@ -60,7 +55,6 @@ class ConfirmEmail extends StatelessWidget {
                           child: Text(localization.resendEmail.toUpperCase()),
                         ),
                       ),
-                      SizedBox(width: kTableColumnGap),
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
@@ -83,7 +77,6 @@ class ConfirmEmail extends StatelessWidget {
                           child: Text(localization.changeEmail.toUpperCase()),
                         ),
                       ),
-                      SizedBox(width: kTableColumnGap),
                       /*
                       if (state.user.lastEmailAddress.isNotEmpty) ...[
                         TextButton(
@@ -100,6 +93,13 @@ class ConfirmEmail extends StatelessWidget {
                         child: TextButton(
                           onPressed: viewModel.onRefreshPressed,
                           child: Text(localization.refreshData.toUpperCase()),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: kTableColumnGap),
+                        child: TextButton(
+                          onPressed: viewModel.onLogoutPressed,
+                          child: Text(localization.logout.toUpperCase()),
                         ),
                       ),
                     ],

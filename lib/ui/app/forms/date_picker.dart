@@ -139,7 +139,8 @@ class _DatePickerState extends State<DatePicker> {
           widget.onSelected('', false);
         } else {
           String date = '';
-          if (isAllDigits(value) || value.length <= 5) {
+          final dateAsNumber = value.replaceAll('/', '').replaceAll('\\', '');
+          if (isAllDigits(dateAsNumber) || value.length <= 5) {
             String firstPart = '01';
             String secondPart = '01';
             int year = DateTime.now().year;
@@ -154,6 +155,30 @@ class _DatePickerState extends State<DatePicker> {
                 secondPart = '0' + parts[1];
               } else {
                 secondPart = parts[1];
+              }
+              if (parts.length == 3) {
+                year = parseInt(parts[2]);
+                if (year < 100) {
+                  year += 2000;
+                }
+              }
+            } else if (value.contains('\\')) {
+              final parts = value.split('\\');
+              if (parts[0].length == 1) {
+                secondPart = '0' + parts[0];
+              } else {
+                secondPart = parts[0];
+              }
+              if (parts[1].length == 1) {
+                firstPart = '0' + parts[1];
+              } else {
+                firstPart = parts[1];
+              }
+              if (parts.length == 3) {
+                year = parseInt(parts[2]);
+                if (year < 100) {
+                  year += 2000;
+                }
               }
             } else {
               value = value.replaceAll(RegExp(r'[^0-9]'), '');
