@@ -79,16 +79,6 @@ class UserView extends StatelessWidget {
                   memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                       .present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.recurringInvoice))
-            EntitiesListTile(
-              entity: user,
-              isFilter: isFilter,
-              title: localization.recurringInvoices,
-              entityType: EntityType.recurringInvoice,
-              subtitle: memoizedRecurringInvoiceStatsForUser(
-                      user.id, state.recurringInvoiceState.map)
-                  .present(localization.active, localization.archived),
-            ),
           if (userCompany.canViewOrCreate(EntityType.quote))
             EntitiesListTile(
               entity: user,
@@ -111,6 +101,17 @@ class UserView extends StatelessWidget {
                 state.creditState.map,
               ).present(localization.active, localization.archived),
             ),
+          if (userCompany.canViewOrCreate(EntityType.task))
+            EntitiesListTile(
+              entity: user,
+              isFilter: isFilter,
+              entityType: EntityType.task,
+              title: localization.tasks,
+              subtitle: memoizedTaskStatsForUser(
+                user.id,
+                state.taskState.map,
+              ).present(localization.active, localization.archived),
+            ),
           if (userCompany.canViewOrCreate(EntityType.project))
             EntitiesListTile(
               entity: user,
@@ -122,15 +123,15 @@ class UserView extends StatelessWidget {
                 state.projectState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.task))
+          if (userCompany.canViewOrCreate(EntityType.expense))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
-              entityType: EntityType.task,
-              title: localization.tasks,
-              subtitle: memoizedTaskStatsForUser(
+              entityType: EntityType.expense,
+              title: localization.expenses,
+              subtitle: memoizedExpenseStatsForUser(
                 user.id,
-                state.taskState.map,
+                state.expenseState.map,
               ).present(localization.active, localization.archived),
             ),
           if (userCompany.canViewOrCreate(EntityType.vendor))
@@ -144,16 +145,15 @@ class UserView extends StatelessWidget {
                 state.vendorState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.expense))
+          if (userCompany.canViewOrCreate(EntityType.recurringInvoice))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
-              entityType: EntityType.expense,
-              title: localization.expenses,
-              subtitle: memoizedExpenseStatsForUser(
-                user.id,
-                state.expenseState.map,
-              ).present(localization.active, localization.archived),
+              title: localization.recurringInvoices,
+              entityType: EntityType.recurringInvoice,
+              subtitle: memoizedRecurringInvoiceStatsForUser(
+                      user.id, state.recurringInvoiceState.map)
+                  .present(localization.active, localization.archived),
             ),
           if (userCompany.canViewOrCreate(EntityType.recurringExpense))
             EntitiesListTile(
