@@ -1016,10 +1016,6 @@ class __PdfPreviewState extends State<_PdfPreview> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    if (_pdfController == null) {
-      return SizedBox();
-    }
-
     return Container(
       height: 1200,
       child: Stack(
@@ -1075,20 +1071,22 @@ class __PdfPreviewState extends State<_PdfPreview> {
                       color: Colors.grey,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
-                        child: PdfView(
-                          controller: _pdfController,
-                          onDocumentLoaded: (document) {
-                            setState(() {
-                              _pageCount = document?.pagesCount ?? 0;
-                              _currentPage = 1;
-                            });
-                          },
-                          onPageChanged: (page) {
-                            setState(() {
-                              _currentPage = page;
-                            });
-                          },
-                        ),
+                        child: _pdfController == null
+                            ? SizedBox()
+                            : PdfView(
+                                controller: _pdfController,
+                                onDocumentLoaded: (document) {
+                                  setState(() {
+                                    _pageCount = document?.pagesCount ?? 0;
+                                    _currentPage = 1;
+                                  });
+                                },
+                                onPageChanged: (page) {
+                                  setState(() {
+                                    _currentPage = page;
+                                  });
+                                },
+                              ),
                       ),
                     ),
                   ),
