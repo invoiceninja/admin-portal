@@ -123,9 +123,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
         EntityAction.viewPdf,
         EntityAction.download,
         EntityAction.emailInvoice,
-        if (!invoice.isPaid) EntityAction.newPayment,
         if (!invoice.isSent) EntityAction.markSent,
         if (!invoice.isPaid) EntityAction.markPaid,
+        if (!invoice.isPaid) EntityAction.newPayment,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
