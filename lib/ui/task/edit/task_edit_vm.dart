@@ -99,10 +99,15 @@ class TaskEditVM {
           if (task.isOld &&
               !hasTaskChanges(task, state.taskState.map) &&
               [
+                EntityAction.start,
+                EntityAction.stop,
                 EntityAction.invoiceTask,
                 EntityAction.clone,
               ].contains(action)) {
             handleEntityAction(task, action);
+            if ([EntityAction.start, EntityAction.stop].contains(action)) {
+              viewEntity(entity: task, force: true);
+            }
           } else {
             final Completer<TaskEntity> completer = new Completer<TaskEntity>();
             store.dispatch(SaveTaskRequest(completer: completer, task: task));
@@ -128,10 +133,15 @@ class TaskEditVM {
               }
 
               if ([
+                EntityAction.start,
+                EntityAction.stop,
                 EntityAction.invoiceTask,
                 EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedTask, action);
+                if ([EntityAction.start, EntityAction.stop].contains(action)) {
+                  viewEntity(entity: task, force: true);
+                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
