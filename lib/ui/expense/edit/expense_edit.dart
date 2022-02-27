@@ -100,7 +100,8 @@ class _ExpenseEditState extends State<ExpenseEdit>
         if (expense.isRecurring)
           if (expense.isRunning) EntityAction.stop else EntityAction.start,
         if (expense.isOld) EntityAction.clone,
-        if (!expense.isRecurring) EntityAction.invoiceExpense,
+        if (!expense.isRecurring && !expense.isInvoiced)
+          EntityAction.invoiceExpense,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

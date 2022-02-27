@@ -103,7 +103,7 @@ class _TaskEditState extends State<TaskEdit>
       onSavePressed: (context, [EntityAction action]) =>
           _onSavePressed(context, action),
       actions: [
-        EntityAction.invoiceTask,
+        if (!task.isInvoiced) EntityAction.invoiceTask,
         if (task.isOld) EntityAction.clone,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
