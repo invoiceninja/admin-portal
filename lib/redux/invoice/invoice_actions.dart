@@ -608,6 +608,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: invoice);
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToInvoice:
       createEntity(context: context, entity: invoice.clone);
       break;

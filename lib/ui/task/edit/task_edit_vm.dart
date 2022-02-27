@@ -129,7 +129,7 @@ class TaskEditVM {
 
               if ([
                 EntityAction.invoiceTask,
-                EntityAction.clone,
+                if (task.isOld) EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedTask, action);
               }

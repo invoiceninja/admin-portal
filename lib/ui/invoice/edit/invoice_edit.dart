@@ -126,6 +126,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         if (!invoice.isSent) EntityAction.markSent,
         if (!invoice.isPaid) EntityAction.markPaid,
         if (!invoice.isPaid) EntityAction.newPayment,
+        if (invoice.isOld) EntityAction.clone,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

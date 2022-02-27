@@ -167,7 +167,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
               if ([
                 EntityAction.start,
                 EntityAction.stop,
-                EntityAction.clone,
+                if (recurringExpense.isOld) EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedRecurringExpense, action);
               }

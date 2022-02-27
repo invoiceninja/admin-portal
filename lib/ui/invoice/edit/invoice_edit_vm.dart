@@ -148,6 +148,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
                 EntityAction.download,
+                EntityAction.clone,
               ].contains(action)) {
             handleEntityAction(invoice, action);
           } else {
@@ -185,6 +186,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
                 EntityAction.download,
+                if (invoice.isOld) EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }
