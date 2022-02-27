@@ -16,11 +16,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VariablesHelp extends StatefulWidget {
   const VariablesHelp({
-    this.showEmailVariables = false,
     this.showInvoiceAsQuote = false,
   });
 
-  final bool showEmailVariables;
   final bool showInvoiceAsQuote;
 
   @override
@@ -34,8 +32,7 @@ class _VariablesHelpState extends State<VariablesHelp>
   @override
   void initState() {
     super.initState();
-    _controller =
-        TabController(vsync: this, length: widget.showEmailVariables ? 5 : 4);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -64,7 +61,6 @@ class _VariablesHelpState extends State<VariablesHelp>
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.company)),
-            if (widget.showEmailVariables) Tab(child: Text(localization.email)),
           ],
         ),
         SizedBox(
@@ -190,7 +186,6 @@ class _VariablesHelpState extends State<VariablesHelp>
                     CompanyFields.custom4,
                 ].map((field) => 'company.$field').toList(),
               ),
-              if (widget.showEmailVariables) SizedBox(),
             ],
           ),
         ),
