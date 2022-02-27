@@ -546,6 +546,7 @@ Future handleCreditAction(
             ..entityType = EntityType.quote
             ..designId = designId));
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToCredit:
       createEntity(context: context, entity: credit.clone);
       break;

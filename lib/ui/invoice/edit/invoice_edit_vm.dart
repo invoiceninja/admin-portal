@@ -186,7 +186,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.emailInvoice,
                 EntityAction.viewPdf,
                 EntityAction.download,
-                if (invoice.isOld) EntityAction.clone,
+                EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedInvoice, action);
               }

@@ -99,7 +99,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
       actions: [
         if (expense.isRecurring)
           if (expense.isRunning) EntityAction.stop else EntityAction.start,
-        EntityAction.clone,
+        if (expense.isOld) EntityAction.clone,
         if (!expense.isRecurring) EntityAction.invoiceExpense,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),

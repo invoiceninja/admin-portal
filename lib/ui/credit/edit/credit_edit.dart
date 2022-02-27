@@ -100,6 +100,7 @@ class _CreditEditState extends State<CreditEdit>
         EntityAction.download,
         EntityAction.emailCredit,
         if (!invoice.isSent) EntityAction.markSent,
+        if (invoice.isOld) EntityAction.clone,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

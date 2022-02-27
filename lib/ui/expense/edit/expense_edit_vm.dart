@@ -178,7 +178,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
 
               if ([
                 EntityAction.invoiceExpense,
-                if (expense.isOld) EntityAction.clone,
+                EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedExpense, action);
               }

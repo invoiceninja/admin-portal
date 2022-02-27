@@ -95,7 +95,12 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           if (recurringInvoice.isOld &&
               !hasRecurringInvoiceChanges(
                   recurringInvoice, state.recurringInvoiceState.map) &&
-              action != null) {
+              [
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.viewPdf,
+                EntityAction.clone,
+              ].contains(action)) {
             handleEntityAction(recurringInvoice, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -126,6 +131,15 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedRecurringInvoice);
                 }
+              }
+
+              if ([
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.viewPdf,
+                EntityAction.clone,
+              ].contains(action)) {
+                handleEntityAction(savedRecurringInvoice, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
