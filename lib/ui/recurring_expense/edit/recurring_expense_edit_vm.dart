@@ -130,7 +130,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           if (recurringExpense.isOld &&
               !hasRecurringExpenseChanges(
                   recurringExpense, state.recurringExpenseState.map) &&
-              action != null) {
+              [
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.clone,
+              ].contains(action)) {
             handleEntityAction(recurringExpense, action);
           } else {
             final Completer<ExpenseEntity> completer =
@@ -158,6 +162,14 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                       context: navigatorKey.currentContext,
                       entity: savedRecurringExpense);
                 }
+              }
+
+              if ([
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.clone,
+              ].contains(action)) {
+                handleEntityAction(savedRecurringExpense, action);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

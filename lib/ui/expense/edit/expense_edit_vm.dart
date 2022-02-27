@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -140,37 +141,55 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           final expense = store.state.expenseUIState.editing;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
-          final Completer<ExpenseEntity> completer =
-              new Completer<ExpenseEntity>();
-          store.dispatch(
-              SaveExpenseRequest(completer: completer, expense: expense));
-          return completer.future.then((savedExpense) {
-            showToast(expense.isNew
-                ? localization.createdExpense
-                : localization.updatedExpense);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-              if (expense.isNew) {
-                navigator.pushReplacementNamed(ExpenseViewScreen.route);
+          if (expense.isOld &&
+              !hasExpenseChanges(expense, state.expenseState.map) &&
+              [
+                EntityAction.invoiceExpense,
+                EntityAction.clone,
+              ].contains(action)) {
+            handleEntityAction(expense, action);
+          } else {
+            final Completer<ExpenseEntity> completer =
+                new Completer<ExpenseEntity>();
+            store.dispatch(
+                SaveExpenseRequest(completer: completer, expense: expense));
+            return completer.future.then((savedExpense) {
+              showToast(expense.isNew
+                  ? localization.createdExpense
+                  : localization.updatedExpense);
+
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
+                if (expense.isNew) {
+                  navigator.pushReplacementNamed(ExpenseViewScreen.route);
+                } else {
+                  navigator.pop(savedExpense);
+                }
               } else {
-                navigator.pop(savedExpense);
-              }
-            } else {
-              viewEntity(entity: savedExpense);
+                viewEntity(entity: savedExpense);
 
-              if (state.prefState.isEditorFullScreen(EntityType.expense)) {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedExpense);
+                if (state.prefState.isEditorFullScreen(EntityType.expense)) {
+                  editEntity(
+                      context: navigatorKey.currentContext,
+                      entity: savedExpense);
+                }
               }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+
+              if ([
+                EntityAction.invoiceExpense,
+                EntityAction.clone,
+              ].contains(action)) {
+                handleEntityAction(savedExpense, action);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
     );
