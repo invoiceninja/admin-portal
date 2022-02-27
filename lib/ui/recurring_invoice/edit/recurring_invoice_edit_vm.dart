@@ -102,6 +102,9 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.clone,
               ].contains(action)) {
             handleEntityAction(recurringInvoice, action);
+            if ([EntityAction.start, EntityAction.stop].contains(action)) {
+              viewEntity(entity: recurringInvoice, force: true);
+            }
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
@@ -140,6 +143,9 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedRecurringInvoice, action);
+                if ([EntityAction.start, EntityAction.stop].contains(action)) {
+                  viewEntity(entity: savedRecurringInvoice, force: true);
+                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

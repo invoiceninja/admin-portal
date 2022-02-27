@@ -136,6 +136,9 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 EntityAction.clone,
               ].contains(action)) {
             handleEntityAction(recurringExpense, action);
+            if ([EntityAction.start, EntityAction.stop].contains(action)) {
+              viewEntity(entity: recurringExpense, force: true);
+            }
           } else {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
@@ -171,6 +174,9 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 EntityAction.viewPdf,
               ].contains(action)) {
                 handleEntityAction(savedRecurringExpense, action);
+                if ([EntityAction.start, EntityAction.stop].contains(action)) {
+                  viewEntity(entity: savedRecurringExpense, force: true);
+                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
