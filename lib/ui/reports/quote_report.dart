@@ -18,9 +18,14 @@ enum QuoteReportFields {
   client_balance,
   client_address1,
   client_address2,
+  client_state,
+  client_country,
   client_shipping_address1,
   client_shipping_address2,
-  client_country,
+  client_shipping_city,
+  client_shipping_state,
+  client_shipping_postal_code,
+  client_shipping_country,
   status,
   number,
   discount,
@@ -297,6 +302,21 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_website:
           value = client.website;
+          break;
+        case QuoteReportFields.client_state:
+          value = client.state;
+          break;
+        case QuoteReportFields.client_shipping_city:
+          value = client.shippingCity;
+          break;
+        case QuoteReportFields.client_shipping_state:
+          value = client.shippingState;
+          break;
+        case QuoteReportFields.client_shipping_postal_code:
+          value = client.shippingPostalCode;
+          break;
+        case QuoteReportFields.client_shipping_country:
+          value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
           break;
       }
 
