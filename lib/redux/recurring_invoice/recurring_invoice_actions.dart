@@ -463,6 +463,7 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: recurringInvoice);
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToRecurring:
       createEntity(context: context, entity: recurringInvoice.clone);
       break;

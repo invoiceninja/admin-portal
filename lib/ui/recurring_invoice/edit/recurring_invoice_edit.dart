@@ -103,6 +103,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
         else
           EntityAction.stop,
         EntityAction.viewPdf,
+        if (invoice.isOld) EntityAction.clone,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(

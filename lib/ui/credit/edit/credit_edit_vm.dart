@@ -98,6 +98,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,
                 EntityAction.download,
+                EntityAction.clone,
               ].contains(action)) {
             handleEntityAction(credit, action);
           } else {
@@ -134,6 +135,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 EntityAction.emailCredit,
                 EntityAction.viewPdf,
                 EntityAction.download,
+                EntityAction.clone,
               ].contains(action)) {
                 handleEntityAction(savedCredit, action);
               }

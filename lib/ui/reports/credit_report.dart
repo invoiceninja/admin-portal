@@ -21,9 +21,14 @@ enum CreditReportFields {
   client_balance,
   client_address1,
   client_address2,
+  client_country,
   client_shipping_address1,
   client_shipping_address2,
-  client_country,
+  client_state,
+  client_shipping_city,
+  client_shipping_state,
+  client_shipping_postal_code,
+  client_shipping_country,
   status,
   number,
   discount,
@@ -304,6 +309,21 @@ ReportResult creditReport(
           break;
         case CreditReportFields.client_website:
           value = client.website;
+          break;
+        case CreditReportFields.client_state:
+          value = client.state;
+          break;
+        case CreditReportFields.client_shipping_city:
+          value = client.shippingCity;
+          break;
+        case CreditReportFields.client_shipping_state:
+          value = client.shippingState;
+          break;
+        case CreditReportFields.client_shipping_postal_code:
+          value = client.shippingPostalCode;
+          break;
+        case CreditReportFields.client_shipping_country:
+          value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
           break;
       }
 

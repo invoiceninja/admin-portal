@@ -16,6 +16,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'client_shipping_state': 'Client Shipping State',
+      'client_shipping_city': 'Client Shipping City',
+      'client_shipping_postal_code': 'Client Shipping Postal Code',
+      'client_shipping_country': 'Client Shipping Country',
       'load_pdf': 'Load PDF',
       'start_free_trial': 'Start Free Trial',
       'start_free_trial_message':
@@ -73291,6 +73295,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get loadPdf =>
       _localizedValues[localeCode]['load_pdf'] ??
       _localizedValues['en']['load_pdf'];
+
+  String get clientShippingCity =>
+      _localizedValues[localeCode]['client_shipping_city'] ??
+      _localizedValues['en']['client_shipping_city'];
+
+  String get clientShippingState =>
+      _localizedValues[localeCode]['client_shipping_state'] ??
+      _localizedValues['en']['client_shipping_state'];
+
+  String get clientShippingPostalCode =>
+      _localizedValues[localeCode]['client_shipping_postal_code'] ??
+      _localizedValues['en']['client_shipping_postal_code'];
+
+  String get clientShippingCountry =>
+      _localizedValues[localeCode]['client_shipping_country'] ??
+      _localizedValues['en']['client_shipping_country'];
 
   // STARTER: lang field - do not remove comment
 

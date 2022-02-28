@@ -396,6 +396,7 @@ void handleRecurringExpenseAction(BuildContext context,
             .rebuild((b) => b..entityType = EntityType.expense),
       );
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToRecurring:
       createEntity(
         context: context,

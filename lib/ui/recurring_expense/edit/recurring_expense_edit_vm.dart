@@ -130,8 +130,15 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           if (recurringExpense.isOld &&
               !hasRecurringExpenseChanges(
                   recurringExpense, state.recurringExpenseState.map) &&
-              action != null) {
+              [
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.clone,
+              ].contains(action)) {
             handleEntityAction(recurringExpense, action);
+            if ([EntityAction.start, EntityAction.stop].contains(action)) {
+              viewEntity(entity: recurringExpense, force: true);
+            }
           } else {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
@@ -157,6 +164,18 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                   editEntity(
                       context: navigatorKey.currentContext,
                       entity: savedRecurringExpense);
+                }
+              }
+
+              if ([
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.clone,
+                EntityAction.viewPdf,
+              ].contains(action)) {
+                handleEntityAction(savedRecurringExpense, action);
+                if ([EntityAction.start, EntityAction.stop].contains(action)) {
+                  viewEntity(entity: savedRecurringExpense, force: true);
                 }
               }
             }).catchError((Object error) {

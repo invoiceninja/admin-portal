@@ -21,9 +21,17 @@ enum InvoiceReportFields {
   client_balance,
   client_address1,
   client_address2,
+  client_vat_number,
+  client_city,
+  client_postal_code,
+  client_country,
   client_shipping_address1,
   client_shipping_address2,
-  client_country,
+  client_state,
+  client_shipping_city,
+  client_shipping_state,
+  client_shipping_postal_code,
+  client_shipping_country,
   status,
   number,
   discount,
@@ -57,9 +65,6 @@ enum InvoiceReportFields {
   exchange_rate,
   public_notes,
   private_notes,
-  client_vat_number,
-  client_city,
-  client_postal_code,
   client_website,
   tax_rate1,
   tax_rate2,
@@ -357,6 +362,21 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_website:
           value = client.website;
+          break;
+        case InvoiceReportFields.client_state:
+          value = client.state;
+          break;
+        case InvoiceReportFields.client_shipping_city:
+          value = client.shippingCity;
+          break;
+        case InvoiceReportFields.client_shipping_state:
+          value = client.shippingState;
+          break;
+        case InvoiceReportFields.client_shipping_postal_code:
+          value = client.shippingPostalCode;
+          break;
+        case InvoiceReportFields.client_shipping_country:
+          value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
           break;
       }
 

@@ -260,6 +260,7 @@ void handleExpenseAction(
     case EntityAction.edit:
       editEntity(context: context, entity: expense);
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToExpense:
       createEntity(
         context: context,

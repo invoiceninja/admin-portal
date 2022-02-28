@@ -386,7 +386,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             ],
           ),
         VariablesHelp(
-          //showEmailVariables: true,
           showInvoiceAsQuote: template == EmailTemplate.quote,
         ),
       ],

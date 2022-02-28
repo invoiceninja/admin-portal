@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -81,7 +82,7 @@ class TaskEditVM {
           store.dispatch(AddTaskTime(TaskTime(), showAsRunning: true));
         }
       },
-      onSavePressed: (BuildContext context) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final task = store.state.taskUIState.editing;
           final localization = navigatorKey.localization;
@@ -94,35 +95,62 @@ class TaskEditVM {
                 });
             return null;
           }
-          final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-          store.dispatch(SaveTaskRequest(completer: completer, task: task));
-          return completer.future.then((savedTask) {
-            showToast(task.isNew
-                ? localization.createdTask
-                : localization.updatedTask);
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-              if (task.isNew) {
-                navigator.pushReplacementNamed(TaskViewScreen.route);
-              } else {
-                navigator.pop(savedTask);
-              }
-            } else {
-              viewEntity(entity: savedTask);
-
-              if (state.prefState.isEditorFullScreen(EntityType.task)) {
-                editEntity(
-                    context: navigatorKey.currentContext, entity: savedTask);
-              }
+          if (task.isOld &&
+              !hasTaskChanges(task, state.taskState.map) &&
+              [
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.invoiceTask,
+                EntityAction.clone,
+              ].contains(action)) {
+            handleEntityAction(task, action);
+            if ([EntityAction.start, EntityAction.stop].contains(action)) {
+              viewEntity(entity: task, force: true);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          } else {
+            final Completer<TaskEntity> completer = new Completer<TaskEntity>();
+            store.dispatch(SaveTaskRequest(completer: completer, task: task));
+            return completer.future.then((savedTask) {
+              showToast(task.isNew
+                  ? localization.createdTask
+                  : localization.updatedTask);
+
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
+                if (task.isNew) {
+                  navigator.pushReplacementNamed(TaskViewScreen.route);
+                } else {
+                  navigator.pop(savedTask);
+                }
+              } else {
+                viewEntity(entity: savedTask);
+
+                if (state.prefState.isEditorFullScreen(EntityType.task)) {
+                  editEntity(
+                      context: navigatorKey.currentContext, entity: savedTask);
+                }
+              }
+
+              if ([
+                EntityAction.start,
+                EntityAction.stop,
+                EntityAction.invoiceTask,
+                EntityAction.clone,
+              ].contains(action)) {
+                handleEntityAction(savedTask, action);
+                if ([EntityAction.start, EntityAction.stop].contains(action)) {
+                  viewEntity(entity: task, force: true);
+                }
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
         });
       },
     );
@@ -131,7 +159,7 @@ class TaskEditVM {
   final TaskEntity task;
   final int taskTimeIndex;
   final CompanyEntity company;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, [EntityAction]) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function onFabPressed;
   final bool isLoading;

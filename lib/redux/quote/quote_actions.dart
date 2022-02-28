@@ -546,6 +546,7 @@ Future handleQuoteAction(
             ..entityType = EntityType.invoice
             ..designId = designId));
       break;
+    case EntityAction.clone:
     case EntityAction.cloneToQuote:
       createEntity(context: context, entity: quote.clone);
       break;

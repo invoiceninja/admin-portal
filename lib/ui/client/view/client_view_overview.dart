@@ -61,10 +61,13 @@ class ClientOverview extends StatelessWidget {
       if (companyGateway.isOld && !companyGateway.isDeleted) {
         final customerReference = gatewayToken.customerReference;
         gatewayMap[customerReference] = companyGateway;
-        linkMap[customerReference] = GatewayEntity.getClientUrl(
+        final clientUrl = GatewayEntity.getClientUrl(
           gatewayId: companyGateway.gatewayId,
           customerReference: customerReference,
         );
+        if (clientUrl != null) {
+          linkMap[customerReference] = clientUrl;
+        }
         if (tokenMap.containsKey(customerReference)) {
           tokenMap[customerReference].add(gatewayToken);
         } else {

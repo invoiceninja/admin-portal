@@ -9,8 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -71,6 +70,23 @@ class _TaskEditState extends State<TaskEdit>
     super.dispose();
   }
 
+  void _onSavePressed(BuildContext context, [EntityAction action]) {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+    if (!isValid) {
+      return;
+    }
+
+    final viewModel = widget.viewModel;
+    viewModel.onSavePressed(context, action);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -84,21 +100,16 @@ class _TaskEditState extends State<TaskEdit>
       entity: task,
       title: task.isNew ? localization.newTask : localization.editTask,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-         */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context, [EntityAction action]) =>
+          _onSavePressed(context, action),
+      actions: [
+        if (!task.isInvoiced) ...[
+          task.isRunning ? EntityAction.stop : EntityAction.start,
+          EntityAction.invoiceTask,
+        ],
+        if (task.isOld) EntityAction.clone,
+      ],
+      onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
         //isScrollable: true,

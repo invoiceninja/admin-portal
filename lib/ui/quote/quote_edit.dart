@@ -103,6 +103,7 @@ class _QuoteEditState extends State<QuoteEdit>
         invoice.invoiceId.isEmpty
             ? EntityAction.convertToInvoice
             : EntityAction.viewInvoice,
+        if (invoice.isOld) EntityAction.clone,
       ],
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
