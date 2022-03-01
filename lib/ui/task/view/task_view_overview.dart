@@ -200,6 +200,7 @@ class _TaskOverviewState extends State<TaskOverview> {
             TaskTimeListTile(
               task: task,
               taskTime: taskTime,
+              isValid: true,
               onTap: (BuildContext context) =>
                   viewModel.state.userCompany.canEditEntity(task)
                       ? viewModel.onEditPressed(context, taskTime)

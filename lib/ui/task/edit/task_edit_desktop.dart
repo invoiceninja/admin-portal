@@ -123,10 +123,12 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final client = state.clientState.get(task.clientId);
     final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
+
     if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
       taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
     }
 
+    final overlapping = task.getInvalidTimeIndices;
     final rateLabel = localization.rate +
         ' • ' +
         formatNumber(
@@ -413,8 +415,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: IconButton(
-                      icon: Icon(Icons.clear),
-                      tooltip: localization.remove,
+                      icon: Icon(
+                        Icons.clear,
+                        color: overlapping.contains(index) ? Colors.red : null,
+                      ),
+                      tooltip: overlapping.contains(index)
+                          ? localization.invalidTime
+                          : localization.remove,
                       onPressed: taskTimes[index].isEmpty
                           ? null
                           : () {

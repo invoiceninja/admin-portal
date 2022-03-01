@@ -18,11 +18,13 @@ class TaskTimeListTile extends StatelessWidget {
     @required this.task,
     @required this.taskTime,
     @required this.onTap,
+    @required this.isValid,
   });
 
   final Function(BuildContext context) onTap;
   final TaskEntity task;
   final TaskTime taskTime;
+  final bool isValid;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,9 @@ class TaskTimeListTile extends StatelessWidget {
             ],
           ),
           subtitle: Text(subtitle),
-          trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+          trailing: onTap != null
+              ? Icon(isValid ? Icons.navigate_next : Icons.error)
+              : null,
         ),
         Divider(
           height: 1.0,
