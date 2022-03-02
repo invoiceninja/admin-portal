@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -15,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/money.dart';
 enum ClientReportFields {
   id,
   name,
+  group,
   website,
   currency,
   language,
@@ -67,20 +69,23 @@ enum ClientReportFields {
   updated_at,
 }
 
-var memoizedClientReport = memo5((
+var memoizedClientReport = memo6((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) =>
-    clientReport(userCompany, reportsUIState, clientMap, userMap, staticState));
+    clientReport(userCompany, reportsUIState, clientMap, userMap, groupMap,
+        staticState));
 
 ReportResult clientReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -135,6 +140,9 @@ ReportResult clientReport(
           break;
         case ClientReportFields.name:
           value = client.displayName;
+          break;
+        case ClientReportFields.group:
+          value = groupMap[client.groupId]?.name ?? '';
           break;
         case ClientReportFields.website:
           value = client.website;

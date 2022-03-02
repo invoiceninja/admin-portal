@@ -193,8 +193,6 @@ ReportResult lineItemReport(
 
         if (value.runtimeType == bool) {
           row.add(invoice.getReportBool(value: value));
-        } else if (column == InvoiceItemReportFields.quantity) {
-          row.add(invoice.getReportDouble(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
           row.add(invoice.getReportDouble(
               value: value, currencyId: client.currencyId));

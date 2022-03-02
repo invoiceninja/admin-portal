@@ -281,6 +281,7 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           state.clientState.map,
           state.userState.map,
+          state.groupState.map,
           state.staticState,
         );
         break;

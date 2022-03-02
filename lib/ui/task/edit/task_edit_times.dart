@@ -52,6 +52,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final viewModel = widget.viewModel;
     final task = viewModel.task;
     final taskTimes = task.getTaskTimes();
+    final invalidTimes = task.getInvalidTimeIndices;
     final taskTime = viewModel.taskTimeIndex != null &&
             taskTimes.length > viewModel.taskTimeIndex
         ? taskTimes[viewModel.taskTimeIndex]
@@ -68,15 +69,18 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
       return HelpText(localization.clickPlusToAddTime);
     }
 
-    final taskTimeWidgets = task
-        .getTaskTimes()
-        .toList()
-        .reversed
-        .map<Widget>((taskTime) => TaskTimeListTile(
-              task: task,
-              taskTime: taskTime,
-              onTap: (context) => _showTaskTimeEditor(taskTime, context),
-            ));
+    final sortedTaskTimes = task.getTaskTimes().toList().reversed.toList();
+    final taskTimeWidgets = <Widget>[];
+
+    for (var i = 0; i < sortedTaskTimes.length; i++) {
+      final taskTime = sortedTaskTimes[i];
+      taskTimeWidgets.add(TaskTimeListTile(
+        task: task,
+        taskTime: taskTime,
+        onTap: (context) => _showTaskTimeEditor(taskTime, context),
+        isValid: !invalidTimes.contains(sortedTaskTimes.length - i - 1),
+      ));
+    }
 
     return ScrollableListView(
       children: taskTimeWidgets.toList(),

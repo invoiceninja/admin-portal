@@ -352,6 +352,35 @@ abstract class TaskEntity extends Object
     return isValid && countRunning <= 1;
   }
 
+  List get getInvalidTimeIndices {
+    final times = getTaskTimes();
+    DateTime lastDateTime = DateTime(2000);
+
+    final indices = <int>[];
+    int counter = 0;
+
+    times.forEach((time) {
+      final startDate = time.startDate;
+      final endDate = time.endDate;
+
+      if (time.isRunning) {
+        //
+      } else {
+        if (startDate.isBefore(lastDateTime) || startDate.isAfter(endDate)) {
+          indices.add(counter);
+        }
+        if (endDate.isBefore(startDate) || endDate.isBefore(lastDateTime)) {
+          indices.add(counter);
+        }
+        lastDateTime = lastDateTime.isAfter(endDate) ? lastDateTime : endDate;
+      }
+
+      counter++;
+    });
+
+    return indices;
+  }
+
   bool get isRunning {
     final taskTimes = getTaskTimes();
 
