@@ -16,6 +16,7 @@ class TokenMeta extends StatelessWidget {
     if (meta.last4 != null) {
       cardDetails += ' ${meta.last4}';
     }
+
     if (meta.expMonth != null && meta.expYear != null) {
       cardDetails += '  ${meta.expMonth}/${meta.expYear}';
     }
