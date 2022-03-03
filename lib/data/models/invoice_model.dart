@@ -1112,7 +1112,10 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
-    if (dueDate.isEmpty || balance == 0) {
+    final date =
+        (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
+
+    if (date.isEmpty || balance == 0) {
       return false;
     }
 
@@ -1120,7 +1123,7 @@ abstract class InvoiceEntity extends Object
         !isRecurring &&
         isSent &&
         isUnpaid &&
-        DateTime.tryParse(dueDate)
+        DateTime.tryParse(date)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
