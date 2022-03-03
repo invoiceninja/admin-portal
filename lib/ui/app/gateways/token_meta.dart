@@ -11,6 +11,16 @@ class TokenMeta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cardDetails = '••••';
+
+    if (meta.last4 != null) {
+      cardDetails += ' ${meta.last4}';
+    }
+
+    if (meta.expMonth != null && meta.expYear != null) {
+      cardDetails += '  ${meta.expMonth}/${meta.expYear}';
+    }
+
     return Row(
       children: [
         Image.asset(
@@ -20,7 +30,7 @@ class TokenMeta extends StatelessWidget {
         SizedBox(width: 8),
         Flexible(
           child: Text(
-            '•••• ${meta.last4} ${meta.expMonth}/${meta.expYear}',
+            cardDetails,
             overflow: TextOverflow.ellipsis,
           ),
         ),

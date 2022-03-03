@@ -852,7 +852,9 @@ abstract class InvoiceEntity extends Object
 
       if (invitations.isNotEmpty) {
         if (multiselect) {
-          actions.add(EntityAction.bulkDownload);
+          if (!isRecurring) {
+            actions.add(EntityAction.bulkDownload);
+          }
         } else {
           actions.add(EntityAction.viewPdf);
           if (!isRecurring) {
@@ -1110,7 +1112,10 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
-    if (dueDate.isEmpty || balance == 0) {
+    final date =
+        (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
+
+    if (date.isEmpty || balance == 0) {
       return false;
     }
 
@@ -1118,7 +1123,7 @@ abstract class InvoiceEntity extends Object
         !isRecurring &&
         isSent &&
         isUnpaid &&
-        DateTime.tryParse(dueDate)
+        DateTime.tryParse(date)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
