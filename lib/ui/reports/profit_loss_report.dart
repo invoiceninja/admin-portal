@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -102,7 +104,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = EntityType.payment;
+          value = AppLocalization.of(navigatorKey.currentContext).payment;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
@@ -190,7 +192,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = EntityType.expense;
+          value = AppLocalization.of(navigatorKey.currentContext).expense;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
