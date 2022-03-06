@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -14,9 +16,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 enum RecurringInvoiceReportFields {
   id,
   amount,
-  balance,
   converted_amount,
-  converted_balance,
   client,
   client_balance,
   client_address1,
@@ -36,11 +36,6 @@ enum RecurringInvoiceReportFields {
   number,
   discount,
   po_number,
-  date,
-  due_date,
-  age,
-  partial,
-  partial_due_date,
   auto_bill,
   invoice1,
   invoice2,
@@ -73,7 +68,6 @@ enum RecurringInvoiceReportFields {
   tax_name2,
   tax_name3,
   currency,
-  is_viewed,
   assigned_to,
   created_by,
   project,
@@ -83,6 +77,9 @@ enum RecurringInvoiceReportFields {
   contact_email,
   contact_phone,
   contact_name,
+  frequency,
+  start_date,
+  remaining_cycles,
 }
 
 var memoizedRecurringInvoiceReport = memo8((
@@ -119,6 +116,7 @@ ReportResult recurringInvoiceReport(
   final List<List<ReportElement>> data = [];
   BuiltList<RecurringInvoiceReportFields> columns;
 
+  final localization = AppLocalization.of(navigatorKey.currentContext);
   final reportSettings = userCompany.settings?.reportSettings;
   final invoiceReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportInvoice)
@@ -129,10 +127,9 @@ ReportResult recurringInvoiceReport(
     RecurringInvoiceReportFields.number,
     RecurringInvoiceReportFields.client,
     RecurringInvoiceReportFields.amount,
-    RecurringInvoiceReportFields.balance,
-    RecurringInvoiceReportFields.date,
-    RecurringInvoiceReportFields.due_date,
-    RecurringInvoiceReportFields.age,
+    RecurringInvoiceReportFields.frequency,
+    RecurringInvoiceReportFields.start_date,
+    RecurringInvoiceReportFields.remaining_cycles,
   ];
 
   if (invoiceReportSettings.columns.isNotEmpty) {
@@ -171,14 +168,8 @@ ReportResult recurringInvoiceReport(
         case RecurringInvoiceReportFields.amount:
           value = invoice.amount;
           break;
-        case RecurringInvoiceReportFields.balance:
-          value = invoice.balanceOrAmount;
-          break;
         case RecurringInvoiceReportFields.converted_amount:
           value = invoice.amount * 1 / invoice.exchangeRate;
-          break;
-        case RecurringInvoiceReportFields.converted_balance:
-          value = invoice.balanceOrAmount * 1 / invoice.exchangeRate;
           break;
         case RecurringInvoiceReportFields.client:
           value = client.displayName;
@@ -210,9 +201,6 @@ ReportResult recurringInvoiceReport(
         case RecurringInvoiceReportFields.po_number:
           value = invoice.poNumber;
           break;
-        case RecurringInvoiceReportFields.date:
-          value = invoice.date;
-          break;
         case RecurringInvoiceReportFields.reminder1_sent:
           value = invoice.reminder1Sent;
           break;
@@ -224,18 +212,6 @@ ReportResult recurringInvoiceReport(
           break;
         case RecurringInvoiceReportFields.reminder_last_sent:
           value = invoice.reminderLastSent;
-          break;
-        case RecurringInvoiceReportFields.age:
-          value = invoice.isPaid ? -1 : invoice.age;
-          break;
-        case RecurringInvoiceReportFields.due_date:
-          value = invoice.dueDate;
-          break;
-        case RecurringInvoiceReportFields.partial:
-          value = invoice.partial;
-          break;
-        case RecurringInvoiceReportFields.partial_due_date:
-          value = invoice.partialDueDate;
           break;
         case RecurringInvoiceReportFields.auto_bill:
           value = invoice.autoBill;
@@ -331,9 +307,6 @@ ReportResult recurringInvoiceReport(
           value =
               staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
           break;
-        case RecurringInvoiceReportFields.is_viewed:
-          value = invoice.isViewed;
-          break;
         case RecurringInvoiceReportFields.assigned_to:
           value = userMap[invoice.assignedUserId]?.listDisplayName ?? '';
           break;
@@ -379,6 +352,15 @@ ReportResult recurringInvoiceReport(
         case RecurringInvoiceReportFields.client_shipping_country:
           value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
           break;
+        case RecurringInvoiceReportFields.frequency:
+          value = localization.lookup(kFrequencies[invoice.frequencyId]);
+          break;
+        case RecurringInvoiceReportFields.start_date:
+          value = invoice.nextSendDate;
+          break;
+        case RecurringInvoiceReportFields.remaining_cycles:
+          value = invoice.remainingCycles;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -392,14 +374,10 @@ ReportResult recurringInvoiceReport(
 
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
-      } else if (column == RecurringInvoiceReportFields.age) {
-        row.add(
-            invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         String currencyId = client.currencyId;
         if ([
           RecurringInvoiceReportFields.converted_amount,
-          RecurringInvoiceReportFields.converted_balance
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
