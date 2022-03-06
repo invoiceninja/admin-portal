@@ -91,6 +91,8 @@ class ReportsScreen extends StatelessWidget {
           kReportInvoiceTax,
           kReportPaymentTax,
         ],
+        if (state.company.isModuleEnabled(EntityType.recurringInvoice))
+          kReportRecurringInvoice,
       ],
       if (state.company.isModuleEnabled(EntityType.quote)) ...[
         kReportQuote,
@@ -98,7 +100,11 @@ class ReportsScreen extends StatelessWidget {
       ],
       if (state.company.isModuleEnabled(EntityType.credit)) kReportCredit,
       kReportDocument,
-      kReportExpense,
+      if (state.company.isModuleEnabled(EntityType.expense)) ...[
+        kReportExpense,
+        if (state.company.isModuleEnabled(EntityType.recurringExpense))
+          kReportRecurringExpense,
+      ],
       kReportProduct,
       kReportProfitAndLoss,
       kReportTask,

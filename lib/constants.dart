@@ -490,6 +490,8 @@ const String kReportPaymentTax = 'payment_tax';
 const String kReportQuote = 'quote';
 const String kReportInvoiceItem = 'invoice_item';
 const String kReportQuoteItem = 'quote_item';
+const String kReportRecurringExpense = 'recurring_expense';
+const String kReportRecurringInvoice = 'recurring_invoice';
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';

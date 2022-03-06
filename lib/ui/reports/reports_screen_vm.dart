@@ -11,6 +11,8 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
@@ -123,6 +125,18 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
+      case kReportRecurringInvoice:
+        reportResult = memoizedRecurringInvoiceReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.recurringInvoiceState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.vendorState.map,
+          state.projectState.map,
+          state.staticState,
+        );
+        break;
       case kReportDocument:
         reportResult = memoizedDocumentReport(
           state.userCompany,
@@ -142,6 +156,19 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.expenseState.map,
+          state.expenseCategoryState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportRecurringExpense:
+        reportResult = memoizedRecurringExpenseReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.recurringExpenseState.map,
           state.expenseCategoryState.map,
           state.invoiceState.map,
           state.clientState.map,
