@@ -101,7 +101,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
 
     _focusNode = FocusScopeNode();
-    _optionTabController = TabController(vsync: this, length: 3);
+    _optionTabController = TabController(vsync: this, length: 5);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
     _scrollController = ScrollController();
@@ -588,65 +588,57 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         controller: _optionTabController,
                         tabs: [
                           Tab(text: localization.terms),
-                          Tab(text: localization.notes),
+                          Tab(text: localization.footer),
+                          Tab(text: localization.publicNotes),
+                          Tab(text: localization.privateNotes),
                           Tab(text: localization.settings),
                         ],
                       ),
                       SizedBox(
-                        height: 240,
+                        height: 171,
                         child: TabBarView(
                           controller: _optionTabController,
                           children: <Widget>[
-                            Column(
-                              children: [
-                                DecoratedFormField(
-                                  maxLines: 4,
-                                  controller: _termsController,
-                                  keyboardType: TextInputType.multiline,
-                                  label: entityType == EntityType.credit
-                                      ? localization.creditTerms
-                                      : entityType == EntityType.quote
-                                          ? localization.quoteTerms
-                                          : localization.invoiceTerms,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultTerms(invoice.entityType),
-                                ),
-                                DecoratedFormField(
-                                  maxLines: 4,
-                                  controller: _footerController,
-                                  keyboardType: TextInputType.multiline,
-                                  label: entityType == EntityType.credit
-                                      ? localization.creditFooter
-                                      : entityType == EntityType.quote
-                                          ? localization.quoteFooter
-                                          : localization.invoiceFooter,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultFooter(invoice.entityType),
-                                ),
-                              ],
+                            DecoratedFormField(
+                              maxLines: 7,
+                              controller: _termsController,
+                              keyboardType: TextInputType.multiline,
+                              label: entityType == EntityType.credit
+                                  ? localization.creditTerms
+                                  : entityType == EntityType.quote
+                                      ? localization.quoteTerms
+                                      : localization.invoiceTerms,
+                              hint: invoice.isOld && !invoice.isRecurringInvoice
+                                  ? ''
+                                  : settings
+                                      .getDefaultTerms(invoice.entityType),
                             ),
-                            Column(
-                              children: [
-                                DecoratedFormField(
-                                  maxLines: 4,
-                                  controller: _publicNotesController,
-                                  keyboardType: TextInputType.multiline,
-                                  label: localization.publicNotes,
-                                  hint: client.publicNotes,
-                                ),
-                                DecoratedFormField(
-                                  maxLines: 4,
-                                  controller: _privateNotesController,
-                                  keyboardType: TextInputType.multiline,
-                                  label: localization.privateNotes,
-                                ),
-                              ],
+                            DecoratedFormField(
+                              maxLines: 7,
+                              controller: _footerController,
+                              keyboardType: TextInputType.multiline,
+                              label: entityType == EntityType.credit
+                                  ? localization.creditFooter
+                                  : entityType == EntityType.quote
+                                      ? localization.quoteFooter
+                                      : localization.invoiceFooter,
+                              hint: invoice.isOld && !invoice.isRecurringInvoice
+                                  ? ''
+                                  : settings
+                                      .getDefaultFooter(invoice.entityType),
+                            ),
+                            DecoratedFormField(
+                              maxLines: 7,
+                              controller: _publicNotesController,
+                              keyboardType: TextInputType.multiline,
+                              label: localization.publicNotes,
+                              hint: client.publicNotes,
+                            ),
+                            DecoratedFormField(
+                              maxLines: 7,
+                              controller: _privateNotesController,
+                              keyboardType: TextInputType.multiline,
+                              label: localization.privateNotes,
                             ),
                             LayoutBuilder(builder: (context, constraints) {
                               return GridView.count(
@@ -659,13 +651,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 childAspectRatio:
                                     ((constraints.maxWidth / 2) - 8) / 50,
                                 children: [
-                                  DesignPicker(
-                                    initialValue: invoice.designId,
-                                    onSelected: (value) {
-                                      viewModel.onChanged(invoice.rebuild(
-                                          (b) => b..designId = value.id));
-                                    },
-                                  ),
                                   UserPicker(
                                     userId: invoice.assignedUserId,
                                     onChanged: (userId) => viewModel.onChanged(
@@ -771,133 +756,148 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   child: Column(
                     children: [
                       FormCard(
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding,
+                              left: kMobileDialogPadding / 2),
+                          children: <Widget>[
+                            TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                labelText: localization.subtotal,
+                              ),
+                              textAlign: TextAlign.end,
+                              key: ValueKey(
+                                  '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                              initialValue: formatNumber(
+                                  invoice.calculateSubtotal(
+                                      precision:
+                                          precisionForInvoice(state, invoice)),
+                                  context,
+                                  clientId: invoice.clientId),
+                            ),
+                            if (invoice.isOld &&
+                                (invoice.isInvoice || invoice.isQuote))
+                              TextFormField(
+                                enabled: false,
+                                decoration: InputDecoration(
+                                  labelText: localization.paidToDate,
+                                ),
+                                textAlign: TextAlign.end,
+                                key: ValueKey(
+                                    '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
+                                initialValue: formatNumber(
+                                    invoice.paidToDate, context,
+                                    clientId: invoice.clientId),
+                              ),
+                            if (company.hasCustomSurcharge)
+                              CustomSurcharges(
+                                surcharge1Controller: _surcharge1Controller,
+                                surcharge2Controller: _surcharge2Controller,
+                                surcharge3Controller: _surcharge3Controller,
+                                surcharge4Controller: _surcharge4Controller,
+                              ),
+                            if (company.enableFirstInvoiceTaxRate ||
+                                invoice.taxName1.isNotEmpty)
+                              TaxRateDropdown(
+                                onSelected: (taxRate) {
+                                  viewModel
+                                      .onChanged(invoice.applyTax(taxRate));
+                                },
+                                labelText: localization.tax +
+                                    (company.settings.enableInclusiveTaxes
+                                        ? ' - ${localization.inclusive}'
+                                        : ''),
+                                initialTaxName: invoice.taxName1,
+                                initialTaxRate: invoice.taxRate1,
+                              ),
+                            if (company.enableSecondInvoiceTaxRate ||
+                                invoice.taxName2.isNotEmpty)
+                              TaxRateDropdown(
+                                onSelected: (taxRate) {
+                                  viewModel.onChanged(invoice.applyTax(taxRate,
+                                      isSecond: true));
+                                },
+                                labelText: localization.tax +
+                                    (company.settings.enableInclusiveTaxes
+                                        ? ' - ${localization.inclusive}'
+                                        : ''),
+                                initialTaxName: invoice.taxName2,
+                                initialTaxRate: invoice.taxRate2,
+                              ),
+                            if (company.enableThirdInvoiceTaxRate ||
+                                invoice.taxName3.isNotEmpty)
+                              TaxRateDropdown(
+                                onSelected: (taxRate) {
+                                  final updatedInvoice =
+                                      invoice.applyTax(taxRate, isThird: true);
+                                  print(
+                                      '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
+                                  viewModel.onChanged(
+                                      invoice.applyTax(taxRate, isThird: true));
+                                },
+                                labelText: localization.tax +
+                                    (company.settings.enableInclusiveTaxes
+                                        ? ' - ${localization.inclusive}'
+                                        : ''),
+                                initialTaxName: invoice.taxName3,
+                                initialTaxRate: invoice.taxRate3,
+                              ),
+                            if (company.hasCustomSurcharge)
+                              CustomSurcharges(
+                                surcharge1Controller: _surcharge1Controller,
+                                surcharge2Controller: _surcharge2Controller,
+                                surcharge3Controller: _surcharge3Controller,
+                                surcharge4Controller: _surcharge4Controller,
+                                isAfterTaxes: true,
+                                onSavePressed:
+                                    widget.entityViewModel.onSavePressed,
+                              ),
+                            TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                labelText: invoice.isQuote
+                                    ? localization.total
+                                    : localization.balanceDue,
+                              ),
+                              textAlign: TextAlign.end,
+                              key: ValueKey(
+                                  '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                              initialValue: formatNumber(
+                                  invoice.calculateTotal(
+                                          precision: precisionForInvoice(
+                                              state, invoice)) -
+                                      invoice.paidToDate,
+                                  context,
+                                  clientId: invoice.clientId),
+                            ),
+                            if (invoice.partial != 0)
+                              TextFormField(
+                                enabled: false,
+                                decoration: InputDecoration(
+                                  labelText: localization.partialDue,
+                                ),
+                                textAlign: TextAlign.end,
+                                key: ValueKey(
+                                    '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
+                                initialValue: formatNumber(
+                                    invoice.partial, context,
+                                    clientId: invoice.clientId),
+                              ),
+                          ]),
+                      FormCard(
                         padding: const EdgeInsets.only(
                             top: kMobileDialogPadding,
                             right: kMobileDialogPadding,
                             left: kMobileDialogPadding / 2),
-                        children: <Widget>[
-                          TextFormField(
-                            enabled: false,
-                            decoration: InputDecoration(
-                              labelText: localization.subtotal,
-                            ),
-                            textAlign: TextAlign.end,
-                            key: ValueKey(
-                                '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
-                            initialValue: formatNumber(
-                                invoice.calculateSubtotal(
-                                    precision:
-                                        precisionForInvoice(state, invoice)),
-                                context,
-                                clientId: invoice.clientId),
+                        children: [
+                          DesignPicker(
+                            initialValue: invoice.designId,
+                            onSelected: (value) {
+                              viewModel.onChanged(invoice
+                                  .rebuild((b) => b..designId = value.id));
+                            },
                           ),
-                          if (invoice.isOld &&
-                              (invoice.isInvoice || invoice.isQuote))
-                            TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                labelText: localization.paidToDate,
-                              ),
-                              textAlign: TextAlign.end,
-                              key: ValueKey(
-                                  '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
-                              initialValue: formatNumber(
-                                  invoice.paidToDate, context,
-                                  clientId: invoice.clientId),
-                            ),
-                          if (company.hasCustomSurcharge)
-                            CustomSurcharges(
-                              surcharge1Controller: _surcharge1Controller,
-                              surcharge2Controller: _surcharge2Controller,
-                              surcharge3Controller: _surcharge3Controller,
-                              surcharge4Controller: _surcharge4Controller,
-                            ),
-                          if (company.enableFirstInvoiceTaxRate ||
-                              invoice.taxName1.isNotEmpty)
-                            TaxRateDropdown(
-                              onSelected: (taxRate) {
-                                viewModel.onChanged(invoice.applyTax(taxRate));
-                              },
-                              labelText: localization.tax +
-                                  (company.settings.enableInclusiveTaxes
-                                      ? ' - ${localization.inclusive}'
-                                      : ''),
-                              initialTaxName: invoice.taxName1,
-                              initialTaxRate: invoice.taxRate1,
-                            ),
-                          if (company.enableSecondInvoiceTaxRate ||
-                              invoice.taxName2.isNotEmpty)
-                            TaxRateDropdown(
-                              onSelected: (taxRate) {
-                                viewModel.onChanged(
-                                    invoice.applyTax(taxRate, isSecond: true));
-                              },
-                              labelText: localization.tax +
-                                  (company.settings.enableInclusiveTaxes
-                                      ? ' - ${localization.inclusive}'
-                                      : ''),
-                              initialTaxName: invoice.taxName2,
-                              initialTaxRate: invoice.taxRate2,
-                            ),
-                          if (company.enableThirdInvoiceTaxRate ||
-                              invoice.taxName3.isNotEmpty)
-                            TaxRateDropdown(
-                              onSelected: (taxRate) {
-                                final updatedInvoice =
-                                    invoice.applyTax(taxRate, isThird: true);
-                                print(
-                                    '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
-                                viewModel.onChanged(
-                                    invoice.applyTax(taxRate, isThird: true));
-                              },
-                              labelText: localization.tax +
-                                  (company.settings.enableInclusiveTaxes
-                                      ? ' - ${localization.inclusive}'
-                                      : ''),
-                              initialTaxName: invoice.taxName3,
-                              initialTaxRate: invoice.taxRate3,
-                            ),
-                          if (company.hasCustomSurcharge)
-                            CustomSurcharges(
-                              surcharge1Controller: _surcharge1Controller,
-                              surcharge2Controller: _surcharge2Controller,
-                              surcharge3Controller: _surcharge3Controller,
-                              surcharge4Controller: _surcharge4Controller,
-                              isAfterTaxes: true,
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          TextFormField(
-                            enabled: false,
-                            decoration: InputDecoration(
-                              labelText: invoice.isQuote
-                                  ? localization.total
-                                  : localization.balanceDue,
-                            ),
-                            textAlign: TextAlign.end,
-                            key: ValueKey(
-                                '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
-                            initialValue: formatNumber(
-                                invoice.calculateTotal(
-                                        precision: precisionForInvoice(
-                                            state, invoice)) -
-                                    invoice.paidToDate,
-                                context,
-                                clientId: invoice.clientId),
-                          ),
-                          if (invoice.partial != 0)
-                            TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                labelText: localization.partialDue,
-                              ),
-                              textAlign: TextAlign.end,
-                              key: ValueKey(
-                                  '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
-                              initialValue: formatNumber(
-                                  invoice.partial, context,
-                                  clientId: invoice.clientId),
-                            ),
                         ],
                       ),
                     ],
