@@ -31,9 +31,6 @@ enum RecurringExpenseReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
-  invoice,
-  invoice_amount,
-  invoice_date,
   vendor,
   expense1,
   expense2,
@@ -97,9 +94,11 @@ ReportResult recurringExpenseReport(
     RecurringExpenseReportFields.amount,
     RecurringExpenseReportFields.transaction_reference,
     RecurringExpenseReportFields.client,
-    RecurringExpenseReportFields.invoice,
     RecurringExpenseReportFields.vendor,
     RecurringExpenseReportFields.category,
+    RecurringExpenseReportFields.frequency,
+    RecurringExpenseReportFields.start_date,
+    RecurringExpenseReportFields.remaining_cycles,
   ];
 
   if (expenseReportSettings.columns.isNotEmpty) {
@@ -184,15 +183,6 @@ ReportResult recurringExpenseReport(
           break;
         case RecurringExpenseReportFields.client_shipping_address2:
           value = client?.shippingAddress2;
-          break;
-        case RecurringExpenseReportFields.invoice:
-          value = invoice?.listDisplayName;
-          break;
-        case RecurringExpenseReportFields.invoice_amount:
-          value = invoice?.amount;
-          break;
-        case RecurringExpenseReportFields.invoice_date:
-          value = invoice.isNew ? '' : invoice.date;
           break;
         case RecurringExpenseReportFields.vendor:
           value = vendor?.listDisplayName;
