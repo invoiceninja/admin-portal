@@ -82,10 +82,10 @@ ReportResult recurringExpenseReport(
   BuiltList<RecurringExpenseReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
-  final expenseReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportExpense)
-          ? reportSettings[kReportExpense]
-          : ReportSettingsEntity();
+  final expenseReportSettings = reportSettings != null &&
+          reportSettings.containsKey(kReportRecurringExpense)
+      ? reportSettings[kReportRecurringExpense]
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringExpenseReportFields.amount,

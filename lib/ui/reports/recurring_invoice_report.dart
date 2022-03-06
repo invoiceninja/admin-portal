@@ -118,10 +118,10 @@ ReportResult recurringInvoiceReport(
 
   final localization = AppLocalization.of(navigatorKey.currentContext);
   final reportSettings = userCompany.settings?.reportSettings;
-  final invoiceReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoice)
-          ? reportSettings[kReportInvoice]
-          : ReportSettingsEntity();
+  final invoiceReportSettings = reportSettings != null &&
+          reportSettings.containsKey(kReportRecurringInvoice)
+      ? reportSettings[kReportRecurringInvoice]
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringInvoiceReportFields.number,
@@ -359,7 +359,9 @@ ReportResult recurringInvoiceReport(
           value = invoice.nextSendDate;
           break;
         case RecurringInvoiceReportFields.remaining_cycles:
-          value = invoice.remainingCycles;
+          value = invoice.remainingCycles == -1
+              ? localization.endless
+              : '${invoice.remainingCycles}';
           break;
       }
 
