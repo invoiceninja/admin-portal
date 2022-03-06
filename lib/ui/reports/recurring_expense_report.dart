@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -42,6 +44,9 @@ enum RecurringExpenseReportFields {
   created_by,
   public_notes,
   private_notes,
+  frequency,
+  start_date,
+  remaining_cycles,
 }
 
 var memoizedRecurringExpenseReport = memo9((
@@ -81,6 +86,7 @@ ReportResult recurringExpenseReport(
   final List<List<ReportElement>> data = [];
   BuiltList<RecurringExpenseReportFields> columns;
 
+  final localization = AppLocalization.of(navigatorKey.currentContext);
   final reportSettings = userCompany.settings?.reportSettings;
   final expenseReportSettings = reportSettings != null &&
           reportSettings.containsKey(kReportRecurringExpense)
@@ -217,6 +223,17 @@ ReportResult recurringExpenseReport(
           break;
         case RecurringExpenseReportFields.private_notes:
           value = expense.privateNotes;
+          break;
+        case RecurringExpenseReportFields.frequency:
+          value = localization.lookup(kFrequencies[invoice.frequencyId]);
+          break;
+        case RecurringExpenseReportFields.start_date:
+          value = invoice.nextSendDate;
+          break;
+        case RecurringExpenseReportFields.remaining_cycles:
+          value = invoice.remainingCycles == -1
+              ? localization.endless
+              : '${invoice.remainingCycles}';
           break;
       }
 
