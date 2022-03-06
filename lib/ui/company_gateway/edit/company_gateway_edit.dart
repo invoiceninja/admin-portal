@@ -191,11 +191,12 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           ),
                         ),
                     ] else
-                      DecoratedFormField(
-                        enabled: false,
-                        label: localization.accountId,
-                        initialValue: accountId,
-                        keyboardType: TextInputType.text,
+                      GatewayConfigSettings(
+                        key:
+                            ValueKey('__connect_${companyGateway.gatewayId}__'),
+                        companyGateway: companyGateway,
+                        viewModel: viewModel,
+                        disasbledFields: ['account_id'],
                       )
                   else
                     GatewayConfigSettings(
@@ -459,11 +460,16 @@ class CardListTile extends StatelessWidget {
 }
 
 class GatewayConfigSettings extends StatelessWidget {
-  const GatewayConfigSettings({Key key, this.companyGateway, this.viewModel})
-      : super(key: key);
+  const GatewayConfigSettings({
+    Key key,
+    this.companyGateway,
+    this.viewModel,
+    this.disasbledFields = const <String>[],
+  }) : super(key: key);
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
+  final List<String> disasbledFields;
 
   @override
   Widget build(BuildContext context) {
@@ -498,6 +504,7 @@ class GatewayConfigSettings extends StatelessWidget {
                   value: companyGateway.parsedConfig[field],
                   gateway: gateway,
                   defaultValue: gateway.parsedFields[field],
+                  enabled: !disasbledFields.contains(field),
                   onChanged: (dynamic value) {
                     viewModel
                         .onChanged(companyGateway.updateConfig(field, value));
@@ -517,6 +524,7 @@ class GatewayConfigField extends StatefulWidget {
     @required this.value,
     @required this.defaultValue,
     @required this.onChanged,
+    @required this.enabled,
   }) : super(key: key);
 
   final GatewayEntity gateway;
@@ -524,6 +532,7 @@ class GatewayConfigField extends StatefulWidget {
   final dynamic value;
   final dynamic defaultValue;
   final Function(dynamic) onChanged;
+  final bool enabled;
 
   @override
   _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
@@ -576,7 +585,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
     if (widget.gateway.id == kGatewayStripe && widget.field == 'apiKey') {
       label = 'Secret Key';
     } else {
-      label = toTitleCase(widget.field);
+      label = toTitleCase(widget.field.replaceAll('_', ' '));
     }
 
     if ('${widget.defaultValue}'.startsWith('[') &&
@@ -623,6 +632,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
       ].contains(widget.field);
 
       return DecoratedFormField(
+        enabled: widget.enabled,
         controller: _textController,
         label: label,
         maxLines: isMultiline ? 6 : 1,
