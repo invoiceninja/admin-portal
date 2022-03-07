@@ -707,7 +707,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
-                _amountController.text = formatNumber(credit.balance, context,
+                _amountController.text = formatNumber(
+                        credit.balanceOrAmount, context,
                         formatNumberType: FormatNumberType.inputMoney) ??
                     '0';
                 _creditId = credit.id;

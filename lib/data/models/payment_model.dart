@@ -544,7 +544,8 @@ abstract class PaymentableEntity extends Object
 
   double get amount;
 
-  bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
+  bool get isEmpty =>
+      (invoiceId ?? '').isEmpty && (creditId ?? '').isEmpty && amount == 0;
 
   EntityType get entityType =>
       (invoiceId ?? '').isEmpty ? EntityType.credit : EntityType.invoice;
