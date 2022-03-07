@@ -862,14 +862,19 @@ class SidebarFooter extends StatelessWidget {
               icon: Icon(Icons.help_outline),
               onPressed: () {
                 String url = kDocsUrl;
-                final subRoute = state.uiState.baseSubRoute;
+                final uiState = state.uiState;
+                final subRoute = uiState.baseSubRoute;
 
-                if (state.uiState.isInSettings) {
+                if (uiState.isInSettings) {
                   if (kAdvancedSettings.contains(subRoute)) {
                     url += '/advanced-settings/#$subRoute';
                   } else {
                     url += '/basic-settings/#$subRoute';
                   }
+                } else if (uiState.mainRoute == kDashboard) {
+                  url += '/introduction';
+                } else if (uiState.mainRoute == kReports) {
+                  url += '/$kReports';
                 } else {
                   final route = state.uiState.entityTypeRoute.plural;
                   url += '/' + toSnakeCase(route).replaceAll('_', '-');

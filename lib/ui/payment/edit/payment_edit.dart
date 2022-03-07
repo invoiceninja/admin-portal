@@ -659,6 +659,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                       : entity.listDisplayName;
                 }
               },
+              overrideSuggestedAmount: (entity) {
+                if (entity == null) {
+                  return '';
+                } else {
+                  return formatNumber(entity.listDisplayAmount, context,
+                      clientId: (entity as InvoiceEntity).clientId);
+                }
+              },
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
@@ -680,9 +688,27 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               labelText: AppLocalization.of(context).credit,
               entityId: paymentable.creditId,
               entityList: creditList,
+              overrideSuggestedLabel: (entity) {
+                if (entity == null) {
+                  return '';
+                } else {
+                  return entity.listDisplayName.isEmpty
+                      ? localization.pending
+                      : entity.listDisplayName;
+                }
+              },
+              overrideSuggestedAmount: (entity) {
+                if (entity == null) {
+                  return '';
+                } else {
+                  return formatNumber(entity.listDisplayAmount, context,
+                      clientId: (entity as InvoiceEntity).clientId);
+                }
+              },
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
-                _amountController.text = formatNumber(credit.balance, context,
+                _amountController.text = formatNumber(
+                        credit.balanceOrAmount, context,
                         formatNumberType: FormatNumberType.inputMoney) ??
                     '0';
                 _creditId = credit.id;
