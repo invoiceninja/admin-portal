@@ -138,7 +138,7 @@ ReportResult expenseReport(
           value = expense.transactionReference;
           break;
         case ExpenseReportFields.currency:
-          value = staticState.currencyMap[expense.currencyId];
+          value = staticState.currencyMap[expense.currencyId]?.name ?? '';
           break;
         case ExpenseReportFields.date:
           value = expense.date;

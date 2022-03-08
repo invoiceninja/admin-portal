@@ -144,7 +144,7 @@ ReportResult recurringExpenseReport(
           value = expense.transactionReference;
           break;
         case RecurringExpenseReportFields.currency:
-          value = staticState.currencyMap[expense.currencyId];
+          value = staticState.currencyMap[expense.currencyId]?.name ?? '';
           break;
         case RecurringExpenseReportFields.date:
           value = expense.date;
