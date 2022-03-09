@@ -252,7 +252,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final enableCustomEmail = state.isSelfHosted || state.isPaidAccount;
+    final enableCustomEmail = state.isSelfHosted || state.isProPlan;
 
     return SingleChildScrollView(
       child: FormCard(
