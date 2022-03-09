@@ -1,7 +1,6 @@
 name: invoiceninja
 version: '5.0.77'
-summary: Online Invoicing
-description: Create invoices, accept payments, track expenses & time-tasks
+summary: Create invoices, accept payments, track expenses & time-tasks
 confinement: strict
 base: core18
 grade: stable
