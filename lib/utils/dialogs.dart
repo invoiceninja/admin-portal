@@ -405,8 +405,8 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.invoice)),
                   title: Text(localization.invoice),
                   onTap: () {
-                    handleEntityAction(invoice, EntityAction.cloneToInvoice);
                     Navigator.of(context).pop();
+                    handleEntityAction(invoice, EntityAction.cloneToInvoice);
                   },
                 ),
               if (userCompany.canCreate(EntityType.quote))
@@ -414,8 +414,8 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.quote)),
                   title: Text(localization.quote),
                   onTap: () {
-                    handleEntityAction(invoice, EntityAction.cloneToQuote);
                     Navigator.of(context).pop();
+                    handleEntityAction(invoice, EntityAction.cloneToQuote);
                   },
                 ),
               if (userCompany.canCreate(EntityType.credit))
@@ -423,8 +423,8 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.credit)),
                   title: Text(localization.credit),
                   onTap: () {
-                    handleEntityAction(invoice, EntityAction.cloneToCredit);
                     Navigator.of(context).pop();
+                    handleEntityAction(invoice, EntityAction.cloneToCredit);
                   },
                 ),
               if (userCompany.canCreate(EntityType.recurringInvoice))
@@ -432,8 +432,8 @@ void cloneToDialog({
                   leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
                   title: Text(localization.recurringInvoice),
                   onTap: () {
-                    handleEntityAction(invoice, EntityAction.cloneToRecurring);
                     Navigator.of(context).pop();
+                    handleEntityAction(invoice, EntityAction.cloneToRecurring);
                   },
                 ),
             ],
