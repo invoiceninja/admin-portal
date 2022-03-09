@@ -18,6 +18,7 @@ enum InvoiceReportFields {
   converted_amount,
   converted_balance,
   client,
+  client_number,
   client_balance,
   client_address1,
   client_address2,
@@ -377,6 +378,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_shipping_country:
           value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
+          break;
+        case InvoiceReportFields.client_number:
+          value = client.number;
           break;
       }
 
