@@ -901,6 +901,9 @@ abstract class InvoiceEntity extends Object
 
         if (isQuote) {
           if ((invoiceId ?? '').isEmpty) {
+            if (!isApproved) {
+              actions.add(EntityAction.approve);
+            }
             actions.add(EntityAction.convertToInvoice);
           } else {
             actions.add(EntityAction.viewInvoice);

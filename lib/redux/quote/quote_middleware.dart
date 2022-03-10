@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final showEmailQuote = _showEmailQuote();
   final showPdfQuote = _showPdfQuote();
   final convertQuote = _convertQuote(repository);
+  final approveQuote = _approveQuote(repository);
   final loadQuotes = _loadQuotes(repository);
   final loadQuote = _loadQuote(repository);
   final saveQuote = _saveQuote(repository);
@@ -45,6 +46,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
     TypedMiddleware<AppState, ConvertQuotes>(convertQuote),
+    TypedMiddleware<AppState, ApproveQuotes>(approveQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, ShowPdfQuote>(showPdfQuote),
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
@@ -234,6 +236,26 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuoteFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _approveQuote(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ApproveQuotes;
+    repository
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.approve)
+        .then((quotes) {
+      store.dispatch(ApproveQuoteSuccess(quotes: quotes));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ApproveQuoteFailure(error));
       action.completer.completeError(error);
     });
 

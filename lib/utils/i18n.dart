@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'approved_quote': 'Successfully apporved quote',
+      'approved_quotes': 'Successfully approved quotes',
+      'approve': 'Approve',
       'client_website': 'Client Website',
       'invalid_time': 'Invalid Time',
       'client_shipping_state': 'Client Shipping State',
@@ -74134,6 +74137,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientWebsite =>
       _localizedValues[localeCode]['client_website'] ??
       _localizedValues['en']['client_website'];
+
+  String get approve =>
+      _localizedValues[localeCode]['approve'] ??
+      _localizedValues['en']['approve'];
+
+  String get approvedQuote =>
+      _localizedValues[localeCode]['approved_quote'] ??
+      _localizedValues['en']['approved_quote'];
+
+  String get approvedQuotes =>
+      _localizedValues[localeCode]['approved_quotes'] ??
+      _localizedValues['en']['approved_quotes'];
 
   // STARTER: lang field - do not remove comment
 
