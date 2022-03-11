@@ -791,6 +791,25 @@ abstract class InvoiceEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
+    for (var i = 0; i < lineItems.length; i++) {
+      final lineItem = lineItems[i];
+      final isMatch = matchesStrings(
+        haystacks: [
+          lineItem.productKey,
+          lineItem.notes,
+          lineItem.customValue1,
+          lineItem.customValue2,
+          lineItem.customValue3,
+          lineItem.customValue4,
+        ],
+        needle: filter,
+      );
+
+      if (isMatch) {
+        return true;
+      }
+    }
+
     return matchesStrings(
       haystacks: [
         number,
