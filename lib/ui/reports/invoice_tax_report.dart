@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/enums.dart';
 
 enum TaxRateReportFields {
   client,
+  client_number,
   number,
   amount,
   date,
@@ -126,6 +127,9 @@ ReportResult taxReport(
               value = staticState.currencyMap[client.currencyId]?.name ??
                   staticState.currencyMap[client.settings.currencyId]?.name;
               break;
+            case TaxRateReportFields.client_number:
+              value = client.number;
+              break;
           }
 
           if (!ReportResult.matchField(
@@ -157,7 +161,8 @@ ReportResult taxReport(
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
     if (!credit.isDeleted && credit.isSent) {
-      final client = clientMap[credit.clientId];
+      final client =
+          clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
       final precision =
           staticState.currencyMap[client.currencyId]?.precision ?? 2;
       final taxes = credit.getTaxes(precision);
@@ -200,6 +205,9 @@ ReportResult taxReport(
             case TaxRateReportFields.currency:
               value = staticState.currencyMap[client.currencyId]?.name ??
                   staticState.currencyMap[client.settings.currencyId]?.name;
+              break;
+            case TaxRateReportFields.client_number:
+              value = client.number;
               break;
           }
 

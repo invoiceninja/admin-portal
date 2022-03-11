@@ -15,6 +15,7 @@ enum QuoteReportFields {
   amount,
   converted_amount,
   client,
+  client_number,
   client_balance,
   client_address1,
   client_address2,
@@ -317,6 +318,9 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_shipping_country:
           value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
+          break;
+        case QuoteReportFields.client_number:
+          value = client.number;
           break;
       }
 

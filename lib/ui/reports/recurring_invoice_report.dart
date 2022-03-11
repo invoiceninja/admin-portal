@@ -18,6 +18,7 @@ enum RecurringInvoiceReportFields {
   amount,
   converted_amount,
   client,
+  client_number,
   client_balance,
   client_address1,
   client_address2,
@@ -362,6 +363,9 @@ ReportResult recurringInvoiceReport(
           value = invoice.remainingCycles == -1
               ? localization.endless
               : '${invoice.remainingCycles}';
+          break;
+        case RecurringInvoiceReportFields.client_number:
+          value = client.number;
           break;
       }
 

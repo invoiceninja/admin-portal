@@ -122,6 +122,10 @@ class EntityAction extends EnumClass {
       return 'email';
     }
 
+    // else if (value == 'approve') {
+    //  return 'approved';
+    // }
+
     return value;
   }
 
