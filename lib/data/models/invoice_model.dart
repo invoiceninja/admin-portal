@@ -98,6 +98,10 @@ class InvoiceFields {
   static const String autoBillEnabled = 'auto_bill_enabled';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
+  static const String clientCity = 'client_city';
+  static const String clientState = 'client_state';
+  static const String clientPostalCode = 'client_postal_code';
+  static const String clientCountry = 'client_country';
 }
 
 class InvoiceTotalFields {
@@ -615,6 +619,8 @@ abstract class InvoiceEntity extends Object
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
+    final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
+    final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
     switch (sortField) {
       case InvoiceFields.number:
         var invoiceANumber =
@@ -742,8 +748,6 @@ abstract class InvoiceEntity extends Object
             .compareTo(invoiceB.customValue4.toLowerCase());
         break;
       case InvoiceFields.client:
-        final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
-        final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
         response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
             .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
@@ -759,6 +763,18 @@ abstract class InvoiceEntity extends Object
         break;
       case RecurringInvoiceFields.autoBill:
         response = invoiceA.autoBill.compareTo(invoiceB.autoBill);
+        break;
+      case InvoiceFields.clientCity:
+        response = clientA.city.compareTo(clientB.city);
+        break;
+      case InvoiceFields.clientState:
+        response = clientA.state.compareTo(clientB.state);
+        break;
+      case InvoiceFields.clientPostalCode:
+        response = clientA.postalCode.compareTo(clientB.postalCode);
+        break;
+      case InvoiceFields.clientCountry:
+        response = clientA.countryId.compareTo(clientB.countryId);
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');

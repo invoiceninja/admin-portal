@@ -53,6 +53,10 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.vendor,
       InvoiceFields.contactName,
       InvoiceFields.contactEmail,
+      InvoiceFields.clientState,
+      InvoiceFields.clientCity,
+      InvoiceFields.clientPostalCode,
+      InvoiceFields.clientCountry,
     ];
   }
 
@@ -61,6 +65,7 @@ class InvoicePresenter extends EntityPresenter {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final invoice = entity as InvoiceEntity;
+    final client = state.clientState.get(invoice.clientId);
 
     switch (field) {
       case InvoiceFields.status:
@@ -139,6 +144,14 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.autoBillEnabled:
         return Text(localization.lookup(
             invoice.autoBillEnabled ? localization.yes : localization.no));
+      case InvoiceFields.clientState:
+        return Text(client.state);
+      case InvoiceFields.clientCity:
+        return Text(client.city);
+      case InvoiceFields.clientPostalCode:
+        return Text(client.postalCode);
+      case InvoiceFields.clientCountry:
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case InvoiceFields.contactName:
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(

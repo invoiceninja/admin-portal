@@ -78,4 +78,8 @@ class CreditFields {
   static const String vendor = 'vendor';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
+  static const String clientCity = 'client_city';
+  static const String clientState = 'client_state';
+  static const String clientPostalCode = 'client_postal_code';
+  static const String clientCountry = 'client_country';
 }
