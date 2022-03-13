@@ -318,10 +318,10 @@ class _AccountOverview extends StatelessWidget {
       children: <Widget>[
         AppHeader(
           label: localization.plan,
-          value: account.plan.isEmpty
-              ? localization.free
-              : account.isTrial
-                  ? '${localization.pro} • ${localization.freeTrial}'
+          value: account.isTrial
+              ? '${localization.pro} • ${localization.freeTrial}'
+              : account.plan.isEmpty
+                  ? localization.free
                   : localization.lookup(account.plan),
           secondLabel: secondLabel,
           secondValue: secondValue,
