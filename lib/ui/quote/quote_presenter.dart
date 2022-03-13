@@ -47,6 +47,10 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.vendor,
       QuoteFields.contactName,
       QuoteFields.contactEmail,
+      QuoteFields.clientState,
+      QuoteFields.clientCity,
+      QuoteFields.clientPostalCode,
+      QuoteFields.clientCountry,
     ];
   }
 
@@ -55,6 +59,7 @@ class QuotePresenter extends EntityPresenter {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final quote = entity as InvoiceEntity;
+    final client = state.clientState.get(quote.clientId);
 
     switch (field) {
       case QuoteFields.status:
@@ -113,6 +118,14 @@ class QuotePresenter extends EntityPresenter {
         return Text(state.projectState.get(quote.projectId).listDisplayName);
       case QuoteFields.vendor:
         return Text(state.vendorState.get(quote.vendorId).name);
+      case QuoteFields.clientState:
+        return Text(client.state);
+      case QuoteFields.clientCity:
+        return Text(client.city);
+      case QuoteFields.clientPostalCode:
+        return Text(client.postalCode);
+      case QuoteFields.clientCountry:
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case QuoteFields.contactName:
       case QuoteFields.contactEmail:
         final contact =

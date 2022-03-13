@@ -47,6 +47,10 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.vendor,
       CreditFields.contactName,
       CreditFields.contactEmail,
+      CreditFields.clientState,
+      CreditFields.clientCity,
+      CreditFields.clientPostalCode,
+      CreditFields.clientCountry,
     ];
   }
 
@@ -55,6 +59,7 @@ class CreditPresenter extends EntityPresenter {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final credit = entity as InvoiceEntity;
+    final client = state.clientState.get(credit.clientId);
 
     switch (field) {
       case CreditFields.status:
@@ -120,6 +125,14 @@ class CreditPresenter extends EntityPresenter {
         return Text(state.projectState.get(credit.projectId).listDisplayName);
       case CreditFields.vendor:
         return Text(state.vendorState.get(credit.vendorId).name);
+      case CreditFields.clientState:
+        return Text(client.state);
+      case CreditFields.clientCity:
+        return Text(client.city);
+      case CreditFields.clientPostalCode:
+        return Text(client.postalCode);
+      case CreditFields.clientCountry:
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case CreditFields.contactName:
       case CreditFields.contactEmail:
         final contact = creditContactSelector(
