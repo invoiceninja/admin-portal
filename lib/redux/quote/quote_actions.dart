@@ -498,13 +498,12 @@ Future handleQuoteAction(
           quoteIds));
       break;
     case EntityAction.approve:
-      store.dispatch(ApproveQuotes(
-          snackBarCompleter<Null>(
-              context,
-              quotes.length == 1
-                  ? localization.approvedQuote
-                  : localization.approvedQuotes),
-          quoteIds));
+      final message = quoteIds.length > 1
+          ? localization.approvedQuotes
+              .replaceFirst(':value', quoteIds.length.toString())
+          : localization.approveQuote;
+      store.dispatch(
+          ApproveQuotes(snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.viewInvoice:
       viewEntityById(entityId: quote.invoiceId, entityType: EntityType.invoice);

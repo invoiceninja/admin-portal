@@ -28,6 +28,8 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
   final loadTask = _loadTask(repository);
   final saveTask = _saveTask(repository);
   final archiveTask = _archiveTask(repository);
+  final startTask = _startTask(repository);
+  final stopTask = _stopTask(repository);
   final deleteTask = _deleteTask(repository);
   final restoreTask = _restoreTask(repository);
   final saveDocument = _saveDocument(repository);
@@ -41,6 +43,8 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
     TypedMiddleware<AppState, LoadTask>(loadTask),
     TypedMiddleware<AppState, SaveTaskRequest>(saveTask),
     TypedMiddleware<AppState, ArchiveTaskRequest>(archiveTask),
+    TypedMiddleware<AppState, StartTasksRequest>(startTask),
+    TypedMiddleware<AppState, StopTasksRequest>(stopTask),
     TypedMiddleware<AppState, DeleteTaskRequest>(deleteTask),
     TypedMiddleware<AppState, RestoreTaskRequest>(restoreTask),
     TypedMiddleware<AppState, SaveTaskDocumentRequest>(saveDocument),
@@ -113,6 +117,56 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTaskFailure(prevTasks));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _startTask(TaskRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as StartTasksRequest;
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+
+    repository
+        .bulkAction(store.state.credentials, action.taskIds, EntityAction.start)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(StartTasksSuccess(tasks));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(StartTasksFailure(prevTasks));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _stopTask(TaskRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as StopTasksRequest;
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+
+    repository
+        .bulkAction(store.state.credentials, action.taskIds, EntityAction.stop)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(StopTasksSuccess(tasks));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(StopTasksFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
