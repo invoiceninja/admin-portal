@@ -87,6 +87,7 @@ class _QuoteEditState extends State<QuoteEdit>
     final invoice = viewModel.invoice;
     final state = viewModel.state;
     final prefState = state.prefState;
+    final client = state.clientState.get(invoice.clientId);
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
@@ -95,16 +96,10 @@ class _QuoteEditState extends State<QuoteEdit>
       title: invoice.isNew ? localization.newQuote : localization.editQuote,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
-      actions: [
-        EntityAction.viewPdf,
-        EntityAction.download,
-        EntityAction.emailQuote,
-        if (!invoice.isSent) EntityAction.markSent,
-        invoice.invoiceId.isEmpty
-            ? EntityAction.convertToInvoice
-            : EntityAction.viewInvoice,
-        if (invoice.isOld) EntityAction.clone,
-      ],
+      actions: invoice.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

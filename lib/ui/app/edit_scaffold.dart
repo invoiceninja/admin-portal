@@ -179,23 +179,29 @@ class EditScaffold extends StatelessWidget {
                     //size: iconSize,
                     //color: color,
                   ),
-                  itemBuilder: (BuildContext context) => actions
-                      .map((action) => PopupMenuItem<EntityAction>(
-                            child: Row(
-                              children: <Widget>[
-                                Icon(
-                                  getEntityActionIcon(action),
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<EntityAction>>[
+                    ...actions
+                        .map((action) => action == null
+                            ? PopupMenuDivider()
+                            : PopupMenuItem<EntityAction>(
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      getEntityActionIcon(action),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    SizedBox(width: 16.0),
+                                    Text(AppLocalization.of(context)
+                                        .lookup(action.toString())),
+                                  ],
                                 ),
-                                SizedBox(width: 16.0),
-                                Text(AppLocalization.of(context)
-                                    .lookup(action.toString())),
-                              ],
-                            ),
-                            value: action,
-                          ))
-                      .toList(),
+                                value: action,
+                              ))
+                        .toList()
+                  ],
                   onSelected: (action) => onActionPressed(context, action),
                   enabled: isEnabled,
                 )

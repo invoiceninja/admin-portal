@@ -110,6 +110,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final state = viewModel.state;
+    final client = state.clientState.get(invoice.clientId);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
@@ -119,15 +120,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
-      actions: [
-        EntityAction.viewPdf,
-        EntityAction.download,
-        EntityAction.emailInvoice,
-        if (!invoice.isSent) EntityAction.markSent,
-        if (!invoice.isPaid) EntityAction.markPaid,
-        if (!invoice.isPaid) EntityAction.newPayment,
-        if (invoice.isOld) EntityAction.clone,
-      ],
+      actions: invoice.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

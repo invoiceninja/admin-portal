@@ -95,16 +95,9 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           if (recurringInvoice.isOld &&
               !hasRecurringInvoiceChanges(
                   recurringInvoice, state.recurringInvoiceState.map) &&
-              [
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.viewPdf,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(recurringInvoice, action);
-            if ([EntityAction.start, EntityAction.stop].contains(action)) {
-              viewEntity(entity: recurringInvoice, force: true);
-            }
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
@@ -136,16 +129,8 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.viewPdf,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedRecurringInvoice, action);
-                if ([EntityAction.start, EntityAction.stop].contains(action)) {
-                  viewEntity(entity: savedRecurringInvoice, force: true);
-                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

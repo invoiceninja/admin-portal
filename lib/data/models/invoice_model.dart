@@ -955,7 +955,7 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    if (!multiselect) {
+    if (!multiselect && isOld) {
       int countOtherTypes = 0;
       if (userCompany.canCreate(EntityType.invoice)) {
         countOtherTypes++;

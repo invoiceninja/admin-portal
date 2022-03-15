@@ -130,15 +130,9 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           if (recurringExpense.isOld &&
               !hasRecurringExpenseChanges(
                   recurringExpense, state.recurringExpenseState.map) &&
-              [
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(recurringExpense, action);
-            if ([EntityAction.start, EntityAction.stop].contains(action)) {
-              viewEntity(entity: recurringExpense, force: true);
-            }
           } else {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
@@ -167,16 +161,8 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 }
               }
 
-              if ([
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.clone,
-                EntityAction.viewPdf,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedRecurringExpense, action);
-                if ([EntityAction.start, EntityAction.stop].contains(action)) {
-                  viewEntity(entity: savedRecurringExpense, force: true);
-                }
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

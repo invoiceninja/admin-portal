@@ -93,6 +93,7 @@ class _TaskEditState extends State<TaskEdit>
     final viewModel = widget.viewModel;
     final task = viewModel.task;
     final state = viewModel.state;
+    final client = state.clientState.get(task.clientId);
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.task);
 
     return EditScaffold(
@@ -102,13 +103,10 @@ class _TaskEditState extends State<TaskEdit>
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context, [EntityAction action]) =>
           _onSavePressed(context, action),
-      actions: [
-        if (!task.isInvoiced) ...[
-          task.isRunning ? EntityAction.stop : EntityAction.start,
-          EntityAction.invoiceTask,
-        ],
-        if (task.isOld) EntityAction.clone,
-      ],
+      actions: task.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

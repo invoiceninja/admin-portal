@@ -606,7 +606,7 @@ abstract class TaskEntity extends Object
       }
     }
 
-    if (!multiselect) {
+    if (!multiselect && isOld) {
       if (userCompany.canCreate(EntityType.task)) {
         actions.add(EntityAction.clone);
       }

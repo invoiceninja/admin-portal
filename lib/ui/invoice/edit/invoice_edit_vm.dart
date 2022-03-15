@@ -143,13 +143,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
 
           if (invoice.isOld &&
               !hasInvoiceChanges(invoice, state.invoiceState.map) &&
-              [
-                EntityAction.newPayment,
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(invoice, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -181,13 +176,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([
-                EntityAction.newPayment,
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedInvoice, action);
               }
             }).catchError((Object error) {

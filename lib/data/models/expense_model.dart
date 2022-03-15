@@ -351,19 +351,18 @@ abstract class ExpenseEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.expense) &&
-        !multiselect &&
-        !isRecurring) {
-      actions.add(EntityAction.cloneToExpense);
-    }
+    if (!multiselect && isOld) {
+      if (userCompany.canCreate(EntityType.expense) && !isRecurring) {
+        actions.add(EntityAction.cloneToExpense);
+      }
 
-    if (userCompany.canCreate(EntityType.recurringExpense) && !multiselect) {
-      actions.add(EntityAction.cloneToRecurring);
-    }
-    if (userCompany.canCreate(EntityType.expense) &&
-        !multiselect &&
-        isRecurring) {
-      actions.add(EntityAction.cloneToExpense);
+      if (userCompany.canCreate(EntityType.recurringExpense)) {
+        actions.add(EntityAction.cloneToRecurring);
+      }
+
+      if (userCompany.canCreate(EntityType.expense) && isRecurring) {
+        actions.add(EntityAction.cloneToExpense);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {

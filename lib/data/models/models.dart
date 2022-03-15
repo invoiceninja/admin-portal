@@ -115,6 +115,17 @@ class EntityAction extends EnumClass {
 
   bool get isEmail => toString().startsWith('email');
 
+  bool get isServerSide => [
+        EntityAction.start,
+        EntityAction.stop,
+        EntityAction.markPaid,
+        EntityAction.markSent,
+        EntityAction.convertToInvoice,
+        EntityAction.approve,
+      ].contains(this);
+
+  bool get isClientSide => !isServerSide;
+
   String toApiParam() {
     final value = toString();
 

@@ -87,6 +87,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final state = viewModel.state;
     final invoice = viewModel.invoice;
     final prefState = state.prefState;
+    final client = state.clientState.get(invoice.clientId);
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
@@ -97,14 +98,10 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
           : localization.editRecurringInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
-      actions: [
-        if (!recurringInvoice.isRunning)
-          EntityAction.start
-        else
-          EntityAction.stop,
-        EntityAction.viewPdf,
-        if (invoice.isOld) EntityAction.clone,
-      ],
+      actions: invoice.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
