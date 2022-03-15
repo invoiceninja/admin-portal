@@ -153,11 +153,12 @@ class LoadTasksSuccess implements StopLoading {
 }
 
 class SaveTaskRequest implements StartSaving {
-  SaveTaskRequest({this.completer, this.task, this.autoSelect = true});
+  SaveTaskRequest({this.completer, this.task, this.autoSelect = true, this.action});
 
   final Completer completer;
   final TaskEntity task;
   final bool autoSelect;
+  final EntityAction action;
 }
 
 class SaveTaskSuccess implements StopSaving, PersistData, PersistUI {

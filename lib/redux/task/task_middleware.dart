@@ -178,7 +178,7 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTaskRequest;
     repository
-        .saveData(store.state.credentials, action.task)
+        .saveData(store.state.credentials, action.task, action: action.action)
         .then((TaskEntity task) {
       if (action.task.isNew) {
         store.dispatch(

@@ -103,7 +103,11 @@ class TaskEditVM {
             handleEntityAction(task, action);
           } else {
             final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-            store.dispatch(SaveTaskRequest(completer: completer, task: task));
+            store.dispatch(SaveTaskRequest(
+              completer: completer,
+              task: task,
+              action: action,
+            ));
             return completer.future.then((savedTask) {
               showToast(task.isNew
                   ? localization.createdTask
