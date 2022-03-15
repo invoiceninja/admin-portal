@@ -137,7 +137,10 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
             store.dispatch(SaveRecurringExpenseRequest(
-                completer: completer, recurringExpense: recurringExpense));
+              completer: completer,
+              recurringExpense: recurringExpense,
+              action: action,
+            ));
             return completer.future.then((savedRecurringExpense) {
               showToast(recurringExpense.isNew
                   ? localization.createdRecurringExpense

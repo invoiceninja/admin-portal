@@ -122,6 +122,8 @@ class EntityAction extends EnumClass {
         EntityAction.markSent,
         EntityAction.convertToInvoice,
         EntityAction.approve,
+        EntityAction.cancel,
+        EntityAction.resume,
       ].contains(this);
 
   bool get isClientSide => !isServerSide;
