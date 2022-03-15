@@ -124,6 +124,8 @@ class EntityPresenter {
       'discount',
       'profit',
       'total',
+      'payment',
+      'expense',
       'invoice_amount',
       'invoice_balance',
       'client_balance',
