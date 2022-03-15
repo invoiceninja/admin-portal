@@ -98,19 +98,16 @@ class TaskEditVM {
 
           if (task.isOld &&
               !hasTaskChanges(task, state.taskState.map) &&
-              [
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.invoiceTask,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(task, action);
-            if ([EntityAction.start, EntityAction.stop].contains(action)) {
-              viewEntity(entity: task, force: true);
-            }
           } else {
             final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-            store.dispatch(SaveTaskRequest(completer: completer, task: task));
+            store.dispatch(SaveTaskRequest(
+              completer: completer,
+              task: task,
+              action: action,
+            ));
             return completer.future.then((savedTask) {
               showToast(task.isNew
                   ? localization.createdTask
@@ -132,16 +129,18 @@ class TaskEditVM {
                 }
               }
 
-              if ([
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.invoiceTask,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedTask, action);
-                if ([EntityAction.start, EntityAction.stop].contains(action)) {
-                  viewEntity(entity: task, force: true);
-                }
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedTask, action);
+                viewEntity(entity: savedTask, force: true);
+                // TODO remove once backend action is supported
+              } else if (action == EntityAction.start) {
+                handleEntityAction(savedTask, action);
+                viewEntity(entity: savedTask, force: true);
+              } else if (action == EntityAction.stop) {
+                handleEntityAction(savedTask, action);
+                viewEntity(entity: savedTask, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

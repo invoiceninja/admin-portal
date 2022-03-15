@@ -130,20 +130,17 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           if (recurringExpense.isOld &&
               !hasRecurringExpenseChanges(
                   recurringExpense, state.recurringExpenseState.map) &&
-              [
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(recurringExpense, action);
-            if ([EntityAction.start, EntityAction.stop].contains(action)) {
-              viewEntity(entity: recurringExpense, force: true);
-            }
           } else {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
             store.dispatch(SaveRecurringExpenseRequest(
-                completer: completer, recurringExpense: recurringExpense));
+              completer: completer,
+              recurringExpense: recurringExpense,
+              action: action,
+            ));
             return completer.future.then((savedRecurringExpense) {
               showToast(recurringExpense.isNew
                   ? localization.createdRecurringExpense
@@ -167,16 +164,18 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 }
               }
 
-              if ([
-                EntityAction.start,
-                EntityAction.stop,
-                EntityAction.clone,
-                EntityAction.viewPdf,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedRecurringExpense, action);
-                if ([EntityAction.start, EntityAction.stop].contains(action)) {
-                  viewEntity(entity: savedRecurringExpense, force: true);
-                }
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedRecurringExpense, action);
+                viewEntity(entity: savedRecurringExpense, force: true);
+                // TODO remove once backend action is supported
+              } else if (action == EntityAction.start) {
+                handleEntityAction(savedRecurringExpense, action);
+                viewEntity(entity: savedRecurringExpense, force: true);
+              } else if (action == EntityAction.stop) {
+                handleEntityAction(savedRecurringExpense, action);
+                viewEntity(entity: savedRecurringExpense, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

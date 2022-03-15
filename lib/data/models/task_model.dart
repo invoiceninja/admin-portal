@@ -591,12 +591,10 @@ abstract class TaskEntity extends Object
         if (isRunning) {
           actions.add(EntityAction.stop);
         } else {
-          if (!multiselect) {
-            if (duration > 0) {
-              actions.add(EntityAction.resume);
-            } else {
-              actions.add(EntityAction.start);
-            }
+          if (duration > 0) {
+            actions.add(EntityAction.resume);
+          } else {
+            actions.add(EntityAction.start);
           }
 
           if (userCompany.canCreate(EntityType.invoice)) {
@@ -606,7 +604,7 @@ abstract class TaskEntity extends Object
       }
     }
 
-    if (!multiselect) {
+    if (!multiselect && isOld) {
       if (userCompany.canCreate(EntityType.task)) {
         actions.add(EntityAction.clone);
       }

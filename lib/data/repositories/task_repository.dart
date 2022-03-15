@@ -80,17 +80,29 @@ class TaskRepository {
     return true;
   }
 
-  Future<TaskEntity> saveData(Credentials credentials, TaskEntity task) async {
+  Future<TaskEntity> saveData(Credentials credentials, TaskEntity task,
+      {EntityAction action}) async {
     final data = serializers.serializeWith(TaskEntity.serializer, task);
 
     dynamic response;
+    String url;
 
     if (task.isNew) {
-      response = await webClient.post(
-          credentials.url + '/tasks', credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/tasks?';
     } else {
-      final url = credentials.url + '/tasks/${task.id}';
+      url = credentials.url + '/tasks/${task.id}?';
+    }
+
+    if (action == EntityAction.start) {
+      url += '&start=true';
+    } else if (action == EntityAction.stop) {
+      url += '&stop=true';
+    }
+
+    if (task.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

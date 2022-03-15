@@ -90,6 +90,8 @@ class QuoteRepository {
       url += '&convert=true';
     } else if (action == EntityAction.markSent) {
       url += '&mark_sent=true';
+    } else if (action == EntityAction.approve) {
+      url += '&approve=true';
     }
 
     if (quote.isNew) {

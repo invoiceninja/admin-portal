@@ -59,19 +59,30 @@ class RecurringExpenseRepository {
   }
 
   Future<ExpenseEntity> saveData(
-      Credentials credentials, ExpenseEntity recurringExpense) async {
+      Credentials credentials, ExpenseEntity recurringExpense,
+      {EntityAction action}) async {
     final data =
         serializers.serializeWith(ExpenseEntity.serializer, recurringExpense);
     dynamic response;
+    String url;
 
     if (recurringExpense.isNew) {
-      response = await webClient.post(
-          credentials.url + '/recurring_expenses?show_dates=true',
-          credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/recurring_expenses?show_dates=true';
     } else {
-      final url =
+      url =
           '${credentials.url}/recurring_expenses/${recurringExpense.id}?show_dates=true';
+    }
+
+    if (action == EntityAction.start) {
+      url += '&start=true';
+    } else if (action == EntityAction.stop) {
+      url += '&stop=true';
+    }
+
+    if (recurringExpense.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

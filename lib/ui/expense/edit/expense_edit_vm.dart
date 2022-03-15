@@ -144,10 +144,8 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
 
           if (expense.isOld &&
               !hasExpenseChanges(expense, state.expenseState.map) &&
-              [
-                EntityAction.invoiceExpense,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(expense, action);
           } else {
             final Completer<ExpenseEntity> completer =
@@ -176,11 +174,11 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
                 }
               }
 
-              if ([
-                EntityAction.invoiceExpense,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedExpense, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedExpense, action);
+                viewEntity(entity: savedExpense, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

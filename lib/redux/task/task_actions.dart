@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 
 // Project imports:
@@ -15,7 +14,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -153,11 +151,13 @@ class LoadTasksSuccess implements StopLoading {
 }
 
 class SaveTaskRequest implements StartSaving {
-  SaveTaskRequest({this.completer, this.task, this.autoSelect = true});
+  SaveTaskRequest(
+      {this.completer, this.task, this.autoSelect = true, this.action});
 
   final Completer completer;
   final TaskEntity task;
   final bool autoSelect;
+  final EntityAction action;
 }
 
 class SaveTaskSuccess implements StopSaving, PersistData, PersistUI {
@@ -194,6 +194,44 @@ class ArchiveTaskSuccess implements StopSaving, PersistData {
 
 class ArchiveTaskFailure implements StopSaving {
   ArchiveTaskFailure(this.tasks);
+
+  final List<TaskEntity> tasks;
+}
+
+class StartTasksRequest implements StartSaving {
+  StartTasksRequest(this.completer, this.taskIds);
+
+  final Completer completer;
+  final List<String> taskIds;
+}
+
+class StartTasksSuccess implements StopSaving, PersistData {
+  StartTasksSuccess(this.tasks);
+
+  final List<TaskEntity> tasks;
+}
+
+class StartTasksFailure implements StopSaving {
+  StartTasksFailure(this.tasks);
+
+  final List<TaskEntity> tasks;
+}
+
+class StopTasksRequest implements StartSaving {
+  StopTasksRequest(this.completer, this.taskIds);
+
+  final Completer completer;
+  final List<String> taskIds;
+}
+
+class StopTasksSuccess implements StopSaving, PersistData {
+  StopTasksSuccess(this.tasks);
+
+  final List<TaskEntity> tasks;
+}
+
+class StopTasksFailure implements StopSaving {
+  StopTasksFailure(this.tasks);
 
   final List<TaskEntity> tasks;
 }
@@ -323,26 +361,21 @@ void handleTaskAction(
       editEntity(context: context, entity: task);
       break;
     case EntityAction.start:
-    case EntityAction.stop:
     case EntityAction.resume:
-      final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-      final localization = AppLocalization.of(context);
-      store
-          .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
-      completer.future.then((savedTask) {
-        showToast(savedTask.isRunning
-            ? (savedTask.duration > 0
-                ? localization.resumedTask
-                : localization.startedTask)
-            : localization.stoppedTask);
-      }).catchError((Object error) {
-        showDialog<ErrorDialog>(
-            context: context,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            });
-      });
-
+      final message = taskIds.length > 1
+          ? localization.startedTasks
+              .replaceFirst(':value', taskIds.length.toString())
+          : localization.startedTask;
+      store.dispatch(StartTasksRequest(
+          snackBarCompleter<Null>(context, message), taskIds));
+      break;
+    case EntityAction.stop:
+      final message = taskIds.length > 1
+          ? localization.stoppedTasks
+              .replaceFirst(':value', taskIds.length.toString())
+          : localization.stoppedTask;
+      store.dispatch(
+          StopTasksRequest(snackBarCompleter<Null>(context, message), taskIds));
       break;
     case EntityAction.invoiceTask:
       tasks.sort((taskA, taskB) {

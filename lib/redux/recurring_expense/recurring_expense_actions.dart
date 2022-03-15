@@ -123,10 +123,11 @@ class LoadRecurringExpensesSuccess implements StopLoading {
 }
 
 class SaveRecurringExpenseRequest implements StartSaving {
-  SaveRecurringExpenseRequest({this.completer, this.recurringExpense});
+  SaveRecurringExpenseRequest({this.completer, this.recurringExpense, this.action,});
 
   final Completer completer;
   final ExpenseEntity recurringExpense;
+  final EntityAction action;
 }
 
 class SaveRecurringExpenseSuccess

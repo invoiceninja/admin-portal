@@ -88,6 +88,7 @@ class _CreditEditState extends State<CreditEdit>
     final state = viewModel.state;
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
+    final client = state.clientState.get(invoice.clientId);
 
     return EditScaffold(
       isFullscreen: isFullscreen,
@@ -95,13 +96,10 @@ class _CreditEditState extends State<CreditEdit>
       title: invoice.isNew ? localization.newCredit : localization.editCredit,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
-      actions: [
-        EntityAction.viewPdf,
-        EntityAction.download,
-        EntityAction.emailCredit,
-        if (!invoice.isSent) EntityAction.markSent,
-        if (invoice.isOld) EntityAction.clone,
-      ],
+      actions: invoice.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

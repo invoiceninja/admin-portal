@@ -93,13 +93,8 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           }
           if (quote.isOld &&
               !hasQuoteChanges(quote, state.quoteState.map) &&
-              [
-                EntityAction.emailQuote,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.viewInvoice,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(quote, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -130,14 +125,15 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([
-                EntityAction.emailQuote,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.viewInvoice,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedQuote, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedQuote, action);
+                viewEntity(entity: savedQuote, force: true);
+                // TODO remove once backend action is supported
+              } else if (action == EntityAction.approve) {
+                handleEntityAction(savedQuote, action);
+                viewEntity(entity: savedQuote, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

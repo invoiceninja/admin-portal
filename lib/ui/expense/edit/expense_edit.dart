@@ -77,6 +77,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final expense = viewModel.expense;
     final state = viewModel.state;
     final store = StoreProvider.of<AppState>(context);
+    final client = state.clientState.get(expense.clientId);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
     final footer = localization.expenseTotal +
@@ -96,13 +97,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
               : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(context),
-      actions: [
-        if (expense.isRecurring)
-          if (expense.isRunning) EntityAction.stop else EntityAction.start,
-        if (expense.isOld) EntityAction.clone,
-        if (!expense.isRecurring && !expense.isInvoiced)
-          EntityAction.invoiceExpense,
-      ],
+      actions: expense.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,

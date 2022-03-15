@@ -143,13 +143,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
 
           if (invoice.isOld &&
               !hasInvoiceChanges(invoice, state.invoiceState.map) &&
-              [
-                EntityAction.newPayment,
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(invoice, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -181,14 +176,15 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([
-                EntityAction.newPayment,
-                EntityAction.emailInvoice,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedInvoice, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedInvoice, action);
+                viewEntity(entity: savedInvoice, force: true);
+                // TODO remove once backend action is supported
+              } else if (action == EntityAction.cancel) {
+                handleEntityAction(savedInvoice, action);
+                viewEntity(entity: savedInvoice, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

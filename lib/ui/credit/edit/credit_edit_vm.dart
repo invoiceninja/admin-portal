@@ -94,12 +94,8 @@ class CreditEditVM extends AbstractInvoiceEditVM {
 
           if (credit.isOld &&
               !hasCreditChanges(credit, state.creditState.map) &&
-              [
-                EntityAction.emailCredit,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              action != null &&
+              action.isClientSide) {
             handleEntityAction(credit, action);
           } else {
             final Completer<InvoiceEntity> completer =
@@ -131,13 +127,11 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 }
               }
 
-              if ([
-                EntityAction.emailCredit,
-                EntityAction.viewPdf,
-                EntityAction.download,
-                EntityAction.clone,
-              ].contains(action)) {
+              if (action != null && action.isClientSide) {
                 handleEntityAction(savedCredit, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedCredit, action);
+                viewEntity(entity: savedCredit, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

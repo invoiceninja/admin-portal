@@ -191,7 +191,8 @@ Middleware<AppState> _saveRecurringExpense(
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveRecurringExpenseRequest;
     repository
-        .saveData(store.state.credentials, action.recurringExpense)
+        .saveData(store.state.credentials, action.recurringExpense,
+            action: action.action)
         .then((ExpenseEntity recurringExpense) {
       if (action.recurringExpense.isNew) {
         store.dispatch(AddRecurringExpenseSuccess(recurringExpense));

@@ -27,6 +27,9 @@ enum ProfitAndLossReportFields {
   vendor_country,
   type,
   amount,
+  payment,
+  expense,
+  profit,
   date,
   category,
 }
@@ -76,7 +79,9 @@ ReportResult profitAndLossReport(
 
   final defaultColumns = [
     ProfitAndLossReportFields.type,
-    ProfitAndLossReportFields.amount,
+    ProfitAndLossReportFields.payment,
+    ProfitAndLossReportFields.expense,
+    ProfitAndLossReportFields.profit,
     ProfitAndLossReportFields.client,
     ProfitAndLossReportFields.vendor,
     ProfitAndLossReportFields.date,
@@ -143,6 +148,15 @@ ReportResult profitAndLossReport(
           value = staticState.countryMap[vendor?.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.amount:
+          value = payment?.completedAmount;
+          break;
+        case ProfitAndLossReportFields.payment:
+          value = payment?.completedAmount;
+          break;
+        case ProfitAndLossReportFields.expense:
+          value = 0.0;
+          break;
+        case ProfitAndLossReportFields.profit:
           value = payment?.completedAmount;
           break;
         case ProfitAndLossReportFields.date:
@@ -231,6 +245,15 @@ ReportResult profitAndLossReport(
           value = staticState.countryMap[vendor?.countryId];
           break;
         case ProfitAndLossReportFields.amount:
+          value = -expense.amount;
+          break;
+        case ProfitAndLossReportFields.payment:
+          value = 0.0;
+          break;
+        case ProfitAndLossReportFields.expense:
+          value = expense.amount;
+          break;
+        case ProfitAndLossReportFields.profit:
           value = -expense.amount;
           break;
         case ProfitAndLossReportFields.date:

@@ -730,6 +730,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,
+              onSavePressed: viewModel.onSavePressed,
             ),
           ),
         ],

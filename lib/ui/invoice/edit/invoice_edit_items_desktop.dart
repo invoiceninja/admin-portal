@@ -90,6 +90,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         includedLineItems.any((item) => item.taxName2.isNotEmpty);
     final hasTax3 = company.enableThirdItemTaxRate ||
         includedLineItems.any((item) => item.taxName3.isNotEmpty);
+    final hasAnyTax = hasTax1 || hasTax2 || hasTax3;
 
     final customField1 =
         widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
@@ -145,6 +146,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           pdfColumns = [...pdfColumns, ProductItemFields.quantity];
         }
       }
+    }
+
+    if (hasAnyTax && !pdfColumns.contains(ProductItemFields.tax)) {
+      pdfColumns = [...pdfColumns, ProductItemFields.tax];
     }
 
     if (company.hasCustomField(customField1) &&

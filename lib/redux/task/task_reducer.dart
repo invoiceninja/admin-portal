@@ -89,6 +89,12 @@ final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, ArchiveTaskSuccess>((tasks, action) {
     return action.tasks[0];
   }),
+  TypedReducer<TaskEntity, StartTasksSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
+  TypedReducer<TaskEntity, StopTasksSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
   TypedReducer<TaskEntity, DeleteTaskSuccess>((tasks, action) {
     return action.tasks[0];
   }),
@@ -223,6 +229,8 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaskState, LoadTaskSuccess>(_setLoadedTask),
   TypedReducer<TaskState, ArchiveTaskSuccess>(_archiveTaskSuccess),
+  TypedReducer<TaskState, StartTasksSuccess>(_startTaskSuccess),
+  TypedReducer<TaskState, StopTasksSuccess>(_stopTaskSuccess),
   TypedReducer<TaskState, DeleteTaskSuccess>(_deleteTaskSuccess),
   TypedReducer<TaskState, RestoreTaskSuccess>(_restoreTaskSuccess),
   TypedReducer<TaskState, SortTasksSuccess>(_sortTasksSuccess),
@@ -241,6 +249,22 @@ TaskState _sortTasksSuccess(TaskState taskState, SortTasksSuccess action) {
 }
 
 TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
+}
+
+TaskState _startTaskSuccess(TaskState taskState, StartTasksSuccess action) {
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
+}
+
+TaskState _stopTaskSuccess(TaskState taskState, StopTasksSuccess action) {
   return taskState.rebuild((b) {
     for (final task in action.tasks) {
       b.map[task.id] = task;

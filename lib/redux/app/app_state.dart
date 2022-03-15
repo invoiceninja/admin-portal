@@ -914,6 +914,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
     //return '## Logs: ${company.systemLogs}';
 
+    //var str = '\n\n';
+    //for (var userCompany in userCompanyStates) {
+    //  str += userCompany.company.id + ' => ' + userCompany.token.token + '\n';
+    //}
+    //return str;
+
     return '\n\nForce: ${clientUIState.forceSelected}'
         '\n\nURL: ${authState.url}'
         '\nRoute: ${uiState.currentRoute}'
