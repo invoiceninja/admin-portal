@@ -178,6 +178,10 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedInvoice, action);
+                // TODO remove once backend action is supported
+              } else if (action == EntityAction.cancel) {
+                handleEntityAction(savedInvoice, action);
+                viewEntity(entity: savedInvoice, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
