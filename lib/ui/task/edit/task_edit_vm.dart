@@ -131,6 +131,9 @@ class TaskEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedTask, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedTask, action);
+                viewEntity(entity: savedTask, force: true);
                 // TODO remove once backend action is supported
               } else if (action == EntityAction.start) {
                 handleEntityAction(savedTask, action);

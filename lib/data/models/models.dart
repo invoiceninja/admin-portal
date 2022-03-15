@@ -124,6 +124,16 @@ class EntityAction extends EnumClass {
         EntityAction.approve,
         EntityAction.cancel,
         EntityAction.resume,
+        EntityAction.archive,
+        EntityAction.delete,
+        EntityAction.restore,
+        EntityAction.purge,
+      ].contains(this);
+
+  bool get requiresSecondRequest => [
+        EntityAction.archive,
+        EntityAction.delete,
+        EntityAction.restore,
       ].contains(this);
 
   bool get isClientSide => !isServerSide;

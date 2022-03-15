@@ -129,6 +129,9 @@ class CreditEditVM extends AbstractInvoiceEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedCredit, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedCredit, action);
+                viewEntity(entity: savedCredit, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

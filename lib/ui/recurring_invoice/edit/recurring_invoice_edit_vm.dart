@@ -131,6 +131,9 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedRecurringInvoice, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedRecurringInvoice, action);
+                viewEntity(entity: savedRecurringInvoice, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

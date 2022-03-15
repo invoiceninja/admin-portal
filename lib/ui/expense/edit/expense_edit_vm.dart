@@ -176,6 +176,9 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedExpense, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedExpense, action);
+                viewEntity(entity: savedExpense, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(

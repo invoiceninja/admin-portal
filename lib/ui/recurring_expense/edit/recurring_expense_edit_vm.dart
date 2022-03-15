@@ -166,6 +166,9 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
 
               if (action != null && action.isClientSide) {
                 handleEntityAction(savedRecurringExpense, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedRecurringExpense, action);
+                viewEntity(entity: savedRecurringExpense, force: true);
                 // TODO remove once backend action is supported
               } else if (action == EntityAction.start) {
                 handleEntityAction(savedRecurringExpense, action);
