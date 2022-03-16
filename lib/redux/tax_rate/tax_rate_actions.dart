@@ -216,16 +216,6 @@ class FilterTaxRatesByState implements PersistUI {
 
 void handleTaxRateAction(
     BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          taxRates.length == 1,
-      'Cannot perform this action on more than one tax rate');
-
   if (taxRates.isEmpty) {
     return;
   }

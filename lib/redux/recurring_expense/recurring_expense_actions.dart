@@ -13,6 +13,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -123,7 +124,11 @@ class LoadRecurringExpensesSuccess implements StopLoading {
 }
 
 class SaveRecurringExpenseRequest implements StartSaving {
-  SaveRecurringExpenseRequest({this.completer, this.recurringExpense, this.action,});
+  SaveRecurringExpenseRequest({
+    this.completer,
+    this.recurringExpense,
+    this.action,
+  });
 
   final Completer completer;
   final ExpenseEntity recurringExpense;
@@ -428,6 +433,23 @@ void handleRecurringExpenseAction(BuildContext context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [recurringExpense],
+      );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var expense in recurringExpenses) {
+        for (var document in (expense as ExpenseEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
       );
       break;
     default:

@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -559,6 +560,23 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [recurringInvoice],
+      );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var invoice in recurringInvoices) {
+        for (var document in (invoice as InvoiceEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
       );
       break;
   }

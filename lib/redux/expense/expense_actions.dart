@@ -14,6 +14,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -359,6 +360,26 @@ void handleExpenseAction(
       showEntityActionsDialog(
         entities: [expense],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var expense in expenses) {
+        for (var document in (expense as ExpenseEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in expense_actions');
       break;
   }
 }

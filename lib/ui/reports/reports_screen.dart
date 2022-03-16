@@ -7,9 +7,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -17,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -33,6 +33,7 @@ import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/dates.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -188,6 +189,12 @@ class ReportsScreen extends StatelessWidget {
         ),
     ];
 
+    final entities = reportResult.entities ?? [];
+    final firstEntity = entities.isNotEmpty ? entities.first : null;
+    if (entities.length > kMaxEntitiesPerBulkAction) {
+      entities.removeRange(kMaxEntitiesPerBulkAction, entities.length);
+    }
+
     final chartChildren = [
       AppDropdownButton<String>(
         enabled: reportsState.group.isNotEmpty,
@@ -268,6 +275,27 @@ class ReportsScreen extends StatelessWidget {
                 },
               ),
             ],
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ActionMenuButton(
+                  entityActions: firstEntity == null
+                      ? null
+                      : firstEntity.getActions(
+                          userCompany: state.userCompany, multiselect: true),
+                  entity: firstEntity,
+                  onSelected: (context, action) {
+                    confirmCallback(
+                        context: context,
+                        message: localization.lookup(action.toString()) +
+                            ' • ' +
+                            (reportResult.entities.length == 1
+                                ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
+                                : '${reportResult.entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
+                        callback: (_) {
+                          handleEntitiesActions(reportResult.entities, action);
+                        });
+                  }),
+            ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
@@ -649,6 +677,7 @@ class ReportResult {
     @required this.allColumns,
     @required this.defaultColumns,
     @required this.data,
+    this.entities,
     this.showTotals = true,
   });
 
@@ -656,6 +685,7 @@ class ReportResult {
   final List<String> allColumns;
   final List<String> defaultColumns;
   final List<List<ReportElement>> data;
+  final List<BaseEntity> entities;
   final bool showTotals;
 
   static bool matchField({

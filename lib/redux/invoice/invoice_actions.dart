@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -710,6 +711,26 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       showEntityActionsDialog(
         entities: [invoice],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var invoice in invoices) {
+        for (var document in (invoice as InvoiceEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in invoice_actions');
       break;
   }
 }

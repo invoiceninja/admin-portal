@@ -13,6 +13,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -273,16 +274,6 @@ class FilterVendorsByCustom4 implements PersistUI {
 
 void handleVendorAction(
     BuildContext context, List<BaseEntity> vendors, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          vendors.length == 1,
-      'Cannot perform this action on more than one vendor');
-
   if (vendors.isEmpty) {
     return;
   }
@@ -358,6 +349,26 @@ void handleVendorAction(
       showEntityActionsDialog(
         entities: [vendor],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var vendor in vendors) {
+        for (var document in (vendor as VendorEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in vendor_actions');
       break;
   }
 }

@@ -216,8 +216,8 @@ abstract class DocumentEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.document)) {
-      actions.add(EntityAction.clone);
+    if (!isDeleted && multiselect) {
+      actions.add(EntityAction.documents);
     }
 
     if (actions.isNotEmpty && actions.last != null) {

@@ -140,6 +140,21 @@ class SaveDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class DownloadDocumentsRequest implements StartSaving {
+  DownloadDocumentsRequest({this.completer, this.documentIds});
+
+  final Completer completer;
+  final List<String> documentIds;
+}
+
+class DownloadDocumentsSuccess implements StopSaving {}
+
+class DownloadDocumentsFailure implements StopSaving {
+  DownloadDocumentsFailure(this.error);
+
+  final Object error;
+}
+
 class ArchiveDocumentRequest implements StartSaving {
   ArchiveDocumentRequest(this.completer, this.documentIds);
 
@@ -250,16 +265,6 @@ class FilterDocumentsByCustom4 implements PersistUI {
 
 void handleDocumentAction(
     BuildContext context, List<BaseEntity> documents, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          documents.length == 1,
-      'Cannot perform this action on more than one document');
-
   if (documents.isEmpty) {
     return;
   }
@@ -321,6 +326,17 @@ void handleDocumentAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [document],
+      );
+      break;
+    case EntityAction.documents:
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
       );
       break;
   }

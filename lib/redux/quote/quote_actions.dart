@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -647,6 +648,26 @@ Future handleQuoteAction(
       showEntityActionsDialog(
         entities: [quote],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var quote in quotes) {
+        for (var document in (quote as InvoiceEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in quote_actions');
       break;
   }
 }

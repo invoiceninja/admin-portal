@@ -644,7 +644,13 @@ abstract class ClientEntity extends Object
       if (userCompany.canEditEntity(this)) {
         actions.add(EntityAction.settings);
       }
+    }
 
+    if (!isDeleted && multiselect) {
+      actions.add(EntityAction.documents);
+    }
+
+    if (!isDeleted && !multiselect) {
       if (actions.isNotEmpty && actions.last != null) {
         actions.add(null);
       }

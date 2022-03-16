@@ -79,6 +79,7 @@ ReportResult taskReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<BaseEntity> entities = [];
   BuiltList<TaskReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -238,6 +239,7 @@ ReportResult taskReport(
 
     if (!skip) {
       data.add(row);
+      entities.add(task);
     }
   }
 
@@ -251,5 +253,6 @@ ReportResult taskReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entities: entities,
   );
 }

@@ -118,6 +118,7 @@ ReportResult invoiceReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<BaseEntity> entities = [];
   BuiltList<InvoiceReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -418,6 +419,7 @@ ReportResult invoiceReport(
 
     if (!skip) {
       data.add(row);
+      entities.add(invoice);
     }
   }
 
@@ -432,5 +434,6 @@ ReportResult invoiceReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entities: entities,
   );
 }

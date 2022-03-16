@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final archiveDocument = _archiveDocument(repository);
   final deleteDocument = _deleteDocument(repository);
   final restoreDocument = _restoreDocument(repository);
+  final downloadDocuments = _downloadDocuments(repository);
 
   return [
     TypedMiddleware<AppState, ViewDocumentList>(viewDocumentList),
@@ -38,6 +39,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
     TypedMiddleware<AppState, DeleteDocumentRequest>(deleteDocument),
     TypedMiddleware<AppState, RestoreDocumentRequest>(restoreDocument),
+    TypedMiddleware<AppState, DownloadDocumentsRequest>(downloadDocuments),
   ];
 }
 
@@ -102,6 +104,29 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveDocumentFailure(prevDocuments));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _downloadDocuments(DocumentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DownloadDocumentsRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.download)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(DownloadDocumentsSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadDocumentsFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

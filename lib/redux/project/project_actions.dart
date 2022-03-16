@@ -14,6 +14,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -335,6 +336,23 @@ void handleProjectAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [project],
+      );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var project in projects) {
+        for (var document in (project as ProjectEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
       );
       break;
   }
