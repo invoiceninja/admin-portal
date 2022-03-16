@@ -33,6 +33,7 @@ import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/dates.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -188,6 +189,11 @@ class ReportsScreen extends StatelessWidget {
         ),
     ];
 
+    final entities = reportResult.entities;
+    if (entities.length > kMaxEntitiesPerBulkAction) {
+      entities.removeRange(kMaxEntitiesPerBulkAction, entities.length);
+    }
+
     final firstEntity =
         reportResult.entities != null && reportResult.entities.isNotEmpty
             ? reportResult.entities.first
@@ -276,14 +282,23 @@ class ReportsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: ActionMenuButton(
-                entityActions: firstEntity == null
-                    ? null
-                    : firstEntity.getActions(
-                        userCompany: state.userCompany, multiselect: true),
-                entity: firstEntity,
-                onSelected: (context, action) =>
-                    handleEntitiesActions(reportResult.entities, action),
-              ),
+                  entityActions: firstEntity == null
+                      ? null
+                      : firstEntity.getActions(
+                          userCompany: state.userCompany, multiselect: true),
+                  entity: firstEntity,
+                  onSelected: (context, action) {
+                    confirmCallback(
+                        context: context,
+                        message: localization.lookup(action.toString()) +
+                            ' • ' +
+                            (reportResult.entities.length == 1
+                                ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
+                                : '${reportResult.entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
+                        callback: (_) {
+                          handleEntitiesActions(reportResult.entities, action);
+                        });
+                  }),
             ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
