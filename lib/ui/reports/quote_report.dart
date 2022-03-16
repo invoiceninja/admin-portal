@@ -95,7 +95,7 @@ ReportResult quoteReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
-  final List<String> entityIds = [];
+  final List<BaseEntity> entities = [];
   BuiltList<QuoteReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -355,7 +355,7 @@ ReportResult quoteReport(
 
     if (!skip) {
       data.add(row);
-      entityIds.add(quote.id);
+      entities.add(quote);
     }
   }
 
@@ -370,7 +370,6 @@ ReportResult quoteReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
-    entityType: EntityType.quote,
-    entityIds: entityIds,
+    entities: entities,
   );
 }

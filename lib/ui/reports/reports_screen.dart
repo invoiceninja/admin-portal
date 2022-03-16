@@ -188,14 +188,10 @@ class ReportsScreen extends StatelessWidget {
         ),
     ];
 
-    final firstEntityId =
-        reportResult.entityIds != null && reportResult.entityIds.isNotEmpty
-            ? reportResult.entityIds.first
+    final firstEntity =
+        reportResult.entities != null && reportResult.entities.isNotEmpty
+            ? reportResult.entities.first
             : null;
-    BaseEntity firstEntity;
-    if (firstEntityId != null) {
-      firstEntity = state.getEntityMap(reportResult.entityType)[firstEntityId];
-    }
 
     final chartChildren = [
       AppDropdownButton<String>(
@@ -280,14 +276,14 @@ class ReportsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: ActionMenuButton(
-                  entityActions: firstEntity == null
-                      ? null
-                      : firstEntity.getActions(
-                          userCompany: state.userCompany, multiselect: true),
-                  entity: firstEntity,
-                  onSelected: (context, action) {
-                    //
-                  }),
+                entityActions: firstEntity == null
+                    ? null
+                    : firstEntity.getActions(
+                        userCompany: state.userCompany, multiselect: true),
+                entity: firstEntity,
+                onSelected: (context, action) =>
+                    handleEntitiesActions(reportResult.entities, action),
+              ),
             ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
@@ -670,8 +666,7 @@ class ReportResult {
     @required this.allColumns,
     @required this.defaultColumns,
     @required this.data,
-    this.entityType,
-    this.entityIds,
+    this.entities,
     this.showTotals = true,
   });
 
@@ -679,8 +674,7 @@ class ReportResult {
   final List<String> allColumns;
   final List<String> defaultColumns;
   final List<List<ReportElement>> data;
-  final List<String> entityIds;
-  final EntityType entityType;
+  final List<BaseEntity> entities;
   final bool showTotals;
 
   static bool matchField({

@@ -63,7 +63,7 @@ ReportResult documentReport(
   BuiltMap<String, UserEntity> userMap,
 ) {
   final List<List<ReportElement>> data = [];
-  final List<String> entityIds = [];
+  final List<BaseEntity> entities = [];
   BuiltList<DocumentReportFields> columns;
 
   final localization =
@@ -188,7 +188,7 @@ ReportResult documentReport(
       final row = _getRow(quote, document);
       if (row != null) {
         data.add(row);
-        entityIds.add(document.id);
+        entities.add(document);
       }
     });
   });
@@ -205,7 +205,6 @@ ReportResult documentReport(
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     showTotals: false,
-    entityType: EntityType.document,
-    entityIds: entityIds,
+    entities: entities,
   );
 }
