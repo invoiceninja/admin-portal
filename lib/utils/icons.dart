@@ -20,6 +20,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.printPdf:
       return Icons.print;
     case EntityAction.download:
+    case EntityAction.documents:
       return Icons.download;
     case EntityAction.clientPortal:
       return Icons.cloud_circle;

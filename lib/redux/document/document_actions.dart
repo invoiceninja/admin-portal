@@ -140,6 +140,21 @@ class SaveDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class DownloadDocumentsRequest implements StartSaving {
+  DownloadDocumentsRequest({this.completer, this.documentIds});
+
+  final Completer completer;
+  final List<String> documentIds;
+}
+
+class DownloadDocumentsSuccess implements StopSaving {}
+
+class DownloadDocumentsFailure implements StopSaving {
+  DownloadDocumentsFailure(this.error);
+
+  final Object error;
+}
+
 class ArchiveDocumentRequest implements StartSaving {
   ArchiveDocumentRequest(this.completer, this.documentIds);
 
