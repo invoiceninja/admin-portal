@@ -18,6 +18,8 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+import '../document/document_actions.dart';
+
 class ViewProductList implements PersistUI {
   ViewProductList({this.force = false});
 
@@ -319,6 +321,26 @@ void handleProductAction(
       showEntityActionsDialog(
         entities: [product],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var product in products) {
+        for (var document in (product as ProductEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in product_actions');
       break;
   }
 }

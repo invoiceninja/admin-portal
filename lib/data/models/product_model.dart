@@ -322,6 +322,10 @@ abstract class ProductEntity extends Object
       actions.add(EntityAction.clone);
     }
 
+    if (!isDeleted && multiselect) {
+      actions.add(EntityAction.documents);
+    }
+
     if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
