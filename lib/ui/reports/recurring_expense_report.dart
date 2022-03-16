@@ -81,6 +81,7 @@ ReportResult recurringExpenseReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<RecurringExpenseReportFields> columns;
 
   final localization = AppLocalization.of(navigatorKey.currentContext);
@@ -248,6 +249,7 @@ ReportResult recurringExpenseReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(expense.id);
     }
   }
 
@@ -263,5 +265,7 @@ ReportResult recurringExpenseReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.recurringExpense,
+    entityIds: entityIds,
   );
 }

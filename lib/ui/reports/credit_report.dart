@@ -96,6 +96,7 @@ ReportResult creditReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<CreditReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -362,6 +363,7 @@ ReportResult creditReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(credit.id);
     }
   }
 
@@ -376,5 +378,7 @@ ReportResult creditReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.credit,
+    entityIds: entityIds,
   );
 }

@@ -67,6 +67,7 @@ ReportResult paymentReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<PaymentReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -232,6 +233,7 @@ ReportResult paymentReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(payment.id);
     }
   }
 
@@ -246,5 +248,7 @@ ReportResult paymentReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.payment,
+    entityIds: entityIds,
   );
 }

@@ -89,6 +89,7 @@ ReportResult clientReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<ClientReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -335,6 +336,7 @@ ReportResult clientReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(client.id);
     }
   }
 
@@ -349,5 +351,7 @@ ReportResult clientReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.client,
+    entityIds: entityIds,
   );
 }

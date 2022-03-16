@@ -79,6 +79,7 @@ ReportResult expenseReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<ExpenseReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -240,6 +241,7 @@ ReportResult expenseReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(expense.id);
     }
   }
 
@@ -254,5 +256,7 @@ ReportResult expenseReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.expense,
+    entityIds: entityIds,
   );
 }

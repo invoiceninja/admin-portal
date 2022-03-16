@@ -47,6 +47,7 @@ ReportResult productReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<ProductReportFields> columns;
 
   final reportSettings = userCompany.settings?.reportSettings;
@@ -153,6 +154,7 @@ ReportResult productReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(product.id);
     }
   }
 
@@ -167,5 +169,7 @@ ReportResult productReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.product,
+    entityIds: entityIds,
   );
 }

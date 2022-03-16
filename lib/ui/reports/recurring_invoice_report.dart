@@ -115,6 +115,7 @@ ReportResult recurringInvoiceReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
+  final List<String> entityIds = [];
   BuiltList<RecurringInvoiceReportFields> columns;
 
   final localization = AppLocalization.of(navigatorKey.currentContext);
@@ -399,6 +400,7 @@ ReportResult recurringInvoiceReport(
 
     if (!skip) {
       data.add(row);
+      entityIds.add(invoice.id);
     }
   }
 
@@ -414,5 +416,7 @@ ReportResult recurringInvoiceReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    entityType: EntityType.recurringInvoice,
+    entityIds: entityIds,
   );
 }
