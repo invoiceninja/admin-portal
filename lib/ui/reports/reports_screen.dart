@@ -189,15 +189,11 @@ class ReportsScreen extends StatelessWidget {
         ),
     ];
 
-    final entities = reportResult.entities;
+    final entities = reportResult.entities ?? [];
+    final firstEntity = entities.isNotEmpty ? entities.first : null;
     if (entities.length > kMaxEntitiesPerBulkAction) {
       entities.removeRange(kMaxEntitiesPerBulkAction, entities.length);
     }
-
-    final firstEntity =
-        reportResult.entities != null && reportResult.entities.isNotEmpty
-            ? reportResult.entities.first
-            : null;
 
     final chartChildren = [
       AppDropdownButton<String>(
