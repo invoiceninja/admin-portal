@@ -274,16 +274,6 @@ class FilterVendorsByCustom4 implements PersistUI {
 
 void handleVendorAction(
     BuildContext context, List<BaseEntity> vendors, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          vendors.length == 1,
-      'Cannot perform this action on more than one vendor');
-
   if (vendors.isEmpty) {
     return;
   }

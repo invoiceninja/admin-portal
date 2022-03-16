@@ -161,6 +161,7 @@ ReportResult documentReport(
       final row = _getRow(client, document);
       if (row != null) {
         data.add(row);
+        entities.add(document);
       }
     });
   });
@@ -170,6 +171,7 @@ ReportResult documentReport(
       final row = _getRow(product, document);
       if (row != null) {
         data.add(row);
+        entities.add(document);
       }
     });
   });
@@ -179,6 +181,7 @@ ReportResult documentReport(
       final row = _getRow(invoice, document);
       if (row != null) {
         data.add(row);
+        entities.add(document);
       }
     });
   });

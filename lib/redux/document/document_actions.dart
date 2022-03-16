@@ -265,16 +265,6 @@ class FilterDocumentsByCustom4 implements PersistUI {
 
 void handleDocumentAction(
     BuildContext context, List<BaseEntity> documents, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          documents.length == 1,
-      'Cannot perform this action on more than one document');
-
   if (documents.isEmpty) {
     return;
   }
@@ -336,6 +326,17 @@ void handleDocumentAction(
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [document],
+      );
+      break;
+    case EntityAction.documents:
+      store.dispatch(
+        DownloadDocumentsRequest(
+          documentIds: documentIds,
+          completer: snackBarCompleter<Null>(
+            context,
+            localization.exportedData,
+          ),
+        ),
       );
       break;
   }
