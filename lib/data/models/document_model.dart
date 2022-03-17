@@ -224,7 +224,9 @@ abstract class DocumentEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(userCompany: userCompany));
+    //return actions..addAll(super.getActions(userCompany: userCompany));
+
+    return actions;
   }
 
   static Serializer<DocumentEntity> get serializer =>
