@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -38,6 +39,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({
@@ -58,6 +60,21 @@ class ReportsScreen extends StatelessWidget {
     final reportResult = viewModel.reportResult;
 
     Widget leading = SizedBox();
+
+    if (state.isHosted && !state.isProPlan && !state.isTrial) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Material(child: HelpText(localization.upgradeToViewReports)),
+            AppButton(
+              label: localization.upgrade.toUpperCase(),
+              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+            )
+          ],
+        ),
+      );
+    }
 
     if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
