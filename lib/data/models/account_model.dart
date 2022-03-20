@@ -89,7 +89,7 @@ abstract class AccountEntity
   int get hostedCompanyCount;
 
   bool get isUpdateAvailable {
-    if (!isSchedulerRunning || disableAutoUpdate) {
+    if (disableAutoUpdate) {
       return false;
     }
 
