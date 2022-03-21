@@ -113,7 +113,12 @@ class _UpdateDialogState extends State<UpdateDialog> {
               Navigator.of(context).pop();
             },
           ),
-          if (!account.isUpdateAvailable)
+          if (account.isUpdateAvailable)
+            TextButton(
+              child: Text(localization.releaseNotes.toUpperCase()),
+              onPressed: () => launch(kReleaseNotesUrl),
+            )
+          else
             TextButton(
               child: Text(localization.viewChanges.toUpperCase()),
               onPressed: () => launch(kGitHubDiffUrl.replaceFirst(

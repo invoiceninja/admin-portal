@@ -43,6 +43,8 @@ const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
+const String kReleaseNotesUrl =
+    'https://github.com/invoiceninja/invoiceninja/wiki/Release-notes';
 const String kDocsUrl = 'https://invoiceninja.github.io/docs';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain';
@@ -664,7 +666,9 @@ List<String> kCustomLabels = [
   'surcharge',
   'tax',
   'taxes',
-  'terms',
+  'invoice_terms',
+  'quote_terms',
+  'credit_terms',
   'to',
   'total',
   'unit_cost',

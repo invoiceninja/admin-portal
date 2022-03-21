@@ -195,7 +195,10 @@ ReportResult lineItemReport(
           row.add(invoice.getReportBool(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
           row.add(invoice.getReportDouble(
-              value: value, currencyId: client.currencyId));
+              value: value,
+              currencyId: column == InvoiceItemReportFields.quantity
+                  ? null
+                  : client.currencyId));
         } else {
           row.add(invoice.getReportString(value: value));
         }
