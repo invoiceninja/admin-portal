@@ -229,7 +229,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final template = widget.viewModel.selectedTemplate;
     final company = state.company;
     final enableCustomEmail =
-        state.isSelfHosted || state.isProPlan || state.isProPlan;
+        state.isSelfHosted || state.isProPlan || state.isTrial;
 
     final editor = ScrollableListView(
       children: <Widget>[

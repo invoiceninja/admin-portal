@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -24,6 +23,7 @@ import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,6 +43,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
   String _bodyPreview = '';
+  String _rawBodyPreview = '';
   String _subjectPreview = '';
   bool _isLoading = false;
 
@@ -144,6 +145,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
+            _rawBodyPreview = rawBody.trim();
 
             if (origSubject.isEmpty && origBody.isEmpty) {
               _subjectController.text = rawSubject.trim();
@@ -254,52 +256,64 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final state = viewModel.state;
     final enableCustomEmail =
         state.isSelfHosted || state.isProPlan || state.isTrial;
+    final isLoading = _isLoading &&
+        _subjectController.text.isEmpty &&
+        _bodyController.text.isEmpty;
 
-    return SingleChildScrollView(
-      child: FormCard(
-        padding: EdgeInsets.only(
-            left: 16, bottom: 16, right: 16, top: isMobile(context) ? 16 : 0),
-        children: <Widget>[
-          if (_isLoading &&
-              _subjectController.text.isEmpty &&
-              _bodyController.text.isEmpty)
-            LoadingIndicator(height: 210)
-          else ...[
-            if (!enableCustomEmail)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: IconMessage(
-                  localization.customEmailsDisabledHelp,
-                  trailing: TextButton(
-                    child: Text(
-                      localization.upgrade.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
+    return isLoading
+        ? LoadingIndicator(height: 210)
+        : Column(
+            children: [
+              if (!enableCustomEmail)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: IconMessage(
+                    localization.customEmailsDisabledHelp,
+                    trailing: TextButton(
+                      child: Text(
+                        localization.upgrade.toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
+                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
                     ),
-                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
                   ),
                 ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: DecoratedFormField(
+                  controller: _subjectController,
+                  label: localization.subject,
+                  onChanged: (_) => _onChanged(),
+                  keyboardType: TextInputType.text,
+                  enabled: enableCustomEmail,
+                ),
               ),
-            DecoratedFormField(
-              controller: _subjectController,
-              label: localization.subject,
-              onChanged: (_) => _onChanged(),
-              keyboardType: TextInputType.text,
-              enabled: enableCustomEmail,
-            ),
-            DecoratedFormField(
-              controller: _bodyController,
-              label: localization.body,
-              maxLines: enableCustomEmail ? 6 : 2,
-              keyboardType: TextInputType.multiline,
-              onChanged: (_) => _onChanged(),
-              enabled: enableCustomEmail,
-            ),
-          ]
-        ],
-      ),
-    );
+              if ((_rawBodyPreview ?? '').startsWith('<p>'))
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: DecoratedFormField(
+                    controller: _bodyController,
+                    label: localization.body,
+                    maxLines: enableCustomEmail ? 6 : 2,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (_) => _onChanged(),
+                    enabled: enableCustomEmail,
+                  ),
+                )
+              else
+                Expanded(
+                  child: Material(
+                    color: Colors.white,
+                    child: ExampleEditor(
+                      key: ValueKey('__body_${_rawBodyPreview}__'),
+                      initialValue: _rawBodyPreview,
+                    ),
+                  ),
+                ),
+            ],
+          );
   }
 
   Widget _buildHistory(BuildContext context) {
@@ -343,18 +357,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           children: [
             Expanded(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildTemplateDropdown(context),
-                  _buildEdit(context),
                   Expanded(
-                    child: Container(
-                      child: _buildPreview(context),
-                      color: Colors.white,
-                      height: double.infinity,
-                    ),
+                    child: _buildEdit(context),
+                    flex: 2,
                   ),
+                  if (!isDesktopOS())
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        child: _buildPreview(context),
+                        color: Colors.white,
+                        height: double.infinity,
+                      ),
+                    ),
                 ],
               ),
             ),
