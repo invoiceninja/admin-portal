@@ -390,10 +390,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     flex: 2,
                   ),
                   Expanded(
-                    flex: 3,
+                    flex: supportsInlineBrowser() ? 3 : 2,
                     child: Container(
                       child: _buildPreview(context),
-                      color: Colors.white,
+                      color: supportsInlineBrowser()
+                          ? Colors.white
+                          : Theme.of(context).scaffoldBackgroundColor,
                       height: double.infinity,
                     ),
                   ),
