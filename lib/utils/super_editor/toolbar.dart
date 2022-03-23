@@ -109,9 +109,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
     }
   }
 
+  /*
   /// Returns the text alignment of the currently selected text node.
   ///
-  /// Throws an exception if the currently selected node is not a text node.
+  /// Throws an exception if the currently selected node is not a text node.  
   TextAlign _getCurrentTextAlignment() {
     final selectedNode = widget.editor.document
         .getNodeById(widget.composer.selection.extent.nodeId);
@@ -147,6 +148,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         widget.editor.document.getNodeById(selection.extent.nodeId);
     return selectedNode is ParagraphNode;
   }
+  */
 
   /// Converts the currently selected text node into a new type of
   /// text node, represented by [newType].
@@ -253,6 +255,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   /// Returns true if the current text selection includes part
   /// or all of a single link, returns false if zero links are
   /// in the selection or if 2+ links are in the selection.
@@ -346,6 +349,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       });
     }
   }
+  */
 
   /// Takes the text from the [urlController] and applies it as a link
   /// attribution to the currently selected text.
@@ -399,6 +403,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     return TextRange(start: startOffset, end: endOffset);
   }
 
+  /*
   /// Changes the alignment of the current selected text node
   /// to reflect [newAlignment].
   void _changeAlignment(TextAlign newAlignment) {
@@ -427,6 +432,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         .getNodeById(widget.composer.selection.extent.nodeId) as ParagraphNode;
     selectedNode.putMetadataValue('textAlign', newAlignmentValue);
   }
+  */
 
   /// Returns the localized name for the given [_TextType], e.g.,
   /// "Paragraph" or "Header 1".
@@ -554,6 +560,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 tooltip: 'Strikethrough',
               ),
             ),
+            /*
             Center(
               child: IconButton(
                 onPressed: _areMultipleLinksSelected() ? null : _onLinkPressed,
@@ -565,8 +572,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 tooltip: 'Link',
               ),
             ),
+            */
             // Only display alignment controls if the currently selected text
             // node respects alignment. List items, for example, do not.
+            /*
             if (_isTextAlignable()) ...[
               _buildVerticalDivider(),
               Tooltip(
@@ -599,6 +608,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 ),
               ),
             ],
+            */
           ],
         ),
       ),
@@ -653,6 +663,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   IconData _buildTextAlignIcon(TextAlign align) {
     switch (align) {
       case TextAlign.left:
@@ -669,6 +680,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
     return null;
   }
+  */
 }
 
 enum _TextType {
