@@ -62,6 +62,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     super.didUpdateWidget(oldWidget);
 
     if (widget.value != oldWidget.value) {
+      _doc.removeListener(_hideOrShowToolbar);
       _doc = deserializeMarkdownToDocument(widget.value)
         ..addListener(_hideOrShowToolbar);
       _docEditor = DocumentEditor(document: _doc as MutableDocument);
@@ -73,6 +74,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
     if (_textFormatBarOverlayEntry != null) {
       _textFormatBarOverlayEntry.remove();
     }
+
+    _doc.removeListener(_hideOrShowToolbar);
+    _scrollController.removeListener(_hideOrShowToolbar);
+    _composer.removeListener(_hideOrShowToolbar);
 
     _scrollController.dispose();
     _editorFocusNode.dispose();
