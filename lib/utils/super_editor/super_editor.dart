@@ -161,11 +161,14 @@ class _ExampleEditorState extends State<ExampleEditor> {
   void _showEditorToolbar() {
     if (_textFormatBarOverlayEntry == null) {
       _textFormatBarOverlayEntry ??= OverlayEntry(builder: (context) {
-        return EditorToolbar(
-          anchor: _textSelectionAnchor,
-          editor: _docEditor,
-          composer: _composer,
-          closeToolbar: _hideEditorToolbar,
+        return Theme(
+          data: ThemeData.light(),
+          child: EditorToolbar(
+            anchor: _textSelectionAnchor,
+            editor: _docEditor,
+            composer: _composer,
+            closeToolbar: _hideEditorToolbar,
+          ),
         );
       });
 
