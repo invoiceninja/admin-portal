@@ -178,7 +178,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 18, right: 18, top: 2),
+      padding: const EdgeInsets.only(left: 24, right: 18, top: 2),
       child: Row(
         children: [
           Expanded(
@@ -297,7 +297,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ? Colors.white
               : null,
           child: Padding(
-            padding: const EdgeInsets.only(left: 19, right: 10),
+            padding: const EdgeInsets.only(left: 24, right: 10),
             child: DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
