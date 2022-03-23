@@ -182,14 +182,16 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           DropdownButtonHideUnderline(
             child: DropdownButton<EmailTemplate>(
               value: selectedTemplate,
-              onChanged: (template) {
-                setState(() {
-                  _subjectController.text = '';
-                  _bodyController.text = '';
-                  selectedTemplate = template;
-                  _loadTemplate();
-                });
-              },
+              onChanged: _isLoading
+                  ? null
+                  : (template) {
+                      setState(() {
+                        _subjectController.text = '';
+                        _bodyController.text = '';
+                        selectedTemplate = template;
+                        _loadTemplate();
+                      });
+                    },
               items: [
                 DropdownMenuItem<EmailTemplate>(
                   child: Text(localization.initialEmail),
@@ -306,12 +308,20 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 Expanded(
                   child: Material(
                     color: Colors.white,
-                    child: ExampleEditor(
-                      value: _rawBodyPreview,
-                      onChanged: (value) {
-                        _bodyController.text = value;
-                        _onChanged();
-                      },
+                    child: Stack(
+                      children: [
+                        if (_isLoading) LinearProgressIndicator(),
+                        ExampleEditor(
+                          value: _rawBodyPreview,
+                          onChanged: (value) {
+                            _bodyController.text = value;
+                            // TODO remove check once browser is supported
+                            if (!isDesktopOS()) {
+                              _onChanged();
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
