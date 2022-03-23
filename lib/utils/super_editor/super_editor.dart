@@ -44,7 +44,8 @@ class _ExampleEditorState extends State<ExampleEditor> {
     super.initState();
 
     _doc = deserializeMarkdownToDocument(widget.value)
-      ..addListener(_hideOrShowToolbar);
+      ..addListener(_hideOrShowToolbar)
+      ..addListener(_onChanged);
     _docEditor = DocumentEditor(document: _doc as MutableDocument);
     _composer = DocumentComposer()..addListener(_hideOrShowToolbar);
     _docOps = CommonEditorOperations(
@@ -63,21 +64,11 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
     if (widget.value != oldWidget.value) {
       _doc.removeListener(_hideOrShowToolbar);
-      //_composer.removeListener(_hideOrShowToolbar);
-
+      _doc.removeListener(_onChanged);
       _doc = deserializeMarkdownToDocument(widget.value)
-        ..addListener(_hideOrShowToolbar);
+        ..addListener(_hideOrShowToolbar)
+        ..addListener(_onChanged);
       _docEditor = DocumentEditor(document: _doc as MutableDocument);
-      /*
-      _composer = DocumentComposer()..addListener(_hideOrShowToolbar);
-      _docOps = CommonEditorOperations(
-        editor: _docEditor,
-        composer: _composer,
-        documentLayoutResolver: () =>
-            _docLayoutKey.currentState as DocumentLayout,
-      );
-      */
-
       _editorFocusNode = FocusNode();
     }
   }
@@ -89,6 +80,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     }
 
     _doc.removeListener(_hideOrShowToolbar);
+    _doc.removeListener(_onChanged);
     _scrollController.removeListener(_hideOrShowToolbar);
     _composer.removeListener(_hideOrShowToolbar);
 
@@ -98,10 +90,12 @@ class _ExampleEditorState extends State<ExampleEditor> {
     super.dispose();
   }
 
-  void _hideOrShowToolbar() {
+  void _onChanged() {
     final value = serializeDocumentToMarkdown(_docEditor.document);
     widget.onChanged(value);
+  }
 
+  void _hideOrShowToolbar() {
     if (_gestureMode != DocumentGestureMode.mouse) {
       // We only add our own toolbar when using mouse. On mobile, a bar
       // is rendered for us.
