@@ -396,7 +396,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       child: _buildPreview(context),
                       color: supportsInlineBrowser()
                           ? Colors.white
-                          : Theme.of(context).scaffoldBackgroundColor,
+                          : const Color(0xFFE4E8EB),
                       height: double.infinity,
                     ),
                   ),
