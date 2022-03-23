@@ -293,7 +293,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.only(left: 19, right: 10),
           child: DecoratedFormField(
             controller: _subjectController,
             label: localization.subject,
@@ -376,28 +376,29 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: _bodyController.text.isEmpty
-                  ? LoadingIndicator()
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTemplateDropdown(context),
-                        Expanded(
-                          child: _buildEdit(context),
-                          flex: 2,
-                        ),
-                        Expanded(
-                          flex: supportsInlineBrowser() ? 3 : 2,
-                          child: Container(
-                            child: _buildPreview(context),
-                            color: supportsInlineBrowser()
-                                ? Colors.white
-                                : const Color(0xFFE4E8EB),
-                            height: double.infinity,
-                          ),
-                        ),
-                      ],
+              child: Column(
+                children: [
+                  _buildTemplateDropdown(context),
+                  if (_bodyController.text.isEmpty)
+                    Expanded(child: LoadingIndicator())
+                  else ...[
+                    Expanded(
+                      child: _buildEdit(context),
+                      flex: 2,
                     ),
+                    Expanded(
+                      flex: supportsInlineBrowser() ? 3 : 2,
+                      child: Container(
+                        child: _buildPreview(context),
+                        color: supportsInlineBrowser()
+                            ? Colors.white
+                            : const Color(0xFFE4E8EB),
+                        height: double.infinity,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
             Expanded(
               child: DefaultTabController(
