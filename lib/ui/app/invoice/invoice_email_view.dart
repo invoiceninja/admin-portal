@@ -250,18 +250,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       );
     }
 
-    if (!supportsInlineBrowser()) {
-      return AbsorbPointer(
-        child: ExampleEditor(
-          value: html2md.convert(_bodyPreview),
-        ),
-      );
-    }
-
-    return EmailPreview(
-      isLoading: _isLoading,
-      subject: _subjectPreview,
-      body: _emailPreview,
+    return Stack(
+      children: [
+        if (_isLoading) LinearProgressIndicator(),
+        if (supportsInlineBrowser())
+          EmailPreview(
+            isLoading: _isLoading,
+            subject: _subjectPreview,
+            body: _emailPreview,
+          )
+        else
+          AbsorbPointer(
+            child: ExampleEditor(
+              value: html2md.convert(_bodyPreview),
+            ),
+          )
+      ],
     );
   }
 
@@ -309,19 +313,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 Expanded(
                   child: Material(
                     color: Colors.white,
-                    child: Stack(
-                      children: [
-                        if (_isLoading) LinearProgressIndicator(),
-                        ExampleEditor(
-                          value: _rawBodyPreview,
-                          onChanged: (value) {
-                            if (value != _bodyController.text) {
-                              _bodyController.text = value;
-                              _onChanged();
-                            }
-                          },
-                        ),
-                      ],
+                    child: ExampleEditor(
+                      value: _rawBodyPreview,
+                      onChanged: (value) {
+                        if (value != _bodyController.text) {
+                          _bodyController.text = value;
+                          _onChanged();
+                        }
+                      },
                     ),
                   ),
                 )
