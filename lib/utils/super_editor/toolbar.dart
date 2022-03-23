@@ -439,9 +439,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
       case _TextType.header3:
         return 'Header 3';
       case _TextType.paragraph:
-        return 'Header 4';
+        return 'Paragraph';
       case _TextType.blockquote:
-        return 'Header 5';
+        return 'Blockquote';
       case _TextType.orderedListItem:
         return 'Ordered List Item';
       case _TextType.unorderedListItem:
@@ -508,6 +508,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 child: DropdownButton<_TextType>(
                   value: _getCurrentTextType(),
                   items: _TextType.values
+                      .where((element) => element != _TextType.blockquote)
                       .map((textType) => DropdownMenuItem<_TextType>(
                             value: textType,
                             child: Padding(
