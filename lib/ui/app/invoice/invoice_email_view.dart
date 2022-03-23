@@ -358,9 +358,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final isLoading = _isLoading &&
-        _subjectController.text.isEmpty &&
-        _bodyController.text.isEmpty;
 
     if (isDesktop(context)) {
       return EditScaffold(
