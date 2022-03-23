@@ -63,14 +63,18 @@ class _ExampleEditorState extends State<ExampleEditor> {
     super.didUpdateWidget(oldWidget);
 
     if (widget.value != oldWidget.value) {
-      _doc.removeListener(_hideOrShowToolbar);
-      _doc.removeListener(_onChanged);
-      _doc = deserializeMarkdownToDocument(widget.value)
-        ..addListener(_hideOrShowToolbar)
-        ..addListener(_onChanged);
-      _docEditor = DocumentEditor(document: _doc as MutableDocument);
-      _editorFocusNode = FocusNode();
+      _setValue(widget.value);
     }
+  }
+
+  void _setValue(String value) {
+    _doc.removeListener(_hideOrShowToolbar);
+    _doc.removeListener(_onChanged);
+    _doc = deserializeMarkdownToDocument(value)
+      ..addListener(_hideOrShowToolbar)
+      ..addListener(_onChanged);
+    _docEditor = DocumentEditor(document: _doc as MutableDocument);
+    _editorFocusNode = FocusNode();
   }
 
   @override
@@ -91,8 +95,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
   }
 
   void _onChanged() {
-    final value = serializeDocumentToMarkdown(_docEditor.document);
-    widget.onChanged(value);
+    if (widget.onChanged != null) {
+      final value = serializeDocumentToMarkdown(_docEditor.document);
+      widget.onChanged(value);
+    }
   }
 
   void _hideOrShowToolbar() {

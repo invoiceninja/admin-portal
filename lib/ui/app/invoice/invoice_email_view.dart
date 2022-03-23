@@ -148,12 +148,15 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
             _emailPreview = email.trim();
-            _rawBodyPreview = rawBody.trim();
 
-            final company = widget.viewModel.state.company;
-            if (company.markdownEmailEnabled &&
-                _rawBodyPreview.startsWith('<p>')) {
-              _rawBodyPreview = html2md.convert(_rawBodyPreview);
+            if (_rawBodyPreview.isEmpty) {
+              _rawBodyPreview = rawBody.trim();
+
+              final company = widget.viewModel.state.company;
+              if (company.markdownEmailEnabled &&
+                  _rawBodyPreview.startsWith('<p>')) {
+                _rawBodyPreview = html2md.convert(_rawBodyPreview);
+              }
             }
 
             if (origSubject.isEmpty && origBody.isEmpty) {
@@ -197,6 +200,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       setState(() {
                         _subjectController.text = '';
                         _bodyController.text = '';
+                        _rawBodyPreview = '';
                         selectedTemplate = template;
                         _loadTemplate();
                       });
@@ -258,7 +262,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             body: _emailPreview,
           )
         else
-          AbsorbPointer(
+          IgnorePointer(
             child: ExampleEditor(
               value: html2md.convert(_bodyPreview),
             ),
@@ -297,7 +301,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ? Colors.white
               : null,
           child: Padding(
-            padding: const EdgeInsets.only(left: 24, right: 10),
+            padding: const EdgeInsets.only(left: 24, right: 10, bottom: 16),
             child: DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
