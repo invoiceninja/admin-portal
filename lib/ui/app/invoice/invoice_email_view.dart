@@ -307,8 +307,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   child: Material(
                     color: Colors.white,
                     child: ExampleEditor(
-                      key: ValueKey('__body_${_rawBodyPreview}__'),
-                      initialValue: _rawBodyPreview,
+                      value: _rawBodyPreview,
+                      onChanged: (value) {
+                        _bodyController.text = value;
+                        _onChanged();
+                      },
                     ),
                   ),
                 ),

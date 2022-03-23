@@ -10,10 +10,12 @@ import 'package:super_editor/super_editor.dart';
 class ExampleEditor extends StatefulWidget {
   const ExampleEditor({
     Key key,
-    @required this.initialValue,
+    @required this.value,
+    @required this.onChanged,
   }) : super(key: key);
 
-  final String initialValue;
+  final String value;
+  final Function(String) onChanged;
 
   @override
   _ExampleEditorState createState() => _ExampleEditorState();
@@ -39,12 +41,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
   @override
   void initState() {
-    print('## INIT: ${widget.initialValue}');
-    final value = deserializeMarkdownToDocument(widget.initialValue);
-
     super.initState();
 
-    _doc = value..addListener(_hideOrShowToolbar);
+    _doc = deserializeMarkdownToDocument(widget.value)
+      ..addListener(_hideOrShowToolbar);
     _docEditor = DocumentEditor(document: _doc as MutableDocument);
     _composer = DocumentComposer()..addListener(_hideOrShowToolbar);
     _docOps = CommonEditorOperations(
@@ -55,6 +55,16 @@ class _ExampleEditorState extends State<ExampleEditor> {
     );
     _editorFocusNode = FocusNode();
     _scrollController = ScrollController()..addListener(_hideOrShowToolbar);
+  }
+
+  @override
+  void didUpdateWidget(ExampleEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.value != oldWidget.value) {
+      _doc = deserializeMarkdownToDocument(widget.value)
+        ..addListener(_hideOrShowToolbar);
+    }
   }
 
   @override
@@ -70,6 +80,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
   }
 
   void _hideOrShowToolbar() {
+    final value = serializeDocumentToMarkdown(_doc);
+    widget.onChanged(value);
+
     if (_gestureMode != DocumentGestureMode.mouse) {
       // We only add our own toolbar when using mouse. On mobile, a bar
       // is rendered for us.
