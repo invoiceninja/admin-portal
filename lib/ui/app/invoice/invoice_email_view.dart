@@ -251,8 +251,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     }
 
     if (!supportsInlineBrowser()) {
-      return IgnorePointer(
-          child: ExampleEditor(value: html2md.convert(_bodyPreview)));
+      return AbsorbPointer(
+        child: ExampleEditor(
+          value: html2md.convert(_bodyPreview),
+        ),
+      );
     }
 
     return EmailPreview(

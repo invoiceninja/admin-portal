@@ -64,6 +64,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     if (widget.value != oldWidget.value) {
       _doc = deserializeMarkdownToDocument(widget.value)
         ..addListener(_hideOrShowToolbar);
+      _docEditor = DocumentEditor(document: _doc as MutableDocument);
     }
   }
 
@@ -80,7 +81,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
   }
 
   void _hideOrShowToolbar() {
-    final value = serializeDocumentToMarkdown(_doc);
+    final value = serializeDocumentToMarkdown(_docEditor.document);
     widget.onChanged(value);
 
     if (_gestureMode != DocumentGestureMode.mouse) {
