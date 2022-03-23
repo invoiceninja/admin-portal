@@ -316,7 +316,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     child: ExampleEditor(
                       value: _rawBodyPreview,
                       onChanged: (value) {
-                        if (value != _bodyController.text) {
+                        print('## NEW VALUE: $value');
+                        print('## OLD VALUE: ${_bodyController.text}');
+                        if (value.trim() != _bodyController.text.trim()) {
                           _bodyController.text = value;
                           _onChanged();
                         }
