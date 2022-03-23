@@ -244,11 +244,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   Widget _buildPreview(BuildContext context) {
-    if (widget.viewModel.isLoading) {
-      return LoadingIndicator(
-        height: 210,
-      );
-    } else if (_bodyController.text.isEmpty) {
+    if (_bodyController.text.isEmpty) {
       return SizedBox();
     }
 
@@ -277,69 +273,64 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final state = viewModel.state;
     final enableCustomEmail =
         state.isSelfHosted || state.isProPlan || state.isTrial;
-    final isLoading = _isLoading &&
-        _subjectController.text.isEmpty &&
-        _bodyController.text.isEmpty;
 
-    return isLoading
-        ? LoadingIndicator(height: 210)
-        : Column(
-            children: [
-              if (!enableCustomEmail)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: IconMessage(
-                    localization.customEmailsDisabledHelp,
-                    trailing: TextButton(
-                      child: Text(
-                        localization.upgrade.toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
-                    ),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: DecoratedFormField(
-                  controller: _subjectController,
-                  label: localization.subject,
-                  onChanged: (_) => _onChanged(),
-                  keyboardType: TextInputType.text,
-                  enabled: enableCustomEmail,
-                ),
-              ),
-              if (state.company.markdownEmailEnabled)
-                Expanded(
-                  child: Material(
+    return Column(
+      children: [
+        if (!enableCustomEmail)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: IconMessage(
+              localization.customEmailsDisabledHelp,
+              trailing: TextButton(
+                child: Text(
+                  localization.upgrade.toUpperCase(),
+                  style: TextStyle(
                     color: Colors.white,
-                    child: ExampleEditor(
-                      value: _rawBodyPreview,
-                      onChanged: (value) {
-                        if (value.trim() != _bodyController.text.trim()) {
-                          _bodyController.text = value;
-                          _onChanged();
-                        }
-                      },
-                    ),
                   ),
-                )
-              else
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: DecoratedFormField(
-                    controller: _bodyController,
-                    label: localization.body,
-                    maxLines: enableCustomEmail ? 6 : 2,
-                    keyboardType: TextInputType.multiline,
-                    onChanged: (_) => _onChanged(),
-                    enabled: enableCustomEmail,
-                  ),
-                )
-            ],
-          );
+                ),
+                onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+              ),
+            ),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: DecoratedFormField(
+            controller: _subjectController,
+            label: localization.subject,
+            onChanged: (_) => _onChanged(),
+            keyboardType: TextInputType.text,
+            enabled: enableCustomEmail,
+          ),
+        ),
+        if (state.company.markdownEmailEnabled)
+          Expanded(
+            child: Material(
+              color: Colors.white,
+              child: ExampleEditor(
+                value: _rawBodyPreview,
+                onChanged: (value) {
+                  if (value.trim() != _bodyController.text.trim()) {
+                    _bodyController.text = value;
+                    _onChanged();
+                  }
+                },
+              ),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: DecoratedFormField(
+              controller: _bodyController,
+              label: localization.body,
+              maxLines: enableCustomEmail ? 6 : 2,
+              keyboardType: TextInputType.multiline,
+              onChanged: (_) => _onChanged(),
+              enabled: enableCustomEmail,
+            ),
+          )
+      ],
+    );
   }
 
   Widget _buildHistory(BuildContext context) {
@@ -367,6 +358,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final isLoading = _isLoading &&
+        _subjectController.text.isEmpty &&
+        _bodyController.text.isEmpty;
 
     if (isDesktop(context)) {
       return EditScaffold(
@@ -382,26 +376,28 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTemplateDropdown(context),
-                  Expanded(
-                    child: _buildEdit(context),
-                    flex: 2,
-                  ),
-                  Expanded(
-                    flex: supportsInlineBrowser() ? 3 : 2,
-                    child: Container(
-                      child: _buildPreview(context),
-                      color: supportsInlineBrowser()
-                          ? Colors.white
-                          : const Color(0xFFE4E8EB),
-                      height: double.infinity,
+              child: _bodyController.text.isEmpty
+                  ? LoadingIndicator()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTemplateDropdown(context),
+                        Expanded(
+                          child: _buildEdit(context),
+                          flex: 2,
+                        ),
+                        Expanded(
+                          flex: supportsInlineBrowser() ? 3 : 2,
+                          child: Container(
+                            child: _buildPreview(context),
+                            color: supportsInlineBrowser()
+                                ? Colors.white
+                                : const Color(0xFFE4E8EB),
+                            height: double.infinity,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
             Expanded(
               child: DefaultTabController(
