@@ -598,15 +598,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 ),
               ),
             ],
-            _buildVerticalDivider(),
-            Center(
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
-                splashRadius: 16,
-                tooltip: 'More Options',
-              ),
-            ),
           ],
         ),
       ),
