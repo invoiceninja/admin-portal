@@ -315,8 +315,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                         ExampleEditor(
                           value: _rawBodyPreview,
                           onChanged: (value) {
-                            _bodyController.text = value;
-                            _onChanged();
+                            if (value != _bodyController.text) {
+                              _bodyController.text = value;
+                              _onChanged();
+                            }
                           },
                         ),
                       ],

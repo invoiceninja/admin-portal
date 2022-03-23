@@ -63,9 +63,22 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
     if (widget.value != oldWidget.value) {
       _doc.removeListener(_hideOrShowToolbar);
+      //_composer.removeListener(_hideOrShowToolbar);
+
       _doc = deserializeMarkdownToDocument(widget.value)
         ..addListener(_hideOrShowToolbar);
       _docEditor = DocumentEditor(document: _doc as MutableDocument);
+      /*
+      _composer = DocumentComposer()..addListener(_hideOrShowToolbar);
+      _docOps = CommonEditorOperations(
+        editor: _docEditor,
+        composer: _composer,
+        documentLayoutResolver: () =>
+            _docLayoutKey.currentState as DocumentLayout,
+      );
+      */
+
+      _editorFocusNode = FocusNode();
     }
   }
 
