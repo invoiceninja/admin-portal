@@ -11,7 +11,7 @@ class ExampleEditor extends StatefulWidget {
   const ExampleEditor({
     Key key,
     @required this.value,
-    @required this.onChanged,
+    this.onChanged,
   }) : super(key: key);
 
   final String value;

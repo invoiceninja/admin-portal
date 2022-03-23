@@ -207,7 +207,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         template: '${widget.viewModel.selectedTemplate}',
         body: body,
         subject: subject,
-        onComplete: (subject, body, rawSubject, rawBody) {
+        onComplete: (subject, body, email, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -215,7 +215,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = body.trim();
+            _bodyPreview = email.trim();
           });
         });
   }

@@ -43,6 +43,7 @@ class InvoiceEmailView extends StatefulWidget {
 class _InvoiceEmailViewState extends State<InvoiceEmailView>
     with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
+  String _emailPreview = '';
   String _bodyPreview = '';
   String _rawBodyPreview = '';
   String _subjectPreview = '';
@@ -137,7 +138,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: origBody,
         template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
-        onComplete: (subject, body, rawSubject, rawBody) {
+        onComplete: (subject, body, email, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -146,6 +147,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
+            _emailPreview = email.trim();
             _rawBodyPreview = rawBody.trim();
 
             final company = widget.viewModel.state.company;
@@ -242,20 +244,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   Widget _buildPreview(BuildContext context) {
-    if (!supportsInlineBrowser()) {
-      return SizedBox();
-    }
-
     if (widget.viewModel.isLoading) {
       return LoadingIndicator(
         height: 210,
       );
     }
 
+    if (!supportsInlineBrowser()) {
+      return IgnorePointer(
+          child: ExampleEditor(value: html2md.convert(_bodyPreview)));
+    }
+
     return EmailPreview(
       isLoading: _isLoading,
       subject: _subjectPreview,
-      body: _bodyPreview,
+      body: _emailPreview,
     );
   }
 
@@ -310,10 +313,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           value: _rawBodyPreview,
                           onChanged: (value) {
                             _bodyController.text = value;
-                            // TODO remove check once browser is supported
-                            if (!isDesktopOS()) {
-                              _onChanged();
-                            }
+                            _onChanged();
                           },
                         ),
                       ],
@@ -384,15 +384,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     child: _buildEdit(context),
                     flex: 2,
                   ),
-                  if (!isDesktopOS())
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        child: _buildPreview(context),
-                        color: Colors.white,
-                        height: double.infinity,
-                      ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      child: _buildPreview(context),
+                      color: Colors.white,
+                      height: double.infinity,
                     ),
+                  ),
                 ],
               ),
             ),
