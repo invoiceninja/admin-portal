@@ -292,19 +292,24 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ),
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.only(left: 19, right: 10),
-          child: DecoratedFormField(
-            controller: _subjectController,
-            label: localization.subject,
-            onChanged: (_) => _onChanged(),
-            keyboardType: TextInputType.text,
-            enabled: enableCustomEmail,
+        ColoredBox(
+          color: state.company.markdownEmailEnabled && !isDarkMode(context)
+              ? Colors.white
+              : null,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 19, right: 10),
+            child: DecoratedFormField(
+              controller: _subjectController,
+              label: localization.subject,
+              onChanged: (_) => _onChanged(),
+              keyboardType: TextInputType.text,
+              enabled: enableCustomEmail,
+            ),
           ),
         ),
         if (state.company.markdownEmailEnabled)
           Expanded(
-            child: Material(
+            child: ColoredBox(
               color: Colors.white,
               child: ExampleEditor(
                 value: _rawBodyPreview,
