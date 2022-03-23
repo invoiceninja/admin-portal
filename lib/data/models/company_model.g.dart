@@ -132,6 +132,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'markdown_enabled',
       serializers.serialize(object.markdownEnabled,
           specifiedType: const FullType(bool)),
+      'markdown_email_enabled',
+      serializers.serialize(object.markdownEmailEnabled,
+          specifiedType: const FullType(bool)),
       'use_comma_as_decimal_place',
       serializers.serialize(object.useCommaAsDecimalPlace,
           specifiedType: const FullType(bool)),
@@ -491,6 +494,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'markdown_enabled':
           result.markdownEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'markdown_email_enabled':
+          result.markdownEmailEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'use_comma_as_decimal_place':
@@ -1414,6 +1421,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool markdownEnabled;
   @override
+  final bool markdownEmailEnabled;
+  @override
   final bool useCommaAsDecimalPlace;
   @override
   final bool reportIncludeDrafts;
@@ -1559,6 +1568,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.passwordTimeout,
       this.oauthPasswordRequired,
       this.markdownEnabled,
+      this.markdownEmailEnabled,
       this.useCommaAsDecimalPlace,
       this.reportIncludeDrafts,
       this.groups,
@@ -1678,6 +1688,8 @@ class _$CompanyEntity extends CompanyEntity {
         oauthPasswordRequired, 'CompanyEntity', 'oauthPasswordRequired');
     BuiltValueNullFieldError.checkNotNull(
         markdownEnabled, 'CompanyEntity', 'markdownEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        markdownEmailEnabled, 'CompanyEntity', 'markdownEmailEnabled');
     BuiltValueNullFieldError.checkNotNull(
         useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace');
     BuiltValueNullFieldError.checkNotNull(
@@ -1812,6 +1824,7 @@ class _$CompanyEntity extends CompanyEntity {
         passwordTimeout == other.passwordTimeout &&
         oauthPasswordRequired == other.oauthPasswordRequired &&
         markdownEnabled == other.markdownEnabled &&
+        markdownEmailEnabled == other.markdownEmailEnabled &&
         useCommaAsDecimalPlace == other.useCommaAsDecimalPlace &&
         reportIncludeDrafts == other.reportIncludeDrafts &&
         groups == other.groups &&
@@ -1889,7 +1902,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
                                                                                 invoiceExpenseDocuments.hashCode),
                                                                             invoiceTaskDocuments.hashCode),
                                                                         invoiceTaskTimelog.hashCode),
@@ -1947,6 +1960,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('passwordTimeout', passwordTimeout)
           ..add('oauthPasswordRequired', oauthPasswordRequired)
           ..add('markdownEnabled', markdownEnabled)
+          ..add('markdownEmailEnabled', markdownEmailEnabled)
           ..add('useCommaAsDecimalPlace', useCommaAsDecimalPlace)
           ..add('reportIncludeDrafts', reportIncludeDrafts)
           ..add('groups', groups)
@@ -2164,6 +2178,11 @@ class CompanyEntityBuilder
   bool get markdownEnabled => _$this._markdownEnabled;
   set markdownEnabled(bool markdownEnabled) =>
       _$this._markdownEnabled = markdownEnabled;
+
+  bool _markdownEmailEnabled;
+  bool get markdownEmailEnabled => _$this._markdownEmailEnabled;
+  set markdownEmailEnabled(bool markdownEmailEnabled) =>
+      _$this._markdownEmailEnabled = markdownEmailEnabled;
 
   bool _useCommaAsDecimalPlace;
   bool get useCommaAsDecimalPlace => _$this._useCommaAsDecimalPlace;
@@ -2490,6 +2509,7 @@ class CompanyEntityBuilder
       _passwordTimeout = $v.passwordTimeout;
       _oauthPasswordRequired = $v.oauthPasswordRequired;
       _markdownEnabled = $v.markdownEnabled;
+      _markdownEmailEnabled = $v.markdownEmailEnabled;
       _useCommaAsDecimalPlace = $v.useCommaAsDecimalPlace;
       _reportIncludeDrafts = $v.reportIncludeDrafts;
       _groups = $v.groups.toBuilder();
@@ -2613,6 +2633,7 @@ class CompanyEntityBuilder
               passwordTimeout: BuiltValueNullFieldError.checkNotNull(passwordTimeout, 'CompanyEntity', 'passwordTimeout'),
               oauthPasswordRequired: BuiltValueNullFieldError.checkNotNull(oauthPasswordRequired, 'CompanyEntity', 'oauthPasswordRequired'),
               markdownEnabled: BuiltValueNullFieldError.checkNotNull(markdownEnabled, 'CompanyEntity', 'markdownEnabled'),
+              markdownEmailEnabled: BuiltValueNullFieldError.checkNotNull(markdownEmailEnabled, 'CompanyEntity', 'markdownEmailEnabled'),
               useCommaAsDecimalPlace: BuiltValueNullFieldError.checkNotNull(useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace'),
               reportIncludeDrafts: BuiltValueNullFieldError.checkNotNull(reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts'),
               groups: groups.build(),

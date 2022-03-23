@@ -100,6 +100,7 @@ abstract class CompanyEntity extends Object
       passwordTimeout: 30 * 60 * 1000,
       oauthPasswordRequired: false,
       markdownEnabled: true,
+      markdownEmailEnabled: true,
       useCommaAsDecimalPlace: false,
       reportIncludeDrafts: false,
       groups: BuiltList<GroupEntity>(),
@@ -242,6 +243,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'markdown_enabled')
   bool get markdownEnabled;
+
+  @BuiltValueField(wireName: 'markdown_email_enabled')
+  bool get markdownEmailEnabled;
 
   @BuiltValueField(wireName: 'use_comma_as_decimal_place')
   bool get useCommaAsDecimalPlace;
@@ -590,6 +594,7 @@ abstract class CompanyEntity extends Object
     ..invoiceTaskDatelog = true
     ..showTaskEndDate = false
     ..markdownEnabled = true
+    ..markdownEmailEnabled = true
     ..useCommaAsDecimalPlace = false
     ..reportIncludeDrafts = false
     ..convertRateToClient = true

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -147,6 +148,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _bodyPreview = body.trim();
             _rawBodyPreview = rawBody.trim();
 
+            final company = widget.viewModel.state.company;
+            if (company.markdownEmailEnabled &&
+                _rawBodyPreview.startsWith('<p>')) {
+              _rawBodyPreview = html2md.convert(_rawBodyPreview);
+            }
+
             if (origSubject.isEmpty && origBody.isEmpty) {
               _subjectController.text = rawSubject.trim();
               _bodyController.text = rawBody.trim();
@@ -292,19 +299,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   enabled: enableCustomEmail,
                 ),
               ),
-              if ((_rawBodyPreview ?? '').startsWith('<p>'))
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: DecoratedFormField(
-                    controller: _bodyController,
-                    label: localization.body,
-                    maxLines: enableCustomEmail ? 6 : 2,
-                    keyboardType: TextInputType.multiline,
-                    onChanged: (_) => _onChanged(),
-                    enabled: enableCustomEmail,
-                  ),
-                )
-              else
+              if (state.company.markdownEmailEnabled)
                 Expanded(
                   child: Material(
                     color: Colors.white,
@@ -324,7 +319,19 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       ],
                     ),
                   ),
-                ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: DecoratedFormField(
+                    controller: _bodyController,
+                    label: localization.body,
+                    maxLines: enableCustomEmail ? 6 : 2,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (_) => _onChanged(),
+                    enabled: enableCustomEmail,
+                  ),
+                )
             ],
           );
   }
