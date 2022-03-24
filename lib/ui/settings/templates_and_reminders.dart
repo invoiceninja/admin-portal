@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -20,6 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
@@ -51,7 +53,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  static const kTabEdit = 0;
+  static const kTabSettings = 0;
 
   //static const kTabPreview = 1;
 
@@ -64,7 +66,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
     _controller.addListener(_handleTabSelection);
 
     _controllers = [
@@ -185,7 +187,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _handleTabSelection() {
-    if (_isLoading || _controller.index == kTabEdit) {
+    if (_isLoading || _controller.index == kTabSettings) {
       return;
     }
 
@@ -232,206 +234,219 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final enableCustomEmail =
         state.isSelfHosted || state.isProPlan || state.isTrial;
 
-    final editor = ScrollableListView(
-      children: <Widget>[
-        FormCard(children: <Widget>[
-          AppDropdownButton<EmailTemplate>(
-            labelText: localization.template,
-            value: template,
-            showBlank: false,
-            onChanged: (dynamic value) => setState(() {
-              viewModel.onTemplateChanged(value);
-              _loadTemplate(value);
-            }),
-            items: EmailTemplate.values.where((value) {
-              if ([
-                    EmailTemplate.invoice,
-                    EmailTemplate.payment,
-                    EmailTemplate.payment_partial,
-                  ].contains(value) &&
-                  !company.isModuleEnabled(EntityType.invoice)) {
-                return false;
-              } else if (value == EmailTemplate.quote &&
-                  !company.isModuleEnabled(EntityType.quote)) {
-                return false;
-              } else if (value == EmailTemplate.credit &&
-                  !company.isModuleEnabled(EntityType.credit)) {
-                return false;
-              }
-              // TODO remove this once statements are enabled
-              if (value == EmailTemplate.statement) {
-                return false;
-              }
-              return true;
-            }).map((item) {
-              var name = localization.lookup(item.name);
-              if (item == EmailTemplate.reminder1) {
-                name = localization.firstReminder;
-              } else if (item == EmailTemplate.reminder2) {
-                name = localization.secondReminder;
-              } else if (item == EmailTemplate.reminder3) {
-                name = localization.thirdReminder;
-              } else if (item == EmailTemplate.custom1) {
-                name = localization.firstCustom;
-              } else if (item == EmailTemplate.custom2) {
-                name = localization.secondCustom;
-              } else if (item == EmailTemplate.custom3) {
-                name = localization.thirdCustom;
-              }
-
-              return DropdownMenuItem<EmailTemplate>(
-                child: Text(name),
-                value: item,
-              );
-            }).toList(),
-          ),
-          if (!enableCustomEmail && state.isTrial)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: IconMessage(localization.customEmailsDisabledHelp),
-            ),
-          DecoratedFormField(
-            label: localization.subject,
-            controller: _subjectController,
-            hint: _defaultSubject,
-            keyboardType: TextInputType.text,
-            enabled: enableCustomEmail,
-          ),
-          DecoratedFormField(
-            label: localization.body,
-            controller: _bodyController,
-            maxLines: 8,
-            keyboardType: TextInputType.multiline,
-            hint: _defaultBody,
-            enabled: enableCustomEmail,
-          ),
-        ]),
-        if (template == EmailTemplate.reminder1)
-          ReminderSettings(
-            key: ValueKey('__reminder1_${template}__'),
-            viewModel: viewModel,
-            enabled: settings.enableReminder1,
-            numDays: settings.numDaysReminder1,
-            schedule: settings.scheduleReminder1,
-            feeAmount: settings.lateFeeAmount1,
-            feePercent: settings.lateFeePercent1,
-            onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..enableReminder1 = enabled
-                  ..numDaysReminder1 = days
-                  ..scheduleReminder1 = schedule
-                  ..lateFeeAmount1 = feeAmount
-                  ..lateFeePercent1 = feePercent)),
-          ),
-        if (template == EmailTemplate.reminder2)
-          ReminderSettings(
-            key: ValueKey('__reminder2_${template}__'),
-            viewModel: viewModel,
-            enabled: settings.enableReminder2,
-            numDays: settings.numDaysReminder2,
-            schedule: settings.scheduleReminder2,
-            feeAmount: settings.lateFeeAmount2,
-            feePercent: settings.lateFeePercent2,
-            onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..enableReminder2 = enabled
-                  ..numDaysReminder2 = days
-                  ..scheduleReminder2 = schedule
-                  ..lateFeeAmount2 = feeAmount
-                  ..lateFeePercent2 = feePercent)),
-          ),
-        if (template == EmailTemplate.reminder3)
-          ReminderSettings(
-            key: ValueKey('__reminder3_${template}__'),
-            viewModel: viewModel,
-            enabled: settings.enableReminder3,
-            numDays: settings.numDaysReminder3,
-            schedule: settings.scheduleReminder3,
-            feeAmount: settings.lateFeeAmount3,
-            feePercent: settings.lateFeePercent3,
-            onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..enableReminder3 = enabled
-                  ..numDaysReminder3 = days
-                  ..scheduleReminder3 = schedule
-                  ..lateFeeAmount3 = feeAmount
-                  ..lateFeePercent3 = feePercent)),
-          ),
-        if (template == EmailTemplate.reminder_endless)
-          FormCard(
-            children: <Widget>[
-              BoolDropdownButton(
-                label: localization.sendEmail,
-                value: settings.enableReminderEndless,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableReminderEndless = value)),
-                iconData: Icons.email,
-              ),
-              AppDropdownButton(
-                  labelText: localization.frequency,
-                  value: settings.endlessReminderFrequencyId == '0'
-                      ? null
-                      : settings.endlessReminderFrequencyId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild(
-                          (b) => b..endlessReminderFrequencyId = value)),
-                  items: kFrequencies
-                      .map((id, frequency) =>
-                          MapEntry<String, DropdownMenuItem<String>>(
-                              id,
-                              DropdownMenuItem<String>(
-                                child: Text(localization.lookup(frequency)),
-                                value: id,
-                              )))
-                      .values
-                      .toList()),
-            ],
-          ),
-        VariablesHelp(
-          showInvoiceAsQuote: template == EmailTemplate.quote,
-        ),
-      ],
-    );
-
     return EditScaffold(
       title: localization.templatesAndReminders,
       onSavePressed: viewModel.onSavePressed,
-      appBarBottom: supportsInlineBrowser()
-          ? TabBar(
-              key: ValueKey(state.settingsUIState.updatedAt),
-              controller: _controller,
-              isScrollable: false,
-              tabs: [
-                Tab(
-                  text: localization.edit,
+      appBarBottom: TabBar(
+        key: ValueKey(state.settingsUIState.updatedAt),
+        controller: _controller,
+        isScrollable: false,
+        tabs: [
+          Tab(
+            text: localization.settings,
+          ),
+          Tab(
+            text: localization.design,
+          ),
+          Tab(
+            text: localization.preview,
+          ),
+        ],
+      ),
+      body: AppTabForm(
+        tabBarKey: ValueKey(
+            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}_'),
+        tabController: _controller,
+        formKey: _formKey,
+        focusNode: _focusNode,
+        children: <Widget>[
+          ScrollableListView(
+            children: <Widget>[
+              FormCard(children: <Widget>[
+                AppDropdownButton<EmailTemplate>(
+                  labelText: localization.template,
+                  value: template,
+                  showBlank: false,
+                  onChanged: (dynamic value) => setState(() {
+                    viewModel.onTemplateChanged(value);
+                    _loadTemplate(value);
+                  }),
+                  items: EmailTemplate.values.where((value) {
+                    if ([
+                          EmailTemplate.invoice,
+                          EmailTemplate.payment,
+                          EmailTemplate.payment_partial,
+                        ].contains(value) &&
+                        !company.isModuleEnabled(EntityType.invoice)) {
+                      return false;
+                    } else if (value == EmailTemplate.quote &&
+                        !company.isModuleEnabled(EntityType.quote)) {
+                      return false;
+                    } else if (value == EmailTemplate.credit &&
+                        !company.isModuleEnabled(EntityType.credit)) {
+                      return false;
+                    }
+                    // TODO remove this once statements are enabled
+                    if (value == EmailTemplate.statement) {
+                      return false;
+                    }
+                    return true;
+                  }).map((item) {
+                    var name = localization.lookup(item.name);
+                    if (item == EmailTemplate.reminder1) {
+                      name = localization.firstReminder;
+                    } else if (item == EmailTemplate.reminder2) {
+                      name = localization.secondReminder;
+                    } else if (item == EmailTemplate.reminder3) {
+                      name = localization.thirdReminder;
+                    } else if (item == EmailTemplate.custom1) {
+                      name = localization.firstCustom;
+                    } else if (item == EmailTemplate.custom2) {
+                      name = localization.secondCustom;
+                    } else if (item == EmailTemplate.custom3) {
+                      name = localization.thirdCustom;
+                    }
+
+                    return DropdownMenuItem<EmailTemplate>(
+                      child: Text(name),
+                      value: item,
+                    );
+                  }).toList(),
                 ),
-                Tab(
-                  text: localization.preview,
+                if (!enableCustomEmail && state.isTrial)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: IconMessage(localization.customEmailsDisabledHelp),
+                  ),
+                DecoratedFormField(
+                  label: localization.subject,
+                  controller: _subjectController,
+                  hint: _defaultSubject,
+                  keyboardType: TextInputType.text,
+                  enabled: enableCustomEmail,
                 ),
-              ],
-            )
-          : null,
-      body: supportsInlineBrowser()
-          ? AppTabForm(
-              tabBarKey: ValueKey(
-                  '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}_'),
-              tabController: _controller,
-              formKey: _formKey,
-              focusNode: _focusNode,
-              children: <Widget>[
-                editor,
-                EmailPreview(
-                  isLoading: _isLoading,
-                  subject: _subjectPreview,
-                  body: _bodyPreview,
+                if (!company.markdownEmailEnabled)
+                  DecoratedFormField(
+                    label: localization.body,
+                    controller: _bodyController,
+                    maxLines: 8,
+                    keyboardType: TextInputType.multiline,
+                    hint: _defaultBody,
+                    enabled: enableCustomEmail,
+                  ),
+              ]),
+              if (template == EmailTemplate.reminder1)
+                ReminderSettings(
+                  key: ValueKey('__reminder1_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder1,
+                  numDays: settings.numDaysReminder1,
+                  schedule: settings.scheduleReminder1,
+                  feeAmount: settings.lateFeeAmount1,
+                  feePercent: settings.lateFeePercent1,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder1 = enabled
+                        ..numDaysReminder1 = days
+                        ..scheduleReminder1 = schedule
+                        ..lateFeeAmount1 = feeAmount
+                        ..lateFeePercent1 = feePercent)),
                 ),
-              ],
-            )
-          : AppForm(
-              formKey: _formKey,
-              focusNode: _focusNode,
-              child: editor,
+              if (template == EmailTemplate.reminder2)
+                ReminderSettings(
+                  key: ValueKey('__reminder2_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder2,
+                  numDays: settings.numDaysReminder2,
+                  schedule: settings.scheduleReminder2,
+                  feeAmount: settings.lateFeeAmount2,
+                  feePercent: settings.lateFeePercent2,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder2 = enabled
+                        ..numDaysReminder2 = days
+                        ..scheduleReminder2 = schedule
+                        ..lateFeeAmount2 = feeAmount
+                        ..lateFeePercent2 = feePercent)),
+                ),
+              if (template == EmailTemplate.reminder3)
+                ReminderSettings(
+                  key: ValueKey('__reminder3_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder3,
+                  numDays: settings.numDaysReminder3,
+                  schedule: settings.scheduleReminder3,
+                  feeAmount: settings.lateFeeAmount3,
+                  feePercent: settings.lateFeePercent3,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder3 = enabled
+                        ..numDaysReminder3 = days
+                        ..scheduleReminder3 = schedule
+                        ..lateFeeAmount3 = feeAmount
+                        ..lateFeePercent3 = feePercent)),
+                ),
+              if (template == EmailTemplate.reminder_endless)
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.sendEmail,
+                      value: settings.enableReminderEndless,
+                      onChanged: (value) => viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..enableReminderEndless = value)),
+                      iconData: Icons.email,
+                    ),
+                    AppDropdownButton(
+                        labelText: localization.frequency,
+                        value: settings.endlessReminderFrequencyId == '0'
+                            ? null
+                            : settings.endlessReminderFrequencyId,
+                        onChanged: (dynamic value) =>
+                            viewModel.onSettingsChanged(settings.rebuild(
+                                (b) => b..endlessReminderFrequencyId = value)),
+                        items: kFrequencies
+                            .map((id, frequency) =>
+                                MapEntry<String, DropdownMenuItem<String>>(
+                                    id,
+                                    DropdownMenuItem<String>(
+                                      child:
+                                          Text(localization.lookup(frequency)),
+                                      value: id,
+                                    )))
+                            .values
+                            .toList()),
+                  ],
+                ),
+              VariablesHelp(
+                showInvoiceAsQuote: template == EmailTemplate.quote,
+              ),
+            ],
+          ),
+          ColoredBox(
+            color: Colors.white,
+            child: ExampleEditor(
+              value: _bodyController.text,
+              onChanged: (value) {
+                if (value.trim() != _bodyController.text.trim()) {
+                  _bodyController.text = value;
+                }
+              },
             ),
+          ),
+          if (supportsInlineBrowser())
+            EmailPreview(
+              isLoading: _isLoading,
+              subject: _subjectPreview,
+              body: _bodyPreview,
+            )
+          else
+            IgnorePointer(
+              child: ExampleEditor(
+                value: html2md.convert(_bodyPreview),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
