@@ -46,6 +46,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _lastBody;
   String _subjectPreview = '';
   String _bodyPreview = '';
+  String _emailPreview = '';
   String _defaultSubject = '';
   String _defaultBody = '';
 
@@ -54,8 +55,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   TabController _controller;
 
   static const kTabSettings = 0;
-
-  //static const kTabPreview = 1;
+  static const kTabDesign = 1;
+  static const kTabPreview = 2;
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
@@ -64,6 +65,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   @override
   void initState() {
+    print('## initState');
     super.initState();
     _focusNode = FocusScopeNode();
     _controller = TabController(vsync: this, length: 3);
@@ -80,6 +82,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   @override
   void didChangeDependencies() {
+    print('## didChangeDependencies');
     _loadTemplate(widget.viewModel.selectedTemplate);
 
     super.didChangeDependencies();
@@ -98,6 +101,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _loadTemplate(EmailTemplate emailTemplate) {
+    print('## loadTemplate');
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final templateMap = viewModel.state.staticState.templateMap;
@@ -119,6 +123,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _onChanged() {
+    print('## onChanged');
     _debouncer.run(() {
       final template = widget.viewModel.selectedTemplate;
       final String body = _bodyController.text.trim();
@@ -187,7 +192,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _handleTabSelection() {
-    if (_isLoading || _controller.index == kTabSettings) {
+    print('## _handleTabSelection: ${_controller.index}');
+    if (_isLoading || _controller.index != kTabPreview) {
       return;
     }
 
@@ -205,6 +211,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _isLoading = true;
     });
 
+    print('## loadEmailTemplate');
     loadEmailTemplate(
         context: context,
         template: '${widget.viewModel.selectedTemplate}',
@@ -218,7 +225,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
-            _bodyPreview = email.trim();
+            _bodyPreview = body.trim();
+            _emailPreview = email.trim();
           });
         });
   }
@@ -255,7 +263,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       ),
       body: AppTabForm(
         tabBarKey: ValueKey(
-            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}_'),
+            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_emailPreview}_'),
         tabController: _controller,
         formKey: _formKey,
         focusNode: _focusNode,
@@ -428,7 +436,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               value: _bodyController.text,
               onChanged: (value) {
                 if (value.trim() != _bodyController.text.trim()) {
+                  _bodyController.removeListener(_onChanged);
                   _bodyController.text = value;
+                  _bodyController.addListener(_onChanged);
                 }
               },
             ),
@@ -437,13 +447,18 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             EmailPreview(
               isLoading: _isLoading,
               subject: _subjectPreview,
-              body: _bodyPreview,
+              body: _emailPreview,
             )
           else
-            IgnorePointer(
-              child: ExampleEditor(
-                value: html2md.convert(_bodyPreview),
-              ),
+            Stack(
+              children: [
+                if (_isLoading) LinearProgressIndicator(),
+                IgnorePointer(
+                  child: ExampleEditor(
+                    value: html2md.convert(_bodyPreview),
+                  ),
+                ),
+              ],
             ),
         ],
       ),
