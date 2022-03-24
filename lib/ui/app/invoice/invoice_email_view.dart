@@ -191,6 +191,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       .where((contact) => contact != null)
                       .map((contact) => contact.fullNameWithEmail)
                       .join(', '))),
+          SizedBox(width: 4),
           DropdownButtonHideUnderline(
             child: DropdownButton<EmailTemplate>(
               value: selectedTemplate,

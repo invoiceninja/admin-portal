@@ -105,12 +105,21 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final templateMap = viewModel.state.staticState.templateMap;
+    final template = templateMap['$emailTemplate'] ?? TemplateEntity();
 
     _bodyController.removeListener(_onChanged);
     _subjectController.removeListener(_onChanged);
 
     _bodyController.text = settings.getEmailBody(emailTemplate);
     _subjectController.text = settings.getEmailSubject(emailTemplate);
+
+    if (_subjectController.text.isEmpty) {
+      _subjectController.text = template.subject;
+    }
+
+    if (_bodyController.text.isEmpty) {
+      _bodyController.text = template.body;
+    }
 
     _bodyController.addListener(_onChanged);
     _subjectController.addListener(_onChanged);
@@ -211,7 +220,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _isLoading = true;
     });
 
-    print('## loadEmailTemplate');
     loadEmailTemplate(
         context: context,
         template: '${widget.viewModel.selectedTemplate}',
@@ -451,6 +459,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             )
           else
             Stack(
+              alignment: Alignment.topCenter,
               children: [
                 if (_isLoading) LinearProgressIndicator(),
                 IgnorePointer(
