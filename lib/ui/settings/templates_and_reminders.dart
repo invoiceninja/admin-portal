@@ -56,8 +56,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  static const kTabSettings = 0;
-  static const kTabDesign = 1;
+  //static const kTabSettings = 0;
+  //static const kTabDesign = 1;
   static const kTabPreview = 2;
 
   final _subjectController = TextEditingController();
@@ -97,7 +97,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _controller.removeListener(_handleTabSelection);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
+      controller.removeListener(_onTextChanged);
       controller.dispose();
     });
     super.dispose();
@@ -117,8 +117,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     print('## SETTINGS - quote: ${settings.emailSubjectQuote}');
     print('## SETTINGS - payment: ${settings.emailSubjectPayment}');
 
-    _bodyController.removeListener(_onChanged);
-    _subjectController.removeListener(_onChanged);
+    _bodyController.removeListener(_onTextChanged);
+    _subjectController.removeListener(_onTextChanged);
 
     _bodyController.text = settings.getEmailBody(emailTemplate) ?? '';
     _subjectController.text = settings.getEmailSubject(emailTemplate) ?? '';
@@ -141,8 +141,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     //print('## SUBJECT IS: ${_subjectController.text}');
     //print('## BODY: ${_bodyController.text}');
 
-    _bodyController.addListener(_onChanged);
-    _subjectController.addListener(_onChanged);
+    _bodyController.addListener(_onTextChanged);
+    _subjectController.addListener(_onTextChanged);
 
     setState(() {
       _defaultSubject = template.subject;
@@ -263,6 +263,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     setState(() {
+      print('## START LOADING');
       _isLoading = true;
     });
 
@@ -277,6 +278,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           }
 
           setState(() {
+            print('## STOP LOADING');
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
@@ -490,9 +492,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               value: _bodyController.text,
               onChanged: (value) {
                 if (value.trim() != _bodyController.text.trim()) {
-                  _bodyController.removeListener(_onChanged);
+                  _bodyController.removeListener(_onTextChanged);
                   _bodyController.text = value;
-                  _bodyController.addListener(_onChanged);
+                  _bodyController.addListener(_onTextChanged);
                 }
               },
             ),
