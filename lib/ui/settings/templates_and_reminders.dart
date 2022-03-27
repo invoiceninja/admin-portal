@@ -139,11 +139,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _bodyController.text = html2md.convert(_bodyController.text);
     }
 
-    //print('## TEMPLATE: ${emailTemplate.name}');
-    //print('## MAP: $templateMap');
-    //print('## SUBJECT IS: ${_subjectController.text}');
-    //print('## BODY: ${_bodyController.text}');
-
     _bodyController.addListener(_onTextChanged);
     _subjectController.addListener(_onTextChanged);
 
