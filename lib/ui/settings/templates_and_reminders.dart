@@ -153,6 +153,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _subjectPreview = '';
       _bodyPreview = '';
       _emailPreview = '';
+
+      if (_defaultBody.startsWith('<p>')) {
+        _defaultBody = html2md.convert(_defaultBody);
+      }
     });
 
     _onChanged();
