@@ -75,11 +75,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   void initState() {
     super.initState();
 
-    final settingsUIState = widget.viewModel.state.settingsUIState;
+    final state = widget.viewModel.state;
+    final company = state.company;
+    final settingsUIState = state.settingsUIState;
 
     _focusNode = FocusScopeNode();
     _controller = TabController(
-        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
+        vsync: this,
+        length: company.markdownEmailEnabled ? 3 : 2,
+        initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
 
     _controllers = [
@@ -115,7 +119,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
-    final templateMap = viewModel.state.staticState.templateMap;
+    final state = viewModel.state;
+    final templateMap = state.staticState.templateMap;
     final template = templateMap[emailTemplate.name] ?? TemplateEntity();
 
     _bodyController.removeListener(_onTextChanged);
@@ -148,7 +153,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _bodyPreview = '';
       _emailPreview = '';
 
-      if (_defaultBody.startsWith('<p>')) {
+      if (state.company.markdownEmailEnabled &&
+          _defaultBody.startsWith('<p>')) {
         _defaultBody = html2md.convert(_defaultBody);
       }
     });
@@ -308,9 +314,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           Tab(
             text: localization.settings,
           ),
-          Tab(
-            text: localization.design,
-          ),
+          if (company.markdownEmailEnabled)
+            Tab(
+              text: localization.design,
+            ),
           Tab(
             text: localization.preview,
           ),
@@ -484,23 +491,21 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               ),
             ],
           ),
-          ColoredBox(
-            color: Colors.white,
-            child: ExampleEditor(
-              key: ValueKey('__tab_${_selectedIndex}__'),
-              value: _bodyMarkdown,
-              onChanged: (value) {
-                if (value.trim() != _bodyController.text.trim()) {
-                  _bodyPreview = '';
-                  _emailPreview = '';
-
-                  //_bodyController.removeListener(_onTextChanged);
-                  _bodyController.text = value;
-                  //_bodyController.addListener(_onTextChanged);
-                }
-              },
+          if (company.markdownEmailEnabled)
+            ColoredBox(
+              color: Colors.white,
+              child: ExampleEditor(
+                key: ValueKey('__tab_${_selectedIndex}__'),
+                value: _bodyMarkdown,
+                onChanged: (value) {
+                  if (value.trim() != _bodyController.text.trim()) {
+                    _bodyPreview = '';
+                    _emailPreview = '';
+                    _bodyController.text = value;
+                  }
+                },
+              ),
             ),
-          ),
           if (supportsInlineBrowser())
             EmailPreview(
               isLoading: _isLoading,
