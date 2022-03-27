@@ -1,10 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_webview.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -45,6 +48,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   EmailTemplate _selectedTemplate;
   int _selectedIndex = 0;
+  String _bodyMarkdown = '';
 
   String _lastSubject;
   String _lastBody;
@@ -69,11 +73,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   @override
   void initState() {
-    print('## initState');
     super.initState();
+
+    final settingsUIState = widget.viewModel.state.settingsUIState;
+    print('## initState - tab: ${settingsUIState.tabIndex}');
+
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 3);
-    _controller.addListener(_handleTabSelection);
+    _controller = TabController(
+        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
+    _controller.addListener(_onTabChanged);
 
     _controllers = [
       _subjectController,
@@ -96,7 +104,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.removeListener(_handleTabSelection);
+    _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onTextChanged);
@@ -147,6 +155,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     setState(() {
       _defaultSubject = template.subject;
       _defaultBody = template.body;
+      _bodyMarkdown = _bodyController.text;
       _subjectPreview = '';
       _bodyPreview = '';
       _emailPreview = '';
@@ -245,10 +254,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
   }
 
-  void _handleTabSelection() {
+  void _onTabChanged() {
     print('## _handleTabSelection: ${_controller.index}');
 
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+
     setState(() {
+      _bodyMarkdown = _bodyController.text;
       _selectedIndex = _controller.index;
     });
 
@@ -322,8 +335,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         ],
       ),
       body: AppTabForm(
-        tabBarKey: ValueKey(
-            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}__'),
+        tabBarKey: ValueKey('__${state.settingsUIState.updatedAt}__'),
         tabController: _controller,
         formKey: _formKey,
         focusNode: _focusNode,
@@ -494,15 +506,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             color: Colors.white,
             child: ExampleEditor(
               key: ValueKey('__tab_${_selectedIndex}__'),
-              value: _bodyController.text,
+              value: _bodyMarkdown,
               onChanged: (value) {
                 if (value.trim() != _bodyController.text.trim()) {
                   _bodyPreview = '';
                   _emailPreview = '';
 
-                  _bodyController.removeListener(_onTextChanged);
+                  //_bodyController.removeListener(_onTextChanged);
                   _bodyController.text = value;
-                  _bodyController.addListener(_onTextChanged);
+                  //_bodyController.addListener(_onTextChanged);
                 }
               },
             ),
