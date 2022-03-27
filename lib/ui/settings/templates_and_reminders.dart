@@ -44,6 +44,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   final _debouncer = Debouncer(sendFirstAction: true);
 
   EmailTemplate _selectedTemplate;
+  int _selectedIndex = 0;
+
   String _lastSubject;
   String _lastBody;
   String _subjectPreview = '';
@@ -245,6 +247,11 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   void _handleTabSelection() {
     print('## _handleTabSelection: ${_controller.index}');
+
+    setState(() {
+      _selectedIndex = _controller.index;
+    });
+
     if (_isLoading || _controller.index != kTabPreview) {
       return;
     }
@@ -486,6 +493,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           ColoredBox(
             color: Colors.white,
             child: ExampleEditor(
+              key: ValueKey('__tab_${_selectedIndex}__'),
               value: _bodyController.text,
               onChanged: (value) {
                 if (value.trim() != _bodyController.text.trim()) {
