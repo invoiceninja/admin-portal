@@ -265,7 +265,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _selectedIndex = _controller.index;
     });
 
-    if (_isLoading || _controller.index != kTabPreview) {
+    if (_controller.index != kTabPreview) {
       return;
     }
 
