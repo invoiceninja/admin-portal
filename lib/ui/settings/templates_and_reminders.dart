@@ -113,9 +113,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final templateMap = viewModel.state.staticState.templateMap;
     final template = templateMap[emailTemplate.name] ?? TemplateEntity();
 
-    print('## SETTINGS - invoice: ${settings.emailSubjectInvoice}');
-    print('## SETTINGS - quote: ${settings.emailSubjectQuote}');
-    print('## SETTINGS - payment: ${settings.emailSubjectPayment}');
+    print(
+        '## SETTINGS - invoice: ${settings.emailSubjectInvoice} - ${settings.emailBodyInvoice}');
+    print(
+        '## SETTINGS - quote: ${settings.emailSubjectQuote} - ${settings.emailBodyQuote}');
+    print(
+        '## SETTINGS - payment: ${settings.emailSubjectPayment} - ${settings.emailBodyPayment}');
 
     _bodyController.removeListener(_onTextChanged);
     _subjectController.removeListener(_onTextChanged);
@@ -163,29 +166,24 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   void _onChanged() {
     print('## onChanged');
-    String body = _bodyController.text.trim();
-    String subject = _subjectController.text.trim();
 
     final viewModel = widget.viewModel;
     final templateMap = viewModel.state.staticState.templateMap;
     final template = templateMap[_selectedTemplate.name] ?? TemplateEntity();
 
     SettingsEntity settings = widget.viewModel.settings;
+    String body = _bodyController.text.trim();
+    String subject = _subjectController.text.trim();
 
-    /*
-    if (subject == template.subject) {
+    if (subject.isEmpty || subject == template.subject) {
       subject = null;
     }
 
-    if (body == template.body || body == html2md.convert(template.body)) {
-      //print('## BODY IS DEFAULT');
-      //print('## BODY: $body');
-      //print('## template.body: ${template.body}');
-      //print('## html2md: template.body: ${html2md.convert(template.body)}');
-
+    if (body.isEmpty ||
+        body == template.body ||
+        body == html2md.convert(template.body)) {
       body = null;
     }
-    */
 
     if (_selectedTemplate == EmailTemplate.invoice) {
       settings = settings.rebuild((b) => b
@@ -492,6 +490,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               value: _bodyController.text,
               onChanged: (value) {
                 if (value.trim() != _bodyController.text.trim()) {
+                  _bodyPreview = '';
+                  _emailPreview = '';
+
                   _bodyController.removeListener(_onTextChanged);
                   _bodyController.text = value;
                   _bodyController.addListener(_onTextChanged);
@@ -509,7 +510,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             Stack(
               alignment: Alignment.topCenter,
               children: [
-                if (_isLoading)
+                if (_isLoading || _bodyPreview.isEmpty)
                   LoadingIndicator()
                 else
                   IgnorePointer(
