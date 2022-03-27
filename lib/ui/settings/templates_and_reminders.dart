@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
@@ -42,6 +43,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
   final _debouncer = Debouncer(sendFirstAction: true);
 
+  EmailTemplate _selectedTemplate;
   String _lastSubject;
   String _lastBody;
   String _subjectPreview = '';
@@ -76,13 +78,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _bodyController,
     ];
 
-    _subjectController.addListener(_onChanged);
-    _bodyController.addListener(_onChanged);
+    _subjectController.addListener(_onTextChanged);
+    _bodyController.addListener(_onTextChanged);
   }
 
   @override
   void didChangeDependencies() {
     print('## didChangeDependencies');
+
     _loadTemplate(widget.viewModel.selectedTemplate);
 
     super.didChangeDependencies();
@@ -102,24 +105,41 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   void _loadTemplate(EmailTemplate emailTemplate) {
     print('## loadTemplate');
+
+    _selectedTemplate = emailTemplate;
+
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final templateMap = viewModel.state.staticState.templateMap;
-    final template = templateMap['$emailTemplate'] ?? TemplateEntity();
+    final template = templateMap[emailTemplate.name] ?? TemplateEntity();
+
+    print('## SETTINGS - invoice: ${settings.emailSubjectInvoice}');
+    print('## SETTINGS - quote: ${settings.emailSubjectQuote}');
+    print('## SETTINGS - payment: ${settings.emailSubjectPayment}');
 
     _bodyController.removeListener(_onChanged);
     _subjectController.removeListener(_onChanged);
 
-    _bodyController.text = settings.getEmailBody(emailTemplate);
-    _subjectController.text = settings.getEmailSubject(emailTemplate);
+    _bodyController.text = settings.getEmailBody(emailTemplate) ?? '';
+    _subjectController.text = settings.getEmailSubject(emailTemplate) ?? '';
 
     if (_subjectController.text.isEmpty) {
       _subjectController.text = template.subject;
     }
 
     if (_bodyController.text.isEmpty) {
-      _bodyController.text = html2md.convert(template.body);
+      _bodyController.text = template.body;
     }
+
+    if (viewModel.state.company.markdownEmailEnabled &&
+        _bodyController.text.startsWith('<p>')) {
+      _bodyController.text = html2md.convert(_bodyController.text);
+    }
+
+    //print('## TEMPLATE: ${emailTemplate.name}');
+    //print('## MAP: $templateMap');
+    //print('## SUBJECT IS: ${_subjectController.text}');
+    //print('## BODY: ${_bodyController.text}');
 
     _bodyController.addListener(_onChanged);
     _subjectController.addListener(_onChanged);
@@ -127,80 +147,103 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     setState(() {
       _defaultSubject = template.subject;
       _defaultBody = template.body;
-
       _subjectPreview = '';
       _bodyPreview = '';
       _emailPreview = '';
+    });
+
+    _onChanged();
+  }
+
+  void _onTextChanged() {
+    _debouncer.run(() {
+      _onChanged();
     });
   }
 
   void _onChanged() {
     print('## onChanged');
-    _debouncer.run(() {
-      final template = widget.viewModel.selectedTemplate;
-      final String body = _bodyController.text.trim();
-      final String subject = _subjectController.text.trim();
+    String body = _bodyController.text.trim();
+    String subject = _subjectController.text.trim();
 
-      SettingsEntity settings = widget.viewModel.settings;
+    final viewModel = widget.viewModel;
+    final templateMap = viewModel.state.staticState.templateMap;
+    final template = templateMap[_selectedTemplate.name] ?? TemplateEntity();
 
-      if (template == EmailTemplate.invoice) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyInvoice = body
-          ..emailSubjectInvoice = subject);
-      } else if (template == EmailTemplate.quote) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyQuote = body
-          ..emailSubjectQuote = subject);
-      } else if (template == EmailTemplate.credit) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyCredit = body
-          ..emailSubjectCredit = subject);
-      } else if (template == EmailTemplate.payment) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyPayment = body
-          ..emailSubjectPayment = subject);
-      } else if (template == EmailTemplate.payment_partial) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyPaymentPartial = body
-          ..emailSubjectPaymentPartial = subject);
-      } else if (template == EmailTemplate.reminder1) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder1 = body
-          ..emailSubjectReminder1 = subject);
-      } else if (template == EmailTemplate.reminder2) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder2 = body
-          ..emailSubjectReminder2 = subject);
-      } else if (template == EmailTemplate.reminder3) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder3 = body
-          ..emailSubjectReminder3 = subject);
-      } else if (template == EmailTemplate.reminder_endless) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminderEndless = body
-          ..emailSubjectReminderEndless = subject);
-      } else if (template == EmailTemplate.custom1) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyCustom1 = body
-          ..emailSubjectCustom1 = subject);
-      } else if (template == EmailTemplate.custom2) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyCustom2 = body
-          ..emailSubjectCustom2 = subject);
-      } else if (template == EmailTemplate.custom3) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyCustom3 = body
-          ..emailSubjectCustom3 = subject);
-      } else if (template == EmailTemplate.statement) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyStatement = body
-          ..emailSubjectStatement = subject);
-      }
+    SettingsEntity settings = widget.viewModel.settings;
 
-      if (settings != widget.viewModel.settings) {
-        widget.viewModel.onSettingsChanged(settings);
-      }
-    });
+    /*
+    if (subject == template.subject) {
+      subject = null;
+    }
+
+    if (body == template.body || body == html2md.convert(template.body)) {
+      //print('## BODY IS DEFAULT');
+      //print('## BODY: $body');
+      //print('## template.body: ${template.body}');
+      //print('## html2md: template.body: ${html2md.convert(template.body)}');
+
+      body = null;
+    }
+    */
+
+    if (_selectedTemplate == EmailTemplate.invoice) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyInvoice = body
+        ..emailSubjectInvoice = subject);
+    } else if (_selectedTemplate == EmailTemplate.quote) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyQuote = body
+        ..emailSubjectQuote = subject);
+    } else if (_selectedTemplate == EmailTemplate.credit) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyCredit = body
+        ..emailSubjectCredit = subject);
+    } else if (_selectedTemplate == EmailTemplate.payment) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyPayment = body
+        ..emailSubjectPayment = subject);
+    } else if (_selectedTemplate == EmailTemplate.payment_partial) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyPaymentPartial = body
+        ..emailSubjectPaymentPartial = subject);
+    } else if (_selectedTemplate == EmailTemplate.reminder1) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder1 = body
+        ..emailSubjectReminder1 = subject);
+    } else if (_selectedTemplate == EmailTemplate.reminder2) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder2 = body
+        ..emailSubjectReminder2 = subject);
+    } else if (_selectedTemplate == EmailTemplate.reminder3) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder3 = body
+        ..emailSubjectReminder3 = subject);
+    } else if (_selectedTemplate == EmailTemplate.reminder_endless) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminderEndless = body
+        ..emailSubjectReminderEndless = subject);
+    } else if (_selectedTemplate == EmailTemplate.custom1) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyCustom1 = body
+        ..emailSubjectCustom1 = subject);
+    } else if (_selectedTemplate == EmailTemplate.custom2) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyCustom2 = body
+        ..emailSubjectCustom2 = subject);
+    } else if (_selectedTemplate == EmailTemplate.custom3) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyCustom3 = body
+        ..emailSubjectCustom3 = subject);
+    } else if (_selectedTemplate == EmailTemplate.statement) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyStatement = body
+        ..emailSubjectStatement = subject);
+    }
+
+    if (settings != widget.viewModel.settings) {
+      widget.viewModel.onSettingsChanged(settings);
+    }
   }
 
   void _handleTabSelection() {
@@ -274,7 +317,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       ),
       body: AppTabForm(
         tabBarKey: ValueKey(
-            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_emailPreview}_'),
+            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}__'),
         tabController: _controller,
         formKey: _formKey,
         focusNode: _focusNode,
@@ -287,8 +330,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   value: template,
                   showBlank: false,
                   onChanged: (dynamic value) => setState(() {
-                    viewModel.onTemplateChanged(value);
                     _loadTemplate(value);
+                    viewModel.onTemplateChanged(value);
                   }),
                   items: EmailTemplate.values.where((value) {
                     if ([
@@ -344,7 +387,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   keyboardType: TextInputType.text,
                   enabled: enableCustomEmail,
                 ),
-                if (!company.markdownEmailEnabled)
+                if (true || !company.markdownEmailEnabled)
                   DecoratedFormField(
                     label: localization.body,
                     controller: _bodyController,
@@ -464,12 +507,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             Stack(
               alignment: Alignment.topCenter,
               children: [
-                if (_isLoading) LinearProgressIndicator(),
-                IgnorePointer(
-                  child: ExampleEditor(
-                    value: html2md.convert(_bodyPreview),
+                if (_isLoading)
+                  LoadingIndicator()
+                else
+                  IgnorePointer(
+                    child: ExampleEditor(
+                      value: html2md.convert(_bodyPreview),
+                    ),
                   ),
-                ),
               ],
             ),
         ],
