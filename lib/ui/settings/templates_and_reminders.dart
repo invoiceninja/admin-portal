@@ -76,7 +76,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     super.initState();
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
-    print('## initState - tab: ${settingsUIState.tabIndex}');
 
     _focusNode = FocusScopeNode();
     _controller = TabController(
@@ -94,8 +93,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   @override
   void didChangeDependencies() {
-    print('## didChangeDependencies');
-
     _loadTemplate(widget.viewModel.selectedTemplate);
 
     super.didChangeDependencies();
@@ -114,21 +111,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _loadTemplate(EmailTemplate emailTemplate) {
-    print('## loadTemplate');
-
     _selectedTemplate = emailTemplate;
 
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final templateMap = viewModel.state.staticState.templateMap;
     final template = templateMap[emailTemplate.name] ?? TemplateEntity();
-
-    print(
-        '## SETTINGS - invoice: ${settings.emailSubjectInvoice} - ${settings.emailBodyInvoice}');
-    print(
-        '## SETTINGS - quote: ${settings.emailSubjectQuote} - ${settings.emailBodyQuote}');
-    print(
-        '## SETTINGS - payment: ${settings.emailSubjectPayment} - ${settings.emailBodyPayment}');
 
     _bodyController.removeListener(_onTextChanged);
     _subjectController.removeListener(_onTextChanged);
@@ -175,8 +163,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _onChanged() {
-    print('## onChanged');
-
     final viewModel = widget.viewModel;
     final templateMap = viewModel.state.staticState.templateMap;
     final template = templateMap[_selectedTemplate.name] ?? TemplateEntity();
@@ -255,8 +241,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _onTabChanged() {
-    print('## _handleTabSelection: ${_controller.index}');
-
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
 
@@ -280,7 +264,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     setState(() {
-      print('## START LOADING');
       _isLoading = true;
     });
 
@@ -295,7 +278,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           }
 
           setState(() {
-            print('## STOP LOADING');
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
