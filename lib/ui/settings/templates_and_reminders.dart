@@ -118,14 +118,13 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     if (_bodyController.text.isEmpty) {
-      _bodyController.text = template.body;
+      _bodyController.text = html2md.convert(template.body);
     }
 
     _bodyController.addListener(_onChanged);
     _subjectController.addListener(_onChanged);
 
     setState(() {
-      final template = templateMap['$emailTemplate'] ?? TemplateEntity();
       _defaultSubject = template.subject;
       _defaultBody = template.body;
     });
