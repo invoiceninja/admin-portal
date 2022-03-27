@@ -127,6 +127,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     setState(() {
       _defaultSubject = template.subject;
       _defaultBody = template.body;
+
+      _subjectPreview = '';
+      _bodyPreview = '';
+      _emailPreview = '';
     });
   }
 
