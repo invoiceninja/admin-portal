@@ -64,7 +64,7 @@ class _VariablesHelpState extends State<VariablesHelp>
           ],
         ),
         SizedBox(
-          height: 400,
+          height: 540,
           child: TabBarView(
             controller: _controller,
             children: [

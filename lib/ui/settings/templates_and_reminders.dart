@@ -489,6 +489,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               VariablesHelp(
                 showInvoiceAsQuote: template == EmailTemplate.quote,
               ),
+              SizedBox(height: 16),
             ],
           ),
           if (company.markdownEmailEnabled)
