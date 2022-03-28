@@ -394,15 +394,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   keyboardType: TextInputType.text,
                   enabled: enableCustomEmail,
                 ),
-                if (true || !company.markdownEmailEnabled)
-                  DecoratedFormField(
-                    label: localization.body,
-                    controller: _bodyController,
-                    maxLines: 8,
-                    keyboardType: TextInputType.multiline,
-                    hint: _defaultBody,
-                    enabled: enableCustomEmail,
-                  ),
+                DecoratedFormField(
+                  label: localization.body,
+                  controller: _bodyController,
+                  maxLines: 8,
+                  keyboardType: TextInputType.multiline,
+                  hint: _defaultBody,
+                  enabled: enableCustomEmail,
+                ),
               ]),
               if (template == EmailTemplate.reminder1)
                 ReminderSettings(
