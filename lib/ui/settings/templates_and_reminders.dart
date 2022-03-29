@@ -78,15 +78,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final state = widget.viewModel.state;
     final company = state.company;
     final settingsUIState = state.settingsUIState;
+    final length = company.markdownEmailEnabled &&
+            widget.viewModel.state.prefState.isDesktop
+        ? 3
+        : 2;
 
     _focusNode = FocusScopeNode();
     _controller = TabController(
-        vsync: this,
-        length: company.markdownEmailEnabled &&
-                widget.viewModel.state.prefState.isDesktop
-            ? 3
-            : 2,
-        initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: length, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
 
     _controllers = [
@@ -96,6 +95,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     _subjectController.addListener(_onTextChanged);
     _bodyController.addListener(_onTextChanged);
+
+    if (settingsUIState.tabIndex == length - 1) {
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _renderTemplate();
+      });
+    }
   }
 
   @override
@@ -264,6 +269,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       return;
     }
 
+    _renderTemplate();
+  }
+
+  void _renderTemplate() {
     final subject = _subjectController.text.trim();
     final body = _bodyController.text.trim();
 

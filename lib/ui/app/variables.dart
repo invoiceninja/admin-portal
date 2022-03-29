@@ -77,6 +77,7 @@ class _VariablesHelpState extends State<VariablesHelp>
                   'created_by_user',
                   'assigned_to_user',
                   'invoices',
+                  'payments',
                   if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
                     QuoteFields.discount,
