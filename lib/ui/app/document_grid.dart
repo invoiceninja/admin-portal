@@ -231,7 +231,6 @@ class DocumentTile extends StatelessWidget {
                                           callback: (password, idToken) {
                                             onDeleteDocument(
                                                 document, password, idToken);
-                                            Navigator.pop(context);
                                           });
                                     });
                               } else if (value == localization.viewExpense) {

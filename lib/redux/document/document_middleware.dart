@@ -156,28 +156,6 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
       }
     });
 
-    /*
-    final prevDocuments = action.documentIds
-        .map((id) => store.state.documentState.map[id])
-        .toList();
-
-    repository
-        .bulkAction(
-            store.state.credentials, action.documentIds, EntityAction.delete)
-        .then((List<DocumentEntity> documents) {
-      store.dispatch(DeleteDocumentSuccess(documents));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteDocumentFailure(prevDocuments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
-    });
-     */
-
     next(action);
   };
 }
