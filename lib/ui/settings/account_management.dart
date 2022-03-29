@@ -372,8 +372,18 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..markdownEnabled = value));
               },
-              title: Text(localization.enableMarkdown),
+              title: Text(localization.enablePdfMarkdown),
               subtitle: Text(localization.enableMarkdownHelp),
+              activeColor: Theme.of(context).colorScheme.secondary,
+            ),
+            SwitchListTile(
+              value: company.markdownEmailEnabled,
+              onChanged: (value) {
+                viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..markdownEmailEnabled = value));
+              },
+              title: Text(localization.enableEmailMarkdown),
+              subtitle: Text(localization.enableEmailMarkdownHelp),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(

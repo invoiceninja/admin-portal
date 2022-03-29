@@ -72,7 +72,8 @@ class EditScaffold extends StatelessWidget {
     if (state.account.isTrial) {
       final trialStarted = convertSqlDateToDateTime(state.account.trialStarted);
       final trialEnds = trialStarted.add(Duration(days: 14));
-      final countDays = trialEnds.difference(trialStarted).inDays;
+      final countDays = trialEnds.difference(DateTime.now()).inDays;
+
       if (countDays <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
       } else {

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -8,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,7 +43,9 @@ class InvoiceEmailView extends StatefulWidget {
 class _InvoiceEmailViewState extends State<InvoiceEmailView>
     with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
+  String _emailPreview = '';
   String _bodyPreview = '';
+  String _rawBodyPreview = '';
   String _subjectPreview = '';
   bool _isLoading = false;
 
@@ -135,7 +138,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: origBody,
         template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
-        onComplete: (subject, body, rawSubject, rawBody) {
+        onComplete: (subject, body, email, rawSubject, rawBody) {
           if (!mounted) {
             return;
           }
@@ -144,6 +147,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = body.trim();
+            _emailPreview = email.trim();
+
+            if (_rawBodyPreview.isEmpty) {
+              _rawBodyPreview = rawBody.trim();
+
+              final company = widget.viewModel.state.company;
+              if (company.markdownEmailEnabled &&
+                  isDesktop(context) &&
+                  _rawBodyPreview.startsWith('<p>')) {
+                _rawBodyPreview = html2md.convert(_rawBodyPreview);
+              }
+            }
 
             if (origSubject.isEmpty && origBody.isEmpty) {
               _subjectController.text = rawSubject.trim();
@@ -167,7 +182,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 18, right: 18, top: 2),
+      padding: const EdgeInsets.only(left: 24, right: 18, top: 2),
       child: Row(
         children: [
           Expanded(
@@ -177,17 +192,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       .where((contact) => contact != null)
                       .map((contact) => contact.fullNameWithEmail)
                       .join(', '))),
+          SizedBox(width: 4),
           DropdownButtonHideUnderline(
             child: DropdownButton<EmailTemplate>(
               value: selectedTemplate,
-              onChanged: (template) {
-                setState(() {
-                  _subjectController.text = '';
-                  _bodyController.text = '';
-                  selectedTemplate = template;
-                  _loadTemplate();
-                });
-              },
+              onChanged: _isLoading
+                  ? null
+                  : (template) {
+                      setState(() {
+                        _subjectController.text = '';
+                        _bodyController.text = '';
+                        _rawBodyPreview = '';
+                        selectedTemplate = template;
+                        _loadTemplate();
+                      });
+                    },
               items: [
                 DropdownMenuItem<EmailTemplate>(
                   child: Text(localization.initialEmail),
@@ -231,20 +250,26 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   Widget _buildPreview(BuildContext context) {
-    if (!supportsInlineBrowser()) {
+    if (_bodyController.text.isEmpty) {
       return SizedBox();
     }
 
-    if (widget.viewModel.isLoading) {
-      return LoadingIndicator(
-        height: 210,
-      );
-    }
-
-    return EmailPreview(
-      isLoading: _isLoading,
-      subject: _subjectPreview,
-      body: _bodyPreview,
+    return Stack(
+      children: [
+        if (_isLoading) LinearProgressIndicator(),
+        if (supportsInlineBrowser())
+          EmailPreview(
+            isLoading: _isLoading,
+            subject: _subjectPreview,
+            body: _emailPreview,
+          )
+        else
+          IgnorePointer(
+            child: ExampleEditor(
+              value: html2md.convert(_bodyPreview),
+            ),
+          )
+      ],
     );
   }
 
@@ -255,40 +280,60 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final enableCustomEmail =
         state.isSelfHosted || state.isProPlan || state.isTrial;
 
-    return SingleChildScrollView(
-      child: FormCard(
-        padding: EdgeInsets.only(
-            left: 16, bottom: 16, right: 16, top: isMobile(context) ? 16 : 0),
-        children: <Widget>[
-          if (_isLoading &&
-              _subjectController.text.isEmpty &&
-              _bodyController.text.isEmpty)
-            LoadingIndicator(height: 210)
-          else ...[
-            if (!enableCustomEmail)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: IconMessage(
-                  localization.customEmailsDisabledHelp,
-                  trailing: TextButton(
-                    child: Text(
-                      localization.upgrade.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+    return Column(
+      children: [
+        if (!enableCustomEmail)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: IconMessage(
+              localization.customEmailsDisabledHelp,
+              trailing: TextButton(
+                child: Text(
+                  localization.upgrade.toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
+                onPressed: () => launch(state.userCompany.ninjaPortalUrl),
               ),
-            DecoratedFormField(
+            ),
+          ),
+        ColoredBox(
+          color: state.company.markdownEmailEnabled &&
+                  isDesktop(context) &&
+                  !isDarkMode(context)
+              ? Colors.white
+              : Theme.of(context).backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24, right: 10, bottom: 16),
+            child: DecoratedFormField(
               controller: _subjectController,
               label: localization.subject,
               onChanged: (_) => _onChanged(),
               keyboardType: TextInputType.text,
               enabled: enableCustomEmail,
             ),
-            DecoratedFormField(
+          ),
+        ),
+        if (state.company.markdownEmailEnabled && isDesktop(context))
+          Expanded(
+            child: ColoredBox(
+              color: Colors.white,
+              child: ExampleEditor(
+                value: _rawBodyPreview,
+                onChanged: (value) {
+                  if (value.trim() != _bodyController.text.trim()) {
+                    _bodyController.text = value;
+                    _onChanged();
+                  }
+                },
+              ),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: DecoratedFormField(
               controller: _bodyController,
               label: localization.body,
               maxLines: enableCustomEmail ? 6 : 2,
@@ -296,9 +341,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               onChanged: (_) => _onChanged(),
               enabled: enableCustomEmail,
             ),
-          ]
-        ],
-      ),
+          )
+      ],
     );
   }
 
@@ -343,18 +387,26 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           children: [
             Expanded(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildTemplateDropdown(context),
-                  _buildEdit(context),
-                  Expanded(
-                    child: Container(
-                      child: _buildPreview(context),
-                      color: Colors.white,
-                      height: double.infinity,
+                  if (_bodyController.text.isEmpty)
+                    Expanded(child: LoadingIndicator())
+                  else ...[
+                    Expanded(
+                      child: _buildEdit(context),
+                      flex: 2,
                     ),
-                  ),
+                    Expanded(
+                      flex: supportsInlineBrowser() ? 3 : 2,
+                      child: Container(
+                        child: _buildPreview(context),
+                        color: supportsInlineBrowser()
+                            ? Colors.white
+                            : const Color(0xFFE4E8EB),
+                        height: double.infinity,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
