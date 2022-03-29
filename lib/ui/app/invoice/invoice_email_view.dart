@@ -154,6 +154,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
               final company = widget.viewModel.state.company;
               if (company.markdownEmailEnabled &&
+                  isDesktop(context) &&
                   _rawBodyPreview.startsWith('<p>')) {
                 _rawBodyPreview = html2md.convert(_rawBodyPreview);
               }
@@ -298,7 +299,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         ColoredBox(
-          color: state.company.markdownEmailEnabled && !isDarkMode(context)
+          color: state.company.markdownEmailEnabled &&
+                  isDesktop(context) &&
+                  !isDarkMode(context)
               ? Colors.white
               : Theme.of(context).backgroundColor,
           child: Padding(
@@ -312,7 +315,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         ),
-        if (state.company.markdownEmailEnabled)
+        if (state.company.markdownEmailEnabled && isDesktop(context))
           Expanded(
             child: ColoredBox(
               color: Colors.white,
