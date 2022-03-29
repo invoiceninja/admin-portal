@@ -82,7 +82,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _focusNode = FocusScopeNode();
     _controller = TabController(
         vsync: this,
-        length: company.markdownEmailEnabled && isDesktop(context) ? 3 : 2,
+        length: company.markdownEmailEnabled &&
+                widget.viewModel.state.prefState.isDesktop
+            ? 3
+            : 2,
         initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
 
@@ -138,7 +141,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     if (viewModel.state.company.markdownEmailEnabled &&
-        isDesktop(context) &&
+        widget.viewModel.state.prefState.isDesktop &&
         _bodyController.text.startsWith('<p>')) {
       _bodyController.text = html2md.convert(_bodyController.text);
     }
@@ -155,7 +158,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _emailPreview = '';
 
       if (state.company.markdownEmailEnabled &&
-          isDesktop(context) &&
+          widget.viewModel.state.prefState.isDesktop &&
           _defaultBody.startsWith('<p>')) {
         _defaultBody = html2md.convert(_defaultBody);
       }
@@ -316,7 +319,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           Tab(
             text: localization.settings,
           ),
-          if (company.markdownEmailEnabled && isDesktop(context))
+          if (company.markdownEmailEnabled &&
+              widget.viewModel.state.prefState.isDesktop)
             Tab(
               text: localization.design,
             ),
@@ -493,7 +497,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               SizedBox(height: 16),
             ],
           ),
-          if (company.markdownEmailEnabled && isDesktop(context))
+          if (company.markdownEmailEnabled &&
+              widget.viewModel.state.prefState.isDesktop)
             ColoredBox(
               color: Colors.white,
               child: ExampleEditor(
