@@ -62,10 +62,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
   void didUpdateWidget(ExampleEditor oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    print('## didUpdateWidget: ${widget.value}');
-
     if (widget.value != oldWidget.value) {
-      print('## CALLING _setValue');
       _setValue(widget.value);
     }
   }
