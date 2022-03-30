@@ -69,7 +69,7 @@ class InvoicePresenter extends EntityPresenter {
 
     switch (field) {
       case InvoiceFields.status:
-        return EntityStatusChip(entity: invoice);
+        return EntityStatusChip(entity: invoice, showState: true);
       case InvoiceFields.number:
         return Text((invoice.number ?? '').isEmpty
             ? localization.pending

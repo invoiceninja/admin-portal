@@ -56,7 +56,7 @@ class TaskPresenter extends EntityPresenter {
 
     switch (field) {
       case TaskFields.status:
-        return EntityStatusChip(entity: task);
+        return EntityStatusChip(entity: task, showState: true);
       case TaskFields.client:
         return Text(state.clientState.map[task.clientId]?.displayName ?? '');
       case TaskFields.rate:

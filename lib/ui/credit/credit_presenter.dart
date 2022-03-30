@@ -63,7 +63,7 @@ class CreditPresenter extends EntityPresenter {
 
     switch (field) {
       case CreditFields.status:
-        return EntityStatusChip(entity: credit);
+        return EntityStatusChip(entity: credit, showState: true);
       case CreditFields.number:
         return Text((credit.number ?? '').isEmpty
             ? localization.pending

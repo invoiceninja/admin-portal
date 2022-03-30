@@ -68,7 +68,7 @@ class RecurringExpensePresenter extends EntityPresenter {
 
     switch (field) {
       case RecurringExpenseFields.status:
-        return EntityStatusChip(entity: expense);
+        return EntityStatusChip(entity: expense, showState: true);
       case RecurringExpenseFields.vendor:
       case RecurringExpenseFields.vendorId:
         return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
