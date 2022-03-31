@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'after_saving': 'After Saving',
+      'view_record': 'View Record',
       'enable_email_markdown': 'Enable Email Markdown',
       'enable_email_markdown_help': 'Use visual markdown editor for emails',
       'enable_pdf_markdown': 'Enable PDF Markdown',
@@ -74189,6 +74191,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enablePdfMarkdown =>
       _localizedValues[localeCode]['enable_pdf_markdown'] ??
       _localizedValues['en']['enable_pdf_markdown'];
+
+  String get afterSaving =>
+      _localizedValues[localeCode]['after_saving'] ??
+      _localizedValues['en']['after_saving'];
+
+  String get viewRecord =>
+      _localizedValues[localeCode]['view_record'] ??
+      _localizedValues['en']['view_record'];
+
 
   // STARTER: lang field - do not remove comment
 

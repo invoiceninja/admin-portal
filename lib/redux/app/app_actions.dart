@@ -147,6 +147,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.persistUi,
     this.tapSelectedToEdit,
     this.showPdfPreview,
+    this.editAfterSaving,
   });
 
   final AppLayout appLayout;
@@ -169,6 +170,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final double textScaleFactor;
   final bool showPdfPreview;
   final BuiltMap<String, String> customColors;
+  final bool editAfterSaving;
 }
 
 class LoadAccountSuccess implements StopLoading {

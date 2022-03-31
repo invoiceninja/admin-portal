@@ -56,6 +56,7 @@ class DeviceSettingsVM {
     @required this.onShowPdfChanged,
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
+    @required this.onEditAfterSavingChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -109,6 +110,9 @@ class DeviceSettingsVM {
         if (store.state.prefState.colorTheme != value) {
           store.dispatch(UpdateUserPreferences(colorTheme: value));
         }
+      },
+      onEditAfterSavingChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(editAfterSaving: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
@@ -186,6 +190,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, String) onColorThemeChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onTapSelectedChanged;
+  final Function(BuildContext, bool) onEditAfterSavingChanged;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;

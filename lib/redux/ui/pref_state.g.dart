@@ -178,6 +178,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideDesktopWarning',
       serializers.serialize(object.hideDesktopWarning,
           specifiedType: const FullType(bool)),
+      'editAfterSaving',
+      serializers.serialize(object.editAfterSaving,
+          specifiedType: const FullType(bool)),
       'textScaleFactor',
       serializers.serialize(object.textScaleFactor,
           specifiedType: const FullType(double)),
@@ -293,6 +296,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'hideDesktopWarning':
           result.hideDesktopWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'editAfterSaving':
+          result.editAfterSaving = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'textScaleFactor':
@@ -586,6 +593,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideDesktopWarning;
   @override
+  final bool editAfterSaving;
+  @override
   final double textScaleFactor;
   @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
@@ -617,6 +626,7 @@ class _$PrefState extends PrefState {
       this.rowsPerPage,
       this.colorTheme,
       this.hideDesktopWarning,
+      this.editAfterSaving,
       this.textScaleFactor,
       this.sortFields,
       this.companyPrefs})
@@ -662,6 +672,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
     BuiltValueNullFieldError.checkNotNull(
+        editAfterSaving, 'PrefState', 'editAfterSaving');
+    BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, 'PrefState', 'textScaleFactor');
     BuiltValueNullFieldError.checkNotNull(
         sortFields, 'PrefState', 'sortFields');
@@ -701,6 +713,7 @@ class _$PrefState extends PrefState {
         rowsPerPage == other.rowsPerPage &&
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
+        editAfterSaving == other.editAfterSaving &&
         textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
@@ -727,23 +740,23 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode),
-                                                                                customColors.hashCode),
-                                                                            isPreviewVisible.hashCode),
-                                                                        isMenuVisible.hashCode),
-                                                                    showKanban.hashCode),
-                                                                showPdfPreview.hashCode),
-                                                            isHistoryVisible.hashCode),
-                                                        enableDarkMode.hashCode),
-                                                    isFilterVisible.hashCode),
-                                                persistData.hashCode),
-                                            persistUI.hashCode),
-                                        longPressSelectionIsDefault.hashCode),
-                                    requireAuthentication.hashCode),
-                                tapSelectedToEdit.hashCode),
-                            rowsPerPage.hashCode),
-                        colorTheme.hashCode),
-                    hideDesktopWarning.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode),
+                                                                                isPreviewVisible.hashCode),
+                                                                            isMenuVisible.hashCode),
+                                                                        showKanban.hashCode),
+                                                                    showPdfPreview.hashCode),
+                                                                isHistoryVisible.hashCode),
+                                                            enableDarkMode.hashCode),
+                                                        isFilterVisible.hashCode),
+                                                    persistData.hashCode),
+                                                persistUI.hashCode),
+                                            longPressSelectionIsDefault.hashCode),
+                                        requireAuthentication.hashCode),
+                                    tapSelectedToEdit.hashCode),
+                                rowsPerPage.hashCode),
+                            colorTheme.hashCode),
+                        hideDesktopWarning.hashCode),
+                    editAfterSaving.hashCode),
                 textScaleFactor.hashCode),
             sortFields.hashCode),
         companyPrefs.hashCode));
@@ -773,6 +786,7 @@ class _$PrefState extends PrefState {
           ..add('rowsPerPage', rowsPerPage)
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
+          ..add('editAfterSaving', editAfterSaving)
           ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
@@ -884,6 +898,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideDesktopWarning(bool hideDesktopWarning) =>
       _$this._hideDesktopWarning = hideDesktopWarning;
 
+  bool _editAfterSaving;
+  bool get editAfterSaving => _$this._editAfterSaving;
+  set editAfterSaving(bool editAfterSaving) =>
+      _$this._editAfterSaving = editAfterSaving;
+
   double _textScaleFactor;
   double get textScaleFactor => _$this._textScaleFactor;
   set textScaleFactor(double textScaleFactor) =>
@@ -929,6 +948,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _rowsPerPage = $v.rowsPerPage;
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
+      _editAfterSaving = $v.editAfterSaving;
       _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
@@ -970,8 +990,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
                   isMenuVisible, 'PrefState', 'isMenuVisible'),
               showKanban: BuiltValueNullFieldError.checkNotNull(
                   showKanban, 'PrefState', 'showKanban'),
-              showPdfPreview: BuiltValueNullFieldError.checkNotNull(
-                  showPdfPreview, 'PrefState', 'showPdfPreview'),
+              showPdfPreview:
+                  BuiltValueNullFieldError.checkNotNull(showPdfPreview, 'PrefState', 'showPdfPreview'),
               isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),
               enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, 'PrefState', 'enableDarkMode'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, 'PrefState', 'isFilterVisible'),
@@ -983,6 +1003,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
+              editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, 'PrefState', 'editAfterSaving'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, 'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());

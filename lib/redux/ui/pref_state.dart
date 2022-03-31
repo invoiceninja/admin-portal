@@ -26,6 +26,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isMenuVisible: true,
       isHistoryVisible: false,
       enableDarkMode: false,
+      editAfterSaving: true,
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
       isFilterVisible: false,
@@ -129,6 +130,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get hideDesktopWarning;
 
+  bool get editAfterSaving;
+
   double get textScaleFactor;
 
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
@@ -197,6 +200,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true
+    ..editAfterSaving = true
     ..showPdfPreview = true
     ..textScaleFactor = 1
     ..colorTheme =
