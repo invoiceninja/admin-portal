@@ -57,6 +57,7 @@ class DeviceSettingsVM {
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
     @required this.onEditAfterSavingChanged,
+    @required this.onEnableTouchEventsChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -99,6 +100,11 @@ class DeviceSettingsVM {
       },
       onTapSelectedChanged: (context, value) async {
         store.dispatch(UpdateUserPreferences(tapSelectedToEdit: value));
+      },
+      onEnableTouchEventsChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(enableTouchEvents: value));
+        store.dispatch(UpdatedSetting());
+        AppBuilder.of(context).rebuild();
       },
       onShowPdfChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreview: value));
@@ -195,6 +201,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
+  final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
   final Future<bool> authenticationSupported;
 }

@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_touch_events': 'Enable Touch Events',
+      'enable_touch_events_help': 'Support drag events to scroll',
       'after_saving': 'After Saving',
       'view_record': 'View Record',
       'enable_email_markdown': 'Enable Email Markdown',
@@ -74200,6 +74202,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['view_record'] ??
       _localizedValues['en']['view_record'];
 
+  String get enableTouchEvents =>
+      _localizedValues[localeCode]['enable_touch_events'] ??
+      _localizedValues['en']['enable_touch_events'];
+
+  String get enableTouchEventsHelp =>
+      _localizedValues[localeCode]['enable_touch_events_help'] ??
+      _localizedValues['en']['enable_touch_events_help'];
 
   // STARTER: lang field - do not remove comment
 

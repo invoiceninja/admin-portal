@@ -231,7 +231,16 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       }
                     },
                   ),
-                  if (isDesktop(context))
+                  if (isDesktop(context)) ...[
+                    SwitchListTile(
+                      title: Text(localization.enableTouchEvents),
+                      subtitle: Text(localization.enableTouchEventsHelp),
+                      value: prefState.enableTouchEvents,
+                      onChanged: (value) =>
+                          viewModel.onEnableTouchEventsChanged(context, value),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      secondary: Icon(Icons.touch_app),
+                    ),
                     SwitchListTile(
                       title: Text(localization.showPdfPreview),
                       subtitle: Text(localization.showPdfPreviewHelp),
@@ -241,6 +250,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.filePdfBox),
                     ),
+                  ],
                   SwitchListTile(
                     title: Text(localization.persistUi),
                     subtitle: Text(localization.persistUiHelp),
