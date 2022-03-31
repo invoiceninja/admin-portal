@@ -76,6 +76,7 @@ PrefState prefReducer(
       ..useSidebarEditor
           .replace(sidebarEditorReducer(state.useSidebarEditor, action))
       ..sortFields.replace(sortFieldsReducer(state.sortFields, action))
+      ..editAfterSaving = editAfterSavingReducer(state.editAfterSaving, action)
       ..showPdfPreview = showPdfPreviewReducer(state.showPdfPreview, action),
   );
 }
@@ -333,6 +334,12 @@ Reducer<String> colorThemeReducer = combineReducers([
 Reducer<bool> showPdfPreviewReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.showPdfPreview ?? value;
+  }),
+]);
+
+Reducer<bool> editAfterSavingReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
+    return action.editAfterSaving ?? value;
   }),
 ]);
 

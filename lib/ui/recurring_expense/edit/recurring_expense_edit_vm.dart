@@ -155,9 +155,14 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                   Navigator.of(context).pop(savedRecurringExpense);
                 }
               } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
+
                 viewEntity(entity: savedRecurringExpense);
 
-                if (state.prefState.isEditorFullScreen(EntityType.expense)) {
+                if (state.prefState.isEditorFullScreen(EntityType.expense) &&
+                    state.prefState.editAfterSaving) {
                   editEntity(
                       context: navigatorKey.currentContext,
                       entity: savedRecurringExpense);
