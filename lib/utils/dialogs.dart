@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 // Project imports:
@@ -437,6 +439,53 @@ void cloneToDialog({
                   },
                 ),
             ],
+          ),
+          actions: [
+            TextButton(
+              child: Text(localization.close.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      });
+}
+
+void changeTaskStatusDialog({
+  @required BuildContext context,
+  @required TaskEntity task,
+}) {
+  final localization = AppLocalization.of(context);
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final statusIds = memoizedSortedActiveTaskStatusIds(
+          state.taskStatusState.list, state.taskStatusState.map)
+      .where((statusId) => statusId != task.statusId)
+      .toList();
+
+  showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(localization.changeStatus),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: statusIds.map((statusId) {
+              final status = state.taskStatusState.get(statusId);
+              return ListTile(
+                title: Text(status.name),
+                leading: Icon(Icons.check_circle),
+                onTap: () {
+                  store.dispatch(SaveTaskRequest(
+                    task: task.rebuild((b) => b..statusId = statusId),
+                    completer: snackBarCompleter<TaskEntity>(
+                      context,
+                      localization.changedStatus,
+                    ),
+                  ));
+                  Navigator.of(context).pop();
+                },
+              );
+            }).toList(),
           ),
           actions: [
             TextButton(

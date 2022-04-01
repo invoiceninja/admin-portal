@@ -596,7 +596,15 @@ abstract class TaskEntity extends Object
           } else {
             actions.add(EntityAction.start);
           }
+        }
+      }
 
+      if (!multiselect && isOld) {
+        if (userCompany.canEditEntity(this)) {
+          actions.add(EntityAction.changeStatus);
+        }
+
+        if (!isInvoiced && !isRunning) {
           if (userCompany.canCreate(EntityType.invoice)) {
             actions.add(EntityAction.invoiceTask);
           }

@@ -108,6 +108,7 @@ class EntityAction extends EnumClass {
   static const EntityAction resendInvite = _$resendInvite;
   static const EntityAction disconnect = _$disconnect;
   static const EntityAction viewInvoice = _$viewInvoice;
+  static const EntityAction changeStatus = _$changeStatus;
 
   @override
   String toString() {
