@@ -267,7 +267,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     child: child,
                   );
                 },
-                scrollBehavior: MyCustomScrollBehavior(),
+                scrollBehavior: state.prefState.enableTouchEvents
+                    ? MyCustomScrollBehavior()
+                    : null,
                 navigatorKey: navigatorKey,
                 supportedLocales: kLanguages
                     .map(

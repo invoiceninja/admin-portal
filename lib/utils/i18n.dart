@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'fees_sample': 'The fee for a :amount invoice would be :total.',
+      'enable_touch_events': 'Enable Touch Events',
+      'enable_touch_events_help': 'Support drag events to scroll',
+      'after_saving': 'After Saving',
+      'view_record': 'View Record',
       'enable_email_markdown': 'Enable Email Markdown',
       'enable_email_markdown_help': 'Use visual markdown editor for emails',
       'enable_pdf_markdown': 'Enable PDF Markdown',
@@ -74189,6 +74194,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enablePdfMarkdown =>
       _localizedValues[localeCode]['enable_pdf_markdown'] ??
       _localizedValues['en']['enable_pdf_markdown'];
+
+  String get afterSaving =>
+      _localizedValues[localeCode]['after_saving'] ??
+      _localizedValues['en']['after_saving'];
+
+  String get viewRecord =>
+      _localizedValues[localeCode]['view_record'] ??
+      _localizedValues['en']['view_record'];
+
+  String get enableTouchEvents =>
+      _localizedValues[localeCode]['enable_touch_events'] ??
+      _localizedValues['en']['enable_touch_events'];
+
+  String get enableTouchEventsHelp =>
+      _localizedValues[localeCode]['enable_touch_events_help'] ??
+      _localizedValues['en']['enable_touch_events_help'];
+
+  String get feesSample =>
+      _localizedValues[localeCode]['fees_sample'] ??
+      _localizedValues['en']['fees_sample'];
 
   // STARTER: lang field - do not remove comment
 

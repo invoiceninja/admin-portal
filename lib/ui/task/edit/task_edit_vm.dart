@@ -121,9 +121,14 @@ class TaskEditVM {
                   navigator.pop(savedTask);
                 }
               } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
+
                 viewEntity(entity: savedTask);
 
-                if (state.prefState.isEditorFullScreen(EntityType.task)) {
+                if (state.prefState.isEditorFullScreen(EntityType.task) &&
+                    state.prefState.editAfterSaving) {
                   editEntity(
                       context: navigatorKey.currentContext, entity: savedTask);
                 }

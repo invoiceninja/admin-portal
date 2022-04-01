@@ -150,7 +150,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       disabledLabel: localization.showOrHide,
                     ),
                   ],
-                  if (isDesktop(context))
+                  if (isDesktop(context)) ...[
                     BoolDropdownButton(
                       label: localization.clickSelected,
                       value: prefState.tapSelectedToEdit,
@@ -159,8 +159,17 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.hidePreview,
-                    )
-                  else
+                    ),
+                    BoolDropdownButton(
+                      label: localization.afterSaving,
+                      value: prefState.editAfterSaving,
+                      onChanged: (value) {
+                        viewModel.onEditAfterSavingChanged(context, value);
+                      },
+                      enabledLabel: localization.editRecord,
+                      disabledLabel: localization.viewRecord,
+                    ),
+                  ] else
                     BoolDropdownButton(
                       label: localization.listLongPress,
                       value: !prefState.longPressSelectionIsDefault,
@@ -222,7 +231,16 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       }
                     },
                   ),
-                  if (isDesktop(context))
+                  if (isDesktop(context)) ...[
+                    SwitchListTile(
+                      title: Text(localization.enableTouchEvents),
+                      subtitle: Text(localization.enableTouchEventsHelp),
+                      value: prefState.enableTouchEvents,
+                      onChanged: (value) =>
+                          viewModel.onEnableTouchEventsChanged(context, value),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      secondary: Icon(Icons.touch_app),
+                    ),
                     SwitchListTile(
                       title: Text(localization.showPdfPreview),
                       subtitle: Text(localization.showPdfPreviewHelp),
@@ -232,6 +250,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.filePdfBox),
                     ),
+                  ],
                   SwitchListTile(
                     title: Text(localization.persistUi),
                     subtitle: Text(localization.persistUiHelp),

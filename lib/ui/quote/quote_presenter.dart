@@ -63,7 +63,7 @@ class QuotePresenter extends EntityPresenter {
 
     switch (field) {
       case QuoteFields.status:
-        return EntityStatusChip(entity: quote);
+        return EntityStatusChip(entity: quote, showState: true);
       case QuoteFields.number:
         return Text(
             (quote.number ?? '').isEmpty ? localization.pending : quote.number);

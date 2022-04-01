@@ -902,6 +902,21 @@ class _FeesEditorState extends State<FeesEditor> {
     }
   }
 
+  String _sampleFee() {
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+
+    const double amount = 100;
+    final fee = settings.calculateSampleFee(100);
+
+    return localization.feesSample
+        .replaceFirst(':amount', formatNumber(amount, context))
+        .replaceFirst(':total', formatNumber(fee, context));
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -912,6 +927,7 @@ class _FeesEditorState extends State<FeesEditor> {
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
     return FormCard(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         DecoratedFormField(
           label: localization.feePercent,
@@ -923,13 +939,6 @@ class _FeesEditorState extends State<FeesEditor> {
         DecoratedFormField(
           label: localization.feeAmount,
           controller: _amountController,
-          isMoney: true,
-          keyboardType:
-              TextInputType.numberWithOptions(decimal: true, signed: true),
-        ),
-        DecoratedFormField(
-          label: localization.feeCap,
-          controller: _capController,
           isMoney: true,
           keyboardType:
               TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -970,6 +979,13 @@ class _FeesEditorState extends State<FeesEditor> {
             initialTaxName: settings.taxName3,
             initialTaxRate: settings.taxRate3,
           ),
+        DecoratedFormField(
+          label: localization.feeCap,
+          controller: _capController,
+          isMoney: true,
+          keyboardType:
+              TextInputType.numberWithOptions(decimal: true, signed: true),
+        ),
         SizedBox(height: 16),
         LearnMoreUrl(
           url: kGatewayFeeHelpURL,
@@ -984,6 +1000,11 @@ class _FeesEditorState extends State<FeesEditor> {
             subtitle: Text(localization.adjustFeePercentHelp),
           ),
         ),
+        SizedBox(height: 16),
+        Text(
+          _sampleFee(),
+          style: TextStyle(color: Colors.grey),
+        )
       ],
     );
   }

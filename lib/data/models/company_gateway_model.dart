@@ -362,6 +362,36 @@ abstract class FeesAndLimitsSettings
   @BuiltValueField(wireName: 'is_enabled')
   bool get isEnabled;
 
+  double calculateSampleFee(double amount) {
+    double fee = 0;
+
+    fee += feeAmount;
+
+    if (feePercent != 0) {
+      if (adjustFeePercent) {
+        fee += round((amount / (1 - feePercent / 100)) - amount, 2);
+      } else {
+        fee += round(amount * feePercent / 100, 2);
+      }
+    }
+
+    if (taxRate1 != 0) {
+      fee += round(amount * 1 / taxRate1, 2);
+    }
+    if (taxRate2 != 0) {
+      fee += round(amount * 1 / taxRate2, 2);
+    }
+    if (taxRate2 != 0) {
+      fee += round(amount * 1 / taxRate2, 2);
+    }
+
+    if (feeCap > 0 && fee > feeCap) {
+      fee = feeCap;
+    }
+
+    return fee;
+  }
+
   // ignore: unused_element
   static void _initializeBuilder(FeesAndLimitsSettingsBuilder builder) =>
       builder..isEnabled = false;

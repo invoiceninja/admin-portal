@@ -26,8 +26,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isMenuVisible: true,
       isHistoryVisible: false,
       enableDarkMode: false,
+      editAfterSaving: true,
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
+      enableTouchEvents: true,
       isFilterVisible: false,
       textScaleFactor: 1,
       longPressSelectionIsDefault: true,
@@ -107,6 +109,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get showPdfPreview;
 
+  bool get enableTouchEvents;
+
   bool get isHistoryVisible;
 
   bool get enableDarkMode;
@@ -128,6 +132,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   String get colorTheme;
 
   bool get hideDesktopWarning;
+
+  bool get editAfterSaving;
 
   double get textScaleFactor;
 
@@ -197,7 +203,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true
+    ..editAfterSaving = true
     ..showPdfPreview = true
+    ..enableTouchEvents = true
     ..textScaleFactor = 1
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;

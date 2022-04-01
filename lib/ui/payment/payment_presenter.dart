@@ -87,7 +87,7 @@ class PaymentPresenter extends EntityPresenter {
                 payment.amount * payment.exchangeRate, context,
                 clientId: payment.exchangeCurrencyId)));
       case PaymentFields.status:
-        return EntityStatusChip(entity: payment);
+        return EntityStatusChip(entity: payment, showState: true);
       case PaymentFields.customValue1:
         return Text(presentCustomField(context, payment.customValue1));
       case PaymentFields.customValue2:

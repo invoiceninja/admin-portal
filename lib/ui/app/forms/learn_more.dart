@@ -27,7 +27,6 @@ class LearnMoreUrl extends StatelessWidget {
     }
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Expanded(
           child: child,
@@ -37,11 +36,7 @@ class LearnMoreUrl extends StatelessWidget {
         ),
         TextButton(
           child: Text(label ?? localization.learnMore),
-          onPressed: () async {
-            if (await canLaunch(url)) {
-              await launch(url, forceSafariVC: false, forceWebView: false);
-            }
-          },
+          onPressed: () => launch(url),
         ),
       ],
     );

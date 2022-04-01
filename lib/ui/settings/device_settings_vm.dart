@@ -56,6 +56,8 @@ class DeviceSettingsVM {
     @required this.onShowPdfChanged,
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
+    @required this.onEditAfterSavingChanged,
+    @required this.onEnableTouchEventsChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -99,6 +101,11 @@ class DeviceSettingsVM {
       onTapSelectedChanged: (context, value) async {
         store.dispatch(UpdateUserPreferences(tapSelectedToEdit: value));
       },
+      onEnableTouchEventsChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(enableTouchEvents: value));
+        store.dispatch(UpdatedSetting());
+        AppBuilder.of(context).rebuild();
+      },
       onShowPdfChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreview: value));
       },
@@ -109,6 +116,9 @@ class DeviceSettingsVM {
         if (store.state.prefState.colorTheme != value) {
           store.dispatch(UpdateUserPreferences(colorTheme: value));
         }
+      },
+      onEditAfterSavingChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(editAfterSaving: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
@@ -186,10 +196,12 @@ class DeviceSettingsVM {
   final Function(BuildContext, String) onColorThemeChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onTapSelectedChanged;
+  final Function(BuildContext, bool) onEditAfterSavingChanged;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
+  final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
   final Future<bool> authenticationSupported;
 }

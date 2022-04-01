@@ -68,7 +68,7 @@ class ExpensePresenter extends EntityPresenter {
 
     switch (field) {
       case ExpenseFields.status:
-        return EntityStatusChip(entity: expense);
+        return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
       case ExpenseFields.vendorId:
         return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
