@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -991,6 +992,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         final sectionIndex =
                             includedLineItems.indexOf(lineItems[index]);
                         final options = {
+                          if (widget.isTasks &&
+                              (lineItems[index].taskId ?? '').isNotEmpty)
+                            localization.viewTask: MdiIcons.chevronDoubleRight,
                           if (sectionIndex > 0)
                             localization.moveTop: MdiIcons.chevronDoubleUp,
                           if (sectionIndex > 1)
@@ -1013,7 +1017,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             .toList();
                       },
                       onSelected: (String action) {
-                        if (action == localization.moveTop) {
+                        if (action == localization.viewTask) {
+                          viewEntityById(
+                              entityId: lineItems[index].taskId,
+                              entityType: EntityType.task);
+                        } else if (action == localization.moveTop) {
                           viewModel.onMovedInvoiceItem(index, 0);
                         } else if (action == localization.moveUp) {
                           viewModel.onMovedInvoiceItem(index, index - 1);
