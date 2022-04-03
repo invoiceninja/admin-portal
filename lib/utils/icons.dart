@@ -79,7 +79,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.settings:
       return Icons.settings;
     case EntityAction.refundPayment:
-    case EntityAction.cancel:
+    case EntityAction.cancelInvoice:
       return Icons.remove_circle_outline;
     case EntityAction.reverse:
       return Icons.undo;

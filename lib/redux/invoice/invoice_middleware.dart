@@ -150,8 +150,8 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as CancelInvoicesRequest;
     repository
-        .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.cancel)
+        .bulkAction(store.state.credentials, action.invoiceIds,
+            EntityAction.cancelInvoice)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(CancelInvoicesSuccess(invoices));
       store.dispatch(RefreshData());

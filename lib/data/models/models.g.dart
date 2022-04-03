@@ -66,7 +66,7 @@ const EntityAction _$stop = const EntityAction._('stop');
 const EntityAction _$toggleMultiselect =
     const EntityAction._('toggleMultiselect');
 const EntityAction _$reverse = const EntityAction._('reverse');
-const EntityAction _$cancel = const EntityAction._('cancel');
+const EntityAction _$cancelInvoice = const EntityAction._('cancelInvoice');
 const EntityAction _$copy = const EntityAction._('copy');
 const EntityAction _$invoiceTask = const EntityAction._('invoiceTask');
 const EntityAction _$invoiceExpense = const EntityAction._('invoiceExpense');
@@ -184,8 +184,8 @@ EntityAction _$valueOf(String name) {
       return _$toggleMultiselect;
     case 'reverse':
       return _$reverse;
-    case 'cancel':
-      return _$cancel;
+    case 'cancelInvoice':
+      return _$cancelInvoice;
     case 'copy':
       return _$copy;
     case 'invoiceTask':
@@ -262,7 +262,7 @@ final BuiltSet<EntityAction> _$values =
   _$stop,
   _$toggleMultiselect,
   _$reverse,
-  _$cancel,
+  _$cancelInvoice,
   _$copy,
   _$invoiceTask,
   _$invoiceExpense,
