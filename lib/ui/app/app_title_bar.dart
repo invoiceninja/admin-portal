@@ -57,7 +57,10 @@ class AppTitleBar extends StatelessWidget {
             )),
             MinimizeWindowButton(colors: buttonColors),
             MaximizeWindowButton(colors: buttonColors),
-            CloseWindowButton(colors: closeButtonColors),
+            CloseWindowButton(colors: closeButtonColors, onPressed() {
+              // TODO check if there are any changes 
+              appWindow.close()
+            }),
           ],
         ),
       ),
