@@ -84,6 +84,11 @@ enum InvoiceReportFields {
   contact_email,
   contact_phone,
   contact_name,
+  age_group_0,
+  age_group_30,
+  age_group_60,
+  age_group_90,
+  age_group_120,
 }
 
 var memoizedInvoiceReport = memo8((
@@ -382,6 +387,27 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_number:
           value = client.number;
+          break;
+        case InvoiceReportFields.age_group_0:
+          value = invoice.isPaid || invoice.age >= 30 ? 0.0 : invoice.balance;
+          break;
+        case InvoiceReportFields.age_group_30:
+          value = invoice.isPaid || invoice.age < 30 || invoice.age >= 60
+              ? 0.0
+              : invoice.balance;
+          break;
+        case InvoiceReportFields.age_group_60:
+          value = invoice.isPaid || invoice.age < 60 || invoice.age >= 90
+              ? 0.0
+              : invoice.balance;
+          break;
+        case InvoiceReportFields.age_group_90:
+          value = invoice.isPaid || invoice.age < 90 || invoice.age >= 120
+              ? 0.0
+              : invoice.balance;
+          break;
+        case InvoiceReportFields.age_group_120:
+          value = invoice.isPaid || invoice.age < 120 ? 0.0 : invoice.balance;
           break;
       }
 
