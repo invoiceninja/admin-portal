@@ -85,6 +85,11 @@ class _ExpenseEditState extends State<ExpenseEdit>
         formatNumber(expense.grossAmount, context,
             currencyId: expense.currencyId);
 
+    print('## ${expense.getActions(
+      userCompany: state.userCompany,
+      client: client,
+    )}');
+
     return EditScaffold(
       isFullscreen: isFullscreen,
       entity: expense,

@@ -654,8 +654,9 @@ abstract class ExpenseEntity extends Object
 
   bool get canBeStarted =>
       isRecurring &&
-      [kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
-          .contains(calculatedStatusId);
+      ([kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
+              .contains(calculatedStatusId) ||
+          statusId == null);
 
   bool get canBeStopped =>
       isRecurring &&

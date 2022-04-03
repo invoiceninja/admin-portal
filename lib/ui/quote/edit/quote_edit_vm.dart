@@ -135,10 +135,6 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               } else if (action != null && action.requiresSecondRequest) {
                 handleEntityAction(savedQuote, action);
                 viewEntity(entity: savedQuote, force: true);
-                // TODO remove once backend action is supported
-              } else if (action == EntityAction.approve) {
-                handleEntityAction(savedQuote, action);
-                viewEntity(entity: savedQuote, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
