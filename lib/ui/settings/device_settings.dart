@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -281,9 +282,11 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       subtitle: LiveText(() {
                         return localization.lastUpdated +
                             ': ' +
-                            timeago.format(convertTimestampToDate(
-                                (state.userCompanyState.lastUpdated / 1000)
-                                    .round()));
+                            timeago.format(
+                                convertTimestampToDate(
+                                    (state.userCompanyState.lastUpdated / 1000)
+                                        .round()),
+                                locale: localeSelector(state, twoLetter: true));
                       }),
                       onTap: () {
                         viewModel.onRefreshTap(context);

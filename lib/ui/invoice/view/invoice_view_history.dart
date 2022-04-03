@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 // Package imports:
 import 'package:timeago/timeago.dart' as timeago;
@@ -86,7 +87,8 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
                 showTime: true,
               ) +
               ' • ' +
-              timeago.format(convertTimestampToDate(history.createdAt))),
+              timeago.format(convertTimestampToDate(history.createdAt),
+                  locale: localeSelector(state, twoLetter: true))),
           trailing: Icon(Icons.chevron_right),
           onTap: () =>
               viewModel.onViewPdf(context, invoice, history.activityId),

@@ -120,7 +120,7 @@ List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
   return list;
 }
 
-String localeSelector(AppState state) {
+String localeSelector(AppState state, {bool twoLetter = false}) {
   final locale = state.staticState
           ?.languageMap[state.company?.settings?.languageId]?.locale ??
       'en';
@@ -128,6 +128,8 @@ String localeSelector(AppState state) {
   // https://github.com/flutter/flutter/issues/32090
   if (locale == 'mk_MK' || locale == 'sq') {
     return 'en';
+  } else if (twoLetter) {
+    return locale.split('_').first;
   } else {
     return locale;
   }

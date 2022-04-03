@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
@@ -157,7 +158,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
         subtitle: subtitle,
         // TODO this needs to be localized
         trailing: LiveText(
-          () => timeago.format(history.dateTime, locale: 'en_short'),
+          () => timeago.format(history.dateTime,
+              locale: localeSelector(state, twoLetter: true) + '_short'),
           duration: Duration(minutes: 1),
         ),
         /*
@@ -195,7 +197,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 },
               )
             : LiveText(
-                () => timeago.format(history.dateTime, locale: 'en_short'),
+                () => timeago.format(history.dateTime, locale: localeSelector(state, twoLetter: true) + '_short'),
                 duration: Duration(minutes: 1),
               ),
 
