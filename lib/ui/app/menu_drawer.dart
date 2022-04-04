@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -366,6 +367,47 @@ class MenuDrawer extends StatelessWidget {
                                     },
                                   ),
                                 ),
+                            if (state.userCompany.isOwner &&
+                                !isPaidAccount(context) &&
+                                !isApple())
+                              Material(
+                                child: Tooltip(
+                                  message: state.isMenuCollapsed
+                                      ? localization.upgrade
+                                      : '',
+                                  child: ListTile(
+                                    dense: true,
+                                    tileColor: Colors.green,
+                                    leading: Padding(
+                                      padding: const EdgeInsets.only(left: 4),
+                                      child: Icon(
+                                        Icons.arrow_circle_up,
+                                        size: 22,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    title: state.isMenuCollapsed
+                                        ? SizedBox()
+                                        : Text(
+                                            localization.upgrade,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .copyWith(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                ),
+                                          ),
+                                    onTap: () {
+                                      store.dispatch(ViewSettings(
+                                          clearFilter: true,
+                                          company: company,
+                                          user: state.user,
+                                          section: kSettingsAccountManagement));
+                                    },
+                                  ),
+                                ),
+                              ),
                             DrawerTile(
                               company: company,
                               icon: getEntityIcon(EntityType.dashboard),
@@ -823,31 +865,6 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.orange,
                   ),
                 ),
-            if (isHosted(context) && !isPaidAccount(context) && !isApple())
-              IconButton(
-                tooltip: localization.upgrade,
-                icon: Icon(Icons.arrow_circle_up),
-                color: Colors.green,
-                onPressed: () async {
-                  /*
-                  if (isHosted(context) &&
-                      !kIsWeb &&
-                      (Platform.isIOS || Platform.isAndroid)) {
-                    showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return UpgradeDialog();
-                        });
-                  }
-                  */
-
-                  if (isHosted(context)) {
-                    launch(state.userCompany.ninjaPortalUrl);
-                  } else {
-                    launch(kWhiteLabelUrl);
-                  }
-                },
-              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
