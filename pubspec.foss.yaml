@@ -31,7 +31,7 @@ dependencies:
   built_collection: ^5.1.0
   memoize: ^3.0.0
   cached_network_image: 3.0.0 # imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-  url_launcher: ^6.0.9
+  url_launcher: ^6.0.20
   share: ^2.0.4
   intl: ^0.17.0
   flutter_slidable: ^1.1.0
