@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -213,6 +214,67 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     }
   }
 
+  void _initTimeago() {
+    final locale = localeSelector(widget.store.state, twoLetter: true);
+    if (locale == 'ar') {
+      timeago.setLocaleMessages('ar', timeago.ArMessages());
+      timeago.setLocaleMessages('ar_short', timeago.ArMessages());
+    } else if (locale == 'ca') {
+      timeago.setLocaleMessages('ca', timeago.CaMessages());
+      timeago.setLocaleMessages('ca_short', timeago.CaMessages());
+    } else if (locale == 'cs') {
+      timeago.setLocaleMessages('cs', timeago.CsMessages());
+      timeago.setLocaleMessages('cs_short', timeago.CsMessages());
+    } else if (locale == 'da') {
+      timeago.setLocaleMessages('da', timeago.DaMessages());
+      timeago.setLocaleMessages('da_short', timeago.DaMessages());
+    } else if (locale == 'de') {
+      timeago.setLocaleMessages('de', timeago.DeMessages());
+      timeago.setLocaleMessages('de_short', timeago.DeMessages());
+    } else if (locale == 'en') {
+      timeago.setLocaleMessages('en', timeago.EnMessages());
+      timeago.setLocaleMessages('en_short', timeago.EnMessages());
+    } else if (locale == 'es') {
+      timeago.setLocaleMessages('es', timeago.EsMessages());
+      timeago.setLocaleMessages('es_short', timeago.EsMessages());
+    } else if (locale == 'fa') {
+      timeago.setLocaleMessages('fa', timeago.FaMessages());
+    } else if (locale == 'fr') {
+      timeago.setLocaleMessages('fr', timeago.FrMessages());
+      timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
+    } else if (locale == 'it') {
+      timeago.setLocaleMessages('it', timeago.ItMessages());
+      timeago.setLocaleMessages('it_short', timeago.ItShortMessages());
+    } else if (locale == 'ja') {
+      timeago.setLocaleMessages('ja', timeago.JaMessages());
+    } else if (locale == 'nb') {
+      timeago.setLocaleMessages('nb', timeago.NbNoMessages());
+      timeago.setLocaleMessages('nb_short', timeago.NbNoShortMessages());
+    } else if (locale == 'nl') {
+      timeago.setLocaleMessages('nl', timeago.NlMessages());
+      timeago.setLocaleMessages('nl_short', timeago.NlShortMessages());
+    } else if (locale == 'pl') {
+      timeago.setLocaleMessages('pl', timeago.PlMessages());
+    } else if (locale == 'pt') {
+      timeago.setLocaleMessages('pt', timeago.PtBrMessages());
+      timeago.setLocaleMessages('pt_short', timeago.PtBrShortMessages());
+    } else if (locale == 'ro') {
+      timeago.setLocaleMessages('ro', timeago.RoMessages());
+      timeago.setLocaleMessages('ro_short', timeago.RoShortMessages());
+    } else if (locale == 'ru') {
+      timeago.setLocaleMessages('ru', timeago.RuMessages());
+      timeago.setLocaleMessages('ru_short', timeago.RuShortMessages());
+    } else if (locale == 'sv') {
+      timeago.setLocaleMessages('sv', timeago.SvMessages());
+      timeago.setLocaleMessages('sv_short', timeago.SvShortMessages());
+    } else if (locale == 'th') {
+      timeago.setLocaleMessages('th', timeago.ThMessages());
+      timeago.setLocaleMessages('th_short', timeago.ThShortMessages());
+    } else if (locale == 'zh') {
+      timeago.setLocaleMessages('zh', timeago.ZhMessages());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
@@ -229,6 +291,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           });
           Intl.defaultLocale = localeSelector(state);
           final locale = AppLocalization.createLocale(localeSelector(state));
+          _initTimeago();
 
           final textButtonTheme = TextButton.styleFrom(
             minimumSize: Size(88, 36),

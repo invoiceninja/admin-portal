@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -441,6 +442,9 @@ void handleTaskAction(
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: task.clone);
+      break;
+    case EntityAction.changeStatus:
+      changeTaskStatusDialog(context: context, task: task);
       break;
     case EntityAction.restore:
       final message = taskIds.length > 1

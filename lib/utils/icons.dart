@@ -79,7 +79,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.settings:
       return Icons.settings;
     case EntityAction.refundPayment:
-    case EntityAction.cancel:
+    case EntityAction.cancelInvoice:
       return Icons.remove_circle_outline;
     case EntityAction.reverse:
       return Icons.undo;
@@ -94,6 +94,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.delete_forever;
     case EntityAction.viewInvoice:
       return MdiIcons.fileAccount;
+    case EntityAction.changeStatus:
+      return Icons.adjust;
     default:
       return null;
   }

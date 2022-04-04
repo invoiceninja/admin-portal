@@ -66,7 +66,7 @@ const EntityAction _$stop = const EntityAction._('stop');
 const EntityAction _$toggleMultiselect =
     const EntityAction._('toggleMultiselect');
 const EntityAction _$reverse = const EntityAction._('reverse');
-const EntityAction _$cancel = const EntityAction._('cancel');
+const EntityAction _$cancelInvoice = const EntityAction._('cancelInvoice');
 const EntityAction _$copy = const EntityAction._('copy');
 const EntityAction _$invoiceTask = const EntityAction._('invoiceTask');
 const EntityAction _$invoiceExpense = const EntityAction._('invoiceExpense');
@@ -74,6 +74,7 @@ const EntityAction _$invoiceProject = const EntityAction._('invoiceProject');
 const EntityAction _$resendInvite = const EntityAction._('resendInvite');
 const EntityAction _$disconnect = const EntityAction._('disconnect');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
+const EntityAction _$changeStatus = const EntityAction._('changeStatus');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -183,8 +184,8 @@ EntityAction _$valueOf(String name) {
       return _$toggleMultiselect;
     case 'reverse':
       return _$reverse;
-    case 'cancel':
-      return _$cancel;
+    case 'cancelInvoice':
+      return _$cancelInvoice;
     case 'copy':
       return _$copy;
     case 'invoiceTask':
@@ -199,6 +200,8 @@ EntityAction _$valueOf(String name) {
       return _$disconnect;
     case 'viewInvoice':
       return _$viewInvoice;
+    case 'changeStatus':
+      return _$changeStatus;
     default:
       throw new ArgumentError(name);
   }
@@ -259,7 +262,7 @@ final BuiltSet<EntityAction> _$values =
   _$stop,
   _$toggleMultiselect,
   _$reverse,
-  _$cancel,
+  _$cancelInvoice,
   _$copy,
   _$invoiceTask,
   _$invoiceExpense,
@@ -267,6 +270,7 @@ final BuiltSet<EntityAction> _$values =
   _$resendInvite,
   _$disconnect,
   _$viewInvoice,
+  _$changeStatus,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

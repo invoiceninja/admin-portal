@@ -100,7 +100,7 @@ class EntityAction extends EnumClass {
   static const EntityAction stop = _$stop;
   static const EntityAction toggleMultiselect = _$toggleMultiselect;
   static const EntityAction reverse = _$reverse;
-  static const EntityAction cancel = _$cancel;
+  static const EntityAction cancelInvoice = _$cancelInvoice;
   static const EntityAction copy = _$copy;
   static const EntityAction invoiceTask = _$invoiceTask;
   static const EntityAction invoiceExpense = _$invoiceExpense;
@@ -108,6 +108,7 @@ class EntityAction extends EnumClass {
   static const EntityAction resendInvite = _$resendInvite;
   static const EntityAction disconnect = _$disconnect;
   static const EntityAction viewInvoice = _$viewInvoice;
+  static const EntityAction changeStatus = _$changeStatus;
 
   @override
   String toString() {
@@ -123,7 +124,7 @@ class EntityAction extends EnumClass {
         EntityAction.markSent,
         EntityAction.convertToInvoice,
         EntityAction.approve,
-        EntityAction.cancel,
+        EntityAction.cancelInvoice,
         EntityAction.resume,
         EntityAction.archive,
         EntityAction.delete,
@@ -144,6 +145,10 @@ class EntityAction extends EnumClass {
 
     if (value.startsWith('email')) {
       return 'email';
+    }
+
+    if (this == EntityAction.cancelInvoice) {
+      return 'cancel';
     }
 
     // else if (value == 'approve') {

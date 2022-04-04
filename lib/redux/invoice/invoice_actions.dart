@@ -542,7 +542,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             ..entityType = EntityType.credit
             ..designId = designId));
       break;
-    case EntityAction.cancel:
+    case EntityAction.cancelInvoice:
       store.dispatch(CancelInvoicesRequest(
           snackBarCompleter<Null>(
               context,

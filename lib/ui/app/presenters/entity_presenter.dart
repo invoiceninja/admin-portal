@@ -140,6 +140,11 @@ class EntityPresenter {
       'duration',
       'net_amount',
       'net_total',
+      'age_group_0',
+      'age_group_30',
+      'age_group_60',
+      'age_group_90',
+      'age_group_120',
     ].contains(field);
 
     return value;

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 // Package imports:
 import 'package:timeago/timeago.dart' as timeago;
@@ -75,8 +76,9 @@ class _DesignViewState extends State<DesignView> {
               value: '$count',
               label: localization.count,
               secondLabel: localization.lastUpdated,
-              secondValue:
-                  timeago.format(convertTimestampToDate(design.updatedAt)),
+              secondValue: timeago.format(
+                  convertTimestampToDate(design.updatedAt),
+                  locale: localeSelector(state, twoLetter: true)),
             ),
             ListDivider(),
             if (company.isModuleEnabled(EntityType.invoice))

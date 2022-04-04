@@ -9,6 +9,7 @@ import 'package:boardview/boardview_controller.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_card.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_status.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view_vm.dart';
@@ -52,20 +53,8 @@ class KanbanViewState extends State<KanbanView> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
-    _statuses = state.taskStatusState.list
-        .where((statusId) => state.taskStatusState.get(statusId).isActive)
-        .toList();
-
-    _statuses.sort((statusIdA, statusIdB) {
-      final statusA = state.taskStatusState.get(statusIdA);
-      final statusB = state.taskStatusState.get(statusIdB);
-      if (statusA.statusOrder == statusB.statusOrder) {
-        return statusB.updatedAt.compareTo(statusA.updatedAt);
-      } else {
-        return (statusA.statusOrder ?? 99999)
-            .compareTo(statusB.statusOrder ?? 99999);
-      }
-    });
+    _statuses = memoizedSortedActiveTaskStatusIds(
+        state.taskStatusState.list, state.taskStatusState.map);
 
     _tasks = {};
 

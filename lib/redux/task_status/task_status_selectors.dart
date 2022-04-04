@@ -8,6 +8,39 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedSortedActiveTaskStatusIds = memo2((
+  BuiltList<String> taskStatusList,
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
+) =>
+    sortedActiveTaskStatusIds(
+      taskStatusList: taskStatusList,
+      taskStatusMap: taskStatusMap,
+    ));
+
+List<String> sortedActiveTaskStatusIds({
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
+  BuiltList<String> taskStatusList,
+}) {
+  final statuses = taskStatusList
+      .where((statusId) =>
+          taskStatusMap.containsKey(statusId) &&
+          taskStatusMap[statusId].isActive)
+      .toList();
+
+  statuses.sort((statusIdA, statusIdB) {
+    final statusA = taskStatusMap[statusIdA];
+    final statusB = taskStatusMap[statusIdB];
+    if (statusA.statusOrder == statusB.statusOrder) {
+      return statusB.updatedAt.compareTo(statusA.updatedAt);
+    } else {
+      return (statusA.statusOrder ?? 99999)
+          .compareTo(statusB.statusOrder ?? 99999);
+    }
+  });
+
+  return statuses;
+}
+
 var memoizedDropdownTaskStatusList = memo4(
     (BuiltMap<String, TaskStatusEntity> taskStatusMap,
             BuiltList<String> taskStatusList,
