@@ -91,6 +91,8 @@ class InvoiceRepository {
       url += '&paid=true';
     } else if (action == EntityAction.markSent) {
       url += '&mark_sent=true';
+    } else if (action == EntityAction.cancelInvoice) {
+      url += '&cancel=true';
     }
 
     if (invoice.isNew) {

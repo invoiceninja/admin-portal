@@ -139,13 +139,6 @@ class TaskEditVM {
               } else if (action != null && action.requiresSecondRequest) {
                 handleEntityAction(savedTask, action);
                 viewEntity(entity: savedTask, force: true);
-                // TODO remove once backend action is supported
-              } else if (action == EntityAction.start) {
-                handleEntityAction(savedTask, action);
-                viewEntity(entity: savedTask, force: true);
-              } else if (action == EntityAction.stop) {
-                handleEntityAction(savedTask, action);
-                viewEntity(entity: savedTask, force: true);
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
