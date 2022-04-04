@@ -154,7 +154,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if ((payment.isForInvoice != true || invoicePaymentables.isEmpty) &&
+    if (invoicePaymentables.isEmpty &&
         invoicePaymentables
             .where((paymentable) => paymentable.isEmpty)
             .isEmpty) {
@@ -222,17 +222,16 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                if (payment.isForInvoice != true && payment.isForCredit != true)
-                  DecoratedFormField(
-                    controller: _amountController,
-                    autocorrect: false,
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
-                    label: paymentTotal == 0
-                        ? localization.amount
-                        : amountPlaceholder,
-                    onSavePressed: viewModel.onSavePressed,
-                  ),
+                DecoratedFormField(
+                  controller: _amountController,
+                  autocorrect: false,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                  label: paymentTotal == 0
+                      ? localization.amount
+                      : amountPlaceholder,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
               ] else
                 DecoratedFormField(
                   controller: _numberController,
@@ -278,8 +277,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
               if (payment.isNew || payment.isApplying == true)
-                if (payment.isForInvoice != true &&
-                    state.company.isModuleEnabled(EntityType.credit))
+                if (state.company.isModuleEnabled(EntityType.credit))
                   for (var index = 0;
                       index < creditPaymentables.length;
                       index++)
@@ -736,7 +734,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ],
         if ((widget.entityType == EntityType.invoice &&
                 payment.invoices.isNotEmpty &&
-                payment.isForInvoice != true &&
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
