@@ -320,14 +320,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           Expanded(
             child: ColoredBox(
               color: Colors.white,
-              child: ExampleEditor(
-                value: _rawBodyPreview,
-                onChanged: (value) {
-                  if (value.trim() != _bodyController.text.trim()) {
-                    _bodyController.text = value;
-                    _onChanged();
-                  }
-                },
+              child: IgnorePointer(
+                ignoring: !enableCustomEmail,
+                child: ExampleEditor(
+                  value: _rawBodyPreview,
+                  onChanged: (value) {
+                    if (value.trim() != _bodyController.text.trim()) {
+                      _bodyController.text = value;
+                      _onChanged();
+                    }
+                  },
+                ),
               ),
             ),
           )
