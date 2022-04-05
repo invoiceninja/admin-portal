@@ -61,7 +61,7 @@ List<String> dropdownCreditSelector(
         invoice: creditB,
         clientMap: clientMap,
         sortAscending: true,
-        sortField: ClientFields.name,
+        sortField: CreditFields.number,
         userMap: userMap);
   });
 
