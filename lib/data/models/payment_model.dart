@@ -114,7 +114,6 @@ abstract class PaymentEntity extends Object
       clientContactId: '',
       currencyId: '',
       invitationId: '',
-      isForInvoice: false,
       isApplying: false,
     );
   }
@@ -194,12 +193,6 @@ abstract class PaymentEntity extends Object
 
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
-
-  @nullable
-  bool get isForInvoice;
-
-  @nullable
-  bool get isForCredit;
 
   @nullable
   bool get isApplying;

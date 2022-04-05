@@ -154,10 +154,9 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if ((payment.isForInvoice != true || invoicePaymentables.isEmpty) &&
-        invoicePaymentables
-            .where((paymentable) => paymentable.isEmpty)
-            .isEmpty) {
+    if (invoicePaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
       invoicePaymentables.add(PaymentableEntity());
     }
 
@@ -177,18 +176,27 @@ class _PaymentEditState extends State<PaymentEdit> {
       creditTotal += credit.amount;
     });
 
-    String amountPlaceholder;
-    if (paymentTotal != 0) {
-      amountPlaceholder = '${localization.amount} ';
-      if (creditTotal == 0) {
-        amountPlaceholder +=
-            formatNumber(paymentTotal, context, clientId: payment.clientId);
-      } else {
-        amountPlaceholder += formatNumber(paymentTotal - creditTotal, context,
-                clientId: payment.clientId) +
-            ' + ${localization.credit} ' +
-            formatNumber(creditTotal, context, clientId: payment.clientId);
-      }
+    String amountPlaceholder = localization.amount;
+
+    if (payment.invoices.length > 1) {
+      amountPlaceholder += ' • ' +
+          localization.total +
+          ' ' +
+          formatNumber(paymentTotal, context, clientId: payment.clientId);
+    }
+
+    if (payment.credits.length > 1) {
+      amountPlaceholder += ' • ' +
+          localization.credit +
+          ' ' +
+          formatNumber(creditTotal, context, clientId: payment.clientId);
+    }
+
+    double limit;
+    if (payment.amount != 0) {
+      limit = payment.amount - paymentTotal;
+    } else if (creditTotal != 0) {
+      limit = creditTotal - paymentTotal;
     }
 
     final body = Form(
@@ -222,17 +230,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                if (payment.isForInvoice != true && payment.isForCredit != true)
-                  DecoratedFormField(
-                    controller: _amountController,
-                    autocorrect: false,
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
-                    label: paymentTotal == 0
-                        ? localization.amount
-                        : amountPlaceholder,
-                    onSavePressed: viewModel.onSavePressed,
-                  ),
+                DecoratedFormField(
+                  controller: _amountController,
+                  autocorrect: false,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                  label: amountPlaceholder,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
               ] else
                 DecoratedFormField(
                   controller: _numberController,
@@ -251,9 +256,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     paymentable: invoicePaymentables[index],
                     index: index,
                     entityType: EntityType.invoice,
-                    limit: payment.amount == 0
-                        ? null
-                        : payment.amount - paymentTotal,
+                    limit: limit,
                   ),
               if (payment.isApplying != true)
                 DatePicker(
@@ -278,8 +281,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
               if (payment.isNew || payment.isApplying == true)
-                if (payment.isForInvoice != true &&
-                    state.company.isModuleEnabled(EntityType.credit))
+                if (state.company.isModuleEnabled(EntityType.credit))
                   for (var index = 0;
                       index < creditPaymentables.length;
                       index++)
@@ -727,7 +729,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               autocorrect: false,
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
-              label: payment.isForInvoice == true
+              label: widget.entityType == EntityType.invoice
                   ? localization.amount
                   : localization.applied,
               onSavePressed: viewModel.onSavePressed,
@@ -736,7 +738,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ],
         if ((widget.entityType == EntityType.invoice &&
                 payment.invoices.isNotEmpty &&
-                payment.isForInvoice != true &&
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&

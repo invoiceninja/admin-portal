@@ -168,8 +168,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         _defaultBody = html2md.convert(_defaultBody);
       }
     });
-
-    _onChanged();
   }
 
   void _onTextChanged() {
@@ -353,6 +351,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   showBlank: false,
                   onChanged: (dynamic value) => setState(() {
                     _loadTemplate(value);
+                    _onChanged();
                     viewModel.onTemplateChanged(value);
                   }),
                   items: EmailTemplate.values.where((value) {
