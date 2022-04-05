@@ -179,8 +179,10 @@ class _PaymentEditState extends State<PaymentEdit> {
     String amountPlaceholder = localization.amount;
 
     if (payment.invoices.length > 1) {
-      amountPlaceholder +=
-          ' ' + formatNumber(paymentTotal, context, clientId: payment.clientId);
+      amountPlaceholder += ' • ' +
+          localization.total +
+          ' ' +
+          formatNumber(paymentTotal, context, clientId: payment.clientId);
     }
 
     if (payment.credits.length > 1) {
