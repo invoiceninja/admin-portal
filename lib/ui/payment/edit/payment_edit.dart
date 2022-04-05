@@ -176,18 +176,18 @@ class _PaymentEditState extends State<PaymentEdit> {
       creditTotal += credit.amount;
     });
 
-    String amountPlaceholder;
-    if (paymentTotal != 0) {
-      amountPlaceholder = '${localization.amount} ';
-      if (creditTotal == 0) {
-        amountPlaceholder +=
-            formatNumber(paymentTotal, context, clientId: payment.clientId);
-      } else {
-        amountPlaceholder += formatNumber(paymentTotal - creditTotal, context,
-                clientId: payment.clientId) +
-            ' + ${localization.credit} ' +
-            formatNumber(creditTotal, context, clientId: payment.clientId);
-      }
+    String amountPlaceholder = localization.amount;
+
+    if (payment.invoices.length > 1) {
+      amountPlaceholder +=
+          ' ' + formatNumber(paymentTotal, context, clientId: payment.clientId);
+    }
+
+    if (payment.credits.length > 1) {
+      amountPlaceholder += ' • ' +
+          localization.credit +
+          ' ' +
+          formatNumber(creditTotal, context, clientId: payment.clientId);
     }
 
     double limit;
@@ -233,9 +233,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   autocorrect: false,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: true, signed: true),
-                  label: paymentTotal == 0
-                      ? localization.amount
-                      : amountPlaceholder,
+                  label: amountPlaceholder,
                   onSavePressed: viewModel.onSavePressed,
                 ),
               ] else
