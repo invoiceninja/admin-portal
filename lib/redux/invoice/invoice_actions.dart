@@ -645,7 +645,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(
         context: context,
         entity: PaymentEntity(state: state).rebuild((b) => b
-          ..isForInvoice = true
           ..clientId = invoice.clientId
           ..invoices.addAll(invoices
               .where((invoice) => !(invoice as InvoiceEntity).isPaid)

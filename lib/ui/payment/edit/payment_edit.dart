@@ -191,6 +191,13 @@ class _PaymentEditState extends State<PaymentEdit> {
       }
     }
 
+    double limit;
+    if (payment.amount != 0) {
+      limit = payment.amount - paymentTotal;
+    } else {
+      limit = creditTotal;
+    }
+
     final body = Form(
       key: _formKey,
       child: Column(
@@ -250,9 +257,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     paymentable: invoicePaymentables[index],
                     index: index,
                     entityType: EntityType.invoice,
-                    limit: payment.amount == 0
-                        ? null
-                        : payment.amount - paymentTotal,
+                    limit: limit,
                   ),
               if (payment.isApplying != true)
                 DatePicker(
@@ -725,7 +730,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               autocorrect: false,
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
-              label: payment.isForInvoice == true
+              label: widget.entityType == EntityType.invoice
                   ? localization.amount
                   : localization.applied,
               onSavePressed: viewModel.onSavePressed,
