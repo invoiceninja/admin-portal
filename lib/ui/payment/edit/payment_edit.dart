@@ -154,10 +154,9 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if (invoicePaymentables.isEmpty &&
-        invoicePaymentables
-            .where((paymentable) => paymentable.isEmpty)
-            .isEmpty) {
+    if (invoicePaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
       invoicePaymentables.add(PaymentableEntity());
     }
 
@@ -194,8 +193,8 @@ class _PaymentEditState extends State<PaymentEdit> {
     double limit;
     if (payment.amount != 0) {
       limit = payment.amount - paymentTotal;
-    } else {
-      limit = creditTotal;
+    } else if (creditTotal != 0) {
+      limit = creditTotal - paymentTotal;
     }
 
     final body = Form(
