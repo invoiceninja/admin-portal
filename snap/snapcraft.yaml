@@ -1,6 +1,25 @@
 name: invoiceninja
 version: '5.0.77'
 summary: Create invoices, accept payments, track expenses & time-tasks
+description: If the app fails to run using `snap run invoiceninja` it may help to run `/snap/invoiceninja/current/bin/invoiceninja` instead
+
+Create. Send. Get Paid.
+
+Invoice Ninja is a leading source-code available platform for SMB’s to invoice, accept payments, track expenses & time billable-tasks. Designed for freelancers and small to medium size businesses, Invoice Ninja is a suite of apps to help you get paid.
+
+• Incredibly easy to use
+Invoice Ninja was built to serve freelancers and business owners with a complete suite of invoicing & payment tools to advance your business.
+
+• Invoicing & Payments
+Every feature is geared towards accurate and secure invoicing and getting you paid. With Invoice Ninja you can send beautiful branded invoices with minimum of effort and maximum professionalism.
+
+• Time Tracker & Projects
+Create projects and individual tasks per project. When done, simply “Send task to invoice” and all details will be sent ready for your clients to pay!
+
+• Track Vendors & Expenses
+With Invoice Ninja, all your earnings, expenses, clients and vendors are stored and managed in one system. Categorize your vendors & re-invoice expenses to clients, or simply run expense reports.
+
+All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft.
 confinement: strict
 base: core18
 grade: stable
