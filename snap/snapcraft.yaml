@@ -1,7 +1,7 @@
 name: invoiceninja
 version: '5.0.77'
 summary: Create invoices, accept payments, track expenses & time-tasks
-description: If the app fails to run using `snap run invoiceninja` it may help to run `/snap/invoiceninja/current/bin/invoiceninja` instead
+description: "### Note: if the app fails to run using `snap run invoiceninja` it may help to run `/snap/invoiceninja/current/bin/invoiceninja` instead
 
 Create. Send. Get Paid.
 
@@ -19,7 +19,7 @@ Create projects and individual tasks per project. When done, simply “Send task
 • Track Vendors & Expenses
 With Invoice Ninja, all your earnings, expenses, clients and vendors are stored and managed in one system. Categorize your vendors & re-invoice expenses to clients, or simply run expense reports.
 
-All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft.
+All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft."
 confinement: strict
 base: core18
 grade: stable
