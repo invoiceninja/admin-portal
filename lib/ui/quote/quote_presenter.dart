@@ -51,6 +51,8 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.clientCity,
       QuoteFields.clientPostalCode,
       QuoteFields.clientCountry,
+      QuoteFields.partial,
+      QuoteFields.partialDueDate,
     ];
   }
 
@@ -132,9 +134,12 @@ class QuotePresenter extends EntityPresenter {
             quoteContactSelector(quote, state.clientState.get(quote.clientId));
         if (field == QuoteFields.contactName) {
           return Text(contact?.fullName ?? '');
-        } else {
-          return Text(contact?.email ?? '');
         }
+        return Text(contact?.email ?? '');
+      case QuoteFields.partial:
+        return Text(formatNumber(quote.partial, context));
+      case QuoteFields.partialDueDate:
+        return Text(formatDate(quote.partialDueDate, context));
     }
 
     return super.getField(field: field, context: context);

@@ -51,6 +51,8 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.clientCity,
       CreditFields.clientPostalCode,
       CreditFields.clientCountry,
+      CreditFields.partial,
+      CreditFields.partialDueDate,
     ];
   }
 
@@ -139,9 +141,12 @@ class CreditPresenter extends EntityPresenter {
             credit, state.clientState.get(credit.clientId));
         if (field == CreditFields.contactName) {
           return Text(contact?.fullName ?? '');
-        } else {
-          return Text(contact?.email ?? '');
         }
+        return Text(contact?.email ?? '');
+      case CreditFields.partial:
+        return Text(formatNumber(credit.partial, context));
+      case CreditFields.partialDueDate:
+        return Text(formatDate(credit.partialDueDate, context));
     }
 
     return super.getField(field: field, context: context);

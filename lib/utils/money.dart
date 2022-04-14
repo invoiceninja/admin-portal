@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 
 double getExchangeRate(BuiltMap<String, CurrencyEntity> currencyMap,
     {String fromCurrencyId, String toCurrencyId}) {
-  if (fromCurrencyId == null || toCurrencyId == null) {
+  if ((fromCurrencyId ?? '').isEmpty || (toCurrencyId ?? '').isEmpty) {
     return 1;
   }
   final fromCurrency = currencyMap[fromCurrencyId];

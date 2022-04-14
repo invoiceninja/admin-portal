@@ -57,6 +57,8 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.clientCity,
       InvoiceFields.clientPostalCode,
       InvoiceFields.clientCountry,
+      InvoiceFields.partial,
+      InvoiceFields.partialDueDate,
     ];
   }
 
@@ -158,9 +160,12 @@ class InvoicePresenter extends EntityPresenter {
             invoice, state.clientState.get(invoice.clientId));
         if (field == InvoiceFields.contactName) {
           return Text(contact?.fullName ?? '');
-        } else {
-          return Text(contact?.email ?? '');
         }
+        return Text(contact?.email ?? '');
+      case InvoiceFields.partial:
+        return Text(formatNumber(invoice.partial, context));
+      case InvoiceFields.partialDueDate:
+        return Text(formatDate(invoice.partialDueDate, context));
     }
 
     return super.getField(field: field, context: context);

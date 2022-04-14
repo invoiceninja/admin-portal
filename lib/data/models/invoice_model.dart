@@ -776,6 +776,12 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.clientCountry:
         response = clientA.countryId.compareTo(clientB.countryId);
         break;
+      case InvoiceFields.partial:
+        response = invoiceA.partial.compareTo(invoiceB.partial);
+        break;
+      case InvoiceFields.partialDueDate:
+        response = invoiceA.partialDueDate.compareTo(invoiceB.partialDueDate);
+        break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
         break;
