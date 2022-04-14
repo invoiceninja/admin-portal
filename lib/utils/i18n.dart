@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'create_project': 'Create Project',
+      'update_project': 'Update Project',
       'view_task': 'View Task',
       'cancel_invoice': 'Cancel',
       'changed_status': 'Successfully changed task status',
@@ -74984,6 +74986,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get viewTask =>
       _localizedValues[localeCode]['view_task'] ??
       _localizedValues['en']['view_task'];
+
+  String get createProject =>
+      _localizedValues[localeCode]['create_project'] ??
+      _localizedValues['en']['create_project'];
+
+  String get updateProject =>
+      _localizedValues[localeCode]['update_project'] ??
+      _localizedValues['en']['update_project'];
 
   // STARTER: lang field - do not remove comment
 

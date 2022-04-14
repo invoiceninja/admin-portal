@@ -97,6 +97,8 @@ abstract class WebhookEntity extends Object
   static const EVENT_LATE_INVOICE = '22';
   static const EVENT_EXPIRED_QUOTE = '23';
   static const EVENT_REMIND_INVOICE = '24';
+  static const EVENT_CREATE_PROJECT = '25';
+  static const EVENT_UPDATE_PROJECT = '26';
 
   static const EVENT_MAP = {
     EVENT_CREATE_CLIENT: 'create_client',
@@ -123,6 +125,8 @@ abstract class WebhookEntity extends Object
     EVENT_LATE_INVOICE: 'late_invoice',
     EVENT_EXPIRED_QUOTE: 'expired_quote',
     EVENT_REMIND_INVOICE: 'remind_invoice',
+    EVENT_CREATE_PROJECT: 'create_project',
+    EVENT_UPDATE_PROJECT: 'update_project',
   };
 
   static const EVENTS = [
@@ -150,6 +154,8 @@ abstract class WebhookEntity extends Object
     EVENT_CREATE_TASK,
     EVENT_UPDATE_TASK,
     EVENT_DELETE_TASK,
+    EVENT_CREATE_PROJECT,
+    EVENT_UPDATE_PROJECT,
   ];
 
   @override
