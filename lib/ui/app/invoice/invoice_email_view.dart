@@ -155,7 +155,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               final company = widget.viewModel.state.company;
               if (company.markdownEmailEnabled &&
                   widget.viewModel.state.prefState.isDesktop &&
-                  _rawBodyPreview.startsWith('<p>')) {
+                  _rawBodyPreview.trim().startsWith('<')) {
                 _rawBodyPreview = html2md.convert(_rawBodyPreview);
               }
             }

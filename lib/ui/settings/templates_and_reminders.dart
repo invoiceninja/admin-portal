@@ -147,7 +147,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     if (viewModel.state.company.markdownEmailEnabled &&
         widget.viewModel.state.prefState.isDesktop &&
-        _bodyController.text.startsWith('<p>')) {
+        _bodyController.text.trim().startsWith('<')) {
       _bodyController.text = html2md.convert(_bodyController.text);
     }
 
@@ -164,7 +164,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
       if (state.company.markdownEmailEnabled &&
           widget.viewModel.state.prefState.isDesktop &&
-          _defaultBody.startsWith('<p>')) {
+          _defaultBody.trim().startsWith('<')) {
         _defaultBody = html2md.convert(_defaultBody);
       }
     });
