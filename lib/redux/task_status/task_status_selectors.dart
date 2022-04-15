@@ -64,7 +64,7 @@ List<String> dropdownTaskStatusesSelector(
     final taskStatusB = taskStatusMap[taskStatusBId];
     return taskStatusA.compareTo(
       sortAscending: true,
-      sortField: TaskStatusFields.name,
+      sortField: TaskStatusFields.order,
       taskStatus: taskStatusB,
     );
   });
