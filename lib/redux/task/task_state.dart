@@ -66,6 +66,7 @@ abstract class TaskUIState extends Object
       editing: TaskEntity(),
       selectedId: '',
       tabIndex: 0,
+      kanbanLastUpdated: 0,
     );
   }
 
@@ -87,6 +88,9 @@ abstract class TaskUIState extends Object
 
   @override
   String get editingId => editing.id;
+
+  @nullable
+  int get kanbanLastUpdated;
 
   static Serializer<TaskUIState> get serializer => _$taskUIStateSerializer;
 }
