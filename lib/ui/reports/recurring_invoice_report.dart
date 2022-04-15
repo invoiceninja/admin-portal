@@ -147,6 +147,11 @@ ReportResult recurringInvoiceReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId] ?? ClientEntity();
+
+    if (invoice.invitations.isEmpty) {
+      continue;
+    }
+
     final contact = client.getContact(invoice.invitations.first.contactId);
 
     if (invoice.isDeleted || client.isDeleted) {

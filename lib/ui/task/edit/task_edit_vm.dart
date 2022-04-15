@@ -85,6 +85,7 @@ class TaskEditVM {
       onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final task = store.state.taskUIState.editing;
+          final origTask = state.taskState.get(task.id);
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (!task.areTimesValid) {
@@ -112,6 +113,10 @@ class TaskEditVM {
               showToast(task.isNew
                   ? localization.createdTask
                   : localization.updatedTask);
+
+              if (origTask.statusId != savedTask.statusId) {
+                store.dispatch(UpdateKanban());
+              }
 
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));

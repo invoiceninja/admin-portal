@@ -879,8 +879,11 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isRecurringInvoice) {
-          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
-              .contains(statusId)) {
+          if ([
+            kRecurringInvoiceStatusDraft,
+            kRecurringInvoiceStatusPaused,
+            kRecurringInvoiceStatusCompleted,
+          ].contains(statusId)) {
             actions.add(EntityAction.start);
           } else if ([
             kRecurringInvoiceStatusPending,

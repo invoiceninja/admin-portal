@@ -18,7 +18,9 @@ EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
     ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action));
+    ..tabIndex = tabIndexReducer(state.tabIndex, action)
+    ..kanbanLastUpdated =
+        kanbanLastUpdatedReducer(state.kanbanLastUpdated, action));
 }
 
 final forceSelectedReducer = combineReducers<bool>([
@@ -38,6 +40,12 @@ final tabIndexReducer = combineReducers<int>([
   }),
   TypedReducer<int, PreviewEntity>((completer, action) {
     return 0;
+  }),
+]);
+
+final kanbanLastUpdatedReducer = combineReducers<int>([
+  TypedReducer<int, UpdateKanban>((completer, action) {
+    return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);
 

@@ -124,6 +124,11 @@ ReportResult quoteReport(
   for (var quoteId in quoteMap.keys) {
     final quote = quoteMap[quoteId];
     final client = clientMap[quote.clientId] ?? ClientEntity();
+
+    if (quote.invitations.isEmpty) {
+      continue;
+    }
+
     final contact = client.getContact(quote.invitations.first.contactId);
     //final vendor = vendorMap[quote.vendorId];
 

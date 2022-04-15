@@ -86,6 +86,12 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(TaskEntity)));
     }
+    value = object.kanbanLastUpdated;
+    if (value != null) {
+      result
+        ..add('kanbanLastUpdated')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.selectedId;
     if (value != null) {
       result
@@ -117,6 +123,10 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
+          break;
+        case 'kanbanLastUpdated':
+          result.kanbanLastUpdated = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -247,6 +257,8 @@ class _$TaskUIState extends TaskUIState {
   @override
   final int editingTimeIndex;
   @override
+  final int kanbanLastUpdated;
+  @override
   final ListUIState listUIState;
   @override
   final String selectedId;
@@ -265,6 +277,7 @@ class _$TaskUIState extends TaskUIState {
   _$TaskUIState._(
       {this.editing,
       this.editingTimeIndex,
+      this.kanbanLastUpdated,
       this.listUIState,
       this.selectedId,
       this.forceSelected,
@@ -290,6 +303,7 @@ class _$TaskUIState extends TaskUIState {
     return other is TaskUIState &&
         editing == other.editing &&
         editingTimeIndex == other.editingTimeIndex &&
+        kanbanLastUpdated == other.kanbanLastUpdated &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         forceSelected == other.forceSelected &&
@@ -307,8 +321,10 @@ class _$TaskUIState extends TaskUIState {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, editing.hashCode),
-                                editingTimeIndex.hashCode),
+                            $jc(
+                                $jc($jc(0, editing.hashCode),
+                                    editingTimeIndex.hashCode),
+                                kanbanLastUpdated.hashCode),
                             listUIState.hashCode),
                         selectedId.hashCode),
                     forceSelected.hashCode),
@@ -322,6 +338,7 @@ class _$TaskUIState extends TaskUIState {
     return (newBuiltValueToStringHelper('TaskUIState')
           ..add('editing', editing)
           ..add('editingTimeIndex', editingTimeIndex)
+          ..add('kanbanLastUpdated', kanbanLastUpdated)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('forceSelected', forceSelected)
@@ -343,6 +360,11 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   int get editingTimeIndex => _$this._editingTimeIndex;
   set editingTimeIndex(int editingTimeIndex) =>
       _$this._editingTimeIndex = editingTimeIndex;
+
+  int _kanbanLastUpdated;
+  int get kanbanLastUpdated => _$this._kanbanLastUpdated;
+  set kanbanLastUpdated(int kanbanLastUpdated) =>
+      _$this._kanbanLastUpdated = kanbanLastUpdated;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -380,6 +402,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
     if ($v != null) {
       _editing = $v.editing?.toBuilder();
       _editingTimeIndex = $v.editingTimeIndex;
+      _kanbanLastUpdated = $v.kanbanLastUpdated;
       _listUIState = $v.listUIState.toBuilder();
       _selectedId = $v.selectedId;
       _forceSelected = $v.forceSelected;
@@ -410,6 +433,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
           new _$TaskUIState._(
               editing: _editing?.build(),
               editingTimeIndex: editingTimeIndex,
+              kanbanLastUpdated: kanbanLastUpdated,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               forceSelected: forceSelected,
