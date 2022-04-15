@@ -126,6 +126,11 @@ ReportResult creditReport(
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
     final client = clientMap[credit.clientId] ?? ClientEntity();
+
+    if (credit.invitations.isEmpty) {
+      continue;
+    }
+
     final contact = client.getContact(credit.invitations.first.contactId);
 
     if (credit.isDeleted || client.isDeleted) {
