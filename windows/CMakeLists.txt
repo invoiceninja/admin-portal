@@ -7,7 +7,7 @@ cmake_policy(SET CMP0063 NEW)
 
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
-set(PDFIUM_VERSION "4929" CACHE STRING "" FORCE)
+set(PDFIUM_VERSION "latest" CACHE STRING "" FORCE)
 set(PDFIUM_ARCH "x64" CACHE STRING "" FORCE)
 
 # Configure build options.

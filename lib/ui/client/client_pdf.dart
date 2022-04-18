@@ -55,7 +55,6 @@ class ClientPdfView extends StatefulWidget {
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
   http.Response _response;
-  int _pageNumber = 1, _pageCount = 1;
 
   static const STATUS_ALL = 'all';
   static const STATUS_PAID = 'paid';
@@ -177,6 +176,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     final localization = AppLocalization.of(context);
     final client = widget.viewModel.client;
 
+    /*
     final pageSelector = _pageCount == 1
         ? <Widget>[]
         : [
@@ -195,6 +195,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               onPressed: _pageNumber < _pageCount ? () => null : null,
             ),
           ];
+          */
 
     bool showEmail = false; //isDesktop(context);
 
@@ -335,7 +336,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   if (isDesktop(context)) ...[
                     showPayments,
                     showAging,
-                    ...pageSelector,
+                    //...pageSelector,
                   ]
                 ],
               ),

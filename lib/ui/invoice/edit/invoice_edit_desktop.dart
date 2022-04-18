@@ -931,8 +931,6 @@ class __PdfPreviewState extends State<_PdfPreview> {
   final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   http.Response _response;
-  int _pageCount = 1;
-  int _currentPage = 1;
   bool _isLoading = false;
 
   @override
@@ -1012,6 +1010,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /*
               if (_pageCount > 1)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -1032,6 +1031,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                     ],
                   ),
                 ),
+                */
               Expanded(
                   child: _response == null
                       ? SizedBox()

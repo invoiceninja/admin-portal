@@ -97,6 +97,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final invoice = widget.viewModel.invoice;
     final client = state.clientState.get(invoice.clientId);
 
+    /*
     final pageSelector = _pageCount == 1
         ? <Widget>[]
         : [
@@ -115,6 +116,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
               onPressed: _pageNumber < _pageCount ? () => null : null,
             ),
           ];
+    */
 
     final activitySelector = _activityId == null || kIsWeb
         ? <Widget>[]
@@ -203,7 +205,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                           .title()),
                     ),
                     if (isDesktop(context)) ...activitySelector,
-                    if (isDesktop(context)) ...pageSelector,
+                    //if (isDesktop(context)) ...pageSelector,
                     if (isDesktop(context) &&
                         invoice.isInvoice &&
                         _activityId == null)
