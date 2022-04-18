@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -32,9 +32,6 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -551,8 +548,6 @@ class PdfDesignPreview extends StatefulWidget {
 }
 
 class _PdfDesignPreviewState extends State<PdfDesignPreview> {
-  PdfController _pdfController;
-
   String get _pdfString {
     if (widget.pdfBytes == null) {
       return '';
@@ -568,24 +563,6 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
     if (oldWidget.pdfBytes == widget.pdfBytes) {
       return;
     }
-
-    if (kIsWeb) {
-      WebUtils.registerWebView(_pdfString);
-    } else {
-      final document = PdfDocument.openData(widget.pdfBytes);
-      if (_pdfController == null) {
-        _pdfController = PdfController(document: document);
-      } else {
-        _pdfController.loadDocument(document);
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    _pdfController?.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -600,12 +577,9 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
             SizedBox()
           else if (kIsWeb)
             HtmlElementView(viewType: _pdfString)
-          else if (_pdfController != null)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: PdfView(
-                controller: _pdfController,
-              ),
+          else if (widget.pdfBytes != null)
+            PdfPreview(
+              build: (format) => widget.pdfBytes,
             )
           else
             SizedBox(),

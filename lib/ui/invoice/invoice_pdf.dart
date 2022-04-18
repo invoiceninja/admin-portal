@@ -12,13 +12,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:printing/printing.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -54,9 +53,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
   String _activityId;
-  String _pdfString;
   http.Response _response;
-  PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
   @override
@@ -82,37 +79,14 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       widget.viewModel.invoice,
       _isDeliveryNote,
       _activityId,
-    ).then((response) {
+    ).then((response) async {
       setState(() {
         _response = response;
         _isLoading = false;
       });
-
-      if (kIsWeb) {
-        _pdfString =
-            'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-        WebUtils.registerWebView(_pdfString);
-      } else {
-        final document = PdfDocument.openData(_response.bodyBytes);
-        if (_pdfController == null) {
-          _pdfController = PdfController(document: document);
-        } else {
-          // loadDocument is causing an error
-          //_pdfController.loadDocument(document);
-          _pdfController?.dispose();
-          _pdfController = PdfController(document: document);
-        }
-      }
     }).catchError((Object error) {
       _isLoading = false;
     });
-  }
-
-  @override
-  void dispose() {
-    _pdfController?.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -128,13 +102,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         : [
             IconButton(
               icon: Icon(Icons.navigate_before),
-              onPressed: _pageNumber > 1
-                  ? () => _pdfController.previousPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
-                  : null,
+              onPressed: _pageNumber > 1 ? () => null : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -144,13 +112,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             ),
             IconButton(
               icon: Icon(Icons.navigate_next),
-              onPressed: _pageNumber < _pageCount
-                  ? () => _pdfController.nextPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
-                  : null,
+              onPressed: _pageNumber < _pageCount ? () => null : null,
             ),
           ];
 
@@ -319,24 +281,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             : null,
         body: _isLoading || _response == null
             ? LoadingIndicator()
-            : kIsWeb
-                ? HtmlElementView(viewType: _pdfString)
-                : Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: PdfView(
-                      controller: _pdfController,
-                      onDocumentLoaded: (document) {
-                        setState(() {
-                          _pageCount = document?.pagesCount ?? 0;
-                        });
-                      },
-                      onPageChanged: (page) {
-                        setState(() {
-                          _pageNumber = page;
-                        });
-                      },
-                    ),
-                  ));
+            : PdfPreview(
+                build: (format) => _response.bodyBytes,
+              ));
   }
 }
 

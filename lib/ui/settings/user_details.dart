@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+//import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -480,12 +480,14 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                     if (_secret == null)
                       LoadingIndicator()
                     else ...[
+                      /*
                       QrImage(
                         data: _qrCode,
                         version: QrVersions.auto,
                         size: 180,
                         backgroundColor: Colors.white,
                       ),
+                      */
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: SelectableText(_secret),

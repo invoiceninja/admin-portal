@@ -15,8 +15,8 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:printing/printing.dart';
 import 'package:share/share.dart';
 
 // Project imports:
@@ -55,7 +55,6 @@ class ClientPdfView extends StatefulWidget {
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
   http.Response _response;
-  PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
   static const STATUS_ALL = 'all';
@@ -100,16 +99,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         _response = response;
         _isLoading = false;
       });
-
-      final document = PdfDocument.openData(_response.bodyBytes);
-      if (_pdfController == null) {
-        _pdfController = PdfController(document: document);
-      } else {
-        // loadDocument is causing an error
-        //_pdfController.loadDocument(document);
-        _pdfController?.dispose();
-        _pdfController = PdfController(document: document);
-      }
     }).catchError((Object error) {
       setState(() {
         _isLoading = false;
@@ -182,13 +171,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   }
 
   @override
-  void dispose() {
-    _pdfController?.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -200,13 +182,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         : [
             IconButton(
               icon: Icon(Icons.navigate_before),
-              onPressed: _pageNumber > 1
-                  ? () => _pdfController.previousPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
-                  : null,
+              onPressed: _pageNumber > 1 ? () => null : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -216,13 +192,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             ),
             IconButton(
               icon: Icon(Icons.navigate_next),
-              onPressed: _pageNumber < _pageCount
-                  ? () => _pdfController.nextPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
-                  : null,
+              onPressed: _pageNumber < _pageCount ? () => null : null,
             ),
           ];
 
@@ -479,23 +449,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
-                : Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: PdfView(
-                      controller: _pdfController,
-                      onDocumentLoaded: (document) {
-                        setState(() {
-                          _pageCount = document?.pagesCount ?? 0;
-                        });
-                      },
-                      onPageChanged: (page) {
-                        setState(
-                          () {
-                            _pageNumber = page;
-                          },
-                        );
-                      },
-                    ),
+                : PdfPreview(
+                    build: (format) => _response.bodyBytes,
                   ),
           ),
         ],
