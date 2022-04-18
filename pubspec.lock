@@ -894,6 +894,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "1fc6e38c198a76a6fd60b7bd3b4c190cd6c9330b"
+      url: "https://github.com/theyakka/qr.flutter.git"
+    source: git
+    version: "4.0.1"
   quiver:
     dependency: transitive
     description:
