@@ -451,6 +451,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 ? LoadingIndicator()
                 : PdfPreview(
                     build: (format) => _response.bodyBytes,
+                    canChangeOrientation: false,
+                    canChangePageFormat: false,
+                    canDebug: false,
                   ),
           ),
         ],

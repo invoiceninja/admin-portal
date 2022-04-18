@@ -1037,6 +1037,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
                       ? SizedBox()
                       : PdfPreview(
                           build: (format) => _response.bodyBytes,
+                          canChangeOrientation: false,
+                          canChangePageFormat: false,
+                          canDebug: false,
                         )),
             ],
           ),

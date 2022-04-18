@@ -283,6 +283,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             ? LoadingIndicator()
             : PdfPreview(
                 build: (format) => _response.bodyBytes,
+                canChangeOrientation: false,
+                canChangePageFormat: false,
+                canDebug: false,
               ));
   }
 }

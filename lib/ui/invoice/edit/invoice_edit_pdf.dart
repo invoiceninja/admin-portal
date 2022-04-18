@@ -90,6 +90,9 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     return Center(
       child: PdfPreview(
         build: (format) => _response.bodyBytes,
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        canDebug: false,
       ),
     );
   }

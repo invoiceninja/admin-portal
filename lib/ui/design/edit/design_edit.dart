@@ -580,6 +580,9 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
           else if (widget.pdfBytes != null)
             PdfPreview(
               build: (format) => widget.pdfBytes,
+              canChangeOrientation: false,
+              canChangePageFormat: false,
+              canDebug: false,
             )
           else
             SizedBox(),
