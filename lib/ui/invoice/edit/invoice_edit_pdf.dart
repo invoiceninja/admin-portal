@@ -5,10 +5,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:native_pdf_view/native_pdf_view.dart';
-
 // Project imports:
+import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -18,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:printing/printing.dart';
 
 class InvoiceEditPDF extends StatefulWidget {
   const InvoiceEditPDF({
@@ -34,7 +33,7 @@ class InvoiceEditPDF extends StatefulWidget {
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   bool _isLoading = false;
   String _pdfString;
-  PdfController _pdfController;
+  http.Response _response;
 
   @override
   void didChangeDependencies() {
@@ -68,15 +67,12 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
         .then((dynamic response) {
       setState(() {
         _isLoading = false;
+        _response = response;
 
         if (kIsWeb) {
           _pdfString =
               'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
           WebUtils.registerWebView(_pdfString);
-        } else {
-          final document = PdfDocument.openData(response.bodyBytes);
-          _pdfController?.dispose();
-          _pdfController = PdfController(document: document);
         }
       });
     }).catchError((dynamic error) {
@@ -92,7 +88,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       return HelpText(AppLocalization.of(context).noClientSelected);
     }
 
-    if (_pdfString == null && _pdfController == null) {
+    if (_response == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -101,7 +97,12 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     return Center(
       child: kIsWeb
           ? HtmlElementView(viewType: _pdfString)
-          : PdfView(controller: _pdfController),
+          : PdfPreview(
+              build: (format) => _response.bodyBytes,
+              canChangeOrientation: false,
+              canChangePageFormat: false,
+              canDebug: false,
+            ),
     );
   }
 }

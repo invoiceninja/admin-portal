@@ -7,8 +7,8 @@ cmake_policy(SET CMP0063 NEW)
 
 set(CMAKE_INSTALL_RPATH "$ORIGIN/lib")
 
-# TODO remove this: https://github.com/rbcprolabs/packages.flutter/pull/233#issuecomment-970246427
-set(PDFIUM_VERSION "4634" CACHE STRING "")
+set(PDFIUM_VERSION "latest" CACHE STRING "" FORCE)
+set(PDFIUM_ARCH "x64" CACHE STRING "" FORCE)
 
 # Configure build options.
 get_property(IS_MULTICONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)

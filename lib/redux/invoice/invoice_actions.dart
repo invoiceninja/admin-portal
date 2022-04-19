@@ -21,9 +21,9 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-//import 'package:http/http.dart' as http;
-//import 'package:invoiceninja_flutter/data/web_client.dart';
-//import 'package:printing/printing.dart';
+import 'package:http/http.dart' as http;
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:printing/printing.dart';
 
 class ViewInvoiceList implements PersistUI {
   ViewInvoiceList({this.force = false});
@@ -698,13 +698,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       }
       break;
     case EntityAction.printPdf:
-      /*
       final invitation = invoice.invitations.first;
       final url = invitation.downloadLink;
+      store.dispatch(StartLoading());
       final http.Response response =
           await WebClient().get(url, '', rawResponse: true);
+      store.dispatch(StopLoading());
       await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
-      */
       break;
     case EntityAction.more:
       showEntityActionsDialog(

@@ -9,7 +9,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:http/http.dart' as http;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -49,6 +49,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:printing/printing.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
@@ -929,10 +930,8 @@ class _PdfPreview extends StatefulWidget {
 class __PdfPreviewState extends State<_PdfPreview> {
   final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
-  int _pageCount = 1;
-  int _currentPage = 1;
+  http.Response _response;
   bool _isLoading = false;
-  PdfController _pdfController;
 
   @override
   void didChangeDependencies() {
@@ -950,15 +949,8 @@ class __PdfPreviewState extends State<_PdfPreview> {
     }
   }
 
-  @override
-  void dispose() {
-    _pdfController?.dispose();
-
-    super.dispose();
-  }
-
   void loadPdf() async {
-    if (_pdfController == null) {
+    if (_response == null) {
       _loadPdf();
     } else {
       _pdfDebouncer.run(() {
@@ -997,13 +989,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
         .then((dynamic response) {
       setState(() {
         _isLoading = false;
-
-        final document = PdfDocument.openData(response.bodyBytes);
-        if (_pdfController == null) {
-          _pdfController = PdfController(document: document);
-        } else {
-          _pdfController.loadDocument(document);
-        }
+        _response = response;
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -1024,6 +1010,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /*
               if (_pageCount > 1)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -1034,64 +1021,26 @@ class __PdfPreviewState extends State<_PdfPreview> {
                           width: 180,
                           label: localization.previousPage,
                           iconData: MdiIcons.pagePrevious,
-                          onPressed: _currentPage == 1
-                              ? null
-                              : () {
-                                  _pdfController.previousPage(
-                                    duration: Duration(
-                                        milliseconds:
-                                            kDefaultAnimationDuration),
-                                    curve: Curves.easeInOutCubic,
-                                  );
-                                }),
+                          onPressed: _currentPage == 1 ? null : () {}),
                       SizedBox(width: kTableColumnGap),
                       AppButton(
                           width: 180,
                           label: localization.nextPage,
                           iconData: MdiIcons.pageNext,
-                          onPressed: _currentPage == _pageCount
-                              ? null
-                              : () {
-                                  _pdfController.nextPage(
-                                    duration: Duration(
-                                        milliseconds:
-                                            kDefaultAnimationDuration),
-                                    curve: Curves.easeInOutCubic,
-                                  );
-                                }),
+                          onPressed: _currentPage == _pageCount ? null : () {}),
                     ],
                   ),
                 ),
+                */
               Expanded(
-                child: IgnorePointer(
-                  ignoring: true,
-                  child: Material(
-                    elevation: 8,
-                    child: Container(
-                      color: Colors.grey,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: _pdfController == null
-                            ? SizedBox()
-                            : PdfView(
-                                controller: _pdfController,
-                                onDocumentLoaded: (document) {
-                                  setState(() {
-                                    _pageCount = document?.pagesCount ?? 0;
-                                    _currentPage = 1;
-                                  });
-                                },
-                                onPageChanged: (page) {
-                                  setState(() {
-                                    _currentPage = page;
-                                  });
-                                },
-                              ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                  child: _response == null
+                      ? SizedBox()
+                      : PdfPreview(
+                          build: (format) => _response.bodyBytes,
+                          canChangeOrientation: false,
+                          canChangePageFormat: false,
+                          canDebug: false,
+                        )),
             ],
           ),
           if (_isLoading)
