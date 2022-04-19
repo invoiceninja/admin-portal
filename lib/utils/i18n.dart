@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'tax_amount1': 'Tax Amount 1',
+      'tax_amount2': 'Tax Amount 2',
+      'tax_amount3': 'Tax Amount 3',
       'create_project': 'Create Project',
       'update_project': 'Update Project',
       'view_task': 'View Task',
