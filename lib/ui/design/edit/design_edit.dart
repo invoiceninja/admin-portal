@@ -32,6 +32,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -562,6 +564,10 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
 
     if (oldWidget.pdfBytes == widget.pdfBytes) {
       return;
+    }
+
+    if (kIsWeb) {
+      WebUtils.registerWebView(_pdfString);
     }
   }
 

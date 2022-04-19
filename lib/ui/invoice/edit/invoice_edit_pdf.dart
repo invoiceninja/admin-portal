@@ -32,6 +32,7 @@ class InvoiceEditPDF extends StatefulWidget {
 
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   bool _isLoading = false;
+  String _pdfString;
   http.Response _response;
 
   @override
@@ -67,6 +68,12 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       setState(() {
         _isLoading = false;
         _response = response;
+
+        if (kIsWeb) {
+          _pdfString =
+              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+          WebUtils.registerWebView(_pdfString);
+        }
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -88,12 +95,14 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     }
 
     return Center(
-      child: PdfPreview(
-        build: (format) => _response.bodyBytes,
-        canChangeOrientation: false,
-        canChangePageFormat: false,
-        canDebug: false,
-      ),
+      child: kIsWeb
+          ? HtmlElementView(viewType: _pdfString)
+          : PdfPreview(
+              build: (format) => _response.bodyBytes,
+              canChangeOrientation: false,
+              canChangePageFormat: false,
+              canDebug: false,
+            ),
     );
   }
 }
