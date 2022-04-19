@@ -103,7 +103,7 @@ class EditScaffold extends StatelessWidget {
       },
       child: FocusTraversalGroup(
         child: Scaffold(
-          body: showUpgradeBanner && !isApple()
+          body: showUpgradeBanner
               ? Column(
                   children: [
                     InkWell(
@@ -111,7 +111,7 @@ class EditScaffold extends StatelessWidget {
                         upgradeMessage,
                         color: Colors.orange,
                       ),
-                      onTap: state.userCompany.isOwner
+                      onTap: state.userCompany.isOwner && !isApple()
                           ? () async {
                               launch(state.userCompany.ninjaPortalUrl);
                             }
