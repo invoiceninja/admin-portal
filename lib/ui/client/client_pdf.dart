@@ -54,6 +54,8 @@ class ClientPdfView extends StatefulWidget {
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
   http.Response _response;
+  //int _pageCount = 1;
+  //int _currentPage = 1;
 
   static const STATUS_ALL = 'all';
   static const STATUS_PAID = 'paid';
@@ -181,20 +183,32 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         : [
             IconButton(
               icon: Icon(Icons.navigate_before),
-              onPressed: _pageNumber > 1 ? () => null : null,
+              onPressed: _currentPage > 1
+                  ? () {
+                      setState(() {
+                        _currentPage++;
+                      });
+                    }
+                  : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(localization.pdfPageInfo
-                  .replaceFirst(':current', '$_pageNumber')
+                  .replaceFirst(':current', '$_currentPage')
                   .replaceFirst(':total', '$_pageCount')),
             ),
             IconButton(
               icon: Icon(Icons.navigate_next),
-              onPressed: _pageNumber < _pageCount ? () => null : null,
+              onPressed: _currentPage < _pageCount
+                  ? () {
+                      setState(() {
+                        _currentPage++;
+                      });
+                    }
+                  : null,
             ),
           ];
-          */
+    */
 
     bool showEmail = false; //isDesktop(context);
 

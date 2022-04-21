@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,6 +48,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:printing/printing.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
@@ -928,6 +930,8 @@ class _PdfPreview extends StatefulWidget {
 class __PdfPreviewState extends State<_PdfPreview> {
   final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
+  int _pageCount = 1;
+  int _currentPage = 1;
   http.Response _response;
   bool _isLoading = false;
 
@@ -984,10 +988,12 @@ class __PdfPreviewState extends State<_PdfPreview> {
     webClient
         .post(url, credentials.token,
             data: json.encode(data), rawResponse: true)
-        .then((dynamic response) {
+        .then((dynamic response) async {
+      final pages = await Printing.raster(response.bodyBytes, dpi: 5).toList();
       setState(() {
         _isLoading = false;
         _response = response;
+        _pageCount = pages.length;
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -998,17 +1004,16 @@ class __PdfPreviewState extends State<_PdfPreview> {
 
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return Container(
-      height: 1200,
+      height: 1450,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              /*
               if (_pageCount > 1)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
@@ -1019,17 +1024,28 @@ class __PdfPreviewState extends State<_PdfPreview> {
                           width: 180,
                           label: localization.previousPage,
                           iconData: MdiIcons.pagePrevious,
-                          onPressed: _currentPage == 1 ? null : () {}),
+                          onPressed: _currentPage == 1
+                              ? null
+                              : () {
+                                  setState(() {
+                                    _currentPage--;
+                                  });
+                                }),
                       SizedBox(width: kTableColumnGap),
                       AppButton(
                           width: 180,
                           label: localization.nextPage,
                           iconData: MdiIcons.pageNext,
-                          onPressed: _currentPage == _pageCount ? null : () {}),
+                          onPressed: _currentPage == _pageCount
+                              ? null
+                              : () {
+                                  setState(() {
+                                    _currentPage++;
+                                  });
+                                }),
                     ],
                   ),
                 ),
-                */
               Expanded(
                   child: _response == null
                       ? SizedBox()
@@ -1038,6 +1054,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                           canChangeOrientation: false,
                           canChangePageFormat: false,
                           canDebug: false,
+                          pages: [_currentPage - 1],
                         )),
             ],
           ),
