@@ -994,6 +994,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
         _isLoading = false;
         _response = response;
         _pageCount = pages.length;
+        if (_currentPage > _pageCount) {
+          _currentPage = _pageCount;
+        }
       });
     }).catchError((dynamic error) {
       setState(() {
