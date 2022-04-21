@@ -603,11 +603,11 @@ abstract class TaskEntity extends Object
         if (userCompany.canEditEntity(this)) {
           actions.add(EntityAction.changeStatus);
         }
+      }
 
-        if (!isInvoiced && !isRunning) {
-          if (userCompany.canCreate(EntityType.invoice)) {
-            actions.add(EntityAction.invoiceTask);
-          }
+      if (!isInvoiced && !isRunning) {
+        if (userCompany.canCreate(EntityType.invoice)) {
+          actions.add(EntityAction.invoiceTask);
         }
       }
     }
