@@ -55,7 +55,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   String _activityId;
   String _pdfString;
   http.Response _response;
-  int _pageNumber = 1, _pageCount = 1;
+  //int _pageCount = 1;
+  //int _currentPage = 1;
 
   @override
   void initState() {
@@ -110,17 +111,17 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         : [
             IconButton(
               icon: Icon(Icons.navigate_before),
-              onPressed: _pageNumber > 1 ? () => null : null,
+              onPressed: _currentPage > 1 ? () => null : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(localization.pdfPageInfo
-                  .replaceFirst(':current', '$_pageNumber')
+                  .replaceFirst(':current', '$_currentPage')
                   .replaceFirst(':total', '$_pageCount')),
             ),
             IconButton(
               icon: Icon(Icons.navigate_next),
-              onPressed: _pageNumber < _pageCount ? () => null : null,
+              onPressed: _currentPage < _pageCount ? () => null : null,
             ),
           ];
     */
