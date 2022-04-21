@@ -21,7 +21,8 @@ enum TaxRateReportFields {
   tax_amount,
   tax_paid,
   payment_amount,
-  currency
+  currency,
+  transaction_reference,
 }
 
 var memoizedPaymentTaxReport = memo9((
@@ -151,6 +152,9 @@ ReportResult paymentTaxReport(
                 case TaxRateReportFields.currency:
                   value = staticState.currencyMap[client.currencyId]?.name ??
                       staticState.currencyMap[client.settings.currencyId]?.name;
+                  break;
+                case TaxRateReportFields.transaction_reference:
+                  value = payment.transactionReference;
                   break;
               }
 

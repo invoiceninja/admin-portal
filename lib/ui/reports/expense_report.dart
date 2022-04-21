@@ -42,6 +42,9 @@ enum ExpenseReportFields {
   created_by,
   public_notes,
   private_notes,
+  tax_amount1,
+  tax_amount2,
+  tax_amount3,
 }
 
 var memoizedExpenseReport = memo9((
@@ -217,6 +220,15 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.private_notes:
           value = expense.privateNotes;
+          break;
+        case ExpenseReportFields.tax_amount1:
+          value = expense.calculateTaxAmount1;
+          break;
+        case ExpenseReportFields.tax_amount2:
+          value = expense.calculateTaxAmount2;
+          break;
+        case ExpenseReportFields.tax_amount3:
+          value = expense.calculateTaxAmount3;
           break;
       }
 

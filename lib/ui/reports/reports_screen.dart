@@ -1609,7 +1609,8 @@ class ReportNumberValue extends ReportElement {
     }
 
     return formatNumber(value, context,
-        currencyId: currencyId, formatNumberType: formatNumberType);
+        currencyId: currencyId,
+        formatNumberType: formatNumberType ?? FormatNumberType.money);
   }
 }
 
