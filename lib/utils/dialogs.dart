@@ -252,11 +252,12 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   bool _isPasswordObscured = true;
 
   void _submit() {
-    if ((_password ?? '').isEmpty) {
+    final password = (_password ?? '').trim();
+    if (password.isEmpty) {
       return;
     }
     Navigator.pop(context);
-    widget.callback(_password, widget.idToken);
+    widget.callback(password, widget.idToken);
   }
 
   @override
