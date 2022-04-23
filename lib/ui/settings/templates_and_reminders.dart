@@ -62,10 +62,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  //static const kTabSettings = 0;
-  //static const kTabDesign = 1;
-  static const kTabPreview = 2;
-
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
@@ -263,7 +259,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _selectedIndex = _controller.index;
     });
 
-    if (_controller.index != kTabPreview) {
+    final previewIndex = store.state.company.markdownEmailEnabled ? 2 : 1;
+
+    if (_controller.index != previewIndex) {
       return;
     }
 
