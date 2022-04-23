@@ -681,13 +681,29 @@ abstract class ExpenseEntity extends Object
     }
   }
 
-  double get calculatetaxRate2 => calculateTaxByAmount == true
-      ? taxAmount2 / (amount - taxAmount2) * 100
-      : taxRate2;
+  double get calculatetaxRate2 {
+    if (calculateTaxByAmount == true) {
+      if (usesInclusiveTaxes) {
+        return taxAmount2 / (amount - taxAmount2) * 100;
+      } else {
+        return taxAmount2 / amount * 100;
+      }
+    } else {
+      return taxRate2;
+    }
+  }
 
-  double get calculatetaxRate3 => calculateTaxByAmount == true
-      ? taxAmount3 / (amount - taxAmount3) * 100
-      : taxRate3;
+  double get calculatetaxRate3 {
+    if (calculateTaxByAmount == true) {
+      if (usesInclusiveTaxes) {
+        return taxAmount3 / (amount - taxAmount3) * 100;
+      } else {
+        return taxAmount3 / amount * 100;
+      }
+    } else {
+      return taxRate3;
+    }
+  }
 
   double get taxAmount =>
       calculateTaxAmount1 + calculateTaxAmount2 + calculateTaxAmount3;
@@ -699,11 +715,11 @@ abstract class ExpenseEntity extends Object
 
     if (usesInclusiveTaxes) {
       if (taxRate1 != 0) {
-        return amount - (amount / (1 + (taxRate1 / 100)));
+        return round(amount - (amount / (1 + (taxRate1 / 100))), 2);
       }
     } else {
       if (taxRate1 != 0) {
-        return amount * taxRate1 / 100;
+        return round(amount * taxRate1 / 100, 2);
       }
     }
 
@@ -717,11 +733,11 @@ abstract class ExpenseEntity extends Object
 
     if (usesInclusiveTaxes) {
       if (taxRate2 != 0) {
-        return amount - (amount / (1 + (taxRate2 / 100)));
+        return round(amount - (amount / (1 + (taxRate2 / 100))), 2);
       }
     } else {
       if (taxRate2 != 0) {
-        return amount * taxRate2 / 100;
+        return round(amount * taxRate2 / 100, 2);
       }
     }
 
@@ -735,11 +751,11 @@ abstract class ExpenseEntity extends Object
 
     if (usesInclusiveTaxes) {
       if (taxRate3 != 0) {
-        return amount - (amount / (1 + (taxRate3 / 100)));
+        return round(amount - (amount / (1 + (taxRate3 / 100))), 2);
       }
     } else {
       if (taxRate3 != 0) {
-        return amount * taxRate3 / 100;
+        return round(amount * taxRate3 / 100, 2);
       }
     }
 
