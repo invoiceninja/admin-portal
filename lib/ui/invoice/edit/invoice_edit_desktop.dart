@@ -1010,7 +1010,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final localization = AppLocalization.of(context);
 
     return Container(
-      height: 1450,
+      height: 1200,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -1058,6 +1058,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                           canChangePageFormat: false,
                           canDebug: false,
                           pages: [_currentPage - 1],
+                          maxPageWidth: 800,
                         )),
             ],
           ),
