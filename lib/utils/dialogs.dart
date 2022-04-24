@@ -181,6 +181,9 @@ void passwordCallback({
   final localization = AppLocalization.of(context);
   final user = state.user;
 
+  print(
+      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider.isEmpty}, ${state.company.oauthPasswordRequired}');
+
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
         context: context,
@@ -193,11 +196,13 @@ void passwordCallback({
               },
               child: Text(localization.setPassword.toUpperCase()))
         ]);
+    print('## 1');
     return;
   }
 
   if (state.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null, null);
+    print('## 2');
     return;
   }
 
@@ -206,6 +211,7 @@ void passwordCallback({
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        print('## 3');
         return PasswordConfirmation(
           callback: callback,
         );
@@ -218,8 +224,10 @@ void passwordCallback({
     GoogleOAuth.signIn((idToken, accessToken) {
       if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
           !user.hasPassword) {
+        print('## 4');
         callback(null, idToken);
       } else {
+        print('## 5');
         showDialog<AlertDialog>(
           context: context,
           barrierDismissible: false,
@@ -235,6 +243,8 @@ void passwordCallback({
   } catch (error) {
     showErrorDialog(context: context, message: '$error');
   }
+
+  print('## 6');
 }
 
 class PasswordConfirmation extends StatefulWidget {

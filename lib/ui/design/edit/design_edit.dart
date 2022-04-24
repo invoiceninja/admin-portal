@@ -589,6 +589,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
               canChangeOrientation: false,
               canChangePageFormat: false,
               canDebug: false,
+              maxPageWidth: 800,
             )
           else
             SizedBox(),

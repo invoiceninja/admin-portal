@@ -102,6 +102,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
               canChangeOrientation: false,
               canChangePageFormat: false,
               canDebug: false,
+              maxPageWidth: 800,
             ),
     );
   }

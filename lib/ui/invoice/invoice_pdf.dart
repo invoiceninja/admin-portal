@@ -298,6 +298,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
+                    maxPageWidth: 800,
                   ));
   }
 }
