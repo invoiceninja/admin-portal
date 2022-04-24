@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 // Project imports:
@@ -206,7 +207,7 @@ void passwordCallback({
     return;
   }
 
-  if (user.oauthProvider.isEmpty) {
+  if (user.oauthProvider.isEmpty || !supportsGoogleOAuth()) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,
