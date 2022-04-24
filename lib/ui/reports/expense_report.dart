@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -195,16 +196,32 @@ ReportResult expenseReport(
           value = vendor?.listDisplayName;
           break;
         case ExpenseReportFields.expense1:
-          value = expense.customValue1;
+          value = presentCustomField(
+            value: expense.customValue1,
+            customFieldType: CustomFieldType.expense1,
+            company: userCompany.company,
+          );
           break;
         case ExpenseReportFields.expense2:
-          value = expense.customValue2;
+          value = presentCustomField(
+            value: expense.customValue2,
+            customFieldType: CustomFieldType.expense2,
+            company: userCompany.company,
+          );
           break;
         case ExpenseReportFields.expense3:
-          value = expense.customValue3;
+          value = presentCustomField(
+            value: expense.customValue3,
+            customFieldType: CustomFieldType.expense3,
+            company: userCompany.company,
+          );
           break;
         case ExpenseReportFields.expense4:
-          value = expense.customValue4;
+          value = presentCustomField(
+            value: expense.customValue4,
+            customFieldType: CustomFieldType.expense4,
+            company: userCompany.company,
+          );
           break;
         case ExpenseReportFields.category:
           value = expenseCategoryMap[expense.categoryId]?.name ?? '';
