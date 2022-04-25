@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -69,8 +70,8 @@ class PaymentPresenter extends EntityPresenter {
             .join(', ');
         return Text(numbers);
       case PaymentFields.client:
-        return Text(
-            state.clientState.map[payment.clientId]?.listDisplayName ?? '');
+        final client = state.clientState.get(payment.clientId);
+        return LinkTextRelatedEntity(entity: client, relation: payment);
       case PaymentFields.transactionReference:
         return Text(payment.transactionReference);
       case PaymentFields.date:

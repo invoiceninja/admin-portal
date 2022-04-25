@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -58,6 +59,7 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.customValue3,
       ExpenseFields.customValue4,
       ExpenseFields.documents,
+      ExpenseFields.recurringExpense,
     ];
   }
 
@@ -71,12 +73,12 @@ class ExpensePresenter extends EntityPresenter {
         return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
       case ExpenseFields.vendorId:
-        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName);
+        final vendor = state.vendorState.get(expense.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case ExpenseFields.clientId:
       case ExpenseFields.client:
-        return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
-            .listDisplayName);
+        final client = state.clientState.get(expense.clientId);
+        return LinkTextRelatedEntity(entity: client, relation: expense);
       case ExpenseFields.expenseDate:
         return Text(formatDate(expense.date, context));
       case ExpenseFields.netAmount:
@@ -155,6 +157,11 @@ class ExpensePresenter extends EntityPresenter {
         return Text(presentCustomField(context, expense.customValue4));
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
+      case ExpenseFields.recurringExpense:
+        final recurringExpense =
+            state.recurringExpenseState.get(expense.recurringId);
+        return LinkTextRelatedEntity(
+            entity: recurringExpense, relation: expense);
     }
 
     return super.getField(field: field, context: context);

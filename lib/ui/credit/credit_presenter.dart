@@ -10,9 +10,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CreditPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -72,9 +74,7 @@ class CreditPresenter extends EntityPresenter {
             ? localization.pending
             : credit.number);
       case CreditFields.client:
-        return Text((state.clientState.map[credit.clientId] ??
-                ClientEntity(id: credit.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(entity: client, relation: credit);
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
       case CreditFields.lastSentDate:
@@ -125,9 +125,11 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.isViewed:
         return Text(credit.isViewed ? localization.yes : localization.no);
       case CreditFields.project:
-        return Text(state.projectState.get(credit.projectId).listDisplayName);
+        final project = state.projectState.get(credit.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: credit);
       case CreditFields.vendor:
-        return Text(state.vendorState.get(credit.vendorId).name);
+        final vendor = state.vendorState.get(credit.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: credit);
       case CreditFields.clientState:
         return Text(client.state);
       case CreditFields.clientCity:
@@ -140,12 +142,16 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.contactEmail:
         final contact = creditContactSelector(
             credit, state.clientState.get(credit.clientId));
+        if (contact == null) {
+          return SizedBox();
+        }
         if (field == CreditFields.contactName) {
-          return Text(contact?.fullName ?? '');
+          return Text(contact.fullName ?? '');
         }
         return CopyToClipboard(
-          value: contact?.email ?? '',
+          value: contact.email,
           showBorder: true,
+          onLongPress: () => launch('mailto:${contact.email}'),
         );
       case CreditFields.partial:
         return Text(formatNumber(credit.partial, context));

@@ -9,11 +9,13 @@ class CopyToClipboard extends StatelessWidget {
     @required this.value,
     this.child,
     this.showBorder = false,
+    this.onLongPress,
   }) : super(key: key);
 
   final Widget child;
   final String value;
   final bool showBorder;
+  final Function onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,13 @@ class CopyToClipboard extends StatelessWidget {
       return SizedBox();
     }
 
-    final widget = child == null ? Text(value) : child;
+    final widget = child == null
+        ? Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        : child;
     final localization = AppLocalization.of(context);
     final onTap = () {
       Clipboard.setData(ClipboardData(text: value));
@@ -34,23 +42,19 @@ class CopyToClipboard extends StatelessWidget {
     };
 
     if (showBorder) {
-      return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
+      return ConstrainedBox(
+        child: OutlinedButton(
+          onPressed: onTap,
           child: widget,
+          onLongPress: onLongPress,
         ),
+        constraints: BoxConstraints(maxWidth: 180),
       );
     } else {
       return InkWell(
         child: widget,
         onTap: onTap,
+        onLongPress: onLongPress,
       );
     }
   }
