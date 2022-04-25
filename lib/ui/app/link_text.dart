@@ -19,6 +19,10 @@ class LinkTextRelatedEntity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (entity == null || relation == null) {
+      return SizedBox();
+    }
+
     return GestureDetector(
       child: Text(
         entity.listDisplayName,

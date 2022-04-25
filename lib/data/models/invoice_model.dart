@@ -102,6 +102,8 @@ class InvoiceFields {
   static const String clientState = 'client_state';
   static const String clientPostalCode = 'client_postal_code';
   static const String clientCountry = 'client_country';
+  static const String quote = 'quote';
+  static const String recurringInvoice = 'recurring_invoice';
 }
 
 class InvoiceTotalFields {

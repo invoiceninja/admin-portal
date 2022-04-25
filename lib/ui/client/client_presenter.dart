@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -135,7 +136,8 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.documents:
         return Text('${client.documents.length}');
       case ClientFields.group:
-        return Text(state.groupState.get(client.groupId).name);
+        final group = state.groupState.get(client.groupId);
+        return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
         return Text(
           client.contacts.map((contact) => contact.fullName).join('\n'),

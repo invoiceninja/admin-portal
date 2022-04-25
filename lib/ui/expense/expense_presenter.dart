@@ -59,6 +59,7 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.customValue3,
       ExpenseFields.customValue4,
       ExpenseFields.documents,
+      ExpenseFields.recurringExpense,
     ];
   }
 
@@ -156,6 +157,11 @@ class ExpensePresenter extends EntityPresenter {
         return Text(presentCustomField(context, expense.customValue4));
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
+      case ExpenseFields.recurringExpense:
+        final recurringExpense =
+            state.recurringExpenseState.get(expense.recurringId);
+        return LinkTextRelatedEntity(
+            entity: recurringExpense, relation: expense);
     }
 
     return super.getField(field: field, context: context);

@@ -62,6 +62,8 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.clientCountry,
       InvoiceFields.partial,
       InvoiceFields.partialDueDate,
+      InvoiceFields.quote,
+      InvoiceFields.recurringInvoice,
     ];
   }
 
@@ -176,6 +178,15 @@ class InvoicePresenter extends EntityPresenter {
         return Text(formatNumber(invoice.partial, context));
       case InvoiceFields.partialDueDate:
         return Text(formatDate(invoice.partialDueDate, context));
+      case InvoiceFields.quote:
+        final quote =
+            memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
+        return LinkTextRelatedEntity(entity: quote, relation: invoice);
+      case InvoiceFields.recurringInvoice:
+        final recurringInvoice =
+            state.recurringInvoiceState.get(invoice.recurringId);
+        return LinkTextRelatedEntity(
+            entity: recurringInvoice, relation: invoice);
     }
 
     return super.getField(field: field, context: context);
