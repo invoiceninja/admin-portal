@@ -682,9 +682,6 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
-    print(
-        '## isLarge: ${state.company.isLarge}, isLoaded: ${state.isLoaded}, loading: ${state.uiState.loadingEntityType}');
-
     bool isLoading = false;
     if (widget.entityType != null &&
         state.company.isLarge &&
