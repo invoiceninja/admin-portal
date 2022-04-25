@@ -1383,6 +1383,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
               'message': _message,
               'send_logs': _includeLogs ? 'true' : '',
               'platform': getPlatformLetter(),
+              'version': state.appVersion,
             }))
         .then((dynamic response) async {
       setState(() => _isSaving = false);

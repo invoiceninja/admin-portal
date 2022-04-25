@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -135,7 +136,10 @@ class QuotePresenter extends EntityPresenter {
         if (field == QuoteFields.contactName) {
           return Text(contact?.fullName ?? '');
         }
-        return Text(contact?.email ?? '');
+        return CopyToClipboard(
+          value: contact?.email ?? '',
+          showBorder: true,
+        );
       case QuoteFields.partial:
         return Text(formatNumber(quote.partial, context));
       case QuoteFields.partialDueDate:
