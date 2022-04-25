@@ -29,6 +29,9 @@ class LinkTextRelatedEntity extends StatelessWidget {
         viewEntity(entity: relation);
         viewEntity(entity: entity, addToStack: true);
       },
+      onLongPress: () {
+        editEntity(context: context, entity: entity);
+      },
     );
   }
 }

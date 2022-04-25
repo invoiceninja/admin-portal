@@ -72,8 +72,8 @@ class ExpensePresenter extends EntityPresenter {
         return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
       case ExpenseFields.vendorId:
-        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName);
+        final vendor = state.vendorState.get(expense.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case ExpenseFields.clientId:
       case ExpenseFields.client:
         final client = state.clientState.get(expense.clientId);

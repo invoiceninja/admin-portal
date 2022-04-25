@@ -72,8 +72,8 @@ class RecurringExpensePresenter extends EntityPresenter {
         return EntityStatusChip(entity: expense, showState: true);
       case RecurringExpenseFields.vendor:
       case RecurringExpenseFields.vendorId:
-        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName);
+        final vendor = state.vendorState.get(expense.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case RecurringExpenseFields.clientId:
       case RecurringExpenseFields.client:
         final client = state.clientState.get(expense.clientId);

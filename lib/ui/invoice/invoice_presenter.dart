@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -84,7 +85,8 @@ class InvoicePresenter extends EntityPresenter {
         final project = state.projectState.get(invoice.projectId);
         return LinkTextRelatedEntity(entity: project, relation: invoice);
       case InvoiceFields.vendor:
-        return Text(state.vendorState.get(invoice.vendorId).name);
+        final vendor = state.vendorState.get(invoice.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: invoice);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.lastSentDate:
@@ -159,12 +161,16 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(
             invoice, state.clientState.get(invoice.clientId));
+        if (contact == null) {
+          return SizedBox();
+        }
         if (field == InvoiceFields.contactName) {
-          return Text(contact?.fullName ?? '');
+          return Text(contact.fullName);
         }
         return CopyToClipboard(
-          value: contact?.email ?? '',
+          value: contact.email,
           showBorder: true,
+          onLongPress: () => launch('mailto:${contact.email}'),
         );
       case InvoiceFields.partial:
         return Text(formatNumber(invoice.partial, context));

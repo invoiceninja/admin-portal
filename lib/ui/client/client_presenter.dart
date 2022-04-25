@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -68,6 +69,7 @@ class ClientPresenter extends EntityPresenter {
         return CopyToClipboard(
           value: client.primaryContact.email,
           showBorder: true,
+          onLongPress: () => launch('mailto:${client.primaryContact.email}'),
         );
       case ClientFields.contactPhone:
         return Text(client.primaryContact.phone);

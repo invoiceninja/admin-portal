@@ -9,11 +9,13 @@ class CopyToClipboard extends StatelessWidget {
     @required this.value,
     this.child,
     this.showBorder = false,
+    this.onLongPress,
   }) : super(key: key);
 
   final Widget child;
   final String value;
   final bool showBorder;
+  final Function onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +43,18 @@ class CopyToClipboard extends StatelessWidget {
 
     if (showBorder) {
       return ConstrainedBox(
-        child: OutlinedButton(onPressed: onTap, child: widget),
+        child: OutlinedButton(
+          onPressed: onTap,
+          child: widget,
+          onLongPress: onLongPress,
+        ),
         constraints: BoxConstraints(maxWidth: 180),
       );
     } else {
       return InkWell(
         child: widget,
         onTap: onTap,
+        onLongPress: onLongPress,
       );
     }
   }

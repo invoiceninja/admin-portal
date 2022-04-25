@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -88,11 +89,11 @@ class EntityPresenter {
                 ? localization.archived
                 : localization.deleted);
       case EntityFields.createdBy:
-        return Text(
-            state.userState.map[entity.createdUserId]?.listDisplayName ?? '');
+        final user = state.userState.get(entity.createdUserId);
+        return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.assignedTo:
-        return Text(
-            state.userState.map[entity.assignedUserId]?.listDisplayName ?? '');
+        final user = state.userState.get(entity.assignedUserId);
+        return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.isDeleted:
         return Text(entity.isDeleted ? localization.yes : localization.no);
     }
