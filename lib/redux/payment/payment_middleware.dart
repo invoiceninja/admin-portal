@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -319,7 +320,7 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
         if (action.completer != null) {
           action.completer.complete(null);
         }
-        store.dispatch(LoadRecurringInvoices());
+        store.dispatch(LoadQuotes());
       }
     }).catchError((Object error) {
       print(error);

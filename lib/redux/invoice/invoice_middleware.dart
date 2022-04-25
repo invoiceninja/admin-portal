@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -455,7 +456,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         if (action.completer != null) {
           action.completer.complete(null);
         }
-        store.dispatch(LoadPayments());
+        store.dispatch(LoadRecurringInvoices());
       }
     }).catchError((Object error) {
       print(error);
