@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -78,9 +79,8 @@ class InvoicePresenter extends EntityPresenter {
             ? localization.pending
             : invoice.number);
       case InvoiceFields.client:
-        return Text((state.clientState.map[invoice.clientId] ??
-                ClientEntity(id: invoice.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(
+            label: client.displayName, entity: client, relation: invoice);
       case InvoiceFields.project:
         return Text(state.projectState.get(invoice.projectId).listDisplayName);
       case InvoiceFields.vendor:

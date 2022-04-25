@@ -40,19 +40,9 @@ class CopyToClipboard extends StatelessWidget {
     };
 
     if (showBorder) {
-      return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 180),
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          child: widget,
-        ),
+      return ConstrainedBox(
+        child: OutlinedButton(onPressed: onTap, child: widget),
+        constraints: BoxConstraints(maxWidth: 180),
       );
     } else {
       return InkWell(
