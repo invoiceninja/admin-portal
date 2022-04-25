@@ -18,7 +18,7 @@ class CopyToClipboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ((value ?? '').isEmpty) {
-      return child;
+      return SizedBox();
     }
 
     final widget = child == null ? Text(value) : child;
