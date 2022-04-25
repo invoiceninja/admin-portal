@@ -38,8 +38,10 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<BuiltList<ClientEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/clients?';
+  Future<BuiltList<ClientEntity>> loadList(
+      Credentials credentials, int page) async {
+    final String url =
+        credentials.url + '/clients?per_page=$kRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
