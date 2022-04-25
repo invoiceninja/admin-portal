@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -71,9 +72,7 @@ class QuotePresenter extends EntityPresenter {
         return Text(
             (quote.number ?? '').isEmpty ? localization.pending : quote.number);
       case QuoteFields.client:
-        return Text((state.clientState.map[quote.clientId] ??
-                ClientEntity(id: quote.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(entity: client, relation: quote);
       case QuoteFields.date:
         return Text(formatDate(quote.date, context));
       case QuoteFields.lastSentDate:
@@ -118,7 +117,8 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.isViewed:
         return Text(quote.isViewed ? localization.yes : localization.no);
       case QuoteFields.project:
-        return Text(state.projectState.get(quote.projectId).listDisplayName);
+        final project = state.projectState.get(quote.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: quote);
       case QuoteFields.vendor:
         return Text(state.vendorState.get(quote.vendorId).name);
       case QuoteFields.clientState:

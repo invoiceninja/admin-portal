@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -72,9 +73,7 @@ class CreditPresenter extends EntityPresenter {
             ? localization.pending
             : credit.number);
       case CreditFields.client:
-        return Text((state.clientState.map[credit.clientId] ??
-                ClientEntity(id: credit.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(entity: client, relation: credit);
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
       case CreditFields.lastSentDate:
@@ -125,7 +124,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.isViewed:
         return Text(credit.isViewed ? localization.yes : localization.no);
       case CreditFields.project:
-        return Text(state.projectState.get(credit.projectId).listDisplayName);
+        final project = state.projectState.get(credit.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: credit);
       case CreditFields.vendor:
         return Text(state.vendorState.get(credit.vendorId).name);
       case CreditFields.clientState:

@@ -79,10 +79,10 @@ class InvoicePresenter extends EntityPresenter {
             ? localization.pending
             : invoice.number);
       case InvoiceFields.client:
-        return LinkTextRelatedEntity(
-            label: client.displayName, entity: client, relation: invoice);
+        return LinkTextRelatedEntity(entity: client, relation: invoice);
       case InvoiceFields.project:
-        return Text(state.projectState.get(invoice.projectId).listDisplayName);
+        final project = state.projectState.get(invoice.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: invoice);
       case InvoiceFields.vendor:
         return Text(state.vendorState.get(invoice.vendorId).name);
       case InvoiceFields.date:

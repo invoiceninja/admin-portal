@@ -10,12 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 class LinkTextRelatedEntity extends StatelessWidget {
   const LinkTextRelatedEntity({
     Key key,
-    @required this.label,
     @required this.entity,
     @required this.relation,
   }) : super(key: key);
 
-  final String label;
   final BaseEntity entity;
   final BaseEntity relation;
 
@@ -23,12 +21,11 @@ class LinkTextRelatedEntity extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Text(
-        label,
+        entity.listDisplayName,
         textAlign: TextAlign.center,
         style: TextStyle(decoration: TextDecoration.underline),
       ),
       onTap: () {
-        print('## clicked: ${DateTime.now()}');
         viewEntity(entity: relation);
         viewEntity(entity: entity, addToStack: true);
       },
