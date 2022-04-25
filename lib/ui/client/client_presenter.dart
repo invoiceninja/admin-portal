@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -64,7 +65,10 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.contactName:
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
-        return Text(client.primaryContact.email);
+        return CopyToClipboard(
+          value: client.primaryContact.email,
+          showBorder: true,
+        );
       case ClientFields.contactPhone:
         return Text(client.primaryContact.phone);
       case ClientFields.address1:

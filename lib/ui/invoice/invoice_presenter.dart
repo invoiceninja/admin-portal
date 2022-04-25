@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -161,7 +162,10 @@ class InvoicePresenter extends EntityPresenter {
         if (field == InvoiceFields.contactName) {
           return Text(contact?.fullName ?? '');
         }
-        return Text(contact?.email ?? '');
+        return CopyToClipboard(
+          value: contact?.email ?? '',
+          showBorder: true,
+        );
       case InvoiceFields.partial:
         return Text(formatNumber(invoice.partial, context));
       case InvoiceFields.partialDueDate:

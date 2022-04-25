@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -202,16 +203,32 @@ ReportResult quoteReport(
           value = quote.autoBill;
           break;
         case QuoteReportFields.invoice1:
-          value = quote.customValue1;
+          value = presentCustomField(
+            value: quote.customValue1,
+            customFieldType: CustomFieldType.invoice1,
+            company: userCompany.company,
+          );
           break;
         case QuoteReportFields.invoice2:
-          value = quote.customValue2;
+          value = presentCustomField(
+            value: quote.customValue2,
+            customFieldType: CustomFieldType.invoice2,
+            company: userCompany.company,
+          );
           break;
         case QuoteReportFields.invoice3:
-          value = quote.customValue3;
+          value = presentCustomField(
+            value: quote.customValue3,
+            customFieldType: CustomFieldType.invoice3,
+            company: userCompany.company,
+          );
           break;
         case QuoteReportFields.invoice4:
-          value = quote.customValue4;
+          value = presentCustomField(
+            value: quote.customValue4,
+            customFieldType: CustomFieldType.invoice4,
+            company: userCompany.company,
+          );
           break;
         case QuoteReportFields.surcharge1:
           value = quote.customSurcharge1;

@@ -682,6 +682,13 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
+    bool isLoading = false;
+    if (widget.entityType != null &&
+        state.company.isLarge &&
+        state.uiState.loadingEntityType == widget.entityType) {
+      isLoading = true;
+    }
+
     Widget child = Material(
       color: color,
       child: Opacity(
@@ -690,11 +697,17 @@ class _DrawerTileState extends State<DrawerTile> {
           dense: true,
           leading: Padding(
             padding: const EdgeInsets.only(left: 4),
-            child: Icon(
-              widget.icon,
-              size: 22,
-              color: textColor,
-            ),
+            child: isLoading
+                ? SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 22,
+                    height: 22,
+                  )
+                : Icon(
+                    widget.icon,
+                    size: 22,
+                    color: textColor,
+                  ),
           ),
           title: state.isMenuCollapsed
               ? SizedBox()
@@ -1370,6 +1383,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
               'message': _message,
               'send_logs': _includeLogs ? 'true' : '',
               'platform': getPlatformLetter(),
+              'version': state.appVersion,
             }))
         .then((dynamic response) async {
       setState(() => _isSaving = false);

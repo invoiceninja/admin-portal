@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -165,16 +166,32 @@ ReportResult contactReport(
             value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
             break;
           case ContactReportFields.client1:
-            value = client.customValue1;
+            value = presentCustomField(
+              value: client.customValue1,
+              customFieldType: CustomFieldType.client1,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.client2:
-            value = client.customValue2;
+            value = presentCustomField(
+              value: client.customValue2,
+              customFieldType: CustomFieldType.client2,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.client3:
-            value = client.customValue3;
+            value = presentCustomField(
+              value: client.customValue3,
+              customFieldType: CustomFieldType.client3,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.client4:
-            value = client.customValue4;
+            value = presentCustomField(
+              value: client.customValue4,
+              customFieldType: CustomFieldType.client4,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.address1:
             value = client.address1;
@@ -249,16 +266,32 @@ ReportResult contactReport(
             value = contact.phone;
             break;
           case ContactReportFields.contact1:
-            value = contact.customValue1;
+            value = presentCustomField(
+              value: contact.customValue1,
+              customFieldType: CustomFieldType.contact1,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.contact2:
-            value = contact.customValue2;
+            value = presentCustomField(
+              value: contact.customValue2,
+              customFieldType: CustomFieldType.contact2,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.contact3:
-            value = contact.customValue3;
+            value = presentCustomField(
+              value: contact.customValue3,
+              customFieldType: CustomFieldType.contact3,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.contact4:
-            value = contact.customValue4;
+            value = presentCustomField(
+              value: contact.customValue4,
+              customFieldType: CustomFieldType.contact4,
+              company: userCompany.company,
+            );
             break;
           case ContactReportFields.contact_last_login:
             value = convertTimestampToDateString(contact.lastLogin);

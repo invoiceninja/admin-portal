@@ -37,9 +37,10 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url + '/invoices?created_at=$createdAt';
+  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
+      int createdAt, bool filterDeleted) async {
+    String url = credentials.url +
+        '/invoices?per_page=$kRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';

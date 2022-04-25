@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -142,7 +143,10 @@ class CreditPresenter extends EntityPresenter {
         if (field == CreditFields.contactName) {
           return Text(contact?.fullName ?? '');
         }
-        return Text(contact?.email ?? '');
+        return CopyToClipboard(
+          value: contact?.email ?? '',
+          showBorder: true,
+        );
       case CreditFields.partial:
         return Text(formatNumber(credit.partial, context));
       case CreditFields.partialDueDate:

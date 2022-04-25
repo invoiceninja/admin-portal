@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -193,16 +194,32 @@ ReportResult taskReport(
           value = client.shippingAddress2;
           break;
         case TaskReportFields.task1:
-          value = task.customValue1;
+          value = presentCustomField(
+            value: task.customValue1,
+            customFieldType: CustomFieldType.task1,
+            company: userCompany.company,
+          );
           break;
         case TaskReportFields.task2:
-          value = task.customValue2;
+          value = presentCustomField(
+            value: task.customValue2,
+            customFieldType: CustomFieldType.task2,
+            company: userCompany.company,
+          );
           break;
         case TaskReportFields.task3:
-          value = task.customValue3;
+          value = presentCustomField(
+            value: task.customValue3,
+            customFieldType: CustomFieldType.task3,
+            company: userCompany.company,
+          );
           break;
         case TaskReportFields.task4:
-          value = task.customValue4;
+          value = presentCustomField(
+            value: task.customValue4,
+            customFieldType: CustomFieldType.task4,
+            company: userCompany.company,
+          );
           break;
         case TaskReportFields.status:
           value = taskStatusMap[task.statusId]?.name ?? '';

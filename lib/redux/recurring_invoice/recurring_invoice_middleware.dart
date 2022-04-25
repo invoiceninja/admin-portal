@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -11,7 +12,6 @@ import 'package:invoiceninja_flutter/data/repositories/recurring_invoice_reposit
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
@@ -328,7 +328,7 @@ Middleware<AppState> _loadRecurringInvoices(
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      store.dispatch(LoadQuotes());
+      store.dispatch(LoadPayments());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadRecurringInvoicesFailure(error));

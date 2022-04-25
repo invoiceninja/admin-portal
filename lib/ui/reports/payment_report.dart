@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -184,16 +185,32 @@ ReportResult paymentReport(
           value = payment.date;
           break;
         case PaymentReportFields.payment1:
-          value = payment.customValue1;
+          value = presentCustomField(
+            value: payment.customValue1,
+            customFieldType: CustomFieldType.payment1,
+            company: userCompany.company,
+          );
           break;
         case PaymentReportFields.payment2:
-          value = payment.customValue2;
+          value = presentCustomField(
+            value: payment.customValue2,
+            customFieldType: CustomFieldType.payment2,
+            company: userCompany.company,
+          );
           break;
         case PaymentReportFields.payment3:
-          value = payment.customValue3;
+          value = presentCustomField(
+            value: payment.customValue3,
+            customFieldType: CustomFieldType.payment3,
+            company: userCompany.company,
+          );
           break;
         case PaymentReportFields.payment4:
-          value = payment.customValue4;
+          value = presentCustomField(
+            value: payment.customValue4,
+            customFieldType: CustomFieldType.payment4,
+            company: userCompany.company,
+          );
           break;
         case PaymentReportFields.exchange_rate:
           value = payment.exchangeRate;
