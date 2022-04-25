@@ -31,13 +31,12 @@ class WebClient {
     if (!url.contains('?')) {
       url += '?';
     }
-    print('GET: $url');
 
-    if (url.contains('invoiceninja.com')) {
-      url += '&per_page=$kMaxRecordsPerApiPage';
-    } else {
+    if (!url.contains('per_page')) {
       url += '&per_page=999999';
     }
+
+    print('GET: $url');
 
     final client = http.Client();
     final http.Response response = await client.get(
