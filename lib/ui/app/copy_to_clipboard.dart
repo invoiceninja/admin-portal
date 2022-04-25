@@ -21,7 +21,13 @@ class CopyToClipboard extends StatelessWidget {
       return SizedBox();
     }
 
-    final widget = child == null ? Text(value) : child;
+    final widget = child == null
+        ? Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        : child;
     final localization = AppLocalization.of(context);
     final onTap = () {
       Clipboard.setData(ClipboardData(text: value));
@@ -37,6 +43,7 @@ class CopyToClipboard extends StatelessWidget {
       return GestureDetector(
         onTap: onTap,
         child: Container(
+          constraints: BoxConstraints(maxWidth: 180),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             border: Border.all(
