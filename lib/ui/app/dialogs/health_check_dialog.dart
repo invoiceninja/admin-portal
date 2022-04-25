@@ -34,13 +34,21 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     super.didChangeDependencies();
   }
 
-  void runCheck() {
+  void runCheck() async {
     setState(() {
       _response = null;
     });
 
     final webClient = WebClient();
     final state = StoreProvider.of<AppState>(context).state;
+
+    try {
+      await webClient.get('${state.account.defaultUrl}/update', '',
+          rawResponse: true);
+    } catch (e) {
+      // do nothing
+    }
+
     final credentials = state.credentials;
     final url = '${credentials.url}/health_check';
 
