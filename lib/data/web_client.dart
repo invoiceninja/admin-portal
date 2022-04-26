@@ -32,7 +32,7 @@ class WebClient {
       url += '?';
     }
 
-    if (!url.contains('per_page')) {
+    if (url.contains('/api/') && !url.contains('per_page')) {
       url += '&per_page=999999';
     }
 

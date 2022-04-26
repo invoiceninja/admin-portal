@@ -1063,16 +1063,11 @@ class __PdfPreviewState extends State<_PdfPreview> {
             ],
           ),
           if (_isLoading)
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                LinearProgressIndicator(),
-                Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ],
+            Container(
+              color: Colors.grey.shade300,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             )
         ],
       ),

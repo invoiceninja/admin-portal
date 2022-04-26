@@ -47,6 +47,9 @@ class _$HealthCheckResponseSerializer
       'open_basedir',
       serializers.serialize(object.openBasedir,
           specifiedType: const FullType(bool)),
+      'file_permissions',
+      serializers.serialize(object.filePermissions,
+          specifiedType: const FullType(String)),
       'exec',
       serializers.serialize(object.execEnabled,
           specifiedType: const FullType(bool)),
@@ -110,6 +113,10 @@ class _$HealthCheckResponseSerializer
         case 'open_basedir':
           result.openBasedir = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'file_permissions':
+          result.filePermissions = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'exec':
           result.execEnabled = serializers.deserialize(value,
@@ -224,6 +231,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool openBasedir;
   @override
+  final String filePermissions;
+  @override
   final bool execEnabled;
   @override
   final String emailDriver;
@@ -248,6 +257,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.cacheEnabled,
       this.phantomEnabled,
       this.openBasedir,
+      this.filePermissions,
       this.execEnabled,
       this.emailDriver,
       this.pendingJobs,
@@ -269,6 +279,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         phantomEnabled, 'HealthCheckResponse', 'phantomEnabled');
     BuiltValueNullFieldError.checkNotNull(
         openBasedir, 'HealthCheckResponse', 'openBasedir');
+    BuiltValueNullFieldError.checkNotNull(
+        filePermissions, 'HealthCheckResponse', 'filePermissions');
     BuiltValueNullFieldError.checkNotNull(
         execEnabled, 'HealthCheckResponse', 'execEnabled');
     BuiltValueNullFieldError.checkNotNull(
@@ -303,6 +315,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         cacheEnabled == other.cacheEnabled &&
         phantomEnabled == other.phantomEnabled &&
         openBasedir == other.openBasedir &&
+        filePermissions == other.filePermissions &&
         execEnabled == other.execEnabled &&
         emailDriver == other.emailDriver &&
         pendingJobs == other.pendingJobs &&
@@ -326,14 +339,18 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(0,
-                                                        systemHealth.hashCode),
-                                                    phpVersion.hashCode),
-                                                envWritable.hashCode),
-                                            dbCheck.hashCode),
-                                        cacheEnabled.hashCode),
-                                    phantomEnabled.hashCode),
-                                openBasedir.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            systemHealth
+                                                                .hashCode),
+                                                        phpVersion.hashCode),
+                                                    envWritable.hashCode),
+                                                dbCheck.hashCode),
+                                            cacheEnabled.hashCode),
+                                        phantomEnabled.hashCode),
+                                    openBasedir.hashCode),
+                                filePermissions.hashCode),
                             execEnabled.hashCode),
                         emailDriver.hashCode),
                     pendingJobs.hashCode),
@@ -352,6 +369,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('cacheEnabled', cacheEnabled)
           ..add('phantomEnabled', phantomEnabled)
           ..add('openBasedir', openBasedir)
+          ..add('filePermissions', filePermissions)
           ..add('execEnabled', execEnabled)
           ..add('emailDriver', emailDriver)
           ..add('pendingJobs', pendingJobs)
@@ -397,6 +415,11 @@ class HealthCheckResponseBuilder
   bool get openBasedir => _$this._openBasedir;
   set openBasedir(bool openBasedir) => _$this._openBasedir = openBasedir;
 
+  String _filePermissions;
+  String get filePermissions => _$this._filePermissions;
+  set filePermissions(String filePermissions) =>
+      _$this._filePermissions = filePermissions;
+
   bool _execEnabled;
   bool get execEnabled => _$this._execEnabled;
   set execEnabled(bool execEnabled) => _$this._execEnabled = execEnabled;
@@ -436,6 +459,7 @@ class HealthCheckResponseBuilder
       _cacheEnabled = $v.cacheEnabled;
       _phantomEnabled = $v.phantomEnabled;
       _openBasedir = $v.openBasedir;
+      _filePermissions = $v.filePermissions;
       _execEnabled = $v.execEnabled;
       _emailDriver = $v.emailDriver;
       _pendingJobs = $v.pendingJobs;
@@ -477,10 +501,11 @@ class HealthCheckResponseBuilder
                   phantomEnabled, 'HealthCheckResponse', 'phantomEnabled'),
               openBasedir: BuiltValueNullFieldError.checkNotNull(
                   openBasedir, 'HealthCheckResponse', 'openBasedir'),
+              filePermissions: BuiltValueNullFieldError.checkNotNull(
+                  filePermissions, 'HealthCheckResponse', 'filePermissions'),
               execEnabled: BuiltValueNullFieldError.checkNotNull(
                   execEnabled, 'HealthCheckResponse', 'execEnabled'),
-              emailDriver: BuiltValueNullFieldError.checkNotNull(
-                  emailDriver, 'HealthCheckResponse', 'emailDriver'),
+              emailDriver: BuiltValueNullFieldError.checkNotNull(emailDriver, 'HealthCheckResponse', 'emailDriver'),
               pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, 'HealthCheckResponse', 'pendingJobs'),
               pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, 'HealthCheckResponse', 'pdfEngine'),
               trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, 'HealthCheckResponse', 'trailingSlash'),
