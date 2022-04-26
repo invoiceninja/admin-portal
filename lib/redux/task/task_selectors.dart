@@ -39,6 +39,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     if (notes.trim().isNotEmpty) {
       notes += '\n';
     }
+    notes += '<div class="task-time-details">\n';
     task
         .getTaskTimes()
         .where((time) => time.startDate != null && time.endDate != null)
@@ -49,7 +50,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
             showTime: true);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
-        notes += '##### $start - $end\n';
+        notes += '$start - $end<br/>\n';
       } else if (state.company.invoiceTaskDatelog) {
         final date = formatDate(time.startDate.toIso8601String(), context,
             showTime: false);
@@ -59,9 +60,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
             showTime: true, showDate: false);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
-        notes += '##### $start - $end\n';
+        notes += '$start - $end<br/>\n';
       }
     });
+    notes += '</div>\n';
 
     if (state.company.invoiceTaskDatelog && !state.company.invoiceTaskTimelog) {
       notes += '\n' + dates.join('\n');
