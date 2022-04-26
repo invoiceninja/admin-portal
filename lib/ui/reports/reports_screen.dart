@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_reducer.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -217,7 +216,7 @@ class ReportsScreen extends StatelessWidget {
               reportState.filters.rebuild((b) => b
                 ..addAll(
                   (value ?? '').isEmpty
-                      ? {filterColumns.first: ''}
+                      ? {if (filterColumns.isNotEmpty) filterColumns.first: ''}
                       : {
                           value: (reportState.filters[value] ?? '').isNotEmpty
                               ? reportState.filters[value]
