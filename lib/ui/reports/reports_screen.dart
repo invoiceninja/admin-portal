@@ -206,49 +206,56 @@ class ReportsScreen extends StatelessWidget {
         : null;
 
     final dateChildren = [
-      AppDropdownButton<String>(
-          labelText: localization.date,
-          value: dateField,
-          showBlank: true,
-          onChanged: (dynamic value) {
-            viewModel.onReportFiltersChanged(
-              context,
-              reportState.filters.rebuild((b) => b
-                ..addAll(
-                  (value ?? '').isEmpty
-                      ? {if (filterColumns.isNotEmpty) filterColumns.first: ''}
-                      : {
-                          value: (reportState.filters[value] ?? '').isNotEmpty
-                              ? reportState.filters[value]
-                              : DateRange.thisQuarter.toString(),
-                          if (filterColumns.isNotEmpty &&
-                              filterColumns.first != value)
-                            filterColumns.first: ''
-                        },
-                )),
-            );
-          },
-          items: dateColumns
-              .map((column) => DropdownMenuItem<String>(
-                    value: column,
-                    child: Text(
-                      localization.lookup(column),
-                    ),
-                  ))
-              .toList()),
+      if (dateColumns.length > 1)
+        AppDropdownButton<String>(
+            labelText: localization.date,
+            value: dateField,
+            showBlank: true,
+            onChanged: (dynamic value) {
+              viewModel.onReportFiltersChanged(
+                context,
+                reportState.filters.rebuild((b) => b
+                  ..addAll(
+                    (value ?? '').isEmpty
+                        ? {
+                            if (filterColumns.isNotEmpty)
+                              filterColumns.first: ''
+                          }
+                        : {
+                            value: (reportState.filters[value] ?? '').isNotEmpty
+                                ? reportState.filters[value]
+                                : DateRange.thisQuarter.toString(),
+                            if (filterColumns.isNotEmpty &&
+                                filterColumns.first != value)
+                              filterColumns.first: ''
+                          },
+                  )),
+              );
+            },
+            items: dateColumns
+                .map((column) => DropdownMenuItem<String>(
+                      value: column,
+                      child: Text(
+                        localization.lookup(column),
+                      ),
+                    ))
+                .toList()),
       AppDropdownButton<DateRange>(
         labelText: localization.range,
         showBlank: true,
         blankValue: null,
         value: dateRange,
-        onChanged: (dynamic value) {
-          viewModel.onReportFiltersChanged(
-              context,
-              reportState.filters.rebuild((b) => b
-                ..addAll({
-                  dateField ?? dateColumns.first: value == null ? '' : '$value'
-                })));
-        },
+        onChanged: dateColumns.isEmpty
+            ? null
+            : (dynamic value) {
+                viewModel.onReportFiltersChanged(
+                    context,
+                    reportState.filters.rebuild((b) => b
+                      ..addAll({
+                        dateField ?? dateColumns.first:
+                            value == null ? '' : '$value'
+                      })));
+              },
         items: DateRange.values
             .map((dateRange) => DropdownMenuItem<DateRange>(
                   child: Text(localization.lookup(dateRange.toString())),
@@ -282,7 +289,7 @@ class ReportsScreen extends StatelessWidget {
       AppDropdownButton<String>(
         enabled: reportsState.group.isNotEmpty,
         labelText: localization.chart,
-        value: reportsState.chart,
+        value: reportsState.group.isNotEmpty ? reportsState.chart : null,
         blankValue: '',
         showBlank: true,
         onChanged: (dynamic value) {
