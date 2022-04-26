@@ -43,7 +43,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = StoreProvider.of<AppState>(context).state;
 
     try {
-      await webClient.get('${state.account.defaultUrl}/update', '',
+      await webClient.get('${state.account.defaultUrl}/update?secret=', '',
           rawResponse: true);
     } catch (e) {
       // do nothing
@@ -145,6 +145,14 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isWarning: true,
                   ),
                   */
+                if (_response.filePermissions != 'Ok')
+                  _HealthListTile(
+                    title: 'Invalid File Permissions',
+                    isValid: false,
+                    subtitle: _response.filePermissions,
+                    url:
+                        'https://invoiceninja.github.io/docs/self-host-installation',
+                  ),
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
                     /*
