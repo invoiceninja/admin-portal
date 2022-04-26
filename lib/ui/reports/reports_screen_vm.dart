@@ -375,28 +375,15 @@ class ReportsScreenVM {
         }) {
           Timer(Duration(milliseconds: 100), () {
             final reportState = state.uiState.reportsUIState;
-            if (group != null && reportState.group != group) {
-              store.dispatch(UpdateReportSettings(
-                report: report ?? reportState.report,
-                group: group,
-                chart: chart,
-                subgroup: subgroup,
-                selectedGroup: '',
-                customStartDate: '',
-                customEndDate: '',
-                filters: BuiltMap<String, String>(),
-              ));
-            } else {
-              store.dispatch(UpdateReportSettings(
-                report: report ?? reportState.report,
-                group: group,
-                selectedGroup: selectedGroup,
-                subgroup: subgroup,
-                chart: chart,
-                customStartDate: customStartDate,
-                customEndDate: customEndDate,
-              ));
-            }
+            store.dispatch(UpdateReportSettings(
+              report: report ?? reportState.report,
+              group: group,
+              selectedGroup: selectedGroup,
+              subgroup: subgroup,
+              chart: chart,
+              customStartDate: customStartDate,
+              customEndDate: customEndDate,
+            ));
           });
         },
         onExportPressed: (context) async {
@@ -570,6 +557,7 @@ GroupTotals calculateReportTotals({
         }
 
         if (cell is ReportNumberValue &&
+            cell.currencyId != null &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
           var rate = cell.exchangeRate;

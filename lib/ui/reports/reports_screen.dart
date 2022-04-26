@@ -420,13 +420,31 @@ class ReportsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Flexible(
-                        child: FormCard(children: reportChildren),
+                        child: FormCard(
+                          children: reportChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding / 2,
+                              left: kMobileDialogPadding),
+                        ),
                       ),
                       Flexible(
-                        child: FormCard(children: dateChildren),
+                        child: FormCard(
+                          children: dateChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding / 2,
+                              left: kMobileDialogPadding / 2),
+                        ),
                       ),
                       Flexible(
-                        child: FormCard(children: chartChildren),
+                        child: FormCard(
+                          children: chartChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding,
+                              left: kMobileDialogPadding / 2),
+                        ),
                       )
                     ],
                   ),
@@ -1255,7 +1273,10 @@ class ReportResult {
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
-          value = formatNumber(values[column], context);
+          value = formatNumber(values[column], context,
+              formatNumberType: column == 'quantity'
+                  ? FormatNumberType.double
+                  : FormatNumberType.money);
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values[column].toInt()));
         }
@@ -1390,6 +1411,22 @@ class ReportResult {
           } else if (cell is ReportDurationValue) {
             currencyId = cell.currencyId ?? '';
           }
+
+          // if the specific cell doesn't have a currency
+          // set then find it in the row
+          if (currencyId.isEmpty) {
+            for (var k = 0; k < row.length; k++) {
+              final cell = row[k];
+              if (cell is ReportNumberValue) {
+                currencyId = cell.currencyId ?? '';
+              } else if (cell is ReportAgeValue) {
+                currencyId = cell.currencyId ?? '';
+              } else if (cell is ReportDurationValue) {
+                currencyId = cell.currencyId ?? '';
+              }
+            }
+          }
+
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
           }
