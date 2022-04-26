@@ -151,7 +151,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isValid: false,
                     subtitle: _response.filePermissions,
                     url:
-                        'https://invoiceninja.github.io/docs/self-host-installation',
+                        'https://invoiceninja.github.io/docs/self-host-installation/#file-permissions',
                   ),
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
