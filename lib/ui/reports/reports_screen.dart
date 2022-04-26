@@ -1273,7 +1273,10 @@ class ReportResult {
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
-          value = formatNumber(values[column], context);
+          value = formatNumber(values[column], context,
+              formatNumberType: column == 'quantity'
+                  ? FormatNumberType.double
+                  : FormatNumberType.money);
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values[column].toInt()));
         }

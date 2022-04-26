@@ -557,6 +557,7 @@ GroupTotals calculateReportTotals({
         }
 
         if (cell is ReportNumberValue &&
+            cell.currencyId != null &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
           var rate = cell.exchangeRate;
