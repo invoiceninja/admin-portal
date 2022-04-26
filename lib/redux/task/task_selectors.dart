@@ -39,7 +39,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     if (notes.trim().isNotEmpty) {
       notes += '\n';
     }
-    notes += '<span class="task-time-details">\n';
+    notes += '<div class="task-time-details">\n';
     task
         .getTaskTimes()
         .where((time) => time.startDate != null && time.endDate != null)
@@ -63,7 +63,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         notes += '$start - $end<br/>\n';
       }
     });
-    notes += '</span>\n';
+    notes += '</div>\n';
 
     if (state.company.invoiceTaskDatelog && !state.company.invoiceTaskTimelog) {
       notes += '\n' + dates.join('\n');
