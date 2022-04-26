@@ -1408,6 +1408,22 @@ class ReportResult {
           } else if (cell is ReportDurationValue) {
             currencyId = cell.currencyId ?? '';
           }
+
+          // if the specific cell doesn't have a currency
+          // set then find it in the row
+          if (currencyId.isEmpty) {
+            for (var k = 0; k < row.length; k++) {
+              final cell = row[k];
+              if (cell is ReportNumberValue) {
+                currencyId = cell.currencyId ?? '';
+              } else if (cell is ReportAgeValue) {
+                currencyId = cell.currencyId ?? '';
+              } else if (cell is ReportDurationValue) {
+                currencyId = cell.currencyId ?? '';
+              }
+            }
+          }
+
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
           }
