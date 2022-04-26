@@ -720,9 +720,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               addTitle: localization.addField,
               liveChanges: true,
               prefix: 'total',
-              allowDuplicates: [
-                '\$' + InvoiceTotalFields.subtotal,
-              ],
             ),
           ),
         ],
