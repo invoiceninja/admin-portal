@@ -141,23 +141,6 @@ class ReportsScreen extends StatelessWidget {
                 ))
             .toList(),
       ),
-      if (hasCustomDate) ...[
-        DatePicker(
-          labelText: localization.startDate,
-          selectedDate: reportsState.customStartDate,
-          onSelected: (date, _) =>
-              viewModel.onSettingsChanged(customStartDate: date),
-        ),
-        DatePicker(
-          labelText: localization.endDate,
-          selectedDate: reportsState.customEndDate,
-          onSelected: (date, _) =>
-              viewModel.onSettingsChanged(customEndDate: date),
-        ),
-      ]
-    ];
-
-    final groupChildren = [
       AppDropdownButton<String>(
         labelText: localization.group,
         value: reportsState.group,
@@ -204,6 +187,75 @@ class ReportsScreen extends StatelessWidget {
             ),
           ],
         ),
+    ];
+
+    final reportState = viewModel.reportState;
+    final filterColumns = reportState.filters.keys.where((column) =>
+        [
+          ReportColumnType.date,
+          ReportColumnType.dateTime,
+        ].contains(getReportColumnType(column, context)) &&
+        (reportState.filters[column] ?? '').isNotEmpty);
+    final dateColumns = reportResult.columns.where((column) => [
+          ReportColumnType.date,
+          ReportColumnType.dateTime,
+        ].contains(getReportColumnType(column, context)));
+    final dateField = filterColumns.isNotEmpty ? filterColumns.first : null;
+
+    print(
+        '## dateField: $dateField, filters: $filterColumns, dates: $dateColumns');
+
+    final dateChildren = [
+      AppDropdownButton<String>(
+          labelText: localization.date,
+          value: dateField,
+          onChanged: (dynamic value) {
+            //
+          },
+          items: dateColumns
+              .map((column) => DropdownMenuItem<String>(
+                    value: column,
+                    child: Text(
+                      localization.lookup(column),
+                    ),
+                  ))
+              .toList()),
+      AppDropdownButton<DateRange>(
+        labelText: localization.range,
+        showBlank: true,
+        blankValue: null,
+        value: (reportState.filters[dateField] ?? '').isNotEmpty
+            ? DateRange.valueOf(reportState.filters[dateField])
+            : null,
+        onChanged: (dynamic value) {
+          viewModel.onReportFiltersChanged(
+              context,
+              reportState.filters.rebuild((b) => b
+                ..addAll({
+                  dateField ?? dateColumns.first: value == null ? '' : '$value'
+                })));
+        },
+        items: DateRange.values
+            .map((dateRange) => DropdownMenuItem<DateRange>(
+                  child: Text(localization.lookup(dateRange.toString())),
+                  value: dateRange,
+                ))
+            .toList(),
+      ),
+      if (hasCustomDate) ...[
+        DatePicker(
+          labelText: localization.startDate,
+          selectedDate: reportsState.customStartDate,
+          onSelected: (date, _) =>
+              viewModel.onSettingsChanged(customStartDate: date),
+        ),
+        DatePicker(
+          labelText: localization.endDate,
+          selectedDate: reportsState.customEndDate,
+          onSelected: (date, _) =>
+              viewModel.onSettingsChanged(customEndDate: date),
+        ),
+      ]
     ];
 
     final entities = reportResult.entities ?? [];
@@ -339,7 +391,7 @@ class ReportsScreen extends StatelessWidget {
                 ? FormCard(
                     children: [
                       ...reportChildren,
-                      ...groupChildren,
+                      ...dateChildren,
                       ...chartChildren,
                     ],
                   )
@@ -350,7 +402,7 @@ class ReportsScreen extends StatelessWidget {
                         child: FormCard(children: reportChildren),
                       ),
                       Flexible(
-                        child: FormCard(children: groupChildren),
+                        child: FormCard(children: dateChildren),
                       ),
                       Flexible(
                         child: FormCard(children: chartChildren),
@@ -985,9 +1037,8 @@ class ReportResult {
             labelText: null,
             showBlank: true,
             blankValue: null,
-            value: (textEditingControllers[column].text ?? '').isNotEmpty &&
-                    textEditingControllers[column].text != 'null'
-                ? DateRange.valueOf(textEditingControllers[column].text)
+            value: (reportState.filters[column] ?? '').isNotEmpty
+                ? DateRange.valueOf(reportState.filters[column])
                 : null,
             onChanged: (dynamic value) {
               if (value == null) {
