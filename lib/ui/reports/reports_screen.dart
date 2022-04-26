@@ -420,13 +420,31 @@ class ReportsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Flexible(
-                        child: FormCard(children: reportChildren),
+                        child: FormCard(
+                          children: reportChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding / 2,
+                              left: kMobileDialogPadding),
+                        ),
                       ),
                       Flexible(
-                        child: FormCard(children: dateChildren),
+                        child: FormCard(
+                          children: dateChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding / 2,
+                              left: kMobileDialogPadding / 2),
+                        ),
                       ),
                       Flexible(
-                        child: FormCard(children: chartChildren),
+                        child: FormCard(
+                          children: chartChildren,
+                          padding: const EdgeInsets.only(
+                              top: kMobileDialogPadding,
+                              right: kMobileDialogPadding,
+                              left: kMobileDialogPadding / 2),
+                        ),
                       )
                     ],
                   ),
