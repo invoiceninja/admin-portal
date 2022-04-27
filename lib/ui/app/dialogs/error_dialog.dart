@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -24,7 +25,11 @@ class ErrorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    var errorStr = '$error';
+    String errorStr = '$error'.trim();
+
+    if (errorStr.startsWith('<')) {
+      errorStr = html2md.convert(errorStr);
+    }
 
     if (error is Error) {
       errorStr += '\n\n' + (error as Error).stackTrace.toString();
