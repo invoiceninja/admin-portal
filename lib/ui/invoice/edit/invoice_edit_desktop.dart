@@ -339,7 +339,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               child: Text(localization.endless),
                               value: -1,
                             ),
-                            ...List<int>.generate(37, (i) => i)
+                            ...List<int>.generate(61, (i) => i)
                                 .map((value) => DropdownMenuItem(
                                       child: Text('$value'),
                                       value: value,
