@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_currency': 'Invoice Currency',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
       'tax_amount2': 'Tax Amount 2',
@@ -75002,6 +75003,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get range =>
       _localizedValues[localeCode]['range'] ??
       _localizedValues['en']['range'];
+
+  String get invoiceCurrency =>
+      _localizedValues[localeCode]['invoice_currency'] ??
+      _localizedValues['en']['invoice_currency'];
 
   // STARTER: lang field - do not remove comment
 

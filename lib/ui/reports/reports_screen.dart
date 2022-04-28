@@ -965,13 +965,27 @@ class ReportResult {
       for (String column in sortedColumns(reportState))
         DataColumn(
           label: Container(
-            constraints: BoxConstraints(minWidth: 80),
-            child: Text(
-              (company.getCustomFieldLabel(column).isNotEmpty
-                      ? company.getCustomFieldLabel(column)
-                      : localization.lookup(column)) +
-                  '   ',
-              overflow: TextOverflow.ellipsis,
+            constraints: BoxConstraints(minWidth: kTableColumnWidthMin),
+            child: Row(
+              children: [
+                Text(
+                  (company.getCustomFieldLabel(column).isNotEmpty
+                          ? company.getCustomFieldLabel(column)
+                          : localization.lookup(column)) +
+                      '   ',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (column == reportState.group)
+                  IconButton(
+                      onPressed: () {
+                        store.dispatch(UpdateReportSettings(
+                          report: reportState.report,
+                          group: '',
+                        ));
+                      },
+                      icon: Icon(Icons.clear, color: Colors.grey))
+              ],
             ),
           ),
           numeric:

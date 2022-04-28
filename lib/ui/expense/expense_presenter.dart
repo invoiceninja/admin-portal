@@ -35,25 +35,17 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.taxAmount,
       ExpenseFields.privateNotes,
       ExpenseFields.shouldBeInvoiced,
-      ExpenseFields.transactionId,
       ExpenseFields.transactionReference,
-      ExpenseFields.bankId,
-      ExpenseFields.currencyId,
-      ExpenseFields.categoryId,
       ExpenseFields.category,
       ExpenseFields.paymentDate,
       ExpenseFields.paymentType,
       ExpenseFields.exchangeRate,
-      ExpenseFields.invoiceCurrencyId,
       ExpenseFields.taxName1,
       ExpenseFields.taxName2,
       ExpenseFields.taxName3,
       ExpenseFields.taxRate1,
       ExpenseFields.taxRate2,
       ExpenseFields.taxRate3,
-      ExpenseFields.clientId,
-      ExpenseFields.invoiceId,
-      ExpenseFields.vendorId,
       ExpenseFields.customValue1,
       ExpenseFields.customValue2,
       ExpenseFields.customValue3,
@@ -72,10 +64,8 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.status:
         return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
-      case ExpenseFields.vendorId:
         final vendor = state.vendorState.get(expense.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: expense);
-      case ExpenseFields.clientId:
       case ExpenseFields.client:
         final client = state.clientState.get(expense.clientId);
         return LinkTextRelatedEntity(entity: client, relation: expense);
@@ -105,14 +95,11 @@ class ExpensePresenter extends EntityPresenter {
         return Text(expense.transactionId);
       case ExpenseFields.transactionReference:
         return Text(expense.transactionReference);
-      case ExpenseFields.bankId:
-        return Text(expense.bankId);
-      case ExpenseFields.currencyId:
+      case ExpenseFields.currency:
         return Text(state
                 .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
       case ExpenseFields.category:
-      case ExpenseFields.categoryId:
         return Text(state.expenseCategoryState.map[expense.categoryId]
                 ?.listDisplayName ??
             '');
@@ -125,7 +112,7 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.exchangeRate:
         return Text(formatNumber(expense.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
-      case ExpenseFields.invoiceCurrencyId:
+      case ExpenseFields.invoiceCurrency:
         return Text(state.staticState.currencyMap[expense.invoiceCurrencyId]
                 ?.listDisplayName ??
             '');
