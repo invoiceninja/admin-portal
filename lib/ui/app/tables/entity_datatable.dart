@@ -93,6 +93,12 @@ class EntityDataTableSource extends AppDataTableSource {
       backgroundColor = convertHexStringToColor(rowColor);
     }
 
+    final wideFields = [
+      'public_notes',
+      'private_notes',
+      'description',
+    ];
+
     return DataRow(
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged:
@@ -131,7 +137,15 @@ class EntityDataTableSource extends AppDataTableSource {
           ),
         ...tableColumns.map(
           (field) => DataCell(
-            entityPresenter.getField(field: field, context: context),
+            ConstrainedBox(
+              child: entityPresenter.getField(field: field, context: context),
+              constraints: BoxConstraints(
+                maxWidth: wideFields.contains(field)
+                    ? kTableColumnWidthMax * 2
+                    : kTableColumnWidthMax,
+                minWidth: kTableColumnWidthMin,
+              ),
+            ),
             onTap: () => onTap(entity),
             //onLongPress: () => selectEntity(entity: entity, context: context, longPress: true),
             backgroundColor: backgroundColor,
