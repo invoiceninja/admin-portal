@@ -40,10 +40,10 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
       child: GestureDetector(
         child: Text(
           widget.entity.listDisplayName,
-          textAlign: TextAlign.center,
           style: TextStyle(
-              decoration:
-                  _isHovered ? TextDecoration.underline : TextDecoration.none),
+            decoration:
+                _isHovered ? TextDecoration.underline : TextDecoration.none,
+          ),
         ),
         onTap: () {
           viewEntity(entity: widget.relation);
