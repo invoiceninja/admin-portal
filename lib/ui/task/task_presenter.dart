@@ -77,7 +77,14 @@ class TaskPresenter extends EntityPresenter {
         final project = state.projectState.get(task.projectId);
         return LinkTextRelatedEntity(entity: project, relation: task);
       case TaskFields.description:
-        return Text(task.description);
+        return Tooltip(
+          message: task.description,
+          child: Text(
+            task.description,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case TaskFields.duration:
         return Text(formatDuration(task.calculateDuration()));
       case TaskFields.number:
