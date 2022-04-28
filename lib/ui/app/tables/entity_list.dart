@@ -276,15 +276,8 @@ class _EntityListState extends State<EntityList> {
                                 'custom', entityType.snakeCase);
                             label = state.company.getCustomFieldLabel(key);
                           }
-                          var minWidth = kTableColumnWidthMin;
-                          if (field == ProductFields.description) {
-                            minWidth *= 4;
-                          }
                           return DataColumn(
                               label: Container(
-                                constraints: BoxConstraints(
-                                  minWidth: minWidth,
-                                ),
                                 child: Text(
                                   label,
                                   overflow: TextOverflow.ellipsis,
