@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
 
-class LinkTextRelatedEntity extends StatelessWidget {
+class LinkTextRelatedEntity extends StatefulWidget {
   const LinkTextRelatedEntity({
     Key key,
     @required this.entity,
@@ -18,24 +18,41 @@ class LinkTextRelatedEntity extends StatelessWidget {
   final BaseEntity relation;
 
   @override
+  State<LinkTextRelatedEntity> createState() => _LinkTextRelatedEntityState();
+}
+
+class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
-    if (entity == null || relation == null) {
+    if (widget.entity == null || widget.relation == null) {
       return SizedBox();
     }
 
-    return GestureDetector(
-      child: Text(
-        entity.listDisplayName,
-        textAlign: TextAlign.center,
-        style: TextStyle(decoration: TextDecoration.underline),
+    return MouseRegion(
+      onHover: (event) {
+        setState(() => _isHovered = true);
+      },
+      onExit: (event) {
+        setState(() => _isHovered = false);
+      },
+      child: GestureDetector(
+        child: Text(
+          widget.entity.listDisplayName,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              decoration:
+                  _isHovered ? TextDecoration.underline : TextDecoration.none),
+        ),
+        onTap: () {
+          viewEntity(entity: widget.relation);
+          viewEntity(entity: widget.entity, addToStack: true);
+        },
+        onLongPress: () {
+          editEntity(context: context, entity: widget.entity);
+        },
       ),
-      onTap: () {
-        viewEntity(entity: relation);
-        viewEntity(entity: entity, addToStack: true);
-      },
-      onLongPress: () {
-        editEntity(context: context, entity: entity);
-      },
     );
   }
 }
