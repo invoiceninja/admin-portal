@@ -93,11 +93,25 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
       case RecurringExpenseFields.publicNotes:
-        return Text(expense.publicNotes);
+        return Tooltip(
+          message: expense.publicNotes,
+          child: Text(
+            expense.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case RecurringExpenseFields.number:
         return Text(expense.number);
       case RecurringExpenseFields.privateNotes:
-        return Text(expense.privateNotes);
+        return Tooltip(
+          message: expense.privateNotes,
+          child: Text(
+            expense.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case RecurringExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
       case RecurringExpenseFields.currencyId:

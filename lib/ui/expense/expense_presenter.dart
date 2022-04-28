@@ -84,11 +84,25 @@ class ExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
       case ExpenseFields.publicNotes:
-        return Text(expense.publicNotes);
+        return Tooltip(
+          message: expense.publicNotes,
+          child: Text(
+            expense.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ExpenseFields.number:
         return Text(expense.number);
       case ExpenseFields.privateNotes:
-        return Text(expense.privateNotes);
+        return Tooltip(
+          message: expense.privateNotes,
+          child: Text(
+            expense.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
       case ExpenseFields.transactionId:

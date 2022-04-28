@@ -128,9 +128,23 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.custom4:
         return Text(presentCustomField(context, client.customValue4));
       case ClientFields.publicNotes:
-        return Text(client.publicNotes);
+        return Tooltip(
+          message: client.publicNotes,
+          child: Text(
+            client.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ClientFields.privateNotes:
-        return Text(client.privateNotes);
+        return Tooltip(
+          message: client.privateNotes,
+          child: Text(
+            client.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ClientFields.taskRate:
         return Text(formatNumber(client.settings.defaultTaskRate, context));
       case ClientFields.documents:
