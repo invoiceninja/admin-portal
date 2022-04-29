@@ -153,10 +153,15 @@ class ClientPresenter extends EntityPresenter {
         final group = state.groupState.get(client.groupId);
         return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
-        return Text(
-          client.contacts.map((contact) => contact.fullName).join('\n'),
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
+        final contacts =
+            client.contacts.map((contact) => contact.fullName).join('\n');
+        return Tooltip(
+          message: contacts,
+          child: Text(
+            contacts,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
         );
     }
 
