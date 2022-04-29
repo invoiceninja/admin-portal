@@ -401,8 +401,13 @@ class ReportsScreenVM {
               csvData += '\n';
               for (var i = 0; i < row.length; i++) {
                 final column = reportResult.columns[i];
-                final value = row[i].renderText(context, column).trim();
-                csvData += '"$value",';
+                final value = row[i]
+                    .renderText(context, column)
+                    .trim()
+                    .replaceAll('"', '\\"');
+                csvData += value.contains(' ') || value.contains('"')
+                    ? '"$value",'
+                    : '$value,';
               }
               csvData = csvData.substring(0, csvData.length - 1);
             });
@@ -426,11 +431,15 @@ class ReportsScreenVM {
 
             groupTotals.rows.forEach((group) {
               final row = groupTotals.totals[group];
-              csvData += '$group,${row['count'].toInt()}';
+              csvData +=
+                  '"${group.trim().replaceAll('"', '\\"')}",${row['count'].toInt()}';
 
               columns.forEach((column) {
-                final value = row[column].toString();
-                csvData += value.contains(' ') ? ',"$value"' : ',$value';
+                final value =
+                    row[column].toString().trim().replaceAll('"', '\\"');
+                csvData += value.contains(' ') || value.contains('"')
+                    ? ',"$value"'
+                    : ',$value';
               });
 
               csvData += '\n';
