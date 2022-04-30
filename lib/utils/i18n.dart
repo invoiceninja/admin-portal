@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'alternate_pdf_viewer': 'Alternate PDF Viewer',
+      'alternate_pdf_viewer_help':
+          'Improve scrolling over the PDF preview [BETA]',
       'invoice_currency': 'Invoice Currency',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -75001,12 +75004,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['update_project'];
 
   String get range =>
-      _localizedValues[localeCode]['range'] ??
-      _localizedValues['en']['range'];
+      _localizedValues[localeCode]['range'] ?? _localizedValues['en']['range'];
 
   String get invoiceCurrency =>
       _localizedValues[localeCode]['invoice_currency'] ??
       _localizedValues['en']['invoice_currency'];
+
+  String get alternatePdfViewer =>
+      _localizedValues[localeCode]['alternate_pdf_viewer'] ??
+      _localizedValues['en']['alternate_pdf_viewer'];
+
+  String get alternatePdfViewerHelp =>
+      _localizedValues[localeCode]['alternate_pdf_viewer_help'] ??
+      _localizedValues['en']['alternate_pdf_viewer_help'];
 
   // STARTER: lang field - do not remove comment
 
