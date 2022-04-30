@@ -54,6 +54,7 @@ class DeviceSettingsVM {
     @required this.onPersistDataChanged,
     @required this.onPersistUiChanged,
     @required this.onShowPdfChanged,
+    @required this.onEnableJSPDFChanged,
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
     @required this.onEditAfterSavingChanged,
@@ -108,6 +109,9 @@ class DeviceSettingsVM {
       },
       onShowPdfChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreview: value));
+      },
+      onEnableJSPDFChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(enableJSPDF: value));
       },
       onTextScaleFactorChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(textScaleFactor: value));
@@ -201,6 +205,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
+  final Function(BuildContext, bool) onEnableJSPDFChanged;
   final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
   final Future<bool> authenticationSupported;
