@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -94,6 +95,15 @@ class CompanyGatewayEditVM {
               showToast(companyGateway.isNew
                   ? localization.createdCompanyGateway
                   : localization.updatedCompanyGateway);
+
+              final company = store.state.company;
+              if ((company.settings.companyGatewayIds ?? '').isNotEmpty) {
+                store.dispatch(SaveCompanyRequest(
+                    completer: Completer<Null>(),
+                    company: company.rebuild((b) => b
+                      ..settings.companyGatewayIds +=
+                          ',' + savedCompanyGateway.id)));
+              }
 
               if (state.prefState.isMobile) {
                 store.dispatch(
