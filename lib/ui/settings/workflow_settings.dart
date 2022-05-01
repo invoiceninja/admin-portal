@@ -102,11 +102,20 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     iconData: Icons.email,
                   ),
                   BoolDropdownButton(
-                    label: localization.autoArchiveInvoice,
-                    helpLabel: localization.autoArchiveInvoiceHelp,
+                    label: localization.autoArchivePaidInvoices,
+                    helpLabel: localization.autoArchivePaidInvoices,
                     value: settings.autoArchiveInvoice,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..autoArchiveInvoice = value)),
+                    iconData: Icons.archive,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.autoArchiveCancelledInvoices,
+                    helpLabel: localization.autoArchiveCancelledInvoicesHelp,
+                    value: settings.autoArchiveInvoiceCancelled,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild(
+                            (b) => b..autoArchiveInvoiceCancelled = value)),
                     iconData: Icons.archive,
                   ),
                 ]),
