@@ -1065,7 +1065,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
               Expanded(
                 child: _response == null
                     ? SizedBox()
-                    : state.prefState.enableJSPDF
+                    : state.prefState.enableJSPDF || !kIsWeb
                         ? PdfPreview(
                             build: (format) => _response.bodyBytes,
                             canChangeOrientation: false,
