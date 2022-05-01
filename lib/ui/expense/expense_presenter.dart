@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -34,30 +35,23 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.taxAmount,
       ExpenseFields.privateNotes,
       ExpenseFields.shouldBeInvoiced,
-      ExpenseFields.transactionId,
       ExpenseFields.transactionReference,
-      ExpenseFields.bankId,
-      ExpenseFields.currencyId,
-      ExpenseFields.categoryId,
       ExpenseFields.category,
       ExpenseFields.paymentDate,
       ExpenseFields.paymentType,
       ExpenseFields.exchangeRate,
-      ExpenseFields.invoiceCurrencyId,
       ExpenseFields.taxName1,
       ExpenseFields.taxName2,
       ExpenseFields.taxName3,
       ExpenseFields.taxRate1,
       ExpenseFields.taxRate2,
       ExpenseFields.taxRate3,
-      ExpenseFields.clientId,
-      ExpenseFields.invoiceId,
-      ExpenseFields.vendorId,
       ExpenseFields.customValue1,
       ExpenseFields.customValue2,
       ExpenseFields.customValue3,
       ExpenseFields.customValue4,
       ExpenseFields.documents,
+      ExpenseFields.recurringExpense,
     ];
   }
 
@@ -70,13 +64,11 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.status:
         return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
-      case ExpenseFields.vendorId:
-        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName);
-      case ExpenseFields.clientId:
+        final vendor = state.vendorState.get(expense.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case ExpenseFields.client:
-        return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
-            .listDisplayName);
+        final client = state.clientState.get(expense.clientId);
+        return LinkTextRelatedEntity(entity: client, relation: expense);
       case ExpenseFields.expenseDate:
         return Text(formatDate(expense.date, context));
       case ExpenseFields.netAmount:
@@ -92,25 +84,36 @@ class ExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
       case ExpenseFields.publicNotes:
-        return Text(expense.publicNotes);
+        return Tooltip(
+          message: expense.publicNotes,
+          child: Text(
+            expense.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ExpenseFields.number:
         return Text(expense.number);
       case ExpenseFields.privateNotes:
-        return Text(expense.privateNotes);
+        return Tooltip(
+          message: expense.privateNotes,
+          child: Text(
+            expense.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
       case ExpenseFields.transactionId:
         return Text(expense.transactionId);
       case ExpenseFields.transactionReference:
         return Text(expense.transactionReference);
-      case ExpenseFields.bankId:
-        return Text(expense.bankId);
-      case ExpenseFields.currencyId:
+      case ExpenseFields.currency:
         return Text(state
                 .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
       case ExpenseFields.category:
-      case ExpenseFields.categoryId:
         return Text(state.expenseCategoryState.map[expense.categoryId]
                 ?.listDisplayName ??
             '');
@@ -123,7 +126,7 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.exchangeRate:
         return Text(formatNumber(expense.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
-      case ExpenseFields.invoiceCurrencyId:
+      case ExpenseFields.invoiceCurrency:
         return Text(state.staticState.currencyMap[expense.invoiceCurrencyId]
                 ?.listDisplayName ??
             '');
@@ -155,6 +158,11 @@ class ExpensePresenter extends EntityPresenter {
         return Text(presentCustomField(context, expense.customValue4));
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
+      case ExpenseFields.recurringExpense:
+        final recurringExpense =
+            state.recurringExpenseState.get(expense.recurringId);
+        return LinkTextRelatedEntity(
+            entity: recurringExpense, relation: expense);
     }
 
     return super.getField(field: field, context: context);

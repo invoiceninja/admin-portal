@@ -7,8 +7,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -64,7 +67,11 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.contactName:
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
-        return Text(client.primaryContact.email);
+        return CopyToClipboard(
+          value: client.primaryContact.email,
+          showBorder: true,
+          onLongPress: () => launch('mailto:${client.primaryContact.email}'),
+        );
       case ClientFields.contactPhone:
         return Text(client.primaryContact.phone);
       case ClientFields.address1:
@@ -121,20 +128,40 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.custom4:
         return Text(presentCustomField(context, client.customValue4));
       case ClientFields.publicNotes:
-        return Text(client.publicNotes);
+        return Tooltip(
+          message: client.publicNotes,
+          child: Text(
+            client.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ClientFields.privateNotes:
-        return Text(client.privateNotes);
+        return Tooltip(
+          message: client.privateNotes,
+          child: Text(
+            client.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case ClientFields.taskRate:
         return Text(formatNumber(client.settings.defaultTaskRate, context));
       case ClientFields.documents:
         return Text('${client.documents.length}');
       case ClientFields.group:
-        return Text(state.groupState.get(client.groupId).name);
+        final group = state.groupState.get(client.groupId);
+        return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
-        return Text(
-          client.contacts.map((contact) => contact.fullName).join('\n'),
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
+        final contacts =
+            client.contacts.map((contact) => contact.fullName).join('\n');
+        return Tooltip(
+          message: contacts,
+          child: Text(
+            contacts,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
         );
     }
 

@@ -79,9 +79,10 @@ class LoadProductFailure implements StopLoading {
 }
 
 class LoadProducts {
-  LoadProducts({this.completer});
+  LoadProducts({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadProductsRequest implements StartLoading {}

@@ -302,15 +302,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         '';
 
     final tableHeaderColumns = <Widget>[];
+    final translations = company.settings.translations;
 
     for (var i = 0; i < _columns.length; i++) {
       final column = _columns[i];
       String label = '';
       bool isNumeric = false;
       if (column == COLUMN_ITEM) {
-        label = localization.item;
+        label = translations['item'] ?? localization.item;
       } else if (column == COLUMN_DESCRIPTION) {
-        label = localization.description;
+        label = translations['description'] ?? localization.description;
       } else if (column == COLUMN_CUSTOM1) {
         label = company.getCustomFieldLabel(customField1);
       } else if (column == COLUMN_CUSTOM2) {
@@ -325,13 +326,21 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 ? ' - ${localization.inclusive}'
                 : '');
       } else if (column == COLUMN_QUANTITY) {
-        label = widget.isTasks ? localization.hours : localization.quantity;
+        if (widget.isTasks) {
+          label = translations['hours'] ?? localization.hours;
+        } else {
+          label = translations['quantity'] ?? localization.quantity;
+        }
         isNumeric = true;
       } else if (column == COLUMN_UNIT_COST) {
-        label = widget.isTasks ? localization.rate : localization.unitCost;
+        if (widget.isTasks) {
+          label = translations['rate'] ?? localization.rate;
+        } else {
+          label = translations['unit_cost'] ?? localization.unitCost;
+        }
         isNumeric = true;
       } else if (column == COLUMN_DISCOUNT) {
-        label = localization.discount;
+        label = translations['discount'] ?? localization.discount;
         isNumeric = true;
       }
       tableHeaderColumns.add(TableHeader(

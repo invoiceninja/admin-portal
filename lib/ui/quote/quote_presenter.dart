@@ -9,10 +9,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QuotePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -51,6 +54,8 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.clientCity,
       QuoteFields.clientPostalCode,
       QuoteFields.clientCountry,
+      QuoteFields.partial,
+      QuoteFields.partialDueDate,
     ];
   }
 
@@ -68,9 +73,7 @@ class QuotePresenter extends EntityPresenter {
         return Text(
             (quote.number ?? '').isEmpty ? localization.pending : quote.number);
       case QuoteFields.client:
-        return Text((state.clientState.map[quote.clientId] ??
-                ClientEntity(id: quote.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(entity: client, relation: quote);
       case QuoteFields.date:
         return Text(formatDate(quote.date, context));
       case QuoteFields.lastSentDate:
@@ -92,9 +95,23 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.customValue4:
         return Text(presentCustomField(context, quote.customValue4));
       case QuoteFields.publicNotes:
-        return Text(quote.publicNotes);
+        return Tooltip(
+          message: quote.publicNotes,
+          child: Text(
+            quote.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case QuoteFields.privateNotes:
-        return Text(quote.privateNotes);
+        return Tooltip(
+          message: quote.privateNotes,
+          child: Text(
+            quote.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case QuoteFields.discount:
         return Text(quote.isAmountDiscount
             ? formatNumber(quote.discount, context,
@@ -115,9 +132,11 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.isViewed:
         return Text(quote.isViewed ? localization.yes : localization.no);
       case QuoteFields.project:
-        return Text(state.projectState.get(quote.projectId).listDisplayName);
+        final project = state.projectState.get(quote.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: quote);
       case QuoteFields.vendor:
-        return Text(state.vendorState.get(quote.vendorId).name);
+        final vendor = state.vendorState.get(quote.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: quote);
       case QuoteFields.clientState:
         return Text(client.state);
       case QuoteFields.clientCity:
@@ -130,11 +149,21 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.contactEmail:
         final contact =
             quoteContactSelector(quote, state.clientState.get(quote.clientId));
-        if (field == QuoteFields.contactName) {
-          return Text(contact?.fullName ?? '');
-        } else {
-          return Text(contact?.email ?? '');
+        if (contact == null) {
+          return SizedBox();
         }
+        if (field == QuoteFields.contactName) {
+          return Text(contact.fullName);
+        }
+        return CopyToClipboard(
+          value: contact.email,
+          showBorder: true,
+          onLongPress: () => launch('mailto:${contact.email}'),
+        );
+      case QuoteFields.partial:
+        return Text(formatNumber(quote.partial, context));
+      case QuoteFields.partialDueDate:
+        return Text(formatDate(quote.partialDueDate, context));
     }
 
     return super.getField(field: field, context: context);

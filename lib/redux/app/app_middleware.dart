@@ -229,22 +229,11 @@ Middleware<AppState> _createLoadState(
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
-
-      if (store.state.company.isLarge) {
-        store.dispatch(LoadClients(
-            completer: Completer<Null>()
-              ..future.catchError((Object error) {
-                store.dispatch(UserLogout());
-              })));
-      } else {
-        store.dispatch(RefreshData(
-            completer: Completer<Null>()
-              ..future.then((value) {
-                AppBuilder.of(navigatorKey.currentContext).rebuild();
-              }).catchError((Object error) {
-                store.dispatch(UserLogout());
-              })));
-      }
+      store.dispatch(RefreshData(
+          completer: Completer<Null>()
+            ..future.then((value) {
+              AppBuilder.of(navigatorKey.currentContext).rebuild();
+            })));
 
       if (uiState.currentRoute != LoginScreen.route &&
           uiState.currentRoute.isNotEmpty &&

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -126,6 +127,11 @@ ReportResult creditReport(
   for (var creditId in creditMap.keys) {
     final credit = creditMap[creditId];
     final client = clientMap[credit.clientId] ?? ClientEntity();
+
+    if (credit.invitations.isEmpty) {
+      continue;
+    }
+
     final contact = client.getContact(credit.invitations.first.contactId);
 
     if (credit.isDeleted || client.isDeleted) {
@@ -204,16 +210,32 @@ ReportResult creditReport(
           value = credit.autoBill;
           break;
         case CreditReportFields.invoice1:
-          value = credit.customValue1;
+          value = presentCustomField(
+            value: credit.customValue1,
+            customFieldType: CustomFieldType.invoice1,
+            company: userCompany.company,
+          );
           break;
         case CreditReportFields.invoice2:
-          value = credit.customValue2;
+          value = presentCustomField(
+            value: credit.customValue2,
+            customFieldType: CustomFieldType.invoice2,
+            company: userCompany.company,
+          );
           break;
         case CreditReportFields.invoice3:
-          value = credit.customValue3;
+          value = presentCustomField(
+            value: credit.customValue3,
+            customFieldType: CustomFieldType.invoice3,
+            company: userCompany.company,
+          );
           break;
         case CreditReportFields.invoice4:
-          value = credit.customValue4;
+          value = presentCustomField(
+            value: credit.customValue4,
+            customFieldType: CustomFieldType.invoice4,
+            company: userCompany.company,
+          );
           break;
         case CreditReportFields.surcharge1:
           value = credit.customSurcharge1;

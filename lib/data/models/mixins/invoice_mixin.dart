@@ -105,6 +105,14 @@ abstract class CalculateInvoiceTotal {
       total += round(customSurcharge2, precision);
     }
 
+    if (customSurcharge3 != 0.0 && customTaxes3) {
+      total += round(customSurcharge3, precision);
+    }
+
+    if (customSurcharge4 != 0.0 && customTaxes4) {
+      total += round(customSurcharge4, precision);
+    }
+
     if (taxRate1 != 0) {
       taxAmount =
           _calculateTaxAmount(total, taxRate1, useInclusiveTaxes, precision);
@@ -256,6 +264,14 @@ abstract class CalculateInvoiceTotal {
       total += round(customSurcharge2, precision);
     }
 
+    if (customSurcharge3 != 0.0 && customTaxes3) {
+      total += round(customSurcharge3, precision);
+    }
+
+    if (customSurcharge4 != 0.0 && customTaxes4) {
+      total += round(customSurcharge4, precision);
+    }
+
     if (!usesInclusiveTaxes) {
       final double taxAmount1 = round(total * taxRate1 / 100, precision);
       final double taxAmount2 = round(total * taxRate2 / 100, precision);
@@ -270,6 +286,14 @@ abstract class CalculateInvoiceTotal {
 
     if (customSurcharge2 != 0.0 && !customTaxes2) {
       total += round(customSurcharge2, precision);
+    }
+
+    if (customSurcharge3 != 0.0 && !customTaxes3) {
+      total += round(customSurcharge3, precision);
+    }
+
+    if (customSurcharge4 != 0.0 && !customTaxes4) {
+      total += round(customSurcharge4, precision);
     }
 
     return total;

@@ -480,7 +480,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                     if (_secret == null)
                       LoadingIndicator()
                     else ...[
-                      QrImage(
+                      QrImageView(
                         data: _qrCode,
                         version: QrVersions.auto,
                         size: 180,

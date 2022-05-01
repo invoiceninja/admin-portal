@@ -251,6 +251,16 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.filePdfBox),
                     ),
+                    if (kIsWeb)
+                      SwitchListTile(
+                        title: Text(localization.alternatePdfViewer),
+                        subtitle: Text(localization.alternatePdfViewerHelp),
+                        value: prefState.enableJSPDF,
+                        onChanged: (value) =>
+                            viewModel.onEnableJSPDFChanged(context, value),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        secondary: Icon(MdiIcons.filePdfBox),
+                      ),
                   ],
                   SwitchListTile(
                     title: Text(localization.persistUi),

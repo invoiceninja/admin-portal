@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -154,6 +155,11 @@ ReportResult invoiceReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId] ?? ClientEntity();
+
+    if (invoice.invitations.isEmpty) {
+      continue;
+    }
+
     final contact = client.getContact(invoice.invitations.first.contactId);
 
     if (invoice.isDeleted || client.isDeleted) {
@@ -247,16 +253,32 @@ ReportResult invoiceReport(
           value = invoice.autoBill;
           break;
         case InvoiceReportFields.invoice1:
-          value = invoice.customValue1;
+          value = presentCustomField(
+            value: invoice.customValue1,
+            customFieldType: CustomFieldType.invoice1,
+            company: userCompany.company,
+          );
           break;
         case InvoiceReportFields.invoice2:
-          value = invoice.customValue2;
+          value = presentCustomField(
+            value: invoice.customValue2,
+            customFieldType: CustomFieldType.invoice2,
+            company: userCompany.company,
+          );
           break;
         case InvoiceReportFields.invoice3:
-          value = invoice.customValue3;
+          value = presentCustomField(
+            value: invoice.customValue3,
+            customFieldType: CustomFieldType.invoice3,
+            company: userCompany.company,
+          );
           break;
         case InvoiceReportFields.invoice4:
-          value = invoice.customValue4;
+          value = presentCustomField(
+            value: invoice.customValue4,
+            customFieldType: CustomFieldType.invoice4,
+            company: userCompany.company,
+          );
           break;
         case InvoiceReportFields.has_expenses:
           value = invoice.hasExpenses;

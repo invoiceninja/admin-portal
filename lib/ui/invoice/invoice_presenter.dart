@@ -8,10 +8,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -57,6 +60,10 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.clientCity,
       InvoiceFields.clientPostalCode,
       InvoiceFields.clientCountry,
+      InvoiceFields.partial,
+      InvoiceFields.partialDueDate,
+      InvoiceFields.quote,
+      InvoiceFields.recurringInvoice,
     ];
   }
 
@@ -75,13 +82,13 @@ class InvoicePresenter extends EntityPresenter {
             ? localization.pending
             : invoice.number);
       case InvoiceFields.client:
-        return Text((state.clientState.map[invoice.clientId] ??
-                ClientEntity(id: invoice.clientId))
-            .listDisplayName);
+        return LinkTextRelatedEntity(entity: client, relation: invoice);
       case InvoiceFields.project:
-        return Text(state.projectState.get(invoice.projectId).listDisplayName);
+        final project = state.projectState.get(invoice.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: invoice);
       case InvoiceFields.vendor:
-        return Text(state.vendorState.get(invoice.vendorId).name);
+        final vendor = state.vendorState.get(invoice.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: invoice);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.lastSentDate:
@@ -119,9 +126,23 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.customValue4:
         return Text(presentCustomField(context, invoice.customValue4));
       case InvoiceFields.publicNotes:
-        return Text(invoice.publicNotes);
+        return Tooltip(
+          message: invoice.publicNotes,
+          child: Text(
+            invoice.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case InvoiceFields.privateNotes:
-        return Text(invoice.privateNotes);
+        return Tooltip(
+          message: invoice.privateNotes,
+          child: Text(
+            invoice.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case InvoiceFields.discount:
         return Text(invoice.isAmountDiscount
             ? formatNumber(invoice.discount, context,
@@ -156,11 +177,30 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(
             invoice, state.clientState.get(invoice.clientId));
-        if (field == InvoiceFields.contactName) {
-          return Text(contact?.fullName ?? '');
-        } else {
-          return Text(contact?.email ?? '');
+        if (contact == null) {
+          return SizedBox();
         }
+        if (field == InvoiceFields.contactName) {
+          return Text(contact.fullName);
+        }
+        return CopyToClipboard(
+          value: contact.email,
+          showBorder: true,
+          onLongPress: () => launch('mailto:${contact.email}'),
+        );
+      case InvoiceFields.partial:
+        return Text(formatNumber(invoice.partial, context));
+      case InvoiceFields.partialDueDate:
+        return Text(formatDate(invoice.partialDueDate, context));
+      case InvoiceFields.quote:
+        final quote =
+            memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
+        return LinkTextRelatedEntity(entity: quote, relation: invoice);
+      case InvoiceFields.recurringInvoice:
+        final recurringInvoice =
+            state.recurringInvoiceState.get(invoice.recurringId);
+        return LinkTextRelatedEntity(
+            entity: recurringInvoice, relation: invoice);
     }
 
     return super.getField(field: field, context: context);

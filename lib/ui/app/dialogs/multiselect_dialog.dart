@@ -41,7 +41,6 @@ class MultiSelectList extends StatefulWidget {
     @required this.addTitle,
     @required this.onSelected,
     this.liveChanges = false,
-    this.allowDuplicates = const <String>[],
     this.prefix,
     this.isDialog = false,
   });
@@ -53,7 +52,6 @@ class MultiSelectList extends StatefulWidget {
   final Function(List<String>) onSelected;
   final bool liveChanges;
   final String prefix;
-  final List<String> allowDuplicates;
   final bool isDialog;
 
   @override
@@ -101,9 +99,7 @@ class MultiSelectListState extends State<MultiSelectList> {
 
     final Map<String, String> options = {};
     widget.options
-        .where((option) =>
-            !selected.contains(option) ||
-            widget.allowDuplicates.contains(option))
+        .where((option) => !selected.contains(option))
         .forEach((option) {
       final columnTitle = state.company.getCustomFieldLabel(option);
       options[option] =
@@ -133,8 +129,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                 return;
               }
 
-              if (selected.contains(value) &&
-                  !widget.allowDuplicates.contains(value)) {
+              if (selected.contains(value)) {
                 return;
               }
 

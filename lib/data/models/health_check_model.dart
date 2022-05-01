@@ -37,6 +37,9 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'open_basedir')
   bool get openBasedir;
 
+  @BuiltValueField(wireName: 'file_permissions')
+  String get filePermissions;
+
   @BuiltValueField(wireName: 'exec')
   bool get execEnabled;
 
@@ -55,8 +58,9 @@ abstract class HealthCheckResponse
   String get queue;
 
   // ignore: unused_element
-  static void _initializeBuilder(HealthCheckResponseBuilder builder) =>
-      builder..trailingSlash = false;
+  static void _initializeBuilder(HealthCheckResponseBuilder builder) => builder
+    ..trailingSlash = false
+    ..filePermissions = '';
 
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;

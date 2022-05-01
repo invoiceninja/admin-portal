@@ -6,32 +6,56 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class CopyToClipboard extends StatelessWidget {
   const CopyToClipboard({
     Key key,
-    @required this.child,
     @required this.value,
+    this.child,
+    this.showBorder = false,
+    this.onLongPress,
   }) : super(key: key);
 
   final Widget child;
   final String value;
+  final bool showBorder;
+  final Function onLongPress;
 
   @override
   Widget build(BuildContext context) {
-    if (value == null) {
-      return child;
+    if ((value ?? '').isEmpty) {
+      return SizedBox();
     }
 
+    final widget = child == null
+        ? Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
+        : child;
     final localization = AppLocalization.of(context);
+    final onTap = () {
+      Clipboard.setData(ClipboardData(text: value));
+      showToast(
+        localization.copiedToClipboard.replaceFirst(
+          ':value',
+          value.replaceAll('\n', ' '),
+        ),
+      );
+    };
 
-    return InkWell(
-      child: child,
-      onTap: () {
-        Clipboard.setData(ClipboardData(text: value));
-        showToast(
-          localization.copiedToClipboard.replaceFirst(
-            ':value',
-            value.replaceAll('\n', ' '),
-          ),
-        );
-      },
-    );
+    if (showBorder) {
+      return ConstrainedBox(
+        child: OutlinedButton(
+          onPressed: onTap,
+          child: widget,
+          onLongPress: onLongPress,
+        ),
+        constraints: BoxConstraints(maxWidth: 180),
+      );
+    } else {
+      return InkWell(
+        child: widget,
+        onTap: onTap,
+        onLongPress: onLongPress,
+      );
+    }
   }
 }

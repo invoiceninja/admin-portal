@@ -1,5 +1,17 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -52,6 +64,8 @@ UIState uiReducer(UIState state, dynamic action) {
         : state.currentRoute.endsWith('edit')
             ? state.previousRoute
             : state.currentRoute
+    ..loadingEntityType =
+        loadingEntityTypeReducer(state.loadingEntityType, action)
     ..currentRoute = currentRoute
     ..previewStack.replace(previewStackReducer(state.previewStack, action))
     ..filterStack.replace(filterStackReducer(state.filterStack, action))
@@ -106,6 +120,48 @@ Reducer<String> filterReducer = combineReducers([
   }),
   TypedReducer<String, ViewDashboard>((state, action) {
     return action.filter;
+  }),
+]);
+
+Reducer<EntityType> loadingEntityTypeReducer = combineReducers([
+  TypedReducer<EntityType, StopLoading>((state, action) {
+    return null;
+  }),
+  TypedReducer<EntityType, LoadClientsRequest>((state, action) {
+    return EntityType.client;
+  }),
+  TypedReducer<EntityType, LoadProductsRequest>((state, action) {
+    return EntityType.product;
+  }),
+  TypedReducer<EntityType, LoadInvoicesRequest>((state, action) {
+    return EntityType.invoice;
+  }),
+  TypedReducer<EntityType, LoadRecurringInvoicesRequest>((state, action) {
+    return EntityType.recurringInvoice;
+  }),
+  TypedReducer<EntityType, LoadPaymentsRequest>((state, action) {
+    return EntityType.payment;
+  }),
+  TypedReducer<EntityType, LoadQuotesRequest>((state, action) {
+    return EntityType.quote;
+  }),
+  TypedReducer<EntityType, LoadCreditsRequest>((state, action) {
+    return EntityType.credit;
+  }),
+  TypedReducer<EntityType, LoadProjectsRequest>((state, action) {
+    return EntityType.project;
+  }),
+  TypedReducer<EntityType, LoadTasksRequest>((state, action) {
+    return EntityType.task;
+  }),
+  TypedReducer<EntityType, LoadVendorsRequest>((state, action) {
+    return EntityType.vendor;
+  }),
+  TypedReducer<EntityType, LoadExpensesRequest>((state, action) {
+    return EntityType.expense;
+  }),
+  TypedReducer<EntityType, LoadRecurringExpensesRequest>((state, action) {
+    return EntityType.recurringExpense;
   }),
 ]);
 

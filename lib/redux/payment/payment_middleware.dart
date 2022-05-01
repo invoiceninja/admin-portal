@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -11,7 +13,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
@@ -303,16 +304,23 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     repository
         .loadList(
       state.credentials,
+      action.page,
       state.createdAtLimit,
       state.filterDeletedClients,
     )
         .then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
-
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (data.length == kRecordsPerPage) {
+        store.dispatch(LoadPayments(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+        store.dispatch(LoadQuotes());
       }
-      store.dispatch(LoadRecurringInvoices());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPaymentsFailure(error));

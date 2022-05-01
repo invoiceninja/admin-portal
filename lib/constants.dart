@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.78';
+const String kClientVersion = '5.0.79';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -71,7 +71,7 @@ const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =
     'https://github.com/invoiceninja/invoiceninja/blob/master/resources/lang/en/texts.php';
-const String kStatusCheckUrl = 'https://status.invoiceninja.com/';
+const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 const String kGoogleAnalyticsUrl =
     'https://support.google.com/analytics/answer/1037249?hl=en';
 
@@ -116,7 +116,7 @@ const double kBorderRadius = 2;
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
 
-const double kTableColumnWidthMin = 40;
+const double kTableColumnWidthMin = 80;
 const double kTableColumnWidthMax = 120;
 
 const int kTableListWidthCutoff = 550;
@@ -148,10 +148,10 @@ const double kLighterOpacity = .6;
 
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
-const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 60;
 const int kMaxRawPostSeconds = 300;
 const int kMaxEntitiesPerBulkAction = 100;
+const int kRecordsPerPage = 20000;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;

@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -71,12 +72,12 @@ class RecurringExpensePresenter extends EntityPresenter {
         return EntityStatusChip(entity: expense, showState: true);
       case RecurringExpenseFields.vendor:
       case RecurringExpenseFields.vendorId:
-        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName);
+        final vendor = state.vendorState.get(expense.vendorId);
+        return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case RecurringExpenseFields.clientId:
       case RecurringExpenseFields.client:
-        return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
-            .listDisplayName);
+        final client = state.clientState.get(expense.clientId);
+        return LinkTextRelatedEntity(entity: client, relation: expense);
       case RecurringExpenseFields.nextSendDate:
         return Text(formatDate(expense.nextSendDate, context));
       case RecurringExpenseFields.netAmount:
@@ -92,11 +93,25 @@ class RecurringExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
       case RecurringExpenseFields.publicNotes:
-        return Text(expense.publicNotes);
+        return Tooltip(
+          message: expense.publicNotes,
+          child: Text(
+            expense.publicNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case RecurringExpenseFields.number:
         return Text(expense.number);
       case RecurringExpenseFields.privateNotes:
-        return Text(expense.privateNotes);
+        return Tooltip(
+          message: expense.privateNotes,
+          child: Text(
+            expense.privateNotes,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case RecurringExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
       case RecurringExpenseFields.currencyId:

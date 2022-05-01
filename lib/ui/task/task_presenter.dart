@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -58,7 +59,8 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.status:
         return EntityStatusChip(entity: task, showState: true);
       case TaskFields.client:
-        return Text(state.clientState.map[task.clientId]?.displayName ?? '');
+        final client = state.clientState.get(task.clientId);
+        return LinkTextRelatedEntity(entity: client, relation: task);
       case TaskFields.rate:
         return Text(formatNumber(task.rate, context, clientId: task.clientId));
       case TaskFields.calculatedRate:
@@ -72,9 +74,17 @@ class TaskPresenter extends EntityPresenter {
         );
         return Text(formatNumber(rate, context, clientId: task.clientId));
       case TaskFields.project:
-        return Text(state.projectState.map[task.projectId]?.name ?? '');
+        final project = state.projectState.get(task.projectId);
+        return LinkTextRelatedEntity(entity: project, relation: task);
       case TaskFields.description:
-        return Text(task.description);
+        return Tooltip(
+          message: task.description,
+          child: Text(
+            task.description,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+        );
       case TaskFields.duration:
         return Text(formatDuration(task.calculateDuration()));
       case TaskFields.number:

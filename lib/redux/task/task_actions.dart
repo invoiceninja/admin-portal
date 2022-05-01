@@ -345,6 +345,8 @@ class FilterTasksByCustom4 implements PersistUI {
   final String value;
 }
 
+class UpdateKanban {}
+
 void handleTaskAction(
     BuildContext context, List<BaseEntity> tasks, EntityAction action) {
   if (tasks.isEmpty) {

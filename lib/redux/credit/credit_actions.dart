@@ -22,6 +22,10 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:printing/printing.dart';
+
 class ViewCreditList implements PersistUI {
   ViewCreditList({this.force = false});
 
@@ -626,6 +630,15 @@ Future handleCreditAction(
           store.dispatch(RemoveFromCreditMultiselect(entity: credit));
         }
       }
+      break;
+    case EntityAction.printPdf:
+      final invitation = credit.invitations.first;
+      final url = invitation.downloadLink;
+      store.dispatch(StartLoading());
+      final http.Response response =
+          await WebClient().get(url, '', rawResponse: true);
+      store.dispatch(StopLoading());
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
       break;
     case EntityAction.more:
       showEntityActionsDialog(

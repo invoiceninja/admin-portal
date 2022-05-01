@@ -34,7 +34,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.filteredTaskList.length}__'),
+              '__${company.id}_${state.userCompanyState.lastUpdated}_${viewModel.filteredTaskList.length}_${state.taskUIState.kanbanLastUpdated}__'),
         );
       },
     );

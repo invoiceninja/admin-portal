@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -114,16 +115,32 @@ ReportResult productReport(
           value = product.taxRate3;
           break;
         case ProductReportFields.product1:
-          value = product.customValue1;
+          value = presentCustomField(
+            value: product.customValue1,
+            customFieldType: CustomFieldType.product1,
+            company: userCompany.company,
+          );
           break;
         case ProductReportFields.product2:
-          value = product.customValue2;
+          value = presentCustomField(
+            value: product.customValue2,
+            customFieldType: CustomFieldType.product2,
+            company: userCompany.company,
+          );
           break;
         case ProductReportFields.product3:
-          value = product.customValue3;
+          value = presentCustomField(
+            value: product.customValue3,
+            customFieldType: CustomFieldType.product3,
+            company: userCompany.company,
+          );
           break;
         case ProductReportFields.product4:
-          value = product.customValue4;
+          value = presentCustomField(
+            value: product.customValue4,
+            customFieldType: CustomFieldType.product4,
+            company: userCompany.company,
+          );
           break;
       }
 

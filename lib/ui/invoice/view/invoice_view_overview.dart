@@ -256,12 +256,12 @@ class InvoiceOverview extends StatelessWidget {
         ));
       }
     } else {
-      final relatedInvoice =
+      final relatedQuote =
           memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
-      if (relatedInvoice != null) {
+      if (relatedQuote != null) {
         widgets.add(EntityListTile(
           isFilter: isFilter,
-          entity: relatedInvoice,
+          entity: relatedQuote,
         ));
       }
     }

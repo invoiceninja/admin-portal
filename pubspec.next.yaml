@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.78+78
+version: 5.0.79+79
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -36,7 +36,10 @@ dependencies:
   intl: ^0.17.0
   flutter_slidable: ^1.1.0
   charts_flutter: ^0.12.0
-  qr_flutter: ^4.0.0
+  #qr_flutter: ^4.0.0
+  qr_flutter: # https://github.com/theyakka/qr.flutter/issues/174#issuecomment-1084235757
+    git:
+      url: https://github.com/theyakka/qr.flutter.git
   local_auth: ^1.1.6
   sentry_flutter: ^6.1.2
   image_picker: ^0.8.3+1
@@ -44,7 +47,6 @@ dependencies:
   flutter_json_viewer: ^1.0.1
   webview_flutter: ^2.0.10
   timeago: ^3.1.0
-  native_pdf_view: ^5.0.0
   package_info: ^2.0.2
   rounded_loading_button: ^2.0.5
   version: ^2.0.0
@@ -60,8 +62,8 @@ dependencies:
   states_rebuilder: ^5.2.0
   super_editor: ^0.2.0
   html2md: ^1.2.5
+  printing: ^5.8.0
   # bitsdojo_window: ^0.1.1+1
-  # printing: ^5.6.3
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 
@@ -92,7 +94,7 @@ msix_config:
   display_name: Invoice Ninja
   publisher_display_name: Invoice Ninja
   identity_name: InvoiceNinja.InvoiceNinja
-  msix_version: 5.0.78.0
+  msix_version: 5.0.79.0
   publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
   architecture: x64
   capabilities: 'internetClient'

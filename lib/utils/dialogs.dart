@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 // Project imports:
@@ -181,6 +182,9 @@ void passwordCallback({
   final localization = AppLocalization.of(context);
   final user = state.user;
 
+  print(
+      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider.isEmpty}, ${state.company.oauthPasswordRequired}');
+
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
         context: context,
@@ -193,19 +197,22 @@ void passwordCallback({
               },
               child: Text(localization.setPassword.toUpperCase()))
         ]);
+    print('## 1');
     return;
   }
 
   if (state.hasRecentlyEnteredPassword && !alwaysRequire) {
     callback(null, null);
+    print('## 2');
     return;
   }
 
-  if (user.oauthProvider.isEmpty) {
+  if (user.oauthProvider.isEmpty || !supportsGoogleOAuth()) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        print('## 3');
         return PasswordConfirmation(
           callback: callback,
         );
@@ -218,8 +225,10 @@ void passwordCallback({
     GoogleOAuth.signIn((idToken, accessToken) {
       if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
           !user.hasPassword) {
+        print('## 4');
         callback(null, idToken);
       } else {
+        print('## 5');
         showDialog<AlertDialog>(
           context: context,
           barrierDismissible: false,
@@ -235,6 +244,8 @@ void passwordCallback({
   } catch (error) {
     showErrorDialog(context: context, message: '$error');
   }
+
+  print('## 6');
 }
 
 class PasswordConfirmation extends StatefulWidget {
@@ -252,11 +263,12 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   bool _isPasswordObscured = true;
 
   void _submit() {
-    if ((_password ?? '').isEmpty) {
+    final password = (_password ?? '').trim();
+    if (password.isEmpty) {
       return;
     }
     Navigator.pop(context);
-    widget.callback(_password, widget.idToken);
+    widget.callback(password, widget.idToken);
   }
 
   @override

@@ -21,6 +21,10 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:printing/printing.dart';
+
 class ViewQuoteList implements PersistUI {
   ViewQuoteList({this.force = false});
 
@@ -89,9 +93,10 @@ class LoadQuote {
 }
 
 class LoadQuotes {
-  LoadQuotes({this.completer});
+  LoadQuotes({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadQuoteRequest implements StartLoading {}
@@ -643,6 +648,15 @@ Future handleQuoteAction(
           store.dispatch(RemoveFromQuoteMultiselect(entity: quote));
         }
       }
+      break;
+    case EntityAction.printPdf:
+      final invitation = quote.invitations.first;
+      final url = invitation.downloadLink;
+      store.dispatch(StartLoading());
+      final http.Response response =
+          await WebClient().get(url, '', rawResponse: true);
+      store.dispatch(StopLoading());
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
       break;
     case EntityAction.more:
       showEntityActionsDialog(

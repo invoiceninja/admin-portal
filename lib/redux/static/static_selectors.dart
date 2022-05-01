@@ -24,7 +24,8 @@ var memoizedGroupList =
     memo1((BuiltMap<String, GroupEntity> groupMap) => groupList(groupMap));
 
 List<String> groupList(BuiltMap<String, GroupEntity> groupMap) {
-  final list = groupMap.keys.toList();
+  final list =
+      groupMap.keys.where((groupId) => groupMap[groupId].isActive).toList();
 
   list.sort((idA, idB) =>
       groupMap[idA].listDisplayName.compareTo(groupMap[idB].listDisplayName));

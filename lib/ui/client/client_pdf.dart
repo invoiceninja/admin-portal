@@ -15,12 +15,11 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:printing/printing.dart';
 import 'package:share/share.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -55,8 +54,8 @@ class ClientPdfView extends StatefulWidget {
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
   http.Response _response;
-  PdfController _pdfController;
-  int _pageNumber = 1, _pageCount = 1;
+  //int _pageCount = 1;
+  //int _currentPage = 1;
 
   static const STATUS_ALL = 'all';
   static const STATUS_PAID = 'paid';
@@ -100,16 +99,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         _response = response;
         _isLoading = false;
       });
-
-      final document = PdfDocument.openData(_response.bodyBytes);
-      if (_pdfController == null) {
-        _pdfController = PdfController(document: document);
-      } else {
-        // loadDocument is causing an error
-        //_pdfController.loadDocument(document);
-        _pdfController?.dispose();
-        _pdfController = PdfController(document: document);
-      }
     }).catchError((Object error) {
       setState(() {
         _isLoading = false;
@@ -182,49 +171,44 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   }
 
   @override
-  void dispose() {
-    _pdfController?.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
     final client = widget.viewModel.client;
 
+    /*
     final pageSelector = _pageCount == 1
         ? <Widget>[]
         : [
             IconButton(
               icon: Icon(Icons.navigate_before),
-              onPressed: _pageNumber > 1
-                  ? () => _pdfController.previousPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
+              onPressed: _currentPage > 1
+                  ? () {
+                      setState(() {
+                        _currentPage++;
+                      });
+                    }
                   : null,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(localization.pdfPageInfo
-                  .replaceFirst(':current', '$_pageNumber')
+                  .replaceFirst(':current', '$_currentPage')
                   .replaceFirst(':total', '$_pageCount')),
             ),
             IconButton(
               icon: Icon(Icons.navigate_next),
-              onPressed: _pageNumber < _pageCount
-                  ? () => _pdfController.nextPage(
-                        duration:
-                            Duration(milliseconds: kDefaultAnimationDuration),
-                        curve: Curves.easeInOutCubic,
-                      )
+              onPressed: _currentPage < _pageCount
+                  ? () {
+                      setState(() {
+                        _currentPage++;
+                      });
+                    }
                   : null,
             ),
           ];
+    */
 
     bool showEmail = false; //isDesktop(context);
 
@@ -287,7 +271,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey.shade300,
       appBar: widget.showAppBar
           ? AppBar(
               centerTitle: false,
@@ -365,7 +349,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   if (isDesktop(context)) ...[
                     showPayments,
                     showAging,
-                    ...pageSelector,
+                    //...pageSelector,
                   ]
                 ],
               ),
@@ -479,23 +463,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
-                : Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: PdfView(
-                      controller: _pdfController,
-                      onDocumentLoaded: (document) {
-                        setState(() {
-                          _pageCount = document?.pagesCount ?? 0;
-                        });
-                      },
-                      onPageChanged: (page) {
-                        setState(
-                          () {
-                            _pageNumber = page;
-                          },
-                        );
-                      },
-                    ),
+                : PdfPreview(
+                    build: (format) => _response.bodyBytes,
+                    canChangeOrientation: false,
+                    canChangePageFormat: false,
+                    canDebug: false,
+                    maxPageWidth: 800,
                   ),
           ),
         ],

@@ -375,28 +375,15 @@ class ReportsScreenVM {
         }) {
           Timer(Duration(milliseconds: 100), () {
             final reportState = state.uiState.reportsUIState;
-            if (group != null && reportState.group != group) {
-              store.dispatch(UpdateReportSettings(
-                report: report ?? reportState.report,
-                group: group,
-                chart: chart,
-                subgroup: subgroup,
-                selectedGroup: '',
-                customStartDate: '',
-                customEndDate: '',
-                filters: BuiltMap<String, String>(),
-              ));
-            } else {
-              store.dispatch(UpdateReportSettings(
-                report: report ?? reportState.report,
-                group: group,
-                selectedGroup: selectedGroup,
-                subgroup: subgroup,
-                chart: chart,
-                customStartDate: customStartDate,
-                customEndDate: customEndDate,
-              ));
-            }
+            store.dispatch(UpdateReportSettings(
+              report: report ?? reportState.report,
+              group: group,
+              selectedGroup: selectedGroup,
+              subgroup: subgroup,
+              chart: chart,
+              customStartDate: customStartDate,
+              customEndDate: customEndDate,
+            ));
           });
         },
         onExportPressed: (context) async {
@@ -414,8 +401,13 @@ class ReportsScreenVM {
               csvData += '\n';
               for (var i = 0; i < row.length; i++) {
                 final column = reportResult.columns[i];
-                final value = row[i].renderText(context, column).trim();
-                csvData += '"$value",';
+                final value = row[i]
+                    .renderText(context, column)
+                    .trim()
+                    .replaceAll('"', '\\"');
+                csvData += value.contains(' ') || value.contains('"')
+                    ? '"$value",'
+                    : '$value,';
               }
               csvData = csvData.substring(0, csvData.length - 1);
             });
@@ -439,11 +431,15 @@ class ReportsScreenVM {
 
             groupTotals.rows.forEach((group) {
               final row = groupTotals.totals[group];
-              csvData += '$group,${row['count'].toInt()}';
+              csvData +=
+                  '"${group.trim().replaceAll('"', '\\"')}",${row['count'].toInt()}';
 
               columns.forEach((column) {
-                final value = row[column].toString();
-                csvData += value.contains(' ') ? ',"$value"' : ',$value';
+                final value =
+                    row[column].toString().trim().replaceAll('"', '\\"');
+                csvData += value.contains(' ') || value.contains('"')
+                    ? ',"$value"'
+                    : ',$value';
               });
 
               csvData += '\n';
@@ -570,6 +566,7 @@ GroupTotals calculateReportTotals({
         }
 
         if (cell is ReportNumberValue &&
+            cell.currencyId != null &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
           var rate = cell.exchangeRate;

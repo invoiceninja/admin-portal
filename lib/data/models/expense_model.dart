@@ -58,6 +58,7 @@ class ExpenseFields {
   static const String transactionId = 'transaction_id';
   static const String transactionReference = 'transaction_reference';
   static const String bankId = 'bank_id';
+  static const String currency = 'currency';
   static const String currencyId = 'currency_id';
   static const String categoryId = 'category_id';
   static const String category = 'category';
@@ -69,6 +70,7 @@ class ExpenseFields {
   static const String paymentDate = 'payment_date';
   static const String paymentType = 'payment_type';
   static const String exchangeRate = 'exchange_rate';
+  static const String invoiceCurrency = 'invoice_currency';
   static const String invoiceCurrencyId = 'invoice_currency_id';
   static const String taxRate1 = 'tax_rate1';
   static const String taxName1 = 'tax_name1';
@@ -90,6 +92,7 @@ class ExpenseFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
+  static const String recurringExpense = 'recurring_expense';
 }
 
 abstract class ExpenseEntity extends Object
@@ -681,44 +684,85 @@ abstract class ExpenseEntity extends Object
     }
   }
 
-  double get calculatetaxRate2 => calculateTaxByAmount == true
-      ? taxAmount2 / (amount - taxAmount2) * 100
-      : taxRate2;
-
-  double get calculatetaxRate3 => calculateTaxByAmount == true
-      ? taxAmount3 / (amount - taxAmount3) * 100
-      : taxRate3;
-
-  double get taxAmount {
-    var total = 0.0;
-
+  double get calculatetaxRate2 {
     if (calculateTaxByAmount == true) {
-      total += taxAmount1 + taxAmount2 + taxAmount3;
-    } else {
       if (usesInclusiveTaxes) {
-        if (taxRate1 != 0) {
-          total += amount - (amount / (1 + (taxRate1 / 100)));
-        }
-        if (taxRate2 != 0) {
-          total += amount - (amount / (1 + (taxRate2 / 100)));
-        }
-        if (taxRate3 != 0) {
-          total += amount - (amount / (1 + (taxRate3 / 100)));
-        }
+        return taxAmount2 / (amount - taxAmount2) * 100;
       } else {
-        if (taxRate1 != 0) {
-          total += amount * taxRate1 / 100;
-        }
-        if (taxRate2 != 0) {
-          total += amount * taxRate2 / 100;
-        }
-        if (taxRate3 != 0) {
-          total += amount * taxRate3 / 100;
-        }
+        return taxAmount2 / amount * 100;
+      }
+    } else {
+      return taxRate2;
+    }
+  }
+
+  double get calculatetaxRate3 {
+    if (calculateTaxByAmount == true) {
+      if (usesInclusiveTaxes) {
+        return taxAmount3 / (amount - taxAmount3) * 100;
+      } else {
+        return taxAmount3 / amount * 100;
+      }
+    } else {
+      return taxRate3;
+    }
+  }
+
+  double get taxAmount =>
+      calculateTaxAmount1 + calculateTaxAmount2 + calculateTaxAmount3;
+
+  double get calculateTaxAmount1 {
+    if (calculateTaxByAmount == true) {
+      return taxAmount1;
+    }
+
+    if (usesInclusiveTaxes) {
+      if (taxRate1 != 0) {
+        return round(amount - (amount / (1 + (taxRate1 / 100))), 2);
+      }
+    } else {
+      if (taxRate1 != 0) {
+        return round(amount * taxRate1 / 100, 2);
       }
     }
 
-    return total;
+    return 0;
+  }
+
+  double get calculateTaxAmount2 {
+    if (calculateTaxByAmount == true) {
+      return taxAmount2;
+    }
+
+    if (usesInclusiveTaxes) {
+      if (taxRate2 != 0) {
+        return round(amount - (amount / (1 + (taxRate2 / 100))), 2);
+      }
+    } else {
+      if (taxRate2 != 0) {
+        return round(amount * taxRate2 / 100, 2);
+      }
+    }
+
+    return 0;
+  }
+
+  double get calculateTaxAmount3 {
+    if (calculateTaxByAmount == true) {
+      return taxAmount3;
+    }
+
+    if (usesInclusiveTaxes) {
+      if (taxRate3 != 0) {
+        return round(amount - (amount / (1 + (taxRate3 / 100))), 2);
+      }
+    } else {
+      if (taxRate3 != 0) {
+        return round(amount * taxRate3 / 100, 2);
+      }
+    }
+
+    return 0;
   }
 
   double get netAmount => usesInclusiveTaxes ? amount - taxAmount : amount;

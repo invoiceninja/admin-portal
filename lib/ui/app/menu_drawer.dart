@@ -682,6 +682,13 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
+    bool isLoading = false;
+    if (widget.entityType != null &&
+        state.company.isLarge &&
+        state.uiState.loadingEntityType == widget.entityType) {
+      isLoading = true;
+    }
+
     Widget child = Material(
       color: color,
       child: Opacity(
@@ -690,11 +697,17 @@ class _DrawerTileState extends State<DrawerTile> {
           dense: true,
           leading: Padding(
             padding: const EdgeInsets.only(left: 4),
-            child: Icon(
-              widget.icon,
-              size: 22,
-              color: textColor,
-            ),
+            child: isLoading
+                ? SizedBox(
+                    child: CircularProgressIndicator(),
+                    width: 22,
+                    height: 22,
+                  )
+                : Icon(
+                    widget.icon,
+                    size: 22,
+                    color: textColor,
+                  ),
           ),
           title: state.isMenuCollapsed
               ? SizedBox()
@@ -808,7 +821,7 @@ class SidebarFooter extends StatelessWidget {
                     clearErrorOnDismiss: true,
                   ),
                 )
-              else if (state.isSelfHosted && account.isUpdateAvailable)
+              else if (state.isSelfHosted && state.isUpdateAvailable)
                 IconButton(
                   tooltip: localization.updateAvailable,
                   icon: Icon(
@@ -966,8 +979,6 @@ class SidebarFooterCollapsed extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final isUpdateAvailable =
-        state.isSelfHosted && state.account.isUpdateAvailable;
 
     return Container(
       width: double.infinity,
@@ -976,7 +987,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
       child: state.uiState.filterEntityType != null &&
               state.prefState.isFilterVisible
           ? PopupMenuButton<String>(
-              icon: isUpdateAvailable
+              icon: state.isUpdateAvailable
                   ? Icon(Icons.warning,
                       color: Theme.of(context).colorScheme.secondary)
                   : Icon(Icons.info_outline),
@@ -990,7 +1001,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
                 }
               },
               itemBuilder: (BuildContext context) => [
-                if (isUpdateAvailable)
+                if (state.isUpdateAvailable)
                   PopupMenuItem<String>(
                     child: ListTile(
                       leading: Icon(
@@ -1034,7 +1045,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
           : IconButton(
               icon: Icon(
                 Icons.chevron_right,
-                color: isUpdateAvailable ? state.accentColor : null,
+                color: state.isUpdateAvailable ? state.accentColor : null,
               ),
               tooltip: localization.showMenu,
               onPressed: () {
@@ -1291,7 +1302,7 @@ void _showAbout(BuildContext context) async {
                     ),
                     if (!state.account.disableAutoUpdate)
                       AppButton(
-                        label: (state.account.isUpdateAvailable
+                        label: (state.isUpdateAvailable
                                 ? localization.updateApp
                                 : localization.forceUpdate)
                             .toUpperCase(),
@@ -1372,6 +1383,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
               'message': _message,
               'send_logs': _includeLogs ? 'true' : '',
               'platform': getPlatformLetter(),
+              'version': state.appVersion,
             }))
         .then((dynamic response) async {
       setState(() => _isSaving = false);
