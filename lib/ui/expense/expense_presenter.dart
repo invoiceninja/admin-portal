@@ -100,9 +100,8 @@ class ExpensePresenter extends EntityPresenter {
                 .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
       case ExpenseFields.category:
-        return Text(state.expenseCategoryState.map[expense.categoryId]
-                ?.listDisplayName ??
-            '');
+        final category = state.expenseCategoryState.map[expense.categoryId];
+        return LinkTextRelatedEntity(entity: category, relation: expense);
       case ExpenseFields.paymentType:
         return Text(state.staticState.paymentTypeMap[expense.paymentTypeId]
                 ?.listDisplayName ??
