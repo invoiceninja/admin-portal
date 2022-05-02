@@ -36,8 +36,14 @@ class _LiveTextState extends State<LiveText> {
 
   @override
   Widget build(BuildContext context) {
+    final String value = widget.value() ?? '';
+
+    if (value.isEmpty) {
+      return SizedBox();
+    }
+
     return Text(
-      widget.value(),
+      value,
       style: widget.style,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
