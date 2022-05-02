@@ -298,14 +298,12 @@ class _LoginState extends State<LoginView> {
     return SafeArea(
       child: ScrollableListView(
         children: <Widget>[
-          if (isDesktopOS())
-            AppTitleBar()
-          else
-            Container(
-              width: double.infinity,
-              height: 24,
-              color: state.accentColor,
-            ),
+          if (isDesktopOS()) AppTitleBar(),
+          Container(
+            width: double.infinity,
+            height: 24,
+            color: state.accentColor,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 25),
             child: Center(
