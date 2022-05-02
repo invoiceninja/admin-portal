@@ -97,6 +97,8 @@ class EntityDataTableSource extends AppDataTableSource {
       'public_notes',
       'private_notes',
       'description',
+      'email',
+      'contact_email',
     ];
 
     return DataRow(
