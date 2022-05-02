@@ -128,23 +128,9 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.custom4:
         return Text(presentCustomField(context, client.customValue4));
       case ClientFields.publicNotes:
-        return Tooltip(
-          message: client.publicNotes,
-          child: Text(
-            client.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: client.publicNotes);
       case ClientFields.privateNotes:
-        return Tooltip(
-          message: client.privateNotes,
-          child: Text(
-            client.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: client.privateNotes);
       case ClientFields.taskRate:
         return Text(formatNumber(client.settings.defaultTaskRate, context));
       case ClientFields.documents:
@@ -155,14 +141,7 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.contacts:
         final contacts =
             client.contacts.map((contact) => contact.fullName).join('\n');
-        return Tooltip(
-          message: contacts,
-          child: Text(
-            contacts,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: contacts);
     }
 
     return super.getField(field: field, context: context);

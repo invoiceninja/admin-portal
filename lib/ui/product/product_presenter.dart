@@ -45,7 +45,7 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.productKey:
         return Text(product.productKey);
       case ProductFields.description:
-        return Text(product.notes);
+        return TableTooltip(message: product.notes);
       case ProductFields.cost:
         return Align(
           alignment: Alignment.centerRight,

@@ -89,23 +89,9 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.customValue4:
         return Text(presentCustomField(context, invoice.customValue4));
       case RecurringInvoiceFields.publicNotes:
-        return Tooltip(
-          message: invoice.publicNotes,
-          child: Text(
-            invoice.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: invoice.publicNotes);
       case RecurringInvoiceFields.privateNotes:
-        return Tooltip(
-          message: invoice.privateNotes,
-          child: Text(
-            invoice.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: invoice.privateNotes);
       case RecurringInvoiceFields.discount:
         return Text(invoice.isAmountDiscount
             ? formatNumber(invoice.discount, context,
