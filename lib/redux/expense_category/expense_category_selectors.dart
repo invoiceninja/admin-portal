@@ -94,7 +94,7 @@ double calculateExpenseCategoryAmount({
 
   expenseMap.forEach((expenseId, expense) {
     if (expense.categoryId == categoryId) {
-      total += expense.amount;
+      total += expense.grossAmount;
     }
   });
 

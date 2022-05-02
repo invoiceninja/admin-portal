@@ -102,23 +102,9 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.customValue4:
         return Text(presentCustomField(context, credit.customValue4));
       case CreditFields.publicNotes:
-        return Tooltip(
-          message: credit.publicNotes,
-          child: Text(
-            credit.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: credit.publicNotes);
       case CreditFields.privateNotes:
-        return Tooltip(
-          message: credit.privateNotes,
-          child: Text(
-            credit.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: credit.privateNotes);
       case CreditFields.discount:
         return Text(credit.isAmountDiscount
             ? formatNumber(credit.discount, context,

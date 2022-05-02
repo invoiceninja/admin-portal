@@ -16,6 +16,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'auto_archive_paid_invoices': 'Auto Archive Paid',
+      'auto_archive_paid_invoices_help':
+          'Automatically archive invoices when they are paid.',
+      'auto_archive_cancelled_invoices': 'Auto Archive Cancelled',
+      'auto_archive_cancelled_invoices_help':
+          'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
       'alternate_pdf_viewer_help':
           'Improve scrolling over the PDF preview [BETA]',
@@ -1201,9 +1207,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
           'Automatically email recurring invoices when they are created.',
-      'auto_archive_invoice': 'Auto Archive',
-      'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
           'Automatically archive quotes when they are converted.',
@@ -71674,12 +71677,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get autoEmailInvoiceHelp =>
       _localizedValues[localeCode]['auto_email_invoice_help'] ?? '';
 
-  String get autoArchiveInvoice =>
-      _localizedValues[localeCode]['auto_archive_invoice'] ?? '';
-
-  String get autoArchiveInvoiceHelp =>
-      _localizedValues[localeCode]['auto_archive_invoice_help'] ?? '';
-
   String get autoArchiveQuote =>
       _localizedValues[localeCode]['auto_archive_quote'] ?? '';
 
@@ -75017,6 +75014,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get alternatePdfViewerHelp =>
       _localizedValues[localeCode]['alternate_pdf_viewer_help'] ??
       _localizedValues['en']['alternate_pdf_viewer_help'];
+
+  String get autoArchivePaidInvoices =>
+      _localizedValues[localeCode]['auto_archive_paid_invoices'] ??
+      _localizedValues[localeCode]['auto_archive_paid_invoices'];
+
+  String get autoArchivePaidInvoicesHelp =>
+      _localizedValues[localeCode]['auto_archive_paid_invoices_help'] ??
+      _localizedValues[localeCode]['auto_archive_paid_invoices_help'];
+
+  String get autoArchiveCancelledInvoices =>
+      _localizedValues[localeCode]['auto_archive_cancelled_invoices'] ??
+      _localizedValues[localeCode]['auto_archive_cancelled_invoices'];
+
+  String get autoArchiveCancelledInvoicesHelp =>
+      _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'] ??
+      _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'];
 
   // STARTER: lang field - do not remove comment
 

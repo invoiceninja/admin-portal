@@ -84,25 +84,11 @@ class ExpensePresenter extends EntityPresenter {
         return Text(formatNumber(expense.taxAmount, context,
             currencyId: expense.currencyId));
       case ExpenseFields.publicNotes:
-        return Tooltip(
-          message: expense.publicNotes,
-          child: Text(
-            expense.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: expense.publicNotes);
       case ExpenseFields.number:
         return Text(expense.number);
       case ExpenseFields.privateNotes:
-        return Tooltip(
-          message: expense.privateNotes,
-          child: Text(
-            expense.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: expense.privateNotes);
       case ExpenseFields.shouldBeInvoiced:
         return Text(expense.shouldBeInvoiced.toString());
       case ExpenseFields.transactionId:
@@ -114,9 +100,8 @@ class ExpensePresenter extends EntityPresenter {
                 .staticState.currencyMap[expense.currencyId]?.listDisplayName ??
             '');
       case ExpenseFields.category:
-        return Text(state.expenseCategoryState.map[expense.categoryId]
-                ?.listDisplayName ??
-            '');
+        final category = state.expenseCategoryState.map[expense.categoryId];
+        return LinkTextRelatedEntity(entity: category, relation: expense);
       case ExpenseFields.paymentType:
         return Text(state.staticState.paymentTypeMap[expense.paymentTypeId]
                 ?.listDisplayName ??

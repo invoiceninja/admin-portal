@@ -256,7 +256,10 @@ class SettingsViewer extends StatelessWidget {
           settings.customMessagePaidInvoice?.toString(),
       localization.customMessageUnapprovedQuote:
           settings.customMessageUnapprovedQuote?.toString(),
-      localization.autoArchiveInvoice: settings.autoArchiveInvoice?.toString(),
+      localization.autoArchivePaidInvoices:
+          settings.autoArchiveInvoice?.toString(),
+      localization.autoArchiveCancelledInvoices:
+          settings.autoArchiveInvoiceCancelled?.toString(),
       localization.autoArchiveQuote: settings.autoArchiveQuote?.toString(),
       localization.autoEmailInvoice: settings.autoEmailInvoice?.toString(),
       localization.autoConvertQuote: settings.autoConvertQuote?.toString(),

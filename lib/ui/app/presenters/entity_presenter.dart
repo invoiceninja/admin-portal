@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -163,5 +163,25 @@ class EntityPresenter {
     }
 
     return value;
+  }
+}
+
+class TableTooltip extends StatelessWidget {
+  const TableTooltip({
+    @required this.message,
+  });
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: message,
+      child: Text(
+        message,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+      ),
+    );
   }
 }

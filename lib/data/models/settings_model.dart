@@ -241,6 +241,10 @@ abstract class SettingsEntity
   bool get autoArchiveInvoice;
 
   @nullable
+  @BuiltValueField(wireName: 'auto_archive_invoice_cancelled')
+  bool get autoArchiveInvoiceCancelled;
+
+  @nullable
   @BuiltValueField(wireName: 'auto_archive_quote')
   bool get autoArchiveQuote;
 

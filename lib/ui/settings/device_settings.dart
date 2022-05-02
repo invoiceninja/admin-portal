@@ -290,6 +290,10 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       leading: Icon(Icons.refresh),
                       title: Text(localization.refreshData),
                       subtitle: LiveText(() {
+                        if (state.userCompanyState.lastUpdated == 0) {
+                          return '';
+                        }
+
                         return localization.lastUpdated +
                             ': ' +
                             timeago.format(

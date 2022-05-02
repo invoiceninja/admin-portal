@@ -95,23 +95,9 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.customValue4:
         return Text(presentCustomField(context, quote.customValue4));
       case QuoteFields.publicNotes:
-        return Tooltip(
-          message: quote.publicNotes,
-          child: Text(
-            quote.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: quote.publicNotes);
       case QuoteFields.privateNotes:
-        return Tooltip(
-          message: quote.privateNotes,
-          child: Text(
-            quote.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: quote.privateNotes);
       case QuoteFields.discount:
         return Text(quote.isAmountDiscount
             ? formatNumber(quote.discount, context,

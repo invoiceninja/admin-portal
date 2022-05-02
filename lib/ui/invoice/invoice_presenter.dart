@@ -126,23 +126,9 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.customValue4:
         return Text(presentCustomField(context, invoice.customValue4));
       case InvoiceFields.publicNotes:
-        return Tooltip(
-          message: invoice.publicNotes,
-          child: Text(
-            invoice.publicNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: invoice.publicNotes);
       case InvoiceFields.privateNotes:
-        return Tooltip(
-          message: invoice.privateNotes,
-          child: Text(
-            invoice.privateNotes,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-          ),
-        );
+        return TableTooltip(message: invoice.privateNotes);
       case InvoiceFields.discount:
         return Text(invoice.isAmountDiscount
             ? formatNumber(invoice.discount, context,
