@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'notification_invoice_sent': 'Invoice Sent',
       'auto_archive_paid_invoices': 'Auto Archive Paid',
       'auto_archive_paid_invoices_help':
           'Automatically archive invoices when they are paid.',
@@ -75030,6 +75031,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get autoArchiveCancelledInvoicesHelp =>
       _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'] ??
       _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'];
+
+  String get notificationInvoiceSent =>
+      _localizedValues[localeCode]['notification_invoice_sent'] ??
+      _localizedValues[localeCode]['notification_invoice_sent'];
 
   // STARTER: lang field - do not remove comment
 

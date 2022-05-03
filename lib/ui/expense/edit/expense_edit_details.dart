@@ -161,6 +161,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
               },
+              /*
+              onCreateNew: (completer, name) {
+                store.dispatch(SaveVendorRequest(
+                    vendor: VendorEntity().rebuild((b) => b..name = name),
+                    completer: completer));
+              },
+              */
             ),
             if (!expense.isInvoiced) ...[
               EntityDropdown(

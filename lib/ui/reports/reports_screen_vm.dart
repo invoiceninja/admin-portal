@@ -404,10 +404,8 @@ class ReportsScreenVM {
                 final value = row[i]
                     .renderText(context, column)
                     .trim()
-                    .replaceAll('"', '\\"');
-                csvData += value.contains(' ') || value.contains('"')
-                    ? '"$value",'
-                    : '$value,';
+                    .replaceAll('"', '""');
+                csvData += '"$value",';
               }
               csvData = csvData.substring(0, csvData.length - 1);
             });
@@ -432,14 +430,12 @@ class ReportsScreenVM {
             groupTotals.rows.forEach((group) {
               final row = groupTotals.totals[group];
               csvData +=
-                  '"${group.trim().replaceAll('"', '\\"')}",${row['count'].toInt()}';
+                  '"${group.trim().replaceAll('"', '""')}",${row['count'].toInt()}';
 
               columns.forEach((column) {
                 final value =
-                    row[column].toString().trim().replaceAll('"', '\\"');
-                csvData += value.contains(' ') || value.contains('"')
-                    ? ',"$value"'
-                    : ',$value';
+                    row[column].toString().trim().replaceAll('"', '""');
+                csvData += ',"$value"';
               });
 
               csvData += '\n';

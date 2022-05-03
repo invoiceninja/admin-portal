@@ -116,7 +116,10 @@ class NotificationSettings extends StatelessWidget {
                       value = NOTIFY_NONE;
                     }
                     return DataRow(cells: [
-                      DataCell(Text(localization.lookup(eventType))),
+                      // workaround for mistake in translations
+                      DataCell(Text(eventType == kNotificationsInvoiceSent
+                          ? localization.notificationInvoiceSent
+                          : localization.lookup(eventType))),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
                               ? IconText(

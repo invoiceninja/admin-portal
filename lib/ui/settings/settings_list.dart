@@ -408,6 +408,7 @@ class SettingsSearch extends StatelessWidget {
           'task_settings',
           'auto_start_tasks',
           'show_tasks_table',
+          'client_portal',
         ],
       ],
       kSettingsTaskStatuses: [
@@ -515,7 +516,6 @@ class SettingsSearch extends StatelessWidget {
         [
           'client_portal',
           'dashboard',
-          'tasks',
           'portal_mode',
           'subdomain',
           'domain',

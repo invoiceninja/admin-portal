@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
@@ -8,9 +9,11 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskSettings extends StatefulWidget {
@@ -160,29 +163,37 @@ class _TaskSettingsState extends State<TaskSettings> {
               ],
             ],
           ),
-          if ((settings.enablePortalTasks ?? false) != false)
-            FormCard(
-              children: [
-                AppDropdownButton<String>(
-                  labelText: localization.tasksShownInPortal,
-                  value: settings.clientPortalTasks,
-                  onChanged: (dynamic value) {
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..clientPortalTasks = value));
-                  },
-                  items: [
-                    SettingsEntity.PORTAL_TASKS_INVOICED,
-                    SettingsEntity.PORTAL_TASKS_UNINVOICED,
-                    SettingsEntity.PORTAL_TASKS_ALL,
-                  ]
-                      .map((value) => DropdownMenuItem(
-                            child: Text(localization.lookup(value)),
-                            value: value,
-                          ))
-                      .toList(),
-                ),
-              ],
-            ),
+          FormCard(
+            children: [
+              BoolDropdownButton(
+                label: localization.clientPortal,
+                value: settings.enablePortalTasks,
+                iconData: getSettingIcon(kSettingsClientPortal),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enablePortalTasks = value)),
+              ),
+              AppDropdownButton<String>(
+                labelText: localization.tasksShownInPortal,
+                value: settings.clientPortalTasks,
+                onChanged: ((settings.enablePortalTasks ?? false) != false)
+                    ? (dynamic value) {
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..clientPortalTasks = value));
+                      }
+                    : null,
+                items: [
+                  SettingsEntity.PORTAL_TASKS_INVOICED,
+                  SettingsEntity.PORTAL_TASKS_UNINVOICED,
+                  SettingsEntity.PORTAL_TASKS_ALL,
+                ]
+                    .map((value) => DropdownMenuItem(
+                          child: Text(localization.lookup(value)),
+                          value: value,
+                        ))
+                    .toList(),
+              ),
+            ],
+          ),
           if (!viewModel.state.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
