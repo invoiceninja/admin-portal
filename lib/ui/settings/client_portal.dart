@@ -393,13 +393,6 @@ class _ClientPortalState extends State<ClientPortal>
                   ),
                   */
                   BoolDropdownButton(
-                    label: localization.tasks,
-                    value: settings.enablePortalTasks,
-                    iconData: getEntityIcon(EntityType.task),
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enablePortalTasks = value)),
-                  ),
-                  BoolDropdownButton(
                       label: localization.documentUpload,
                       helpLabel: localization.documentUploadHelp,
                       value: settings.enablePortalUploads,
