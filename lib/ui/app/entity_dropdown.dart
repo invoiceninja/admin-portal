@@ -12,6 +12,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -38,6 +39,7 @@ class EntityDropdown extends StatefulWidget {
     this.onFieldSubmitted,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
+    this.onCreateNew,
   });
 
   final EntityType entityType;
@@ -54,6 +56,7 @@ class EntityDropdown extends StatefulWidget {
   final Function(Completer<SelectableEntity> completer) onAddPressed;
   final Function(BaseEntity) overrideSuggestedAmount;
   final Function(BaseEntity) overrideSuggestedLabel;
+  final Function(Completer<SelectableEntity> completer, String) onCreateNew;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -104,6 +107,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
     super.didUpdateWidget(oldWidget);
 
     if (widget.entityId != oldWidget.entityId) {
+      final state = StoreProvider.of<AppState>(context).state;
+      _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
       _textController.text = _getEntityLabel(_entityMap[widget.entityId]);
     }
   }
@@ -252,6 +257,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
             return <SelectableEntity>[];
           }
 
+          if (widget.onCreateNew != null &&
+              options.isEmpty &&
+              textEditingValue.text.isNotEmpty) {
+            options.add(_AutocompleteEntity(name: textEditingValue.text));
+          }
+
           return options;
         },
         displayStringForOption: (entity) => entity.listDisplayName,
@@ -266,14 +277,32 @@ class _EntityDropdownState extends State<EntityDropdown> {
             return;
           }
 
-          widget.onSelected(entity);
+          void _wrapUp(SelectableEntity entity) {
+            widget.onSelected(entity);
 
-          _focusNode.requestFocus();
+            _focusNode.requestFocus();
 
-          WidgetsBinding.instance.addPostFrameCallback((duration) {
-            _textController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _textController.text.length));
-          });
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              _textController.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _textController.text.length));
+            });
+          }
+
+          if (entity?.id == _AutocompleteEntity.KEY) {
+            final name = (entity as _AutocompleteEntity).name;
+            _textController.text = name;
+            _focusNode.removeListener(_onFocusChanged);
+            final completer = Completer<SelectableEntity>();
+            completer.future.then((value) {
+              _wrapUp(value);
+              _focusNode.addListener(_onFocusChanged);
+            }).catchError((dynamic error) {
+              _focusNode.addListener(_onFocusChanged);
+            });
+            widget.onCreateNew(completer, name);
+          } else {
+            _wrapUp(entity);
+          }
         },
         fieldViewBuilder: (BuildContext context,
             TextEditingController textEditingController,
@@ -550,4 +579,30 @@ class EntityAutocompleteListTile extends StatelessWidget {
       onTap: onTap != null ? () => onTap(entity) : null,
     );
   }
+}
+
+class _AutocompleteEntity extends Object with SelectableEntity {
+  _AutocompleteEntity({this.name});
+
+  static const KEY = '__new__';
+
+  final String name;
+
+  @override
+  String get id => KEY;
+
+  @override
+  bool matchesFilter(String filter) => true;
+
+  @override
+  String matchesFilterValue(String filter) => null;
+
+  @override
+  String get listDisplayName {
+    final localization = AppLocalization.of(navigatorKey.currentContext);
+    return '${localization.create}: $name';
+  }
+
+  @override
+  double get listDisplayAmount => null;
 }
