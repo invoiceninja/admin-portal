@@ -292,7 +292,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
           if (entity?.id == _AutocompleteEntity.KEY) {
             final name = (entity as _AutocompleteEntity).name;
             _textController.text = name;
+
             _focusNode.removeListener(_onFocusChanged);
+            _focusNode.requestFocus();
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              _textController.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _textController.text.length));
+            });
+
             final completer = Completer<SelectableEntity>();
             completer.future.then((value) {
               showToast(AppLocalization.of(navigatorKey.currentContext)
