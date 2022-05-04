@@ -320,7 +320,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
             onFieldSubmitted: (String value) {
               onFieldSubmitted();
             },
-            onChanged: (value) => _filter = value,
+            onChanged: (value) {
+              _filter = value;
+              widget.onSelected(null);
+            },
             suffixIconButton: iconButton,
           );
         },
