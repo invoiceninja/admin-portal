@@ -281,7 +281,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
           void _wrapUp(SelectableEntity entity) {
             widget.onSelected(entity);
-            //_focusNode.requestFocus();
+            _focusNode.requestFocus();
 
             WidgetsBinding.instance.addPostFrameCallback((duration) {
               _textController.selection = TextSelection.fromPosition(
