@@ -259,7 +259,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
           if (widget.onCreateNew != null &&
               options.isEmpty &&
-              textEditingValue.text.isNotEmpty) {
+              _filter.isNotEmpty) {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
@@ -267,6 +267,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         },
         displayStringForOption: (entity) => entity.listDisplayName,
         onSelected: (entity) {
+          _filter = '';
           /*
           _textController.text = widget.overrideSuggestedLabel != null
               ? widget.overrideSuggestedLabel(entity)
