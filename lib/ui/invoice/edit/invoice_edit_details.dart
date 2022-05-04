@@ -1,11 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -134,6 +137,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -453,6 +457,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (vendor) => viewModel.onChanged(
                   invoice.rebuild((b) => b.vendorId = vendor.id),
                 ),
+                onCreateNew: (completer, name) {
+                  store.dispatch(SaveVendorRequest(
+                      vendor: VendorEntity().rebuild((b) => b..name = name),
+                      completer: completer));
+                },
               ),
             DecoratedFormField(
               key: ValueKey('__exchange_rate_${invoice.clientId}__'),

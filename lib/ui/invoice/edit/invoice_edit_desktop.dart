@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -207,6 +209,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -668,8 +671,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       clientId: invoice.clientId,
                                       projectId: invoice.projectId,
                                       onChanged: (projectId) {
-                                        final project =
-                                            state.projectState.get(projectId);
+                                        final project = store.state.projectState
+                                            .get(projectId);
                                         final client = state.clientState
                                             .get(project.clientId);
 
@@ -704,6 +707,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         invoice.rebuild(
                                             (b) => b.vendorId = vendor.id),
                                       ),
+                                      onCreateNew: (completer, name) {
+                                        store.dispatch(SaveVendorRequest(
+                                            vendor: VendorEntity()
+                                                .rebuild((b) => b..name = name),
+                                            completer: completer));
+                                      },
                                     ),
                                   DecoratedFormField(
                                     key: ValueKey(

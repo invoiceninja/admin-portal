@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectPicker extends StatelessWidget {
   const ProjectPicker({
@@ -29,19 +31,32 @@ class ProjectPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final localization = AppLocalization.of(context);
 
-    return DynamicSelector(
-      onChanged: onChanged,
-      onAddPressed: onAddPressed,
-      entityType: EntityType.project,
-      entityId: projectId,
-      entityIds: memoizedDropdownProjectList(
-          state.projectState.map,
-          state.projectState.list,
-          state.clientState.map,
-          state.userState.map,
-          clientId),
-    );
+    return EntityDropdown(
+        entityType: EntityType.project,
+        labelText: localization.project,
+        onAddPressed: onAddPressed,
+        entityId: projectId,
+        entityList: memoizedDropdownProjectList(
+            state.projectState.map,
+            state.projectState.list,
+            state.clientState.map,
+            state.userState.map,
+            clientId),
+        onSelected: (entity) {
+          onChanged(entity?.id ?? '');
+        },
+        onCreateNew: (clientId ?? '').isNotEmpty
+            ? (completer, name) {
+                store.dispatch(SaveProjectRequest(
+                    project: ProjectEntity().rebuild((b) => b
+                      ..name = name
+                      ..clientId = clientId),
+                    completer: completer));
+              }
+            : null);
   }
 }
