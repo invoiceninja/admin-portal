@@ -99,6 +99,10 @@ class EntityDataTableSource extends AppDataTableSource {
       'description',
       'email',
       'contact_email',
+      'custom1',
+      'custom2',
+      'custom3',
+      'custom4',
     ];
 
     return DataRow(
@@ -143,7 +147,7 @@ class EntityDataTableSource extends AppDataTableSource {
               child: entityPresenter.getField(field: field, context: context),
               constraints: BoxConstraints(
                 maxWidth: wideFields.contains(field)
-                    ? kTableColumnWidthMax * 2
+                    ? kTableColumnWidthMax * 1.5
                     : kTableColumnWidthMax,
                 minWidth: kTableColumnWidthMin,
               ),

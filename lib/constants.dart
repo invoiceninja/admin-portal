@@ -117,7 +117,7 @@ const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
 
 const double kTableColumnWidthMin = 80;
-const double kTableColumnWidthMax = 120;
+const double kTableColumnWidthMax = 200;
 
 const int kTableListWidthCutoff = 550;
 const int kDefaultAnimationDuration = 500;
