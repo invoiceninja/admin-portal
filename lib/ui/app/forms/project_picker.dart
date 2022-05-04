@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -9,13 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectPicker extends StatelessWidget {
