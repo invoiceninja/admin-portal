@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
@@ -19,7 +20,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -206,19 +206,23 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                  */
               ),
             ],
-            DynamicSelector(
+            EntityDropdown(
               allowClearing: true,
-              key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,
               labelText: localization.category,
               entityId: expense.categoryId,
-              entityIds: memoizedDropdownExpenseCategoriesList(
+              entityList: memoizedDropdownExpenseCategoriesList(
                   state.expenseCategoryState.map,
                   state.expenseCategoryState.list),
-              onChanged: (categoryId) {
-                final category = state.expenseCategoryState.get(categoryId);
+              onSelected: (category) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));
+              },
+              onCreateNew: (completer, name) {
+                store.dispatch(SaveExpenseCategoryRequest(
+                    expenseCategory:
+                        ExpenseCategoryEntity().rebuild((b) => b..name = name),
+                    completer: completer));
               },
             ),
             UserPicker(
