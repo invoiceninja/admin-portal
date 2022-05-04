@@ -671,8 +671,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       clientId: invoice.clientId,
                                       projectId: invoice.projectId,
                                       onChanged: (projectId) {
-                                        final project =
-                                            state.projectState.get(projectId);
+                                        final project = store.state.projectState
+                                            .get(projectId);
                                         final client = state.clientState
                                             .get(project.clientId);
 
