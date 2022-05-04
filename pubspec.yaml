@@ -100,7 +100,6 @@ msix_config:
   display_name: Invoice Ninja
   publisher_display_name: Invoice Ninja
   identity_name: InvoiceNinja.InvoiceNinja
-  msix_version: 5.0.81.0
   publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
   architecture: x64
   capabilities: 'internetClient'
