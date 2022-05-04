@@ -566,7 +566,16 @@ class EntityAutocompleteListTile extends StatelessWidget {
 
     return ListTile(
       title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          if (entity.id == _AutocompleteEntity.KEY)
+            Padding(
+              padding: const EdgeInsets.only(right: 8, top: 4),
+              child: Icon(
+                Icons.add_circle_outline,
+                size: 16,
+              ),
+            ),
           Expanded(
             child: Text(label, style: Theme.of(context).textTheme.subtitle1),
           ),

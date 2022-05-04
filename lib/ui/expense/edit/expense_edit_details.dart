@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -161,13 +162,11 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
               },
-              /*
               onCreateNew: (completer, name) {
                 store.dispatch(SaveVendorRequest(
                     vendor: VendorEntity().rebuild((b) => b..name = name),
                     completer: completer));
               },
-              */
             ),
             if (!expense.isInvoiced) ...[
               EntityDropdown(
