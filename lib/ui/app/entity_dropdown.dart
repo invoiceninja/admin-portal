@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -295,6 +296,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
             _focusNode.removeListener(_onFocusChanged);
             final completer = Completer<SelectableEntity>();
             completer.future.then((value) {
+              showToast(AppLocalization.of(navigatorKey.currentContext)
+                  .createdRecord);
               _wrapUp(value);
               _focusNode.addListener(_onFocusChanged);
             }).catchError((dynamic error) {
