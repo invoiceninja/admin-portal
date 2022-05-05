@@ -1145,7 +1145,9 @@ abstract class InvoiceEntity extends Object
 
   String get calculatedStatusId {
     if (isRecurring) {
-      if (isPending) {
+      if (!isDraft && remainingCycles == 0) {
+        return kRecurringInvoiceStatusCompleted;
+      } else if (isPending) {
         return kRecurringInvoiceStatusPending;
       }
     } else {
