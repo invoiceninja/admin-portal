@@ -262,6 +262,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         secondary: Icon(MdiIcons.filePdfBox),
                       ),
                   ],
+                  /*
                   SwitchListTile(
                     title: Text(localization.persistUi),
                     subtitle: Text(localization.persistUiHelp),
@@ -271,6 +272,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
+                  */
                   SwitchListTile(
                     title: Text(localization.persistData),
                     subtitle: Text(localization.persistDataHelp),
