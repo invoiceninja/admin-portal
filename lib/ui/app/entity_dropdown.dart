@@ -334,7 +334,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
             },
             onChanged: (value) {
               _filter = value;
-              widget.onSelected(null);
+              if (hasValue) {
+                widget.onSelected(null);
+              }
             },
             suffixIconButton: iconButton,
           );

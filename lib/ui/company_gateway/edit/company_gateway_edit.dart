@@ -145,22 +145,23 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
+                      autofocus: true,
                       entityType: EntityType.gateway,
                       entityList:
                           memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,
                       entityId: companyGateway.gatewayId,
                       onSelected: (SelectableEntity gateway) {
-                        gateway ??= GatewayEntity();
                         viewModel.onChanged(
                           companyGateway.rebuild((b) => b
-                            ..feesAndLimitsMap[(gateway as GatewayEntity)
+                            ..feesAndLimitsMap[((gateway ?? GatewayEntity())
+                                            as GatewayEntity)
                                         .defaultGatewayTypeId ??
                                     kGatewayTypeCreditCard] =
                                 FeesAndLimitsSettings(isEnabled: true)
-                            ..gatewayId = gateway.id
+                            ..gatewayId = gateway?.id ?? ''
                             ..config = '{}'
-                            ..label = gateway.listDisplayName),
+                            ..label = gateway?.listDisplayName ?? ''),
                         );
                       },
                     ),
