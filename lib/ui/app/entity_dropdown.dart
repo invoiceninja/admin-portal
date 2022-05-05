@@ -261,7 +261,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
           if (widget.onCreateNew != null &&
               options.isEmpty &&
               _filter.trim().isNotEmpty &&
-              textEditingValue.text.trim().isNotEmpty) {
+              textEditingValue.text.trim().isNotEmpty &&
+              state.userCompany.canCreate(widget.entityType)) {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
