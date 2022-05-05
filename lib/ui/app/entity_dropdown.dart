@@ -260,7 +260,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
           if (widget.onCreateNew != null &&
               options.isEmpty &&
-              _filter.isNotEmpty) {
+              _filter.trim().isNotEmpty &&
+              textEditingValue.text.trim().isNotEmpty) {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
@@ -290,7 +291,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           }
 
           if (entity?.id == _AutocompleteEntity.KEY) {
-            final name = (entity as _AutocompleteEntity).name;
+            final name = (entity as _AutocompleteEntity).name.trim();
             _textController.text = name;
 
             _focusNode.removeListener(_onFocusChanged);
