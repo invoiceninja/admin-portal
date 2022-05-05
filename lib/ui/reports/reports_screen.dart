@@ -916,8 +916,12 @@ class ReportResult {
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
     );
+
     final customStartDate = reportsUIState.customStartDate;
     final customEndDate = reportsUIState.customEndDate;
+
+    value = value.split('T').first;
+
     if (dateRange == DateRange.custom) {
       if (customStartDate.isNotEmpty && customEndDate.isNotEmpty) {
         if (!(startDate.compareTo(value) <= 0 &&
@@ -1256,10 +1260,16 @@ class ReportResult {
         final cell = row[index];
         final column = sorted[j];
         cells.add(
-          DataCell(cell.renderWidget(context, column), onTap: () {
-            viewEntityById(
-                entityId: cell.entityId, entityType: cell.entityType);
-          }),
+          DataCell(
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+              child: cell.renderWidget(context, column),
+            ),
+            onTap: () {
+              viewEntityById(
+                  entityId: cell.entityId, entityType: cell.entityType);
+            },
+          ),
         );
       }
       return DataRow(cells: cells);
@@ -1574,7 +1584,11 @@ class ReportStringValue extends ReportElement {
 
   @override
   Widget renderWidget(BuildContext context, String column) {
-    return Text(renderText(context, column));
+    return Text(
+      renderText(context, column),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   @override

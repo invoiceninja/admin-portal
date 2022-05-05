@@ -16,11 +16,21 @@ enum PaymentReportFields {
   number,
   amount,
   client,
+  client_number,
   client_balance,
   client_address1,
   client_address2,
+  client_vat_number,
+  client_city,
+  client_postal_code,
+  client_country,
   client_shipping_address1,
   client_shipping_address2,
+  client_state,
+  client_shipping_city,
+  client_shipping_state,
+  client_shipping_postal_code,
+  client_shipping_country,
   transaction_reference,
   date,
   type,
@@ -177,6 +187,36 @@ ReportResult paymentReport(
           break;
         case PaymentReportFields.client_shipping_address2:
           value = client.shippingAddress2;
+          break;
+        case PaymentReportFields.client_state:
+          value = client.state;
+          break;
+        case PaymentReportFields.client_shipping_city:
+          value = client.shippingCity;
+          break;
+        case PaymentReportFields.client_shipping_state:
+          value = client.shippingState;
+          break;
+        case PaymentReportFields.client_shipping_postal_code:
+          value = client.shippingPostalCode;
+          break;
+        case PaymentReportFields.client_shipping_country:
+          value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
+          break;
+        case PaymentReportFields.client_city:
+          value = client.city;
+          break;
+        case PaymentReportFields.client_country:
+          value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
+        case PaymentReportFields.client_postal_code:
+          value = client.postalCode;
+          break;
+        case PaymentReportFields.client_vat_number:
+          value = client.vatNumber;
+          break;
+        case PaymentReportFields.client_number:
+          value = client.number;
           break;
         case PaymentReportFields.transaction_reference:
           value = payment.transactionReference;
