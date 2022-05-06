@@ -90,7 +90,6 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
     final webPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
     final cliPhpVersion =
