@@ -90,7 +90,6 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
     final webPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
     final cliPhpVersion =
@@ -153,15 +152,14 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     url:
                         'https://invoiceninja.github.io/docs/self-host-installation/#file-permissions',
                   ),
+                /*
                 if (!state.account.isDocker) ...[
                   if (!_response.openBasedir)
-                    /*
                     _HealthListTile(
                       title: 'Open Basedir',
                       isWarning: true,
                       subtitle: 'Not enabled',
                     ),
-                    */
                     if (!_response.cacheEnabled)
                       _HealthListTile(
                         title: 'Config not cached',
@@ -170,6 +168,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                         isWarning: true,
                       ),
                 ],
+                */
                 if (_response.queue == 'sync')
                   _HealthListTile(
                     title: 'Queue not enabled',

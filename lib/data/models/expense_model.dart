@@ -349,6 +349,7 @@ abstract class ExpenseEntity extends Object
 
       if (!isInvoiced &&
           !isRecurring &&
+          shouldBeInvoiced &&
           userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.invoiceExpense);
       }

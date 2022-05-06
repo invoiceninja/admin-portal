@@ -311,7 +311,7 @@ List<String> clientExpenseList(
         expense.clientId != clientId) {
       return false;
     }
-    return expense.isActive && !expense.isInvoiced;
+    return expense.isActive && !expense.isInvoiced && expense.shouldBeInvoiced;
   }).toList();
 
   list.sort((idA, idB) => expenseMap[idA]
