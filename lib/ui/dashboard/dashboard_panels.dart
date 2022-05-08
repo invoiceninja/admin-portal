@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -407,7 +411,56 @@ class DashboardPanels extends StatelessWidget {
       return LoadingIndicator();
     }
 
+    final runningTasks = memoizedRunningTasks(state.taskState.map);
+
+    Widget _runningTasks() {
+      return Padding(
+        padding: const EdgeInsets.only(top: 20, left: 12),
+        child: Wrap(
+            spacing: 8,
+            children: runningTasks
+                .map((task) => Card(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 180),
+                        child: Tooltip(
+                          message: task.description,
+                          child: ListTile(
+                            dense: true,
+                            title: LiveText(() {
+                              return formatDuration(task.calculateDuration());
+                            }),
+                            subtitle: Text(
+                              (task.clientId ?? '').isNotEmpty
+                                  ? state.clientState
+                                      .get(task.clientId)
+                                      .displayName
+                                  : task.number,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            onTap: () => viewEntity(entity: task),
+                            onLongPress: () =>
+                                editEntity(context: context, entity: task),
+                            leading: ActionMenuButton(
+                              entity: task,
+                              entityActions: task.getActions(
+                                includeEdit: true,
+                                userCompany: state.userCompany,
+                              ),
+                              onSelected: (context, action) =>
+                                  handleTaskAction(context, [task], action),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ))
+                .toList()),
+      );
+    }
+
     final entityTypes = [
+      if (company.isModuleEnabled(EntityType.task) && runningTasks.isNotEmpty)
+        EntityType.taskStatus,
       if (company.isModuleEnabled(EntityType.invoice)) EntityType.invoice,
       if (company.isModuleEnabled(EntityType.invoice)) EntityType.payment,
       if (company.isModuleEnabled(EntityType.quote)) EntityType.quote,
@@ -456,6 +509,8 @@ class DashboardPanels extends StatelessWidget {
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.expense, entityIds));
+                case EntityType.taskStatus:
+                  return _runningTasks();
               }
 
               return SizedBox();
