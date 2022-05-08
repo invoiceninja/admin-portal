@@ -418,43 +418,41 @@ class DashboardPanels extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20, left: 12),
         child: Wrap(
             spacing: 8,
-            children: runningTasks
-                .map((task) => Card(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 180),
-                        child: Tooltip(
-                          message: task.description,
-                          child: ListTile(
-                            dense: true,
-                            title: LiveText(() {
-                              return formatDuration(task.calculateDuration());
-                            }),
-                            subtitle: Text(
-                              (task.clientId ?? '').isNotEmpty
-                                  ? state.clientState
-                                      .get(task.clientId)
-                                      .displayName
-                                  : task.number,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            onTap: () => viewEntity(entity: task),
-                            onLongPress: () =>
-                                editEntity(context: context, entity: task),
-                            leading: ActionMenuButton(
-                              entity: task,
-                              entityActions: task.getActions(
-                                includeEdit: true,
-                                userCompany: state.userCompany,
-                              ),
-                              onSelected: (context, action) =>
-                                  handleTaskAction(context, [task], action),
-                            ),
-                          ),
-                        ),
+            children: runningTasks.map((task) {
+              final client = state.clientState.map[task.clientId];
+              return Card(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 180),
+                  child: Tooltip(
+                    message: task.description,
+                    child: ListTile(
+                      dense: true,
+                      title: LiveText(() {
+                        return formatDuration(task.calculateDuration());
+                      }),
+                      subtitle: Text(
+                        client != null ? client.displayName : task.number,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ))
-                .toList()),
+                      onTap: () =>
+                          viewEntity(entity: task, filterEntity: client),
+                      onLongPress: () =>
+                          editEntity(context: context, entity: task),
+                      leading: ActionMenuButton(
+                        entity: task,
+                        entityActions: task.getActions(
+                          includeEdit: true,
+                          userCompany: state.userCompany,
+                        ),
+                        onSelected: (context, action) =>
+                            handleTaskAction(context, [task], action),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }).toList()),
       );
     }
 
