@@ -60,21 +60,7 @@ class ReportsScreen extends StatelessWidget {
     final reportResult = viewModel.reportResult;
 
     Widget leading = SizedBox();
-
-    if (state.isHosted && !state.isProPlan && !state.isTrial) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Material(child: HelpText(localization.upgradeToViewReports)),
-            AppButton(
-              label: localization.upgrade.toUpperCase(),
-              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
-            )
-          ],
-        ),
-      );
-    }
+    final hideReports = state.isHosted && !state.isProPlan && !state.isTrial;
 
     if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
@@ -337,160 +323,180 @@ class ReportsScreen extends StatelessWidget {
                 ),
             ],
           ),
-          actions: <Widget>[
-            if (isDesktop(context)) ...[
-              Builder(builder: (BuildContext context) {
-                return AppTextButton(
-                  label: localization.columns,
-                  isInHeader: true,
-                  onPressed: () {
-                    multiselectDialog(
-                      // Using the navigatorKey to prevent using the appBarTheme
-                      context: navigatorKey.currentContext,
-                      onSelected: (selected) {
-                        viewModel.onReportColumnsChanged(context, selected);
-                      },
-                      options: reportResult.allColumns,
-                      selected: reportResult.columns.toList(),
-                      defaultSelected: reportResult.defaultColumns,
-                    );
-                  },
-                );
-              }),
-              AppTextButton(
-                label: localization.export,
-                isInHeader: true,
-                onPressed: () {
-                  viewModel.onExportPressed(context);
-                },
-              ),
-            ],
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ActionMenuButton(
-                  entityActions: firstEntity == null
-                      ? null
-                      : firstEntity.getActions(
-                          userCompany: state.userCompany, multiselect: true),
-                  entity: firstEntity,
-                  onSelected: (context, action) {
-                    confirmCallback(
-                        context: context,
-                        message: localization.lookup(action.toString()) +
-                            ' • ' +
-                            (reportResult.entities.length == 1
-                                ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
-                                : '${reportResult.entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
-                        callback: (_) {
-                          handleEntitiesActions(reportResult.entities, action);
-                        });
-                  }),
-            ),
-            if (isMobile(context) || !state.prefState.isHistoryVisible)
-              Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(Icons.history),
-                  padding: const EdgeInsets.only(left: 4, right: 20),
-                  tooltip: localization.history,
-                  onPressed: () {
-                    if (isMobile(context) || state.prefState.isHistoryFloated) {
-                      Scaffold.of(context).openEndDrawer();
-                    } else {
-                      store.dispatch(
-                          UpdateUserPreferences(sidebar: AppSidebar.history));
-                    }
-                  },
-                ),
-              ),
-          ],
-        ),
-        body: ScrollableListView(
-          key: ValueKey(
-              '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
-          children: <Widget>[
-            isMobile(context)
-                ? FormCard(
-                    children: [
-                      ...reportChildren,
-                      ...dateChildren,
-                      ...chartChildren,
-                    ],
-                  )
-                : Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Flexible(
-                        child: FormCard(
-                          children: reportChildren,
-                          padding: const EdgeInsets.only(
-                              top: kMobileDialogPadding,
-                              right: kMobileDialogPadding / 2,
-                              left: kMobileDialogPadding),
-                        ),
-                      ),
-                      Flexible(
-                        child: FormCard(
-                          children: dateChildren,
-                          padding: const EdgeInsets.only(
-                              top: kMobileDialogPadding,
-                              right: kMobileDialogPadding / 2,
-                              left: kMobileDialogPadding / 2),
-                        ),
-                      ),
-                      Flexible(
-                        child: FormCard(
-                          children: chartChildren,
-                          padding: const EdgeInsets.only(
-                              top: kMobileDialogPadding,
-                              right: kMobileDialogPadding,
-                              left: kMobileDialogPadding / 2),
-                        ),
-                      )
-                    ],
-                  ),
-            if (isMobile(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
+          actions: hideReports
+              ? []
+              : [
+                  if (isDesktop(context)) ...[
                     Builder(builder: (BuildContext context) {
-                      return Expanded(
-                        child: AppButton(
-                          label: localization.columns,
-                          onPressed: () {
-                            multiselectDialog(
-                              context: context,
-                              onSelected: (selected) {
-                                viewModel.onReportColumnsChanged(
-                                    context, selected);
-                              },
-                              options: reportResult.allColumns,
-                              selected: reportResult.columns.toList(),
-                              defaultSelected: reportResult.defaultColumns,
-                            );
-                          },
-                        ),
+                      return AppTextButton(
+                        label: localization.columns,
+                        isInHeader: true,
+                        onPressed: () {
+                          multiselectDialog(
+                            // Using the navigatorKey to prevent using the appBarTheme
+                            context: navigatorKey.currentContext,
+                            onSelected: (selected) {
+                              viewModel.onReportColumnsChanged(
+                                  context, selected);
+                            },
+                            options: reportResult.allColumns,
+                            selected: reportResult.columns.toList(),
+                            defaultSelected: reportResult.defaultColumns,
+                          );
+                        },
                       );
                     }),
-                    SizedBox(width: kGutterWidth),
-                    Expanded(
-                      child: AppButton(
-                        label: localization.export,
+                    AppTextButton(
+                      label: localization.export,
+                      isInHeader: true,
+                      onPressed: () {
+                        viewModel.onExportPressed(context);
+                      },
+                    ),
+                  ],
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ActionMenuButton(
+                        entityActions: firstEntity == null
+                            ? null
+                            : firstEntity.getActions(
+                                userCompany: state.userCompany,
+                                multiselect: true),
+                        entity: firstEntity,
+                        onSelected: (context, action) {
+                          confirmCallback(
+                              context: context,
+                              message: localization.lookup(action.toString()) +
+                                  ' • ' +
+                                  (reportResult.entities.length == 1
+                                      ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
+                                      : '${reportResult.entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
+                              callback: (_) {
+                                handleEntitiesActions(
+                                    reportResult.entities, action);
+                              });
+                        }),
+                  ),
+                  if (isMobile(context) || !state.prefState.isHistoryVisible)
+                    Builder(
+                      builder: (context) => IconButton(
+                        icon: Icon(Icons.history),
+                        padding: const EdgeInsets.only(left: 4, right: 20),
+                        tooltip: localization.history,
                         onPressed: () {
-                          viewModel.onExportPressed(context);
+                          if (isMobile(context) ||
+                              state.prefState.isHistoryFloated) {
+                            Scaffold.of(context).openEndDrawer();
+                          } else {
+                            store.dispatch(UpdateUserPreferences(
+                                sidebar: AppSidebar.history));
+                          }
                         },
                       ),
                     ),
+                ],
+        ),
+        body: hideReports
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    HelpText(localization.upgradeToViewReports),
+                    AppButton(
+                      label: localization.upgrade.toUpperCase(),
+                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                    )
                   ],
                 ),
+              )
+            : ScrollableListView(
+                key: ValueKey(
+                    '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
+                children: <Widget>[
+                  isMobile(context)
+                      ? FormCard(
+                          children: [
+                            ...reportChildren,
+                            ...dateChildren,
+                            ...chartChildren,
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Flexible(
+                              child: FormCard(
+                                children: reportChildren,
+                                padding: const EdgeInsets.only(
+                                    top: kMobileDialogPadding,
+                                    right: kMobileDialogPadding / 2,
+                                    left: kMobileDialogPadding),
+                              ),
+                            ),
+                            Flexible(
+                              child: FormCard(
+                                children: dateChildren,
+                                padding: const EdgeInsets.only(
+                                    top: kMobileDialogPadding,
+                                    right: kMobileDialogPadding / 2,
+                                    left: kMobileDialogPadding / 2),
+                              ),
+                            ),
+                            Flexible(
+                              child: FormCard(
+                                children: chartChildren,
+                                padding: const EdgeInsets.only(
+                                    top: kMobileDialogPadding,
+                                    right: kMobileDialogPadding,
+                                    left: kMobileDialogPadding / 2),
+                              ),
+                            )
+                          ],
+                        ),
+                  if (isMobile(context))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: [
+                          Builder(builder: (BuildContext context) {
+                            return Expanded(
+                              child: AppButton(
+                                label: localization.columns,
+                                onPressed: () {
+                                  multiselectDialog(
+                                    context: context,
+                                    onSelected: (selected) {
+                                      viewModel.onReportColumnsChanged(
+                                          context, selected);
+                                    },
+                                    options: reportResult.allColumns,
+                                    selected: reportResult.columns.toList(),
+                                    defaultSelected:
+                                        reportResult.defaultColumns,
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                          SizedBox(width: kGutterWidth),
+                          Expanded(
+                            child: AppButton(
+                              label: localization.export,
+                              onPressed: () {
+                                viewModel.onExportPressed(context);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ReportDataTable(
+                    key: ValueKey(
+                        '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
+                    viewModel: viewModel,
+                  )
+                ],
               ),
-            ReportDataTable(
-              key: ValueKey(
-                  '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
-              viewModel: viewModel,
-            )
-          ],
-        ),
       ),
     );
   }
