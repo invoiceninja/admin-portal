@@ -1039,7 +1039,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_pageCount > 1 && state.prefState.enableJSPDF)
+              if (_pageCount > 1 && (state.prefState.enableJSPDF || !kIsWeb))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
