@@ -948,6 +948,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
   String _pdfString;
   http.Response _response;
   bool _isLoading = false;
+  bool _pendingLoad = false;
 
   @override
   void didChangeDependencies() {
@@ -976,7 +977,12 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    if (!widget.invoice.hasClient || _isLoading) {
+    if (!widget.invoice.hasClient) {
+      return;
+    }
+
+    if (_isLoading) {
+      _pendingLoad = true;
       return;
     }
 
@@ -1016,6 +1022,11 @@ class __PdfPreviewState extends State<_PdfPreview> {
           _pdfString =
               'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
           WebUtils.registerWebView(_pdfString);
+        }
+
+        if (_pendingLoad) {
+          _pendingLoad = false;
+          _loadPdf();
         }
       });
     }).catchError((dynamic error) {
