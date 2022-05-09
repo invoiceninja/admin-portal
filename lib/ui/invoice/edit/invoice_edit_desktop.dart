@@ -1084,7 +1084,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
                 ),
               Expanded(
                 child: _response == null
-                    ? SizedBox()
+                    ? Container(
+                        color: Colors.grey.shade300,
+                      )
                     : state.prefState.enableJSPDF || !kIsWeb
                         ? PdfPreview(
                             build: (format) => _response.bodyBytes,
@@ -1099,11 +1101,8 @@ class __PdfPreviewState extends State<_PdfPreview> {
             ],
           ),
           if (_isLoading)
-            Container(
-              color: Colors.grey.shade300,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            Center(
+              child: CircularProgressIndicator(),
             )
         ],
       ),
