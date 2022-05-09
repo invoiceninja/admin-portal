@@ -164,6 +164,10 @@ class ReportsScreen extends StatelessWidget {
               value: kReportGroupDay,
             ),
             DropdownMenuItem(
+              child: Text(localization.week),
+              value: kReportGroupWeek,
+            ),
+            DropdownMenuItem(
               child: Text(localization.month),
               value: kReportGroupMonth,
             ),
@@ -645,6 +649,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
+            showFirstLastButtons: true,
             header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
@@ -1330,6 +1335,8 @@ class ReportResult {
               } else if (reportState.subgroup == kReportGroupMonth) {
                 customEndDate =
                     convertDateTimeToSqlDate(addDays(addMonths(date, 1), -1));
+              } else if (reportState.subgroup == kReportGroupWeek) {
+                customEndDate = convertDateTimeToSqlDate(addDays(date, 6));
               } else {
                 customEndDate =
                     convertDateTimeToSqlDate(addDays(addYears(date, 1), -1));

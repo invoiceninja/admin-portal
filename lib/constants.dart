@@ -555,6 +555,7 @@ const String kDefaultLightSelectedColor = '#e5f5ff';
 const String kDefaultLightBorderColor = '#dfdfdf';
 
 const String kReportGroupDay = 'day';
+const String kReportGroupWeek = 'week';
 const String kReportGroupMonth = 'month';
 const String kReportGroupYear = 'year';
 
