@@ -10,6 +10,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -422,32 +423,39 @@ class DashboardPanels extends StatelessWidget {
             children: runningTasks.map((task) {
               final client = state.clientState.map[task.clientId];
               return Card(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 180),
-                  child: Tooltip(
-                    message: task.description,
-                    child: ListTile(
-                      dense: true,
-                      title: LiveText(() {
-                        return formatDuration(task.calculateDuration());
-                      }),
-                      subtitle: Text(
-                        client != null ? client.displayName : task.number,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onTap: () =>
-                          viewEntity(entity: task, filterEntity: client),
-                      onLongPress: () =>
-                          editEntity(context: context, entity: task),
-                      leading: ActionMenuButton(
-                        entity: task,
-                        entityActions: task.getActions(
-                          includeEdit: true,
-                          userCompany: state.userCompany,
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(kBorderRadius),
+                ),
+                child: AppBorder(
+                  hideBorder: !isDarkMode(context),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 180),
+                    child: Tooltip(
+                      message: task.description,
+                      child: ListTile(
+                        dense: true,
+                        title: LiveText(() {
+                          return formatDuration(task.calculateDuration());
+                        }),
+                        subtitle: Text(
+                          client != null ? client.displayName : task.number,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        onSelected: (context, action) =>
-                            handleTaskAction(context, [task], action),
+                        onTap: () =>
+                            viewEntity(entity: task, filterEntity: client),
+                        onLongPress: () =>
+                            editEntity(context: context, entity: task),
+                        leading: ActionMenuButton(
+                          entity: task,
+                          entityActions: task.getActions(
+                            includeEdit: true,
+                            userCompany: state.userCompany,
+                          ),
+                          onSelected: (context, action) =>
+                              handleTaskAction(context, [task], action),
+                        ),
                       ),
                     ),
                   ),
