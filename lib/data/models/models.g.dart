@@ -75,6 +75,7 @@ const EntityAction _$resendInvite = const EntityAction._('resendInvite');
 const EntityAction _$disconnect = const EntityAction._('disconnect');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
 const EntityAction _$changeStatus = const EntityAction._('changeStatus');
+const EntityAction _$addToInvoice = const EntityAction._('addToInvoice');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -202,6 +203,8 @@ EntityAction _$valueOf(String name) {
       return _$viewInvoice;
     case 'changeStatus':
       return _$changeStatus;
+    case 'addToInvoice':
+      return _$addToInvoice;
     default:
       throw new ArgumentError(name);
   }
@@ -271,6 +274,7 @@ final BuiltSet<EntityAction> _$values =
   _$disconnect,
   _$viewInvoice,
   _$changeStatus,
+  _$addToInvoice,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
