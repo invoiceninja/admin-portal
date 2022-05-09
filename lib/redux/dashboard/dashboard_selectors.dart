@@ -808,14 +808,18 @@ var memoizedPreviousChartExpenses = memo5(
             BuiltMap<String, ExpenseEntity> expenseMap) =>
         chartExpenses(currencyMap, company, settings, invoiceMap, expenseMap));
 
-var memoizedRunningTasks =
-    memo1((BuiltMap<String, TaskEntity> taskMap) => runningTasks(taskMap));
+var memoizedRunningTasks = memo2(
+    (BuiltMap<String, TaskEntity> taskMap, String userId) =>
+        runningTasks(taskMap, userId));
 
-List<TaskEntity> runningTasks(BuiltMap<String, TaskEntity> taskMap) {
+List<TaskEntity> runningTasks(
+    BuiltMap<String, TaskEntity> taskMap, String userId) {
   final tasks = <TaskEntity>[];
 
   taskMap.forEach((taskId, task) {
-    if (task.isRunning && !task.isDeleted) {
+    if (task.isRunning &&
+        !task.isDeleted &&
+        (task.createdUserId == userId || task.assignedUserId == userId)) {
       tasks.add(task);
     }
   });

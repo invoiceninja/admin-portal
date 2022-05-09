@@ -411,7 +411,8 @@ class DashboardPanels extends StatelessWidget {
       return LoadingIndicator();
     }
 
-    final runningTasks = memoizedRunningTasks(state.taskState.map);
+    final runningTasks =
+        memoizedRunningTasks(state.taskState.map, state.user.id);
 
     Widget _runningTasks() {
       return Padding(
