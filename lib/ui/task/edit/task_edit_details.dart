@@ -1,8 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
@@ -100,6 +103,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final task = viewModel.task;
@@ -151,7 +155,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 projectId: task.projectId,
                 clientId: task.clientId,
                 onChanged: (selectedId) {
-                  final project = state.projectState.get(selectedId);
+                  final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged(task.rebuild((b) => b
                     ..projectId = project?.id
                     ..clientId = (project?.clientId ?? '').isNotEmpty
