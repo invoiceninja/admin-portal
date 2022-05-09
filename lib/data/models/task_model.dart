@@ -608,6 +608,9 @@ abstract class TaskEntity extends Object
       if (!isInvoiced && !isRunning) {
         if (userCompany.canCreate(EntityType.invoice)) {
           actions.add(EntityAction.invoiceTask);
+          if ((clientId ?? '').isNotEmpty) {
+            actions.add(EntityAction.addToInvoice);
+          }
         }
       }
     }

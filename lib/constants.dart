@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.83';
+const String kClientVersion = '5.0.84';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -555,6 +555,7 @@ const String kDefaultLightSelectedColor = '#e5f5ff';
 const String kDefaultLightBorderColor = '#dfdfdf';
 
 const String kReportGroupDay = 'day';
+const String kReportGroupWeek = 'week';
 const String kReportGroupMonth = 'month';
 const String kReportGroupYear = 'year';
 

@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'add_to_invoice': 'Add To Invoice',
+      'no_invoices_found': 'No invoices found',
+      'week': 'Week',
       'created_record': 'Successfully created record',
       'notification_invoice_sent': 'Invoice Sent',
       'auto_archive_paid_invoices': 'Auto Archive Paid',
@@ -75040,6 +75043,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get createdRecord =>
       _localizedValues[localeCode]['created_record'] ??
       _localizedValues[localeCode]['created_record'];
+
+  String get week =>
+      _localizedValues[localeCode]['week'] ??
+      _localizedValues[localeCode]['week'];
+
+  String get addToInvoice =>
+      _localizedValues[localeCode]['add_to_invoice'] ??
+      _localizedValues[localeCode]['add_to_invoice'];
+
+  String get noInvoicesFound =>
+      _localizedValues[localeCode]['no_invoices_found'] ??
+      _localizedValues[localeCode]['no_invoices_found'];
 
   // STARTER: lang field - do not remove comment
 

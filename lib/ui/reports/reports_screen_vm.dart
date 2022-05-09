@@ -511,49 +511,57 @@ GroupTotals calculateReportTotals({
 
   for (var i = 0; i < data.length; i++) {
     final row = data[i];
+    final columnIndex = columns.indexOf(reportState.group);
+
+    if (columnIndex == -1) {
+      print('## ERROR: colum not found - ${reportState.group}');
+      continue;
+    }
+
+    final groupCell = row[columnIndex];
+    String group = groupCell.stringValue;
+
+    if (groupCell is ReportAgeValue) {
+      final age = groupCell.doubleValue;
+      if (groupCell.value == -1) {
+        group = kAgeGroupPaid;
+      } else if (age < 30) {
+        group = kAgeGroup0;
+      } else if (age < 60) {
+        group = kAgeGroup30;
+      } else if (age < 90) {
+        group = kAgeGroup60;
+      } else if (age < 120) {
+        group = kAgeGroup90;
+      } else {
+        group = kAgeGroup120;
+      }
+    } else if (group.isNotEmpty && isValidDate(group)) {
+      group = convertDateTimeToSqlDate(DateTime.tryParse(group));
+      if (reportState.subgroup == kReportGroupYear) {
+        group = group.substring(0, 4) + '-01-01';
+      } else if (reportState.subgroup == kReportGroupMonth) {
+        group = group.substring(0, 7) + '-01';
+      } else if (reportState.subgroup == kReportGroupWeek) {
+        final date = DateTime.parse(group);
+        final dateWeek =
+            DateTime(date.year, date.month, date.day - date.weekday % 7);
+        group = convertDateTimeToSqlDate(dateWeek);
+      }
+    }
+
+    if (!totals.containsKey(group)) {
+      totals[group] = {'count': 0};
+    }
+
     for (var j = 0; j < row.length; j++) {
       final cell = row[j];
       final column = columns[j];
-      final columnIndex = columns.indexOf(reportState.group);
 
-      if (columnIndex == -1) {
-        print('## ERROR: colum not found - ${reportState.group}');
-        continue;
-      }
-
-      final groupCell = row[columnIndex];
-      String group = groupCell.stringValue;
-
-      if (groupCell is ReportAgeValue) {
-        final age = groupCell.doubleValue;
-        if (groupCell.value == -1) {
-          group = kAgeGroupPaid;
-        } else if (age < 30) {
-          group = kAgeGroup0;
-        } else if (age < 60) {
-          group = kAgeGroup30;
-        } else if (age < 90) {
-          group = kAgeGroup60;
-        } else if (age < 120) {
-          group = kAgeGroup90;
-        } else {
-          group = kAgeGroup120;
-        }
-      } else if (group.isNotEmpty && isValidDate(group)) {
-        group = convertDateTimeToSqlDate(DateTime.tryParse(group));
-        if (reportState.subgroup == kReportGroupYear) {
-          group = group.substring(0, 4) + '-01-01';
-        } else if (reportState.subgroup == kReportGroupMonth) {
-          group = group.substring(0, 7) + '-01';
-        }
-      }
-
-      if (!totals.containsKey(group)) {
-        totals[group] = {'count': 0};
-      }
       if (column == reportState.group) {
         totals[group]['count'] += 1;
       }
+
       if (cell is ReportNumberValue ||
           cell is ReportAgeValue ||
           cell is ReportDurationValue) {

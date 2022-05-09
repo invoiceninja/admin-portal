@@ -352,6 +352,9 @@ abstract class ExpenseEntity extends Object
           shouldBeInvoiced &&
           userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.invoiceExpense);
+        if ((clientId ?? '').isNotEmpty) {
+          actions.add(EntityAction.addToInvoice);
+        }
       }
     }
 

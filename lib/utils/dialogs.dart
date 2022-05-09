@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
@@ -505,6 +506,56 @@ void changeTaskStatusDialog({
               onPressed: () => Navigator.of(context).pop(),
             )
           ],
+        );
+      });
+}
+
+void addToInvoiceDialog({
+  @required BuildContext context,
+  @required String clientId,
+  @required List<InvoiceItemEntity> items,
+}) {
+  final localization = AppLocalization.of(context);
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+
+  final invoices = state.invoiceState.map.values.where((invoice) {
+    if (clientId != invoice.clientId) {
+      return false;
+    }
+
+    return invoice.isActive && !invoice.isPaid;
+  });
+
+  if (invoices.isEmpty) {
+    showMessageDialog(context: context, message: localization.noInvoicesFound);
+    return;
+  }
+
+  showDialog<AlertDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(localization.addToInvoice),
+          children: invoices.map((invoice) {
+            return SimpleDialogOption(
+              child: Row(children: [
+                Expanded(child: Text(invoice.number)),
+                Text(
+                  formatNumber(invoice.amount, context,
+                      clientId: invoice.clientId),
+                ),
+              ]),
+              onPressed: () {
+                editEntity(
+                    context: context,
+                    entity: invoice.rebuild(
+                      (b) => b..lineItems.addAll(items),
+                    ));
+                Navigator.of(context).pop();
+              },
+            );
+          }).toList(),
         );
       });
 }

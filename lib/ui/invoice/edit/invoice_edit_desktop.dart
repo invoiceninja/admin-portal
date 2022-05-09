@@ -948,6 +948,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
   String _pdfString;
   http.Response _response;
   bool _isLoading = false;
+  bool _pendingLoad = false;
 
   @override
   void didChangeDependencies() {
@@ -976,7 +977,12 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    if (!widget.invoice.hasClient || _isLoading) {
+    if (!widget.invoice.hasClient) {
+      return;
+    }
+
+    if (_isLoading) {
+      _pendingLoad = true;
       return;
     }
 
@@ -1017,6 +1023,11 @@ class __PdfPreviewState extends State<_PdfPreview> {
               'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
           WebUtils.registerWebView(_pdfString);
         }
+
+        if (_pendingLoad) {
+          _pendingLoad = false;
+          _loadPdf();
+        }
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -1039,7 +1050,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_pageCount > 1 && state.prefState.enableJSPDF)
+              if (_pageCount > 1 && (state.prefState.enableJSPDF || !kIsWeb))
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
@@ -1073,7 +1084,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
                 ),
               Expanded(
                 child: _response == null
-                    ? SizedBox()
+                    ? Container(
+                        color: Colors.grey.shade300,
+                      )
                     : state.prefState.enableJSPDF || !kIsWeb
                         ? PdfPreview(
                             build: (format) => _response.bodyBytes,
@@ -1088,11 +1101,8 @@ class __PdfPreviewState extends State<_PdfPreview> {
             ],
           ),
           if (_isLoading)
-            Container(
-              color: Colors.grey.shade300,
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            Center(
+              child: CircularProgressIndicator(),
             )
         ],
       ),

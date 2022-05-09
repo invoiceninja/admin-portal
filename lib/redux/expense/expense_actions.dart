@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewExpenseList implements PersistUI {
@@ -277,6 +278,7 @@ void handleExpenseAction(
       );
       break;
     case EntityAction.invoiceExpense:
+    case EntityAction.addToInvoice:
       final availableExpenses = expenses.where((entity) {
         final expense = entity as ExpenseEntity;
         return !expense.isDeleted && !expense.isInvoiced;
@@ -304,15 +306,23 @@ void handleExpenseAction(
               ))
           .toList();
       if (items.isNotEmpty) {
-        createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild(
-            (b) => b
-              ..lineItems.addAll(items)
-              ..projectId = projectId
-              ..vendorId = vendorId,
-          ),
-        );
+        if (action == EntityAction.invoiceExpense) {
+          createEntity(
+            context: context,
+            entity: InvoiceEntity(state: state, client: client).rebuild(
+              (b) => b
+                ..lineItems.addAll(items)
+                ..projectId = projectId
+                ..vendorId = vendorId,
+            ),
+          );
+        } else {
+          addToInvoiceDialog(
+            context: context,
+            clientId: expense.clientId,
+            items: items,
+          );
+        }
       }
       break;
     case EntityAction.restore:

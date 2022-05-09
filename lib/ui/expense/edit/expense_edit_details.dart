@@ -192,7 +192,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 projectId: expense.projectId,
                 clientId: expense.clientId,
                 onChanged: (selectedId) {
-                  final project = state.projectState.get(selectedId);
+                  final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged(expense.rebuild((b) => b
                     ..projectId = project?.id
                     ..clientId = (project?.clientId ?? '').isNotEmpty
