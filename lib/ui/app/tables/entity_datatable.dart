@@ -147,6 +147,9 @@ class EntityDataTableSource extends AppDataTableSource {
                 maxWidth: wideFields.contains(field)
                     ? kTableColumnWidthMax * 1.5
                     : kTableColumnWidthMax,
+                minWidth: field == ProductFields.description
+                    ? kTableColumnWidthMax
+                    : 0,
               ),
             ),
             onTap: () => onTap(entity),
