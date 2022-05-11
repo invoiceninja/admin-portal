@@ -63,6 +63,7 @@ dependencies:
   super_editor: ^0.2.0
   html2md: ^1.2.5
   printing: ^5.8.0
+  image_cropper: ^2.0.2
   # bitsdojo_window: ^0.1.1+1
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
