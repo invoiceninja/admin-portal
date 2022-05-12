@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -55,6 +56,10 @@ class EditScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
+
+    if (state.companies.isEmpty) {
+      return LoadingIndicator();
+    }
 
     bool showUpgradeBanner = false;
     bool isEnabled = (isMobile(context) ||

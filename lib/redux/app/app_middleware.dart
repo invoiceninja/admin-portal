@@ -6,6 +6,7 @@ import 'dart:math';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 // Package imports:
 import 'package:path_provider/path_provider.dart';
@@ -233,6 +234,7 @@ Middleware<AppState> _createLoadState(
           completer: Completer<Null>()
             ..future.then((value) {
               AppBuilder.of(navigatorKey.currentContext).rebuild();
+              store.dispatch(UpdatedSetting());
             })));
 
       if (uiState.currentRoute != LoginScreen.route &&
