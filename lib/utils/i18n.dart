@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'register_label': 'Create your account in seconds',
+      'login_label': 'Login to an existing account',
       'add_to_invoice': 'Add To Invoice',
       'no_invoices_found': 'No invoices found',
       'week': 'Week',
@@ -69658,6 +69660,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noInvoicesFound =>
       _localizedValues[localeCode]['no_invoices_found'] ??
       _localizedValues[localeCode]['no_invoices_found'];
+
+  String get registerLabel =>
+      _localizedValues[localeCode]['register_label'] ??
+      _localizedValues[localeCode]['register_label'];
+
+  String get loginLabel =>
+      _localizedValues[localeCode]['login_label'] ??
+      _localizedValues[localeCode]['login_label'];
 
   // STARTER: lang field - do not remove comment
 
