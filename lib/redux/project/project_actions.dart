@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProjectList implements PersistUI {
@@ -272,6 +273,23 @@ void handleProjectAction(
             ..clientId = project.clientId));
       break;
     case EntityAction.invoiceProject:
+      String lastClientId = '';
+      bool hasMultipleClients = false;
+      projects.forEach((project) {
+        final clientId = (project as ProjectEntity).clientId ?? '';
+        if (clientId.isNotEmpty) {
+          if (lastClientId.isNotEmpty && lastClientId != clientId) {
+            hasMultipleClients = true;
+          }
+          lastClientId = clientId;
+        }
+      });
+      if (hasMultipleClients) {
+        showErrorDialog(
+            context: context, message: localization.multipleClientError);
+        return;
+      }
+
       final items = <InvoiceItemEntity>[];
       projects.forEach((project) {
         items.addAll(

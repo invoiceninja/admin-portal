@@ -224,7 +224,9 @@ class _DashboardScreenState extends State<DashboardScreen>
             Builder(
               builder: (context) => IconButton(
                 padding: const EdgeInsets.only(left: 4, right: 20),
-                tooltip: localization.history,
+                tooltip: state.prefState.enableTooltips
+                    ? localization.history
+                    : null,
                 icon: Icon(Icons.history),
                 onPressed: () {
                   if (isMobile(context) || state.prefState.isHistoryFloated) {

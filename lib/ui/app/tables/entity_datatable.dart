@@ -53,6 +53,7 @@ class EntityDataTableSource extends AppDataTableSource {
   @override
   DataRow getRow(int index) {
     final state = StoreProvider.of<AppState>(context).state;
+    final prefState = state.prefState;
     final entity = entityMap[entityList[index]];
     entityPresenter.initialize(entity, context);
 
@@ -113,7 +114,9 @@ class EntityDataTableSource extends AppDataTableSource {
             Row(
               children: <Widget>[
                 IconButton(
-                  tooltip: AppLocalization.of(context).editRecord,
+                  tooltip: prefState.enableTooltips
+                      ? AppLocalization.of(context).editRecord
+                      : null,
                   onPressed: () => editEntity(context: context, entity: entity),
                   icon: GestureDetector(
                     child: Icon(MdiIcons.circleEditOutline),

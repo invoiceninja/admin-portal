@@ -383,6 +383,23 @@ void handleTaskAction(
       break;
     case EntityAction.invoiceTask:
     case EntityAction.addToInvoice:
+      String lastClientId = '';
+      bool hasMultipleClients = false;
+      tasks.forEach((task) {
+        final clientId = (task as TaskEntity).clientId ?? '';
+        if (clientId.isNotEmpty) {
+          if (lastClientId.isNotEmpty && lastClientId != clientId) {
+            hasMultipleClients = true;
+          }
+          lastClientId = clientId;
+        }
+      });
+      if (hasMultipleClients) {
+        showErrorDialog(
+            context: context, message: localization.multipleClientError);
+        return;
+      }
+
       tasks.sort((taskA, taskB) {
         final taskAEntity = taskA as TaskEntity;
         final taskBEntity = taskB as TaskEntity;

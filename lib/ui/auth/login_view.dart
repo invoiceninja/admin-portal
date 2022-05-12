@@ -67,7 +67,7 @@ class _LoginState extends State<LoginView> {
   bool _tokenLogin = false;
   bool _emailLogin = false;
   bool _isSelfHosted = false;
-  bool _createAccount = true;
+  bool _createAccount = false;
   bool _hideGoogle = false;
 
   bool _recoverPassword = false;
@@ -85,13 +85,12 @@ class _LoginState extends State<LoginView> {
       if (_isSelfHosted) {
         _emailLogin = true;
         _createAccount = false;
-      } else if (WebUtils.getHtmlValue('login') == 'true') {
-        _createAccount = false;
+      } else if (WebUtils.getHtmlValue('signup') == 'true') {
+        _createAccount = true;
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
       _emailLogin = true;
       _hideGoogle = true;
-      _createAccount = false;
     } else if (isWindows() || isLinux()) {
       _emailLogin = true;
       _hideGoogle = true;
@@ -363,123 +362,53 @@ class _LoginState extends State<LoginView> {
                   children: <Widget>[
                     Column(
                       children: <Widget>[
-                        if (!isApple() &&
-                            (!kIsWeb || !state.authState.isSelfHost))
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Material(
-                                  color: _createAccount
-                                      ? state.accentColor
-                                      : Colors.transparent,
-                                  child: InkWell(
-                                    child: Center(
-                                        child: Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Text(
-                                        localization.signUp,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 18,
-                                                color: _createAccount
-                                                    ? Colors.white
-                                                    : null),
-                                      ),
-                                    )),
-                                    onTap: () {
-                                      setState(() {
-                                        _createAccount = true;
-                                        _isSelfHosted = false;
-                                        _loginError = '';
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Material(
-                                  color: _createAccount
-                                      ? Colors.transparent
-                                      : state.accentColor,
-                                  child: InkWell(
-                                    child: Center(
-                                        child: Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Text(
-                                        localization.login,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 18,
-                                                color: _createAccount
-                                                    ? null
-                                                    : Colors.white),
-                                      ),
-                                    )),
-                                    onTap: () {
-                                      setState(() {
-                                        _createAccount = false;
-                                        _loginError = '';
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                         SizedBox(height: 20),
-                        if (!_recoverPassword) ...[
-                          if (!_createAccount &&
-                              (!kIsWeb || !kReleaseMode)) ...[
-                            RuledText(localization.selectPlatform),
-                            AppToggleButtons(
-                              tabLabels: [
-                                localization.hosted,
-                                localization.selfhosted,
-                              ],
-                              selectedIndex: _isSelfHosted ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _isSelfHosted = index == 1;
-                                  _loginError = '';
-                                  if (index == 1) {
-                                    _emailLogin = true;
-                                  }
-                                });
-                              },
-                            ),
-                          ],
-                          if (!_isSelfHosted && !_hideGoogle) ...[
-                            RuledText(localization.selectMethod),
-                            AppToggleButtons(
-                              tabLabels:
-                                  calculateLayout(context) == AppLayout.mobile
-                                      ? [
-                                          'Google',
-                                          localization.email,
-                                        ]
-                                      : [
-                                          _createAccount
-                                              ? localization.googleSignUp
-                                              : localization.googleSignIn,
-                                          _createAccount
-                                              ? localization.emailSignUp
-                                              : localization.emailSignIn,
-                                        ],
-                              selectedIndex: _emailLogin ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _emailLogin = index == 1;
-                                  _loginError = '';
-                                });
-                              },
-                            ),
-                          ],
+                        if (!_recoverPassword &&
+                            (!kIsWeb || !kReleaseMode)) ...[
+                          RuledText(localization.selectPlatform),
+                          AppToggleButtons(
+                            tabLabels: [
+                              localization.hosted,
+                              localization.selfhosted,
+                            ],
+                            selectedIndex: _isSelfHosted ? 1 : 0,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _isSelfHosted = index == 1;
+                                _createAccount = false;
+                                _loginError = '';
+                                if (index == 1) {
+                                  _emailLogin = true;
+                                }
+                              });
+                            },
+                          ),
+                        ],
+                        if (!_isSelfHosted && !_hideGoogle) ...[
+                          RuledText(localization.selectMethod),
+                          AppToggleButtons(
+                            tabLabels:
+                                calculateLayout(context) == AppLayout.mobile
+                                    ? [
+                                        'Google',
+                                        localization.email,
+                                      ]
+                                    : [
+                                        _createAccount
+                                            ? localization.googleSignUp
+                                            : localization.googleSignIn,
+                                        _createAccount
+                                            ? localization.emailSignUp
+                                            : localization.emailSignIn,
+                                      ],
+                            selectedIndex: _emailLogin ? 1 : 0,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _emailLogin = index == 1;
+                                _loginError = '';
+                              });
+                            },
+                          ),
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -668,6 +597,22 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     ),
+                    if (!_isSelfHosted &&
+                        !isApple() &&
+                        (!kIsWeb || !state.authState.isSelfHost))
+                      Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 8),
+                          child: TextButton(
+                            child: Text(_createAccount
+                                ? localization.loginLabel
+                                : localization.registerLabel),
+                            onPressed: () {
+                              setState(() {
+                                _createAccount = !_createAccount;
+                                _loginError = '';
+                              });
+                            },
+                          )),
                     SizedBox(height: 4),
                     Flex(
                       direction: calculateLayout(context) == AppLayout.desktop

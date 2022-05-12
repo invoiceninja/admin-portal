@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -173,7 +174,9 @@ class _ExpenseViewState extends State<ExpenseView>
                       final image = await ImagePicker()
                           .pickImage(source: ImageSource.camera);
                       if (image != null && image.path != null) {
-                        final bytes = await image.readAsBytes();
+                        final croppedFile = await ImageCropper()
+                            .cropImage(sourcePath: image.path);
+                        final bytes = await croppedFile.readAsBytes();
                         multipartFile = MultipartFile.fromBytes('file', bytes,
                             filename: image.path.split('/').last);
                       }

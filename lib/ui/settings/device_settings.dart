@@ -234,6 +234,15 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   ),
                   if (isDesktop(context)) ...[
                     SwitchListTile(
+                      title: Text(localization.enableTooltips),
+                      subtitle: Text(localization.enableTooltipsHelp),
+                      value: prefState.enableTooltips,
+                      onChanged: (value) =>
+                          viewModel.onEnableTooltipsChanged(context, value),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      secondary: Icon(MdiIcons.tooltip),
+                    ),
+                    SwitchListTile(
                       title: Text(localization.enableTouchEvents),
                       subtitle: Text(localization.enableTouchEventsHelp),
                       value: prefState.enableTouchEvents,

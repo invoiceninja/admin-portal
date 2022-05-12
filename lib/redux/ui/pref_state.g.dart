@@ -178,6 +178,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'rowsPerPage',
       serializers.serialize(object.rowsPerPage,
           specifiedType: const FullType(int)),
+      'enableTooltips',
+      serializers.serialize(object.enableTooltips,
+          specifiedType: const FullType(bool)),
       'colorTheme',
       serializers.serialize(object.colorTheme,
           specifiedType: const FullType(String)),
@@ -303,6 +306,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'rowsPerPage':
           result.rowsPerPage = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'enableTooltips':
+          result.enableTooltips = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'colorTheme':
           result.colorTheme = serializers.deserialize(value,
@@ -607,6 +614,8 @@ class _$PrefState extends PrefState {
   @override
   final int rowsPerPage;
   @override
+  final bool enableTooltips;
+  @override
   final String colorTheme;
   @override
   final bool hideDesktopWarning;
@@ -644,6 +653,7 @@ class _$PrefState extends PrefState {
       this.tapSelectedToEdit,
       this.enableJSPDF,
       this.rowsPerPage,
+      this.enableTooltips,
       this.colorTheme,
       this.hideDesktopWarning,
       this.editAfterSaving,
@@ -692,6 +702,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         rowsPerPage, 'PrefState', 'rowsPerPage');
     BuiltValueNullFieldError.checkNotNull(
+        enableTooltips, 'PrefState', 'enableTooltips');
+    BuiltValueNullFieldError.checkNotNull(
         colorTheme, 'PrefState', 'colorTheme');
     BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
@@ -737,6 +749,7 @@ class _$PrefState extends PrefState {
         tapSelectedToEdit == other.tapSelectedToEdit &&
         enableJSPDF == other.enableJSPDF &&
         rowsPerPage == other.rowsPerPage &&
+        enableTooltips == other.enableTooltips &&
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
         editAfterSaving == other.editAfterSaving &&
@@ -766,20 +779,20 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode),
-                                                                                showKanban.hashCode),
-                                                                            showPdfPreview.hashCode),
-                                                                        enableTouchEvents.hashCode),
-                                                                    isHistoryVisible.hashCode),
-                                                                enableDarkMode.hashCode),
-                                                            isFilterVisible.hashCode),
-                                                        persistData.hashCode),
-                                                    persistUI.hashCode),
-                                                longPressSelectionIsDefault.hashCode),
-                                            requireAuthentication.hashCode),
-                                        tapSelectedToEdit.hashCode),
-                                    enableJSPDF.hashCode),
-                                rowsPerPage.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode),
+                                                                                showPdfPreview.hashCode),
+                                                                            enableTouchEvents.hashCode),
+                                                                        isHistoryVisible.hashCode),
+                                                                    enableDarkMode.hashCode),
+                                                                isFilterVisible.hashCode),
+                                                            persistData.hashCode),
+                                                        persistUI.hashCode),
+                                                    longPressSelectionIsDefault.hashCode),
+                                                requireAuthentication.hashCode),
+                                            tapSelectedToEdit.hashCode),
+                                        enableJSPDF.hashCode),
+                                    rowsPerPage.hashCode),
+                                enableTooltips.hashCode),
                             colorTheme.hashCode),
                         hideDesktopWarning.hashCode),
                     editAfterSaving.hashCode),
@@ -812,6 +825,7 @@ class _$PrefState extends PrefState {
           ..add('tapSelectedToEdit', tapSelectedToEdit)
           ..add('enableJSPDF', enableJSPDF)
           ..add('rowsPerPage', rowsPerPage)
+          ..add('enableTooltips', enableTooltips)
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
           ..add('editAfterSaving', editAfterSaving)
@@ -926,6 +940,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
 
+  bool _enableTooltips;
+  bool get enableTooltips => _$this._enableTooltips;
+  set enableTooltips(bool enableTooltips) =>
+      _$this._enableTooltips = enableTooltips;
+
   String _colorTheme;
   String get colorTheme => _$this._colorTheme;
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
@@ -985,6 +1004,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _tapSelectedToEdit = $v.tapSelectedToEdit;
       _enableJSPDF = $v.enableJSPDF;
       _rowsPerPage = $v.rowsPerPage;
+      _enableTooltips = $v.enableTooltips;
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
       _editAfterSaving = $v.editAfterSaving;
@@ -1042,6 +1062,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(tapSelectedToEdit, 'PrefState', 'tapSelectedToEdit'),
               enableJSPDF: BuiltValueNullFieldError.checkNotNull(enableJSPDF, 'PrefState', 'enableJSPDF'),
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, 'PrefState', 'rowsPerPage'),
+              enableTooltips: BuiltValueNullFieldError.checkNotNull(enableTooltips, 'PrefState', 'enableTooltips'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, 'PrefState', 'editAfterSaving'),

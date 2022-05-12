@@ -313,15 +313,19 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
       AppBuilder.of(navigatorKey.currentContext).rebuild();
     }).catchError((Object error) {
-      final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
-      store.dispatch(RefreshDataFailure(message));
-      if ('$error'.startsWith('403')) {
+      if ('$error'.startsWith('403') || '$error'.startsWith('429')) {
         store.dispatch(UserLogout());
-      } else if ('$error'.startsWith('Error ::')) {
-        throw error;
+      } else {
+        final message = _parseError('$error');
+        if (action.completer != null) {
+          action.completer.completeError(message);
+        }
+
+        store.dispatch(RefreshDataFailure(message));
+
+        if ('$error'.startsWith('Error ::')) {
+          throw error;
+        }
       }
     });
 

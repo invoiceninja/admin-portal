@@ -137,6 +137,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final prefState = state.prefState;
 
     final _showFilterStateSheet = () {
       if (closeBottomSheet() == kFilterStatePanel) {
@@ -410,7 +411,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (!widget.hideListOptions) ...[
                   if (isMobile(context))
                     IconButton(
-                      tooltip: localization.multiselect,
+                      tooltip: prefState.enableTooltips
+                          ? localization.multiselect
+                          : null,
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
                     ),
@@ -429,7 +432,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.statuses.isNotEmpty && isMobile(context))
                   IconButton(
-                    tooltip: localization.status,
+                    tooltip:
+                        prefState.enableTooltips ? localization.status : null,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
                     color: store.state
@@ -440,8 +444,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy.replaceFirst(
-                        ':value', widget.customValues1.join(', ')),
+                    tooltip: prefState.enableTooltips
+                        ? localization.filteredBy.replaceFirst(
+                            ':value', widget.customValues1.join(', '))
+                        : null,
                     icon: Icon(Icons.looks_one),
                     onPressed: _showFilterCustom1Sheet,
                     color: store.state
@@ -452,8 +458,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues2.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy.replaceFirst(
-                        ':value', widget.customValues2.join(', ')),
+                    tooltip: prefState.enableTooltips
+                        ? localization.filteredBy.replaceFirst(
+                            ':value', widget.customValues2.join(', '))
+                        : null,
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom2Sheet,
                     color: store.state
@@ -464,8 +472,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues3.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy.replaceFirst(
-                        ':value', widget.customValues3.join(', ')),
+                    tooltip: prefState.enableTooltips
+                        ? localization.filteredBy.replaceFirst(
+                            ':value', widget.customValues3.join(', '))
+                        : '',
                     icon: Icon(Icons.looks_3),
                     onPressed: _showFilterCustom3Sheet,
                     color: store.state
@@ -476,8 +486,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues4.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filteredBy.replaceFirst(
-                        ':value', widget.customValues4.join(', ')),
+                    tooltip: prefState.enableTooltips
+                        ? localization.filteredBy.replaceFirst(
+                            ':value', widget.customValues4.join(', '))
+                        : '',
                     icon: Icon(Icons.looks_4),
                     onPressed: _showFilterCustom4Sheet,
                     color: store.state
@@ -488,8 +500,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (!widget.entityType.isSetting)
                   IconButton(
-                    tooltip:
-                        isList ? localization.showTable : localization.showList,
+                    tooltip: prefState.enableTooltips
+                        ? (isList
+                            ? localization.showTable
+                            : localization.showList)
+                        : null,
                     icon: Icon(isList ? Icons.table_chart : Icons.view_list),
                     onPressed: () {
                       store.dispatch(SwitchListTableLayout());
@@ -498,7 +513,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (!widget.hideListOptions) ...[
                   if (isList && widget.sortFields.isNotEmpty)
                     IconButton(
-                      tooltip: localization.sort,
+                      tooltip:
+                          prefState.enableTooltips ? localization.sort : null,
                       icon: Icon(Icons.sort_by_alpha),
                       onPressed: _showSortSheet,
                     ),
@@ -515,14 +531,18 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   else
                     IconButton(
                       icon: Icon(Icons.view_week),
-                      tooltip: localization.columns,
+                      tooltip: prefState.enableTooltips
+                          ? localization.columns
+                          : null,
                       onPressed: _onColumnsPressed,
                     ),
                 if (state.prefState.isDesktop)
                   AppBorder(
                     isLeft: true,
                     child: Tooltip(
-                      message: localization.refreshData,
+                      message: prefState.enableTooltips
+                          ? localization.refreshData
+                          : '',
                       child: InkWell(
                         onTap: () => store.dispatch(RefreshData()),
                         child: Padding(

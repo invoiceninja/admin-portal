@@ -30,6 +30,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
       enableTouchEvents: true,
+      enableTooltips: true,
       enableJSPDF: false,
       isFilterVisible: false,
       textScaleFactor: 1,
@@ -132,6 +133,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   int get rowsPerPage;
 
+  bool get enableTooltips;
+
   String get colorTheme;
 
   bool get hideDesktopWarning;
@@ -210,6 +213,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showPdfPreview = true
     ..enableTouchEvents = true
     ..enableJSPDF = false
+    ..enableTooltips = true
     ..textScaleFactor = 1
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;

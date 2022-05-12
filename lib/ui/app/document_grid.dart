@@ -10,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -66,8 +67,11 @@ class DocumentGrid extends StatelessWidget {
                         if (status == PermissionStatus.granted) {
                           final image = await ImagePicker()
                               .pickImage(source: ImageSource.camera);
+
                           if (image != null && image.path != null) {
-                            final bytes = await image.readAsBytes();
+                            final croppedFile = await ImageCropper()
+                                .cropImage(sourcePath: image.path);
+                            final bytes = await croppedFile.readAsBytes();
                             final multipartFile = MultipartFile.fromBytes(
                                 'documents[]', bytes,
                                 filename: image.path.split('/').last);

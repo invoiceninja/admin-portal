@@ -59,6 +59,7 @@ class DeviceSettingsVM {
     @required this.onTextScaleFactorChanged,
     @required this.onEditAfterSavingChanged,
     @required this.onEnableTouchEventsChanged,
+    @required this.onEnableTooltipsChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -115,6 +116,9 @@ class DeviceSettingsVM {
       },
       onTextScaleFactorChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(textScaleFactor: value));
+      },
+      onEnableTooltipsChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(enableTooltips: value));
       },
       onColorThemeChanged: (context, value) async {
         if (store.state.prefState.colorTheme != value) {
@@ -207,6 +211,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onShowPdfChanged;
   final Function(BuildContext, bool) onEnableJSPDFChanged;
   final Function(BuildContext, bool) onEnableTouchEventsChanged;
+  final Function(BuildContext, bool) onEnableTooltipsChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
   final Future<bool> authenticationSupported;
 }

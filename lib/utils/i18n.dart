@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_tooltips': 'Enable Tooltips',
+      'enable_tooltips_help': 'Show tooltips when hovering the mouse',
+      'multiple_client_error': 'Error: records belong to more than one client',
+      'register_label': 'Create your account in seconds',
+      'login_label': 'Login to an existing account',
       'add_to_invoice': 'Add To Invoice',
       'no_invoices_found': 'No invoices found',
       'week': 'Week',
@@ -24255,14 +24260,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Improve scrolling over the PDF preview [BETA]',
       'invoice_currency': 'Rechnungs-Währung',
       'range': 'Bereich',
-      'tax_amount1': 'Tax Amount 1',
-      'tax_amount2': 'Tax Amount 2',
-      'tax_amount3': 'Tax Amount 3',
+      'tax_amount1': 'Steuerhöhe 1',
+      'tax_amount2': 'Steuerhöhe 2',
+      'tax_amount3': 'Steuerhöhe 3',
       'create_project': 'Projekt erstellen',
-      'update_project': 'Update Project',
+      'update_project': 'Projekt aktualisieren',
       'view_task': 'Aufgabe anzeugen',
-      'cancel_invoice': 'Cancel',
-      'changed_status': 'Successfully changed task status',
+      'cancel_invoice': 'Abbrechen',
+      'changed_status': 'Erfolgreich Aufgabenstatus geändert',
       'change_status': 'Status ändern',
       'fees_sample':
           'Die Gebühren für eine Rechnung über :amount  würden :total betragen.',
@@ -24285,14 +24290,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approve': 'Angebot annehmen',
       'client_website': 'Kunden-Website',
       'invalid_time': 'Ungültige Zeit',
-      'client_shipping_state': 'Client Shipping State',
-      'client_shipping_city': 'Client Shipping City',
-      'client_shipping_postal_code': 'Client Shipping Postal Code',
-      'client_shipping_country': 'Client Shipping Country',
+      'client_shipping_state': 'Liefer-Region Kunde',
+      'client_shipping_city': 'Lieferort Kunde',
+      'client_shipping_postal_code': 'Liefer-PLZ Kunde',
+      'client_shipping_country': 'Kunde Lieferung LAND',
       'load_pdf': 'PDF laden',
       'start_free_trial': 'Kostenlose Testversion starten',
       'start_free_trial_message': 'Teste den Pro-Tarif GRATIS für 14 Tage',
-      'due_on_receipt': 'Due on Receipt',
+      'due_on_receipt': 'Fällig bei Erhalt',
       'is_paid': 'Ist bezahlt',
       'age_group_paid': 'Bezahlt',
       'id': 'ID',
@@ -24301,7 +24306,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company_currency': 'Firmenwährung',
       'purged_client': 'Kunde erfolgreich bereinigt',
       'custom_emails_disabled_help':
-          'To prevent spam we require upgrading to a paid account to customize the email',
+          'Um Spam zu verhindern braucht es ein Upgrade zu einem bezahlten Account um das E-Mail anzupassen.',
       'upgrade_to_add_company':
           'Upgrade deinen Tarif um weitere Firmen hinzuzufügen',
       'file_saved_in_downloads_folder':
@@ -24334,7 +24339,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'PDF-Vorschau bei der Bearbeitung von Rechnungen anzeigen',
       'print_pdf': 'PDF drucken',
       'remind_me': 'Erinnere mich',
-      'instant_bank_pay': 'Instant Bank Pay',
+      'instant_bank_pay': 'Sofortige Banküberweisung',
       'click_selected': 'Ausgewähltes anklicken',
       'hide_preview': 'Vorschau ausblenden',
       'edit_record': 'Datensatz bearbeiten',
@@ -24389,9 +24394,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'for_best_performance':
           'Für die beste Leistung laden Sie die App herunter :app',
       'gross_line_total': 'Bruttozeile gesamt',
-      'bulk_email_invoice': 'Email Invoice',
-      'bulk_email_quote': 'Email Quote',
-      'bulk_email_credit': 'Email Credit',
+      'bulk_email_invoice': 'Email Rechnung',
+      'bulk_email_quote': 'Angebot per E-Mail senden',
+      'bulk_email_credit': 'Guthaben per E-Mail senden',
       'from_name': 'Absendername',
       'clone_to_expense': 'Klonen zu Ausgabe',
       'recurring_expense': 'Wiederkehrende Ausgabe',
@@ -24422,8 +24427,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'decimal_comma': 'Dezimaltrennzeichen',
       'use_comma_as_decimal_place':
           'Komma als Dezimalstelle in Formularen verwenden',
-      'select_method': 'Select Method',
-      'select_platform': 'Select Platform',
+      'select_method': 'Methode auswählen',
+      'select_platform': 'Plattform auswählen',
       'use_web_app_to_connect_gmail':
           'Bitte verwenden Sie die Web-App, um sich mit Gmail zu verbinden',
       'expense_tax_help': 'Postensteuersätze sind deaktiviert',
@@ -24525,8 +24530,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'unassigned': 'Nicht zugewiesen',
       'partial_value':
           'Muss grösser als Null und kleiner als der Gesamtbetrag sein',
-      'search_kanban': 'Search Kanban',
-      'search_kanbans': 'Search Kanban',
+      'search_kanban': 'Kanban auswählen',
+      'search_kanbans': 'Kanban auswählen',
       'kanban': 'Kanban',
       'enable': 'Aktivieren',
       'move_top': 'Ganz nach oben verschieben',
@@ -24562,17 +24567,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recurring_products': 'Wiederkehrende Produkte',
       'promo_code': 'Gutscheincode',
       'promo_discount': 'Promo-Rabatt',
-      'allow_cancellation': 'Allow Cancellation',
-      'per_seat_enabled': 'Per Seat Enabled',
-      'max_seats_limit': 'Max Seats Limit',
+      'allow_cancellation': 'Ermögliche Storno',
+      'per_seat_enabled': 'Pro Platz Aktiviert',
+      'max_seats_limit': 'Max. Plätze Limit',
       'trial_enabled': 'Testversion aktiv',
       'trial_duration': 'Testzeitraum',
-      'allow_query_overrides': 'Allow Query Overrides',
-      'allow_plan_changes': 'Allow Plan Changes',
+      'allow_query_overrides': 'Überschreiben von Abfragen zulassen',
+      'allow_plan_changes': 'Planänderungen zulassen',
       'plan_map': 'Plan Map',
       'refund_period': 'Erstattungszeitraum',
       'webhook_configuration': 'Webhook-Konfiguration',
-      'purchase_page': 'Purchase Page',
+      'purchase_page': 'Kauf-Seite',
       'security': 'Sicherheit',
       'email_bounced': 'E-Mail zurückgesendet',
       'email_spam_complaint': 'Spam-Beschwerde',
@@ -69658,6 +69663,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get noInvoicesFound =>
       _localizedValues[localeCode]['no_invoices_found'] ??
       _localizedValues[localeCode]['no_invoices_found'];
+
+  String get registerLabel =>
+      _localizedValues[localeCode]['register_label'] ??
+      _localizedValues[localeCode]['register_label'];
+
+  String get loginLabel =>
+      _localizedValues[localeCode]['login_label'] ??
+      _localizedValues[localeCode]['login_label'];
+
+  String get multipleClientError =>
+      _localizedValues[localeCode]['multiple_client_error'] ??
+      _localizedValues[localeCode]['multiple_client_error'];
+
+  String get enableTooltips =>
+      _localizedValues[localeCode]['enable_tooltips'] ??
+      _localizedValues[localeCode]['enable_tooltips'];
+
+  String get enableTooltipsHelp =>
+      _localizedValues[localeCode]['enable_tooltips_help'] ??
+      _localizedValues[localeCode]['enable_tooltips_help'];
 
   // STARTER: lang field - do not remove comment
 
