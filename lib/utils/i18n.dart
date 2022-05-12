@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'multiple_client_error': 'Error: records belong to more than one client',
       'register_label': 'Create your account in seconds',
       'login_label': 'Login to an existing account',
       'add_to_invoice': 'Add To Invoice',
@@ -69668,6 +69669,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get loginLabel =>
       _localizedValues[localeCode]['login_label'] ??
       _localizedValues[localeCode]['login_label'];
+
+
+  String get multipleClientError =>
+      _localizedValues[localeCode]['multiple_client_error'] ??
+      _localizedValues[localeCode]['multiple_client_error'];
 
   // STARTER: lang field - do not remove comment
 
