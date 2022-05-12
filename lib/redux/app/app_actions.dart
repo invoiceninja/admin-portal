@@ -150,6 +150,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.showPdfPreview,
     this.editAfterSaving,
     this.enableTouchEvents,
+    this.enableTooltips,
   });
 
   final AppLayout appLayout;
@@ -175,6 +176,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final BuiltMap<String, String> customColors;
   final bool editAfterSaving;
   final bool enableTouchEvents;
+  final bool enableTooltips;
 }
 
 class LoadAccountSuccess implements StopLoading {

@@ -663,7 +663,7 @@ class _DrawerTileState extends State<DrawerTile> {
         );
       } else if (userCompany.canCreate(widget.entityType)) {
         trailingWidget = IconButton(
-          tooltip: widget.iconTooltip,
+          tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
           icon: Icon(
             Icons.add_circle_outline,
             color: textColor,
@@ -769,6 +769,7 @@ class SidebarFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final prefState = state.prefState;
     final localization = AppLocalization.of(context);
     final account = state.userCompany.account;
 
@@ -784,7 +785,7 @@ class SidebarFooter extends StatelessWidget {
             if (!Config.DEMO_MODE && !state.isDemo)
               if (state.isSelfHosted && !account.isSchedulerRunning)
                 IconButton(
-                  tooltip: localization.error,
+                  tooltip: prefState.enableTooltips ? localization.error : '',
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -811,7 +812,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.credentials.token.isEmpty)
                 IconButton(
-                  tooltip: localization.error,
+                  tooltip: prefState.enableTooltips ? localization.error : '',
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -823,7 +824,9 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.isSelfHosted && state.isUpdateAvailable)
                 IconButton(
-                  tooltip: localization.updateAvailable,
+                  tooltip: prefState.enableTooltips
+                      ? localization.updateAvailable
+                      : '',
                   icon: Icon(
                     Icons.warning,
                     color: Theme.of(context).colorScheme.secondary,
@@ -881,12 +884,13 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
-              tooltip: localization.contactUs,
+              tooltip: prefState.enableTooltips ? localization.contactUs : '',
             ),
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () => launch(kForumUrl),
-              tooltip: localization.supportForum,
+              tooltip:
+                  prefState.enableTooltips ? localization.supportForum : '',
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
@@ -912,13 +916,13 @@ class SidebarFooter extends StatelessWidget {
 
                 launch(url);
               },
-              tooltip: localization.userGuide,
+              tooltip: prefState.enableTooltips ? localization.userGuide : '',
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
               // prevent the modal from being stuck over the pdf
               onPressed: () => _showAbout(context),
-              tooltip: localization.about,
+              tooltip: prefState.enableTooltips ? localization.about : '',
             ),
             /*
             if (kDebugMode)
@@ -937,7 +941,7 @@ class SidebarFooter extends StatelessWidget {
                   Icons.warning,
                   color: Colors.red,
                 ),
-                tooltip: localization.error,
+                tooltip: prefState.enableTooltips ? localization.error : '',
                 onPressed: () => showDialog<ErrorDialog>(
                     context: context,
                     builder: (BuildContext context) {
@@ -953,7 +957,8 @@ class SidebarFooter extends StatelessWidget {
               AppBorder(
                 isLeft: true,
                 child: Tooltip(
-                  message: localization.hideMenu,
+                  message:
+                      prefState.enableTooltips ? localization.hideMenu : '',
                   child: InkWell(
                     onTap: () => store.dispatch(
                         UpdateUserPreferences(sidebar: AppSidebar.menu)),
@@ -1047,7 +1052,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
                 Icons.chevron_right,
                 color: state.isUpdateAvailable ? state.accentColor : null,
               ),
-              tooltip: localization.showMenu,
+              tooltip:
+                  state.prefState.enableTooltips ? localization.showMenu : null,
               onPressed: () {
                 store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
               },

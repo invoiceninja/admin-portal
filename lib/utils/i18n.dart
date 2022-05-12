@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_tooltips': 'Enable Tooltips',
+      'enable_tooltips_help': 'Show tooltips when hovering the mouse',
       'multiple_client_error': 'Error: records belong to more than one client',
       'register_label': 'Create your account in seconds',
       'login_label': 'Login to an existing account',
@@ -69670,10 +69672,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['login_label'] ??
       _localizedValues[localeCode]['login_label'];
 
-
   String get multipleClientError =>
       _localizedValues[localeCode]['multiple_client_error'] ??
       _localizedValues[localeCode]['multiple_client_error'];
+
+  String get enableTooltips =>
+      _localizedValues[localeCode]['enable_tooltips'] ??
+      _localizedValues[localeCode]['enable_tooltips'];
+
+  String get enableTooltipsHelp =>
+      _localizedValues[localeCode]['enable_tooltips_help'] ??
+      _localizedValues[localeCode]['enable_tooltips_help'];
 
   // STARTER: lang field - do not remove comment
 
