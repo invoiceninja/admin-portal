@@ -48,6 +48,7 @@ class ListScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final prefState = state.prefState;
     final localization = AppLocalization.of(context);
     final isSettings = entityType.isSetting;
 
@@ -80,6 +81,7 @@ class ListScaffold extends StatelessWidget {
     } else if (entityType != null && entityType != EntityType.settings) {
       leading = IconButton(
         icon: Icon(Icons.add),
+        tooltip: prefState.enableTooltips ? localization.createNew : null,
         onPressed: () {
           createEntityByType(entityType: entityType, context: context);
         },
@@ -93,6 +95,7 @@ class ListScaffold extends StatelessWidget {
           Expanded(
               child: IconButton(
             icon: Icon(Icons.check_box),
+            tooltip: prefState.enableTooltips ? localization.multiselect : null,
             onPressed: state.prefState.showKanban &&
                     state.uiState.mainRoute == '${EntityType.task}'
                 ? null
@@ -144,7 +147,9 @@ class ListScaffold extends StatelessWidget {
                   Builder(
                     builder: (context) => IconButton(
                       padding: const EdgeInsets.only(left: 4, right: 20),
-                      tooltip: localization.history,
+                      tooltip: prefState.enableTooltips
+                          ? localization.history
+                          : null,
                       icon: Icon(Icons.history),
                       onPressed: () {
                         if (isMobile(context) ||

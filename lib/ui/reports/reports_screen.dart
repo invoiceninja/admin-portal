@@ -386,7 +386,9 @@ class ReportsScreen extends StatelessWidget {
                       builder: (context) => IconButton(
                         icon: Icon(Icons.history),
                         padding: const EdgeInsets.only(left: 4, right: 20),
-                        tooltip: localization.history,
+                        tooltip: state.prefState.enableTooltips
+                            ? localization.history
+                            : null,
                         onPressed: () {
                           if (isMobile(context) ||
                               state.prefState.isHistoryFloated) {
