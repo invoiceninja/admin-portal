@@ -314,9 +314,9 @@ List<String> _getRoutes(AppState state) {
       final bool isNew = state.getUIState(entityType)?.isCreatingNew ?? false;
       if (isNew) {
         route += '/edit';
-      } else if (entityType != EntityType.product) {
-        route += '/view';
       }
+    } else if (part == 'view') {
+      // do nothing
     } else {
       if (![kMain, kDashboard, kSettings].contains(part) &&
           entityType == null) {
