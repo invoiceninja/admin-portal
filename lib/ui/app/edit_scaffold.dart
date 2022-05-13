@@ -57,10 +57,6 @@ class EditScaffold extends StatelessWidget {
     final state = store.state;
     final localization = AppLocalization.of(context);
 
-    if (state.companies.isEmpty) {
-      return LoadingIndicator();
-    }
-
     bool showUpgradeBanner = false;
     bool isEnabled = (isMobile(context) ||
             !state.uiState.isInSettings ||
@@ -108,24 +104,26 @@ class EditScaffold extends StatelessWidget {
       },
       child: FocusTraversalGroup(
         child: Scaffold(
-          body: showUpgradeBanner
-              ? Column(
-                  children: [
-                    InkWell(
-                      child: IconMessage(
-                        upgradeMessage,
-                        color: Colors.orange,
-                      ),
-                      onTap: state.userCompany.isOwner && !isApple()
-                          ? () async {
-                              launch(state.userCompany.ninjaPortalUrl);
-                            }
-                          : null,
-                    ),
-                    Expanded(child: body),
-                  ],
-                )
-              : body,
+          body: state.companies.isEmpty
+              ? LoadingIndicator()
+              : showUpgradeBanner
+                  ? Column(
+                      children: [
+                        InkWell(
+                          child: IconMessage(
+                            upgradeMessage,
+                            color: Colors.orange,
+                          ),
+                          onTap: state.userCompany.isOwner && !isApple()
+                              ? () async {
+                                  launch(state.userCompany.ninjaPortalUrl);
+                                }
+                              : null,
+                        ),
+                        Expanded(child: body),
+                      ],
+                    )
+                  : body,
           drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
           appBar: AppBar(
             centerTitle: false,
