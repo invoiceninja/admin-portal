@@ -426,12 +426,12 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                 <String, String>{
                                   PrefState
                                           .THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR:
-                                      '#444444',
+                                      '#2F2E2E',
                                   PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR:
                                       '#FFFFFF',
                                   PrefState
                                           .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR:
-                                      '#2F2F2F',
+                                      '#454544',
                                   PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR:
                                       '#FFFFFF',
                                   PrefState
