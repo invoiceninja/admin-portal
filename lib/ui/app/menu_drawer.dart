@@ -895,7 +895,7 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.help_outline),
               onPressed: () {
-                String url = kDocsUrl;
+                String url = kDocsUrl + '/docs';
                 final uiState = state.uiState;
                 final subRoute = uiState.baseSubRoute;
 

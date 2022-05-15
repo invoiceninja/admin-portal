@@ -600,7 +600,7 @@ class _LoginState extends State<LoginView> {
                         !isApple() &&
                         (!kIsWeb || !state.authState.isSelfHost))
                       Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 8),
+                          padding: const EdgeInsets.only(top: 6, bottom: 10),
                           child: TextButton(
                             child: Text(
                               _createAccount
@@ -673,22 +673,39 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     ),
-                  if (!_recoverPassword && kIsWeb)
-                    InkWell(
-                      onTap: () => launch(getNativeAppUrl(platform)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(getNativeAppIcon(platform), size: 16),
-                            SizedBox(width: 8),
-                            Text('$platform ${localization.app}')
-                          ],
+                  if (!_recoverPassword)
+                    if (kIsWeb)
+                      InkWell(
+                        onTap: () => launch(getNativeAppUrl(platform)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(getNativeAppIcon(platform), size: 16),
+                              SizedBox(width: 8),
+                              Text('$platform ${localization.app}')
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
+                      )
+                    else
+                      InkWell(
+                        onTap: () => launch(kDocsUrl),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.book, size: 16),
+                              SizedBox(width: 8),
+                              Text(localization.documentation)
+                            ],
+                          ),
+                        ),
+                      )
                 ],
               ),
             ],

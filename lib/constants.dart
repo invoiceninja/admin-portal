@@ -45,7 +45,7 @@ const String kYouTubeUrl =
 
 const String kReleaseNotesUrl =
     'https://github.com/invoiceninja/invoiceninja/wiki/Release-notes';
-const String kDocsUrl = 'https://invoiceninja.github.io/docs';
+const String kDocsUrl = 'https://invoiceninja.github.io';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain';
 const String kDocsCustomFieldsUrl =
