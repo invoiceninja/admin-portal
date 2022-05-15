@@ -108,7 +108,6 @@ class _LoginState extends State<LoginView> {
       _privacyChecked = true;
       _termsChecked = true;
       _emailLogin = true;
-      _createAccount = false;
     }
 
     if (_urlController.text.isEmpty) {
