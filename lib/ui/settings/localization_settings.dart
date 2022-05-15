@@ -341,7 +341,14 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   for (var key in translations.keys)
                     Row(
                       children: [
-                        Expanded(child: Text(localization.lookup(key))),
+                        Expanded(
+                            child: Text(
+                          key.startsWith('country_')
+                              ? key.split('_')[1]
+                              : localization.lookup(key),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )),
                         Expanded(
                           child: TextFormField(
                             key: ValueKey('__${key}__'),
