@@ -197,7 +197,7 @@ ReportResult recurringInvoiceReport(
           value = client.shippingAddress2;
           break;
         case RecurringInvoiceReportFields.status:
-          value = kInvoiceStatuses[invoice.statusId] ?? '';
+          value = kInvoiceStatuses[invoice.calculatedStatusId] ?? '';
           break;
         case RecurringInvoiceReportFields.number:
           value = invoice.number;
