@@ -255,7 +255,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
-  /*
   /// Returns true if the current text selection includes part
   /// or all of a single link, returns false if zero links are
   /// in the selection or if 2+ links are in the selection.
@@ -278,7 +277,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionStart = min(baseOffset, extentOffset);
     final selectionEnd = max(baseOffset, extentOffset);
     final selectionRange =
-        TextRange(start: selectionStart, end: selectionEnd - 1);
+        SpanRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
         widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
@@ -302,7 +301,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionStart = min(baseOffset, extentOffset);
     final selectionEnd = max(baseOffset, extentOffset);
     final selectionRange =
-        TextRange(start: selectionStart, end: selectionEnd - 1);
+        SpanRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
         widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
@@ -337,7 +336,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         // the entire link attribution.
         text.removeAttribution(
           overlappingLinkSpan.attribution,
-          TextRange(
+          SpanRange(
               start: overlappingLinkSpan.start, end: overlappingLinkSpan.end),
         );
       }
@@ -349,7 +348,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
       });
     }
   }
-  */
 
   /// Takes the text from the [urlController] and applies it as a link
   /// attribution to the currently selected text.
@@ -362,7 +360,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionStart = min(baseOffset, extentOffset);
     final selectionEnd = max(baseOffset, extentOffset);
     final selectionRange =
-        TextRange(start: selectionStart, end: selectionEnd - 1);
+        SpanRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
         widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
@@ -389,7 +387,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
   /// Given [text] and a [range] within the [text], the [range] is
   /// shortened on both sides to remove any trailing whitespace and
   /// the new range is returned.
-  TextRange _trimTextRangeWhitespace(AttributedText text, TextRange range) {
+  SpanRange _trimTextRangeWhitespace(AttributedText text, SpanRange range) {
     int startOffset = range.start;
     int endOffset = range.end;
 
@@ -400,7 +398,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       endOffset -= 1;
     }
 
-    return TextRange(start: startOffset, end: endOffset);
+    return SpanRange(start: startOffset, end: endOffset);
   }
 
   /*
@@ -560,7 +558,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 tooltip: 'Strikethrough',
               ),
             ),
-            /*
             Center(
               child: IconButton(
                 onPressed: _areMultipleLinksSelected() ? null : _onLinkPressed,
@@ -572,7 +569,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 tooltip: 'Link',
               ),
             ),
-            */
             // Only display alignment controls if the currently selected text
             // node respects alignment. List items, for example, do not.
             /*
