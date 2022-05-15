@@ -602,9 +602,12 @@ class _LoginState extends State<LoginView> {
                       Padding(
                           padding: const EdgeInsets.only(top: 10, bottom: 8),
                           child: TextButton(
-                            child: Text(_createAccount
-                                ? localization.loginLabel
-                                : localization.registerLabel),
+                            child: Text(
+                              _createAccount
+                                  ? localization.loginLabel
+                                  : localization.registerLabel,
+                              textAlign: TextAlign.center,
+                            ),
                             onPressed: () {
                               setState(() {
                                 _createAccount = !_createAccount;
