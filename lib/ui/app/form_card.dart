@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -38,8 +40,8 @@ class FormCard extends StatelessWidget {
       padding: padding ??
           (forceNarrow
               ? EdgeInsets.symmetric(
-                  vertical: kMobileDialogPadding,
-                  horizontal: (MediaQuery.of(context).size.width - 510) / 2,
+                  horizontal:
+                      max((MediaQuery.of(context).size.width - 510) / 2, 16),
                 )
               : EdgeInsets.only(
                   left: kMobileDialogPadding,

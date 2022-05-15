@@ -298,7 +298,7 @@ class _LoginState extends State<LoginView> {
           if (isDesktopOS()) AppTitleBar(),
           Container(
             width: double.infinity,
-            height: 24,
+            height: 16,
             color: state.accentColor,
           ),
           Padding(
@@ -329,10 +329,7 @@ class _LoginState extends State<LoginView> {
           ),
           if (_tokenLogin)
             FormCard(
-              padding: EdgeInsets.symmetric(
-                vertical: 0,
-                horizontal: (MediaQuery.of(context).size.width - 510) / 2,
-              ),
+              forceNarrow: true,
               internalPadding: const EdgeInsets.all(0),
               children: [
                 DecoratedFormField(
@@ -358,10 +355,7 @@ class _LoginState extends State<LoginView> {
               key: _formKey,
               child: AutofillGroup(
                 child: FormCard(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: (MediaQuery.of(context).size.width - 510) / 2,
-                  ),
+                  forceNarrow: true,
                   internalPadding: const EdgeInsets.all(0),
                   children: <Widget>[
                     Column(
@@ -602,6 +596,7 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                     if (!_isSelfHosted &&
+                        !_recoverPassword &&
                         !isApple() &&
                         (!kIsWeb || !state.authState.isSelfHost))
                       Padding(
@@ -623,11 +618,9 @@ class _LoginState extends State<LoginView> {
               ),
             ),
           ),
+          SizedBox(height: 8),
           FormCard(
-            padding: EdgeInsets.symmetric(
-              vertical: 0,
-              horizontal: (MediaQuery.of(context).size.width - 510) / 2,
-            ),
+            forceNarrow: true,
             internalPadding: const EdgeInsets.all(0),
             children: [
               Flex(
