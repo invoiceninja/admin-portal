@@ -338,6 +338,10 @@ abstract class TaskEntity extends Object
 
       if (time.isRunning) {
         countRunning++;
+
+        if (startDate.isBefore(lastDateTime)) {
+          isValid = false;
+        }
       } else {
         if (startDate.isBefore(lastDateTime) || startDate.isAfter(endDate)) {
           isValid = false;
@@ -364,7 +368,9 @@ abstract class TaskEntity extends Object
       final endDate = time.endDate;
 
       if (time.isRunning) {
-        //
+        if (startDate.isBefore(lastDateTime)) {
+          indices.add(counter);
+        }
       } else {
         if (startDate.isBefore(lastDateTime) || startDate.isAfter(endDate)) {
           indices.add(counter);
