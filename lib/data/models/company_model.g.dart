@@ -301,6 +301,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'calculate_expense_tax_by_amount',
       serializers.serialize(object.calculateExpenseTaxByAmount,
           specifiedType: const FullType(bool)),
+      'stop_on_unpaid_recurring ',
+      serializers.serialize(object.stopOnUnpaidRecurring,
+          specifiedType: const FullType(bool)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -736,6 +739,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'calculate_expense_tax_by_amount':
           result.calculateExpenseTaxByAmount = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'stop_on_unpaid_recurring ':
+          result.stopOnUnpaidRecurring = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
@@ -1513,6 +1520,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool calculateExpenseTaxByAmount;
   @override
+  final bool stopOnUnpaidRecurring;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1614,6 +1623,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.settings,
       this.enabledModules,
       this.calculateExpenseTaxByAmount,
+      this.stopOnUnpaidRecurring,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1772,6 +1782,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(calculateExpenseTaxByAmount,
         'CompanyEntity', 'calculateExpenseTaxByAmount');
     BuiltValueNullFieldError.checkNotNull(
+        stopOnUnpaidRecurring, 'CompanyEntity', 'stopOnUnpaidRecurring');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, 'CompanyEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, 'CompanyEntity', 'updatedAt');
@@ -1870,6 +1882,7 @@ class _$CompanyEntity extends CompanyEntity {
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         calculateExpenseTaxByAmount == other.calculateExpenseTaxByAmount &&
+        stopOnUnpaidRecurring == other.stopOnUnpaidRecurring &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1902,17 +1915,17 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode),
-                                                                                invoiceExpenseDocuments.hashCode),
-                                                                            invoiceTaskDocuments.hashCode),
-                                                                        invoiceTaskTimelog.hashCode),
-                                                                    invoiceTaskDatelog.hashCode),
-                                                                autoStartTasks.hashCode),
-                                                            showTasksTable.hashCode),
-                                                        showTaskEndDate.hashCode),
-                                                    settings.hashCode),
-                                                enabledModules.hashCode),
-                                            calculateExpenseTaxByAmount.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
+                                                                                invoiceTaskDocuments.hashCode),
+                                                                            invoiceTaskTimelog.hashCode),
+                                                                        invoiceTaskDatelog.hashCode),
+                                                                    autoStartTasks.hashCode),
+                                                                showTasksTable.hashCode),
+                                                            showTaskEndDate.hashCode),
+                                                        settings.hashCode),
+                                                    enabledModules.hashCode),
+                                                calculateExpenseTaxByAmount.hashCode),
+                                            stopOnUnpaidRecurring.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -2006,6 +2019,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('calculateExpenseTaxByAmount', calculateExpenseTaxByAmount)
+          ..add('stopOnUnpaidRecurring', stopOnUnpaidRecurring)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -2431,6 +2445,11 @@ class CompanyEntityBuilder
   set calculateExpenseTaxByAmount(bool calculateExpenseTaxByAmount) =>
       _$this._calculateExpenseTaxByAmount = calculateExpenseTaxByAmount;
 
+  bool _stopOnUnpaidRecurring;
+  bool get stopOnUnpaidRecurring => _$this._stopOnUnpaidRecurring;
+  set stopOnUnpaidRecurring(bool stopOnUnpaidRecurring) =>
+      _$this._stopOnUnpaidRecurring = stopOnUnpaidRecurring;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -2555,6 +2574,7 @@ class CompanyEntityBuilder
       _settings = $v.settings.toBuilder();
       _enabledModules = $v.enabledModules;
       _calculateExpenseTaxByAmount = $v.calculateExpenseTaxByAmount;
+      _stopOnUnpaidRecurring = $v.stopOnUnpaidRecurring;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -2679,6 +2699,7 @@ class CompanyEntityBuilder
               settings: settings.build(),
               enabledModules: BuiltValueNullFieldError.checkNotNull(enabledModules, 'CompanyEntity', 'enabledModules'),
               calculateExpenseTaxByAmount: BuiltValueNullFieldError.checkNotNull(calculateExpenseTaxByAmount, 'CompanyEntity', 'calculateExpenseTaxByAmount'),
+              stopOnUnpaidRecurring: BuiltValueNullFieldError.checkNotNull(stopOnUnpaidRecurring, 'CompanyEntity', 'stopOnUnpaidRecurring'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'CompanyEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'CompanyEntity', 'updatedAt'),

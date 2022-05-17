@@ -53,6 +53,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'is_migrated',
       serializers.serialize(object.isMigrated,
           specifiedType: const FullType(bool)),
+      'is_hosted',
+      serializers.serialize(object.isHosted,
+          specifiedType: const FullType(bool)),
       'is_scheduler_running',
       serializers.serialize(object.isSchedulerRunning,
           specifiedType: const FullType(bool)),
@@ -133,6 +136,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.isMigrated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'is_hosted':
+          result.isHosted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'is_scheduler_running':
           result.isSchedulerRunning = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -186,6 +193,8 @@ class _$AccountEntity extends AccountEntity {
   @override
   final bool isMigrated;
   @override
+  final bool isHosted;
+  @override
   final bool isSchedulerRunning;
   @override
   final bool disableAutoUpdate;
@@ -212,6 +221,7 @@ class _$AccountEntity extends AccountEntity {
       this.debugEnabled,
       this.isDocker,
       this.isMigrated,
+      this.isHosted,
       this.isSchedulerRunning,
       this.disableAutoUpdate,
       this.defaultCompanyId,
@@ -240,6 +250,8 @@ class _$AccountEntity extends AccountEntity {
         isDocker, 'AccountEntity', 'isDocker');
     BuiltValueNullFieldError.checkNotNull(
         isMigrated, 'AccountEntity', 'isMigrated');
+    BuiltValueNullFieldError.checkNotNull(
+        isHosted, 'AccountEntity', 'isHosted');
     BuiltValueNullFieldError.checkNotNull(
         isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning');
     BuiltValueNullFieldError.checkNotNull(
@@ -275,6 +287,7 @@ class _$AccountEntity extends AccountEntity {
         debugEnabled == other.debugEnabled &&
         isDocker == other.isDocker &&
         isMigrated == other.isMigrated &&
+        isHosted == other.isHosted &&
         isSchedulerRunning == other.isSchedulerRunning &&
         disableAutoUpdate == other.disableAutoUpdate &&
         defaultCompanyId == other.defaultCompanyId &&
@@ -302,23 +315,26 @@ class _$AccountEntity extends AccountEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        id
+                                                                        $jc(
+                                                                            0,
+                                                                            id
+                                                                                .hashCode),
+                                                                        trialPlan
                                                                             .hashCode),
-                                                                    trialPlan
+                                                                    trialStarted
                                                                         .hashCode),
-                                                                trialStarted
+                                                                defaultUrl
                                                                     .hashCode),
-                                                            defaultUrl
+                                                            reportErrors
                                                                 .hashCode),
-                                                        reportErrors.hashCode),
-                                                    plan.hashCode),
-                                                planExpires.hashCode),
-                                            latestVersion.hashCode),
-                                        currentVersion.hashCode),
-                                    debugEnabled.hashCode),
-                                isDocker.hashCode),
-                            isMigrated.hashCode),
+                                                        plan.hashCode),
+                                                    planExpires.hashCode),
+                                                latestVersion.hashCode),
+                                            currentVersion.hashCode),
+                                        debugEnabled.hashCode),
+                                    isDocker.hashCode),
+                                isMigrated.hashCode),
+                            isHosted.hashCode),
                         isSchedulerRunning.hashCode),
                     disableAutoUpdate.hashCode),
                 defaultCompanyId.hashCode),
@@ -341,6 +357,7 @@ class _$AccountEntity extends AccountEntity {
           ..add('debugEnabled', debugEnabled)
           ..add('isDocker', isDocker)
           ..add('isMigrated', isMigrated)
+          ..add('isHosted', isHosted)
           ..add('isSchedulerRunning', isSchedulerRunning)
           ..add('disableAutoUpdate', disableAutoUpdate)
           ..add('defaultCompanyId', defaultCompanyId)
@@ -404,6 +421,10 @@ class AccountEntityBuilder
   bool get isMigrated => _$this._isMigrated;
   set isMigrated(bool isMigrated) => _$this._isMigrated = isMigrated;
 
+  bool _isHosted;
+  bool get isHosted => _$this._isHosted;
+  set isHosted(bool isHosted) => _$this._isHosted = isHosted;
+
   bool _isSchedulerRunning;
   bool get isSchedulerRunning => _$this._isSchedulerRunning;
   set isSchedulerRunning(bool isSchedulerRunning) =>
@@ -448,6 +469,7 @@ class AccountEntityBuilder
       _debugEnabled = $v.debugEnabled;
       _isDocker = $v.isDocker;
       _isMigrated = $v.isMigrated;
+      _isHosted = $v.isHosted;
       _isSchedulerRunning = $v.isSchedulerRunning;
       _disableAutoUpdate = $v.disableAutoUpdate;
       _defaultCompanyId = $v.defaultCompanyId;
@@ -494,6 +516,7 @@ class AccountEntityBuilder
             debugEnabled: BuiltValueNullFieldError.checkNotNull(debugEnabled, 'AccountEntity', 'debugEnabled'),
             isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, 'AccountEntity', 'isDocker'),
             isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, 'AccountEntity', 'isMigrated'),
+            isHosted: BuiltValueNullFieldError.checkNotNull(isHosted, 'AccountEntity', 'isHosted'),
             isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning'),
             disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate'),
             defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'),

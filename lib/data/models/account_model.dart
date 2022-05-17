@@ -22,6 +22,7 @@ abstract class AccountEntity
       reportErrors: reportErrors,
       debugEnabled: false,
       isDocker: false,
+      isHosted: false,
       isSchedulerRunning: false,
       disableAutoUpdate: false,
       isMigrated: false,
@@ -73,6 +74,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'is_migrated')
   bool get isMigrated;
 
+  @BuiltValueField(wireName: 'is_hosted')
+  bool get isHosted;
+
   @BuiltValueField(wireName: 'is_scheduler_running')
   bool get isSchedulerRunning;
 
@@ -107,6 +111,7 @@ abstract class AccountEntity
     ..isSchedulerRunning = false
     ..disableAutoUpdate = false
     ..isMigrated = false
+    ..isHosted = false
     ..trialPlan = ''
     ..trialStarted = ''
     ..defaultCompanyId = ''

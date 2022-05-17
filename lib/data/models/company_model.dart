@@ -103,6 +103,7 @@ abstract class CompanyEntity extends Object
       markdownEmailEnabled: true,
       useCommaAsDecimalPlace: false,
       reportIncludeDrafts: false,
+      stopOnUnpaidRecurring: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -363,6 +364,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'calculate_expense_tax_by_amount')
   bool get calculateExpenseTaxByAmount;
 
+  @BuiltValueField(wireName: 'stop_on_unpaid_recurring ')
+  bool get stopOnUnpaidRecurring;
+
   String get displayName => settings.name ?? '';
 
   @override
@@ -598,6 +602,7 @@ abstract class CompanyEntity extends Object
     ..useCommaAsDecimalPlace = false
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
+    ..stopOnUnpaidRecurring = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
