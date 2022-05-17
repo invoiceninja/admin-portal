@@ -432,7 +432,9 @@ class SettingsSearch extends StatelessWidget {
       kSettingsWorkflowSettings: [
         [
           'auto_email_invoice',
-          'auto_archive_invoice',
+          'stop_on_unpaid',
+          'auto_archive_paid_invoices',
+          'auto_archive_cancelled_invoices',
           'lock_invoices',
         ],
         [

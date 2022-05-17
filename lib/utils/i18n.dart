@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stop_on_unpaid': 'Stop On Unpaid',
+      'stop_on_unpaid_help':
+          'Stop creating recurring invoices if the last invoice is unpaid.',
       'use_quote_terms': 'Use Quote Terms',
       'use_quote_terms_help': 'When converting a quote to an invoice',
       'add_country': 'Add Country',
@@ -69666,6 +69669,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get useQuoteTermsHelp =>
       _localizedValues[localeCode]['use_quote_terms_help'] ??
       _localizedValues[localeCode]['use_quote_terms_help'];
+
+  String get stopOnUnpaid =>
+      _localizedValues[localeCode]['stop_on_unpaid'] ??
+      _localizedValues[localeCode]['stop_on_unpaid'];
+
+  String get stopOnUnpaidHelp =>
+      _localizedValues[localeCode]['stop_on_unpaid_help'] ??
+      _localizedValues[localeCode]['stop_on_unpaid_help'];
 
   // STARTER: lang field - do not remove comment
 
