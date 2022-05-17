@@ -634,12 +634,12 @@ packages:
     source: hosted
     version: "1.0.2"
   markdown:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: markdown
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "5.0.0"
   matcher:
     dependency: transitive
     description:
@@ -1176,15 +1176,6 @@ packages:
       url: "https://github.com/superlistapp/super_editor.git"
     source: git
     version: "0.2.0"
-  super_editor_markdown:
-    dependency: "direct main"
-    description:
-      path: super_editor_markdown
-      ref: HEAD
-      resolved-ref: c284ee9b0a008fd507d9cc3dae7f03078592f9eb
-      url: "https://github.com/superlistapp/super_editor.git"
-    source: git
-    version: "0.1.0"
   super_text:
     dependency: transitive
     description:
