@@ -598,7 +598,7 @@ class _LoginState extends State<LoginView> {
                     if (!_isSelfHosted &&
                         !_recoverPassword &&
                         !isApple() &&
-                        (!kIsWeb || !state.authState.isSelfHost))
+                        (!kIsWeb || state.authState.isHosted))
                       Padding(
                           padding: const EdgeInsets.only(top: 6, bottom: 10),
                           child: TextButton(
