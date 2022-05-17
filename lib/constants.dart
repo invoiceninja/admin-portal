@@ -30,7 +30,7 @@ const String kAppleStoreUrl =
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
 const String kGoogleFDroidUrl =
-    'https://f-droid.org/packages/com.invoiceninja.app/';
+    'https://f-droid.org/packages/com.invoiceninja.app';
 const String kMacOSUrl = 'https://apps.apple.com/app/id1503970375';
 const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
@@ -57,7 +57,7 @@ const String kDocsPerformance =
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
 const String kApiDocsURL =
-    'https://invoiceninja.github.io/docs/developer-guide/';
+    'https://invoiceninja.github.io/docs/developer-guide';
 const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
