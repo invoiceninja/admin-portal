@@ -645,6 +645,8 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               keyboardType: TextInputType.number,
             ),
             AppDropdownButton(
+              showBlank: true,
+              blankLabel: localization.disabled,
               value: widget.schedule,
               labelText: localization.schedule,
               onChanged: (dynamic value) {
