@@ -11,6 +11,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.labelText,
     this.showBlank = false,
     this.blankValue = '',
+    this.blankLabel,
     this.enabled = true,
   }) : super(key: key);
 
@@ -21,6 +22,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final bool showBlank;
   final bool enabled;
   final dynamic blankValue;
+  final String blankLabel;
   final DropdownButtonBuilder selectedItemBuilder;
 
   @override
@@ -43,7 +45,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           if (showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
-              child: SizedBox(),
+              child: blankLabel == null ? SizedBox() : Text(blankLabel),
             ),
           ...items
         ],
@@ -55,7 +57,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           decoration: InputDecoration(
             labelText: labelText,
           ),
-          isEmpty: isEmpty,
+          isEmpty: isEmpty && blankLabel == null,
           child: dropDownButton);
     }
 

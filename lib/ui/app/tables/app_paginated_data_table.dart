@@ -476,7 +476,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
               ),
                */
               Scrollbar(
-                showTrackOnHover: true,
                 controller: _controller,
                 child: SingleChildScrollView(
                   controller: _controller,

@@ -146,7 +146,7 @@ class _EmailSettingsState extends State<EmailSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          if (viewModel.state.authState.isHosted) ...[
+          if (viewModel.state.isHosted) ...[
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[

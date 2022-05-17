@@ -1,11 +1,11 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+//import 'package:invoiceninja_flutter/data/models/entities.dart';
+//import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class AppShortcuts extends StatefulWidget {
   const AppShortcuts({Key key, this.child}) : super(key: key);
@@ -20,6 +20,7 @@ class AppShortcuts extends StatefulWidget {
 }
 
 class AppShortcutsState extends State<AppShortcuts> {
+  /*
   final _shortcuts = <LogicalKeySet, _ShortcutIntent>{
     LogicalKeySet(LogicalKeyboardKey.keyN, LogicalKeyboardKey.keyI):
         _ShortcutIntent.create(EntityType.invoice),
@@ -49,9 +50,13 @@ class AppShortcutsState extends State<AppShortcuts> {
       LogicalKeySet(LogicalKeyboardKey.alt, LogicalKeyboardKey.arrowLeft):
           _ShortcutIntent.back(),
   };
+  */
 
   @override
   Widget build(BuildContext context) {
+    return SizedBox();
+
+    /*
     final _actions = <Type, Action<Intent>>{
       _ShortcutIntent: CallbackAction<_ShortcutIntent>(
         onInvoke: (_ShortcutIntent intent) {
@@ -86,7 +91,6 @@ class AppShortcutsState extends State<AppShortcuts> {
       ),
     );
 
-    /*
     return FocusableActionDetector(
       child: widget.child,
       actions: _actions,
@@ -97,6 +101,7 @@ class AppShortcutsState extends State<AppShortcuts> {
   }
 }
 
+/*
 class _ShortcutIntent extends Intent {
   const _ShortcutIntent({this.intentType, this.entityType});
 
@@ -119,3 +124,5 @@ enum _ShortcutIntentType {
   back,
   list,
 }
+
+*/

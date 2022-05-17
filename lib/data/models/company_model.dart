@@ -103,6 +103,8 @@ abstract class CompanyEntity extends Object
       markdownEmailEnabled: true,
       useCommaAsDecimalPlace: false,
       reportIncludeDrafts: false,
+      stopOnUnpaidRecurring: false,
+      useQuoteTermsOnConversion: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -253,6 +255,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'report_include_drafts')
   bool get reportIncludeDrafts;
 
+  @BuiltValueField(wireName: 'use_quote_terms_on_conversion')
+  bool get useQuoteTermsOnConversion;
+
   BuiltList<GroupEntity> get groups;
 
   BuiltList<ActivityEntity> get activities;
@@ -362,6 +367,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'calculate_expense_tax_by_amount')
   bool get calculateExpenseTaxByAmount;
+
+  @BuiltValueField(wireName: 'stop_on_unpaid_recurring ')
+  bool get stopOnUnpaidRecurring;
 
   String get displayName => settings.name ?? '';
 
@@ -596,8 +604,10 @@ abstract class CompanyEntity extends Object
     ..markdownEnabled = true
     ..markdownEmailEnabled = true
     ..useCommaAsDecimalPlace = false
+    ..useQuoteTermsOnConversion = false
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
+    ..stopOnUnpaidRecurring = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())

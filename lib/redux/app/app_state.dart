@@ -752,15 +752,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get reportErrors => account?.reportErrors ?? false;
 
-  bool get isHosted => authState.isHosted ?? false;
+  bool get isHosted => account == null ? authState.isHosted : account.isHosted;
 
-  bool get isSelfHosted => authState.isSelfHost ?? false;
+  bool get isSelfHosted => !isHosted;
 
   bool get isDemo => cleanApiUrl(authState.url) == kAppDemoUrl;
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
-
-  bool get isProduction => cleanApiUrl(authState.url) == kAppProductionUrl;
 
   bool get isWhiteLabeled => account.plan == kPlanWhiteLabel;
 
@@ -768,9 +766,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isTrial => isHosted && account.isTrial;
 
-  bool get isEnterprisePlan => !isProduction || account.plan == kPlanEnterprise;
-
-  //bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
+  bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isPaidAccount => isSelfHosted
       ? isWhiteLabeled

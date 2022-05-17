@@ -883,12 +883,22 @@ class ReportResult {
     }
 
     value = (value ?? '').toLowerCase();
+    filter = (filter ?? '').toLowerCase();
 
     if (filter == 'null' && value.isEmpty) {
       return true;
     }
 
-    return value.contains(filter.toLowerCase());
+    if (value.contains(filter)) {
+      return true;
+    }
+
+    final localization = AppLocalization.of(navigatorKey.currentContext);
+    if (localization.lookup(value).toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
   }
 
   static bool matchAmount({String filter, num amount}) {

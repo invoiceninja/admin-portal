@@ -40,8 +40,10 @@ class WorkflowSettingsScreen extends StatelessWidget {
 class WorkflowSettingsVM {
   WorkflowSettingsVM({
     @required this.state,
+    @required this.company,
     @required this.settings,
     @required this.onSettingsChanged,
+    @required this.onCompanyChanged,
     @required this.onSavePressed,
   });
 
@@ -51,9 +53,12 @@ class WorkflowSettingsVM {
     return WorkflowSettingsVM(
         state: state,
         settings: state.uiState.settingsUIState.settings,
+        company: state.uiState.settingsUIState.company,
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
+        onCompanyChanged: (company) =>
+            store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
@@ -82,7 +87,9 @@ class WorkflowSettingsVM {
   }
 
   final AppState state;
+  final CompanyEntity company;
   final Function(BuildContext) onSavePressed;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
+  final Function(CompanyEntity) onCompanyChanged;
 }

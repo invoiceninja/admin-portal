@@ -290,25 +290,50 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         ),
                       ),
                       SizedBox(width: 8),
-                      TextButton(
-                        child: Text(localization.addCustom),
-                        onPressed: () {
-                          fieldCallback(
-                              context: context,
-                              callback: (value) {
-                                viewModel.onSettingsChanged(settings.rebuild(
-                                    (b) => b..translations[value] = ''));
+                      Flexible(
+                        child: Wrap(
+                          alignment: WrapAlignment.end,
+                          children: [
+                            TextButton(
+                              child: Text(localization.addCustom),
+                              onPressed: () {
+                                fieldCallback(
+                                    context: context,
+                                    callback: (value) {
+                                      viewModel.onSettingsChanged(
+                                          settings.rebuild((b) =>
+                                              b..translations[value] = ''));
+                                    },
+                                    field: localization.label,
+                                    title: localization.addCustom,
+                                    secondaryActions: [
+                                      TextButton(
+                                        child: Text(
+                                            localization.labels.toUpperCase()),
+                                        onPressed: () => launch(kGitHubLangUrl),
+                                      )
+                                    ]);
                               },
-                              field: localization.label,
-                              title: localization.addCustom,
-                              secondaryActions: [
-                                TextButton(
-                                  child:
-                                      Text(localization.labels.toUpperCase()),
-                                  onPressed: () => launch(kGitHubLangUrl),
-                                )
-                              ]);
-                        },
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final countryId = await showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return _AddCompanyDialog();
+                                    });
+                                if (countryId.isNotEmpty) {
+                                  final key = 'country_' +
+                                      state.staticState.countryMap[countryId]
+                                          .name;
+                                  viewModel.onSettingsChanged(settings.rebuild(
+                                      (b) => b..translations[key] = ''));
+                                }
+                              },
+                              child: Text(localization.addCountry),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -316,7 +341,14 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   for (var key in translations.keys)
                     Row(
                       children: [
-                        Expanded(child: Text(localization.lookup(key))),
+                        Expanded(
+                            child: Text(
+                          key.startsWith('country_')
+                              ? key.split('_')[1]
+                              : localization.lookup(key),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )),
                         Expanded(
                           child: TextFormField(
                             key: ValueKey('__${key}__'),
@@ -341,6 +373,51 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _AddCompanyDialog extends StatefulWidget {
+  const _AddCompanyDialog({Key key}) : super(key: key);
+
+  @override
+  State<_AddCompanyDialog> createState() => _AddCompanyDialogState();
+}
+
+class _AddCompanyDialogState extends State<_AddCompanyDialog> {
+  String _countryId;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    return AlertDialog(
+      title: Text(localization.addCountry),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(_countryId);
+          },
+          child: Text(localization.submit.toUpperCase()),
+        ),
+      ],
+      content: EntityDropdown(
+        autofocus: true,
+        entityType: EntityType.country,
+        entityList: memoizedCountryList(state.staticState.countryMap),
+        labelText: localization.country,
+        onSelected: (SelectableEntity country) {
+          _countryId = country.id;
+        },
       ),
     );
   }

@@ -16,6 +16,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stop_on_unpaid': 'Stop On Unpaid',
+      'stop_on_unpaid_help':
+          'Stop creating recurring invoices if the last invoice is unpaid.',
+      'use_quote_terms': 'Use Quote Terms',
+      'use_quote_terms_help': 'When converting a quote to an invoice',
+      'add_country': 'Add Country',
       'enable_tooltips': 'Enable Tooltips',
       'enable_tooltips_help': 'Show tooltips when hovering the mouse',
       'multiple_client_error': 'Error: records belong to more than one client',
@@ -33,8 +39,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -2036,8 +2041,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Valuta e Faturës',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -4054,8 +4058,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'النطاق',
       'tax_amount1': 'Tax Amount 1',
@@ -6064,8 +6067,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': '發票使用的貨幣',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -8052,8 +8054,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Valuta računa',
       'range': 'Raspon',
       'tax_amount1': 'Tax Amount 1',
@@ -10065,8 +10066,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Měna faktury',
       'range': 'Rozsah',
       'tax_amount1': 'Tax Amount 1',
@@ -12075,8 +12075,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Interval',
       'tax_amount1': 'Tax Amount 1',
@@ -14085,8 +14084,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Factuur valuta',
       'range': 'Bereik',
       'tax_amount1': 'Tax Amount 1',
@@ -16121,8 +16119,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -18131,8 +18128,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Laskun valuutta',
       'range': 'Alue',
       'tax_amount1': 'Tax Amount 1',
@@ -20142,8 +20138,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Devise de la facture',
       'range': 'Portée',
       'tax_amount1': 'Tax Amount 1',
@@ -22166,8 +22161,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Devise de la facture',
       'range': 'Étendue',
       'tax_amount1': 'Tax Amount 1',
@@ -24256,8 +24250,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Rechnungs-Währung',
       'range': 'Bereich',
       'tax_amount1': 'Steuerhöhe 1',
@@ -26345,8 +26338,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Νόμισμα Τιμολογίου',
       'range': 'Εύρος',
       'tax_amount1': 'Tax Amount 1',
@@ -28409,8 +28401,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Valuta fattura',
       'range': 'Intervallo',
       'tax_amount1': 'Tax Amount 1',
@@ -30447,8 +30438,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': '請求書通貨',
       'range': '範囲',
       'tax_amount1': 'Tax Amount 1',
@@ -32454,8 +32444,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Diapazons',
       'tax_amount1': 'Tax Amount 1',
@@ -34465,8 +34454,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Sąskaitos valiuta',
       'range': 'Intervalas',
       'tax_amount1': 'Tax Amount 1',
@@ -36476,8 +36464,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Валута на фактура',
       'range': 'Опсег',
       'tax_amount1': 'Tax Amount 1',
@@ -38491,8 +38478,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Fakturavaluta',
       'range': 'Periode',
       'tax_amount1': 'Tax Amount 1',
@@ -40500,8 +40486,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -42510,8 +42495,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Waluta faktury',
       'range': 'Zakres',
       'tax_amount1': 'Tax Amount 1',
@@ -44520,8 +44504,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Moeda da Fatura',
       'range': 'Período',
       'tax_amount1': 'Tax Amount 1',
@@ -46548,8 +46531,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Moeda da Nota de Pagamento',
       'range': 'Período',
       'tax_amount1': 'Tax Amount 1',
@@ -48592,8 +48574,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Moneda Facturii',
       'range': 'Interval',
       'tax_amount1': 'Tax Amount 1',
@@ -50605,8 +50586,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Диапазон',
       'tax_amount1': 'Tax Amount 1',
@@ -52616,8 +52596,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Valuta računa',
       'range': 'Razpon',
       'tax_amount1': 'Tax Amount 1',
@@ -54630,8 +54609,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Divisa de la Factura',
       'range': 'Rango',
       'tax_amount1': 'Tax Amount 1',
@@ -56652,8 +56630,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Moneda de la Factura',
       'range': 'Rango',
       'tax_amount1': 'Tax Amount 1',
@@ -58706,8 +58683,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Faktura valuta',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -60730,8 +60706,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'สกุลเงินใบแจ้งหนี้',
       'range': 'Range',
       'tax_amount1': 'Tax Amount 1',
@@ -62738,8 +62713,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_cancelled_invoices_help':
           'Automatically archive invoices when they are cancelled.',
       'alternate_pdf_viewer': 'Alternate PDF Viewer',
-      'alternate_pdf_viewer_help':
-          'Improve scrolling over the PDF preview [BETA]',
+      'alternate_pdf_viewer_help': 'Improve scrolling over the PDF preview',
       'invoice_currency': 'Invoice Currency',
       'range': 'Aralık',
       'tax_amount1': 'Tax Amount 1',
@@ -69683,6 +69657,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableTooltipsHelp =>
       _localizedValues[localeCode]['enable_tooltips_help'] ??
       _localizedValues[localeCode]['enable_tooltips_help'];
+
+  String get addCountry =>
+      _localizedValues[localeCode]['add_country'] ??
+      _localizedValues[localeCode]['add_country'];
+
+  String get useQuoteTerms =>
+      _localizedValues[localeCode]['use_quote_terms'] ??
+      _localizedValues[localeCode]['use_quote_terms'];
+
+  String get useQuoteTermsHelp =>
+      _localizedValues[localeCode]['use_quote_terms_help'] ??
+      _localizedValues[localeCode]['use_quote_terms_help'];
+
+  String get stopOnUnpaid =>
+      _localizedValues[localeCode]['stop_on_unpaid'] ??
+      _localizedValues[localeCode]['stop_on_unpaid'];
+
+  String get stopOnUnpaidHelp =>
+      _localizedValues[localeCode]['stop_on_unpaid_help'] ??
+      _localizedValues[localeCode]['stop_on_unpaid_help'];
 
   // STARTER: lang field - do not remove comment
 

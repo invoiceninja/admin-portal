@@ -72,10 +72,8 @@ class _VariablesHelpState extends State<VariablesHelp>
                 fields: [
                   'view_button',
                   'view_url',
-                  'view_link',
                   'payment_button',
                   'payment_url',
-                  'payment_link',
                   'created_by_user',
                   'assigned_to_user',
                   'invoices',

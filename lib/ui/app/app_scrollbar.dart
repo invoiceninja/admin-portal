@@ -34,8 +34,7 @@ class _AppScrollbarState extends State<AppScrollbar> {
         child: Scrollbar(
           child: widget.child,
           controller: widget.controller,
-          isAlwaysShown: isDesktop(context) && _isHovered,
-          showTrackOnHover: true,
+          trackVisibility: isDesktop(context) && _isHovered,
         ),
       );
     }

@@ -69,6 +69,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
+    final company = viewModel.company;
 
     return EditScaffold(
       title: localization.workflowSettings,
@@ -101,6 +102,17 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                         settings.rebuild((b) => b..autoEmailInvoice = value)),
                     iconData: Icons.email,
                   ),
+                  if (!state.settingsUIState.isFiltered)
+                    BoolDropdownButton(
+                      label: localization.stopOnUnpaid,
+                      helpLabel: localization.stopOnUnpaidHelp,
+                      value: company.stopOnUnpaidRecurring,
+                      onChanged: (value) => viewModel.onCompanyChanged(company
+                          .rebuild((b) => b..stopOnUnpaidRecurring = value)),
+                      iconData: Icons.stop_circle,
+                    ),
+                ]),
+                FormCard(children: <Widget>[
                   BoolDropdownButton(
                     label: localization.autoArchivePaidInvoices,
                     helpLabel: localization.autoArchivePaidInvoices,

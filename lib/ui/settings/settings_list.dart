@@ -339,6 +339,7 @@ class SettingsSearch extends StatelessWidget {
           'quote_footer',
           'credit_terms',
           'credit_footer',
+          'use_quote_terms',
         ],
         [
           'default_documents',
@@ -431,7 +432,9 @@ class SettingsSearch extends StatelessWidget {
       kSettingsWorkflowSettings: [
         [
           'auto_email_invoice',
-          'auto_archive_invoice',
+          'stop_on_unpaid',
+          'auto_archive_paid_invoices',
+          'auto_archive_cancelled_invoices',
           'lock_invoices',
         ],
         [

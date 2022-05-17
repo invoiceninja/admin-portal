@@ -183,7 +183,7 @@ ReportResult creditReport(
           value = client.shippingAddress2;
           break;
         case CreditReportFields.status:
-          value = kCreditStatuses[credit.statusId] ?? '';
+          value = kCreditStatuses[credit.calculatedStatusId] ?? '';
           break;
         case CreditReportFields.number:
           value = credit.number;

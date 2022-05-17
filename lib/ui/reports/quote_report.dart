@@ -179,7 +179,7 @@ ReportResult quoteReport(
           value = client.shippingAddress2;
           break;
         case QuoteReportFields.status:
-          value = kQuoteStatuses[quote.statusId] ?? '';
+          value = kQuoteStatuses[quote.calculatedStatusId] ?? '';
           break;
         case QuoteReportFields.discount:
           value = quote.discount;
