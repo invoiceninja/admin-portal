@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_quote_terms': 'Use Quote Terms',
+      'use_quote_terms_help': 'When converting a quote to an invoice',
       'add_country': 'Add Country',
       'enable_tooltips': 'Enable Tooltips',
       'enable_tooltips_help': 'Show tooltips when hovering the mouse',
@@ -69653,10 +69655,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['enable_tooltips_help'] ??
       _localizedValues[localeCode]['enable_tooltips_help'];
 
-
   String get addCountry =>
       _localizedValues[localeCode]['add_country'] ??
       _localizedValues[localeCode]['add_country'];
+
+  String get useQuoteTerms =>
+      _localizedValues[localeCode]['use_quote_terms'] ??
+      _localizedValues[localeCode]['use_quote_terms'];
+
+  String get useQuoteTermsHelp =>
+      _localizedValues[localeCode]['use_quote_terms_help'] ??
+      _localizedValues[localeCode]['use_quote_terms_help'];
 
   // STARTER: lang field - do not remove comment
 

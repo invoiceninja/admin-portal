@@ -339,6 +339,7 @@ class SettingsSearch extends StatelessWidget {
           'quote_footer',
           'credit_terms',
           'credit_footer',
+          'use_quote_terms',
         ],
         [
           'default_documents',

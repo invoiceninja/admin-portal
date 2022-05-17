@@ -104,6 +104,7 @@ abstract class CompanyEntity extends Object
       useCommaAsDecimalPlace: false,
       reportIncludeDrafts: false,
       stopOnUnpaidRecurring: false,
+      useQuoteTermsOnConversion: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -253,6 +254,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'report_include_drafts')
   bool get reportIncludeDrafts;
+
+  @BuiltValueField(wireName: 'use_quote_terms_on_conversion')
+  bool get useQuoteTermsOnConversion;
 
   BuiltList<GroupEntity> get groups;
 
@@ -600,6 +604,7 @@ abstract class CompanyEntity extends Object
     ..markdownEnabled = true
     ..markdownEmailEnabled = true
     ..useCommaAsDecimalPlace = false
+    ..useQuoteTermsOnConversion = false
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false

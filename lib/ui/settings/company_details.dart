@@ -30,7 +30,9 @@ import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
@@ -599,6 +601,15 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       label: localization.onlinePaymentEmail,
                       helpLabel: localization.emailReceipt,
                       iconData: Icons.email,
+                    ),
+                    BoolDropdownButton(
+                      value: company.useQuoteTermsOnConversion,
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                          company.rebuild(
+                              (b) => b..useQuoteTermsOnConversion = value)),
+                      label: localization.useQuoteTerms,
+                      helpLabel: localization.useQuoteTermsHelp,
+                      iconData: getEntityIcon(EntityType.quote),
                     ),
                   ]),
               FormCard(
