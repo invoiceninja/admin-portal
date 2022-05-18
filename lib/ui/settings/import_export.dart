@@ -49,6 +49,7 @@ class _ImportExportState extends State<ImportExport> {
   bool autoValidate = false;
   PreImportResponse _response;
   var _importType = ImportType.csv;
+  var _exportType = ImportType.csv;
   bool _isExporting = false;
 
   @override
@@ -109,7 +110,30 @@ class _ImportExportState extends State<ImportExport> {
               children: [
                 if (_isExporting)
                   LinearProgressIndicator()
-                else
+                else ...[
+                  InputDecorator(
+                    decoration:
+                        InputDecoration(labelText: localization.exportType),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ImportType>(
+                          isDense: true,
+                          value: _exportType,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportType = value;
+                            });
+                          },
+                          items: [
+                            ImportType.csv,
+                            ImportType.json,
+                          ]
+                              .map((importType) => DropdownMenuItem<ImportType>(
+                                  value: importType,
+                                  child:
+                                      Text(localization.lookup('$importType'))))
+                              .toList()),
+                    ),
+                  ),
                   AppButton(
                     iconData: MdiIcons.export,
                     label: localization.export.toUpperCase(),
@@ -134,6 +158,7 @@ class _ImportExportState extends State<ImportExport> {
                       });
                     },
                   )
+                ],
               ],
             )
           ],

@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'export_type': 'Export Type',
       'stop_on_unpaid': 'Stop On Unpaid',
       'stop_on_unpaid_help':
           'Stop creating recurring invoices if the last invoice is unpaid.',
@@ -69677,6 +69678,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get stopOnUnpaidHelp =>
       _localizedValues[localeCode]['stop_on_unpaid_help'] ??
       _localizedValues[localeCode]['stop_on_unpaid_help'];
+
+  String get exportType =>
+      _localizedValues[localeCode]['export_type'] ??
+      _localizedValues[localeCode]['export_type'];
 
   // STARTER: lang field - do not remove comment
 
