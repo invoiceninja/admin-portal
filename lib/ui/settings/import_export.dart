@@ -113,7 +113,7 @@ class _ImportExportState extends State<ImportExport> {
                 else ...[
                   InputDecorator(
                     decoration:
-                        InputDecoration(labelText: localization.exportType),
+                        InputDecoration(labelText: localization.exportFormat),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<ImportType>(
                           isDense: true,
@@ -286,7 +286,7 @@ class _FileImportState extends State<_FileImport> {
     final List<Widget> children = [
       InputDecorator(
         decoration: InputDecoration(
-          labelText: localization.importType,
+          labelText: localization.importFormat,
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<ImportType>(
