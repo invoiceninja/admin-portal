@@ -117,7 +117,7 @@ List<ChartDataGroup> _chartInvoices({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = invoice.hasExchangeRate
-            ? invoice.exchangeRate
+            ? 1 / invoice.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -258,7 +258,7 @@ List<ChartDataGroup> chartQuotes({
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = quote.hasExchangeRate
-            ? quote.exchangeRate
+            ? 1 / quote.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
@@ -579,7 +579,7 @@ List<ChartDataGroup> chartTasks(
           if (settings.currencyId == kCurrencyAll &&
               client.currencyId != company.currencyId) {
             final exchangeRate = invoice.hasExchangeRate
-                ? invoice.exchangeRate
+                ? 1 / invoice.exchangeRate
                 : getExchangeRate(currencyMap,
                     fromCurrencyId: client.currencyId,
                     toCurrencyId: company.currencyId);
