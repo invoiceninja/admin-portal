@@ -1317,7 +1317,7 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => _showUpdate(context),
                       ),
                   ],
-                  if (daysActive > 100)
+                  if (daysActive > 30)
                     AppButton(
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
