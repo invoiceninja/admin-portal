@@ -162,12 +162,24 @@ class _ImportExportState extends State<ImportExport> {
                       final webClient = WebClient();
                       final state = StoreProvider.of<AppState>(context).state;
                       final credentials = state.credentials;
-                      final url = '${credentials.url}/export';
+                      String url = credentials.url;
+
+                      if (_exportFormat == ImportType.json) {
+                        url = '$url/export';
+                      } else {
+                        url = '$url/reports/$_exportType';
+                      }
 
                       setState(() => _isExporting = true);
 
                       webClient
-                          .post(url, credentials.token)
+                          .post(url, credentials.token,
+                              data: json.encode(
+                                {
+                                  'send_email': true,
+                                  //'report_keys': <String>[],
+                                },
+                              ))
                           .then((dynamic result) {
                         setState(() => _isExporting = false);
                         showMessageDialog(
