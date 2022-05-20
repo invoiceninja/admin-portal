@@ -170,3 +170,28 @@ class ImportType extends EnumClass {
 
   static ImportType valueOf(String name) => _$typeValueOf(name);
 }
+
+class ExportType extends EnumClass {
+  const ExportType._(String name) : super(name);
+
+  static Serializer<ExportType> get serializer => _$exportTypeSerializer;
+
+  static const ExportType clients = _$clients;
+  static const ExportType contacts = _$contacts;
+  static const ExportType credits = _$credits;
+  static const ExportType documents = _$documents;
+  static const ExportType expenses = _$expenses;
+  static const ExportType invoices = _$invoices;
+  static const ExportType invoice_items = _$invoice_items;
+  static const ExportType quotes = _$quotes;
+  static const ExportType quote_items = _$quote_items;
+  static const ExportType recurring_invoices = _$recurring_invoices;
+  static const ExportType payments = _$payments;
+  static const ExportType products = _$products;
+  static const ExportType tasks = _$tasks;
+  static const ExportType profitloss = _$profitloss;
+
+  static BuiltSet<ExportType> get values => _$exportValues;
+
+  static ExportType valueOf(String name) => _$exportValueOf(name);
+}

@@ -48,8 +48,9 @@ class _ImportExportState extends State<ImportExport> {
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
-  var _importType = ImportType.csv;
-  var _exportType = ImportType.csv;
+  var _importFormat = ImportType.csv;
+  var _exportFormat = ImportType.csv;
+  var _exportType = ExportType.clients;
   bool _isExporting = false;
 
   @override
@@ -82,9 +83,9 @@ class _ImportExportState extends State<ImportExport> {
           children: [
             if (_response == null)
               _FileImport(
-                importType: _importType,
+                importType: _importFormat,
                 onUploaded: (response) => {
-                  if (_importType == ImportType.csv)
+                  if (_importFormat == ImportType.csv)
                     {
                       setState(() => _response = response),
                     }
@@ -94,12 +95,12 @@ class _ImportExportState extends State<ImportExport> {
                     }
                 },
                 onImportTypeChanged: (importType) =>
-                    setState(() => _importType = importType),
+                    setState(() => _importFormat = importType),
               )
             else
               _FileMapper(
                 key: ValueKey(_response.hash),
-                importType: _importType,
+                importType: _importFormat,
                 formKey: _formKey,
                 response: _response,
                 onCancelPressed: () => setState(() => _response = null),
@@ -117,10 +118,10 @@ class _ImportExportState extends State<ImportExport> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<ImportType>(
                           isDense: true,
-                          value: _exportType,
+                          value: _exportFormat,
                           onChanged: (dynamic value) {
                             setState(() {
-                              _exportType = value;
+                              _exportFormat = value;
                             });
                           },
                           items: [
@@ -128,6 +129,26 @@ class _ImportExportState extends State<ImportExport> {
                             ImportType.json,
                           ]
                               .map((importType) => DropdownMenuItem<ImportType>(
+                                  value: importType,
+                                  child:
+                                      Text(localization.lookup('$importType'))))
+                              .toList()),
+                    ),
+                  ),
+                  InputDecorator(
+                    decoration:
+                        InputDecoration(labelText: localization.exportType),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ExportType>(
+                          isDense: true,
+                          value: _exportType,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportType = value;
+                            });
+                          },
+                          items: ExportType.values
+                              .map((importType) => DropdownMenuItem<ExportType>(
                                   value: importType,
                                   child:
                                       Text(localization.lookup('$importType'))))

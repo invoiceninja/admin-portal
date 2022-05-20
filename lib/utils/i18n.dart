@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_items': 'Invoice Items',
+      'quote_items': 'Quote Items',
+      'profitloss': 'Profit and Loss',
       'import_format': 'Import Format',
       'export_format': 'Export Format',
       'export_type': 'Export Type',
@@ -69692,6 +69695,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get exportFormat =>
       _localizedValues[localeCode]['export_format'] ??
       _localizedValues[localeCode]['export_format'];
+
+  String get invoiceItems =>
+      _localizedValues[localeCode]['invoice_items'] ??
+      _localizedValues[localeCode]['invoice_items'];
+
+  String get quoteItems =>
+      _localizedValues[localeCode]['quote_items'] ??
+      _localizedValues[localeCode]['quote_items'];
+
+  String get profitloss =>
+      _localizedValues[localeCode]['profitloss'] ??
+      _localizedValues[localeCode]['profitloss'];
 
   // STARTER: lang field - do not remove comment
 
