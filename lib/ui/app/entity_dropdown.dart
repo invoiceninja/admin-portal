@@ -602,7 +602,8 @@ class EntityAutocompleteListTile extends StatelessWidget {
               : Container(),
         ],
       ),
-      subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
+      subtitle:
+          (subtitle ?? '').isNotEmpty ? Text(subtitle, maxLines: 2) : null,
       onTap: onTap != null ? () => onTap(entity) : null,
     );
   }
