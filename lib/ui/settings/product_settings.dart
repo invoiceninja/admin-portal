@@ -93,13 +93,14 @@ class _ProductSettingsState extends State<ProductSettings> {
               /*
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showProductDetails),
-                value: company.showProductDetails,
-                subtitle: Text(localization.showProductDetailsHelp),
+                title: Text(localization.showProductDescription),
+                value: company.showProductionDescriptionDropdown,
+                subtitle: Text(localization.showProductDescriptionHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..showProductDetails = value)),
+                    company.rebuild(
+                        (b) => b..showProductionDescriptionDropdown = value)),
               ),
-               */
+              */
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.fillProducts),
