@@ -577,11 +577,22 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final options = productIds
                                     .map((productId) =>
                                         productState.map[productId])
-                                    .where((product) => product.productKey
-                                        .toLowerCase()
-                                        .contains(textEditingValue.text
-                                            .toLowerCase()))
-                                    .toList();
+                                    .where((product) {
+                                  final filter =
+                                      textEditingValue.text.toLowerCase();
+                                  final productKey =
+                                      product.productKey.toLowerCase();
+
+                                  if (company
+                                          .showProductionDescriptionDropdown &&
+                                      product.notes
+                                          .toLowerCase()
+                                          .contains(filter)) {
+                                    return true;
+                                  }
+
+                                  return productKey.contains(filter);
+                                }).toList();
 
                                 if (options.length == 1 &&
                                     options[0].productKey.toLowerCase() ==
