@@ -708,6 +708,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                             itemCount: options.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
+                                              final entity =
+                                                  options.elementAt(index);
                                               return Container(
                                                 color: highlightedIndex == index
                                                     ? convertHexStringToColor(state
@@ -721,8 +723,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                     EntityAutocompleteListTile(
                                                   onTap: (entity) =>
                                                       onSelected(entity),
-                                                  entity:
-                                                      options.elementAt(index),
+                                                  subtitle: entity
+                                                              is ProductEntity &&
+                                                          company
+                                                              .showProductionDescriptionDropdown
+                                                      ? entity.notes
+                                                      : null,
+                                                  entity: entity,
                                                 ),
                                               );
                                             },
