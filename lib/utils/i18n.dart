@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_sent_notification_label': 'Invoice Sent',
       'show_product_description': 'Show Product Description',
       'show_product_description_help':
           'Include the description in the product dropdown',
@@ -40,7 +41,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'no_invoices_found': 'No invoices found',
       'week': 'Week',
       'created_record': 'Successfully created record',
-      'notification_invoice_sent': 'Invoice Sent',
       'auto_archive_paid_invoices': 'Auto Archive Paid',
       'auto_archive_paid_invoices_help':
           'Automatically archive invoices when they are paid.',
@@ -69627,10 +69627,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'] ??
       _localizedValues['en']['auto_archive_cancelled_invoices_help'];
 
-  String get notificationInvoiceSent =>
-      _localizedValues[localeCode]['notification_invoice_sent'] ??
-      _localizedValues['en']['notification_invoice_sent'];
-
   String get createdRecord =>
       _localizedValues[localeCode]['created_record'] ??
       _localizedValues['en']['created_record'];
@@ -69717,6 +69713,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get showProductDescriptionHelp =>
       _localizedValues[localeCode]['show_product_description_help'] ??
       _localizedValues['en']['show_product_description_help'];
+
+  String get invoiceSentNotificationLabel =>
+      _localizedValues[localeCode]['invoice_sent_notification_label'] ??
+      _localizedValues['en']['invoice_sent_notification_label'];
 
   // STARTER: lang field - do not remove comment
 
