@@ -176,8 +176,8 @@ class _ImportExportState extends State<ImportExport> {
                           .post(url, credentials.token,
                               data: json.encode(
                                 {
-                                  'send_email': true,
-                                  'report_keys': ['name'],
+                                  //'send_email': true,
+                                  'report_keys': <String>[],
                                 },
                               ))
                           .then((dynamic result) {
