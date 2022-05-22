@@ -583,8 +583,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   final productKey =
                                       product.productKey.toLowerCase();
 
-                                  if (company
-                                          .showProductionDescriptionDropdown &&
+                                  if (company.showProductDetails &&
                                       product.notes
                                           .toLowerCase()
                                           .contains(filter)) {
@@ -737,7 +736,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                   subtitle: entity
                                                               is ProductEntity &&
                                                           company
-                                                              .showProductionDescriptionDropdown
+                                                              .showProductDetails
                                                       ? entity.notes
                                                       : null,
                                                   entity: entity,

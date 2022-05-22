@@ -144,9 +144,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'use_quote_terms_on_conversion',
       serializers.serialize(object.useQuoteTermsOnConversion,
           specifiedType: const FullType(bool)),
-      'show_production_description_dropdown',
-      serializers.serialize(object.showProductionDescriptionDropdown,
-          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -520,10 +517,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'use_quote_terms_on_conversion':
           result.useQuoteTermsOnConversion = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'show_production_description_dropdown':
-          result.showProductionDescriptionDropdown = serializers
-              .deserialize(value, specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
@@ -1450,8 +1443,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool useQuoteTermsOnConversion;
   @override
-  final bool showProductionDescriptionDropdown;
-  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1599,7 +1590,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.useCommaAsDecimalPlace,
       this.reportIncludeDrafts,
       this.useQuoteTermsOnConversion,
-      this.showProductionDescriptionDropdown,
       this.groups,
       this.activities,
       this.taxRates,
@@ -1726,8 +1716,6 @@ class _$CompanyEntity extends CompanyEntity {
         reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts');
     BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion,
         'CompanyEntity', 'useQuoteTermsOnConversion');
-    BuiltValueNullFieldError.checkNotNull(showProductionDescriptionDropdown,
-        'CompanyEntity', 'showProductionDescriptionDropdown');
     BuiltValueNullFieldError.checkNotNull(groups, 'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, 'CompanyEntity', 'activities');
@@ -1864,8 +1852,6 @@ class _$CompanyEntity extends CompanyEntity {
         useCommaAsDecimalPlace == other.useCommaAsDecimalPlace &&
         reportIncludeDrafts == other.reportIncludeDrafts &&
         useQuoteTermsOnConversion == other.useQuoteTermsOnConversion &&
-        showProductionDescriptionDropdown ==
-            other.showProductionDescriptionDropdown &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -1942,7 +1928,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), showProductionDescriptionDropdown.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
                                                                                 invoiceTaskDocuments.hashCode),
                                                                             invoiceTaskTimelog.hashCode),
                                                                         invoiceTaskDatelog.hashCode),
@@ -2004,8 +1990,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('useCommaAsDecimalPlace', useCommaAsDecimalPlace)
           ..add('reportIncludeDrafts', reportIncludeDrafts)
           ..add('useQuoteTermsOnConversion', useQuoteTermsOnConversion)
-          ..add('showProductionDescriptionDropdown',
-              showProductionDescriptionDropdown)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2242,14 +2226,6 @@ class CompanyEntityBuilder
   bool get useQuoteTermsOnConversion => _$this._useQuoteTermsOnConversion;
   set useQuoteTermsOnConversion(bool useQuoteTermsOnConversion) =>
       _$this._useQuoteTermsOnConversion = useQuoteTermsOnConversion;
-
-  bool _showProductionDescriptionDropdown;
-  bool get showProductionDescriptionDropdown =>
-      _$this._showProductionDescriptionDropdown;
-  set showProductionDescriptionDropdown(
-          bool showProductionDescriptionDropdown) =>
-      _$this._showProductionDescriptionDropdown =
-          showProductionDescriptionDropdown;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2575,7 +2551,6 @@ class CompanyEntityBuilder
       _useCommaAsDecimalPlace = $v.useCommaAsDecimalPlace;
       _reportIncludeDrafts = $v.reportIncludeDrafts;
       _useQuoteTermsOnConversion = $v.useQuoteTermsOnConversion;
-      _showProductionDescriptionDropdown = $v.showProductionDescriptionDropdown;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -2702,7 +2677,6 @@ class CompanyEntityBuilder
               useCommaAsDecimalPlace: BuiltValueNullFieldError.checkNotNull(useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace'),
               reportIncludeDrafts: BuiltValueNullFieldError.checkNotNull(reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts'),
               useQuoteTermsOnConversion: BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion, 'CompanyEntity', 'useQuoteTermsOnConversion'),
-              showProductionDescriptionDropdown: BuiltValueNullFieldError.checkNotNull(showProductionDescriptionDropdown, 'CompanyEntity', 'showProductionDescriptionDropdown'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

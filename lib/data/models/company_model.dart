@@ -105,7 +105,6 @@ abstract class CompanyEntity extends Object
       reportIncludeDrafts: false,
       stopOnUnpaidRecurring: false,
       useQuoteTermsOnConversion: false,
-      showProductionDescriptionDropdown: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -258,9 +257,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'use_quote_terms_on_conversion')
   bool get useQuoteTermsOnConversion;
-
-  @BuiltValueField(wireName: 'show_production_description_dropdown')
-  bool get showProductionDescriptionDropdown;
 
   BuiltList<GroupEntity> get groups;
 
@@ -612,7 +608,6 @@ abstract class CompanyEntity extends Object
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false
-    ..showProductionDescriptionDropdown = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
