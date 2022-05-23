@@ -670,16 +670,22 @@ class _DrawerTileState extends State<DrawerTile> {
     };
 
     if (state.isMenuCollapsed) {
-      return InkWell(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          child: SizedBox(
-            height: 40,
-            child: Icon(
-              widget.icon,
-              color: textColor,
-            ),
-          ));
+      return Tooltip(
+        message: prefState.enableTooltips ? widget.title : '',
+        child: ColoredBox(
+          color: color,
+          child: InkWell(
+              onTap: onTap,
+              onLongPress: onLongPress,
+              child: SizedBox(
+                height: 40,
+                child: Icon(
+                  widget.icon,
+                  color: textColor,
+                ),
+              )),
+        ),
+      );
     }
 
     Widget iconWidget;
@@ -731,6 +737,7 @@ class _DrawerTileState extends State<DrawerTile> {
       child: Opacity(
         opacity: isSelected ? 1 : .8,
         child: ListTile(
+          contentPadding: const EdgeInsets.only(left: 12),
           dense: true,
           leading: _isHovered && isDesktop(context) && iconWidget != null
               ? iconWidget
