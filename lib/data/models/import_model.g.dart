@@ -46,6 +46,75 @@ final BuiltSet<ImportType> _$typeValues =
   _$zoho,
 ]);
 
+const ExportType _$clients = const ExportType._('clients');
+const ExportType _$contacts = const ExportType._('contacts');
+const ExportType _$credits = const ExportType._('credits');
+const ExportType _$documents = const ExportType._('documents');
+const ExportType _$expenses = const ExportType._('expenses');
+const ExportType _$invoices = const ExportType._('invoices');
+const ExportType _$invoice_items = const ExportType._('invoice_items');
+const ExportType _$quotes = const ExportType._('quotes');
+const ExportType _$quote_items = const ExportType._('quote_items');
+const ExportType _$recurring_invoices =
+    const ExportType._('recurring_invoices');
+const ExportType _$payments = const ExportType._('payments');
+const ExportType _$products = const ExportType._('products');
+const ExportType _$tasks = const ExportType._('tasks');
+const ExportType _$profitloss = const ExportType._('profitloss');
+
+ExportType _$exportValueOf(String name) {
+  switch (name) {
+    case 'clients':
+      return _$clients;
+    case 'contacts':
+      return _$contacts;
+    case 'credits':
+      return _$credits;
+    case 'documents':
+      return _$documents;
+    case 'expenses':
+      return _$expenses;
+    case 'invoices':
+      return _$invoices;
+    case 'invoice_items':
+      return _$invoice_items;
+    case 'quotes':
+      return _$quotes;
+    case 'quote_items':
+      return _$quote_items;
+    case 'recurring_invoices':
+      return _$recurring_invoices;
+    case 'payments':
+      return _$payments;
+    case 'products':
+      return _$products;
+    case 'tasks':
+      return _$tasks;
+    case 'profitloss':
+      return _$profitloss;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<ExportType> _$exportValues =
+    new BuiltSet<ExportType>(const <ExportType>[
+  _$clients,
+  _$contacts,
+  _$credits,
+  _$documents,
+  _$expenses,
+  _$invoices,
+  _$invoice_items,
+  _$quotes,
+  _$quote_items,
+  _$recurring_invoices,
+  _$payments,
+  _$products,
+  _$tasks,
+  _$profitloss,
+]);
+
 Serializer<PreImportResponse> _$preImportResponseSerializer =
     new _$PreImportResponseSerializer();
 Serializer<PreImportResponseEntityDetails>
@@ -56,6 +125,7 @@ Serializer<ImportRequest> _$importRequestSerializer =
 Serializer<ImportRequestMapping> _$importRequestMappingSerializer =
     new _$ImportRequestMappingSerializer();
 Serializer<ImportType> _$importTypeSerializer = new _$ImportTypeSerializer();
+Serializer<ExportType> _$exportTypeSerializer = new _$ExportTypeSerializer();
 
 class _$PreImportResponseSerializer
     implements StructuredSerializer<PreImportResponse> {
@@ -301,6 +371,23 @@ class _$ImportTypeSerializer implements PrimitiveSerializer<ImportType> {
   ImportType deserialize(Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       ImportType.valueOf(serialized as String);
+}
+
+class _$ExportTypeSerializer implements PrimitiveSerializer<ExportType> {
+  @override
+  final Iterable<Type> types = const <Type>[ExportType];
+  @override
+  final String wireName = 'ExportType';
+
+  @override
+  Object serialize(Serializers serializers, ExportType object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  ExportType deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      ExportType.valueOf(serialized as String);
 }
 
 class _$PreImportResponse extends PreImportResponse {

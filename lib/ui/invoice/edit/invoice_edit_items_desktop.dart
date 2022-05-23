@@ -577,11 +577,21 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final options = productIds
                                     .map((productId) =>
                                         productState.map[productId])
-                                    .where((product) => product.productKey
-                                        .toLowerCase()
-                                        .contains(textEditingValue.text
-                                            .toLowerCase()))
-                                    .toList();
+                                    .where((product) {
+                                  final filter =
+                                      textEditingValue.text.toLowerCase();
+                                  final productKey =
+                                      product.productKey.toLowerCase();
+
+                                  if (company.showProductDetails &&
+                                      product.notes
+                                          .toLowerCase()
+                                          .contains(filter)) {
+                                    return true;
+                                  }
+
+                                  return productKey.contains(filter);
+                                }).toList();
 
                                 if (options.length == 1 &&
                                     options[0].productKey.toLowerCase() ==
@@ -708,6 +718,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                             itemCount: options.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
+                                              final entity =
+                                                  options.elementAt(index);
                                               return Container(
                                                 color: highlightedIndex == index
                                                     ? convertHexStringToColor(state
@@ -721,8 +733,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                     EntityAutocompleteListTile(
                                                   onTap: (entity) =>
                                                       onSelected(entity),
-                                                  entity:
-                                                      options.elementAt(index),
+                                                  subtitle: entity
+                                                              is ProductEntity &&
+                                                          company
+                                                              .showProductDetails
+                                                      ? entity.notes
+                                                      : null,
+                                                  entity: entity,
                                                 ),
                                               );
                                             },

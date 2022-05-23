@@ -158,18 +158,18 @@ class _CompanyGatewayOverview extends StatelessWidget {
             children: [
               Expanded(
                 child: AppButton(
-                  iconData: isDesktop(context) ? MdiIcons.import : null,
-                  label: localization.importCustomers.toUpperCase(),
-                  onPressed: () => viewModel.onStripeImportPressed(context),
+                  iconData:
+                      isDesktop(context) ? MdiIcons.checkCircleOutline : null,
+                  label: localization.verifyCustomers.toUpperCase(),
+                  onPressed: () => viewModel.onStripeVerifyPressed(context),
                 ),
               ),
               SizedBox(width: kTableColumnGap),
               Expanded(
                 child: AppButton(
-                  iconData:
-                      isDesktop(context) ? MdiIcons.checkCircleOutline : null,
-                  label: localization.verifyCustomers.toUpperCase(),
-                  onPressed: () => viewModel.onStripeVerifyPressed(context),
+                  iconData: isDesktop(context) ? MdiIcons.import : null,
+                  label: localization.importCustomers.toUpperCase(),
+                  onPressed: () => viewModel.onStripeImportPressed(context),
                 ),
               ),
             ],

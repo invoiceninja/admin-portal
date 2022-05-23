@@ -48,7 +48,9 @@ class _ImportExportState extends State<ImportExport> {
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
-  var _importType = ImportType.csv;
+  var _importFormat = ImportType.csv;
+  var _exportFormat = ImportType.csv;
+  var _exportType = ExportType.clients;
   bool _isExporting = false;
 
   @override
@@ -81,9 +83,9 @@ class _ImportExportState extends State<ImportExport> {
           children: [
             if (_response == null)
               _FileImport(
-                importType: _importType,
+                importType: _importFormat,
                 onUploaded: (response) => {
-                  if (_importType == ImportType.csv)
+                  if (_importFormat == ImportType.csv)
                     {
                       setState(() => _response = response),
                     }
@@ -93,12 +95,12 @@ class _ImportExportState extends State<ImportExport> {
                     }
                 },
                 onImportTypeChanged: (importType) =>
-                    setState(() => _importType = importType),
+                    setState(() => _importFormat = importType),
               )
             else
               _FileMapper(
                 key: ValueKey(_response.hash),
-                importType: _importType,
+                importType: _importFormat,
                 formKey: _formKey,
                 response: _response,
                 onCancelPressed: () => setState(() => _response = null),
@@ -109,7 +111,50 @@ class _ImportExportState extends State<ImportExport> {
               children: [
                 if (_isExporting)
                   LinearProgressIndicator()
-                else
+                else ...[
+                  InputDecorator(
+                    decoration:
+                        InputDecoration(labelText: localization.exportFormat),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ImportType>(
+                          isDense: true,
+                          value: _exportFormat,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportFormat = value;
+                            });
+                          },
+                          items: [
+                            ImportType.csv,
+                            ImportType.json,
+                          ]
+                              .map((importType) => DropdownMenuItem<ImportType>(
+                                  value: importType,
+                                  child:
+                                      Text(localization.lookup('$importType'))))
+                              .toList()),
+                    ),
+                  ),
+                  InputDecorator(
+                    decoration:
+                        InputDecoration(labelText: localization.exportType),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<ExportType>(
+                          isDense: true,
+                          value: _exportType,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportType = value;
+                            });
+                          },
+                          items: ExportType.values
+                              .map((importType) => DropdownMenuItem<ExportType>(
+                                  value: importType,
+                                  child:
+                                      Text(localization.lookup('$importType'))))
+                              .toList()),
+                    ),
+                  ),
                   AppButton(
                     iconData: MdiIcons.export,
                     label: localization.export.toUpperCase(),
@@ -117,12 +162,24 @@ class _ImportExportState extends State<ImportExport> {
                       final webClient = WebClient();
                       final state = StoreProvider.of<AppState>(context).state;
                       final credentials = state.credentials;
-                      final url = '${credentials.url}/export';
+                      String url = credentials.url;
+
+                      if (_exportFormat == ImportType.json) {
+                        url = '$url/export';
+                      } else {
+                        url = '$url/reports/$_exportType';
+                      }
 
                       setState(() => _isExporting = true);
 
                       webClient
-                          .post(url, credentials.token)
+                          .post(url, credentials.token,
+                              data: json.encode(
+                                {
+                                  //'send_email': true,
+                                  'report_keys': <String>[],
+                                },
+                              ))
                           .then((dynamic result) {
                         setState(() => _isExporting = false);
                         showMessageDialog(
@@ -134,6 +191,7 @@ class _ImportExportState extends State<ImportExport> {
                       });
                     },
                   )
+                ],
               ],
             )
           ],
@@ -261,7 +319,7 @@ class _FileImportState extends State<_FileImport> {
     final List<Widget> children = [
       InputDecorator(
         decoration: InputDecoration(
-          labelText: localization.importType,
+          labelText: localization.importFormat,
         ),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<ImportType>(

@@ -16,6 +16,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invoice_sent_notification_label': 'Invoice Sent',
+      'show_product_description': 'Show Product Description',
+      'show_product_description_help':
+          'Include the description in the product dropdown',
+      'invoice_items': 'Invoice Items',
+      'quote_items': 'Quote Items',
+      'profitloss': 'Profit and Loss',
+      'import_format': 'Import Format',
+      'export_format': 'Export Format',
+      'export_type': 'Export Type',
       'stop_on_unpaid': 'Stop On Unpaid',
       'stop_on_unpaid_help':
           'Stop creating recurring invoices if the last invoice is unpaid.',
@@ -31,7 +41,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'no_invoices_found': 'No invoices found',
       'week': 'Week',
       'created_record': 'Successfully created record',
-      'notification_invoice_sent': 'Invoice Sent',
       'auto_archive_paid_invoices': 'Auto Archive Paid',
       'auto_archive_paid_invoices_help':
           'Automatically archive invoices when they are paid.',
@@ -69604,79 +69613,110 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoArchivePaidInvoices =>
       _localizedValues[localeCode]['auto_archive_paid_invoices'] ??
-      _localizedValues[localeCode]['auto_archive_paid_invoices'];
+      _localizedValues['en']['auto_archive_paid_invoices'];
 
   String get autoArchivePaidInvoicesHelp =>
       _localizedValues[localeCode]['auto_archive_paid_invoices_help'] ??
-      _localizedValues[localeCode]['auto_archive_paid_invoices_help'];
+      _localizedValues['en']['auto_archive_paid_invoices_help'];
 
   String get autoArchiveCancelledInvoices =>
       _localizedValues[localeCode]['auto_archive_cancelled_invoices'] ??
-      _localizedValues[localeCode]['auto_archive_cancelled_invoices'];
+      _localizedValues['en']['auto_archive_cancelled_invoices'];
 
   String get autoArchiveCancelledInvoicesHelp =>
       _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'] ??
-      _localizedValues[localeCode]['auto_archive_cancelled_invoices_help'];
-
-  String get notificationInvoiceSent =>
-      _localizedValues[localeCode]['notification_invoice_sent'] ??
-      _localizedValues[localeCode]['notification_invoice_sent'];
+      _localizedValues['en']['auto_archive_cancelled_invoices_help'];
 
   String get createdRecord =>
       _localizedValues[localeCode]['created_record'] ??
-      _localizedValues[localeCode]['created_record'];
+      _localizedValues['en']['created_record'];
 
   String get week =>
-      _localizedValues[localeCode]['week'] ??
-      _localizedValues[localeCode]['week'];
+      _localizedValues[localeCode]['week'] ?? _localizedValues['en']['week'];
 
   String get addToInvoice =>
       _localizedValues[localeCode]['add_to_invoice'] ??
-      _localizedValues[localeCode]['add_to_invoice'];
+      _localizedValues['en']['add_to_invoice'];
 
   String get noInvoicesFound =>
       _localizedValues[localeCode]['no_invoices_found'] ??
-      _localizedValues[localeCode]['no_invoices_found'];
+      _localizedValues['en']['no_invoices_found'];
 
   String get registerLabel =>
       _localizedValues[localeCode]['register_label'] ??
-      _localizedValues[localeCode]['register_label'];
+      _localizedValues['en']['register_label'];
 
   String get loginLabel =>
       _localizedValues[localeCode]['login_label'] ??
-      _localizedValues[localeCode]['login_label'];
+      _localizedValues['en']['login_label'];
 
   String get multipleClientError =>
       _localizedValues[localeCode]['multiple_client_error'] ??
-      _localizedValues[localeCode]['multiple_client_error'];
+      _localizedValues['en']['multiple_client_error'];
 
   String get enableTooltips =>
       _localizedValues[localeCode]['enable_tooltips'] ??
-      _localizedValues[localeCode]['enable_tooltips'];
+      _localizedValues['en']['enable_tooltips'];
 
   String get enableTooltipsHelp =>
       _localizedValues[localeCode]['enable_tooltips_help'] ??
-      _localizedValues[localeCode]['enable_tooltips_help'];
+      _localizedValues['en']['enable_tooltips_help'];
 
   String get addCountry =>
       _localizedValues[localeCode]['add_country'] ??
-      _localizedValues[localeCode]['add_country'];
+      _localizedValues['en']['add_country'];
 
   String get useQuoteTerms =>
       _localizedValues[localeCode]['use_quote_terms'] ??
-      _localizedValues[localeCode]['use_quote_terms'];
+      _localizedValues['en']['use_quote_terms'];
 
   String get useQuoteTermsHelp =>
       _localizedValues[localeCode]['use_quote_terms_help'] ??
-      _localizedValues[localeCode]['use_quote_terms_help'];
+      _localizedValues['en']['use_quote_terms_help'];
 
   String get stopOnUnpaid =>
       _localizedValues[localeCode]['stop_on_unpaid'] ??
-      _localizedValues[localeCode]['stop_on_unpaid'];
+      _localizedValues['en']['stop_on_unpaid'];
 
   String get stopOnUnpaidHelp =>
       _localizedValues[localeCode]['stop_on_unpaid_help'] ??
-      _localizedValues[localeCode]['stop_on_unpaid_help'];
+      _localizedValues['en']['stop_on_unpaid_help'];
+
+  String get exportType =>
+      _localizedValues[localeCode]['export_type'] ??
+      _localizedValues['en']['export_type'];
+
+  String get importFormat =>
+      _localizedValues[localeCode]['import_format'] ??
+      _localizedValues['en']['import_format'];
+
+  String get exportFormat =>
+      _localizedValues[localeCode]['export_format'] ??
+      _localizedValues['en']['export_format'];
+
+  String get invoiceItems =>
+      _localizedValues[localeCode]['invoice_items'] ??
+      _localizedValues['en']['invoice_items'];
+
+  String get quoteItems =>
+      _localizedValues[localeCode]['quote_items'] ??
+      _localizedValues['en']['quote_items'];
+
+  String get profitloss =>
+      _localizedValues[localeCode]['profitloss'] ??
+      _localizedValues['en']['profitloss'];
+
+  String get showProductDescription =>
+      _localizedValues[localeCode]['show_product_description'] ??
+      _localizedValues['en']['show_product_description'];
+
+  String get showProductDescriptionHelp =>
+      _localizedValues[localeCode]['show_product_description_help'] ??
+      _localizedValues['en']['show_product_description_help'];
+
+  String get invoiceSentNotificationLabel =>
+      _localizedValues[localeCode]['invoice_sent_notification_label'] ??
+      _localizedValues['en']['invoice_sent_notification_label'];
 
   // STARTER: lang field - do not remove comment
 

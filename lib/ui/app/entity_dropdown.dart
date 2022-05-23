@@ -556,23 +556,24 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 }
 
 class EntityAutocompleteListTile extends StatelessWidget {
-  const EntityAutocompleteListTile({
-    @required this.entity,
-    this.filter,
-    this.overrideSuggestedLabel,
-    this.overrideSuggestedAmount,
-    this.onTap,
-  });
+  const EntityAutocompleteListTile(
+      {@required this.entity,
+      this.filter,
+      this.overrideSuggestedLabel,
+      this.overrideSuggestedAmount,
+      this.onTap,
+      this.subtitle});
 
   final SelectableEntity entity;
   final Function(SelectableEntity entity) onTap;
   final String filter;
+  final String subtitle;
   final Function(BaseEntity) overrideSuggestedAmount;
   final Function(BaseEntity) overrideSuggestedLabel;
 
   @override
   Widget build(BuildContext context) {
-    final String subtitle = entity.matchesFilterValue(filter);
+    final String subtitle = this.subtitle ?? entity.matchesFilterValue(filter);
     final String label = overrideSuggestedLabel == null
         ? entity.listDisplayName
         : overrideSuggestedLabel(entity);
@@ -601,7 +602,8 @@ class EntityAutocompleteListTile extends StatelessWidget {
               : Container(),
         ],
       ),
-      subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
+      subtitle:
+          (subtitle ?? '').isNotEmpty ? Text(subtitle, maxLines: 2) : null,
       onTap: onTap != null ? () => onTap(entity) : null,
     );
   }

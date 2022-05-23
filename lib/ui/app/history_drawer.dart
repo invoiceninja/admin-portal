@@ -49,7 +49,7 @@ class HistoryDrawer extends StatelessWidget {
     }
 
     return SizedBox(
-      width: kDrawerWidth,
+      width: kDrawerWidthMobile,
       child: Drawer(
         child: Scaffold(
           appBar: AppBar(
