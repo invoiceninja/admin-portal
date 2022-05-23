@@ -176,7 +176,7 @@ class EditScaffold extends StatelessWidget {
                           }
                         },
                 ),
-              if (actions != null)
+              if ((actions ?? []).isNotEmpty)
                 PopupMenuButton<EntityAction>(
                   icon: Icon(
                     Icons.more_vert,
