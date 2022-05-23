@@ -255,7 +255,11 @@ class MenuDrawer extends StatelessWidget {
 
     return FocusTraversalGroup(
       child: Container(
-        width: state.isMenuCollapsed ? 65 : kDrawerWidth,
+        width: state.isMenuCollapsed
+            ? 65
+            : isDesktop(context)
+                ? kDrawerWidthDesktop
+                : kDrawerWidthMobile,
         child: Drawer(
           child: SafeArea(
             child: Column(
@@ -565,7 +569,7 @@ class DrawerTile extends StatefulWidget {
 }
 
 class _DrawerTileState extends State<DrawerTile> {
-  //bool _isHovered = false;
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -643,43 +647,76 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
-    Widget trailingWidget;
-    if (!state.isMenuCollapsed) {
-      if (widget.title == localization.dashboard) {
-        trailingWidget = IconButton(
-          icon: Icon(
-            Icons.search,
-            color: textColor,
-          ),
-          onPressed: () {
-            if (isMobile(context)) {
-              navigator.pop();
-            }
-            store.dispatch(ViewDashboard(
-                filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
-                    ? null
-                    : ''));
-          },
+    final onTap = () {
+      if (widget.entityType != null) {
+        viewEntitiesByType(
+          entityType: widget.entityType,
         );
-      } else if (userCompany.canCreate(widget.entityType)) {
-        trailingWidget = IconButton(
-          tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
-          icon: Icon(
-            Icons.add_circle_outline,
-            color: textColor,
-          ),
-          onPressed: () {
-            if (isMobile(context)) {
-              navigator.pop();
-            }
-            createEntityByType(
-              context: context,
-              entityType: widget.entityType,
-              applyFilter: false,
-            );
-          },
+      } else {
+        widget.onTap();
+      }
+    };
+
+    final onLongPress = () {
+      if (widget.onLongPress != null) {
+        widget.onLongPress();
+      } else if (widget.entityType != null) {
+        createEntityByType(
+          context: context,
+          entityType: widget.entityType,
+          applyFilter: false,
         );
       }
+    };
+
+    if (state.isMenuCollapsed) {
+      return InkWell(
+          onTap: onTap,
+          onLongPress: onLongPress,
+          child: SizedBox(
+            height: 40,
+            child: Icon(
+              widget.icon,
+              color: textColor,
+            ),
+          ));
+    }
+
+    Widget iconWidget;
+    if (widget.title == localization.dashboard) {
+      iconWidget = IconButton(
+        icon: Icon(
+          Icons.search,
+          color: textColor,
+        ),
+        onPressed: () {
+          if (isMobile(context)) {
+            navigator.pop();
+          }
+          store.dispatch(ViewDashboard(
+              filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
+                  ? null
+                  : ''));
+        },
+      );
+    } else if (userCompany.canCreate(widget.entityType)) {
+      iconWidget = IconButton(
+        tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
+        icon: Icon(
+          Icons.add_circle_outline,
+          color: textColor,
+        ),
+        onPressed: () {
+          if (isMobile(context)) {
+            navigator.pop();
+          }
+          createEntityByType(
+            context: context,
+            entityType: widget.entityType,
+            applyFilter: false,
+          );
+        },
+      );
     }
 
     bool isLoading = false;
@@ -695,56 +732,30 @@ class _DrawerTileState extends State<DrawerTile> {
         opacity: isSelected ? 1 : .8,
         child: ListTile(
           dense: true,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: isLoading
-                ? SizedBox(
-                    child: CircularProgressIndicator(),
-                    width: 22,
-                    height: 22,
-                  )
-                : Icon(
-                    widget.icon,
-                    size: 22,
-                    color: textColor,
-                  ),
-          ),
-          title: state.isMenuCollapsed
-              ? SizedBox()
-              : Text(
-                  widget.title,
-                  key: ValueKey('menu_${widget.title}'),
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontSize: 14,
-                        color: textColor,
-                      ),
-                ),
-          onTap: () {
-            if (widget.entityType != null) {
-              viewEntitiesByType(
-                entityType: widget.entityType,
-              );
-            } else {
-              widget.onTap();
-            }
-          },
-          onLongPress: () => widget.onLongPress != null
-              ? widget.onLongPress()
-              : widget.entityType != null
-                  ? createEntityByType(
-                      context: context,
-                      entityType: widget.entityType,
-                      applyFilter: false,
+          leading: _isHovered && isDesktop(context) && iconWidget != null
+              ? iconWidget
+              : isLoading
+                  ? SizedBox(
+                      child: CircularProgressIndicator(),
+                      width: 22,
+                      height: 22,
                     )
-                  : null,
-          /*
-              trailing: _isHovered ||
-                      !RendererBinding.instance.mouseTracker.mouseIsConnected
-                  ? trailingWidget
-                  : null,
-
-               */
-          trailing: state.isMenuCollapsed ? null : trailingWidget,
+                  : IconButton(
+                      icon: Icon(widget.icon),
+                      color: textColor,
+                      onPressed: onTap,
+                    ),
+          title: Text(
+            widget.title,
+            key: ValueKey('menu_${widget.title}'),
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontSize: 14,
+                  color: textColor,
+                ),
+          ),
+          onTap: onTap,
+          onLongPress: onLongPress,
+          trailing: isMobile(context) ? iconWidget : null,
         ),
       ),
     );
@@ -757,8 +768,8 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     return MouseRegion(
-      //onEnter: (event) => setState(() => _isHovered = true),
-      //onExit: (event) => setState(() => _isHovered = false),
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
       child: child,
     );
   }
