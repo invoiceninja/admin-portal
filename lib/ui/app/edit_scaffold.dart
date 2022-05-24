@@ -104,7 +104,7 @@ class EditScaffold extends StatelessWidget {
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
         EntityAction.cancel,
       EntityAction.save,
-      ...actions ?? [],
+      ...(actions ?? []).where((action) => action != null),
     ];
 
     final textStyle = Theme.of(context)
@@ -156,8 +156,7 @@ class EditScaffold extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: OverflowView.flexible(
                         spacing: 8,
-                        children:
-                            entityActions.where((action) => action != null).map(
+                        children: entityActions.map(
                           (action) {
                             String label;
                             if (action == EntityAction.save &&
@@ -223,8 +222,7 @@ class EditScaffold extends StatelessWidget {
                             itemBuilder: (BuildContext context) {
                               return entityActions
                                   .toList()
-                                  .sublist(entityActions.length - remaining - 1)
-                                  .where((action) => action != null)
+                                  .sublist(entityActions.length - remaining)
                                   .map((action) {
                                 return PopupMenuItem<EntityAction>(
                                   value: action,
