@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -193,7 +192,7 @@ class EditScaffold extends StatelessWidget {
 
                                         onSavePressed(context);
                                       } else {
-                                        handleEntitiesActions([entity], action);
+                                        onActionPressed(context, action);
                                       }
                                     },
                             );
@@ -217,7 +216,7 @@ class EditScaffold extends StatelessWidget {
                               ),
                             ),
                             onSelected: (EntityAction action) {
-                              handleEntitiesActions([entity], action);
+                              onActionPressed(context, action);
                             },
                             itemBuilder: (BuildContext context) {
                               return entityActions
