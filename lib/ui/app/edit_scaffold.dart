@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class EditScaffold extends StatefulWidget {
+class EditScaffold extends StatelessWidget {
   const EditScaffold({
     Key key,
     @required this.title,
@@ -53,27 +53,6 @@ class EditScaffold extends StatefulWidget {
   final bool isFullscreen;
 
   @override
-  State<EditScaffold> createState() => _EditScaffoldState();
-}
-
-class _EditScaffoldState extends State<EditScaffold> {
-  bool _isInitialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Work around to bug which caused enter to no longer work
-    // in the dropdown picker after edting an old invoice and then
-    // trying to create a new one
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _isInitialized = true;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -85,7 +64,7 @@ class _EditScaffoldState extends State<EditScaffold> {
             state.uiState.isEditing ||
             state.settingsUIState.isChanged) &&
         !state.isSaving &&
-        (widget.entity?.isEditable ?? true);
+        (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
         ? (state.account.trialStarted.isEmpty
@@ -122,10 +101,10 @@ class _EditScaffoldState extends State<EditScaffold> {
 
     final entityActions = <EntityAction>[
       if (isDesktop(context) &&
-          ((isEnabled && widget.onSavePressed != null) || isCancelEnabled))
+          ((isEnabled && onSavePressed != null) || isCancelEnabled))
         EntityAction.cancel,
       EntityAction.save,
-      ...(widget.actions ?? []).where((action) => action != null),
+      ...(actions ?? []).where((action) => action != null),
     ];
 
     final textStyle = Theme.of(context)
@@ -155,10 +134,10 @@ class _EditScaffoldState extends State<EditScaffold> {
                                 }
                               : null,
                         ),
-                        Expanded(child: widget.body),
+                        Expanded(child: body),
                       ],
                     )
-                  : widget.body,
+                  : body,
           drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
           appBar: AppBar(
             centerTitle: false,
@@ -166,121 +145,120 @@ class _EditScaffoldState extends State<EditScaffold> {
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(widget.title),
-                if (isDesktop(context) &&
-                    widget.entity != null &&
-                    widget.entity.isOld) ...[
+                Text(title),
+                if (isDesktop(context) && entity != null && entity.isOld) ...[
                   SizedBox(width: 16),
                   EntityStatusChip(
-                      entity: state.getEntity(
-                          widget.entity.entityType, widget.entity.id)),
+                      entity: state.getEntity(entity.entityType, entity.id)),
                 ],
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: OverflowView.flexible(
-                        spacing: 8,
-                        children: entityActions.map(
-                          (action) {
-                            String label;
-                            if (action == EntityAction.save &&
-                                widget.saveLabel != null) {
-                              label = widget.saveLabel;
-                            } else {
-                              label = localization.lookup('$action');
-                            }
+                if (true)
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FocusTraversalGroup(
+                        // TODO this is needed as a workaround to prevent
+                        // breaking tab focus traversal
+                        descendantsAreFocusable: false,
+                        child: OverflowView.flexible(
+                            spacing: 8,
+                            children: entityActions.map(
+                              (action) {
+                                String label;
+                                if (action == EntityAction.save &&
+                                    saveLabel != null) {
+                                  label = saveLabel;
+                                } else {
+                                  label = localization.lookup('$action');
+                                }
 
-                            return OutlinedButton(
-                              child: !_isInitialized
-                                  ? SizedBox()
-                                  : ConstrainedBox(
-                                      constraints: BoxConstraints(minWidth: 60),
-                                      child: IconText(
-                                        icon: getEntityActionIcon(action),
-                                        text: label,
-                                        style:
-                                            state.isSaving ? null : textStyle,
-                                      ),
+                                return OutlinedButton(
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(minWidth: 60),
+                                    child: IconText(
+                                      icon: getEntityActionIcon(action),
+                                      text: label,
+                                      style: state.isSaving ? null : textStyle,
                                     ),
-                              onPressed: state.isSaving
-                                  ? null
-                                  : () {
-                                      if (action == EntityAction.cancel) {
-                                        if (widget.onCancelPressed != null) {
-                                          widget.onCancelPressed(context);
-                                        } else {
-                                          store.dispatch(ResetSettings());
-                                        }
-                                      } else if (action == EntityAction.save) {
-                                        // Clear focus now to prevent un-focus after save from
-                                        // marking the form as changed and to hide the keyboard
-                                        FocusScope.of(context).unfocus(
-                                            disposition: UnfocusDisposition
-                                                .previouslyFocusedChild);
-
-                                        widget.onSavePressed(context);
-                                      } else {
-                                        widget.onActionPressed(context, action);
-                                      }
-                                    },
-                            );
-                          },
-                        ).toList(),
-                        builder: (context, remaining) {
-                          return PopupMenuButton<EntityAction>(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    localization.more,
-                                    style: textStyle,
                                   ),
-                                  SizedBox(width: 4),
-                                  Icon(Icons.arrow_drop_down,
-                                      color: state.headerTextColor),
-                                ],
-                              ),
-                            ),
-                            onSelected: (EntityAction action) {
-                              widget.onActionPressed(context, action);
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return entityActions
-                                  .toList()
-                                  .sublist(entityActions.length - remaining)
-                                  .map((action) {
-                                return PopupMenuItem<EntityAction>(
-                                  value: action,
+                                  onPressed: state.isSaving
+                                      ? null
+                                      : () {
+                                          if (action == EntityAction.cancel) {
+                                            if (onCancelPressed != null) {
+                                              onCancelPressed(context);
+                                            } else {
+                                              store.dispatch(ResetSettings());
+                                            }
+                                          } else if (action ==
+                                              EntityAction.save) {
+                                            // Clear focus now to prevent un-focus after save from
+                                            // marking the form as changed and to hide the keyboard
+                                            FocusScope.of(context).unfocus(
+                                                disposition: UnfocusDisposition
+                                                    .previouslyFocusedChild);
+
+                                            onSavePressed(context);
+                                          } else {
+                                            onActionPressed(context, action);
+                                          }
+                                        },
+                                );
+                              },
+                            ).toList(),
+                            builder: (context, remaining) {
+                              return PopupMenuButton<EntityAction>(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                   child: Row(
-                                    children: <Widget>[
-                                      Icon(getEntityActionIcon(action),
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                      SizedBox(width: 16.0),
-                                      Text(AppLocalization.of(context)
-                                              .lookup(action.toString()) ??
-                                          ''),
+                                    children: [
+                                      Text(
+                                        localization.more,
+                                        style: textStyle,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Icon(Icons.arrow_drop_down,
+                                          color: state.headerTextColor),
                                     ],
                                   ),
-                                );
-                              }).toList();
-                            },
-                          );
-                        }),
-                  ),
-                )
+                                ),
+                                onSelected: (EntityAction action) {
+                                  onActionPressed(context, action);
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return entityActions
+                                      .toList()
+                                      .sublist(entityActions.length - remaining)
+                                      .map((action) {
+                                    return PopupMenuItem<EntityAction>(
+                                      value: action,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(getEntityActionIcon(action),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          SizedBox(width: 16.0),
+                                          Text(AppLocalization.of(context)
+                                                  .lookup(action.toString()) ??
+                                              ''),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+                              );
+                            }),
+                      ),
+                    ),
+                  )
               ],
             ),
-            bottom: widget.isFullscreen && isDesktop(context)
-                ? null
-                : widget.appBarBottom,
+            bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
           ),
-          bottomNavigationBar: widget.bottomNavigationBar,
+          bottomNavigationBar: bottomNavigationBar,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          floatingActionButton: widget.floatingActionButton,
+          floatingActionButton: floatingActionButton,
         ),
       ),
     );
