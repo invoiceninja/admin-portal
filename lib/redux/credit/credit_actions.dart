@@ -584,7 +584,6 @@ Future handleCreditAction(
           ..credits.addAll(credits
               .map((credit) => PaymentableEntity.fromCredit(credit))
               .toList())),
-        filterEntity: state.clientState.map[credit.clientId],
       );
       break;
     case EntityAction.download:

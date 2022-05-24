@@ -762,7 +762,12 @@ class _DrawerTileState extends State<DrawerTile> {
           ),
           onTap: onTap,
           onLongPress: onLongPress,
-          trailing: isMobile(context) ? iconWidget : null,
+          trailing: isMobile(context)
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: iconWidget,
+                )
+              : null,
         ),
       ),
     );

@@ -309,7 +309,6 @@ void handleExpenseCategoryAction(BuildContext context,
     case EntityAction.newExpense:
       createEntity(
         context: context,
-        filterEntity: expenseCategory,
         entity: ExpenseEntity(state: state)
             .rebuild((b) => b..categoryId = expenseCategory.id),
       );

@@ -352,23 +352,20 @@ void handleUserAction(
       createEntity(
           context: context,
           entity: ClientEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user.id),
-          filterEntity: user);
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user.id),
-          filterEntity: user);
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.assignedUserId = user.id),
-          filterEntity: user);
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -377,7 +374,6 @@ void handleUserAction(
           state: state,
           entityType: EntityType.quote,
         ).rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newCredit:
@@ -387,7 +383,6 @@ void handleUserAction(
           state: state,
           entityType: EntityType.credit,
         ).rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newExpense:
@@ -395,7 +390,6 @@ void handleUserAction(
         context: context,
         entity: ExpenseEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newPayment:
@@ -403,7 +397,6 @@ void handleUserAction(
         context: context,
         entity: PaymentEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newProject:
@@ -411,7 +404,6 @@ void handleUserAction(
         context: context,
         entity: ProjectEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newTask:
@@ -419,7 +411,6 @@ void handleUserAction(
         context: context,
         entity:
             TaskEntity(state: state).rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.newVendor:
@@ -427,7 +418,6 @@ void handleUserAction(
         context: context,
         entity: VendorEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
-        filterEntity: user,
       );
       break;
     case EntityAction.restore:
@@ -493,8 +483,7 @@ void handleUserAction(
           entity: ExpenseEntity(
               state: state,
               user: user,
-              entityType: EntityType.recurringExpense),
-          filterEntity: user);
+              entityType: EntityType.recurringExpense));
       break;
     case EntityAction.remove:
       final message = userIds.length > 1

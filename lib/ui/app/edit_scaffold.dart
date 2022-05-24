@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -12,7 +14,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -98,6 +99,19 @@ class EditScaffold extends StatelessWidget {
       isCancelEnabled = true;
     }
 
+    final entityActions = <EntityAction>[
+      if (isDesktop(context) &&
+          ((isEnabled && onSavePressed != null) || isCancelEnabled))
+        EntityAction.cancel,
+      EntityAction.save,
+      ...(actions ?? []).where((action) => action != null),
+    ];
+
+    final textStyle = Theme.of(context)
+        .textTheme
+        .bodyText2
+        .copyWith(color: state.headerTextColor);
+
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -131,85 +145,115 @@ class EditScaffold extends StatelessWidget {
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Flexible(child: Text(title)),
+                Text(title),
                 if (isDesktop(context) && entity != null && entity.isOld) ...[
                   SizedBox(width: 16),
                   EntityStatusChip(
                       entity: state.getEntity(entity.entityType, entity.id)),
                 ],
+                if (true)
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: FocusTraversalGroup(
+                        // TODO this is needed as a workaround to prevent
+                        // breaking tab focus traversal
+                        descendantsAreFocusable: false,
+                        child: OverflowView.flexible(
+                            spacing: 8,
+                            children: entityActions.map(
+                              (action) {
+                                String label;
+                                if (action == EntityAction.save &&
+                                    saveLabel != null) {
+                                  label = saveLabel;
+                                } else {
+                                  label = localization.lookup('$action');
+                                }
+
+                                return OutlinedButton(
+                                  child: ConstrainedBox(
+                                    constraints: BoxConstraints(minWidth: 60),
+                                    child: IconText(
+                                      icon: getEntityActionIcon(action),
+                                      text: label,
+                                      style: state.isSaving ? null : textStyle,
+                                    ),
+                                  ),
+                                  onPressed: state.isSaving
+                                      ? null
+                                      : () {
+                                          if (action == EntityAction.cancel) {
+                                            if (onCancelPressed != null) {
+                                              onCancelPressed(context);
+                                            } else {
+                                              store.dispatch(ResetSettings());
+                                            }
+                                          } else if (action ==
+                                              EntityAction.save) {
+                                            // Clear focus now to prevent un-focus after save from
+                                            // marking the form as changed and to hide the keyboard
+                                            FocusScope.of(context).unfocus(
+                                                disposition: UnfocusDisposition
+                                                    .previouslyFocusedChild);
+
+                                            onSavePressed(context);
+                                          } else {
+                                            onActionPressed(context, action);
+                                          }
+                                        },
+                                );
+                              },
+                            ).toList(),
+                            builder: (context, remaining) {
+                              return PopupMenuButton<EntityAction>(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        localization.more,
+                                        style: textStyle,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Icon(Icons.arrow_drop_down,
+                                          color: state.headerTextColor),
+                                    ],
+                                  ),
+                                ),
+                                onSelected: (EntityAction action) {
+                                  onActionPressed(context, action);
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return entityActions
+                                      .toList()
+                                      .sublist(entityActions.length - remaining)
+                                      .map((action) {
+                                    return PopupMenuItem<EntityAction>(
+                                      value: action,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(getEntityActionIcon(action),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
+                                          SizedBox(width: 16.0),
+                                          Text(AppLocalization.of(context)
+                                                  .lookup(action.toString()) ??
+                                              ''),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList();
+                                },
+                              );
+                            }),
+                      ),
+                    ),
+                  )
               ],
             ),
-            actions: <Widget>[
-              if (state.isSaving)
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Center(
-                      child: SizedBox(
-                    width: 26,
-                    height: 26,
-                    child: CircularProgressIndicator(color: Colors.white),
-                  )),
-                )
-              else
-                SaveCancelButtons(
-                  isEnabled: isEnabled && onSavePressed != null,
-                  isHeader: true,
-                  isCancelEnabled: isCancelEnabled,
-                  saveLabel: saveLabel,
-                  cancelLabel:
-                      entity == null ? localization.cancel : localization.back,
-                  onSavePressed: (context) {
-                    // Clear focus now to prevent un-focus after save from
-                    // marking the form as changed and to hide the keyboard
-                    FocusScope.of(context).unfocus(
-                        disposition: UnfocusDisposition.previouslyFocusedChild);
-
-                    onSavePressed(context);
-                  },
-                  onCancelPressed: isMobile(context)
-                      ? null
-                      : (context) {
-                          if (onCancelPressed != null) {
-                            onCancelPressed(context);
-                          } else {
-                            store.dispatch(ResetSettings());
-                          }
-                        },
-                ),
-              if (actions != null)
-                PopupMenuButton<EntityAction>(
-                  icon: Icon(
-                    Icons.more_vert,
-                    //size: iconSize,
-                    //color: color,
-                  ),
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<EntityAction>>[
-                    ...actions
-                        .map((action) => action == null
-                            ? PopupMenuDivider()
-                            : PopupMenuItem<EntityAction>(
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      getEntityActionIcon(action),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                                    SizedBox(width: 16.0),
-                                    Text(AppLocalization.of(context)
-                                        .lookup(action.toString())),
-                                  ],
-                                ),
-                                value: action,
-                              ))
-                        .toList()
-                  ],
-                  onSelected: (action) => onActionPressed(context, action),
-                  enabled: isEnabled,
-                )
-            ],
             bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
           ),
           bottomNavigationBar: bottomNavigationBar,

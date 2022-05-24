@@ -625,53 +625,60 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       currency?.precision ?? 2);
                                 }
 
-                                final updatedItem = item.rebuild((b) => b
-                                  ..productKey = product.productKey
-                                  ..notes =
-                                      item.isTask ? item.notes : product.notes
-                                  ..productCost = item.productCost
-                                  ..cost = item.isTask && item.cost != 0
-                                      ? item.cost
-                                      : cost
-                                  ..quantity = item.isTask || item.quantity != 0
-                                      ? item.quantity
-                                      : viewModel.state.company.defaultQuantity
-                                          ? 1
-                                          : product.quantity
-                                  ..customValue1 = product.customValue1
-                                  ..customValue2 = product.customValue2
-                                  ..customValue3 = product.customValue3
-                                  ..customValue4 = product.customValue4
-                                  ..taxName1 =
-                                      company.numberOfItemTaxRates >= 1 &&
-                                              product.taxName1.isNotEmpty
-                                          ? product.taxName1
-                                          : item.taxName1
-                                  ..taxRate1 =
-                                      company.numberOfItemTaxRates >= 1 &&
-                                              product.taxName1.isNotEmpty
-                                          ? product.taxRate1
-                                          : item.taxRate1
-                                  ..taxName2 =
-                                      company.numberOfItemTaxRates >= 2 &&
-                                              product.taxName2.isNotEmpty
-                                          ? product.taxName2
-                                          : item.taxName2
-                                  ..taxRate2 =
-                                      company.numberOfItemTaxRates >= 2 &&
-                                              product.taxName2.isNotEmpty
-                                          ? product.taxRate2
-                                          : item.taxRate2
-                                  ..taxName3 =
-                                      company.numberOfItemTaxRates >= 3 &&
-                                              product.taxName3.isNotEmpty
-                                          ? product.taxName3
-                                          : item.taxName3
-                                  ..taxRate3 =
-                                      company.numberOfItemTaxRates >= 3 &&
-                                              product.taxName3.isNotEmpty
-                                          ? product.taxRate3
-                                          : item.taxRate3);
+                                final updatedItem = company.fillProducts
+                                    ? item.rebuild((b) => b
+                                      ..productKey = product.productKey
+                                      ..notes = item.isTask
+                                          ? item.notes
+                                          : product.notes
+                                      ..productCost = item.productCost
+                                      ..cost = item.isTask && item.cost != 0
+                                          ? item.cost
+                                          : cost
+                                      ..quantity =
+                                          item.isTask || item.quantity != 0
+                                              ? item.quantity
+                                              : viewModel.state.company
+                                                      .defaultQuantity
+                                                  ? 1
+                                                  : product.quantity
+                                      ..customValue1 = product.customValue1
+                                      ..customValue2 = product.customValue2
+                                      ..customValue3 = product.customValue3
+                                      ..customValue4 = product.customValue4
+                                      ..taxName1 =
+                                          company.numberOfItemTaxRates >= 1 &&
+                                                  product.taxName1.isNotEmpty
+                                              ? product.taxName1
+                                              : item.taxName1
+                                      ..taxRate1 =
+                                          company.numberOfItemTaxRates >= 1 &&
+                                                  product.taxName1.isNotEmpty
+                                              ? product.taxRate1
+                                              : item.taxRate1
+                                      ..taxName2 =
+                                          company.numberOfItemTaxRates >= 2 &&
+                                                  product.taxName2.isNotEmpty
+                                              ? product.taxName2
+                                              : item.taxName2
+                                      ..taxRate2 =
+                                          company.numberOfItemTaxRates >= 2 &&
+                                                  product.taxName2.isNotEmpty
+                                              ? product.taxRate2
+                                              : item.taxRate2
+                                      ..taxName3 =
+                                          company.numberOfItemTaxRates >= 3 &&
+                                                  product.taxName3.isNotEmpty
+                                              ? product.taxName3
+                                              : item.taxName3
+                                      ..taxRate3 =
+                                          company.numberOfItemTaxRates >= 3 &&
+                                                  product.taxName3.isNotEmpty
+                                              ? product.taxRate3
+                                              : item.taxRate3)
+                                    : item.rebuild((b) =>
+                                        b..productKey = product.productKey);
+
                                 _onChanged(updatedItem, index, debounce: false);
                                 _updateTable();
                               },

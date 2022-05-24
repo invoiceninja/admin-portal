@@ -376,11 +376,13 @@ abstract class ExpenseEntity extends Object
       actions.add(EntityAction.documents);
     }
 
-    if (actions.isNotEmpty && actions.last != null) {
+    final superActions = super.getActions(userCompany: userCompany);
+
+    if (actions.isNotEmpty && superActions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(userCompany: userCompany));
+    return actions..addAll(superActions);
   }
 
   int compareTo(

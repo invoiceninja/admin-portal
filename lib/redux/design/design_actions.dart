@@ -268,16 +268,14 @@ void handleDesignAction(
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.designId = design.id),
-          filterEntity: design);
+              .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.designId = design.id),
-          filterEntity: design);
+              .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -285,8 +283,7 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.quote,
-          ).rebuild((b) => b.designId = design.id),
-          filterEntity: design);
+          ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newCredit:
       createEntity(
@@ -294,8 +291,7 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.credit,
-          ).rebuild((b) => b.designId = design.id),
-          filterEntity: design);
+          ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.restore:
       final message = designIds.length > 1
