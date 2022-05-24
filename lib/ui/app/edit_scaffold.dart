@@ -102,7 +102,7 @@ class EditScaffold extends StatelessWidget {
     final entityActions = <EntityAction>[
       if (isDesktop(context) &&
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
-        EntityAction.back,
+        EntityAction.cancel,
       EntityAction.save,
       ...actions ?? [],
     ];
@@ -159,24 +159,25 @@ class EditScaffold extends StatelessWidget {
                         children:
                             entityActions.where((action) => action != null).map(
                           (action) {
+                            String label;
+                            if (action == EntityAction.save &&
+                                saveLabel != null) {
+                              label = saveLabel;
+                            } else {
+                              label = localization.lookup('$action');
+                            }
+
                             return OutlinedButton(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(getEntityActionIcon(action),
-                                      color: textStyle.color),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    action == EntityAction.save &&
-                                            saveLabel != null
-                                        ? saveLabel
-                                        : localization.lookup('$action'),
-                                    style: textStyle,
-                                  ),
-                                ],
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(minWidth: 60),
+                                child: Text(
+                                  label,
+                                  style: textStyle,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                               onPressed: () {
-                                if (action == EntityAction.back) {
+                                if (action == EntityAction.cancel) {
                                   if (onCancelPressed != null) {
                                     onCancelPressed(context);
                                   } else {

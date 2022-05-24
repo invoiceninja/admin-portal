@@ -110,7 +110,7 @@ class EntityAction extends EnumClass {
   static const EntityAction viewInvoice = _$viewInvoice;
   static const EntityAction changeStatus = _$changeStatus;
   static const EntityAction addToInvoice = _$addToInvoice;
-  static const EntityAction back = _$back;
+  static const EntityAction cancel = _$cancel;
   static const EntityAction save = _$save;
 
   @override

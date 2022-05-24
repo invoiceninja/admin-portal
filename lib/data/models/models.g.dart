@@ -76,7 +76,7 @@ const EntityAction _$disconnect = const EntityAction._('disconnect');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
 const EntityAction _$changeStatus = const EntityAction._('changeStatus');
 const EntityAction _$addToInvoice = const EntityAction._('addToInvoice');
-const EntityAction _$back = const EntityAction._('back');
+const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$save = const EntityAction._('save');
 
 EntityAction _$valueOf(String name) {
@@ -207,8 +207,8 @@ EntityAction _$valueOf(String name) {
       return _$changeStatus;
     case 'addToInvoice':
       return _$addToInvoice;
-    case 'back':
-      return _$back;
+    case 'cancel':
+      return _$cancel;
     case 'save':
       return _$save;
     default:
@@ -281,7 +281,7 @@ final BuiltSet<EntityAction> _$values =
   _$viewInvoice,
   _$changeStatus,
   _$addToInvoice,
-  _$back,
+  _$cancel,
   _$save,
 ]);
 
