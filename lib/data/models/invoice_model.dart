@@ -955,7 +955,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (invitations.isNotEmpty && !multiselect) {
+      if (!multiselect) {
         actions.add(EntityAction.clientPortal);
       }
     }
