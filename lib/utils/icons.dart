@@ -98,7 +98,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.changeStatus:
       return Icons.adjust;
     case EntityAction.cancel:
-      return Icons.cancel;
+      return Icons.cancel_outlined;
     case EntityAction.save:
       return Icons.cloud_upload;
     default:

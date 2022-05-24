@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class EditScaffold extends StatelessWidget {
+class EditScaffold extends StatefulWidget {
   const EditScaffold({
     Key key,
     @required this.title,
@@ -52,6 +53,27 @@ class EditScaffold extends StatelessWidget {
   final bool isFullscreen;
 
   @override
+  State<EditScaffold> createState() => _EditScaffoldState();
+}
+
+class _EditScaffoldState extends State<EditScaffold> {
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Work around to bug which caused enter to no longer work
+    // in the dropdown picker after edting an old invoice and then
+    // trying to create a new one
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _isInitialized = true;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -63,7 +85,7 @@ class EditScaffold extends StatelessWidget {
             state.uiState.isEditing ||
             state.settingsUIState.isChanged) &&
         !state.isSaving &&
-        (entity?.isEditable ?? true);
+        (widget.entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
         ? (state.account.trialStarted.isEmpty
@@ -100,10 +122,10 @@ class EditScaffold extends StatelessWidget {
 
     final entityActions = <EntityAction>[
       if (isDesktop(context) &&
-          ((isEnabled && onSavePressed != null) || isCancelEnabled))
+          ((isEnabled && widget.onSavePressed != null) || isCancelEnabled))
         EntityAction.cancel,
       EntityAction.save,
-      ...(actions ?? []).where((action) => action != null),
+      ...(widget.actions ?? []).where((action) => action != null),
     ];
 
     final textStyle = Theme.of(context)
@@ -133,10 +155,10 @@ class EditScaffold extends StatelessWidget {
                                 }
                               : null,
                         ),
-                        Expanded(child: body),
+                        Expanded(child: widget.body),
                       ],
                     )
-                  : body,
+                  : widget.body,
           drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
           appBar: AppBar(
             centerTitle: false,
@@ -144,11 +166,14 @@ class EditScaffold extends StatelessWidget {
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(title),
-                if (isDesktop(context) && entity != null && entity.isOld) ...[
+                Text(widget.title),
+                if (isDesktop(context) &&
+                    widget.entity != null &&
+                    widget.entity.isOld) ...[
                   SizedBox(width: 16),
                   EntityStatusChip(
-                      entity: state.getEntity(entity.entityType, entity.id)),
+                      entity: state.getEntity(
+                          widget.entity.entityType, widget.entity.id)),
                 ],
                 Expanded(
                   child: Align(
@@ -159,27 +184,30 @@ class EditScaffold extends StatelessWidget {
                           (action) {
                             String label;
                             if (action == EntityAction.save &&
-                                saveLabel != null) {
-                              label = saveLabel;
+                                widget.saveLabel != null) {
+                              label = widget.saveLabel;
                             } else {
                               label = localization.lookup('$action');
                             }
 
                             return OutlinedButton(
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(minWidth: 60),
-                                child: Text(
-                                  label,
-                                  style: state.isSaving ? null : textStyle,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                              child: !_isInitialized
+                                  ? SizedBox()
+                                  : ConstrainedBox(
+                                      constraints: BoxConstraints(minWidth: 60),
+                                      child: IconText(
+                                        icon: getEntityActionIcon(action),
+                                        text: label,
+                                        style:
+                                            state.isSaving ? null : textStyle,
+                                      ),
+                                    ),
                               onPressed: state.isSaving
                                   ? null
                                   : () {
                                       if (action == EntityAction.cancel) {
-                                        if (onCancelPressed != null) {
-                                          onCancelPressed(context);
+                                        if (widget.onCancelPressed != null) {
+                                          widget.onCancelPressed(context);
                                         } else {
                                           store.dispatch(ResetSettings());
                                         }
@@ -190,9 +218,9 @@ class EditScaffold extends StatelessWidget {
                                             disposition: UnfocusDisposition
                                                 .previouslyFocusedChild);
 
-                                        onSavePressed(context);
+                                        widget.onSavePressed(context);
                                       } else {
-                                        onActionPressed(context, action);
+                                        widget.onActionPressed(context, action);
                                       }
                                     },
                             );
@@ -216,7 +244,7 @@ class EditScaffold extends StatelessWidget {
                               ),
                             ),
                             onSelected: (EntityAction action) {
-                              onActionPressed(context, action);
+                              widget.onActionPressed(context, action);
                             },
                             itemBuilder: (BuildContext context) {
                               return entityActions
@@ -246,11 +274,13 @@ class EditScaffold extends StatelessWidget {
                 )
               ],
             ),
-            bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
+            bottom: widget.isFullscreen && isDesktop(context)
+                ? null
+                : widget.appBarBottom,
           ),
-          bottomNavigationBar: bottomNavigationBar,
+          bottomNavigationBar: widget.bottomNavigationBar,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          floatingActionButton: floatingActionButton,
+          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );
