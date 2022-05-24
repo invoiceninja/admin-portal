@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,7 +100,9 @@ class EditScaffold extends StatelessWidget {
     }
 
     final entityActions = <EntityAction>[
-      if (isDesktop(context)) EntityAction.back,
+      if (isDesktop(context) &&
+          ((isEnabled && onSavePressed != null) || isCancelEnabled))
+        EntityAction.back,
       EntityAction.save,
       ...actions ?? [],
     ];
@@ -159,13 +160,6 @@ class EditScaffold extends StatelessWidget {
                             entityActions.where((action) => action != null).map(
                           (action) {
                             return OutlinedButton(
-                              /*
-                              child: IconText(
-                                icon: getEntityActionIcon(action),
-                                text: localization.lookup('$action'),
-                                style: textStyle,
-                              ),
-                              */
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
