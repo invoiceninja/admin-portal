@@ -109,7 +109,7 @@ class EditScaffold extends StatelessWidget {
 
     final textStyle = Theme.of(context)
         .textTheme
-        .bodyMedium
+        .bodyText2
         .copyWith(color: state.headerTextColor);
 
     return WillPopScope(
@@ -172,29 +172,31 @@ class EditScaffold extends StatelessWidget {
                                 constraints: BoxConstraints(minWidth: 60),
                                 child: Text(
                                   label,
-                                  style: textStyle,
+                                  style: state.isSaving ? null : textStyle,
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              onPressed: () {
-                                if (action == EntityAction.cancel) {
-                                  if (onCancelPressed != null) {
-                                    onCancelPressed(context);
-                                  } else {
-                                    store.dispatch(ResetSettings());
-                                  }
-                                } else if (action == EntityAction.save) {
-                                  // Clear focus now to prevent un-focus after save from
-                                  // marking the form as changed and to hide the keyboard
-                                  FocusScope.of(context).unfocus(
-                                      disposition: UnfocusDisposition
-                                          .previouslyFocusedChild);
+                              onPressed: state.isSaving
+                                  ? null
+                                  : () {
+                                      if (action == EntityAction.cancel) {
+                                        if (onCancelPressed != null) {
+                                          onCancelPressed(context);
+                                        } else {
+                                          store.dispatch(ResetSettings());
+                                        }
+                                      } else if (action == EntityAction.save) {
+                                        // Clear focus now to prevent un-focus after save from
+                                        // marking the form as changed and to hide the keyboard
+                                        FocusScope.of(context).unfocus(
+                                            disposition: UnfocusDisposition
+                                                .previouslyFocusedChild);
 
-                                  onSavePressed(context);
-                                } else {
-                                  handleEntitiesActions([entity], action);
-                                }
-                              },
+                                        onSavePressed(context);
+                                      } else {
+                                        handleEntitiesActions([entity], action);
+                                      }
+                                    },
                             );
                           },
                         ).toList(),
