@@ -651,7 +651,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               .where((invoice) => !(invoice as InvoiceEntity).isPaid)
               .map((invoice) => PaymentableEntity.fromInvoice(invoice))
               .toList())),
-        filterEntity: state.clientState.map[invoice.clientId],
       );
       break;
     case EntityAction.download:

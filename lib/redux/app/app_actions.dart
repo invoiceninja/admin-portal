@@ -878,7 +878,6 @@ void createEntity({
   BuildContext context,
   BaseEntity entity,
   bool force = false,
-  BaseEntity filterEntity,
   Completer completer,
   Completer cancelCompleter,
 }) {
@@ -895,15 +894,6 @@ void createEntity({
       context: context,
       force: force,
       callback: () {
-        if (filterEntity != null &&
-            uiState.filterEntityType != filterEntity.entityType &&
-            uiState.filterEntityId != filterEntity.id) {
-          filterByEntity(
-            context: context,
-            entity: filterEntity,
-          );
-        }
-
         if (uiState.previewStack.isNotEmpty) {
           store.dispatch(ClearPreviewStack());
         }

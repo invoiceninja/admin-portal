@@ -344,14 +344,12 @@ void handleClientAction(
       createEntity(
           context: context,
           entity:
-              TaskEntity(state: state).rebuild((b) => b..clientId = client.id),
-          filterEntity: client);
+              TaskEntity(state: state).rebuild((b) => b..clientId = client.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client),
-          filterEntity: client);
+          entity: InvoiceEntity(state: state, client: client));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
@@ -359,8 +357,7 @@ void handleClientAction(
           entity: InvoiceEntity(
               state: state,
               client: client,
-              entityType: EntityType.recurringInvoice),
-          filterEntity: client);
+              entityType: EntityType.recurringInvoice));
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
@@ -368,19 +365,16 @@ void handleClientAction(
           entity: ExpenseEntity(
               state: state,
               client: client,
-              entityType: EntityType.recurringExpense),
-          filterEntity: client);
+              entityType: EntityType.recurringExpense));
       break;
     case EntityAction.newQuote:
       createEntity(
-        context: context,
-        entity: InvoiceEntity(
-          state: state,
-          client: client,
-          entityType: EntityType.quote,
-        ),
-        filterEntity: client,
-      );
+          context: context,
+          entity: InvoiceEntity(
+            state: state,
+            client: client,
+            entityType: EntityType.quote,
+          ));
       break;
     case EntityAction.newCredit:
       createEntity(
@@ -390,14 +384,12 @@ void handleClientAction(
           client: client,
           entityType: EntityType.credit,
         ),
-        filterEntity: client,
       );
       break;
     case EntityAction.newExpense:
       createEntity(
         context: context,
         entity: ExpenseEntity(state: state, client: client),
-        filterEntity: client,
       );
       break;
     case EntityAction.newPayment:
@@ -405,7 +397,6 @@ void handleClientAction(
         context: context,
         entity:
             PaymentEntity(state: state).rebuild((b) => b.clientId = client.id),
-        filterEntity: client,
       );
       break;
     case EntityAction.newProject:
@@ -413,7 +404,6 @@ void handleClientAction(
         context: context,
         entity:
             ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
-        filterEntity: client,
       );
       break;
     case EntityAction.restore:
