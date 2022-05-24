@@ -103,7 +103,7 @@ class EditScaffold extends StatelessWidget {
     final entityActions = <EntityAction>[
       if (isDesktop(context)) EntityAction.back,
       EntityAction.save,
-      ...(actions ?? []),
+      ...actions ?? [],
     ];
 
     final textStyle = Theme.of(context)
@@ -166,10 +166,21 @@ class EditScaffold extends StatelessWidget {
                                 style: textStyle,
                               ),
                               */
-                              child: Text(action == EntityAction.save &&
-                                      saveLabel != null
-                                  ? saveLabel
-                                  : localization.lookup('$action')),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(getEntityActionIcon(action),
+                                      color: textStyle.color),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    action == EntityAction.save &&
+                                            saveLabel != null
+                                        ? saveLabel
+                                        : localization.lookup('$action'),
+                                    style: textStyle,
+                                  ),
+                                ],
+                              ),
                               onPressed: () {
                                 if (action == EntityAction.back) {
                                   if (onCancelPressed != null) {
