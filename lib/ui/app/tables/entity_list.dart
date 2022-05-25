@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -244,69 +243,65 @@ class _EntityListState extends State<EntityList> {
                 },
               ),
             Expanded(
-              child: AppScrollbar(
+              child: SingleChildScrollView(
                 controller: _controller,
-                child: SingleChildScrollView(
-                  controller: _controller,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: AppPaginatedDataTable(
-                      onSelectAll: (value) {
-                        final startIndex =
-                            min(_firstRowIndex, entityList.length - 1);
-                        final endIndex = min(
-                            _firstRowIndex + rowsPerPage, entityList.length);
-                        final entities = entityList
-                            .sublist(startIndex, endIndex)
-                            .map<BaseEntity>(
-                                (String entityId) => entityMap[entityId])
-                            .where((invoice) =>
-                                value != listUIState.isSelected(invoice.id))
-                            .toList();
-                        handleEntitiesActions(
-                            entities, EntityAction.toggleMultiselect);
-                      },
-                      columns: [
-                        if (!isInMultiselect) DataColumn(label: SizedBox()),
-                        ...widget.tableColumns.map((field) {
-                          String label =
-                              AppLocalization.of(context).lookup(field);
-                          if (field.startsWith('custom')) {
-                            final key = field.replaceFirst(
-                                'custom', entityType.snakeCase);
-                            label = state.company.getCustomFieldLabel(key);
-                          }
-                          return DataColumn(
-                              label: Container(
-                                child: Text(
-                                  label,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: AppPaginatedDataTable(
+                    onSelectAll: (value) {
+                      final startIndex =
+                          min(_firstRowIndex, entityList.length - 1);
+                      final endIndex =
+                          min(_firstRowIndex + rowsPerPage, entityList.length);
+                      final entities = entityList
+                          .sublist(startIndex, endIndex)
+                          .map<BaseEntity>(
+                              (String entityId) => entityMap[entityId])
+                          .where((invoice) =>
+                              value != listUIState.isSelected(invoice.id))
+                          .toList();
+                      handleEntitiesActions(
+                          entities, EntityAction.toggleMultiselect);
+                    },
+                    columns: [
+                      if (!isInMultiselect) DataColumn(label: SizedBox()),
+                      ...widget.tableColumns.map((field) {
+                        String label =
+                            AppLocalization.of(context).lookup(field);
+                        if (field.startsWith('custom')) {
+                          final key = field.replaceFirst(
+                              'custom', entityType.snakeCase);
+                          label = state.company.getCustomFieldLabel(key);
+                        }
+                        return DataColumn(
+                            label: Container(
+                              child: Text(
+                                label,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              onSort: (int columnIndex, bool ascending) {
-                                widget.onSortColumn(field);
-                              });
-                        }),
-                      ],
-                      source: dataTableSource,
-                      sortColumnIndex: widget.tableColumns
-                              .contains(listUIState.sortField)
-                          ? widget.tableColumns.indexOf(listUIState.sortField)
-                          : 0,
-                      sortAscending: listUIState.sortAscending,
-                      rowsPerPage: state.prefState.rowsPerPage,
-                      onPageChanged: (row) => _firstRowIndex = row,
-                      initialFirstRowIndex: _firstRowIndex,
-                      availableRowsPerPage: [
-                        10,
-                        25,
-                        50,
-                      ],
-                      onRowsPerPageChanged: (value) {
-                        store.dispatch(
-                            UpdateUserPreferences(rowsPerPage: value));
-                      },
-                    ),
+                            ),
+                            onSort: (int columnIndex, bool ascending) {
+                              widget.onSortColumn(field);
+                            });
+                      }),
+                    ],
+                    source: dataTableSource,
+                    sortColumnIndex:
+                        widget.tableColumns.contains(listUIState.sortField)
+                            ? widget.tableColumns.indexOf(listUIState.sortField)
+                            : 0,
+                    sortAscending: listUIState.sortAscending,
+                    rowsPerPage: state.prefState.rowsPerPage,
+                    onPageChanged: (row) => _firstRowIndex = row,
+                    initialFirstRowIndex: _firstRowIndex,
+                    availableRowsPerPage: [
+                      10,
+                      25,
+                      50,
+                    ],
+                    onRowsPerPageChanged: (value) {
+                      store.dispatch(UpdateUserPreferences(rowsPerPage: value));
+                    },
                   ),
                 ),
               ),

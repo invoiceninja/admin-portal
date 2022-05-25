@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
-
 class ScrollableListView extends StatefulWidget {
   const ScrollableListView({
     Key key,
@@ -37,14 +34,11 @@ class _ScrollableListViewState extends State<ScrollableListView> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScrollbar(
+    return ListView(
+      padding: widget.padding,
+      children: widget.children,
       controller: widget.scrollController ?? _scrollController,
-      child: ListView(
-        padding: widget.padding,
-        children: widget.children,
-        controller: widget.scrollController ?? _scrollController,
-        shrinkWrap: true,
-      ),
+      shrinkWrap: true,
     );
   }
 }
@@ -87,24 +81,21 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return AppScrollbar(
-      controller: widget.scrollController ?? _scrollController,
-      child: widget.separatorBuilder != null
-          ? ListView.separated(
-              separatorBuilder: widget.separatorBuilder,
-              padding: widget.padding,
-              itemBuilder: widget.itemBuilder,
-              itemCount: widget.itemCount,
-              controller: widget.scrollController ?? _scrollController,
-              shrinkWrap: true,
-            )
-          : ListView.builder(
-              padding: widget.padding,
-              itemBuilder: widget.itemBuilder,
-              itemCount: widget.itemCount,
-              controller: widget.scrollController ?? _scrollController,
-              shrinkWrap: true,
-            ),
-    );
+    return widget.separatorBuilder != null
+        ? ListView.separated(
+            separatorBuilder: widget.separatorBuilder,
+            padding: widget.padding,
+            itemBuilder: widget.itemBuilder,
+            itemCount: widget.itemCount,
+            controller: widget.scrollController ?? _scrollController,
+            shrinkWrap: true,
+          )
+        : ListView.builder(
+            padding: widget.padding,
+            itemBuilder: widget.itemBuilder,
+            itemCount: widget.itemCount,
+            controller: widget.scrollController ?? _scrollController,
+            shrinkWrap: true,
+          );
   }
 }

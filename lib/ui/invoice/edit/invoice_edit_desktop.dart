@@ -25,7 +25,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scrollbar.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -238,694 +237,680 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       termsString = '${localization.net} $terms';
     }
 
-    return AppScrollbar(
+    return SingleChildScrollView(
       controller: _scrollController,
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          key: ValueKey('__invoice_${invoice.id}__'),
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: FormCard(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    padding: const EdgeInsets.only(
-                        top: kMobileDialogPadding,
-                        right: kMobileDialogPadding / 2,
-                        bottom: kMobileDialogPadding,
-                        left: kMobileDialogPadding),
-                    children: <Widget>[
-                      if (invoice.isNew)
-                        ClientPicker(
-                          autofocus: true,
-                          clientId: invoice.clientId,
-                          clientState: state.clientState,
-                          onSelected: (client) {
-                            viewModel.onClientChanged(context, invoice, client);
-                          },
-                          onAddPressed: (completer) =>
-                              viewModel.onAddClientPressed(context, completer),
-                        )
-                      else
-                        InkWell(
-                          onTap: () {
-                            filterByEntity(context: context, entity: client);
-                          },
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                minWidth: double.infinity, minHeight: 40),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Text(
-                                EntityPresenter()
-                                    .initialize(client, context)
-                                    .title(),
-                                style: Theme.of(context).textTheme.headline6,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+      child: Column(
+        key: ValueKey('__invoice_${invoice.id}__'),
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding / 2,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding),
+                  children: <Widget>[
+                    if (invoice.isNew)
+                      ClientPicker(
+                        autofocus: true,
+                        clientId: invoice.clientId,
+                        clientState: state.clientState,
+                        onSelected: (client) {
+                          viewModel.onClientChanged(context, invoice, client);
+                        },
+                        onAddPressed: (completer) =>
+                            viewModel.onAddClientPressed(context, completer),
+                      )
+                    else
+                      InkWell(
+                        onTap: () {
+                          filterByEntity(context: context, entity: client);
+                        },
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minWidth: double.infinity, minHeight: 40),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              EntityPresenter()
+                                  .initialize(client, context)
+                                  .title(),
+                              style: Theme.of(context).textTheme.headline6,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
-                      SizedBox(height: 8),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 186),
-                        child: InvoiceEditContactsScreen(
-                          entityType: invoice.entityType,
-                        ),
                       ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: FormCard(
-                    padding: const EdgeInsets.only(
-                        top: kMobileDialogPadding,
-                        right: kMobileDialogPadding / 2,
-                        bottom: kMobileDialogPadding,
-                        left: kMobileDialogPadding / 2),
-                    children: <Widget>[
-                      if (entityType == EntityType.recurringInvoice) ...[
-                        AppDropdownButton<String>(
-                            labelText: localization.frequency,
-                            value: invoice.frequencyId,
-                            onChanged: (dynamic value) {
-                              viewModel.onChanged(invoice
-                                  .rebuild((b) => b..frequencyId = value));
-                            },
-                            items: kFrequencies.entries
-                                .map((entry) => DropdownMenuItem(
-                                      value: entry.key,
-                                      child: Text(
-                                          localization.lookup(entry.value)),
-                                    ))
-                                .toList()),
-                        DatePicker(
-                          labelText: (invoice.lastSentDate ?? '').isNotEmpty
-                              ? localization.nextSendDate
-                              : localization.startDate,
-                          onSelected: (date, _) {
-                            viewModel.onChanged(
-                                invoice.rebuild((b) => b..nextSendDate = date));
-                          },
-                          selectedDate: invoice.nextSendDate,
-                          firstDate: DateTime.now(),
-                        ),
-                        AppDropdownButton<int>(
-                          labelText: localization.remainingCycles,
-                          value: invoice.remainingCycles,
-                          blankValue: null,
-                          onChanged: (dynamic value) => viewModel.onChanged(
-                              invoice
-                                  .rebuild((b) => b..remainingCycles = value)),
-                          items: [
-                            DropdownMenuItem(
-                              child: Text(localization.endless),
-                              value: -1,
-                            ),
-                            ...List<int>.generate(61, (i) => i)
-                                .map((value) => DropdownMenuItem(
-                                      child: Text('$value'),
-                                      value: value,
-                                    ))
-                                .toList()
-                          ],
-                        ),
-                        AppDropdownButton<String>(
-                          labelText: localization.dueDate,
-                          value: invoice.dueDateDays ?? '',
-                          onChanged: (dynamic value) {
-                            viewModel.onChanged(
-                                invoice.rebuild((b) => b..dueDateDays = value));
-                          },
-                          items: [
-                            DropdownMenuItem(
-                              child: Text(localization.usePaymentTerms),
-                              value: 'terms',
-                            ),
-                            ...List<int>.generate(31, (i) => i + 1)
-                                .map((value) => DropdownMenuItem(
-                                      child: Text(value == 1
-                                          ? localization.firstDayOfTheMonth
-                                          : value == 31
-                                              ? localization.lastDayOfTheMonth
-                                              : localization.dayCount
-                                                  .replaceFirst(
-                                                      ':count', '$value')),
-                                      value: '$value',
-                                    ))
-                                .toList()
-                          ],
-                        ),
-                      ] else ...[
-                        DatePicker(
-                          validator: (String val) => val.trim().isEmpty
-                              ? AppLocalization.of(context).pleaseSelectADate
-                              : null,
-                          labelText: entityType == EntityType.credit
-                              ? localization.creditDate
-                              : entityType == EntityType.quote
-                                  ? localization.quoteDate
-                                  : localization.invoiceDate,
-                          selectedDate: invoice.date,
-                          onSelected: (date, _) {
-                            viewModel.onChanged(
-                                invoice.rebuild((b) => b..date = date));
-                          },
-                        ),
-                        DatePicker(
-                          key: ValueKey('__terms_${client.id}__'),
-                          labelText: entityType == EntityType.invoice
-                              ? localization.dueDate
-                              : localization.validUntil,
-                          selectedDate: invoice.dueDate,
-                          message: termsString,
-                          onSelected: (date, _) {
-                            viewModel.onChanged(
-                                invoice.rebuild((b) => b..dueDate = date));
-                          },
-                        ),
-                        DecoratedFormField(
-                          label: localization.partialDeposit,
-                          controller: _partialController,
-                          keyboardType: TextInputType.numberWithOptions(
-                              decimal: true, signed: true),
-                          onSavePressed: widget.entityViewModel.onSavePressed,
-                          validator: (String value) {
-                            final amount = parseDouble(_partialController.text);
-                            final total = invoice.calculateTotal(
-                                precision: precisionForInvoice(state, invoice));
-                            if (amount < 0 || (amount != 0 && amount > total)) {
-                              return localization.partialValue;
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        if (invoice.partial != null && invoice.partial > 0)
-                          DatePicker(
-                            labelText: localization.partialDueDate,
-                            selectedDate: invoice.partialDueDate,
-                            onSelected: (date, _) {
-                              viewModel.onChanged(invoice
-                                  .rebuild((b) => b..partialDueDate = date));
-                            },
-                          ),
-                      ],
-                      CustomField(
-                        controller: _custom1Controller,
-                        field: CustomFieldType.invoice1,
-                        value: invoice.customValue1,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                      ),
-                      CustomField(
-                        controller: _custom3Controller,
-                        field: CustomFieldType.invoice3,
-                        value: invoice.customValue3,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: FormCard(
-                    padding: const EdgeInsets.only(
-                        top: kMobileDialogPadding,
-                        right: kMobileDialogPadding,
-                        bottom: kMobileDialogPadding,
-                        left: kMobileDialogPadding / 2),
-                    children: <Widget>[
-                      DecoratedFormField(
-                        controller: _invoiceNumberController,
-                        label: entityType == EntityType.credit
-                            ? localization.creditNumber
-                            : entityType == EntityType.quote
-                                ? localization.quoteNumber
-                                : localization.invoiceNumber,
-                        validator: (String val) => val.trim().isEmpty &&
-                                invoice.isOld &&
-                                originalInvoice.number.isNotEmpty
-                            ? AppLocalization.of(context)
-                                .pleaseEnterAnInvoiceNumber
-                            : null,
-                        keyboardType: TextInputType.text,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                      ),
-                      DecoratedFormField(
-                        label: localization.poNumber,
-                        controller: _poNumberController,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                        keyboardType: TextInputType.text,
-                      ),
-                      DiscountField(
-                        controller: _discountController,
-                        value: invoice.discount,
-                        isAmountDiscount: invoice.isAmountDiscount,
-                        onTypeChanged: (value) => viewModel.onChanged(invoice
-                            .rebuild((b) => b..isAmountDiscount = value)),
-                      ),
-                      if (entityType == EntityType.recurringInvoice)
-                        AppDropdownButton<String>(
-                          labelText: localization.autoBill,
-                          value: invoice.autoBill,
-                          onChanged: (dynamic value) => viewModel.onChanged(
-                              invoice.rebuild((b) => b..autoBill = value)),
-                          items: [
-                            SettingsEntity.AUTO_BILL_ALWAYS,
-                            SettingsEntity.AUTO_BILL_OPT_OUT,
-                            SettingsEntity.AUTO_BILL_OPT_IN,
-                            SettingsEntity.AUTO_BILL_OFF,
-                          ]
-                              .map((value) => DropdownMenuItem(
-                                    child: Text(localization.lookup(value)),
-                                    value: value,
-                                  ))
-                              .toList(),
-                        ),
-                      CustomField(
-                        controller: _custom2Controller,
-                        field: CustomFieldType.invoice2,
-                        value: invoice.customValue2,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                      ),
-                      CustomField(
-                        controller: _custom4Controller,
-                        field: CustomFieldType.invoice4,
-                        value: invoice.customValue4,
-                        onSavePressed: widget.entityViewModel.onSavePressed,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            if (invoice.isInvoice &&
-                (invoice.hasTasks ||
-                    invoice.lineItems.any((item) => item.isTask) ||
-                    (company.showTasksTable ?? false)))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: AppTabBar(
-                  onTap: (index) {
-                    setState(() => _showTasksTable = index == 1);
-                  },
-                  controller: _tableTabController,
-                  tabs: [
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(getEntityIcon(EntityType.product)),
-                          SizedBox(width: 8),
-                          Text(localization.products +
-                              (countProducts > 0 ? ' ($countProducts)' : '')),
-                        ],
+                    SizedBox(height: 8),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 186),
+                      child: InvoiceEditContactsScreen(
+                        entityType: invoice.entityType,
                       ),
                     ),
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(getEntityIcon(EntityType.task)),
-                          SizedBox(width: 8),
-                          Text(localization.tasks +
-                              (countTasks > 0 ? ' ($countTasks)' : '')),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: FormCard(
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding / 2,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding / 2),
+                  children: <Widget>[
+                    if (entityType == EntityType.recurringInvoice) ...[
+                      AppDropdownButton<String>(
+                          labelText: localization.frequency,
+                          value: invoice.frequencyId,
+                          onChanged: (dynamic value) {
+                            viewModel.onChanged(
+                                invoice.rebuild((b) => b..frequencyId = value));
+                          },
+                          items: kFrequencies.entries
+                              .map((entry) => DropdownMenuItem(
+                                    value: entry.key,
+                                    child:
+                                        Text(localization.lookup(entry.value)),
+                                  ))
+                              .toList()),
+                      DatePicker(
+                        labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                            ? localization.nextSendDate
+                            : localization.startDate,
+                        onSelected: (date, _) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..nextSendDate = date));
+                        },
+                        selectedDate: invoice.nextSendDate,
+                        firstDate: DateTime.now(),
+                      ),
+                      AppDropdownButton<int>(
+                        labelText: localization.remainingCycles,
+                        value: invoice.remainingCycles,
+                        blankValue: null,
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..remainingCycles = value)),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.endless),
+                            value: -1,
+                          ),
+                          ...List<int>.generate(61, (i) => i)
+                              .map((value) => DropdownMenuItem(
+                                    child: Text('$value'),
+                                    value: value,
+                                  ))
+                              .toList()
+                        ],
+                      ),
+                      AppDropdownButton<String>(
+                        labelText: localization.dueDate,
+                        value: invoice.dueDateDays ?? '',
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..dueDateDays = value));
+                        },
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.usePaymentTerms),
+                            value: 'terms',
+                          ),
+                          ...List<int>.generate(31, (i) => i + 1)
+                              .map((value) => DropdownMenuItem(
+                                    child: Text(value == 1
+                                        ? localization.firstDayOfTheMonth
+                                        : value == 31
+                                            ? localization.lastDayOfTheMonth
+                                            : localization.dayCount
+                                                .replaceFirst(
+                                                    ':count', '$value')),
+                                    value: '$value',
+                                  ))
+                              .toList()
+                        ],
+                      ),
+                    ] else ...[
+                      DatePicker(
+                        validator: (String val) => val.trim().isEmpty
+                            ? AppLocalization.of(context).pleaseSelectADate
+                            : null,
+                        labelText: entityType == EntityType.credit
+                            ? localization.creditDate
+                            : entityType == EntityType.quote
+                                ? localization.quoteDate
+                                : localization.invoiceDate,
+                        selectedDate: invoice.date,
+                        onSelected: (date, _) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..date = date));
+                        },
+                      ),
+                      DatePicker(
+                        key: ValueKey('__terms_${client.id}__'),
+                        labelText: entityType == EntityType.invoice
+                            ? localization.dueDate
+                            : localization.validUntil,
+                        selectedDate: invoice.dueDate,
+                        message: termsString,
+                        onSelected: (date, _) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..dueDate = date));
+                        },
+                      ),
+                      DecoratedFormField(
+                        label: localization.partialDeposit,
+                        controller: _partialController,
+                        keyboardType: TextInputType.numberWithOptions(
+                            decimal: true, signed: true),
+                        onSavePressed: widget.entityViewModel.onSavePressed,
+                        validator: (String value) {
+                          final amount = parseDouble(_partialController.text);
+                          final total = invoice.calculateTotal(
+                              precision: precisionForInvoice(state, invoice));
+                          if (amount < 0 || (amount != 0 && amount > total)) {
+                            return localization.partialValue;
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      if (invoice.partial != null && invoice.partial > 0)
+                        DatePicker(
+                          labelText: localization.partialDueDate,
+                          selectedDate: invoice.partialDueDate,
+                          onSelected: (date, _) {
+                            viewModel.onChanged(invoice
+                                .rebuild((b) => b..partialDueDate = date));
+                          },
+                        ),
+                    ],
+                    CustomField(
+                      controller: _custom1Controller,
+                      field: CustomFieldType.invoice1,
+                      value: invoice.customValue1,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom3Controller,
+                      field: CustomFieldType.invoice3,
+                      value: invoice.customValue3,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: FormCard(
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding / 2),
+                  children: <Widget>[
+                    DecoratedFormField(
+                      controller: _invoiceNumberController,
+                      label: entityType == EntityType.credit
+                          ? localization.creditNumber
+                          : entityType == EntityType.quote
+                              ? localization.quoteNumber
+                              : localization.invoiceNumber,
+                      validator: (String val) => val.trim().isEmpty &&
+                              invoice.isOld &&
+                              originalInvoice.number.isNotEmpty
+                          ? AppLocalization.of(context)
+                              .pleaseEnterAnInvoiceNumber
+                          : null,
+                      keyboardType: TextInputType.text,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                    ),
+                    DecoratedFormField(
+                      label: localization.poNumber,
+                      controller: _poNumberController,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                      keyboardType: TextInputType.text,
+                    ),
+                    DiscountField(
+                      controller: _discountController,
+                      value: invoice.discount,
+                      isAmountDiscount: invoice.isAmountDiscount,
+                      onTypeChanged: (value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..isAmountDiscount = value)),
+                    ),
+                    if (entityType == EntityType.recurringInvoice)
+                      AppDropdownButton<String>(
+                        labelText: localization.autoBill,
+                        value: invoice.autoBill,
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..autoBill = value)),
+                        items: [
+                          SettingsEntity.AUTO_BILL_ALWAYS,
+                          SettingsEntity.AUTO_BILL_OPT_OUT,
+                          SettingsEntity.AUTO_BILL_OPT_IN,
+                          SettingsEntity.AUTO_BILL_OFF,
+                        ]
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(localization.lookup(value)),
+                                  value: value,
+                                ))
+                            .toList(),
+                      ),
+                    CustomField(
+                      controller: _custom2Controller,
+                      field: CustomFieldType.invoice2,
+                      value: invoice.customValue2,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom4Controller,
+                      field: CustomFieldType.invoice4,
+                      value: invoice.customValue4,
+                      onSavePressed: widget.entityViewModel.onSavePressed,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (invoice.isInvoice &&
+              (invoice.hasTasks ||
+                  invoice.lineItems.any((item) => item.isTask) ||
+                  (company.showTasksTable ?? false)))
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: AppTabBar(
+                onTap: (index) {
+                  setState(() => _showTasksTable = index == 1);
+                },
+                controller: _tableTabController,
+                tabs: [
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(getEntityIcon(EntityType.product)),
+                        SizedBox(width: 8),
+                        Text(localization.products +
+                            (countProducts > 0 ? ' ($countProducts)' : '')),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(getEntityIcon(EntityType.task)),
+                        SizedBox(width: 8),
+                        Text(localization.tasks +
+                            (countTasks > 0 ? ' ($countTasks)' : '')),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (entityType == EntityType.credit)
+            CreditEditItemsScreen(
+              viewModel: widget.entityViewModel,
+              isTasks: _showTasksTable,
+            )
+          else if (entityType == EntityType.quote)
+            QuoteEditItemsScreen(
+              viewModel: widget.entityViewModel,
+            )
+          else if (entityType == EntityType.invoice)
+            InvoiceEditItemsScreen(
+              viewModel: widget.entityViewModel,
+              isTasks: _showTasksTable,
+            )
+          else if (entityType == EntityType.recurringInvoice)
+            RecurringInvoiceEditItemsScreen(
+              viewModel: widget.entityViewModel,
+              isTasks: _showTasksTable,
+            )
+          else
+            SizedBox(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: FormCard(
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding / 2,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding),
+                  children: <Widget>[
+                    AppTabBar(
+                      controller: _optionTabController,
+                      tabs: [
+                        Tab(text: localization.terms),
+                        Tab(text: localization.footer),
+                        Tab(text: localization.publicNotes),
+                        Tab(text: localization.privateNotes),
+                        Tab(text: localization.settings),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 171,
+                      child: TabBarView(
+                        controller: _optionTabController,
+                        children: <Widget>[
+                          DecoratedFormField(
+                            maxLines: 7,
+                            controller: _termsController,
+                            keyboardType: TextInputType.multiline,
+                            label: entityType == EntityType.credit
+                                ? localization.creditTerms
+                                : entityType == EntityType.quote
+                                    ? localization.quoteTerms
+                                    : localization.invoiceTerms,
+                            hint: invoice.isOld && !invoice.isRecurringInvoice
+                                ? ''
+                                : settings.getDefaultTerms(invoice.entityType),
+                          ),
+                          DecoratedFormField(
+                            maxLines: 7,
+                            controller: _footerController,
+                            keyboardType: TextInputType.multiline,
+                            label: entityType == EntityType.credit
+                                ? localization.creditFooter
+                                : entityType == EntityType.quote
+                                    ? localization.quoteFooter
+                                    : localization.invoiceFooter,
+                            hint: invoice.isOld && !invoice.isRecurringInvoice
+                                ? ''
+                                : settings.getDefaultFooter(invoice.entityType),
+                          ),
+                          DecoratedFormField(
+                            maxLines: 7,
+                            controller: _publicNotesController,
+                            keyboardType: TextInputType.multiline,
+                            label: localization.publicNotes,
+                            hint: client.publicNotes,
+                          ),
+                          DecoratedFormField(
+                            maxLines: 7,
+                            controller: _privateNotesController,
+                            keyboardType: TextInputType.multiline,
+                            label: localization.privateNotes,
+                          ),
+                          LayoutBuilder(builder: (context, constraints) {
+                            return GridView.count(
+                              physics: NeverScrollableScrollPhysics(),
+                              mainAxisSpacing: 12,
+                              crossAxisSpacing: kTableColumnGap,
+                              shrinkWrap: true,
+                              primary: true,
+                              crossAxisCount: 2,
+                              childAspectRatio:
+                                  ((constraints.maxWidth / 2) - 8) / 50,
+                              children: [
+                                UserPicker(
+                                  userId: invoice.assignedUserId,
+                                  onChanged: (userId) => viewModel.onChanged(
+                                      invoice.rebuild(
+                                          (b) => b..assignedUserId = userId)),
+                                ),
+                                if (company.isModuleEnabled(EntityType.project))
+                                  ProjectPicker(
+                                    clientId: invoice.clientId,
+                                    projectId: invoice.projectId,
+                                    onChanged: (projectId) {
+                                      final project = store.state.projectState
+                                          .get(projectId);
+                                      final client = state.clientState
+                                          .get(project.clientId);
+
+                                      if (project.isOld &&
+                                          project.clientId !=
+                                              invoice.clientId) {
+                                        viewModel.onClientChanged(
+                                          context,
+                                          invoice.rebuild(
+                                              (b) => b..projectId = projectId),
+                                          client,
+                                        );
+                                      } else {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) => b..projectId = projectId));
+                                      }
+                                    },
+                                  ),
+                                if (company.isModuleEnabled(EntityType.vendor))
+                                  EntityDropdown(
+                                    entityType: EntityType.vendor,
+                                    entityId: invoice.vendorId,
+                                    labelText: localization.vendor,
+                                    entityList: memoizedDropdownVendorList(
+                                        state.vendorState.map,
+                                        state.vendorState.list,
+                                        state.userState.map,
+                                        state.staticState),
+                                    onSelected: (vendor) => viewModel.onChanged(
+                                      invoice.rebuild(
+                                          (b) => b.vendorId = vendor.id),
+                                    ),
+                                    onCreateNew: (completer, name) {
+                                      store.dispatch(SaveVendorRequest(
+                                          vendor: VendorEntity()
+                                              .rebuild((b) => b..name = name),
+                                          completer: completer));
+                                    },
+                                  ),
+                                DecoratedFormField(
+                                  key: ValueKey(
+                                      '__exchange_rate_${invoice.clientId}__'),
+                                  label: localization.exchangeRate,
+                                  initialValue: formatNumber(
+                                      invoice.exchangeRate, context,
+                                      formatNumberType:
+                                          FormatNumberType.inputMoney),
+                                  onChanged: (value) => viewModel.onChanged(
+                                      invoice.rebuild((b) => b
+                                        ..exchangeRate = parseDouble(value))),
+                                  keyboardType: TextInputType.numberWithOptions(
+                                      decimal: true),
+                                  onSavePressed:
+                                      widget.entityViewModel.onSavePressed,
+                                ),
+                                if (company.hasTaxes)
+                                  SwitchListTile(
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    title: Text(localization.inclusiveTaxes),
+                                    value: invoice.usesInclusiveTaxes,
+                                    onChanged: (value) {
+                                      viewModel.onChanged(invoice.rebuild((b) =>
+                                          b..usesInclusiveTaxes = value));
+                                    },
+                                  ),
+                                if (invoice.isInvoice)
+                                  SwitchListTile(
+                                    activeColor:
+                                        Theme.of(context).colorScheme.secondary,
+                                    title: Text(localization.autoBillEnabled),
+                                    value: invoice.autoBillEnabled,
+                                    onChanged: (value) {
+                                      viewModel.onChanged(invoice.rebuild(
+                                          (b) => b..autoBillEnabled = value));
+                                    },
+                                  ),
+                              ],
+                            );
+                          }),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-            if (entityType == EntityType.credit)
-              CreditEditItemsScreen(
-                viewModel: widget.entityViewModel,
-                isTasks: _showTasksTable,
-              )
-            else if (entityType == EntityType.quote)
-              QuoteEditItemsScreen(
-                viewModel: widget.entityViewModel,
-              )
-            else if (entityType == EntityType.invoice)
-              InvoiceEditItemsScreen(
-                viewModel: widget.entityViewModel,
-                isTasks: _showTasksTable,
-              )
-            else if (entityType == EntityType.recurringInvoice)
-              RecurringInvoiceEditItemsScreen(
-                viewModel: widget.entityViewModel,
-                isTasks: _showTasksTable,
-              )
-            else
-              SizedBox(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: FormCard(
-                    padding: const EdgeInsets.only(
-                        top: kMobileDialogPadding,
-                        right: kMobileDialogPadding / 2,
-                        bottom: kMobileDialogPadding,
-                        left: kMobileDialogPadding),
-                    children: <Widget>[
-                      AppTabBar(
-                        controller: _optionTabController,
-                        tabs: [
-                          Tab(text: localization.terms),
-                          Tab(text: localization.footer),
-                          Tab(text: localization.publicNotes),
-                          Tab(text: localization.privateNotes),
-                          Tab(text: localization.settings),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 171,
-                        child: TabBarView(
-                          controller: _optionTabController,
-                          children: <Widget>[
-                            DecoratedFormField(
-                              maxLines: 7,
-                              controller: _termsController,
-                              keyboardType: TextInputType.multiline,
-                              label: entityType == EntityType.credit
-                                  ? localization.creditTerms
-                                  : entityType == EntityType.quote
-                                      ? localization.quoteTerms
-                                      : localization.invoiceTerms,
-                              hint: invoice.isOld && !invoice.isRecurringInvoice
-                                  ? ''
-                                  : settings
-                                      .getDefaultTerms(invoice.entityType),
-                            ),
-                            DecoratedFormField(
-                              maxLines: 7,
-                              controller: _footerController,
-                              keyboardType: TextInputType.multiline,
-                              label: entityType == EntityType.credit
-                                  ? localization.creditFooter
-                                  : entityType == EntityType.quote
-                                      ? localization.quoteFooter
-                                      : localization.invoiceFooter,
-                              hint: invoice.isOld && !invoice.isRecurringInvoice
-                                  ? ''
-                                  : settings
-                                      .getDefaultFooter(invoice.entityType),
-                            ),
-                            DecoratedFormField(
-                              maxLines: 7,
-                              controller: _publicNotesController,
-                              keyboardType: TextInputType.multiline,
-                              label: localization.publicNotes,
-                              hint: client.publicNotes,
-                            ),
-                            DecoratedFormField(
-                              maxLines: 7,
-                              controller: _privateNotesController,
-                              keyboardType: TextInputType.multiline,
-                              label: localization.privateNotes,
-                            ),
-                            LayoutBuilder(builder: (context, constraints) {
-                              return GridView.count(
-                                physics: NeverScrollableScrollPhysics(),
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: kTableColumnGap,
-                                shrinkWrap: true,
-                                primary: true,
-                                crossAxisCount: 2,
-                                childAspectRatio:
-                                    ((constraints.maxWidth / 2) - 8) / 50,
-                                children: [
-                                  UserPicker(
-                                    userId: invoice.assignedUserId,
-                                    onChanged: (userId) => viewModel.onChanged(
-                                        invoice.rebuild(
-                                            (b) => b..assignedUserId = userId)),
-                                  ),
-                                  if (company
-                                      .isModuleEnabled(EntityType.project))
-                                    ProjectPicker(
-                                      clientId: invoice.clientId,
-                                      projectId: invoice.projectId,
-                                      onChanged: (projectId) {
-                                        final project = store.state.projectState
-                                            .get(projectId);
-                                        final client = state.clientState
-                                            .get(project.clientId);
-
-                                        if (project.isOld &&
-                                            project.clientId !=
-                                                invoice.clientId) {
-                                          viewModel.onClientChanged(
-                                            context,
-                                            invoice.rebuild((b) =>
-                                                b..projectId = projectId),
-                                            client,
-                                          );
-                                        } else {
-                                          viewModel.onChanged(invoice.rebuild(
-                                              (b) => b..projectId = projectId));
-                                        }
-                                      },
-                                    ),
-                                  if (company
-                                      .isModuleEnabled(EntityType.vendor))
-                                    EntityDropdown(
-                                      entityType: EntityType.vendor,
-                                      entityId: invoice.vendorId,
-                                      labelText: localization.vendor,
-                                      entityList: memoizedDropdownVendorList(
-                                          state.vendorState.map,
-                                          state.vendorState.list,
-                                          state.userState.map,
-                                          state.staticState),
-                                      onSelected: (vendor) =>
-                                          viewModel.onChanged(
-                                        invoice.rebuild(
-                                            (b) => b.vendorId = vendor.id),
-                                      ),
-                                      onCreateNew: (completer, name) {
-                                        store.dispatch(SaveVendorRequest(
-                                            vendor: VendorEntity()
-                                                .rebuild((b) => b..name = name),
-                                            completer: completer));
-                                      },
-                                    ),
-                                  DecoratedFormField(
-                                    key: ValueKey(
-                                        '__exchange_rate_${invoice.clientId}__'),
-                                    label: localization.exchangeRate,
-                                    initialValue: formatNumber(
-                                        invoice.exchangeRate, context,
-                                        formatNumberType:
-                                            FormatNumberType.inputMoney),
-                                    onChanged: (value) => viewModel.onChanged(
-                                        invoice.rebuild((b) => b
-                                          ..exchangeRate = parseDouble(value))),
-                                    keyboardType:
-                                        TextInputType.numberWithOptions(
-                                            decimal: true),
-                                    onSavePressed:
-                                        widget.entityViewModel.onSavePressed,
-                                  ),
-                                  if (company.hasTaxes)
-                                    SwitchListTile(
-                                      activeColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      title: Text(localization.inclusiveTaxes),
-                                      value: invoice.usesInclusiveTaxes,
-                                      onChanged: (value) {
-                                        viewModel.onChanged(invoice.rebuild(
-                                            (b) =>
-                                                b..usesInclusiveTaxes = value));
-                                      },
-                                    ),
-                                  if (invoice.isInvoice)
-                                    SwitchListTile(
-                                      activeColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      title: Text(localization.autoBillEnabled),
-                                      value: invoice.autoBillEnabled,
-                                      onChanged: (value) {
-                                        viewModel.onChanged(invoice.rebuild(
-                                            (b) => b..autoBillEnabled = value));
-                                      },
-                                    ),
-                                ],
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      FormCard(
-                          padding: const EdgeInsets.only(
-                              top: kMobileDialogPadding,
-                              right: kMobileDialogPadding,
-                              left: kMobileDialogPadding / 2),
-                          children: <Widget>[
-                            TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                labelText: localization.subtotal,
-                              ),
-                              textAlign: TextAlign.end,
-                              key: ValueKey(
-                                  '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
-                              initialValue: formatNumber(
-                                  invoice.calculateSubtotal(
-                                      precision:
-                                          precisionForInvoice(state, invoice)),
-                                  context,
-                                  clientId: invoice.clientId),
-                            ),
-                            if (invoice.isOld &&
-                                (invoice.isInvoice || invoice.isQuote))
-                              TextFormField(
-                                enabled: false,
-                                decoration: InputDecoration(
-                                  labelText: localization.paidToDate,
-                                ),
-                                textAlign: TextAlign.end,
-                                key: ValueKey(
-                                    '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
-                                initialValue: formatNumber(
-                                    invoice.paidToDate, context,
-                                    clientId: invoice.clientId),
-                              ),
-                            if (company.hasCustomSurcharge)
-                              CustomSurcharges(
-                                surcharge1Controller: _surcharge1Controller,
-                                surcharge2Controller: _surcharge2Controller,
-                                surcharge3Controller: _surcharge3Controller,
-                                surcharge4Controller: _surcharge4Controller,
-                              ),
-                            if (company.enableFirstInvoiceTaxRate ||
-                                invoice.taxName1.isNotEmpty)
-                              TaxRateDropdown(
-                                onSelected: (taxRate) {
-                                  viewModel
-                                      .onChanged(invoice.applyTax(taxRate));
-                                },
-                                labelText: localization.tax +
-                                    (company.settings.enableInclusiveTaxes
-                                        ? ' - ${localization.inclusive}'
-                                        : ''),
-                                initialTaxName: invoice.taxName1,
-                                initialTaxRate: invoice.taxRate1,
-                              ),
-                            if (company.enableSecondInvoiceTaxRate ||
-                                invoice.taxName2.isNotEmpty)
-                              TaxRateDropdown(
-                                onSelected: (taxRate) {
-                                  viewModel.onChanged(invoice.applyTax(taxRate,
-                                      isSecond: true));
-                                },
-                                labelText: localization.tax +
-                                    (company.settings.enableInclusiveTaxes
-                                        ? ' - ${localization.inclusive}'
-                                        : ''),
-                                initialTaxName: invoice.taxName2,
-                                initialTaxRate: invoice.taxRate2,
-                              ),
-                            if (company.enableThirdInvoiceTaxRate ||
-                                invoice.taxName3.isNotEmpty)
-                              TaxRateDropdown(
-                                onSelected: (taxRate) {
-                                  final updatedInvoice =
-                                      invoice.applyTax(taxRate, isThird: true);
-                                  print(
-                                      '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
-                                  viewModel.onChanged(
-                                      invoice.applyTax(taxRate, isThird: true));
-                                },
-                                labelText: localization.tax +
-                                    (company.settings.enableInclusiveTaxes
-                                        ? ' - ${localization.inclusive}'
-                                        : ''),
-                                initialTaxName: invoice.taxName3,
-                                initialTaxRate: invoice.taxRate3,
-                              ),
-                            if (company.hasCustomSurcharge)
-                              CustomSurcharges(
-                                surcharge1Controller: _surcharge1Controller,
-                                surcharge2Controller: _surcharge2Controller,
-                                surcharge3Controller: _surcharge3Controller,
-                                surcharge4Controller: _surcharge4Controller,
-                                isAfterTaxes: true,
-                                onSavePressed:
-                                    widget.entityViewModel.onSavePressed,
-                              ),
-                            TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                labelText: invoice.isQuote
-                                    ? localization.total
-                                    : localization.balanceDue,
-                              ),
-                              textAlign: TextAlign.end,
-                              key: ValueKey(
-                                  '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
-                              initialValue: formatNumber(
-                                  invoice.calculateTotal(
-                                          precision: precisionForInvoice(
-                                              state, invoice)) -
-                                      invoice.paidToDate,
-                                  context,
-                                  clientId: invoice.clientId),
-                            ),
-                            if (invoice.partial != 0)
-                              TextFormField(
-                                enabled: false,
-                                decoration: InputDecoration(
-                                  labelText: localization.partialDue,
-                                ),
-                                textAlign: TextAlign.end,
-                                key: ValueKey(
-                                    '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
-                                initialValue: formatNumber(
-                                    invoice.partial, context,
-                                    clientId: invoice.clientId),
-                              ),
-                          ]),
-                      FormCard(
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: [
+                    FormCard(
                         padding: const EdgeInsets.only(
                             top: kMobileDialogPadding,
                             right: kMobileDialogPadding,
                             left: kMobileDialogPadding / 2),
-                        children: [
-                          DesignPicker(
-                            initialValue: invoice.designId,
-                            onSelected: (value) {
-                              viewModel.onChanged(invoice
-                                  .rebuild((b) => b..designId = value.id));
-                            },
+                        children: <Widget>[
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: localization.subtotal,
+                            ),
+                            textAlign: TextAlign.end,
+                            key: ValueKey(
+                                '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                            initialValue: formatNumber(
+                                invoice.calculateSubtotal(
+                                    precision:
+                                        precisionForInvoice(state, invoice)),
+                                context,
+                                clientId: invoice.clientId),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                          if (invoice.isOld &&
+                              (invoice.isInvoice || invoice.isQuote))
+                            TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                labelText: localization.paidToDate,
+                              ),
+                              textAlign: TextAlign.end,
+                              key: ValueKey(
+                                  '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
+                              initialValue: formatNumber(
+                                  invoice.paidToDate, context,
+                                  clientId: invoice.clientId),
+                            ),
+                          if (company.hasCustomSurcharge)
+                            CustomSurcharges(
+                              surcharge1Controller: _surcharge1Controller,
+                              surcharge2Controller: _surcharge2Controller,
+                              surcharge3Controller: _surcharge3Controller,
+                              surcharge4Controller: _surcharge4Controller,
+                            ),
+                          if (company.enableFirstInvoiceTaxRate ||
+                              invoice.taxName1.isNotEmpty)
+                            TaxRateDropdown(
+                              onSelected: (taxRate) {
+                                viewModel.onChanged(invoice.applyTax(taxRate));
+                              },
+                              labelText: localization.tax +
+                                  (company.settings.enableInclusiveTaxes
+                                      ? ' - ${localization.inclusive}'
+                                      : ''),
+                              initialTaxName: invoice.taxName1,
+                              initialTaxRate: invoice.taxRate1,
+                            ),
+                          if (company.enableSecondInvoiceTaxRate ||
+                              invoice.taxName2.isNotEmpty)
+                            TaxRateDropdown(
+                              onSelected: (taxRate) {
+                                viewModel.onChanged(
+                                    invoice.applyTax(taxRate, isSecond: true));
+                              },
+                              labelText: localization.tax +
+                                  (company.settings.enableInclusiveTaxes
+                                      ? ' - ${localization.inclusive}'
+                                      : ''),
+                              initialTaxName: invoice.taxName2,
+                              initialTaxRate: invoice.taxRate2,
+                            ),
+                          if (company.enableThirdInvoiceTaxRate ||
+                              invoice.taxName3.isNotEmpty)
+                            TaxRateDropdown(
+                              onSelected: (taxRate) {
+                                final updatedInvoice =
+                                    invoice.applyTax(taxRate, isThird: true);
+                                print(
+                                    '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
+                                viewModel.onChanged(
+                                    invoice.applyTax(taxRate, isThird: true));
+                              },
+                              labelText: localization.tax +
+                                  (company.settings.enableInclusiveTaxes
+                                      ? ' - ${localization.inclusive}'
+                                      : ''),
+                              initialTaxName: invoice.taxName3,
+                              initialTaxRate: invoice.taxRate3,
+                            ),
+                          if (company.hasCustomSurcharge)
+                            CustomSurcharges(
+                              surcharge1Controller: _surcharge1Controller,
+                              surcharge2Controller: _surcharge2Controller,
+                              surcharge3Controller: _surcharge3Controller,
+                              surcharge4Controller: _surcharge4Controller,
+                              isAfterTaxes: true,
+                              onSavePressed:
+                                  widget.entityViewModel.onSavePressed,
+                            ),
+                          TextFormField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              labelText: invoice.isQuote
+                                  ? localization.total
+                                  : localization.balanceDue,
+                            ),
+                            textAlign: TextAlign.end,
+                            key: ValueKey(
+                                '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                            initialValue: formatNumber(
+                                invoice.calculateTotal(
+                                        precision: precisionForInvoice(
+                                            state, invoice)) -
+                                    invoice.paidToDate,
+                                context,
+                                clientId: invoice.clientId),
+                          ),
+                          if (invoice.partial != 0)
+                            TextFormField(
+                              enabled: false,
+                              decoration: InputDecoration(
+                                labelText: localization.partialDue,
+                              ),
+                              textAlign: TextAlign.end,
+                              key: ValueKey(
+                                  '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
+                              initialValue: formatNumber(
+                                  invoice.partial, context,
+                                  clientId: invoice.clientId),
+                            ),
+                        ]),
+                    FormCard(
+                      padding: const EdgeInsets.only(
+                          top: kMobileDialogPadding,
+                          right: kMobileDialogPadding,
+                          left: kMobileDialogPadding / 2),
+                      children: [
+                        DesignPicker(
+                          initialValue: invoice.designId,
+                          onSelected: (value) {
+                            viewModel.onChanged(
+                                invoice.rebuild((b) => b..designId = value.id));
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            if (state.prefState.showPdfPreview)
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: _PdfPreview(invoice: invoice),
               ),
-          ],
-        ),
+            ],
+          ),
+          if (state.prefState.showPdfPreview)
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: _PdfPreview(invoice: invoice),
+            ),
+        ],
       ),
     );
   }
