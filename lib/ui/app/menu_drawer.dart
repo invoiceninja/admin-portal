@@ -94,7 +94,7 @@ class MenuDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _companyLogo(company),
-          SizedBox(width: 15, height: kTopBottomBarHeight),
+          SizedBox(width: 12, height: kTopBottomBarHeight),
           Expanded(
             child: Text(
               company.displayName.isEmpty
@@ -143,7 +143,7 @@ class MenuDrawer extends StatelessWidget {
               children: <Widget>[
                 SizedBox(width: 2),
                 Icon(Icons.add_circle, size: 32),
-                SizedBox(width: 20),
+                SizedBox(width: 15),
                 Text(
                   localization.addCompany,
                   style: Theme.of(context).textTheme.subtitle1,
@@ -157,7 +157,7 @@ class MenuDrawer extends StatelessWidget {
             children: <Widget>[
               SizedBox(width: 2),
               Icon(Icons.logout, size: 32),
-              SizedBox(width: 20),
+              SizedBox(width: 15),
               Text(
                 localization.logout,
                 style: Theme.of(context).textTheme.subtitle1,
@@ -216,7 +216,7 @@ class MenuDrawer extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(width: 2),
                         Icon(Icons.add_circle, size: 32),
-                        SizedBox(width: 20),
+                        SizedBox(width: 15),
                         Text(
                           localization.addCompany,
                           style: Theme.of(context).textTheme.subtitle1,
@@ -230,7 +230,7 @@ class MenuDrawer extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(width: 2),
                       Icon(Icons.logout, size: 32),
-                      SizedBox(width: 20),
+                      SizedBox(width: 15),
                       Text(
                         localization.logout,
                         style: Theme.of(context).textTheme.subtitle1,
