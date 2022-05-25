@@ -184,13 +184,13 @@ class PaymentListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           client.displayName,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       Text(
                           formatNumber(payment.amount, context,
                               clientId: payment.clientId),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

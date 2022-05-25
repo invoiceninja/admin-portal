@@ -217,14 +217,14 @@ class RecurringExpenseListItem extends StatelessWidget {
                                   ? expense.number
                                   : expense.publicNotes) +
                               (expense.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                           maxLines: 1,
                         ),
                       ),
                       Text(
                           formatNumber(expense.convertedAmount, context,
                               currencyId: expense.currencyId),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

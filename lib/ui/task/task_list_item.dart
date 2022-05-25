@@ -232,7 +232,7 @@ class TaskListItem extends StatelessWidget {
                               (task.documents.isNotEmpty ? '  📎' : ''),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       duration,

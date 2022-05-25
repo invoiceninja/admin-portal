@@ -187,14 +187,14 @@ class ProjectListItem extends StatelessWidget {
                         child: Text(
                           project.name +
                               (project.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       Text(
                           formatDuration(
                               Duration(hours: project.budgetedHours.toInt()),
                               showSeconds: false),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

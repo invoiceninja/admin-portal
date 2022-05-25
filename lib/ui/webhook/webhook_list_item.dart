@@ -80,11 +80,11 @@ class WebhookListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   webhook.targetUrl,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
               Text(formatNumber(webhook.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
         ),

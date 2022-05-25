@@ -100,7 +100,7 @@ class MenuDrawer extends StatelessWidget {
               company.displayName.isEmpty
                   ? localization.newCompany
                   : company.displayName,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.subtitle1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -144,7 +144,10 @@ class MenuDrawer extends StatelessWidget {
                 SizedBox(width: 2),
                 Icon(Icons.add_circle, size: 32),
                 SizedBox(width: 20),
-                Text(localization.addCompany),
+                Text(
+                  localization.addCompany,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ],
             ),
           ),
@@ -155,7 +158,10 @@ class MenuDrawer extends StatelessWidget {
               SizedBox(width: 2),
               Icon(Icons.logout, size: 32),
               SizedBox(width: 20),
-              Text(localization.logout),
+              Text(
+                localization.logout,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
             ],
           ),
         ),
@@ -211,7 +217,10 @@ class MenuDrawer extends StatelessWidget {
                         SizedBox(width: 2),
                         Icon(Icons.add_circle, size: 32),
                         SizedBox(width: 20),
-                        Text(localization.addCompany),
+                        Text(
+                          localization.addCompany,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
                       ],
                     ),
                   ),
@@ -222,7 +231,10 @@ class MenuDrawer extends StatelessWidget {
                       SizedBox(width: 2),
                       Icon(Icons.logout, size: 32),
                       SizedBox(width: 20),
-                      Text(localization.logout),
+                      Text(
+                        localization.logout,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
                     ],
                   ),
                 ),
@@ -747,10 +759,13 @@ class _DrawerTileState extends State<DrawerTile> {
                       width: 22,
                       height: 22,
                     )
-                  : IconButton(
-                      icon: Icon(widget.icon),
-                      color: textColor,
-                      onPressed: onTap,
+                  : FocusTraversalGroup(
+                      descendantsAreTraversable: false,
+                      child: IconButton(
+                        icon: Icon(widget.icon),
+                        color: textColor,
+                        onPressed: onTap,
+                      ),
                     ),
           title: Text(
             widget.title,
@@ -1169,7 +1184,7 @@ void _showAbout(BuildContext context) async {
                     ),
                     title: Text(
                       'Invoice Ninja',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     subtitle: Text(state.appVersion),
                     onTap: () {

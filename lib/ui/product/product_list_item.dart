@@ -175,13 +175,13 @@ class ProductListItem extends StatelessWidget {
                         child: Text(
                           product.productKey +
                               (product.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       Text(
                           formatNumber(product.price, context,
                               roundToPrecision: false),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

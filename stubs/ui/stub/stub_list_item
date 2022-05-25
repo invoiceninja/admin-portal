@@ -74,11 +74,11 @@ class StubListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   stub.name,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
               Text(formatNumber(stub.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
         ),

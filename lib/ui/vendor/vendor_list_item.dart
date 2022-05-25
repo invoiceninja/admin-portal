@@ -181,14 +181,14 @@ class VendorListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           vendor.name + (documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       /*
                     Text(
                         formatNumber(vendor.balance, context,
                             vendorId: vendor.id),
-                        style: Theme.of(context).textTheme.headline6),
+                        style: Theme.of(context).textTheme.subtitle1),
                      */
                     ],
                   ),

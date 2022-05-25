@@ -190,7 +190,7 @@ class CreditListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           client.displayName,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -202,7 +202,7 @@ class CreditListItem extends StatelessWidget {
                                   : credit.amount,
                               context,
                               clientId: credit.clientId),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

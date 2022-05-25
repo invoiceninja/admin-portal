@@ -216,14 +216,14 @@ class ExpenseListItem extends StatelessWidget {
                                   ? expense.number
                                   : expense.publicNotes) +
                               (expense.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                           maxLines: 1,
                         ),
                       ),
                       Text(
                           formatNumber(expense.amount, context,
                               currencyId: expense.currencyId),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),
