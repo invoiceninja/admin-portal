@@ -89,6 +89,10 @@ abstract class SettingsEntity
   @memoized
   int get hashCode;
 
+  static const PAGE_NUMBER_ALIGN_LEFT = 'L';
+  static const PAGE_NUMBER_ALIGN_RIGHT = 'R';
+  static const PAGE_NUMBER_ALIGN_CENTER = 'C';
+
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
 
@@ -835,6 +839,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'show_all_tasks_client_portal')
   String get clientPortalTasks;
+
+  @nullable
+  @BuiltValueField(wireName: 'page_numbering')
+  bool get pageNumbering;
+
+  @nullable
+  @BuiltValueField(wireName: 'page_numbering_alignment')
+  String get pageNumberingAlignment;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
