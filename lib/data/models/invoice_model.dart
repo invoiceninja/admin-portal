@@ -880,6 +880,26 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.edit);
         }
 
+        if (!isCancelledOrReversed) {
+          if (multiselect) {
+            if (entityType == EntityType.quote) {
+              actions.add(EntityAction.bulkEmailQuote);
+            } else if (entityType == EntityType.credit) {
+              actions.add(EntityAction.bulkEmailCredit);
+            } else if (entityType == EntityType.invoice) {
+              actions.add(EntityAction.bulkEmailInvoice);
+            }
+          } else {
+            if (entityType == EntityType.quote) {
+              actions.add(EntityAction.emailQuote);
+            } else if (entityType == EntityType.credit) {
+              actions.add(EntityAction.emailCredit);
+            } else if (entityType == EntityType.invoice) {
+              actions.add(EntityAction.emailInvoice);
+            }
+          }
+        }
+
         if (isRecurringInvoice) {
           if ([
             kRecurringInvoiceStatusDraft,
@@ -909,24 +929,6 @@ abstract class InvoiceEntity extends Object
       }
 
       if (userCompany.canEditEntity(this) && !isCancelledOrReversed) {
-        if (multiselect) {
-          if (entityType == EntityType.quote) {
-            actions.add(EntityAction.bulkEmailQuote);
-          } else if (entityType == EntityType.credit) {
-            actions.add(EntityAction.bulkEmailCredit);
-          } else if (entityType == EntityType.invoice) {
-            actions.add(EntityAction.bulkEmailInvoice);
-          }
-        } else {
-          if (entityType == EntityType.quote) {
-            actions.add(EntityAction.emailQuote);
-          } else if (entityType == EntityType.credit) {
-            actions.add(EntityAction.emailCredit);
-          } else if (entityType == EntityType.invoice) {
-            actions.add(EntityAction.emailInvoice);
-          }
-        }
-
         if (!isSent && !isRecurring) {
           actions.add(EntityAction.markSent);
         }
