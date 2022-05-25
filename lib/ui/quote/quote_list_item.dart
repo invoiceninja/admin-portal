@@ -189,7 +189,7 @@ class QuoteListItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             client.displayName,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.subtitle1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -197,7 +197,7 @@ class QuoteListItem extends StatelessWidget {
                         Text(
                             formatNumber(quote.amount, context,
                                 clientId: quote.clientId),
-                            style: Theme.of(context).textTheme.headline6),
+                            style: Theme.of(context).textTheme.subtitle1),
                       ],
                     ),
                   ),

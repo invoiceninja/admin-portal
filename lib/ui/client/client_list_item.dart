@@ -175,13 +175,13 @@ class ClientListItem extends StatelessWidget {
                         child: Text(
                           client.displayName +
                               (client.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       Text(
                           formatNumber(client.balance, context,
                               clientId: client.id),
-                          style: Theme.of(context).textTheme.headline6),
+                          style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
                 ),

@@ -197,7 +197,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             client.displayName,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.subtitle1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -205,7 +205,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         Text(
                             formatNumber(invoice.amount, context,
                                 clientId: invoice.clientId),
-                            style: Theme.of(context).textTheme.headline6),
+                            style: Theme.of(context).textTheme.subtitle1),
                       ],
                     ),
                   ),
