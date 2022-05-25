@@ -85,6 +85,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     _custom4Controller.text = task.customValue4;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
+    _updatedAt = DateTime.now().millisecondsSinceEpoch;
 
     super.didChangeDependencies();
   }
