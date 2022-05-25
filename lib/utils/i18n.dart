@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'left': 'Left',
+      'right': 'Right',
+      'center': 'Center',
+      'page_numbering': 'Page Numbering',
+      'page_numbering_alignment': 'Page Numbering Alignment',
       'invoice_sent_notification_label': 'Invoice Sent',
       'show_product_description': 'Show Product Description',
       'show_product_description_help':
@@ -69717,6 +69722,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get invoiceSentNotificationLabel =>
       _localizedValues[localeCode]['invoice_sent_notification_label'] ??
       _localizedValues['en']['invoice_sent_notification_label'];
+
+  String get pageNumbering =>
+      _localizedValues[localeCode]['page_numbering'] ??
+      _localizedValues['en']['page_numbering'];
+
+  String get pageNumberingAlignment =>
+      _localizedValues[localeCode]['page_numbering_alignment'] ??
+      _localizedValues['en']['page_numbering_alignment'];
+
+  String get left =>
+      _localizedValues[localeCode]['left'] ?? _localizedValues['en']['left'];
+  String get right =>
+      _localizedValues[localeCode]['right'] ?? _localizedValues['en']['right'];
+  String get center =>
+      _localizedValues[localeCode]['center'] ??
+      _localizedValues['en']['center'];
 
   // STARTER: lang field - do not remove comment
 

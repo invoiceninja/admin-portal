@@ -3,17 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/credit_model.dart';
-import 'package:invoiceninja_flutter/data/models/design_model.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -269,51 +264,92 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ],
               ),
               FormCard(
-                isLast: true,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  LearnMoreUrl(
-                    url: 'https://fonts.google.com',
-                    child: EntityDropdown(
+                  isLast: true,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    LearnMoreUrl(
+                      url: 'https://fonts.google.com',
+                      child: EntityDropdown(
+                        entityType: EntityType.font,
+                        labelText: localization.primaryFont,
+                        entityId: settings.primaryFont,
+                        entityMap: memoizedFontMap(kGoogleFonts),
+                        onSelected: (font) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..primaryFont = font?.id)),
+                      ),
+                    ),
+                    EntityDropdown(
                       entityType: EntityType.font,
-                      labelText: localization.primaryFont,
-                      entityId: settings.primaryFont,
+                      labelText: localization.secondaryFont,
+                      entityId: settings.secondaryFont,
                       entityMap: memoizedFontMap(kGoogleFonts),
                       onSelected: (font) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..primaryFont = font?.id)),
+                          settings.rebuild((b) => b..secondaryFont = font?.id)),
                     ),
-                  ),
-                  EntityDropdown(
-                    entityType: EntityType.font,
-                    labelText: localization.secondaryFont,
-                    entityId: settings.secondaryFont,
-                    entityMap: memoizedFontMap(kGoogleFonts),
-                    onSelected: (font) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..secondaryFont = font?.id)),
-                  ),
-                  FormColorPicker(
-                    labelText: localization.primaryColor,
-                    onSelected: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..primaryColor = value)),
-                    initialValue: settings.primaryColor,
-                  ),
-                  FormColorPicker(
-                    labelText: localization.secondaryColor,
-                    onSelected: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..secondaryColor = value)),
-                    initialValue: settings.secondaryColor,
-                  ),
-                  SizedBox(height: 16),
+                    FormColorPicker(
+                      labelText: localization.primaryColor,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..primaryColor = value)),
+                      initialValue: settings.primaryColor,
+                    ),
+                    FormColorPicker(
+                      labelText: localization.secondaryColor,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..secondaryColor = value)),
+                      initialValue: settings.secondaryColor,
+                    ),
+                  ]),
+              FormCard(
+                children: [
                   BoolDropdownButton(
                     label: localization.emptyColumns,
-                    value: settings.hideEmptyColumnsOnPdf ?? false,
+                    value: !(settings.hideEmptyColumnsOnPdf ?? false),
                     iconData: MdiIcons.table,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..hideEmptyColumnsOnPdf = value),
+                      settings
+                          .rebuild((b) => b..hideEmptyColumnsOnPdf = !value),
                     ),
-                    enabledLabel: localization.hide,
-                    disabledLabel: localization.show,
-                  )
+                    enabledLabel: localization.show,
+                    disabledLabel: localization.hide,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.pageNumbering,
+                    value: settings.pageNumbering ?? false,
+                    iconData: Icons.numbers,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..pageNumbering = value),
+                    ),
+                    enabledLabel: localization.show,
+                    disabledLabel: localization.hide,
+                  ),
+                  AppDropdownButton(
+                    labelText: localization.pageNumberingAlignment,
+                    value: settings.pageNumberingAlignment,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..pageNumberingAlignment = value)),
+                    items: [
+                      DropdownMenuItem<String>(
+                        child: Text(localization.left),
+                        value: SettingsEntity.PAGE_NUMBER_ALIGN_LEFT,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.center),
+                        value: SettingsEntity.PAGE_NUMBER_ALIGN_CENTER,
+                      ),
+                      DropdownMenuItem<String>(
+                          child: Text(localization.right),
+                          value: SettingsEntity.PAGE_NUMBER_ALIGN_RIGHT),
+                    ],
+                    /*
+                    items: kPageLayouts
+                        .map((pageLayout) => DropdownMenuItem<String>(
+                              value: pageLayout,
+                              child: Text(localization.lookup(pageLayout)),
+                            ))
+                        .toList(),
+                        */
+                  ),
                 ],
               ),
             ],
