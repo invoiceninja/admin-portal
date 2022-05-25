@@ -137,7 +137,15 @@ class EditScaffold extends StatelessWidget {
                         Expanded(child: body),
                       ],
                     )
-                  : body,
+                  : state.isSaving
+                      ? Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            body,
+                            LinearProgressIndicator(),
+                          ],
+                        )
+                      : body,
           drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
           appBar: AppBar(
             centerTitle: false,
