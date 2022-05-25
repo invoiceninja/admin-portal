@@ -152,114 +152,127 @@ class EditScaffold extends StatelessWidget {
             automaticallyImplyLeading: isMobile(context),
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title),
+                if (isDesktop(context))
+                  Text(title)
+                else
+                  Flexible(child: Text(title)),
+                SizedBox(width: 8),
                 if (isDesktop(context) && entity != null && entity.isOld) ...[
-                  SizedBox(width: 16),
                   EntityStatusChip(
                       entity: state.getEntity(entity.entityType, entity.id)),
+                  SizedBox(width: 8),
                 ],
-                if (true)
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: FocusTraversalGroup(
-                        // TODO this is needed as a workaround to prevent
-                        // breaking tab focus traversal
-                        descendantsAreFocusable: false,
-                        child: OverflowView.flexible(
-                            spacing: 8,
-                            children: entityActions.map(
-                              (action) {
-                                String label;
-                                if (action == EntityAction.save &&
-                                    saveLabel != null) {
-                                  label = saveLabel;
-                                } else {
-                                  label = localization.lookup('$action');
-                                }
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: FocusTraversalGroup(
+                      // TODO this is needed as a workaround to prevent
+                      // breaking tab focus traversal
+                      descendantsAreFocusable: false,
+                      child: OverflowView.flexible(
+                          spacing: 8,
+                          children: entityActions.map(
+                            (action) {
+                              String label;
+                              if (action == EntityAction.save &&
+                                  saveLabel != null) {
+                                label = saveLabel;
+                              } else {
+                                label = localization.lookup('$action');
+                              }
 
-                                return OutlinedButton(
-                                  child: ConstrainedBox(
-                                    constraints: BoxConstraints(minWidth: 60),
-                                    child: IconText(
-                                      icon: getEntityActionIcon(action),
-                                      text: label,
-                                      style: state.isSaving ? null : textStyle,
-                                    ),
-                                  ),
-                                  onPressed: state.isSaving
-                                      ? null
-                                      : () {
-                                          if (action == EntityAction.cancel) {
-                                            if (onCancelPressed != null) {
-                                              onCancelPressed(context);
-                                            } else {
-                                              store.dispatch(ResetSettings());
-                                            }
-                                          } else if (action ==
-                                              EntityAction.save) {
-                                            // Clear focus now to prevent un-focus after save from
-                                            // marking the form as changed and to hide the keyboard
-                                            FocusScope.of(context).unfocus(
-                                                disposition: UnfocusDisposition
-                                                    .previouslyFocusedChild);
-
-                                            onSavePressed(context);
-                                          } else {
-                                            onActionPressed(context, action);
-                                          }
-                                        },
-                                );
-                              },
-                            ).toList(),
-                            builder: (context, remaining) {
-                              return PopupMenuButton<EntityAction>(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        localization.more,
-                                        style: textStyle,
-                                      ),
-                                      SizedBox(width: 4),
-                                      Icon(Icons.arrow_drop_down,
-                                          color: state.headerTextColor),
-                                    ],
-                                  ),
+                              return OutlinedButton(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      minWidth: isDesktop(context) ? 60 : 0),
+                                  child: isDesktop(context)
+                                      ? IconText(
+                                          icon: getEntityActionIcon(action),
+                                          text: label,
+                                          style:
+                                              state.isSaving ? null : textStyle,
+                                        )
+                                      : Text(label,
+                                          style: state.isSaving
+                                              ? null
+                                              : textStyle),
                                 ),
-                                onSelected: (EntityAction action) {
-                                  onActionPressed(context, action);
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return entityActions
-                                      .toList()
-                                      .sublist(entityActions.length - remaining)
-                                      .map((action) {
-                                    return PopupMenuItem<EntityAction>(
-                                      value: action,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(getEntityActionIcon(action),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary),
-                                          SizedBox(width: 16.0),
-                                          Text(AppLocalization.of(context)
-                                                  .lookup(action.toString()) ??
-                                              ''),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList();
-                                },
+                                onPressed: state.isSaving
+                                    ? null
+                                    : () {
+                                        if (action == EntityAction.cancel) {
+                                          if (onCancelPressed != null) {
+                                            onCancelPressed(context);
+                                          } else {
+                                            store.dispatch(ResetSettings());
+                                          }
+                                        } else if (action ==
+                                            EntityAction.save) {
+                                          // Clear focus now to prevent un-focus after save from
+                                          // marking the form as changed and to hide the keyboard
+                                          FocusScope.of(context).unfocus(
+                                              disposition: UnfocusDisposition
+                                                  .previouslyFocusedChild);
+
+                                          onSavePressed(context);
+                                        } else {
+                                          onActionPressed(context, action);
+                                        }
+                                      },
                               );
-                            }),
-                      ),
+                            },
+                          ).toList(),
+                          builder: (context, remaining) {
+                            return PopupMenuButton<EntityAction>(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: isDesktop(context)
+                                    ? Row(
+                                        children: [
+                                          Text(
+                                            localization.more,
+                                            style: textStyle,
+                                          ),
+                                          SizedBox(width: 4),
+                                          Icon(Icons.arrow_drop_down,
+                                              color: state.headerTextColor),
+                                        ],
+                                      )
+                                    : Icon(Icons.more_vert),
+                              ),
+                              onSelected: (EntityAction action) {
+                                onActionPressed(context, action);
+                              },
+                              itemBuilder: (BuildContext context) {
+                                return entityActions
+                                    .toList()
+                                    .sublist(entityActions.length - remaining)
+                                    .map((action) {
+                                  return PopupMenuItem<EntityAction>(
+                                    value: action,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(getEntityActionIcon(action),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                        SizedBox(width: 16.0),
+                                        Text(AppLocalization.of(context)
+                                                .lookup(action.toString()) ??
+                                            ''),
+                                      ],
+                                    ),
+                                  );
+                                }).toList();
+                              },
+                            );
+                          }),
                     ),
-                  )
+                  ),
+                )
               ],
             ),
             bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
