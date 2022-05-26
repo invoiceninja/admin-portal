@@ -89,6 +89,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context);
     final webPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
@@ -144,7 +146,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isWarning: true,
                   ),
                   */
-                if (_response.filePermissions != 'Ok')
+                if (_response.filePermissions != 'Ok' &&
+                    !state.account.disableAutoUpdate)
                   _HealthListTile(
                     title: 'Invalid File Permissions',
                     isValid: false,
