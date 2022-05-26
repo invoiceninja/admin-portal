@@ -599,7 +599,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ],
                     ),
                     SizedBox(
-                      height: 180,
+                      height: 174,
                       child: TabBarView(
                         controller: _optionTabController,
                         children: <Widget>[
