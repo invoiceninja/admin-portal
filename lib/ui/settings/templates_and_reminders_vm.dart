@@ -1,10 +1,13 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -65,12 +68,18 @@ class TemplatesAndRemindersVM {
       },
       onSavePressed: (context, updateReminders) {
         Debouncer.runOnComplete(() {
-          final callback = () {
+          final callback = () async {
             if (!updateReminders) {
               return;
             }
             final url = '${state.credentials.url}/invoices/update_reminders';
-            WebClient().post(url, state.credentials.token);
+            store.dispatch(StartLoading());
+            await WebClient().post(url, state.credentials.token);
+            // Give the server a few seconds to process
+            Timer(Duration(seconds: 2), () {
+              store.dispatch(StopLoading());
+              store.dispatch(RefreshData());
+            });
           };
 
           final settingsUIState = store.state.uiState.settingsUIState;
