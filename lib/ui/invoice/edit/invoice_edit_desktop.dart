@@ -599,7 +599,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ],
                     ),
                     SizedBox(
-                      height: 171,
+                      height: 180,
                       child: TabBarView(
                         controller: _optionTabController,
                         children: <Widget>[
@@ -721,28 +721,53 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   onSavePressed:
                                       widget.entityViewModel.onSavePressed,
                                 ),
-                                if (company.hasTaxes)
-                                  SwitchListTile(
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
-                                    title: Text(localization.inclusiveTaxes),
-                                    value: invoice.usesInclusiveTaxes,
-                                    onChanged: (value) {
-                                      viewModel.onChanged(invoice.rebuild((b) =>
-                                          b..usesInclusiveTaxes = value));
-                                    },
-                                  ),
-                                if (invoice.isInvoice)
-                                  SwitchListTile(
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
-                                    title: Text(localization.autoBillEnabled),
-                                    value: invoice.autoBillEnabled,
-                                    onChanged: (value) {
-                                      viewModel.onChanged(invoice.rebuild(
-                                          (b) => b..autoBillEnabled = value));
-                                    },
-                                  ),
+                                DesignPicker(
+                                  initialValue: invoice.designId,
+                                  onSelected: (value) {
+                                    viewModel.onChanged(invoice.rebuild(
+                                        (b) => b..designId = value.id));
+                                  },
+                                ),
+                                if (company.hasTaxes || invoice.isInvoice)
+                                  Row(
+                                    children: [
+                                      if (company.hasTaxes)
+                                        Expanded(
+                                          child: SwitchListTile(
+                                            dense: true,
+                                            activeColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            title: Text(
+                                                localization.inclusiveTaxes),
+                                            value: invoice.usesInclusiveTaxes,
+                                            onChanged: (value) {
+                                              viewModel.onChanged(
+                                                  invoice.rebuild((b) => b
+                                                    ..usesInclusiveTaxes =
+                                                        value));
+                                            },
+                                          ),
+                                        ),
+                                      if (invoice.isInvoice)
+                                        Expanded(
+                                          child: SwitchListTile(
+                                            dense: true,
+                                            activeColor: Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
+                                            title: Text(
+                                                localization.autoBillEnabled),
+                                            value: invoice.autoBillEnabled,
+                                            onChanged: (value) {
+                                              viewModel.onChanged(
+                                                  invoice.rebuild((b) => b
+                                                    ..autoBillEnabled = value));
+                                            },
+                                          ),
+                                        ),
+                                    ],
+                                  )
                               ],
                             );
                           }),
@@ -885,21 +910,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   clientId: invoice.clientId),
                             ),
                         ]),
-                    FormCard(
-                      padding: const EdgeInsets.only(
-                          top: kMobileDialogPadding,
-                          right: kMobileDialogPadding,
-                          left: kMobileDialogPadding / 2),
-                      children: [
-                        DesignPicker(
-                          initialValue: invoice.designId,
-                          onSelected: (value) {
-                            viewModel.onChanged(
-                                invoice.rebuild((b) => b..designId = value.id));
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -907,7 +917,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           ),
           if (state.prefState.showPdfPreview)
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, bottom: 16, top: 2),
               child: _PdfPreview(invoice: invoice),
             ),
         ],
