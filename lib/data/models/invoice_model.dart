@@ -880,6 +880,21 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.edit);
         }
 
+        if (isRecurringInvoice) {
+          if ([
+            kRecurringInvoiceStatusDraft,
+            kRecurringInvoiceStatusPaused,
+            kRecurringInvoiceStatusCompleted,
+          ].contains(statusId)) {
+            actions.add(EntityAction.start);
+          } else if ([
+            kRecurringInvoiceStatusPending,
+            kRecurringInvoiceStatusActive
+          ].contains(statusId)) {
+            actions.add(EntityAction.stop);
+          }
+        }
+
         if (!isCancelledOrReversed) {
           if (multiselect) {
             if (entityType == EntityType.quote) {
@@ -896,22 +911,9 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.emailCredit);
             } else if (entityType == EntityType.invoice) {
               actions.add(EntityAction.emailInvoice);
+            } else if (entityType == EntityType.recurringInvoice && isDraft) {
+              actions.add(EntityAction.emailInvoice);
             }
-          }
-        }
-
-        if (isRecurringInvoice) {
-          if ([
-            kRecurringInvoiceStatusDraft,
-            kRecurringInvoiceStatusPaused,
-            kRecurringInvoiceStatusCompleted,
-          ].contains(statusId)) {
-            actions.add(EntityAction.start);
-          } else if ([
-            kRecurringInvoiceStatusPending,
-            kRecurringInvoiceStatusActive
-          ].contains(statusId)) {
-            actions.add(EntityAction.stop);
           }
         }
       }

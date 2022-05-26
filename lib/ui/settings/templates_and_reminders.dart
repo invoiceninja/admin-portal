@@ -61,6 +61,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   bool _isLoading = false;
   FocusScopeNode _focusNode;
   TabController _controller;
+  bool _updateReminders = false;
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
@@ -315,7 +316,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     return EditScaffold(
       title: localization.templatesAndReminders,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: (context) {
+        viewModel.onSavePressed(context, _updateReminders);
+        _updateReminders = false;
+      },
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
@@ -417,63 +421,72 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               ]),
               if (template == EmailTemplate.reminder1)
                 ReminderSettings(
-                  key: ValueKey('__reminder1_${template}__'),
-                  viewModel: viewModel,
-                  enabled: settings.enableReminder1,
-                  numDays: settings.numDaysReminder1,
-                  schedule: settings.scheduleReminder1,
-                  feeAmount: settings.lateFeeAmount1,
-                  feePercent: settings.lateFeePercent1,
-                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                    key: ValueKey('__reminder1_${template}__'),
+                    viewModel: viewModel,
+                    enabled: settings.enableReminder1,
+                    numDays: settings.numDaysReminder1,
+                    schedule: settings.scheduleReminder1,
+                    feeAmount: settings.lateFeeAmount1,
+                    feePercent: settings.lateFeePercent1,
+                    onChanged:
+                        (enabled, days, schedule, feeAmount, feePercent) {
+                      _updateReminders = true;
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder1 = enabled
                         ..numDaysReminder1 = days
                         ..scheduleReminder1 = schedule
                         ..lateFeeAmount1 = feeAmount
-                        ..lateFeePercent1 = feePercent)),
-                ),
+                        ..lateFeePercent1 = feePercent));
+                    }),
               if (template == EmailTemplate.reminder2)
                 ReminderSettings(
-                  key: ValueKey('__reminder2_${template}__'),
-                  viewModel: viewModel,
-                  enabled: settings.enableReminder2,
-                  numDays: settings.numDaysReminder2,
-                  schedule: settings.scheduleReminder2,
-                  feeAmount: settings.lateFeeAmount2,
-                  feePercent: settings.lateFeePercent2,
-                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                    key: ValueKey('__reminder2_${template}__'),
+                    viewModel: viewModel,
+                    enabled: settings.enableReminder2,
+                    numDays: settings.numDaysReminder2,
+                    schedule: settings.scheduleReminder2,
+                    feeAmount: settings.lateFeeAmount2,
+                    feePercent: settings.lateFeePercent2,
+                    onChanged:
+                        (enabled, days, schedule, feeAmount, feePercent) {
+                      _updateReminders = true;
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder2 = enabled
                         ..numDaysReminder2 = days
                         ..scheduleReminder2 = schedule
                         ..lateFeeAmount2 = feeAmount
-                        ..lateFeePercent2 = feePercent)),
-                ),
+                        ..lateFeePercent2 = feePercent));
+                    }),
               if (template == EmailTemplate.reminder3)
                 ReminderSettings(
-                  key: ValueKey('__reminder3_${template}__'),
-                  viewModel: viewModel,
-                  enabled: settings.enableReminder3,
-                  numDays: settings.numDaysReminder3,
-                  schedule: settings.scheduleReminder3,
-                  feeAmount: settings.lateFeeAmount3,
-                  feePercent: settings.lateFeePercent3,
-                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
+                    key: ValueKey('__reminder3_${template}__'),
+                    viewModel: viewModel,
+                    enabled: settings.enableReminder3,
+                    numDays: settings.numDaysReminder3,
+                    schedule: settings.scheduleReminder3,
+                    feeAmount: settings.lateFeeAmount3,
+                    feePercent: settings.lateFeePercent3,
+                    onChanged:
+                        (enabled, days, schedule, feeAmount, feePercent) {
+                      _updateReminders = true;
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder3 = enabled
                         ..numDaysReminder3 = days
                         ..scheduleReminder3 = schedule
                         ..lateFeeAmount3 = feeAmount
-                        ..lateFeePercent3 = feePercent)),
-                ),
+                        ..lateFeePercent3 = feePercent));
+                    }),
               if (template == EmailTemplate.reminder_endless)
                 FormCard(
                   children: <Widget>[
                     BoolDropdownButton(
                       label: localization.sendEmail,
                       value: settings.enableReminderEndless,
-                      onChanged: (value) => viewModel.onSettingsChanged(settings
-                          .rebuild((b) => b..enableReminderEndless = value)),
+                      onChanged: (value) {
+                        _updateReminders = true;
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..enableReminderEndless = value));
+                      },
                       iconData: Icons.email,
                     ),
                     AppDropdownButton(
@@ -481,9 +494,11 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         value: settings.endlessReminderFrequencyId == '0'
                             ? null
                             : settings.endlessReminderFrequencyId,
-                        onChanged: (dynamic value) =>
-                            viewModel.onSettingsChanged(settings.rebuild(
-                                (b) => b..endlessReminderFrequencyId = value)),
+                        onChanged: (dynamic value) {
+                          _updateReminders = true;
+                          viewModel.onSettingsChanged(settings.rebuild(
+                              (b) => b..endlessReminderFrequencyId = value));
+                        },
                         items: kFrequencies
                             .map((id, frequency) =>
                                 MapEntry<String, DropdownMenuItem<String>>(

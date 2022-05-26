@@ -579,6 +579,15 @@ void handleRecurringInvoiceAction(BuildContext context,
         ),
       );
       break;
+    case EntityAction.emailInvoice:
+      store.dispatch(SaveRecurringInvoiceRequest(
+          recurringInvoice: recurringInvoice,
+          action: action,
+          completer: snackBarCompleter<InvoiceEntity>(
+            context,
+            localization.emailedInvoice,
+          )));
+      break;
   }
 }
 
