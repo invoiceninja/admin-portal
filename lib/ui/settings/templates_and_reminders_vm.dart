@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -62,25 +63,36 @@ class TemplatesAndRemindersVM {
       onTemplateChanged: (template) {
         store.dispatch(UpdateSettingsTemplate(selectedTemplate: template));
       },
-      onSavePressed: (context) {
+      onSavePressed: (context, updateReminders) {
         Debouncer.runOnComplete(() {
+          final callback = () {
+            if (!updateReminders) {
+              return;
+            }
+            final url = '${state.credentials.url}/invoices/update_reminders';
+            WebClient().post(url, state.credentials.token);
+          };
+
           final settingsUIState = store.state.uiState.settingsUIState;
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context).savedSettings);
+              completer.future.then((value) => callback());
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
                   context, AppLocalization.of(context).savedSettings);
+              completer.future.then((value) => callback());
               store.dispatch(SaveGroupRequest(
                   completer: completer, group: settingsUIState.group));
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
                   context, AppLocalization.of(context).savedSettings);
+              completer.future.then((value) => callback());
               store.dispatch(SaveClientRequest(
                   completer: completer, client: settingsUIState.client));
               break;
@@ -95,5 +107,5 @@ class TemplatesAndRemindersVM {
   final EmailTemplate selectedTemplate;
   final Function(EmailTemplate) onTemplateChanged;
   final Function(SettingsEntity) onSettingsChanged;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, bool) onSavePressed;
 }
