@@ -337,7 +337,7 @@ class MenuDrawer extends StatelessWidget {
                                   message: localization.companyDisabledWarning,
                                   child: ListTile(
                                     contentPadding:
-                                        const EdgeInsets.only(left: 20),
+                                        const EdgeInsets.only(left: 12),
                                     onTap: () {
                                       // TODO once v4 is sunset change to ViewSettings
                                       launch(
@@ -395,13 +395,15 @@ class MenuDrawer extends StatelessWidget {
                                     dense: true,
                                     tileColor: Colors.green,
                                     leading: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
+                                      padding: const EdgeInsets.only(left: 9),
                                       child: Icon(
                                         Icons.arrow_circle_up,
                                         size: 22,
                                         color: Colors.white,
                                       ),
                                     ),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 12),
                                     title: state.isMenuCollapsed
                                         ? SizedBox()
                                         : Text(
