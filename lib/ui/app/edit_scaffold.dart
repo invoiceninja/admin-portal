@@ -155,7 +155,10 @@ class EditScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(child: Text(title)),
+                if (isMobile(context))
+                  Flexible(child: Text(title))
+                else
+                  Text(title),
                 SizedBox(width: 8),
                 if (isDesktop(context) && entity != null && entity.isOld) ...[
                   EntityStatusChip(
