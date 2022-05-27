@@ -73,12 +73,17 @@ class TemplatesAndRemindersVM {
               return;
             }
             final url = '${state.credentials.url}/invoices/update_reminders';
-            store.dispatch(StartLoading());
-            await WebClient().post(url, state.credentials.token);
-            // Give the server a few seconds to process
-            Timer(Duration(seconds: 2), () {
-              store.dispatch(StopLoading());
-              store.dispatch(RefreshData());
+            store.dispatch(StartSaving());
+            WebClient()
+                .post(url, state.credentials.token)
+                .then((dynamic value) {
+              // Give the server a few seconds to process
+              Timer(Duration(seconds: 2), () {
+                store.dispatch(StopSaving());
+                store.dispatch(RefreshData());
+              });
+            }).catchError((dynamic error) {
+              store.dispatch(StopSaving());
             });
           };
 
