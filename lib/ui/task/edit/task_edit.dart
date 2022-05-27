@@ -1,6 +1,3 @@
-// Dart imports:
-import 'dart:async';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -158,35 +155,13 @@ class _TaskEditState extends State<TaskEdit>
   }
 }
 
-class _BottomBar extends StatefulWidget {
+class _BottomBar extends StatelessWidget {
   const _BottomBar({
     Key key,
     @required this.task,
   }) : super(key: key);
 
   final TaskEntity task;
-
-  @override
-  State<_BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<_BottomBar> {
-  Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _timer = Timer.periodic(Duration(seconds: 1),
-        (Timer t) => mounted ? setState(() => false) : false);
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    _timer = null;
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,11 +205,10 @@ class _BottomBarState extends State<_BottomBar> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: LiveText(() {
-                      final task = widget.task;
                       final title = localization.duration +
                           ' ' +
                           formatNumber(
-                              widget.task
+                              task
                                   .calculateDuration(
                                       includeRunning: task.showAsRunning)
                                   .inSeconds
