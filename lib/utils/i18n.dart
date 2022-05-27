@@ -16,7 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'add_gateway': 'Add Gateway',
+      'set_default_design': 'Set Default Design',
+      'add_gateway': 'Add Gateway',      
       'add_gateway_help_message':
           'Add a payment gateway (ie. Stripe, WePay or PayPal) to accept online payments',
       'left': 'Left',
@@ -70522,6 +70523,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get addGateway =>
       _localizedValues[localeCode]['add_gateway'] ??
       _localizedValues['en']['add_gateway'];
+
+  String get setDefaultDesign =>
+      _localizedValues[localeCode]['set_default_design'] ??
+      _localizedValues['en']['set_default_design'];
 
   String get addGatewayHelpMessage =>
       _localizedValues[localeCode]['add_gateway_help_message'] ??
