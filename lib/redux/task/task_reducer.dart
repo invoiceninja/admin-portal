@@ -197,9 +197,7 @@ ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
 }
 
 TaskEntity _addTaskTime(TaskEntity task, AddTaskTime action) {
-  return task
-      .addTaskTime(action.taskTime)
-      .rebuild((b) => b.showAsRunning = action.showAsRunning);
+  return task.addTaskTime(action.taskTime);
 }
 
 TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {

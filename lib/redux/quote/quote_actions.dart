@@ -652,10 +652,10 @@ Future handleQuoteAction(
     case EntityAction.printPdf:
       final invitation = quote.invitations.first;
       final url = invitation.downloadLink;
-      store.dispatch(StartLoading());
+      store.dispatch(StartSaving());
       final http.Response response =
           await WebClient().get(url, '', rawResponse: true);
-      store.dispatch(StopLoading());
+      store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
       break;
     case EntityAction.more:

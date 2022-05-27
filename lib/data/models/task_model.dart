@@ -283,7 +283,6 @@ abstract class TaskEntity extends Object
       statusId: defaultTaskStatusId(
           state?.taskStatusState?.map ?? BuiltMap<String, TaskStatusEntity>()),
       documents: BuiltList<DocumentEntity>(),
-      showAsRunning: state?.company?.autoStartTasks ?? false,
     );
   }
 
@@ -524,13 +523,11 @@ abstract class TaskEntity extends Object
   double calculateAmount(double taskRate) =>
       taskRate * round(calculateDuration().inSeconds / 3600, 3);
 
-  Duration calculateDuration({bool includeRunning = true}) {
+  Duration calculateDuration() {
     int seconds = 0;
 
     getTaskTimes().forEach((taskTime) {
-      if (!taskTime.isRunning || includeRunning) {
-        seconds += taskTime.duration.inSeconds;
-      }
+      seconds += taskTime.duration.inSeconds;
     });
 
     return Duration(seconds: seconds);
@@ -571,10 +568,6 @@ abstract class TaskEntity extends Object
   int get statusOrder;
 
   BuiltList<DocumentEntity> get documents;
-
-  @nullable
-  @BuiltValueField(compare: false)
-  bool get showAsRunning;
 
   @override
   List<EntityAction> getActions(
@@ -817,10 +810,6 @@ abstract class TaskEntity extends Object
   }
 
   bool get isStopped => !isRunning;
-
-  // ignore: unused_element
-  static void _initializeBuilder(TaskEntityBuilder builder) =>
-      builder..showAsRunning = false;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

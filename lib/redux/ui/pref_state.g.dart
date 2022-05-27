@@ -187,6 +187,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideDesktopWarning',
       serializers.serialize(object.hideDesktopWarning,
           specifiedType: const FullType(bool)),
+      'hideGatewayWarning',
+      serializers.serialize(object.hideGatewayWarning,
+          specifiedType: const FullType(bool)),
       'editAfterSaving',
       serializers.serialize(object.editAfterSaving,
           specifiedType: const FullType(bool)),
@@ -317,6 +320,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'hideDesktopWarning':
           result.hideDesktopWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'hideGatewayWarning':
+          result.hideGatewayWarning = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'editAfterSaving':
@@ -620,6 +627,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideDesktopWarning;
   @override
+  final bool hideGatewayWarning;
+  @override
   final bool editAfterSaving;
   @override
   final double textScaleFactor;
@@ -656,6 +665,7 @@ class _$PrefState extends PrefState {
       this.enableTooltips,
       this.colorTheme,
       this.hideDesktopWarning,
+      this.hideGatewayWarning,
       this.editAfterSaving,
       this.textScaleFactor,
       this.sortFields,
@@ -708,6 +718,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, 'PrefState', 'hideDesktopWarning');
     BuiltValueNullFieldError.checkNotNull(
+        hideGatewayWarning, 'PrefState', 'hideGatewayWarning');
+    BuiltValueNullFieldError.checkNotNull(
         editAfterSaving, 'PrefState', 'editAfterSaving');
     BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, 'PrefState', 'textScaleFactor');
@@ -752,6 +764,7 @@ class _$PrefState extends PrefState {
         enableTooltips == other.enableTooltips &&
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
+        hideGatewayWarning == other.hideGatewayWarning &&
         editAfterSaving == other.editAfterSaving &&
         textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
@@ -779,22 +792,22 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode),
-                                                                                showPdfPreview.hashCode),
-                                                                            enableTouchEvents.hashCode),
-                                                                        isHistoryVisible.hashCode),
-                                                                    enableDarkMode.hashCode),
-                                                                isFilterVisible.hashCode),
-                                                            persistData.hashCode),
-                                                        persistUI.hashCode),
-                                                    longPressSelectionIsDefault.hashCode),
-                                                requireAuthentication.hashCode),
-                                            tapSelectedToEdit.hashCode),
-                                        enableJSPDF.hashCode),
-                                    rowsPerPage.hashCode),
-                                enableTooltips.hashCode),
-                            colorTheme.hashCode),
-                        hideDesktopWarning.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode),
+                                                                                enableTouchEvents.hashCode),
+                                                                            isHistoryVisible.hashCode),
+                                                                        enableDarkMode.hashCode),
+                                                                    isFilterVisible.hashCode),
+                                                                persistData.hashCode),
+                                                            persistUI.hashCode),
+                                                        longPressSelectionIsDefault.hashCode),
+                                                    requireAuthentication.hashCode),
+                                                tapSelectedToEdit.hashCode),
+                                            enableJSPDF.hashCode),
+                                        rowsPerPage.hashCode),
+                                    enableTooltips.hashCode),
+                                colorTheme.hashCode),
+                            hideDesktopWarning.hashCode),
+                        hideGatewayWarning.hashCode),
                     editAfterSaving.hashCode),
                 textScaleFactor.hashCode),
             sortFields.hashCode),
@@ -828,6 +841,7 @@ class _$PrefState extends PrefState {
           ..add('enableTooltips', enableTooltips)
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
+          ..add('hideGatewayWarning', hideGatewayWarning)
           ..add('editAfterSaving', editAfterSaving)
           ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
@@ -954,6 +968,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideDesktopWarning(bool hideDesktopWarning) =>
       _$this._hideDesktopWarning = hideDesktopWarning;
 
+  bool _hideGatewayWarning;
+  bool get hideGatewayWarning => _$this._hideGatewayWarning;
+  set hideGatewayWarning(bool hideGatewayWarning) =>
+      _$this._hideGatewayWarning = hideGatewayWarning;
+
   bool _editAfterSaving;
   bool get editAfterSaving => _$this._editAfterSaving;
   set editAfterSaving(bool editAfterSaving) =>
@@ -1007,6 +1026,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _enableTooltips = $v.enableTooltips;
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
+      _hideGatewayWarning = $v.hideGatewayWarning;
       _editAfterSaving = $v.editAfterSaving;
       _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
@@ -1065,6 +1085,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               enableTooltips: BuiltValueNullFieldError.checkNotNull(enableTooltips, 'PrefState', 'enableTooltips'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
+              hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, 'PrefState', 'hideGatewayWarning'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, 'PrefState', 'editAfterSaving'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, 'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),

@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -407,6 +410,7 @@ class DashboardPanels extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final company = state.company;
+    final localization = AppLocalization.of(context);
 
     if (!state.staticState.isLoaded) {
       return LoadingIndicator();
@@ -466,6 +470,7 @@ class DashboardPanels extends StatelessWidget {
     }
 
     final entityTypes = [
+      EntityType.dashboard,
       if (company.isModuleEnabled(EntityType.task) && runningTasks.isNotEmpty)
         EntityType.taskStatus,
       if (company.isModuleEnabled(EntityType.invoice)) EntityType.invoice,
@@ -490,6 +495,42 @@ class DashboardPanels extends StatelessWidget {
               }
 
               switch (entityTypes[index]) {
+                case EntityType.dashboard:
+                  if (!state.userCompany.isAdmin ||
+                      state.prefState.hideGatewayWarning ||
+                      state.companyGatewayState.list.isNotEmpty) {
+                    return SizedBox();
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: FormCard(
+                        child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(localization.addGatewayHelpMessage),
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              createEntityByType(
+                                context: context,
+                                entityType: EntityType.companyGateway,
+                              );
+                            },
+                            child: Text(localization.addGateway)),
+                        IconButton(
+                            onPressed: () {
+                              final store = StoreProvider.of<AppState>(context);
+                              store
+                                  .dispatch(DismissGatewayWarningPermanently());
+                            },
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ))
+                      ],
+                    )),
+                  );
                 case EntityType.invoice:
                   return _InvoiceChart(
                       viewModel: viewModel,

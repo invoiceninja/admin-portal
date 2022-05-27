@@ -139,88 +139,104 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ),
               ),
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  if (company.isModuleEnabled(EntityType.invoice)) ...[
-                    DesignPicker(
-                      label: localization.invoiceDesign,
-                      initialValue: settings.defaultInvoiceDesignId,
-                      onSelected: (value) {
-                        setState(() {
-                          _wasInvoiceDesignChanged = true;
-                        });
-                        viewModel.onSettingsChanged(settings.rebuild(
-                            (b) => b..defaultInvoiceDesignId = value.id));
-                      },
-                    ),
-                    if (!isFiltered &&
-                        _wasInvoiceDesignChanged &&
-                        state.userCompany.isAdmin)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: CheckboxListTile(
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          title: Text(localization.updateAllRecords),
-                          value: _updateAllInvoiceDesigns,
-                          onChanged: (value) => setState(
-                            () => _updateAllInvoiceDesigns = value,
+                  if (state.isProPlan) ...[
+                    if (company.isModuleEnabled(EntityType.invoice)) ...[
+                      DesignPicker(
+                        label: localization.invoiceDesign,
+                        initialValue: settings.defaultInvoiceDesignId,
+                        onSelected: (value) {
+                          setState(() {
+                            _wasInvoiceDesignChanged = true;
+                          });
+                          viewModel.onSettingsChanged(settings.rebuild(
+                              (b) => b..defaultInvoiceDesignId = value.id));
+                        },
+                      ),
+                      if (!isFiltered &&
+                          _wasInvoiceDesignChanged &&
+                          state.userCompany.isAdmin)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: CheckboxListTile(
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                            title: Text(localization.updateAllRecords),
+                            value: _updateAllInvoiceDesigns,
+                            onChanged: (value) => setState(
+                              () => _updateAllInvoiceDesigns = value,
+                            ),
                           ),
                         ),
+                    ],
+                    if (company.isModuleEnabled(EntityType.quote)) ...[
+                      DesignPicker(
+                        label: localization.quoteDesign,
+                        initialValue: settings.defaultQuoteDesignId,
+                        onSelected: (value) {
+                          setState(() {
+                            _wasQuoteDesignChanged = true;
+                          });
+                          viewModel.onSettingsChanged(settings.rebuild(
+                              (b) => b..defaultQuoteDesignId = value.id));
+                        },
                       ),
-                  ],
-                  if (company.isModuleEnabled(EntityType.quote)) ...[
-                    DesignPicker(
-                      label: localization.quoteDesign,
-                      initialValue: settings.defaultQuoteDesignId,
-                      onSelected: (value) {
-                        setState(() {
-                          _wasQuoteDesignChanged = true;
-                        });
-                        viewModel.onSettingsChanged(settings.rebuild(
-                            (b) => b..defaultQuoteDesignId = value.id));
-                      },
-                    ),
-                    if (!isFiltered &&
-                        _wasQuoteDesignChanged &&
-                        state.userCompany.isAdmin)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: CheckboxListTile(
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          title: Text(localization.updateAllRecords),
-                          value: _updateAllQuoteDesigns,
-                          onChanged: (value) => setState(
-                            () => _updateAllQuoteDesigns = value,
+                      if (!isFiltered &&
+                          _wasQuoteDesignChanged &&
+                          state.userCompany.isAdmin)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: CheckboxListTile(
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                            title: Text(localization.updateAllRecords),
+                            value: _updateAllQuoteDesigns,
+                            onChanged: (value) => setState(
+                              () => _updateAllQuoteDesigns = value,
+                            ),
                           ),
                         ),
+                    ],
+                    if (company.isModuleEnabled(EntityType.credit)) ...[
+                      DesignPicker(
+                        label: localization.creditDesign,
+                        initialValue: settings.defaultCreditDesignId,
+                        onSelected: (value) {
+                          setState(() {
+                            _wasCreditDesignChanged = true;
+                          });
+                          viewModel.onSettingsChanged(settings.rebuild(
+                              (b) => b..defaultCreditDesignId = value.id));
+                        },
                       ),
-                  ],
-                  if (company.isModuleEnabled(EntityType.credit)) ...[
-                    DesignPicker(
-                      label: localization.creditDesign,
-                      initialValue: settings.defaultCreditDesignId,
-                      onSelected: (value) {
-                        setState(() {
-                          _wasCreditDesignChanged = true;
-                        });
-                        viewModel.onSettingsChanged(settings.rebuild(
-                            (b) => b..defaultCreditDesignId = value.id));
-                      },
-                    ),
-                    if (!isFiltered &&
-                        _wasCreditDesignChanged &&
-                        state.userCompany.isAdmin)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: CheckboxListTile(
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          title: Text(localization.updateAllRecords),
-                          value: _updateAllCreditDesigns,
-                          onChanged: (value) => setState(
-                            () => _updateAllCreditDesigns = value,
+                      if (!isFiltered &&
+                          _wasCreditDesignChanged &&
+                          state.userCompany.isAdmin)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: CheckboxListTile(
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                            title: Text(localization.updateAllRecords),
+                            value: _updateAllCreditDesigns,
+                            onChanged: (value) => setState(
+                              () => _updateAllCreditDesigns = value,
+                            ),
                           ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ] else
+                    OutlinedButton(
+                      child: Text(localization.setDefaultDesign.toUpperCase()),
+                      onPressed: () {
+                        store.dispatch(ViewSettings(
+                          company: state.company,
+                          section: kSettingsCompanyDetails,
+                          tabIndex: 3,
+                        ));
+                      },
+                    ),
                   AppDropdownButton(
                     labelText: localization.pageLayout,
                     value: settings.pageLayout,

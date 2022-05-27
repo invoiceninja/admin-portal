@@ -89,6 +89,8 @@ class DismissNativeWarning implements PersistUI {}
 
 class DismissNativeWarningPermanently implements PersistUI, PersistPrefs {}
 
+class DismissGatewayWarningPermanently implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
 
@@ -1163,8 +1165,7 @@ void editEntity({
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              task: (entity as TaskEntity).rebuild(
-                  (b) => b..showAsRunning = (entity as TaskEntity).isRunning),
+              task: entity,
               taskTimeIndex: subIndex,
               completer: completer,
             ));

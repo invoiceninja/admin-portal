@@ -37,6 +37,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       longPressSelectionIsDefault: true,
       tapSelectedToEdit: false,
       hideDesktopWarning: false,
+      hideGatewayWarning: false,
       showKanban: false,
       showPdfPreview: true,
       persistData: false,
@@ -139,6 +140,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get hideDesktopWarning;
 
+  bool get hideGatewayWarning;
+
   bool get editAfterSaving;
 
   double get textScaleFactor;
@@ -206,6 +209,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..isPreviewVisible = false
     ..isFilterVisible = false
     ..hideDesktopWarning = false
+    ..hideGatewayWarning = false
     ..tapSelectedToEdit = false
     ..persistData = false
     ..persistUI = true
