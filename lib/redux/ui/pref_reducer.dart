@@ -57,6 +57,8 @@ PrefState prefReducer(
           historySidebarReducer(state.historySidebarMode, action)
       ..hideDesktopWarning =
           hideDesktopWarningReducer(state.hideDesktopWarning, action)
+      ..hideGatewayWarning =
+          hideGatewayWarningReducer(state.hideGatewayWarning, action)
       ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
@@ -214,6 +216,12 @@ Reducer<String> filterReducer = combineReducers([
 
 Reducer<bool> hideDesktopWarningReducer = combineReducers([
   TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
+    return true;
+  }),
+]);
+
+Reducer<bool> hideGatewayWarningReducer = combineReducers([
+  TypedReducer<bool, DismissGatewayWarningPermanently>((filter, action) {
     return true;
   }),
 ]);
