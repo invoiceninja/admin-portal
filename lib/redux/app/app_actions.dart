@@ -1163,8 +1163,7 @@ void editEntity({
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              task: (entity as TaskEntity).rebuild(
-                  (b) => b..showAsRunning = (entity as TaskEntity).isRunning),
+              task: entity,
               taskTimeIndex: subIndex,
               completer: completer,
             ));

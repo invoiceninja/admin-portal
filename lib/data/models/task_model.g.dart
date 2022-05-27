@@ -225,13 +225,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add('status_order')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.showAsRunning;
-    if (value != null) {
-      result
-        ..add('showAsRunning')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -335,10 +328,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
-          break;
-        case 'showAsRunning':
-          result.showAsRunning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -677,8 +666,6 @@ class _$TaskEntity extends TaskEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
-  final bool showAsRunning;
-  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -714,7 +701,6 @@ class _$TaskEntity extends TaskEntity {
       this.statusId,
       this.statusOrder,
       this.documents,
-      this.showAsRunning,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -847,7 +833,6 @@ class _$TaskEntity extends TaskEntity {
           ..add('statusId', statusId)
           ..add('statusOrder', statusOrder)
           ..add('documents', documents)
-          ..add('showAsRunning', showAsRunning)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -925,11 +910,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
-  bool _showAsRunning;
-  bool get showAsRunning => _$this._showAsRunning;
-  set showAsRunning(bool showAsRunning) =>
-      _$this._showAsRunning = showAsRunning;
-
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -964,9 +944,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TaskEntityBuilder() {
-    TaskEntity._initializeBuilder(this);
-  }
+  TaskEntityBuilder();
 
   TaskEntityBuilder get _$this {
     final $v = _$v;
@@ -986,7 +964,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _statusId = $v.statusId;
       _statusOrder = $v.statusOrder;
       _documents = $v.documents.toBuilder();
-      _showAsRunning = $v.showAsRunning;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1041,7 +1018,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               statusId: BuiltValueNullFieldError.checkNotNull(statusId, 'TaskEntity', 'statusId'),
               statusOrder: statusOrder,
               documents: documents.build(),
-              showAsRunning: showAsRunning,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TaskEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TaskEntity', 'updatedAt'),

@@ -79,7 +79,7 @@ class TaskEditVM {
               index: taskTimes.length - 1,
               taskTime: taskTimes.firstWhere((time) => time.isRunning).stop));
         } else {
-          store.dispatch(AddTaskTime(TaskTime(), showAsRunning: true));
+          store.dispatch(AddTaskTime(TaskTime()));
         }
       },
       onSavePressed: (BuildContext context, [EntityAction action]) {

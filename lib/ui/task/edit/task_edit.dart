@@ -208,11 +208,7 @@ class _BottomBar extends StatelessWidget {
                       final title = localization.duration +
                           ' ' +
                           formatNumber(
-                              task
-                                  .calculateDuration(
-                                      includeRunning: task.showAsRunning)
-                                  .inSeconds
-                                  .toDouble(),
+                              task.calculateDuration().inSeconds.toDouble(),
                               context,
                               formatNumberType: FormatNumberType.duration);
                       if (task.number.isNotEmpty) {
