@@ -629,6 +629,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
               charts.ColorUtil.fromDartColor(state.accentColor),
+          strokeWidthPxFn: (_a, _b) => 2.5,
           id: DashboardChart.PERIOD_CURRENT,
           displayName:
               settings.enableComparison ? localization.current : widget.title,
@@ -656,6 +657,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
             measureFn: (ChartMoneyData chartData, _) => chartData.amount,
             colorFn: (ChartMoneyData chartData, _) =>
                 charts.MaterialPalette.gray.shadeDefault,
+            strokeWidthPxFn: (_a, _b) => 2.5,
             id: DashboardChart.PERIOD_PREVIOUS,
             displayName: localization.previous,
             data: previous,
