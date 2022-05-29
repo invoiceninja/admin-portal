@@ -155,17 +155,20 @@ class EditScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (isMobile(context))
+                if (isMobile(context) && !isFullscreen)
                   Flexible(child: Text(title))
                 else
                   Text(title),
                 SizedBox(width: 8),
-                if (isDesktop(context) && entity != null && entity.isOld) ...[
+                if (isDesktop(context) &&
+                    isFullscreen &&
+                    entity != null &&
+                    entity.isOld) ...[
                   EntityStatusChip(
                       entity: state.getEntity(entity.entityType, entity.id)),
                   SizedBox(width: 8),
                 ],
-                if (isDesktop(context))
+                if (isDesktop(context) && isFullscreen)
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -278,7 +281,7 @@ class EditScaffold extends StatelessWidget {
                   ),
               ],
             ),
-            actions: isDesktop(context)
+            actions: isDesktop(context) && isFullscreen
                 ? []
                 : [
                     if (state.isSaving)
@@ -297,9 +300,7 @@ class EditScaffold extends StatelessWidget {
                         isHeader: true,
                         isCancelEnabled: isCancelEnabled,
                         saveLabel: saveLabel,
-                        cancelLabel: entity == null
-                            ? localization.cancel
-                            : localization.back,
+                        cancelLabel: localization.cancel,
                         onSavePressed: (context) {
                           // Clear focus now to prevent un-focus after save from
                           // marking the form as changed and to hide the keyboard
