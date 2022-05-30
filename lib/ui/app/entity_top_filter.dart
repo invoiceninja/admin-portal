@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:overflow_view/overflow_view.dart';
 
 // Project imports:
@@ -215,9 +216,17 @@ class EntityTopFilter extends StatelessWidget {
                             ),
                           ),
                         ),
+                        SizedBox(width: 4),
                         if (!prefState
                             .isViewerFullScreen(filterEntityType)) ...[
-                          SizedBox(width: 4),
+                          if (filterEntityType.hasFullWidthViewer)
+                            IconButton(
+                              onPressed: () {
+                                store.dispatch(ToggleViewerLayout(
+                                    uiState.filterEntityType));
+                              },
+                              icon: Icon(MdiIcons.chevronDown),
+                            ),
                           IconButton(
                             icon: Icon(
                               Icons.clear,
@@ -227,8 +236,14 @@ class EntityTopFilter extends StatelessWidget {
                               FilterByEntity(entity: uiState.filterEntity),
                             ),
                           ),
-                          SizedBox(width: 4),
-                        ],
+                        ] else
+                          IconButton(
+                            onPressed: () {
+                              store.dispatch(
+                                  ToggleViewerLayout(uiState.filterEntityType));
+                            },
+                            icon: Icon(MdiIcons.chevronUp),
+                          ),
                       ],
                     ),
             ),
@@ -389,7 +404,6 @@ class EntityTopFilterHeader extends StatelessWidget {
               FilterByEntity(entity: uiState.filterEntity),
             ),
           ),
-          SizedBox(width: 4),
         ],
       ),
     );

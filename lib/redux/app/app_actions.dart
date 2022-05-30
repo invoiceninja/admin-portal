@@ -125,6 +125,12 @@ class ToggleEditorLayout implements PersistPrefs {
   final EntityType entityType;
 }
 
+class ToggleViewerLayout implements PersistPrefs {
+  ToggleViewerLayout(this.entityType);
+
+  final EntityType entityType;
+}
+
 class TogglePreviewSidebar {}
 
 class UpdateUserPreferences implements PersistPrefs {

@@ -79,6 +79,8 @@ PrefState prefReducer(
       ..customColors.replace(customColorsReducer(state.customColors, action))
       ..useSidebarEditor
           .replace(sidebarEditorReducer(state.useSidebarEditor, action))
+      ..useSidebarViewer
+          .replace(sidebarViewerReducer(state.useSidebarViewer, action))
       ..sortFields.replace(sortFieldsReducer(state.sortFields, action))
       ..editAfterSaving = editAfterSavingReducer(state.editAfterSaving, action)
       ..enableTouchEvents =
@@ -163,6 +165,17 @@ Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
 
 Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
   TypedReducer<BuiltMap<EntityType, bool>, ToggleEditorLayout>((value, action) {
+    final entityType = action.entityType.baseType;
+    if (value.containsKey(entityType)) {
+      return value.rebuild((b) => b..[entityType] = !value[entityType]);
+    } else {
+      return value.rebuild((b) => b..[entityType] = true);
+    }
+  }),
+]);
+
+Reducer<BuiltMap<EntityType, bool>> sidebarViewerReducer = combineReducers([
+  TypedReducer<BuiltMap<EntityType, bool>, ToggleViewerLayout>((value, action) {
     final entityType = action.entityType.baseType;
     if (value.containsKey(entityType)) {
       return value.rebuild((b) => b..[entityType] = !value[entityType]);
