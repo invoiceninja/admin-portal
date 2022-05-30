@@ -1,9 +1,12 @@
 // Flutter imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:overflow_view/overflow_view.dart';
 
 // Project imports:
@@ -232,8 +235,8 @@ class EntityTopFilter extends StatelessWidget {
   }
 }
 
-class EntityBottomFilter extends StatelessWidget {
-  const EntityBottomFilter();
+class EntityTopFilterHeader extends StatelessWidget {
+  const EntityTopFilterHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -258,6 +261,16 @@ class EntityBottomFilter extends StatelessWidget {
     final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
         ? state.accentColor
         : Theme.of(context).cardColor;
+
+    final entityActions = (filterEntity as BaseEntity)
+        .getActions(
+          userCompany: state.userCompany,
+        )
+        .where((action) => action != null);
+    final textStyle = Theme.of(context)
+        .textTheme
+        .bodyText2
+        .copyWith(color: state.headerTextColor);
 
     return Material(
       color: backgroundColor,
@@ -302,96 +315,68 @@ class EntityBottomFilter extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: OverflowView.flexible(
-                spacing: 4,
-                children: <Widget>[
-                  for (int i = 0; i < relatedTypes.length; i++)
-                    DecoratedBox(
-                      child: TextButton(
-                        child: Text(
-                          localization.lookup('${relatedTypes[i].plural}'),
-                          style: TextStyle(
-                            color: state.headerTextColor,
-                          ),
+                  spacing: 8,
+                  children: entityActions.map(
+                    (action) {
+                      final label = localization.lookup('$action');
+
+                      return OutlinedButton(
+                        child: IconText(
+                          icon: getEntityActionIcon(action),
+                          text: label,
+                          style: state.isSaving ? null : textStyle,
                         ),
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          minimumSize: Size(0, 36),
-                        ),
-                        onPressed: () {
-                          viewEntitiesByType(
-                            entityType: relatedTypes[i],
-                            filterEntity: filterEntity,
-                          );
-                        },
-                        onLongPress: () {
-                          handleEntityAction(filterEntity,
-                              EntityAction.newEntityType(relatedTypes[i]));
-                        },
-                      ),
-                      decoration: BoxDecoration(
-                        border: relatedTypes[i] == routeEntityType
-                            ? Border(
-                                bottom: BorderSide(
-                                  color: prefState.enableDarkMode ||
-                                          !state.hasAccentColor
-                                      ? state.accentColor
-                                      : Colors.white,
-                                  width: 2,
-                                ),
-                              )
-                            : null,
-                      ),
-                    )
-                ],
-                builder: (context, remaining) {
-                  return PopupMenuButton<EntityType>(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: Row(
-                        children: [
-                          Text(
-                            localization.more,
-                            style: TextStyle(color: state.headerTextColor),
-                          ),
-                          SizedBox(width: 4),
-                          Icon(Icons.arrow_drop_down,
-                              color: state.headerTextColor),
-                        ],
-                      ),
-                    ),
-                    initialValue: routeEntityType,
-                    onSelected: (EntityType value) {
-                      if (value == filterEntityType) {
-                        viewEntity(
-                          entity: filterEntity,
-                        );
-                      } else {
-                        viewEntitiesByType(
-                          entityType: value,
-                          filterEntity: filterEntity,
-                        );
-                      }
+                        onPressed: state.isSaving
+                            ? null
+                            : () {
+                                handleEntitiesActions([filterEntity], action);
+                              },
+                      );
                     },
-                    itemBuilder: (BuildContext context) => filterEntityType
-                        .relatedTypes
-                        .sublist(relatedTypes.length - remaining)
-                        .where(
-                            (element) => state.company.isModuleEnabled(element))
-                        .map((type) => PopupMenuItem<EntityType>(
-                              value: type,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minWidth: 75,
-                                ),
-                                child: Text(type == filterEntityType
-                                    ? localization.overview
-                                    : '${localization.lookup(type.plural)}'),
-                              ),
-                            ))
-                        .toList(),
-                  );
-                },
-              ),
+                  ).toList(),
+                  builder: (context, remaining) {
+                    return PopupMenuButton<EntityAction>(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          children: [
+                            Text(
+                              localization.more,
+                              style: textStyle,
+                            ),
+                            SizedBox(width: 4),
+                            Icon(Icons.arrow_drop_down,
+                                color: state.headerTextColor),
+                          ],
+                        ),
+                      ),
+                      onSelected: (EntityAction action) {
+                        handleEntitiesActions([filterEntity], action);
+                      },
+                      itemBuilder: (BuildContext context) {
+                        return entityActions
+                            .toList()
+                            .sublist(entityActions.length - remaining)
+                            .map((action) {
+                          return PopupMenuItem<EntityAction>(
+                            value: action,
+                            child: Row(
+                              children: <Widget>[
+                                Icon(getEntityActionIcon(action),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                                SizedBox(width: 16.0),
+                                Text(AppLocalization.of(context)
+                                        .lookup(action.toString()) ??
+                                    ''),
+                              ],
+                            ),
+                          );
+                        }).toList();
+                      },
+                    );
+                  }),
             ),
           ),
           SizedBox(width: 4),

@@ -97,7 +97,7 @@ class _ClientViewState extends State<ClientView>
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            EntityBottomFilter(),
+            EntityTopFilterHeader(),
             Expanded(child: Placeholder()),
           ],
         ),
