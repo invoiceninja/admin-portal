@@ -237,7 +237,10 @@ class EntityTopFilter extends StatelessWidget {
                                 store.dispatch(ToggleViewerLayout(
                                     uiState.filterEntityType));
                               },
-                              icon: Icon(MdiIcons.chevronDown),
+                              icon: Icon(
+                                MdiIcons.chevronDown,
+                                color: state.headerTextColor,
+                              ),
                             ),
                         ] else
                           IconButton(
@@ -245,7 +248,10 @@ class EntityTopFilter extends StatelessWidget {
                               store.dispatch(
                                   ToggleViewerLayout(uiState.filterEntityType));
                             },
-                            icon: Icon(MdiIcons.chevronUp),
+                            icon: Icon(
+                              MdiIcons.chevronUp,
+                              color: state.headerTextColor,
+                            ),
                           ),
                       ],
                     ),
