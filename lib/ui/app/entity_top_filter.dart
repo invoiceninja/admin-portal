@@ -72,6 +72,18 @@ class EntityTopFilter extends StatelessWidget {
                   : Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        if (!prefState
+                            .isViewerFullScreen(filterEntityType)) ...[
+                          IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: state.headerTextColor,
+                            ),
+                            onPressed: () => store.dispatch(
+                              FilterByEntity(entity: uiState.filterEntity),
+                            ),
+                          ),
+                        ],
                         if (!prefState.isFilterVisible &&
                             !prefState.isViewerFullScreen(filterEntityType))
                           InkWell(
@@ -227,15 +239,6 @@ class EntityTopFilter extends StatelessWidget {
                               },
                               icon: Icon(MdiIcons.chevronDown),
                             ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              color: state.headerTextColor,
-                            ),
-                            onPressed: () => store.dispatch(
-                              FilterByEntity(entity: uiState.filterEntity),
-                            ),
-                          ),
                         ] else
                           IconButton(
                             onPressed: () {
@@ -291,6 +294,16 @@ class EntityTopFilterHeader extends StatelessWidget {
       color: backgroundColor,
       child: Row(
         children: [
+          IconButton(
+            icon: Icon(
+              Icons.clear,
+              color: state.headerTextColor,
+            ),
+            onPressed: () => store.dispatch(
+              FilterByEntity(entity: uiState.filterEntity),
+            ),
+          ),
+          SizedBox(width: 4),
           if (!prefState.isFilterVisible)
             InkWell(
               onTap: () {
@@ -392,16 +405,6 @@ class EntityTopFilterHeader extends StatelessWidget {
                       },
                     );
                   }),
-            ),
-          ),
-          SizedBox(width: 4),
-          IconButton(
-            icon: Icon(
-              Icons.clear,
-              color: state.headerTextColor,
-            ),
-            onPressed: () => store.dispatch(
-              FilterByEntity(entity: uiState.filterEntity),
             ),
           ),
         ],
