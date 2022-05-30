@@ -227,6 +227,7 @@ class EntityTopFilter extends StatelessWidget {
                               FilterByEntity(entity: uiState.filterEntity),
                             ),
                           ),
+                          SizedBox(width: 4),
                         ],
                       ],
                     ),
@@ -388,6 +389,7 @@ class EntityTopFilterHeader extends StatelessWidget {
               FilterByEntity(entity: uiState.filterEntity),
             ),
           ),
+          SizedBox(width: 4),
         ],
       ),
     );
