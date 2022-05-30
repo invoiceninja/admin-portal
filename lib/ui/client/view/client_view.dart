@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
@@ -85,7 +84,6 @@ class _ClientViewState extends State<ClientView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final documents = client.documents;

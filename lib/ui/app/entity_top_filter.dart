@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -247,16 +246,11 @@ class EntityTopFilterHeader extends StatelessWidget {
     final prefState = state.prefState;
 
     final filterEntityType = uiState.filterEntityType;
-    final routeEntityType = uiState.entityTypeRoute;
 
     final entityMap =
         filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
-    final relatedTypes = filterEntityType?.relatedTypes
-            ?.where((element) => state.company.isModuleEnabled(element))
-            ?.toList() ??
-        [];
 
     final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
         ? state.accentColor
@@ -264,6 +258,7 @@ class EntityTopFilterHeader extends StatelessWidget {
 
     final entityActions = (filterEntity as BaseEntity)
         .getActions(
+          includeEdit: true,
           userCompany: state.userCompany,
         )
         .where((action) => action != null);
@@ -313,7 +308,7 @@ class EntityTopFilterHeader extends StatelessWidget {
           SizedBox(width: 12),
           Expanded(
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.centerRight,
               child: OverflowView.flexible(
                   spacing: 8,
                   children: entityActions.map(
