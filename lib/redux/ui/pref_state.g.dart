@@ -129,6 +129,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       serializers.serialize(object.useSidebarEditor,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(EntityType), const FullType(bool)])),
+      'useSidebarViewer',
+      serializers.serialize(object.useSidebarViewer,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(EntityType), const FullType(bool)])),
       'customColors',
       serializers.serialize(object.customColors,
           specifiedType: const FullType(BuiltMap,
@@ -242,6 +246,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'useSidebarEditor':
           result.useSidebarEditor.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(EntityType), const FullType(bool)])));
+          break;
+        case 'useSidebarViewer':
+          result.useSidebarViewer.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(EntityType), const FullType(bool)])));
           break;
@@ -589,6 +598,8 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<EntityType, bool> useSidebarEditor;
   @override
+  final BuiltMap<EntityType, bool> useSidebarViewer;
+  @override
   final BuiltMap<String, String> customColors;
   @override
   final bool isPreviewVisible;
@@ -646,6 +657,7 @@ class _$PrefState extends PrefState {
       this.menuSidebarMode,
       this.historySidebarMode,
       this.useSidebarEditor,
+      this.useSidebarViewer,
       this.customColors,
       this.isPreviewVisible,
       this.isMenuVisible,
@@ -680,6 +692,8 @@ class _$PrefState extends PrefState {
         historySidebarMode, 'PrefState', 'historySidebarMode');
     BuiltValueNullFieldError.checkNotNull(
         useSidebarEditor, 'PrefState', 'useSidebarEditor');
+    BuiltValueNullFieldError.checkNotNull(
+        useSidebarViewer, 'PrefState', 'useSidebarViewer');
     BuiltValueNullFieldError.checkNotNull(
         customColors, 'PrefState', 'customColors');
     BuiltValueNullFieldError.checkNotNull(
@@ -745,6 +759,7 @@ class _$PrefState extends PrefState {
         menuSidebarMode == other.menuSidebarMode &&
         historySidebarMode == other.historySidebarMode &&
         useSidebarEditor == other.useSidebarEditor &&
+        useSidebarViewer == other.useSidebarViewer &&
         customColors == other.customColors &&
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
@@ -792,7 +807,7 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), useSidebarViewer.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode),
                                                                                 enableTouchEvents.hashCode),
                                                                             isHistoryVisible.hashCode),
                                                                         enableDarkMode.hashCode),
@@ -822,6 +837,7 @@ class _$PrefState extends PrefState {
           ..add('menuSidebarMode', menuSidebarMode)
           ..add('historySidebarMode', historySidebarMode)
           ..add('useSidebarEditor', useSidebarEditor)
+          ..add('useSidebarViewer', useSidebarViewer)
           ..add('customColors', customColors)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
@@ -877,6 +893,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
   set useSidebarEditor(MapBuilder<EntityType, bool> useSidebarEditor) =>
       _$this._useSidebarEditor = useSidebarEditor;
+
+  MapBuilder<EntityType, bool> _useSidebarViewer;
+  MapBuilder<EntityType, bool> get useSidebarViewer =>
+      _$this._useSidebarViewer ??= new MapBuilder<EntityType, bool>();
+  set useSidebarViewer(MapBuilder<EntityType, bool> useSidebarViewer) =>
+      _$this._useSidebarViewer = useSidebarViewer;
 
   MapBuilder<String, String> _customColors;
   MapBuilder<String, String> get customColors =>
@@ -1007,6 +1029,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _menuSidebarMode = $v.menuSidebarMode;
       _historySidebarMode = $v.historySidebarMode;
       _useSidebarEditor = $v.useSidebarEditor.toBuilder();
+      _useSidebarViewer = $v.useSidebarViewer.toBuilder();
       _customColors = $v.customColors.toBuilder();
       _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
@@ -1062,6 +1085,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               historySidebarMode: BuiltValueNullFieldError.checkNotNull(
                   historySidebarMode, 'PrefState', 'historySidebarMode'),
               useSidebarEditor: useSidebarEditor.build(),
+              useSidebarViewer: useSidebarViewer.build(),
               customColors: customColors.build(),
               isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
                   isPreviewVisible, 'PrefState', 'isPreviewVisible'),
@@ -1095,6 +1119,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       try {
         _$failedField = 'useSidebarEditor';
         useSidebarEditor.build();
+        _$failedField = 'useSidebarViewer';
+        useSidebarViewer.build();
         _$failedField = 'customColors';
         customColors.build();
 

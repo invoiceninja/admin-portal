@@ -687,7 +687,11 @@ class EntityScreens extends StatelessWidget {
                     ? listWidget
                     : Column(
                         children: [
-                          topFilterChild,
+                          if (prefState.isViewerFullScreen(
+                              state.uiState.filterEntityType))
+                            Expanded(child: topFilterChild)
+                          else
+                            topFilterChild,
                           Expanded(
                             child: AppBorder(
                               isTop: uiState.filterEntityType != null &&
@@ -705,16 +709,9 @@ class EntityScreens extends StatelessWidget {
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
-              child: Column(
-                children: [
-                  if (isFullScreen) topFilterChild,
-                  Expanded(
-                    child: AppBorder(
-                      child: child,
-                      isTop: isFullScreen && uiState.filterEntityType != null,
-                    ),
-                  ),
-                ],
+              child: AppBorder(
+                child: child,
+                isTop: isFullScreen && uiState.filterEntityType != null,
               ),
               isLeft: true,
             ),

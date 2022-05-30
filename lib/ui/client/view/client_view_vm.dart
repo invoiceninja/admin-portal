@@ -25,8 +25,10 @@ class ClientViewScreen extends StatelessWidget {
   const ClientViewScreen({
     Key key,
     this.isFilter = false,
+    this.isTopFilter = false,
   }) : super(key: key);
   final bool isFilter;
+  final bool isTopFilter;
 
   static const String route = '/client/view';
 
@@ -41,6 +43,7 @@ class ClientViewScreen extends StatelessWidget {
         return ClientView(
           viewModel: vm,
           isFilter: isFilter,
+          isTopFilter: isTopFilter,
           tabIndex: vm.state.clientUIState.tabIndex,
         );
       },

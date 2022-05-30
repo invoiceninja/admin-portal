@@ -1420,6 +1420,9 @@ void selectEntity({
   } else if (isDesktop(context) && !state.prefState.isPreviewVisible) {
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
+    } else if (entity.entityType == EntityType.client &&
+        state.prefState.isViewerFullScreen(EntityType.client)) {
+      viewEntitiesByType(entityType: EntityType.invoice, filterEntity: entity);
     } else {
       if (!state.prefState.isPreviewVisible) {
         store.dispatch(TogglePreviewSidebar());

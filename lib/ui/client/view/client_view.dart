@@ -25,11 +25,13 @@ class ClientView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.isTopFilter,
     @required this.tabIndex,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
   final bool isFilter;
+  final bool isTopFilter;
   final int tabIndex;
 
   @override
@@ -85,6 +87,13 @@ class _ClientViewState extends State<ClientView>
     final client = viewModel.client;
     final documents = client.documents;
     final userCompany = viewModel.state.userCompany;
+
+    if (widget.isTopFilter) {
+      return ViewScaffold(
+        body: Placeholder(),
+        entity: client,
+      );
+    }
 
     return ViewScaffold(
       isFilter: widget.isFilter,
