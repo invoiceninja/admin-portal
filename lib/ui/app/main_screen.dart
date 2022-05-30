@@ -683,7 +683,7 @@ class EntityScreens extends StatelessWidget {
             child: ClipRRect(
               child: AppBorder(
                 isLeft: leftFilterChild != null,
-                child: topFilterChild == null
+                child: topFilterChild == null || prefState.isFilterVisible
                     ? listWidget
                     : Column(
                         children: [

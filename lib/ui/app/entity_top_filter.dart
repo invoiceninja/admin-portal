@@ -71,7 +71,8 @@ class EntityTopFilter extends StatelessWidget {
                   : Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (!prefState.isFilterVisible)
+                        if (!prefState.isFilterVisible &&
+                            !prefState.isViewerFullScreen(filterEntityType))
                           InkWell(
                             onTap: () {
                               store.dispatch(UpdateUserPreferences(
@@ -214,16 +215,19 @@ class EntityTopFilter extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 4),
-                        IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: state.headerTextColor,
+                        if (!prefState
+                            .isViewerFullScreen(filterEntityType)) ...[
+                          SizedBox(width: 4),
+                          IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: state.headerTextColor,
+                            ),
+                            onPressed: () => store.dispatch(
+                              FilterByEntity(entity: uiState.filterEntity),
+                            ),
                           ),
-                          onPressed: () => store.dispatch(
-                            FilterByEntity(entity: uiState.filterEntity),
-                          ),
-                        ),
+                        ],
                       ],
                     ),
             ),
