@@ -495,9 +495,14 @@ void viewEntityById({
             if (isDesktop(navigatorKey.currentContext)) {
               if (!state.prefState.isViewerFullScreen(entityType))
                 store.dispatch(ToggleViewerLayout(entityType));
+              final filterEntity =
+                  store.state.getEntityMap(entityType)[entityId] as BaseEntity;
               viewEntitiesByType(
-                  entityType: EntityType.invoice,
-                  filterEntity: store.state.getEntityMap(entityType)[entityId]);
+                  entityType: filterEntity.entityType.relatedTypes
+                      .where((entityType) =>
+                          state.userCompany.canViewOrCreate(entityType))
+                      .first,
+                  filterEntity: filterEntity);
             } else {
               store.dispatch(ViewClient(
                 clientId: entityId,
