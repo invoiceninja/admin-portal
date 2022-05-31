@@ -252,7 +252,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                   overflow: TextOverflow.ellipsis,
                                 )),
                           ),
-                          SizedBox(width: kTableColumnGap),
+                          SizedBox(width: 4),
                           Flexible(
                             child: OutlinedButton(
                                 onPressed: () {
@@ -260,7 +260,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                       '${contact.link}&client_hash=${client.clientHash}';
                                   Clipboard.setData(ClipboardData(text: url));
                                   showToast(localization.copiedToClipboard
-                                      .replaceFirst(':value ', url));
+                                      .replaceFirst(':value ', ''));
                                 },
                                 child: Text(
                                   localization.copyLink,
