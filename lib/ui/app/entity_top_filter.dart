@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -232,25 +233,39 @@ class EntityTopFilter extends StatelessWidget {
                         if (!prefState
                             .isViewerFullScreen(filterEntityType)) ...[
                           if (filterEntityType.hasFullWidthViewer)
-                            IconButton(
-                              onPressed: () {
-                                store.dispatch(ToggleViewerLayout(
-                                    uiState.filterEntityType));
-                              },
-                              icon: Icon(
-                                MdiIcons.chevronDown,
-                                color: state.headerTextColor,
+                            AppBorder(
+                              isLeft: true,
+                              child: InkWell(
+                                onTap: () {
+                                  store.dispatch(ToggleViewerLayout(
+                                      uiState.filterEntityType));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12),
+                                  child: Icon(
+                                    MdiIcons.chevronDown,
+                                    color: state.headerTextColor,
+                                  ),
+                                ),
                               ),
                             ),
                         ] else
-                          IconButton(
-                            onPressed: () {
-                              store.dispatch(
-                                  ToggleViewerLayout(uiState.filterEntityType));
-                            },
-                            icon: Icon(
-                              MdiIcons.chevronUp,
-                              color: state.headerTextColor,
+                          AppBorder(
+                            isLeft: true,
+                            child: InkWell(
+                              onTap: () {
+                                store.dispatch(ToggleViewerLayout(
+                                    uiState.filterEntityType));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Icon(
+                                  MdiIcons.chevronUp,
+                                  color: state.headerTextColor,
+                                ),
+                              ),
                             ),
                           ),
                       ],
