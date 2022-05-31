@@ -492,10 +492,18 @@ void viewEntityById({
 
         switch (entityType) {
           case EntityType.client:
-            store.dispatch(ViewClient(
-              clientId: entityId,
-              force: force,
-            ));
+            if (isDesktop(navigatorKey.currentContext)) {
+              if (!state.prefState.isViewerFullScreen(entityType))
+                store.dispatch(ToggleViewerLayout(entityType));
+              viewEntitiesByType(
+                  entityType: EntityType.invoice,
+                  filterEntity: store.state.getEntityMap(entityType)[entityId]);
+            } else {
+              store.dispatch(ViewClient(
+                clientId: entityId,
+                force: force,
+              ));
+            }
             break;
           case EntityType.user:
             store.dispatch(ViewUser(
@@ -1426,11 +1434,9 @@ void selectEntity({
   } else if (isDesktop(context) && !state.prefState.isPreviewVisible) {
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
-    } else if (entity.entityType == EntityType.client &&
-        state.prefState.isViewerFullScreen(EntityType.client)) {
-      viewEntitiesByType(entityType: EntityType.invoice, filterEntity: entity);
     } else {
-      if (!state.prefState.isPreviewVisible) {
+      if (!entity.entityType.hasFullWidthViewer &&
+          !state.prefState.isPreviewVisible) {
         store.dispatch(TogglePreviewSidebar());
       }
       viewEntity(entity: entity);
