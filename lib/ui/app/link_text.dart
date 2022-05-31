@@ -46,8 +46,12 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
           ),
         ),
         onTap: () {
-          viewEntity(entity: widget.relation);
-          viewEntity(entity: widget.entity, addToStack: true);
+          if (widget.entity.entityType.hasFullWidthViewer) {
+            viewEntity(entity: widget.entity);
+          } else {
+            viewEntity(entity: widget.relation);
+            viewEntity(entity: widget.entity, addToStack: true);
+          }
         },
         onLongPress: () {
           editEntity(context: context, entity: widget.entity);

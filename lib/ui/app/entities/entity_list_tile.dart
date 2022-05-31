@@ -108,7 +108,12 @@ class _EntityListTileState extends State<EntityListTile> {
             isMenu: true,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              onTap: () => inspectEntity(entity: widget.entity),
+              onTap: () {
+                if (state.prefState
+                    .isViewerFullScreen(widget.entity.entityType))
+                  store.dispatch(ToggleViewerLayout(widget.entity.entityType));
+                inspectEntity(entity: widget.entity);
+              },
               onLongPress: () =>
                   inspectEntity(entity: widget.entity, longPress: true),
               title: Text(
