@@ -208,6 +208,28 @@ class ClientViewFullwidth extends StatelessWidget {
                                 ),
                               ),
                             SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: OutlinedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        localization.clientPortal,
+                                        textAlign: TextAlign.center,
+                                      )),
+                                ),
+                                SizedBox(width: kTableColumnGap),
+                                Flexible(
+                                  child: OutlinedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        localization.copyLink,
+                                        textAlign: TextAlign.center,
+                                      )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
                           ],
                         ))
                     .toList()
