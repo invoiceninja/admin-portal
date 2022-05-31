@@ -92,6 +92,7 @@ class _ClientViewState extends State<ClientView>
 
     if (widget.isTopFilter) {
       return Material(
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
