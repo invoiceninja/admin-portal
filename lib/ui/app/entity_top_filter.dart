@@ -53,11 +53,15 @@ class EntityTopFilter extends StatelessWidget {
       color: backgroundColor,
       child: Column(
         children: [
-          if (prefState.isViewerFullScreen(state.uiState.filterEntityType))
+          if (prefState.isViewerFullScreen(uiState.filterEntityType))
             Expanded(
-                child: ClientViewScreen(
-              isTopFilter: true,
-            )),
+                child: uiState.filterEntityType == EntityType.client
+                    ? ClientViewScreen(
+                        isTopFilter: true,
+                      )
+                    : uiState.filterEntityType == EntityType.vendor
+                        ? VendorViewScreen(isTopFilter: true)
+                        : Placeholder()),
           AnimatedContainer(
             height: show ? 46 : 0,
             duration: Duration(milliseconds: kDefaultAnimationDuration),
