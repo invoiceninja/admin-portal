@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -142,30 +144,52 @@ class ListScaffold extends StatelessWidget {
                           localization.back,
                           style: TextStyle(color: state.headerTextColor),
                         )),
-                  /*
-                  if (!isSettings &&
-                      (isMobile(context) || !state.prefState.isHistoryVisible))
-                    Builder(
-                      builder: (context) => IconButton(
-                        padding: const EdgeInsets.only(left: 4, right: 20),
-                        tooltip: prefState.enableTooltips
-                            ? localization.history
-                            : null,
-                        icon: Icon(Icons.history),
-                        onPressed: () {
-                          if (isMobile(context) ||
-                              state.prefState.isHistoryFloated) {
-                            Scaffold.of(context).openEndDrawer();
-                          } else {
-                            store.dispatch(UpdateUserPreferences(
-                                sidebar: AppSidebar.history));
-                          }
-                        },
-                      ),
-                    ),
-                    */
                 ],
               ),
+              actions: [
+                if (!isSettings &&
+                    (isMobile(context) || !state.prefState.isHistoryVisible))
+                  Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        if (isMobile(context) ||
+                            state.prefState.isHistoryFloated) {
+                          Scaffold.of(context).openEndDrawer();
+                        } else {
+                          store.dispatch(UpdateUserPreferences(
+                              sidebar: AppSidebar.history));
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Icon(
+                          Icons.history,
+                          color: state.headerTextColor,
+                        ),
+                      ),
+                    );
+                  })
+                /*
+                  Builder(
+                    builder: (context) => IconButton(
+                      padding: const EdgeInsets.only(left: 4, right: 20),
+                      tooltip: prefState.enableTooltips
+                          ? localization.history
+                          : null,
+                      icon: Icon(Icons.history),
+                      onPressed: () {
+                        if (isMobile(context) ||
+                            state.prefState.isHistoryFloated) {
+                          Scaffold.of(context).openEndDrawer();
+                        } else {
+                          store.dispatch(UpdateUserPreferences(
+                              sidebar: AppSidebar.history));
+                        }
+                      },
+                    ),
+                  ),
+                  */
+              ],
             ),
             body: ClipRect(
               child: body,
