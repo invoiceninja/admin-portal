@@ -277,7 +277,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 }).toList()
               ],
             )),
-            if (!state.prefState.isPreviewVisible)
+            if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
               Expanded(
                 flex: 2,
                 child: FormCard(
