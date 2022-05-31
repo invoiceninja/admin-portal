@@ -148,69 +148,71 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
             ),
           ),
           Expanded(
-              child: FormCard(
-            isLast: true,
-            constraints: BoxConstraints(minHeight: minHeight),
-            crossAxisAlignment: CrossAxisAlignment.start,
-            padding: const EdgeInsets.only(
-                top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 3,
-                bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding / 3),
-            children: [
-              Text(
-                localization.address,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 4),
-              if (billingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: billingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(billingAddress)),
-                          ],
+              child: SingleChildScrollView(
+            child: FormCard(
+              isLast: true,
+              constraints: BoxConstraints(minHeight: minHeight),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.only(
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding / 3,
+                  bottom: kMobileDialogPadding,
+                  left: kMobileDialogPadding / 3),
+              children: [
+                Text(
+                  localization.address,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                if (billingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: billingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(billingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(billingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
-                SizedBox(height: 8),
-              ],
-              if (shippingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: shippingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(shippingAddress)),
-                          ],
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(billingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                ],
+                if (shippingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: shippingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(shippingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(shippingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(shippingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                ],
               ],
-            ],
+            ),
           )),
           Expanded(
               child: Scrollbar(
