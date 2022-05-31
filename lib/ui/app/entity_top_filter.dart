@@ -73,6 +73,7 @@ class EntityTopFilter extends StatelessWidget {
                   : Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        SizedBox(width: 4),
                         if (!prefState
                             .isViewerFullScreen(filterEntityType)) ...[
                           IconButton(
@@ -315,6 +316,7 @@ class EntityTopFilterHeader extends StatelessWidget {
       color: backgroundColor,
       child: Row(
         children: [
+          SizedBox(width: 5),
           IconButton(
             icon: Icon(
               Icons.clear,
