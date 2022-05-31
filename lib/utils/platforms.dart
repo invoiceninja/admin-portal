@@ -76,9 +76,9 @@ bool isIOS() {
   return Platform.isIOS;
 }
 
-String getMapURL(BuildContext context) => isAndroid()
-    ? 'https://maps.google.com/?q='
-    : 'http://maps.apple.com/?address=';
+String getMapURL(BuildContext context) => isApple()
+    ? 'https://maps.apple.com/?address='
+    : 'https://maps.google.com/?q=';
 
 String getLegacyAppURL(BuildContext context) => isAndroid()
     ? 'https://play.google.com/store/apps/details?id=com.invoiceninja.invoiceninja'

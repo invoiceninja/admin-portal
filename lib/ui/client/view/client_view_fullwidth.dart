@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -179,60 +181,65 @@ class ClientViewFullwidth extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 4),
-                ...client.contacts
-                    .map((contact) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              contact.fullName,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            if (contact.email.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: CopyToClipboard(
-                                  value: contact.email,
-                                  child: IconText(
-                                      icon: Icons.email, text: contact.email),
-                                ),
-                              ),
-                            if (contact.phone.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: CopyToClipboard(
-                                  value: contact.phone,
-                                  child: IconText(
-                                      icon: Icons.phone, text: contact.phone),
-                                ),
-                              ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: OutlinedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        localization.clientPortal,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                ),
-                                SizedBox(width: kTableColumnGap),
-                                Flexible(
-                                  child: OutlinedButton(
-                                      onPressed: () {},
-                                      child: Text(
-                                        localization.copyLink,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                          ],
-                        ))
-                    .toList()
+                ...client.contacts.map((contact) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        contact.fullName,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      if (contact.email.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.email,
+                            child: IconText(
+                                icon: Icons.email, text: contact.email),
+                          ),
+                        ),
+                      if (contact.phone.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.phone,
+                            child: IconText(
+                                icon: Icons.phone, text: contact.phone),
+                          ),
+                        ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: OutlinedButton(
+                                onPressed: () => launch(
+                                    '${contact.silentLink}&client_hash=${client.clientHash}'),
+                                child: Text(
+                                  localization.clientPortal,
+                                  textAlign: TextAlign.center,
+                                )),
+                          ),
+                          SizedBox(width: kTableColumnGap),
+                          Flexible(
+                            child: OutlinedButton(
+                                onPressed: () {
+                                  final url =
+                                      '${contact.link}&client_hash=${client.clientHash}';
+                                  Clipboard.setData(ClipboardData(text: url));
+                                  showToast(localization.copiedToClipboard
+                                      .replaceFirst(':value ', url));
+                                },
+                                child: Text(
+                                  localization.copyLink,
+                                  textAlign: TextAlign.center,
+                                )),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                    ],
+                  );
+                }).toList()
               ],
             )),
             if (!state.prefState.isPreviewVisible)
