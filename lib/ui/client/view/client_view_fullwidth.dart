@@ -28,6 +28,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final client = state.uiState.filterEntity as ClientEntity;
+    final documents = client.documents;
     final billingAddress = formatAddress(state, object: client);
     final shippingAddress =
         formatAddress(state, object: client, isShipping: true);
@@ -273,22 +274,41 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       bottom: kMobileDialogPadding,
                       left: kMobileDialogPadding / 3),
                   child: DefaultTabController(
-                    length: 1,
+                    length: 5,
                     child: SizedBox(
                       height: minHeight,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TabBar(
+                            isScrollable: true,
                             tabs: [
                               Tab(
-                                child: Text(localization.pdf),
+                                child: Text(localization.standing),
+                              ),
+                              Tab(
+                                text: documents.isEmpty
+                                    ? localization.documents
+                                    : '${localization.documents} (${documents.length})',
+                              ),
+                              Tab(
+                                text: localization.ledger,
+                              ),
+                              Tab(
+                                text: localization.activity,
+                              ),
+                              Tab(
+                                text: localization.systemLogs,
                               ),
                             ],
                           ),
                           Flexible(
                             child: TabBarView(
                               children: [
+                                SizedBox(),
+                                SizedBox(),
+                                SizedBox(),
+                                SizedBox(),
                                 SizedBox(),
                               ],
                             ),
