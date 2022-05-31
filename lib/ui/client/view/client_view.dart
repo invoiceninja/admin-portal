@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_fullwidth.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
@@ -96,7 +97,7 @@ class _ClientViewState extends State<ClientView>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             EntityTopFilterHeader(),
-            Expanded(child: Placeholder()),
+            Expanded(child: ClientViewFullwidth()),
           ],
         ),
       );
