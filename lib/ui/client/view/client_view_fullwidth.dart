@@ -68,17 +68,22 @@ class ClientViewFullwidth extends StatelessWidget {
                     ),
                   if (client.currencyId != state.company.currencyId)
                     Text(
-                      '${localization.currency}: ${state.staticState.currencyMap[client.currencyId]?.name ?? ''}',
+                      state.staticState.currencyMap[client.currencyId]?.name ??
+                          '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
                       client.languageId != state.company.settings.languageId)
                     Text(
-                      '${localization.language}: ${state.staticState.languageMap[client.languageId]?.name ?? ''}',
+                      state.staticState.languageMap[client.languageId]?.name ??
+                          '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
+                  if ((client.settings.defaultTaskRate ?? 0) != 0)
+                    Text(
+                        '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
                 ],
               ),
             ),
