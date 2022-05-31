@@ -6,16 +6,27 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewFullwidth extends StatefulWidget {
-  const ClientViewFullwidth({Key key}) : super(key: key);
+  const ClientViewFullwidth({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final ClientViewVM viewModel;
 
   @override
   State<ClientViewFullwidth> createState() => _ClientViewFullwidthState();
@@ -30,6 +41,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final state = store.state;
     final client = state.uiState.filterEntity as ClientEntity;
     final documents = client.documents;
+    final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: client);
     final shippingAddress =
         formatAddress(state, object: client, isShipping: true);
@@ -306,11 +318,49 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                           Flexible(
                             child: TabBarView(
                               children: [
-                                SizedBox(),
-                                SizedBox(),
-                                SizedBox(),
-                                SizedBox(),
-                                SizedBox(),
+                                EntityHeader(
+                                  entity: client,
+                                  label: localization.paidToDate,
+                                  value: formatNumber(
+                                      client.paidToDate, context,
+                                      clientId: client.id),
+                                  secondLabel: localization.balanceDue,
+                                  secondValue: formatNumber(
+                                      client.balance, context,
+                                      clientId: client.id),
+                                ),
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewDocuments(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                  ),
+                                ),
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewLedger(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                  ),
+                                ),
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewActivity(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                  ),
+                                ),
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewSystemLogs(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                  ),
+                                )
                               ],
                             ),
                           ),

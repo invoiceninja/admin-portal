@@ -98,7 +98,10 @@ class _ClientViewState extends State<ClientView>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             EntityTopFilterHeader(),
-            Expanded(child: ClientViewFullwidth()),
+            Expanded(
+                child: ClientViewFullwidth(
+              viewModel: viewModel,
+            )),
           ],
         ),
       );
