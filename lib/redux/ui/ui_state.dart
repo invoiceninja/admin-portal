@@ -250,6 +250,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get isPreviewing => previewStack.isNotEmpty;
 
+  bool get isList => !isEditing && !isEmailing && !isPDF && !isInSettings;
+
   bool get hasRecentActivity {
     if (lastActivityAt == 0) {
       return false;

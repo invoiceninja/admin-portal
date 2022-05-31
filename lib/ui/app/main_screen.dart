@@ -713,7 +713,7 @@ class EntityScreens extends StatelessWidget {
             child: AppBorder(
               child: AppBorder(
                 child: child,
-                isTop: isFullScreen && uiState.filterEntityType != null,
+                isTop: isFullScreen,
               ),
               isLeft: true,
             ),

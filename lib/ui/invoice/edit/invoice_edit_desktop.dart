@@ -267,23 +267,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             viewModel.onAddClientPressed(context, completer),
                       )
                     else
-                      InkWell(
-                        onTap: () {
-                          filterByEntity(context: context, entity: client);
-                        },
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                              minWidth: double.infinity, minHeight: 40),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              EntityPresenter()
-                                  .initialize(client, context)
-                                  .title(),
-                              style: Theme.of(context).textTheme.headline6,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minWidth: double.infinity, minHeight: 40),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            EntityPresenter()
+                                .initialize(client, context)
+                                .title(),
+                            style: Theme.of(context).textTheme.headline6,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
