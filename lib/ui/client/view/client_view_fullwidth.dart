@@ -135,7 +135,7 @@ class ClientViewFullwidth extends StatelessWidget {
                           icon: Icon(Icons.map))
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 8),
                 ],
                 if (shippingAddress.isNotEmpty) ...[
                   Row(
@@ -159,7 +159,6 @@ class ClientViewFullwidth extends StatelessWidget {
                           icon: Icon(Icons.map))
                     ],
                   ),
-                  SizedBox(height: 16),
                 ],
               ],
             )),
@@ -182,8 +181,33 @@ class ClientViewFullwidth extends StatelessWidget {
                 SizedBox(height: 4),
                 ...client.contacts
                     .map((contact) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(contact.fullName),
+                            Text(
+                              contact.fullName,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            if (contact.email.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.email,
+                                  child: IconText(
+                                      icon: Icons.email, text: contact.email),
+                                ),
+                              ),
+                            if (contact.phone.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.phone,
+                                  child: IconText(
+                                      icon: Icons.phone, text: contact.phone),
+                                ),
+                              ),
+                            SizedBox(height: 8),
                           ],
                         ))
                     .toList()
