@@ -57,19 +57,25 @@ class ClientViewFullwidth extends StatelessWidget {
                       value: client.vatNumber,
                       prefix: localization.vatNumber,
                     ),
+                  SizedBox(height: 4),
                   if (client.phone.isNotEmpty)
-                    CopyToClipboard(
-                      value: client.phone,
-                      prefix: localization.phone,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: CopyToClipboard(
+                        value: client.phone,
+                        child: IconText(icon: Icons.phone, text: client.phone),
+                      ),
                     ),
                   if (client.website.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.only(top: 12, bottom: 12),
-                      child: OutlinedButton(
-                          onPressed: () => launch(client.website),
-                          child: IconText(
-                              text: client.website, icon: MdiIcons.openInNew)),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: CopyToClipboard(
+                        value: client.website,
+                        child: IconText(
+                            icon: MdiIcons.earth, text: client.website),
+                      ),
                     ),
+                  SizedBox(height: 4),
                   if (client.currencyId != state.company.currencyId)
                     Text(
                       state.staticState.currencyMap[client.currencyId]?.name ??
@@ -174,6 +180,13 @@ class ClientViewFullwidth extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 4),
+                ...client.contacts
+                    .map((contact) => Column(
+                          children: [
+                            Text(contact.fullName),
+                          ],
+                        ))
+                    .toList()
               ],
             )),
             if (!state.prefState.isPreviewVisible)
