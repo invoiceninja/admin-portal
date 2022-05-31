@@ -3,8 +3,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewFullwidth extends StatelessWidget {
   const ClientViewFullwidth({Key key}) : super(key: key);
@@ -34,8 +38,27 @@ class ClientViewFullwidth extends StatelessWidget {
                 localization.details,
                 style: Theme.of(context).textTheme.headline6,
               ),
+              SizedBox(height: 4),
+              if (client.idNumber.isNotEmpty)
+                CopyToClipboard(
+                  value: client.idNumber,
+                  prefix: localization.idNumber,
+                ),
               if (client.vatNumber.isNotEmpty)
-                Text('${localization.vatNumber}: ${client.vatNumber}'),
+                CopyToClipboard(
+                  value: client.vatNumber,
+                  prefix: localization.vatNumber,
+                ),
+              if (client.phone.isNotEmpty)
+                CopyToClipboard(
+                  value: client.phone,
+                  prefix: localization.phone,
+                ),
+              if (client.website.isNotEmpty)
+                OutlinedButton(
+                    onPressed: () => launch(client.website),
+                    child: IconText(
+                        text: client.website, icon: MdiIcons.openInNew)),
             ],
           ),
         ),
