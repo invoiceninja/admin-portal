@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -23,6 +24,11 @@ class ClientViewFullwidth extends StatelessWidget {
           child: FormCard(
             isLast: true,
             crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding / 2,
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding),
             children: [
               Text(
                 localization.details,
@@ -37,6 +43,11 @@ class ClientViewFullwidth extends StatelessWidget {
             child: FormCard(
           isLast: true,
           crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.only(
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding / 2,
+              bottom: kMobileDialogPadding,
+              left: kMobileDialogPadding / 2),
           children: [
             Text(
               localization.address,
@@ -48,6 +59,12 @@ class ClientViewFullwidth extends StatelessWidget {
             child: FormCard(
           isLast: true,
           crossAxisAlignment: CrossAxisAlignment.start,
+          padding: EdgeInsets.only(
+              top: kMobileDialogPadding,
+              right: kMobileDialogPadding /
+                  (state.prefState.isPreviewVisible ? 1 : 2),
+              bottom: kMobileDialogPadding,
+              left: kMobileDialogPadding / 2),
           children: [
             Text(
               localization.contacts,
@@ -55,18 +72,24 @@ class ClientViewFullwidth extends StatelessWidget {
             ),
           ],
         )),
-        Expanded(
-            flex: 2,
-            child: FormCard(
-              isLast: true,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '', //localization.standing,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ],
-            )),
+        if (!state.prefState.isPreviewVisible)
+          Expanded(
+              flex: 2,
+              child: FormCard(
+                isLast: true,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
+                children: [
+                  Text(
+                    '', //localization.standing,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ],
+              )),
       ],
     );
   }
