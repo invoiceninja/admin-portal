@@ -318,7 +318,7 @@ class EntityTopFilterHeader extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 5,
+            width: 4,
             height: 46,
           ),
           IconButton(
