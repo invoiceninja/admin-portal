@@ -173,11 +173,11 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   }
 
   bool isViewerFullScreen(EntityType entityType) {
-    if (!isDesktop) {
+    if (!isDesktop || entityType == null) {
       return false;
     }
 
-    if (![EntityType.client].contains(entityType)) {
+    if (!entityType.hasFullWidthViewer) {
       return false;
     }
 

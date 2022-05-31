@@ -25,10 +25,10 @@ class VendorViewFullwidth extends StatefulWidget {
   final VendorViewVM viewModel;
 
   @override
-  State<VendorViewFullwidth> createState() => _ClientViewFullwidthState();
+  State<VendorViewFullwidth> createState() => _VendorViewFullwidthState();
 }
 
-class _ClientViewFullwidthState extends State<VendorViewFullwidth>
+class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     with SingleTickerProviderStateMixin {
   ScrollController _scrollController;
 
