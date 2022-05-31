@@ -13,9 +13,15 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ClientViewFullwidth extends StatelessWidget {
+class ClientViewFullwidth extends StatefulWidget {
   const ClientViewFullwidth({Key key}) : super(key: key);
 
+  @override
+  State<ClientViewFullwidth> createState() => _ClientViewFullwidthState();
+}
+
+class _ClientViewFullwidthState extends State<ClientViewFullwidth>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -255,24 +261,44 @@ class ClientViewFullwidth extends StatelessWidget {
             )),
             if (!state.prefState.isPreviewVisible)
               Expanded(
-                  flex: 2,
-                  child: FormCard(
-                    isLast: true,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    constraints: BoxConstraints(minHeight: minHeight),
-                    padding: const EdgeInsets.only(
-                        top: kMobileDialogPadding,
-                        right: kMobileDialogPadding,
-                        bottom: kMobileDialogPadding,
-                        left: kMobileDialogPadding / 3),
-                    children: [
-                      Text(
-                        '', //localization.standing,
-                        style: Theme.of(context).textTheme.headline6,
+                flex: 2,
+                child: FormCard(
+                  isLast: true,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  constraints:
+                      BoxConstraints(minHeight: minHeight, maxHeight: 600),
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding / 3),
+                  child: DefaultTabController(
+                    length: 1,
+                    child: SizedBox(
+                      height: minHeight,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TabBar(
+                            tabs: [
+                              Tab(
+                                child: Text(localization.pdf),
+                              ),
+                            ],
+                          ),
+                          Flexible(
+                            child: TabBarView(
+                              children: [
+                                SizedBox(),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 4),
-                    ],
-                  )),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       );
