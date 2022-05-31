@@ -86,6 +86,7 @@ class EntityTopFilter extends StatelessWidget {
                             ),
                           ),
                         ],
+                        SizedBox(width: 4),
                         if (!prefState.isFilterVisible &&
                             !prefState.isViewerFullScreen(filterEntityType))
                           InkWell(
@@ -316,7 +317,10 @@ class EntityTopFilterHeader extends StatelessWidget {
       color: backgroundColor,
       child: Row(
         children: [
-          SizedBox(width: 5),
+          SizedBox(
+            width: 5,
+            height: 46,
+          ),
           IconButton(
             icon: Icon(
               Icons.clear,
