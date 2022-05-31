@@ -34,6 +34,22 @@ class ClientViewFullwidth extends StatefulWidget {
 
 class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     with SingleTickerProviderStateMixin {
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -48,12 +64,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
 
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
-      return SingleChildScrollView(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: FormCard(
                 isLast: true,
                 constraints: BoxConstraints(minHeight: minHeight),
@@ -130,252 +146,253 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 ],
               ),
             ),
-            Expanded(
-                child: FormCard(
-              isLast: true,
-              constraints: BoxConstraints(minHeight: minHeight),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              padding: const EdgeInsets.only(
-                  top: kMobileDialogPadding,
-                  right: kMobileDialogPadding / 3,
-                  bottom: kMobileDialogPadding,
-                  left: kMobileDialogPadding / 3),
-              children: [
-                Text(
-                  localization.address,
-                  style: Theme.of(context).textTheme.headline6,
+          ),
+          Expanded(
+              child: FormCard(
+            isLast: true,
+            constraints: BoxConstraints(minHeight: minHeight),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding / 3,
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            children: [
+              Text(
+                localization.address,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              SizedBox(height: 4),
+              if (billingAddress.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: CopyToClipboard(
+                        value: billingAddress,
+                        child: Row(
+                          children: [
+                            Flexible(child: Text(billingAddress)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(billingAddress));
+                        },
+                        icon: Icon(Icons.map))
+                  ],
                 ),
-                SizedBox(height: 4),
-                if (billingAddress.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CopyToClipboard(
-                          value: billingAddress,
-                          child: Row(
-                            children: [
-                              Flexible(child: Text(billingAddress)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(billingAddress));
-                          },
-                          icon: Icon(Icons.map))
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                ],
-                if (shippingAddress.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CopyToClipboard(
-                          value: shippingAddress,
-                          child: Row(
-                            children: [
-                              Flexible(child: Text(shippingAddress)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(shippingAddress));
-                          },
-                          icon: Icon(Icons.map))
-                    ],
-                  ),
-                ],
+                SizedBox(height: 8),
               ],
-            )),
-            Expanded(
-                child: FormCard(
-              isLast: true,
-              constraints: BoxConstraints(minHeight: minHeight),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              padding: EdgeInsets.only(
-                  top: kMobileDialogPadding,
-                  right: kMobileDialogPadding /
-                      (state.prefState.isPreviewVisible ? 1 : 3),
-                  bottom: kMobileDialogPadding,
-                  left: kMobileDialogPadding / 3),
-              children: [
-                Text(
-                  localization.contacts,
-                  style: Theme.of(context).textTheme.headline6,
+              if (shippingAddress.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: CopyToClipboard(
+                        value: shippingAddress,
+                        child: Row(
+                          children: [
+                            Flexible(child: Text(shippingAddress)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(shippingAddress));
+                        },
+                        icon: Icon(Icons.map))
+                  ],
                 ),
-                SizedBox(height: 4),
-                ...client.contacts.map((contact) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        contact.fullName,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      if (contact.email.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.email,
-                            child: IconText(
-                                icon: Icons.email, text: contact.email),
-                          ),
-                        ),
-                      if (contact.phone.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.phone,
-                            child: IconText(
-                                icon: Icons.phone, text: contact.phone),
-                          ),
-                        ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () => launch(
-                                    '${contact.silentLink}&client_hash=${client.clientHash}'),
-                                child: Text(
-                                  localization.clientPortal,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                          SizedBox(width: 4),
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () {
-                                  final url =
-                                      '${contact.link}&client_hash=${client.clientHash}';
-                                  Clipboard.setData(ClipboardData(text: url));
-                                  showToast(localization.copiedToClipboard
-                                      .replaceFirst(':value ', ''));
-                                },
-                                child: Text(
-                                  localization.copyLink,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                    ],
-                  );
-                }).toList()
               ],
-            )),
-            if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
-              Expanded(
-                flex: 2,
-                child: FormCard(
-                  isLast: true,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  constraints:
-                      BoxConstraints(minHeight: minHeight, maxHeight: 600),
-                  padding: const EdgeInsets.only(
-                      top: kMobileDialogPadding,
-                      right: kMobileDialogPadding,
-                      bottom: kMobileDialogPadding,
-                      left: kMobileDialogPadding / 3),
-                  child: DefaultTabController(
-                    length: 5,
-                    child: SizedBox(
-                      height: minHeight,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          AppTabBar(
-                            isScrollable: true,
-                            tabs: [
-                              Tab(
-                                child: Text(localization.standing),
-                              ),
-                              Tab(
-                                text: documents.isEmpty
-                                    ? localization.documents
-                                    : '${localization.documents} (${documents.length})',
-                              ),
-                              Tab(
-                                text: localization.ledger,
-                              ),
-                              Tab(
-                                text: localization.activity,
-                              ),
-                              Tab(
-                                text: localization.systemLogs,
-                              ),
-                            ],
-                          ),
-                          Flexible(
-                            child: TabBarView(
-                              children: [
-                                EntityHeader(
-                                  entity: client,
-                                  label: localization.paidToDate,
-                                  value: formatNumber(
-                                      client.paidToDate, context,
-                                      clientId: client.id),
-                                  secondLabel: localization.balanceDue,
-                                  secondValue: formatNumber(
-                                      client.balance, context,
-                                      clientId: client.id),
-                                ),
-                                RefreshIndicator(
-                                  onRefresh: () =>
-                                      viewModel.onRefreshed(context),
-                                  child: ClientViewDocuments(
-                                    viewModel: viewModel,
-                                    key: ValueKey(viewModel.client.id),
-                                  ),
-                                ),
-                                RefreshIndicator(
-                                  onRefresh: () =>
-                                      viewModel.onRefreshed(context),
-                                  child: ClientViewLedger(
-                                    viewModel: viewModel,
-                                    key: ValueKey(viewModel.client.id),
-                                  ),
-                                ),
-                                RefreshIndicator(
-                                  onRefresh: () =>
-                                      viewModel.onRefreshed(context),
-                                  child: ClientViewActivity(
-                                    viewModel: viewModel,
-                                    key: ValueKey(viewModel.client.id),
-                                  ),
-                                ),
-                                RefreshIndicator(
-                                  onRefresh: () =>
-                                      viewModel.onRefreshed(context),
-                                  child: ClientViewSystemLogs(
-                                    viewModel: viewModel,
-                                    key: ValueKey(viewModel.client.id),
-                                  ),
-                                )
-                              ],
+            ],
+          )),
+          Expanded(
+              child: Scrollbar(
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: FormCard(
+                isLast: true,
+                constraints: BoxConstraints(minHeight: minHeight),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding /
+                        (state.prefState.isPreviewVisible ? 1 : 3),
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 3),
+                children: [
+                  Text(
+                    localization.contacts,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(height: 4),
+                  ...client.contacts.map((contact) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          contact.fullName,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        if (contact.email.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: CopyToClipboard(
+                              value: contact.email,
+                              child: IconText(
+                                  icon: Icons.email, text: contact.email),
                             ),
                           ),
-                        ],
-                      ),
+                        if (contact.phone.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: CopyToClipboard(
+                              value: contact.phone,
+                              child: IconText(
+                                  icon: Icons.phone, text: contact.phone),
+                            ),
+                          ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: OutlinedButton(
+                                  onPressed: () => launch(
+                                      '${contact.silentLink}&client_hash=${client.clientHash}'),
+                                  child: Text(
+                                    localization.clientPortal,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
+                            ),
+                            SizedBox(width: 4),
+                            Flexible(
+                              child: OutlinedButton(
+                                  onPressed: () {
+                                    final url =
+                                        '${contact.link}&client_hash=${client.clientHash}';
+                                    Clipboard.setData(ClipboardData(text: url));
+                                    showToast(localization.copiedToClipboard
+                                        .replaceFirst(':value ', ''));
+                                  },
+                                  child: Text(
+                                    localization.copyLink,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  )),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                      ],
+                    );
+                  }).toList()
+                ],
+              ),
+            ),
+          )),
+          if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
+            Expanded(
+              flex: 2,
+              child: FormCard(
+                isLast: true,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                constraints:
+                    BoxConstraints(minHeight: minHeight, maxHeight: 600),
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 3),
+                child: DefaultTabController(
+                  length: 5,
+                  child: SizedBox(
+                    height: minHeight,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AppTabBar(
+                          isScrollable: true,
+                          tabs: [
+                            Tab(
+                              child: Text(localization.standing),
+                            ),
+                            Tab(
+                              text: documents.isEmpty
+                                  ? localization.documents
+                                  : '${localization.documents} (${documents.length})',
+                            ),
+                            Tab(
+                              text: localization.ledger,
+                            ),
+                            Tab(
+                              text: localization.activity,
+                            ),
+                            Tab(
+                              text: localization.systemLogs,
+                            ),
+                          ],
+                        ),
+                        Flexible(
+                          child: TabBarView(
+                            children: [
+                              EntityHeader(
+                                entity: client,
+                                label: localization.paidToDate,
+                                value: formatNumber(client.paidToDate, context,
+                                    clientId: client.id),
+                                secondLabel: localization.balanceDue,
+                                secondValue: formatNumber(
+                                    client.balance, context,
+                                    clientId: client.id),
+                              ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewDocuments(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewLedger(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewActivity(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewSystemLogs(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       );
     });
   }
