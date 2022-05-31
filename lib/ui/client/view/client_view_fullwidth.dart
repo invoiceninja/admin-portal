@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,6 +20,9 @@ class ClientViewFullwidth extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final client = state.uiState.filterEntity as ClientEntity;
+    final billingAddress = formatAddress(state, object: client);
+    final shippingAddress =
+        formatAddress(state, object: client, isShipping: true);
 
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
@@ -102,6 +106,27 @@ class ClientViewFullwidth extends StatelessWidget {
                   localization.address,
                   style: Theme.of(context).textTheme.headline6,
                 ),
+                SizedBox(height: 4),
+                if (billingAddress.isNotEmpty) ...[
+                  CopyToClipboard(
+                    value: billingAddress,
+                    child: Text(billingAddress),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12, bottom: 18),
+                    child: OutlinedButton(
+                        onPressed: () => launch(client.website),
+                        child: IconText(
+                            text: localization.viewMap,
+                            icon: MdiIcons.openInNew)),
+                  ),
+                ],
+                if (shippingAddress.isNotEmpty) ...[
+                  CopyToClipboard(
+                    value: shippingAddress,
+                    child: Text(shippingAddress),
+                  ),
+                ],
               ],
             )),
             Expanded(
@@ -120,6 +145,7 @@ class ClientViewFullwidth extends StatelessWidget {
                   localization.contacts,
                   style: Theme.of(context).textTheme.headline6,
                 ),
+                SizedBox(height: 4),
               ],
             )),
             if (!state.prefState.isPreviewVisible)
@@ -139,6 +165,7 @@ class ClientViewFullwidth extends StatelessWidget {
                         '', //localization.standing,
                         style: Theme.of(context).textTheme.headline6,
                       ),
+                      SizedBox(height: 4),
                     ],
                   )),
           ],
