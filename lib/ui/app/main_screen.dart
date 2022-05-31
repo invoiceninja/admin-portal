@@ -689,7 +689,9 @@ class EntityScreens extends StatelessWidget {
                         children: [
                           if (prefState.isViewerFullScreen(
                               state.uiState.filterEntityType))
-                            Expanded(child: topFilterChild)
+                            Expanded(
+                              child: topFilterChild,
+                            )
                           else
                             topFilterChild,
                           Expanded(
