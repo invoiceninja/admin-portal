@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
@@ -55,7 +54,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final client = state.uiState.filterEntity as ClientEntity;
+    final client = state.clientState.get(state.uiState.filterEntityId);
     final documents = client.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: client);
@@ -90,13 +89,13 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       padding: const EdgeInsets.only(bottom: 1),
                       child: CopyToClipboard(
                         value: client.idNumber,
-                        prefix: localization.idNumber,
+                        prefix: localization.id,
                       ),
                     ),
                   if (client.vatNumber.isNotEmpty)
                     CopyToClipboard(
                       value: client.vatNumber,
-                      prefix: localization.vatNumber,
+                      prefix: localization.vat,
                     ),
                   SizedBox(height: 4),
                   if (client.phone.isNotEmpty)

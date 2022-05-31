@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'vat': 'VAT',
       'standing': 'Standing',
       'view_map': 'View Map',
       'set_default_design': 'Set Default Design',
@@ -70542,6 +70543,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get standing =>
       _localizedValues[localeCode]['standing'] ??
       _localizedValues['en']['standing'];
+
+  String get vat =>
+      _localizedValues[localeCode]['vat'] ??
+      _localizedValues['en']['vat'];
 
   // STARTER: lang field - do not remove comment
 

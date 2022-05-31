@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -51,7 +50,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final vendor = state.uiState.filterEntity as VendorEntity;
+    final vendor = state.vendorState.get(state.uiState.filterEntityId);
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);
@@ -84,13 +83,13 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       padding: const EdgeInsets.only(bottom: 1),
                       child: CopyToClipboard(
                         value: vendor.idNumber,
-                        prefix: localization.idNumber,
+                        prefix: localization.id,
                       ),
                     ),
                   if (vendor.vatNumber.isNotEmpty)
                     CopyToClipboard(
                       value: vendor.vatNumber,
-                      prefix: localization.vatNumber,
+                      prefix: localization.vat,
                     ),
                   SizedBox(height: 4),
                   if (vendor.phone.isNotEmpty)
