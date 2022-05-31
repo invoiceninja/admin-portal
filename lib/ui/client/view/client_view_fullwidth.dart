@@ -248,6 +248,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                 child: Text(
                                   localization.clientPortal,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 )),
                           ),
                           SizedBox(width: kTableColumnGap),
@@ -263,6 +265,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                 child: Text(
                                   localization.copyLink,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 )),
                           ),
                         ],
