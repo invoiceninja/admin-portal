@@ -490,25 +490,27 @@ void viewEntityById({
           return;
         }
 
+        if (isDesktop(navigatorKey.currentContext) &&
+            entityType.hasFullWidthViewer) {
+          if (!state.prefState.isViewerFullScreen(entityType))
+            store.dispatch(ToggleViewerLayout(entityType));
+          final filterEntity =
+              store.state.getEntityMap(entityType)[entityId] as BaseEntity;
+          viewEntitiesByType(
+              entityType: filterEntity.entityType.relatedTypes
+                  .where((entityType) =>
+                      state.userCompany.canViewOrCreate(entityType))
+                  .first,
+              filterEntity: filterEntity);
+          return;
+        }
+
         switch (entityType) {
           case EntityType.client:
-            if (isDesktop(navigatorKey.currentContext)) {
-              if (!state.prefState.isViewerFullScreen(entityType))
-                store.dispatch(ToggleViewerLayout(entityType));
-              final filterEntity =
-                  store.state.getEntityMap(entityType)[entityId] as BaseEntity;
-              viewEntitiesByType(
-                  entityType: filterEntity.entityType.relatedTypes
-                      .where((entityType) =>
-                          state.userCompany.canViewOrCreate(entityType))
-                      .first,
-                  filterEntity: filterEntity);
-            } else {
-              store.dispatch(ViewClient(
-                clientId: entityId,
-                force: force,
-              ));
-            }
+            store.dispatch(ViewClient(
+              clientId: entityId,
+              force: force,
+            ));
             break;
           case EntityType.user:
             store.dispatch(ViewUser(

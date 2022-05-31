@@ -203,7 +203,10 @@ class EntityType extends EnumClass {
 
   String get snakeCase => toSnakeCase(toString());
 
-  bool get hasFullWidthViewer => [EntityType.client].contains(this);
+  bool get hasFullWidthViewer => [
+        EntityType.client,
+        EntityType.vendor,
+      ].contains(this);
 
   static BuiltSet<EntityType> get values => _$typeValues;
 
