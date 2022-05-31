@@ -108,24 +108,52 @@ class ClientViewFullwidth extends StatelessWidget {
                 ),
                 SizedBox(height: 4),
                 if (billingAddress.isNotEmpty) ...[
-                  CopyToClipboard(
-                    value: billingAddress,
-                    child: Text(billingAddress),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: billingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(billingAddress)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(billingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12, bottom: 18),
-                    child: OutlinedButton(
-                        onPressed: () => launch(client.website),
-                        child: IconText(
-                            text: localization.viewMap,
-                            icon: MdiIcons.openInNew)),
-                  ),
+                  SizedBox(height: 16),
                 ],
                 if (shippingAddress.isNotEmpty) ...[
-                  CopyToClipboard(
-                    value: shippingAddress,
-                    child: Text(shippingAddress),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: shippingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(shippingAddress)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(shippingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
                   ),
+                  SizedBox(height: 16),
                 ],
               ],
             )),
