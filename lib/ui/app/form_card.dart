@@ -19,6 +19,7 @@ class FormCard extends StatelessWidget {
     this.isLast = false,
     this.forceNarrow = false,
     this.elevation = 4,
+    this.constraints,
   }) : super(key: key);
 
   final Widget child;
@@ -29,6 +30,7 @@ class FormCard extends StatelessWidget {
   final EdgeInsets internalPadding;
   final bool isLast;
   final double elevation;
+  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class FormCard extends StatelessWidget {
                   ? child
                   : Container(
                       width: double.infinity,
+                      constraints: constraints,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment:
