@@ -50,9 +50,12 @@ class ClientViewFullwidth extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   if (client.idNumber.isNotEmpty)
-                    CopyToClipboard(
-                      value: client.idNumber,
-                      prefix: localization.idNumber,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: CopyToClipboard(
+                        value: client.idNumber,
+                        prefix: localization.idNumber,
+                      ),
                     ),
                   if (client.vatNumber.isNotEmpty)
                     CopyToClipboard(
@@ -79,19 +82,27 @@ class ClientViewFullwidth extends StatelessWidget {
                     ),
                   SizedBox(height: 4),
                   if (client.currencyId != state.company.currencyId)
-                    Text(
-                      state.staticState.currencyMap[client.currencyId]?.name ??
-                          '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Text(
+                        state.staticState.currencyMap[client.currencyId]
+                                ?.name ??
+                            '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
                       client.languageId != state.company.settings.languageId)
-                    Text(
-                      state.staticState.languageMap[client.languageId]?.name ??
-                          '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Text(
+                        state.staticState.languageMap[client.languageId]
+                                ?.name ??
+                            '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   if ((client.settings.defaultTaskRate ?? 0) != 0)
                     Text(
