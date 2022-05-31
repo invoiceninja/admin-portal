@@ -294,7 +294,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 16),
                       ],
                     );
                   }).toList()
