@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -280,7 +281,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TabBar(
+                          AppTabBar(
                             isScrollable: true,
                             tabs: [
                               Tab(
