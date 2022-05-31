@@ -16,8 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'vat': 'VAT',
+      'standing': 'Standing',
+      'view_map': 'View Map',
       'set_default_design': 'Set Default Design',
-      'add_gateway': 'Add Gateway',      
+      'add_gateway': 'Add Gateway',
       'add_gateway_help_message':
           'Add a payment gateway (ie. Stripe, WePay or PayPal) to accept online payments',
       'left': 'Left',
@@ -70524,6 +70527,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['add_gateway'] ??
       _localizedValues['en']['add_gateway'];
 
+  String get viewMap =>
+      _localizedValues[localeCode]['view_map'] ??
+      _localizedValues['en']['view_map'];
+
   String get setDefaultDesign =>
       _localizedValues[localeCode]['set_default_design'] ??
       _localizedValues['en']['set_default_design'];
@@ -70531,6 +70538,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get addGatewayHelpMessage =>
       _localizedValues[localeCode]['add_gateway_help_message'] ??
       _localizedValues['en']['add_gateway_help_message'];
+
+
+  String get standing =>
+      _localizedValues[localeCode]['standing'] ??
+      _localizedValues['en']['standing'];
+
+  String get vat =>
+      _localizedValues[localeCode]['vat'] ??
+      _localizedValues['en']['vat'];
 
   // STARTER: lang field - do not remove comment
 

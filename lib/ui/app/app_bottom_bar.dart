@@ -407,6 +407,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                SizedBox(width: 4),
                 ...widget.iconButtons,
                 if (!widget.hideListOptions) ...[
                   if (isMobile(context))

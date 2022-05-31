@@ -135,26 +135,28 @@ class _ImportExportState extends State<ImportExport> {
                               .toList()),
                     ),
                   ),
-                  InputDecorator(
-                    decoration:
-                        InputDecoration(labelText: localization.exportType),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<ExportType>(
-                          isDense: true,
-                          value: _exportType,
-                          onChanged: (dynamic value) {
-                            setState(() {
-                              _exportType = value;
-                            });
-                          },
-                          items: ExportType.values
-                              .map((importType) => DropdownMenuItem<ExportType>(
-                                  value: importType,
-                                  child:
-                                      Text(localization.lookup('$importType'))))
-                              .toList()),
+                  if (_exportFormat == ImportType.csv)
+                    InputDecorator(
+                      decoration:
+                          InputDecoration(labelText: localization.exportType),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<ExportType>(
+                            isDense: true,
+                            value: _exportType,
+                            onChanged: (dynamic value) {
+                              setState(() {
+                                _exportType = value;
+                              });
+                            },
+                            items: ExportType.values
+                                .map((importType) =>
+                                    DropdownMenuItem<ExportType>(
+                                        value: importType,
+                                        child: Text(localization
+                                            .lookup('$importType'))))
+                                .toList()),
+                      ),
                     ),
-                  ),
                   AppButton(
                     iconData: MdiIcons.export,
                     label: localization.export.toUpperCase(),

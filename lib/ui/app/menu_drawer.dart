@@ -590,6 +590,7 @@ class _DrawerTileState extends State<DrawerTile> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
+    final prefState = state.prefState;
     final userCompany = state.userCompany;
     final NavigatorState navigator = Navigator.of(context);
 
@@ -616,12 +617,12 @@ class _DrawerTileState extends State<DrawerTile> {
       route = widget.entityType.name;
     }
 
-    final isSelected =
-        uiState.currentRoute.startsWith('/${toSnakeCase(route)}') &&
-            (state.uiState.filterEntityType == null ||
-                !state.prefState.isFilterVisible);
+    final isSelected = uiState.filterEntityType != null &&
+            prefState.isViewerFullScreen(uiState.filterEntityType) &&
+            uiState.isList
+        ? widget.entityType == uiState.filterEntityType
+        : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');
 
-    final prefState = state.prefState;
     final inactiveColor = prefState
             .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';

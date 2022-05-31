@@ -55,7 +55,7 @@ class ViewScaffold extends StatelessWidget {
     if (isDesktop(context)) {
       if (isFilter == true &&
           entity.entityType == state.uiState.filterEntityType) {
-        if (state.uiState.filterStack.length > 1) {
+        if (state.uiState.filterStack.length > 1 && !isFilter) {
           leading = IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopFilterStack()),

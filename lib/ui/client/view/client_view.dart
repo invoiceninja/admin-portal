@@ -10,10 +10,12 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_fullwidth.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
@@ -25,11 +27,13 @@ class ClientView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.isTopFilter,
     @required this.tabIndex,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
   final bool isFilter;
+  final bool isTopFilter;
   final int tabIndex;
 
   @override
@@ -85,6 +89,23 @@ class _ClientViewState extends State<ClientView>
     final client = viewModel.client;
     final documents = client.documents;
     final userCompany = viewModel.state.userCompany;
+
+    if (widget.isTopFilter) {
+      return Material(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            EntityTopFilterHeader(),
+            Expanded(
+                child: ClientViewFullwidth(
+              viewModel: viewModel,
+            )),
+          ],
+        ),
+      );
+    }
 
     return ViewScaffold(
       isFilter: widget.isFilter,

@@ -683,11 +683,18 @@ class EntityScreens extends StatelessWidget {
             child: ClipRRect(
               child: AppBorder(
                 isLeft: leftFilterChild != null,
-                child: topFilterChild == null
+                child: topFilterChild == null || prefState.isFilterVisible
                     ? listWidget
                     : Column(
                         children: [
-                          topFilterChild,
+                          if (prefState.isViewerFullScreen(
+                              state.uiState.filterEntityType))
+                            SizedBox(
+                              height: 350,
+                              child: topFilterChild,
+                            )
+                          else
+                            topFilterChild,
                           Expanded(
                             child: AppBorder(
                               isTop: uiState.filterEntityType != null &&
@@ -705,16 +712,9 @@ class EntityScreens extends StatelessWidget {
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
-              child: Column(
-                children: [
-                  if (isFullScreen) topFilterChild,
-                  Expanded(
-                    child: AppBorder(
-                      child: child,
-                      isTop: isFullScreen && uiState.filterEntityType != null,
-                    ),
-                  ),
-                ],
+              child: AppBorder(
+                child: child,
+                isTop: isFullScreen,
               ),
               isLeft: true,
             ),

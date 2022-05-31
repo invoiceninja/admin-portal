@@ -66,8 +66,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                 child: OutlinedButton(
               child: Text(localization.viewPortal.toUpperCase()),
               onPressed: () {
-                launch('${contact.silentLink}&client_hash=${client.clientHash}',
-                    forceWebView: false, forceSafariVC: false);
+                launch(
+                    '${contact.silentLink}&client_hash=${client.clientHash}');
               },
             )),
             SizedBox(width: kTableColumnGap),

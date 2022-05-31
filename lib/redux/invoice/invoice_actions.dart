@@ -544,13 +544,18 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             ..designId = designId));
       break;
     case EntityAction.cancelInvoice:
-      store.dispatch(CancelInvoicesRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization.cancelledInvoice
-                  : localization.cancelledInvoices),
-          invoiceIds));
+      confirmCallback(
+          context: context,
+          message: localization.cancelInvoice,
+          callback: (_) {
+            store.dispatch(CancelInvoicesRequest(
+                snackBarCompleter<Null>(
+                    context,
+                    invoiceIds.length == 1
+                        ? localization.cancelledInvoice
+                        : localization.cancelledInvoices),
+                invoiceIds));
+          });
       break;
     case EntityAction.markPaid:
       store.dispatch(MarkInvoicesPaidRequest(

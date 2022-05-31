@@ -125,6 +125,12 @@ class ToggleEditorLayout implements PersistPrefs {
   final EntityType entityType;
 }
 
+class ToggleViewerLayout implements PersistPrefs {
+  ToggleViewerLayout(this.entityType);
+
+  final EntityType entityType;
+}
+
 class TogglePreviewSidebar {}
 
 class UpdateUserPreferences implements PersistPrefs {
@@ -481,6 +487,21 @@ void viewEntityById({
           showErrorDialog(
               context: navigatorKey.currentContext,
               message: localization.failedToFindRecord);
+          return;
+        }
+
+        if (isDesktop(navigatorKey.currentContext) &&
+            entityType.hasFullWidthViewer) {
+          if (!state.prefState.isViewerFullScreen(entityType))
+            store.dispatch(ToggleViewerLayout(entityType));
+          final filterEntity =
+              store.state.getEntityMap(entityType)[entityId] as BaseEntity;
+          viewEntitiesByType(
+              entityType: filterEntity.entityType.relatedTypes
+                  .where((entityType) =>
+                      state.userCompany.canViewOrCreate(entityType))
+                  .first,
+              filterEntity: filterEntity);
           return;
         }
 
@@ -1421,7 +1442,8 @@ void selectEntity({
     if (uiState.isEditing && entityUIState.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {
-      if (!state.prefState.isPreviewVisible) {
+      if (!entity.entityType.hasFullWidthViewer &&
+          !state.prefState.isPreviewVisible) {
         store.dispatch(TogglePreviewSidebar());
       }
       viewEntity(entity: entity);

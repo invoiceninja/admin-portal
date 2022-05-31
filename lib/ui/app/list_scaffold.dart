@@ -126,24 +126,49 @@ class ListScaffold extends StatelessWidget {
               leadingWidth: kMinInteractiveDimension *
                   (appBarLeadingActions.length +
                       (onCheckboxPressed == null || isMobile(context) ? 1 : 2)),
-              title: appBarTitle,
+              title: Row(
+                children: [
+                  Expanded(child: appBarTitle),
+                  ...appBarActions ?? <Widget>[],
+                  if (isDesktop(context) && onCancelSettingsSection != null)
+                    TextButton(
+                        onPressed: () {
+                          store.dispatch(ViewSettings(
+                            company: state.company,
+                            section: onCancelSettingsSection,
+                            tabIndex: onCancelSettingsIndex,
+                          ));
+                        },
+                        child: Text(
+                          localization.back,
+                          style: TextStyle(color: state.headerTextColor),
+                        )),
+                ],
+              ),
               actions: [
-                ...appBarActions ?? <Widget>[],
-                if (isDesktop(context) && onCancelSettingsSection != null)
-                  TextButton(
-                      onPressed: () {
-                        store.dispatch(ViewSettings(
-                          company: state.company,
-                          section: onCancelSettingsSection,
-                          tabIndex: onCancelSettingsIndex,
-                        ));
-                      },
-                      child: Text(
-                        localization.back,
-                        style: TextStyle(color: state.headerTextColor),
-                      )),
                 if (!isSettings &&
                     (isMobile(context) || !state.prefState.isHistoryVisible))
+                  Builder(builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        if (isMobile(context) ||
+                            state.prefState.isHistoryFloated) {
+                          Scaffold.of(context).openEndDrawer();
+                        } else {
+                          store.dispatch(UpdateUserPreferences(
+                              sidebar: AppSidebar.history));
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Icon(
+                          Icons.history,
+                          color: state.headerTextColor,
+                        ),
+                      ),
+                    );
+                  })
+                /*
                   Builder(
                     builder: (context) => IconButton(
                       padding: const EdgeInsets.only(left: 4, right: 20),
@@ -162,6 +187,7 @@ class ListScaffold extends StatelessWidget {
                       },
                     ),
                   ),
+                  */
               ],
             ),
             body: ClipRect(

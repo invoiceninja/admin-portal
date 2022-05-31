@@ -25,8 +25,11 @@ class VendorViewScreen extends StatelessWidget {
   const VendorViewScreen({
     Key key,
     this.isFilter = false,
+    this.isTopFilter = false,
   }) : super(key: key);
   final bool isFilter;
+  final bool isTopFilter;
+
   static const String route = '/vendor/view';
 
   @override
@@ -39,6 +42,7 @@ class VendorViewScreen extends StatelessWidget {
         return VendorView(
           viewModel: vm,
           isFilter: isFilter,
+          isTopFilter: isTopFilter,
           tabIndex: vm.state.vendorUIState.tabIndex,
         );
       },

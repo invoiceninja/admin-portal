@@ -20,6 +20,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       moduleLayout: ModuleLayout.table,
       isPreviewVisible: false,
       useSidebarEditor: BuiltMap<EntityType, bool>(),
+      useSidebarViewer: BuiltMap<EntityType, bool>(),
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
       rowsPerPage: 10,
@@ -102,6 +103,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltMap<EntityType, bool> get useSidebarEditor;
 
+  BuiltMap<EntityType, bool> get useSidebarViewer;
+
   BuiltMap<String, String> get customColors;
 
   bool get isPreviewVisible;
@@ -169,6 +172,18 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return !(useSidebarEditor[entityType.baseType] ?? false);
   }
 
+  bool isViewerFullScreen(EntityType entityType) {
+    if (!isDesktop || entityType == null) {
+      return false;
+    }
+
+    if (!entityType.hasFullWidthViewer) {
+      return false;
+    }
+
+    return !(useSidebarViewer[entityType.baseType] ?? false);
+  }
+
   bool get isNotDesktop => !isDesktop;
 
   bool get isMobile => appLayout == AppLayout.mobile;
@@ -201,6 +216,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
+    ..useSidebarViewer.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
     ..customColors.replace(builder.enableDarkMode == true
         ? BuiltMap<String, String>()

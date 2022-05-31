@@ -10,12 +10,14 @@ class CopyToClipboard extends StatelessWidget {
     this.child,
     this.showBorder = false,
     this.onLongPress,
+    this.prefix,
   }) : super(key: key);
 
   final Widget child;
   final String value;
   final bool showBorder;
   final Function onLongPress;
+  final String prefix;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CopyToClipboard extends StatelessWidget {
 
     final widget = child == null
         ? Text(
-            value,
+            prefix != null ? '$prefix: $value' : value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           )

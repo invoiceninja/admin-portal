@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -267,23 +266,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             viewModel.onAddClientPressed(context, completer),
                       )
                     else
-                      InkWell(
-                        onTap: () {
-                          filterByEntity(context: context, entity: client);
-                        },
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                              minWidth: double.infinity, minHeight: 40),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Text(
-                              EntityPresenter()
-                                  .initialize(client, context)
-                                  .title(),
-                              style: Theme.of(context).textTheme.headline6,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minWidth: double.infinity, minHeight: 40),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            EntityPresenter()
+                                .initialize(client, context)
+                                .title(),
+                            style: Theme.of(context).textTheme.headline6,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -599,7 +593,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ],
                     ),
                     SizedBox(
-                      height: 174,
+                      height: 176,
                       child: TabBarView(
                         controller: _optionTabController,
                         children: <Widget>[

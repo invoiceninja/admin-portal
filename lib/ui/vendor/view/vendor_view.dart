@@ -9,9 +9,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_fullwidth.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,11 +23,13 @@ class VendorView extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.isFilter,
+    @required this.isTopFilter,
     @required this.tabIndex,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
   final bool isFilter;
+  final bool isTopFilter;
   final int tabIndex;
 
   @override
@@ -78,6 +82,23 @@ class _VendorViewState extends State<VendorView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+
+    if (widget.isTopFilter) {
+      return Material(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            EntityTopFilterHeader(),
+            Expanded(
+                child: VendorViewFullwidth(
+              viewModel: viewModel,
+            )),
+          ],
+        ),
+      );
+    }
 
     return ViewScaffold(
       isFilter: widget.isFilter,
