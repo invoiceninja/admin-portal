@@ -26,7 +26,7 @@ class ClientViewFullwidth extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: const EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 2,
+                right: kMobileDialogPadding / 3,
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding),
             children: [
@@ -45,9 +45,9 @@ class ClientViewFullwidth extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           padding: const EdgeInsets.only(
               top: kMobileDialogPadding,
-              right: kMobileDialogPadding / 2,
+              right: kMobileDialogPadding / 3,
               bottom: kMobileDialogPadding,
-              left: kMobileDialogPadding / 2),
+              left: kMobileDialogPadding / 3),
           children: [
             Text(
               localization.address,
@@ -62,9 +62,9 @@ class ClientViewFullwidth extends StatelessWidget {
           padding: EdgeInsets.only(
               top: kMobileDialogPadding,
               right: kMobileDialogPadding /
-                  (state.prefState.isPreviewVisible ? 1 : 2),
+                  (state.prefState.isPreviewVisible ? 1 : 3),
               bottom: kMobileDialogPadding,
-              left: kMobileDialogPadding / 2),
+              left: kMobileDialogPadding / 3),
           children: [
             Text(
               localization.contacts,
@@ -82,7 +82,7 @@ class ClientViewFullwidth extends StatelessWidget {
                     top: kMobileDialogPadding,
                     right: kMobileDialogPadding,
                     bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 2),
+                    left: kMobileDialogPadding / 3),
                 children: [
                   Text(
                     '', //localization.standing,
