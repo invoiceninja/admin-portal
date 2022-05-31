@@ -27,7 +27,7 @@ class CopyToClipboard extends StatelessWidget {
 
     final widget = child == null
         ? Text(
-            prefix != null ? '${prefix}: $value' : value,
+            prefix != null ? '$prefix: $value' : value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           )

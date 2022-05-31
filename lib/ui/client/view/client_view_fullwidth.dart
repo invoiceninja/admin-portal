@@ -19,101 +19,119 @@ class ClientViewFullwidth extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final client = state.uiState.filterEntity as ClientEntity;
-    ;
 
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: FormCard(
+    return SingleChildScrollView(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: FormCard(
+              isLast: true,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.only(
+                  top: kMobileDialogPadding,
+                  right: kMobileDialogPadding / 3,
+                  bottom: kMobileDialogPadding,
+                  left: kMobileDialogPadding),
+              children: [
+                Text(
+                  localization.details,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                if (client.idNumber.isNotEmpty)
+                  CopyToClipboard(
+                    value: client.idNumber,
+                    prefix: localization.idNumber,
+                  ),
+                if (client.vatNumber.isNotEmpty)
+                  CopyToClipboard(
+                    value: client.vatNumber,
+                    prefix: localization.vatNumber,
+                  ),
+                if (client.phone.isNotEmpty)
+                  CopyToClipboard(
+                    value: client.phone,
+                    prefix: localization.phone,
+                  ),
+                if (client.website.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12, bottom: 12),
+                    child: OutlinedButton(
+                        onPressed: () => launch(client.website),
+                        child: IconText(
+                            text: client.website, icon: MdiIcons.openInNew)),
+                  ),
+                if (client.currencyId != state.company.currencyId)
+                  Text(
+                    '${localization.currency}: ${state.staticState.currencyMap[client.currencyId]?.name ?? ''}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                if ((client.languageId ?? '').isNotEmpty &&
+                    client.languageId != state.company.settings.languageId)
+                  Text(
+                    '${localization.language}: ${state.staticState.languageMap[client.languageId]?.name ?? ''}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              ],
+            ),
+          ),
+          Expanded(
+              child: FormCard(
             isLast: true,
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: const EdgeInsets.only(
                 top: kMobileDialogPadding,
                 right: kMobileDialogPadding / 3,
                 bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding),
+                left: kMobileDialogPadding / 3),
             children: [
               Text(
-                localization.details,
+                localization.address,
                 style: Theme.of(context).textTheme.headline6,
               ),
-              SizedBox(height: 4),
-              if (client.idNumber.isNotEmpty)
-                CopyToClipboard(
-                  value: client.idNumber,
-                  prefix: localization.idNumber,
-                ),
-              if (client.vatNumber.isNotEmpty)
-                CopyToClipboard(
-                  value: client.vatNumber,
-                  prefix: localization.vatNumber,
-                ),
-              if (client.phone.isNotEmpty)
-                CopyToClipboard(
-                  value: client.phone,
-                  prefix: localization.phone,
-                ),
-              if (client.website.isNotEmpty)
-                OutlinedButton(
-                    onPressed: () => launch(client.website),
-                    child: IconText(
-                        text: client.website, icon: MdiIcons.openInNew)),
             ],
-          ),
-        ),
-        Expanded(
-            child: FormCard(
-          isLast: true,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          padding: const EdgeInsets.only(
-              top: kMobileDialogPadding,
-              right: kMobileDialogPadding / 3,
-              bottom: kMobileDialogPadding,
-              left: kMobileDialogPadding / 3),
-          children: [
-            Text(
-              localization.address,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ],
-        )),
-        Expanded(
-            child: FormCard(
-          isLast: true,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          padding: EdgeInsets.only(
-              top: kMobileDialogPadding,
-              right: kMobileDialogPadding /
-                  (state.prefState.isPreviewVisible ? 1 : 3),
-              bottom: kMobileDialogPadding,
-              left: kMobileDialogPadding / 3),
-          children: [
-            Text(
-              localization.contacts,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ],
-        )),
-        if (!state.prefState.isPreviewVisible)
+          )),
           Expanded(
-              flex: 2,
               child: FormCard(
-                isLast: true,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: const EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding,
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 3),
-                children: [
-                  Text(
-                    '', //localization.standing,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                ],
-              )),
-      ],
+            isLast: true,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 3),
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            children: [
+              Text(
+                localization.contacts,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ],
+          )),
+          if (!state.prefState.isPreviewVisible)
+            Expanded(
+                flex: 2,
+                child: FormCard(
+                  isLast: true,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.only(
+                      top: kMobileDialogPadding,
+                      right: kMobileDialogPadding,
+                      bottom: kMobileDialogPadding,
+                      left: kMobileDialogPadding / 3),
+                  children: [
+                    Text(
+                      '', //localization.standing,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ],
+                )),
+        ],
+      ),
     );
   }
 }
