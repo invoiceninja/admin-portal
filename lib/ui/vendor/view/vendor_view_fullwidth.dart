@@ -28,20 +28,25 @@ class VendorViewFullwidth extends StatefulWidget {
 }
 
 class _VendorViewFullwidthState extends State<VendorViewFullwidth>
-    with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
+    with TickerProviderStateMixin {
+  ScrollController _scrollController1;
+  ScrollController _scrollController2;
+  ScrollController _scrollController3;
 
   @override
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController();
+    _scrollController1 = ScrollController();
+    _scrollController2 = ScrollController();
+    _scrollController3 = ScrollController();
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-
+    _scrollController1.dispose();
+    _scrollController2.dispose();
+    _scrollController3.dispose();
     super.dispose();
   }
 
@@ -71,7 +76,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
-              children: [
+              child: ListView(controller: _scrollController1, children: [
                 Text(
                   localization.details,
                   style: Theme.of(context).textTheme.headline6,
@@ -119,7 +124,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-              ],
+              ]),
             ),
           ),
           Expanded(
@@ -132,37 +137,40 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 right: kMobileDialogPadding / 3,
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            children: [
-              Text(
-                localization.address,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 4),
-              if (billingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: billingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(billingAddress)),
-                          ],
+            child: ListView(
+              controller: _scrollController2,
+              children: [
+                Text(
+                  localization.address,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                if (billingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: billingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(billingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(billingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
-                SizedBox(height: 8),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(billingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                ]
               ],
-            ],
+            ),
           )),
           Expanded(
               child: FormCard(
@@ -175,8 +183,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     (state.prefState.isPreviewVisible ? 1 : 3),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            child: SingleChildScrollView(
-                child: Column(
+            child: ListView(
+              controller: _scrollController3,
               children: [
                 Text(
                   localization.contacts,
@@ -214,7 +222,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   );
                 }).toList()
               ],
-            )),
+            ),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
             Expanded(

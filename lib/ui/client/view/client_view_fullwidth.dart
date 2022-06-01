@@ -32,20 +32,25 @@ class ClientViewFullwidth extends StatefulWidget {
 }
 
 class _ClientViewFullwidthState extends State<ClientViewFullwidth>
-    with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
+    with TickerProviderStateMixin {
+  ScrollController _scrollController1;
+  ScrollController _scrollController2;
+  ScrollController _scrollController3;
 
   @override
   void initState() {
     super.initState();
 
-    _scrollController = ScrollController();
+    _scrollController1 = ScrollController();
+    _scrollController2 = ScrollController();
+    _scrollController3 = ScrollController();
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-
+    _scrollController1.dispose();
+    _scrollController2.dispose();
+    _scrollController3.dispose();
     super.dispose();
   }
 
@@ -77,69 +82,74 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
-              children: [
-                Text(
-                  localization.details,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(height: 4),
-                if (client.idNumber.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 1),
-                    child: CopyToClipboard(
-                      value: client.idNumber,
-                      prefix: localization.id,
-                    ),
-                  ),
-                if (client.vatNumber.isNotEmpty)
-                  CopyToClipboard(
-                    value: client.vatNumber,
-                    prefix: localization.vat,
-                  ),
-                SizedBox(height: 4),
-                if (client.phone.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: CopyToClipboard(
-                      value: client.phone,
-                      child: IconText(icon: Icons.phone, text: client.phone),
-                    ),
-                  ),
-                if (client.website.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: CopyToClipboard(
-                      value: client.website,
-                      child:
-                          IconText(icon: MdiIcons.earth, text: client.website),
-                    ),
-                  ),
-                SizedBox(height: 4),
-                if (client.currencyId != state.company.currencyId)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 1),
-                    child: Text(
-                      state.staticState.currencyMap[client.currencyId]?.name ??
-                          '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                if ((client.languageId ?? '').isNotEmpty &&
-                    client.languageId != state.company.settings.languageId)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 1),
-                    child: Text(
-                      state.staticState.languageMap[client.languageId]?.name ??
-                          '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                if ((client.settings.defaultTaskRate ?? 0) != 0)
+              child: ListView(
+                controller: _scrollController1,
+                children: [
                   Text(
-                      '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
-              ],
+                    localization.details,
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(height: 4),
+                  if (client.idNumber.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: CopyToClipboard(
+                        value: client.idNumber,
+                        prefix: localization.id,
+                      ),
+                    ),
+                  if (client.vatNumber.isNotEmpty)
+                    CopyToClipboard(
+                      value: client.vatNumber,
+                      prefix: localization.vat,
+                    ),
+                  SizedBox(height: 4),
+                  if (client.phone.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: CopyToClipboard(
+                        value: client.phone,
+                        child: IconText(icon: Icons.phone, text: client.phone),
+                      ),
+                    ),
+                  if (client.website.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: CopyToClipboard(
+                        value: client.website,
+                        child: IconText(
+                            icon: MdiIcons.earth, text: client.website),
+                      ),
+                    ),
+                  SizedBox(height: 4),
+                  if (client.currencyId != state.company.currencyId)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Text(
+                        state.staticState.currencyMap[client.currencyId]
+                                ?.name ??
+                            '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  if ((client.languageId ?? '').isNotEmpty &&
+                      client.languageId != state.company.settings.languageId)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Text(
+                        state.staticState.languageMap[client.languageId]
+                                ?.name ??
+                            '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  if ((client.settings.defaultTaskRate ?? 0) != 0)
+                    Text(
+                        '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -152,60 +162,63 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 right: kMobileDialogPadding / 3,
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            children: [
-              Text(
-                localization.address,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 4),
-              if (billingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: billingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(billingAddress)),
-                          ],
+            child: ListView(
+              controller: _scrollController2,
+              children: [
+                Text(
+                  localization.address,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                if (billingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: billingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(billingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(billingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
-                SizedBox(height: 8),
-              ],
-              if (shippingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: shippingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(shippingAddress)),
-                          ],
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(billingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                ],
+                if (shippingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: shippingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(shippingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(shippingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(shippingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                ]
               ],
-            ],
+            ),
           )),
           Expanded(
               child: FormCard(
@@ -218,8 +231,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     (state.prefState.isPreviewVisible ? 1 : 3),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            child: SingleChildScrollView(
-                child: Column(
+            child: ListView(
+              controller: _scrollController3,
               children: [
                 Text(
                   localization.contacts,
@@ -288,9 +301,9 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       SizedBox(height: 16),
                     ],
                   );
-                }).toList()
+                }).toList(),
               ],
-            )),
+            ),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
             Expanded(
