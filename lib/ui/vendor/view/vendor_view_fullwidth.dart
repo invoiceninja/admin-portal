@@ -27,7 +27,29 @@ class VendorViewFullwidth extends StatefulWidget {
   State<VendorViewFullwidth> createState() => _VendorViewFullwidthState();
 }
 
-class _VendorViewFullwidthState extends State<VendorViewFullwidth> {
+class _VendorViewFullwidthState extends State<VendorViewFullwidth>
+    with TickerProviderStateMixin {
+  ScrollController _scrollController1;
+  ScrollController _scrollController2;
+  ScrollController _scrollController3;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController1 = ScrollController();
+    _scrollController2 = ScrollController();
+    _scrollController3 = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController1.dispose();
+    _scrollController2.dispose();
+    _scrollController3.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -54,7 +76,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth> {
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
-              child: ListView(children: [
+              child: ListView(controller: _scrollController1, children: [
                 Text(
                   localization.details,
                   style: Theme.of(context).textTheme.headline6,
@@ -116,6 +138,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth> {
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
             child: ListView(
+              controller: _scrollController2,
               children: [
                 Text(
                   localization.address,
@@ -161,6 +184,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth> {
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
             child: ListView(
+              controller: _scrollController3,
               children: [
                 Text(
                   localization.contacts,
