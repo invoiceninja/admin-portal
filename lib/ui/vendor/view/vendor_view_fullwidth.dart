@@ -27,24 +27,7 @@ class VendorViewFullwidth extends StatefulWidget {
   State<VendorViewFullwidth> createState() => _VendorViewFullwidthState();
 }
 
-class _VendorViewFullwidthState extends State<VendorViewFullwidth>
-    with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-
-    super.dispose();
-  }
-
+class _VendorViewFullwidthState extends State<VendorViewFullwidth> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -71,7 +54,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
-              children: [
+              child: ListView(children: [
                 Text(
                   localization.details,
                   style: Theme.of(context).textTheme.headline6,
@@ -119,7 +102,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-              ],
+              ]),
             ),
           ),
           Expanded(
@@ -132,37 +115,39 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 right: kMobileDialogPadding / 3,
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            children: [
-              Text(
-                localization.address,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 4),
-              if (billingAddress.isNotEmpty) ...[
-                Row(
-                  children: [
-                    Expanded(
-                      child: CopyToClipboard(
-                        value: billingAddress,
-                        child: Row(
-                          children: [
-                            Flexible(child: Text(billingAddress)),
-                          ],
+            child: ListView(
+              children: [
+                Text(
+                  localization.address,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                if (billingAddress.isNotEmpty) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CopyToClipboard(
+                          value: billingAddress,
+                          child: Row(
+                            children: [
+                              Flexible(child: Text(billingAddress)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    IconButton(
-                        onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(billingAddress));
-                        },
-                        icon: Icon(Icons.map))
-                  ],
-                ),
-                SizedBox(height: 8),
+                      SizedBox(width: 8),
+                      IconButton(
+                          onPressed: () {
+                            launch('http://maps.google.com/?daddr=' +
+                                Uri.encodeQueryComponent(billingAddress));
+                          },
+                          icon: Icon(Icons.map))
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                ]
               ],
-            ],
+            ),
           )),
           Expanded(
               child: FormCard(
@@ -175,51 +160,44 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     (state.prefState.isPreviewVisible ? 1 : 3),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            child: Scrollbar(
-              controller: _scrollController,
-              child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
+            child: ListView(
+              children: [
+                Text(
+                  localization.contacts,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                ...vendor.contacts.map((contact) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        localization.contacts,
-                        style: Theme.of(context).textTheme.headline6,
+                        contact.fullName,
+                        style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      SizedBox(height: 4),
-                      ...vendor.contacts.map((contact) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              contact.fullName,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            if (contact.email.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: CopyToClipboard(
-                                  value: contact.email,
-                                  child: IconText(
-                                      icon: Icons.email, text: contact.email),
-                                ),
-                              ),
-                            if (contact.phone.isNotEmpty)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                child: CopyToClipboard(
-                                  value: contact.phone,
-                                  child: IconText(
-                                      icon: Icons.phone, text: contact.phone),
-                                ),
-                              ),
-                            SizedBox(height: 16),
-                          ],
-                        );
-                      }).toList()
+                      if (contact.email.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.email,
+                            child: IconText(
+                                icon: Icons.email, text: contact.email),
+                          ),
+                        ),
+                      if (contact.phone.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.phone,
+                            child: IconText(
+                                icon: Icons.phone, text: contact.phone),
+                          ),
+                        ),
+                      SizedBox(height: 16),
                     ],
-                  )),
+                  );
+                }).toList()
+              ],
             ),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
