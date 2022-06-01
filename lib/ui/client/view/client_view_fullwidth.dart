@@ -218,79 +218,86 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     (state.prefState.isPreviewVisible ? 1 : 3),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 3),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                Text(
-                  localization.contacts,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(height: 4),
-                ...client.contacts.map((contact) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Scrollbar(
+              controller: _scrollController,
+              child: SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
                     children: [
                       Text(
-                        contact.fullName,
-                        style: Theme.of(context).textTheme.subtitle1,
+                        localization.contacts,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                      if (contact.email.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.email,
-                            child: IconText(
-                                icon: Icons.email, text: contact.email),
-                          ),
-                        ),
-                      if (contact.phone.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.phone,
-                            child: IconText(
-                                icon: Icons.phone, text: contact.phone),
-                          ),
-                        ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () => launch(
-                                    '${contact.silentLink}&client_hash=${client.clientHash}'),
-                                child: Text(
-                                  localization.clientPortal,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                          SizedBox(width: 4),
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () {
-                                  final url =
-                                      '${contact.link}&client_hash=${client.clientHash}';
-                                  Clipboard.setData(ClipboardData(text: url));
-                                  showToast(localization.copiedToClipboard
-                                      .replaceFirst(':value ', ''));
-                                },
-                                child: Text(
-                                  localization.copyLink,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 4),
+                      ...client.contacts.map((contact) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contact.fullName,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            if (contact.email.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.email,
+                                  child: IconText(
+                                      icon: Icons.email, text: contact.email),
+                                ),
+                              ),
+                            if (contact.phone.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.phone,
+                                  child: IconText(
+                                      icon: Icons.phone, text: contact.phone),
+                                ),
+                              ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: OutlinedButton(
+                                      onPressed: () => launch(
+                                          '${contact.silentLink}&client_hash=${client.clientHash}'),
+                                      child: Text(
+                                        localization.clientPortal,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
+                                ),
+                                SizedBox(width: 4),
+                                Flexible(
+                                  child: OutlinedButton(
+                                      onPressed: () {
+                                        final url =
+                                            '${contact.link}&client_hash=${client.clientHash}';
+                                        Clipboard.setData(
+                                            ClipboardData(text: url));
+                                        showToast(localization.copiedToClipboard
+                                            .replaceFirst(':value ', ''));
+                                      },
+                                      child: Text(
+                                        localization.copyLink,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                          ],
+                        );
+                      }).toList()
                     ],
-                  );
-                }).toList()
-              ],
-            )),
+                  )),
+            ),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
             Expanded(
