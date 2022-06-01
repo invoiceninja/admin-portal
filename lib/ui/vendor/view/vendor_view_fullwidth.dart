@@ -62,71 +62,6 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: FormCard(
-                isLast: true,
-                constraints: BoxConstraints(minHeight: minHeight),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: const EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding / 3,
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding),
-                children: [
-                  Text(
-                    localization.details,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 4),
-                  if (vendor.idNumber.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: CopyToClipboard(
-                        value: vendor.idNumber,
-                        prefix: localization.id,
-                      ),
-                    ),
-                  if (vendor.vatNumber.isNotEmpty)
-                    CopyToClipboard(
-                      value: vendor.vatNumber,
-                      prefix: localization.vat,
-                    ),
-                  SizedBox(height: 4),
-                  if (vendor.phone.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: vendor.phone,
-                        child: IconText(icon: Icons.phone, text: vendor.phone),
-                      ),
-                    ),
-                  if (vendor.website.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: vendor.website,
-                        child: IconText(
-                            icon: MdiIcons.earth, text: vendor.website),
-                      ),
-                    ),
-                  SizedBox(height: 4),
-                  if (vendor.currencyId != state.company.currencyId)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: Text(
-                        state.staticState.currencyMap[vendor.currencyId]
-                                ?.name ??
-                            '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-              child: SingleChildScrollView(
             child: FormCard(
               isLast: true,
               constraints: BoxConstraints(minHeight: minHeight),
@@ -135,94 +70,151 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   top: kMobileDialogPadding,
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
-                  left: kMobileDialogPadding / 3),
+                  left: kMobileDialogPadding),
               children: [
                 Text(
-                  localization.address,
+                  localization.details,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 4),
-                if (billingAddress.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CopyToClipboard(
-                          value: billingAddress,
-                          child: Row(
-                            children: [
-                              Flexible(child: Text(billingAddress)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(billingAddress));
-                          },
-                          icon: Icon(Icons.map))
-                    ],
+                if (vendor.idNumber.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: CopyToClipboard(
+                      value: vendor.idNumber,
+                      prefix: localization.id,
+                    ),
                   ),
-                  SizedBox(height: 8),
-                ],
+                if (vendor.vatNumber.isNotEmpty)
+                  CopyToClipboard(
+                    value: vendor.vatNumber,
+                    prefix: localization.vat,
+                  ),
+                SizedBox(height: 4),
+                if (vendor.phone.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: CopyToClipboard(
+                      value: vendor.phone,
+                      child: IconText(icon: Icons.phone, text: vendor.phone),
+                    ),
+                  ),
+                if (vendor.website.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: CopyToClipboard(
+                      value: vendor.website,
+                      child:
+                          IconText(icon: MdiIcons.earth, text: vendor.website),
+                    ),
+                  ),
+                SizedBox(height: 4),
+                if (vendor.currencyId != state.company.currencyId)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      state.staticState.currencyMap[vendor.currencyId]?.name ??
+                          '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
               ],
             ),
+          ),
+          Expanded(
+              child: FormCard(
+            isLast: true,
+            constraints: BoxConstraints(minHeight: minHeight),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding / 3,
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            children: [
+              Text(
+                localization.address,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              SizedBox(height: 4),
+              if (billingAddress.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: CopyToClipboard(
+                        value: billingAddress,
+                        child: Row(
+                          children: [
+                            Flexible(child: Text(billingAddress)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(billingAddress));
+                        },
+                        icon: Icon(Icons.map))
+                  ],
+                ),
+                SizedBox(height: 8),
+              ],
+            ],
           )),
           Expanded(
-              child: Scrollbar(
-            controller: _scrollController,
-            child: SingleChildScrollView(
-              controller: _scrollController,
               child: FormCard(
-                isLast: true,
-                constraints: BoxConstraints(minHeight: minHeight),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding /
-                        (state.prefState.isPreviewVisible ? 1 : 3),
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 3),
-                children: [
-                  Text(
-                    localization.contacts,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 4),
-                  ...vendor.contacts.map((contact) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          contact.fullName,
-                          style: Theme.of(context).textTheme.subtitle1,
+            isLast: true,
+            constraints: BoxConstraints(minHeight: minHeight),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 3),
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Text(
+                  localization.contacts,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                ...vendor.contacts.map((contact) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        contact.fullName,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      if (contact.email.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.email,
+                            child: IconText(
+                                icon: Icons.email, text: contact.email),
+                          ),
                         ),
-                        if (contact.email.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.email,
-                              child: IconText(
-                                  icon: Icons.email, text: contact.email),
-                            ),
+                      if (contact.phone.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.phone,
+                            child: IconText(
+                                icon: Icons.phone, text: contact.phone),
                           ),
-                        if (contact.phone.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.phone,
-                              child: IconText(
-                                  icon: Icons.phone, text: contact.phone),
-                            ),
-                          ),
-                        SizedBox(height: 16),
-                      ],
-                    );
-                  }).toList()
-                ],
-              ),
-            ),
+                        ),
+                      SizedBox(height: 16),
+                    ],
+                  );
+                }).toList()
+              ],
+            )),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
             Expanded(

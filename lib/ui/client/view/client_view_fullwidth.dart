@@ -68,86 +68,6 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child: FormCard(
-                isLast: true,
-                constraints: BoxConstraints(minHeight: minHeight),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: const EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding / 3,
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding),
-                children: [
-                  Text(
-                    localization.details,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 4),
-                  if (client.idNumber.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: CopyToClipboard(
-                        value: client.idNumber,
-                        prefix: localization.id,
-                      ),
-                    ),
-                  if (client.vatNumber.isNotEmpty)
-                    CopyToClipboard(
-                      value: client.vatNumber,
-                      prefix: localization.vat,
-                    ),
-                  SizedBox(height: 4),
-                  if (client.phone.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: client.phone,
-                        child: IconText(icon: Icons.phone, text: client.phone),
-                      ),
-                    ),
-                  if (client.website.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: client.website,
-                        child: IconText(
-                            icon: MdiIcons.earth, text: client.website),
-                      ),
-                    ),
-                  SizedBox(height: 4),
-                  if (client.currencyId != state.company.currencyId)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: Text(
-                        state.staticState.currencyMap[client.currencyId]
-                                ?.name ??
-                            '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company.settings.languageId)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 1),
-                      child: Text(
-                        state.staticState.languageMap[client.languageId]
-                                ?.name ??
-                            '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  if ((client.settings.defaultTaskRate ?? 0) != 0)
-                    Text(
-                        '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-              child: SingleChildScrollView(
             child: FormCard(
               isLast: true,
               constraints: BoxConstraints(minHeight: minHeight),
@@ -156,150 +76,221 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   top: kMobileDialogPadding,
                   right: kMobileDialogPadding / 3,
                   bottom: kMobileDialogPadding,
-                  left: kMobileDialogPadding / 3),
+                  left: kMobileDialogPadding),
               children: [
                 Text(
-                  localization.address,
+                  localization.details,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 4),
-                if (billingAddress.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CopyToClipboard(
-                          value: billingAddress,
-                          child: Row(
-                            children: [
-                              Flexible(child: Text(billingAddress)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(billingAddress));
-                          },
-                          icon: Icon(Icons.map))
-                    ],
+                if (client.idNumber.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: CopyToClipboard(
+                      value: client.idNumber,
+                      prefix: localization.id,
+                    ),
                   ),
-                  SizedBox(height: 8),
-                ],
-                if (shippingAddress.isNotEmpty) ...[
-                  Row(
-                    children: [
-                      Expanded(
-                        child: CopyToClipboard(
-                          value: shippingAddress,
-                          child: Row(
-                            children: [
-                              Flexible(child: Text(shippingAddress)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(shippingAddress));
-                          },
-                          icon: Icon(Icons.map))
-                    ],
+                if (client.vatNumber.isNotEmpty)
+                  CopyToClipboard(
+                    value: client.vatNumber,
+                    prefix: localization.vat,
                   ),
-                ],
+                SizedBox(height: 4),
+                if (client.phone.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: CopyToClipboard(
+                      value: client.phone,
+                      child: IconText(icon: Icons.phone, text: client.phone),
+                    ),
+                  ),
+                if (client.website.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: CopyToClipboard(
+                      value: client.website,
+                      child:
+                          IconText(icon: MdiIcons.earth, text: client.website),
+                    ),
+                  ),
+                SizedBox(height: 4),
+                if (client.currencyId != state.company.currencyId)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      state.staticState.currencyMap[client.currencyId]?.name ??
+                          '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                if ((client.languageId ?? '').isNotEmpty &&
+                    client.languageId != state.company.settings.languageId)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      state.staticState.languageMap[client.languageId]?.name ??
+                          '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                if ((client.settings.defaultTaskRate ?? 0) != 0)
+                  Text(
+                      '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
               ],
             ),
-          )),
+          ),
           Expanded(
-              child: Scrollbar(
-            controller: _scrollController,
-            child: SingleChildScrollView(
-              controller: _scrollController,
               child: FormCard(
-                isLast: true,
-                constraints: BoxConstraints(minHeight: minHeight),
-                crossAxisAlignment: CrossAxisAlignment.start,
-                padding: EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding /
-                        (state.prefState.isPreviewVisible ? 1 : 3),
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 3),
-                children: [
-                  Text(
-                    localization.contacts,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(height: 4),
-                  ...client.contacts.map((contact) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          contact.fullName,
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        if (contact.email.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.email,
-                              child: IconText(
-                                  icon: Icons.email, text: contact.email),
-                            ),
-                          ),
-                        if (contact.phone.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.phone,
-                              child: IconText(
-                                  icon: Icons.phone, text: contact.phone),
-                            ),
-                          ),
-                        SizedBox(height: 8),
-                        Row(
+            isLast: true,
+            constraints: BoxConstraints(minHeight: minHeight),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding / 3,
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            children: [
+              Text(
+                localization.address,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              SizedBox(height: 4),
+              if (billingAddress.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: CopyToClipboard(
+                        value: billingAddress,
+                        child: Row(
                           children: [
-                            Flexible(
-                              child: OutlinedButton(
-                                  onPressed: () => launch(
-                                      '${contact.silentLink}&client_hash=${client.clientHash}'),
-                                  child: Text(
-                                    localization.clientPortal,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                            ),
-                            SizedBox(width: 4),
-                            Flexible(
-                              child: OutlinedButton(
-                                  onPressed: () {
-                                    final url =
-                                        '${contact.link}&client_hash=${client.clientHash}';
-                                    Clipboard.setData(ClipboardData(text: url));
-                                    showToast(localization.copiedToClipboard
-                                        .replaceFirst(':value ', ''));
-                                  },
-                                  child: Text(
-                                    localization.copyLink,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  )),
-                            ),
+                            Flexible(child: Text(billingAddress)),
                           ],
                         ),
-                        SizedBox(height: 16),
-                      ],
-                    );
-                  }).toList()
-                ],
-              ),
-            ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(billingAddress));
+                        },
+                        icon: Icon(Icons.map))
+                  ],
+                ),
+                SizedBox(height: 8),
+              ],
+              if (shippingAddress.isNotEmpty) ...[
+                Row(
+                  children: [
+                    Expanded(
+                      child: CopyToClipboard(
+                        value: shippingAddress,
+                        child: Row(
+                          children: [
+                            Flexible(child: Text(shippingAddress)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    IconButton(
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(shippingAddress));
+                        },
+                        icon: Icon(Icons.map))
+                  ],
+                ),
+              ],
+            ],
+          )),
+          Expanded(
+              child: FormCard(
+            isLast: true,
+            constraints: BoxConstraints(minHeight: minHeight),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.only(
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 3),
+                bottom: kMobileDialogPadding,
+                left: kMobileDialogPadding / 3),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Text(
+                  localization.contacts,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 4),
+                ...client.contacts.map((contact) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        contact.fullName,
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                      if (contact.email.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.email,
+                            child: IconText(
+                                icon: Icons.email, text: contact.email),
+                          ),
+                        ),
+                      if (contact.phone.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: CopyToClipboard(
+                            value: contact.phone,
+                            child: IconText(
+                                icon: Icons.phone, text: contact.phone),
+                          ),
+                        ),
+                      SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: OutlinedButton(
+                                onPressed: () => launch(
+                                    '${contact.silentLink}&client_hash=${client.clientHash}'),
+                                child: Text(
+                                  localization.clientPortal,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
+                          ),
+                          SizedBox(width: 4),
+                          Flexible(
+                            child: OutlinedButton(
+                                onPressed: () {
+                                  final url =
+                                      '${contact.link}&client_hash=${client.clientHash}';
+                                  Clipboard.setData(ClipboardData(text: url));
+                                  showToast(localization.copiedToClipboard
+                                      .replaceFirst(':value ', ''));
+                                },
+                                child: Text(
+                                  localization.copyLink,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                    ],
+                  );
+                }).toList()
+              ],
+            )),
           )),
           if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
             Expanded(
