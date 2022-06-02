@@ -73,7 +73,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               crossAxisAlignment: CrossAxisAlignment.start,
               padding: const EdgeInsets.only(
                   top: kMobileDialogPadding,
-                  right: kMobileDialogPadding / 3,
+                  right: kMobileDialogPadding / 2,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
               child: ListView(controller: _scrollController1, children: [
@@ -134,9 +134,9 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: const EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 3,
+                right: kMobileDialogPadding / 2,
                 bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding / 3),
+                left: kMobileDialogPadding / 2),
             child: ListView(
               controller: _scrollController2,
               children: [
@@ -180,10 +180,9 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding /
-                    (state.prefState.isPreviewVisible ? 1 : 3),
+                right: kMobileDialogPadding / 2,
                 bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding / 3),
+                left: kMobileDialogPadding / 2),
             child: ListView(
               controller: _scrollController3,
               children: [
@@ -237,7 +236,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     top: kMobileDialogPadding,
                     right: kMobileDialogPadding,
                     bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 3),
+                    left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
                   length: 2,
                   child: SizedBox(
