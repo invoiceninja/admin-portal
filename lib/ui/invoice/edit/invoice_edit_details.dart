@@ -241,6 +241,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     child: Text(localization.usePaymentTerms),
                     value: 'terms',
                   ),
+                  DropdownMenuItem(
+                    child: Text(localization.dueOnReceipt),
+                    value: 'on_receipt',
+                  ),
                   ...List<int>.generate(31, (i) => i + 1)
                       .map((value) => DropdownMenuItem(
                             child: Text(value == 1
