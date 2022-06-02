@@ -79,7 +79,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               crossAxisAlignment: CrossAxisAlignment.start,
               padding: const EdgeInsets.only(
                   top: kMobileDialogPadding,
-                  right: kMobileDialogPadding / 3,
+                  right: kMobileDialogPadding / 2,
                   bottom: kMobileDialogPadding,
                   left: kMobileDialogPadding),
               child: ListView(
@@ -159,9 +159,9 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: const EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 3,
+                right: kMobileDialogPadding / 2,
                 bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding / 3),
+                left: kMobileDialogPadding / 2),
             child: ListView(
               controller: _scrollController2,
               children: [
@@ -229,10 +229,9 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding /
-                    (state.prefState.isPreviewVisible ? 1 : 3),
+                right: kMobileDialogPadding / 2,
                 bottom: kMobileDialogPadding,
-                left: kMobileDialogPadding / 3),
+                left: kMobileDialogPadding / 2),
             child: ListView(
               controller: _scrollController3,
               children: [
@@ -319,7 +318,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     top: kMobileDialogPadding,
                     right: kMobileDialogPadding,
                     bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 3),
+                    left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
                   length: 5,
                   child: SizedBox(
