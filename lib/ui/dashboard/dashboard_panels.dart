@@ -623,19 +623,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
 
     widget.currentData.forEach((dataGroup) {
       final index = widget.currentData.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
-        charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-              charts.ColorUtil.fromDartColor(state.accentColor),
-          strokeWidthPxFn: (_a, _b) => 2.5,
-          id: DashboardChart.PERIOD_CURRENT,
-          displayName:
-              settings.enableComparison ? localization.current : widget.title,
-          data: dataGroup.rawSeries,
-        )
-      ];
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
       if (settings.enableComparison) {
         final List<ChartMoneyData> previous = [];
@@ -664,6 +652,18 @@ class __DashboardPanelState extends State<_DashboardPanel> {
           ),
         );
       }
+
+      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData chartData, _) => chartData.date,
+        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+        colorFn: (ChartMoneyData chartData, _) =>
+            charts.ColorUtil.fromDartColor(state.accentColor),
+        strokeWidthPxFn: (_a, _b) => 2.5,
+        id: DashboardChart.PERIOD_CURRENT,
+        displayName:
+            settings.enableComparison ? localization.current : widget.title,
+        data: dataGroup.rawSeries,
+      ));
     });
 
     _chart = DashboardChart(
