@@ -168,7 +168,9 @@ class EditScaffold extends StatelessWidget {
                       entity: state.getEntity(entity.entityType, entity.id)),
                   SizedBox(width: 8),
                 ],
-                if (isDesktop(context) && isFullscreen)
+                if (isDesktop(context) &&
+                    isFullscreen &&
+                    onActionPressed != null)
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -281,7 +283,9 @@ class EditScaffold extends StatelessWidget {
                   ),
               ],
             ),
-            actions: isDesktop(context) && isFullscreen
+            actions: isDesktop(context) &&
+                    isFullscreen &&
+                    onActionPressed != null
                 ? []
                 : [
                     if (state.isSaving)
@@ -320,7 +324,7 @@ class EditScaffold extends StatelessWidget {
                                 }
                               },
                       ),
-                    if (actions != null)
+                    if (actions != null && onActionPressed != null)
                       PopupMenuButton<EntityAction>(
                         icon: Icon(
                           Icons.more_vert,
