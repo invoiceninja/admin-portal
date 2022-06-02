@@ -256,24 +256,7 @@ class EntityTopFilter extends StatelessWidget {
                                 ),
                               ),
                             ),
-                        ] else
-                          AppBorder(
-                            isLeft: true,
-                            child: InkWell(
-                              onTap: () {
-                                store.dispatch(ToggleViewerLayout(
-                                    uiState.filterEntityType));
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                child: Icon(
-                                  MdiIcons.chevronUp,
-                                  color: state.headerTextColor,
-                                ),
-                              ),
-                            ),
-                          ),
+                        ]
                       ],
                     ),
             ),
@@ -319,126 +302,145 @@ class EntityTopFilterHeader extends StatelessWidget {
 
     return Material(
       color: backgroundColor,
-      child: Row(
-        children: [
-          SizedBox(
-            width: 4,
-            height: 46,
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.clear,
-              color: state.headerTextColor,
+      elevation: 4,
+      child: SizedBox(
+        height: kTopBottomBarHeight - 4,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              width: 4,
             ),
-            onPressed: () => store.dispatch(
-              FilterByEntity(entity: uiState.filterEntity),
-            ),
-          ),
-          SizedBox(width: 4),
-          if (!prefState.isFilterVisible)
-            InkWell(
-              onTap: () {
-                store.dispatch(UpdateUserPreferences(
-                    isFilterVisible: !prefState.isFilterVisible));
-              },
-              onLongPress: () {
-                editEntity(context: context, entity: filterEntity);
-              },
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: 12),
-                  Icon(
-                    Icons.chrome_reader_mode,
-                    color: state.headerTextColor,
-                  ),
-                  SizedBox(width: 12),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 220),
-                    child: Text(
-                      EntityPresenter()
-                          .initialize(filterEntity, context)
-                          .title(),
-                      style:
-                          TextStyle(fontSize: 17, color: state.headerTextColor),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                ],
+            IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: state.headerTextColor,
+              ),
+              onPressed: () => store.dispatch(
+                FilterByEntity(entity: uiState.filterEntity),
               ),
             ),
-          SizedBox(width: 12),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: OverflowView.flexible(
-                  spacing: 8,
-                  children: entityActions.map(
-                    (action) {
-                      final label = localization.lookup('$action');
-
-                      return OutlinedButton(
-                        child: IconText(
-                          icon: getEntityActionIcon(action),
-                          text: label,
-                          style: state.isSaving ? null : textStyle,
-                        ),
-                        onPressed: state.isSaving
-                            ? null
-                            : () {
-                                handleEntitiesActions([filterEntity], action);
-                              },
-                      );
-                    },
-                  ).toList(),
-                  builder: (context, remaining) {
-                    return PopupMenuButton<EntityAction>(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          children: [
-                            Text(
-                              localization.more,
-                              style: textStyle,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(Icons.arrow_drop_down,
-                                color: state.headerTextColor),
-                          ],
-                        ),
+            SizedBox(width: 4),
+            if (!prefState.isFilterVisible)
+              InkWell(
+                onTap: () {
+                  store.dispatch(UpdateUserPreferences(
+                      isFilterVisible: !prefState.isFilterVisible));
+                },
+                onLongPress: () {
+                  editEntity(context: context, entity: filterEntity);
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 12),
+                    Icon(
+                      Icons.chrome_reader_mode,
+                      color: state.headerTextColor,
+                    ),
+                    SizedBox(width: 12),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 220),
+                      child: Text(
+                        EntityPresenter()
+                            .initialize(filterEntity, context)
+                            .title(),
+                        style: TextStyle(
+                            fontSize: 17, color: state.headerTextColor),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      onSelected: (EntityAction action) {
-                        handleEntitiesActions([filterEntity], action);
+                    ),
+                    SizedBox(width: 12),
+                  ],
+                ),
+              ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: OverflowView.flexible(
+                    spacing: 8,
+                    children: entityActions.map(
+                      (action) {
+                        final label = localization.lookup('$action');
+
+                        return OutlinedButton(
+                          child: IconText(
+                            icon: getEntityActionIcon(action),
+                            text: label,
+                            style: state.isSaving ? null : textStyle,
+                          ),
+                          onPressed: state.isSaving
+                              ? null
+                              : () {
+                                  handleEntitiesActions([filterEntity], action);
+                                },
+                        );
                       },
-                      itemBuilder: (BuildContext context) {
-                        return entityActions
-                            .toList()
-                            .sublist(entityActions.length - remaining)
-                            .map((action) {
-                          return PopupMenuItem<EntityAction>(
-                            value: action,
-                            child: Row(
-                              children: <Widget>[
-                                Icon(getEntityActionIcon(action),
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                                SizedBox(width: 16.0),
-                                Text(AppLocalization.of(context)
-                                        .lookup(action.toString()) ??
-                                    ''),
-                              ],
-                            ),
-                          );
-                        }).toList();
-                      },
-                    );
-                  }),
+                    ).toList(),
+                    builder: (context, remaining) {
+                      return PopupMenuButton<EntityAction>(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              Text(
+                                localization.more,
+                                style: textStyle,
+                              ),
+                              SizedBox(width: 4),
+                              Icon(Icons.arrow_drop_down,
+                                  color: state.headerTextColor),
+                            ],
+                          ),
+                        ),
+                        onSelected: (EntityAction action) {
+                          handleEntitiesActions([filterEntity], action);
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return entityActions
+                              .toList()
+                              .sublist(entityActions.length - remaining)
+                              .map((action) {
+                            return PopupMenuItem<EntityAction>(
+                              value: action,
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(getEntityActionIcon(action),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                                  SizedBox(width: 16.0),
+                                  Text(AppLocalization.of(context)
+                                          .lookup(action.toString()) ??
+                                      ''),
+                                ],
+                              ),
+                            );
+                          }).toList();
+                        },
+                      );
+                    }),
+              ),
             ),
-          ),
-        ],
+            AppBorder(
+              isLeft: true,
+              child: InkWell(
+                onTap: () {
+                  store.dispatch(ToggleViewerLayout(uiState.filterEntityType));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Icon(
+                    MdiIcons.chevronUp,
+                    color: state.headerTextColor,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
