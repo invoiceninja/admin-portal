@@ -206,6 +206,10 @@ abstract class VendorEntity extends Object
       if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }
+
+      if (userCompany.canCreate(EntityType.recurringExpense)) {
+        actions.add(EntityAction.newRecurringExpense);
+      }
     }
 
     if (!isDeleted && multiselect) {
