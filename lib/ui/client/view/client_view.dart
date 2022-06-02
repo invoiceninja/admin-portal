@@ -102,6 +102,7 @@ class _ClientViewState extends State<ClientView>
             Expanded(
                 child: AppBorder(
               isTop: true,
+              isBottom: true,
               child: ClientViewFullwidth(
                 viewModel: viewModel,
               ),

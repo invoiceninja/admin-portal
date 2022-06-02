@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -92,8 +93,12 @@ class _VendorViewState extends State<VendorView>
           children: [
             EntityTopFilterHeader(),
             Expanded(
-                child: VendorViewFullwidth(
-              viewModel: viewModel,
+                child: AppBorder(
+              isTop: true,
+              isBottom: true,
+              child: VendorViewFullwidth(
+                viewModel: viewModel,
+              ),
             )),
           ],
         ),
