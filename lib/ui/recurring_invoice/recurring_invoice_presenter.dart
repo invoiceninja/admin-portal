@@ -120,7 +120,9 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.dueDateDays:
         return Text(invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
-            : invoice.dueDateDays == '1'
+            : invoice.dueDateDays == 'receipt'
+                    ? localization.dueOnReceipt
+                    : invoice.dueDateDays == '1'
                 ? localization.firstDayOfTheMonth
                 : invoice.dueDateDays == '31'
                     ? localization.lastDayOfTheMonth
