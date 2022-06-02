@@ -213,10 +213,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             launch('http://maps.google.com/?daddr=' +
                                 Uri.encodeQueryComponent(shippingAddress));
                           },
-                          icon: Icon(Icons.map))
+                          icon: Icon(Icons.map)),
                     ],
                   ),
-                ]
+                  SizedBox(height: 8),
+                ],
+                if (client.publicNotes.isNotEmpty) Text(client.publicNotes),
               ],
             ),
           )),
@@ -350,15 +352,25 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         Flexible(
                           child: TabBarView(
                             children: [
-                              EntityHeader(
-                                entity: client,
-                                label: localization.paidToDate,
-                                value: formatNumber(client.paidToDate, context,
-                                    clientId: client.id),
-                                secondLabel: localization.balanceDue,
-                                secondValue: formatNumber(
-                                    client.balance, context,
-                                    clientId: client.id),
+                              ListView(
+                                children: [
+                                  EntityHeader(
+                                    entity: client,
+                                    label: localization.paidToDate,
+                                    value: formatNumber(
+                                        client.paidToDate, context,
+                                        clientId: client.id),
+                                    secondLabel: localization.balanceDue,
+                                    secondValue: formatNumber(
+                                        client.balance, context,
+                                        clientId: client.id),
+                                  ),
+                                  if (client.privateNotes.isNotEmpty)
+                                    IconText(
+                                      text: client.privateNotes,
+                                      icon: Icons.lock,
+                                    )
+                                ],
                               ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),

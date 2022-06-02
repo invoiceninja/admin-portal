@@ -168,7 +168,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     ],
                   ),
                   SizedBox(height: 8),
-                ]
+                ],
+                if (vendor.publicNotes.isNotEmpty) Text(vendor.publicNotes),
               ],
             ),
           )),
@@ -260,18 +261,27 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                         Flexible(
                           child: TabBarView(
                             children: [
-                              EntityHeader(
-                                entity: vendor,
-                                label: localization.total,
-                                value: formatNumber(
-                                    memoizedCalculateVendorBalance(
-                                        vendor.id,
-                                        vendor.currencyId,
-                                        state.expenseState.map,
-                                        state.expenseState.list),
-                                    context,
-                                    currencyId: vendor.currencyId ??
-                                        state.company.currencyId),
+                              ListView(
+                                children: [
+                                  EntityHeader(
+                                    entity: vendor,
+                                    label: localization.total,
+                                    value: formatNumber(
+                                        memoizedCalculateVendorBalance(
+                                            vendor.id,
+                                            vendor.currencyId,
+                                            state.expenseState.map,
+                                            state.expenseState.list),
+                                        context,
+                                        currencyId: vendor.currencyId ??
+                                            state.company.currencyId),
+                                  ),
+                                  if (vendor.privateNotes.isNotEmpty)
+                                    IconText(
+                                      text: vendor.privateNotes,
+                                      icon: Icons.lock,
+                                    )
+                                ],
                               ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
