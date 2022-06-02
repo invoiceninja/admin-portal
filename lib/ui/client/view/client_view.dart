@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -99,8 +100,12 @@ class _ClientViewState extends State<ClientView>
           children: [
             EntityTopFilterHeader(),
             Expanded(
-                child: ClientViewFullwidth(
-              viewModel: viewModel,
+                child: AppBorder(
+              isTop: true,
+              isBottom: true,
+              child: ClientViewFullwidth(
+                viewModel: viewModel,
+              ),
             )),
           ],
         ),

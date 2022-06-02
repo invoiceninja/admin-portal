@@ -113,6 +113,9 @@ class EditScaffold extends StatelessWidget {
         .bodyText2
         .copyWith(color: state.headerTextColor);
 
+    final showOverflow =
+        isDesktop(context) && isFullscreen && onActionPressed != null;
+
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -155,10 +158,7 @@ class EditScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (isMobile(context) && !isFullscreen)
-                  Flexible(child: Text(title))
-                else
-                  Text(title),
+                if (showOverflow) Text(title) else Flexible(child: Text(title)),
                 SizedBox(width: 8),
                 if (isDesktop(context) &&
                     isFullscreen &&
@@ -168,7 +168,7 @@ class EditScaffold extends StatelessWidget {
                       entity: state.getEntity(entity.entityType, entity.id)),
                   SizedBox(width: 8),
                 ],
-                if (isDesktop(context) && isFullscreen)
+                if (showOverflow)
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
@@ -281,7 +281,7 @@ class EditScaffold extends StatelessWidget {
                   ),
               ],
             ),
-            actions: isDesktop(context) && isFullscreen
+            actions: showOverflow
                 ? []
                 : [
                     if (state.isSaving)
@@ -320,7 +320,7 @@ class EditScaffold extends StatelessWidget {
                                 }
                               },
                       ),
-                    if (actions != null)
+                    if (actions != null && onActionPressed != null)
                       PopupMenuButton<EntityAction>(
                         icon: Icon(
                           Icons.more_vert,

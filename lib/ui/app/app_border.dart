@@ -15,12 +15,14 @@ class AppBorder extends StatelessWidget {
   const AppBorder({
     @required this.child,
     this.isTop,
+    this.isBottom,
     this.isLeft,
     this.hideBorder = false,
   });
 
   final Widget child;
   final bool isTop;
+  final bool isBottom;
   final bool isLeft;
   final bool hideBorder;
 
@@ -51,6 +53,12 @@ class AppBorder extends StatelessWidget {
                 )
               : Border(
                   top: isTop == true
+                      ? BorderSide(
+                          width: borderWidth,
+                          color: color,
+                        )
+                      : BorderSide.none,
+                  bottom: isBottom == true
                       ? BorderSide(
                           width: borderWidth,
                           color: color,
