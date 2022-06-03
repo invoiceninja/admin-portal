@@ -397,6 +397,8 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsProducts: [
         [
+          'track_inventory',
+          'stock_notifications',
           'show_product_discount',
           'show_product_cost',
           'fill_products',

@@ -48,11 +48,13 @@ class _ProductSettingsState extends State<ProductSettings> {
     final viewModel = widget.viewModel;
     final company = viewModel.state.company;
 
-    _stockThresholdController.text = formatNumber(
-      company.stockNotificationThreshold.toDouble(),
-      context,
-      formatNumberType: FormatNumberType.int,
-    );
+    _stockThresholdController.text = company.stockNotificationThreshold == 0
+        ? ''
+        : formatNumber(
+            company.stockNotificationThreshold.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.int,
+          );
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

@@ -86,11 +86,14 @@ class _ProductEditState extends State<ProductEdit> {
       context,
       formatNumberType: FormatNumberType.int,
     );
-    _notificationThresholdController.text = formatNumber(
-      product.stockNotificationThreshold.toDouble(),
-      context,
-      formatNumberType: FormatNumberType.int,
-    );
+    _notificationThresholdController.text =
+        product.stockNotificationThreshold == 0
+            ? ''
+            : formatNumber(
+                product.stockNotificationThreshold.toDouble(),
+                context,
+                formatNumberType: FormatNumberType.int,
+              );
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -265,20 +268,26 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _stockQuantityController,
                     label: localization.stockQuantity,
                   ),
-                  SizedBox(height: 16),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.stockNotifications),
-                    value: product.stockNotification,
-                    onChanged: (value) => viewModel.onChanged(
-                        product.rebuild((b) => b..stockNotification = value)),
-                  ),
-                  if (product.stockNotification)
-                    DecoratedFormField(
-                      keyboardType: TextInputType.number,
-                      controller: _notificationThresholdController,
-                      label: localization.notificationThreshold,
+                  if (company.stockNotification) ...[
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.stockNotifications),
+                      value: product.stockNotification,
+                      onChanged: (value) => viewModel.onChanged(
+                          product.rebuild((b) => b..stockNotification = value)),
                     ),
+                    if (product.stockNotification)
+                      DecoratedFormField(
+                        keyboardType: TextInputType.number,
+                        controller: _notificationThresholdController,
+                        label: localization.notificationThreshold +
+                            ((company.stockNotification &&
+                                    company.stockNotificationThreshold != 0)
+                                ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'
+                                : ''),
+                      ),
+                  ],
                 ],
               ],
             ),
