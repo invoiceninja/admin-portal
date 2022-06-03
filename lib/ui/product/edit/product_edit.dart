@@ -265,11 +265,11 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _stockQuantityController,
                     label: localization.stockQuantity,
                   ),
+                  SizedBox(height: 16),
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.stockNotifications),
                     value: product.stockNotification,
-                    subtitle: Text(localization.stockNotificationsHelp),
                     onChanged: (value) => viewModel.onChanged(
                         product.rebuild((b) => b..stockNotification = value)),
                   ),
@@ -277,7 +277,7 @@ class _ProductEditState extends State<ProductEdit> {
                     DecoratedFormField(
                       keyboardType: TextInputType.number,
                       controller: _notificationThresholdController,
-                      label: localization.stockQuantity,
+                      label: localization.notificationThreshold,
                     ),
                 ],
               ],

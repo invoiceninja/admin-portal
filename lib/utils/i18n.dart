@@ -23,7 +23,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Display a product stock field and update when invoices are sent',
       'stock_notifications': 'Stock Notifications',
       'stock_notifications_help':
-          'Send an email when the stock matches the threshold',
+          'Send an email when the stock reaches the threshold',
       'vat': 'VAT',
       'standing': 'Standing',
       'view_map': 'View Map',
