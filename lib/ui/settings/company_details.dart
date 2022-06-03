@@ -99,17 +99,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   @override
-  void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onSettingsChanged);
-      controller.dispose();
-    });
-    super.dispose();
-  }
-
-  @override
   void didChangeDependencies() {
     _controllers = [
       _nameController,
@@ -167,6 +156,18 @@ class _CompanyDetailsState extends State<CompanyDetails>
         (dynamic controller) => controller.addListener(_onSettingsChanged));
 
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.removeListener(_onTabChanged);
+    _controller.dispose();
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onSettingsChanged);
+      controller.dispose();
+    });
+    super.dispose();
   }
 
   void _onSettingsChanged() {

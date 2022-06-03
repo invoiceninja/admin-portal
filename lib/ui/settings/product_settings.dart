@@ -6,7 +6,10 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/product_settings_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductSettings extends StatefulWidget {
@@ -25,6 +28,9 @@ class _ProductSettingsState extends State<ProductSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productSettings');
   FocusScopeNode _focusNode;
+  final _debouncer = Debouncer(sendFirstAction: true);
+  final _stockThresholdController = TextEditingController();
+  List<TextEditingController> _controllers = [];
 
   @override
   void initState() {
@@ -33,9 +39,46 @@ class _ProductSettingsState extends State<ProductSettings> {
   }
 
   @override
+  void didChangeDependencies() {
+    _controllers = [_stockThresholdController];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final viewModel = widget.viewModel;
+    final company = viewModel.state.company;
+
+    _stockThresholdController.text = formatNumber(
+      company.stockNotificationThreshold.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.int,
+    );
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _focusNode.dispose();
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
     super.dispose();
+  }
+
+  void _onChanged() {
+    final company = widget.viewModel.company.rebuild((b) => b
+      ..stockNotificationThreshold =
+          parseInt(_stockThresholdController.text.trim()));
+    if (company != widget.viewModel.company) {
+      _debouncer.run(() {
+        widget.viewModel.onCompanyChanged(company);
+      });
+    }
   }
 
   @override
@@ -51,6 +94,32 @@ class _ProductSettingsState extends State<ProductSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
+          FormCard(
+            children: [
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.trackInventory),
+                value: company.trackInventory,
+                subtitle: Text(localization.trackInventoryHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..trackInventory = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.stockNotifications),
+                value: company.stockNotification,
+                subtitle: Text(localization.stockNotificationsHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..stockNotification = value)),
+              ),
+              if (company.trackInventory && company.stockNotification)
+                DecoratedFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _stockThresholdController,
+                  label: localization.notificationThreshold,
+                ),
+            ],
+          ),
           FormCard(
             children: <Widget>[
               SwitchListTile(
@@ -88,6 +157,7 @@ class _ProductSettingsState extends State<ProductSettings> {
             ],
           ),
           FormCard(
+            isLast: true,
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
@@ -133,27 +203,6 @@ class _ProductSettingsState extends State<ProductSettings> {
                   disabledLabel: localization.companyCurrency,
                 ),
               )
-            ],
-          ),
-          FormCard(
-            isLast: true,
-            children: [
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.trackInventory),
-                value: company.trackInventory,
-                subtitle: Text(localization.trackInventoryHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..trackInventory = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.stockNotifications),
-                value: company.stockNotification,
-                subtitle: Text(localization.stockNotificationsHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..stockNotification = value)),
-              ),
             ],
           ),
         ],
