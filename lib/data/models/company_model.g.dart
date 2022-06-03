@@ -144,6 +144,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'use_quote_terms_on_conversion',
       serializers.serialize(object.useQuoteTermsOnConversion,
           specifiedType: const FullType(bool)),
+      'enable_applying_payments',
+      serializers.serialize(object.enableApplyingPayments,
+          specifiedType: const FullType(bool)),
+      'track_inventory',
+      serializers.serialize(object.trackInventory,
+          specifiedType: const FullType(bool)),
+      'inventory_notification_threshold',
+      serializers.serialize(object.stockNotificationThreshold,
+          specifiedType: const FullType(int)),
+      'stock_notification',
+      serializers.serialize(object.stockNotification,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -516,6 +528,22 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'use_quote_terms_on_conversion':
           result.useQuoteTermsOnConversion = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_applying_payments':
+          result.enableApplyingPayments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'track_inventory':
+          result.trackInventory = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'inventory_notification_threshold':
+          result.stockNotificationThreshold = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'stock_notification':
+          result.stockNotification = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1443,6 +1471,14 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool useQuoteTermsOnConversion;
   @override
+  final bool enableApplyingPayments;
+  @override
+  final bool trackInventory;
+  @override
+  final int stockNotificationThreshold;
+  @override
+  final bool stockNotification;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1590,6 +1626,10 @@ class _$CompanyEntity extends CompanyEntity {
       this.useCommaAsDecimalPlace,
       this.reportIncludeDrafts,
       this.useQuoteTermsOnConversion,
+      this.enableApplyingPayments,
+      this.trackInventory,
+      this.stockNotificationThreshold,
+      this.stockNotification,
       this.groups,
       this.activities,
       this.taxRates,
@@ -1716,6 +1756,14 @@ class _$CompanyEntity extends CompanyEntity {
         reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts');
     BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion,
         'CompanyEntity', 'useQuoteTermsOnConversion');
+    BuiltValueNullFieldError.checkNotNull(
+        enableApplyingPayments, 'CompanyEntity', 'enableApplyingPayments');
+    BuiltValueNullFieldError.checkNotNull(
+        trackInventory, 'CompanyEntity', 'trackInventory');
+    BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold,
+        'CompanyEntity', 'stockNotificationThreshold');
+    BuiltValueNullFieldError.checkNotNull(
+        stockNotification, 'CompanyEntity', 'stockNotification');
     BuiltValueNullFieldError.checkNotNull(groups, 'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, 'CompanyEntity', 'activities');
@@ -1852,6 +1900,10 @@ class _$CompanyEntity extends CompanyEntity {
         useCommaAsDecimalPlace == other.useCommaAsDecimalPlace &&
         reportIncludeDrafts == other.reportIncludeDrafts &&
         useQuoteTermsOnConversion == other.useQuoteTermsOnConversion &&
+        enableApplyingPayments == other.enableApplyingPayments &&
+        trackInventory == other.trackInventory &&
+        stockNotificationThreshold == other.stockNotificationThreshold &&
+        stockNotification == other.stockNotification &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -1928,7 +1980,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
                                                                                 invoiceTaskDocuments.hashCode),
                                                                             invoiceTaskTimelog.hashCode),
                                                                         invoiceTaskDatelog.hashCode),
@@ -1990,6 +2042,10 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('useCommaAsDecimalPlace', useCommaAsDecimalPlace)
           ..add('reportIncludeDrafts', reportIncludeDrafts)
           ..add('useQuoteTermsOnConversion', useQuoteTermsOnConversion)
+          ..add('enableApplyingPayments', enableApplyingPayments)
+          ..add('trackInventory', trackInventory)
+          ..add('stockNotificationThreshold', stockNotificationThreshold)
+          ..add('stockNotification', stockNotification)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2226,6 +2282,26 @@ class CompanyEntityBuilder
   bool get useQuoteTermsOnConversion => _$this._useQuoteTermsOnConversion;
   set useQuoteTermsOnConversion(bool useQuoteTermsOnConversion) =>
       _$this._useQuoteTermsOnConversion = useQuoteTermsOnConversion;
+
+  bool _enableApplyingPayments;
+  bool get enableApplyingPayments => _$this._enableApplyingPayments;
+  set enableApplyingPayments(bool enableApplyingPayments) =>
+      _$this._enableApplyingPayments = enableApplyingPayments;
+
+  bool _trackInventory;
+  bool get trackInventory => _$this._trackInventory;
+  set trackInventory(bool trackInventory) =>
+      _$this._trackInventory = trackInventory;
+
+  int _stockNotificationThreshold;
+  int get stockNotificationThreshold => _$this._stockNotificationThreshold;
+  set stockNotificationThreshold(int stockNotificationThreshold) =>
+      _$this._stockNotificationThreshold = stockNotificationThreshold;
+
+  bool _stockNotification;
+  bool get stockNotification => _$this._stockNotification;
+  set stockNotification(bool stockNotification) =>
+      _$this._stockNotification = stockNotification;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2551,6 +2627,10 @@ class CompanyEntityBuilder
       _useCommaAsDecimalPlace = $v.useCommaAsDecimalPlace;
       _reportIncludeDrafts = $v.reportIncludeDrafts;
       _useQuoteTermsOnConversion = $v.useQuoteTermsOnConversion;
+      _enableApplyingPayments = $v.enableApplyingPayments;
+      _trackInventory = $v.trackInventory;
+      _stockNotificationThreshold = $v.stockNotificationThreshold;
+      _stockNotification = $v.stockNotification;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -2677,6 +2757,10 @@ class CompanyEntityBuilder
               useCommaAsDecimalPlace: BuiltValueNullFieldError.checkNotNull(useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace'),
               reportIncludeDrafts: BuiltValueNullFieldError.checkNotNull(reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts'),
               useQuoteTermsOnConversion: BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion, 'CompanyEntity', 'useQuoteTermsOnConversion'),
+              enableApplyingPayments: BuiltValueNullFieldError.checkNotNull(enableApplyingPayments, 'CompanyEntity', 'enableApplyingPayments'),
+              trackInventory: BuiltValueNullFieldError.checkNotNull(trackInventory, 'CompanyEntity', 'trackInventory'),
+              stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, 'CompanyEntity', 'stockNotificationThreshold'),
+              stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, 'CompanyEntity', 'stockNotification'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

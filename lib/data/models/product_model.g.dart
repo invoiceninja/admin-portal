@@ -162,6 +162,15 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'in_stock_quantity',
+      serializers.serialize(object.inStockQuantity,
+          specifiedType: const FullType(int)),
+      'stock_notification_threshold',
+      serializers.serialize(object.stockNotificationThreshold,
+          specifiedType: const FullType(int)),
+      'stock_notification',
+      serializers.serialize(object.stockNotification,
+          specifiedType: const FullType(bool)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -281,6 +290,18 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'in_stock_quantity':
+          result.inStockQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'stock_notification_threshold':
+          result.stockNotificationThreshold = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'stock_notification':
+          result.stockNotification = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -544,6 +565,12 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String customValue4;
   @override
+  final int inStockQuantity;
+  @override
+  final int stockNotificationThreshold;
+  @override
+  final bool stockNotification;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -581,6 +608,9 @@ class _$ProductEntity extends ProductEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.inStockQuantity,
+      this.stockNotificationThreshold,
+      this.stockNotification,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -619,6 +649,12 @@ class _$ProductEntity extends ProductEntity {
     BuiltValueNullFieldError.checkNotNull(
         customValue4, 'ProductEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
+        inStockQuantity, 'ProductEntity', 'inStockQuantity');
+    BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold,
+        'ProductEntity', 'stockNotificationThreshold');
+    BuiltValueNullFieldError.checkNotNull(
+        stockNotification, 'ProductEntity', 'stockNotification');
+    BuiltValueNullFieldError.checkNotNull(
         documents, 'ProductEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'ProductEntity', 'createdAt');
@@ -655,6 +691,9 @@ class _$ProductEntity extends ProductEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        inStockQuantity == other.inStockQuantity &&
+        stockNotificationThreshold == other.stockNotificationThreshold &&
+        stockNotification == other.stockNotification &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -687,17 +726,17 @@ class _$ProductEntity extends ProductEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode),
-                                                                                taxName1.hashCode),
-                                                                            taxRate1.hashCode),
-                                                                        taxName2.hashCode),
-                                                                    taxRate2.hashCode),
-                                                                taxName3.hashCode),
-                                                            taxRate3.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode),
+                                                                                taxRate2.hashCode),
+                                                                            taxName3.hashCode),
+                                                                        taxRate3.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    inStockQuantity.hashCode),
+                                                stockNotificationThreshold.hashCode),
+                                            stockNotification.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -727,6 +766,9 @@ class _$ProductEntity extends ProductEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('inStockQuantity', inStockQuantity)
+          ..add('stockNotificationThreshold', stockNotificationThreshold)
+          ..add('stockNotification', stockNotification)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -804,6 +846,21 @@ class ProductEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  int _inStockQuantity;
+  int get inStockQuantity => _$this._inStockQuantity;
+  set inStockQuantity(int inStockQuantity) =>
+      _$this._inStockQuantity = inStockQuantity;
+
+  int _stockNotificationThreshold;
+  int get stockNotificationThreshold => _$this._stockNotificationThreshold;
+  set stockNotificationThreshold(int stockNotificationThreshold) =>
+      _$this._stockNotificationThreshold = stockNotificationThreshold;
+
+  bool _stockNotification;
+  bool get stockNotification => _$this._stockNotification;
+  set stockNotification(bool stockNotification) =>
+      _$this._stockNotification = stockNotification;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -844,7 +901,9 @@ class ProductEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ProductEntityBuilder();
+  ProductEntityBuilder() {
+    ProductEntity._initializeBuilder(this);
+  }
 
   ProductEntityBuilder get _$this {
     final $v = _$v;
@@ -864,6 +923,9 @@ class ProductEntityBuilder
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
+      _inStockQuantity = $v.inStockQuantity;
+      _stockNotificationThreshold = $v.stockNotificationThreshold;
+      _stockNotification = $v.stockNotification;
       _documents = $v.documents.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -920,6 +982,9 @@ class ProductEntityBuilder
               customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ProductEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ProductEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ProductEntity', 'customValue4'),
+              inStockQuantity: BuiltValueNullFieldError.checkNotNull(inStockQuantity, 'ProductEntity', 'inStockQuantity'),
+              stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, 'ProductEntity', 'stockNotificationThreshold'),
+              stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, 'ProductEntity', 'stockNotification'),
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ProductEntity', 'createdAt'),

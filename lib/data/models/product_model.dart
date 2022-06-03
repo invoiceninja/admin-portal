@@ -95,6 +95,9 @@ abstract class ProductEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
+      inStockQuantity: 0,
+      stockNotificationThreshold: 0,
+      stockNotification: true,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -156,6 +159,15 @@ abstract class ProductEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'in_stock_quantity')
+  int get inStockQuantity;
+
+  @BuiltValueField(wireName: 'stock_notification_threshold')
+  int get stockNotificationThreshold;
+
+  @BuiltValueField(wireName: 'stock_notification')
+  bool get stockNotification;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -332,6 +344,12 @@ abstract class ProductEntity extends Object
 
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(ProductEntityBuilder builder) => builder
+    ..inStockQuantity = 0
+    ..stockNotification = true
+    ..stockNotificationThreshold = 0;
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

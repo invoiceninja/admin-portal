@@ -88,7 +88,6 @@ class _ProductSettingsState extends State<ProductSettings> {
             ],
           ),
           FormCard(
-            isLast: true,
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
@@ -135,7 +134,28 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               )
             ],
-          )
+          ),
+          FormCard(
+            isLast: true,
+            children: [
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.trackInventory),
+                value: company.trackInventory,
+                subtitle: Text(localization.trackInventoryHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..trackInventory = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.stockNotifications),
+                value: company.stockNotification,
+                subtitle: Text(localization.stockNotificationsHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..stockNotification = value)),
+              ),
+            ],
+          ),
         ],
       ),
     );
