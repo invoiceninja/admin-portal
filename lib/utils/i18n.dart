@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stock_quantity': 'Stock Quantity',
       'notification_threshold': 'Notification Threshold',
       'track_inventory': 'Track Inventory',
       'track_inventory_help':
@@ -70572,6 +70573,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get notificationThreshold =>
       _localizedValues[localeCode]['notification_threshold'] ??
       _localizedValues['en']['notification_threshold'];
+
+  String get stockQuantity =>
+      _localizedValues[localeCode]['stock_quantity'] ??
+      _localizedValues['en']['stock_quantity'];
+
 
 
   // STARTER: lang field - do not remove comment

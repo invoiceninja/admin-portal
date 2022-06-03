@@ -95,7 +95,7 @@ abstract class ProductEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
-      inStockQuantity: 0,
+      stockQuantity: 0,
       stockNotificationThreshold: 0,
       stockNotification: true,
       documents: BuiltList<DocumentEntity>(),
@@ -161,7 +161,7 @@ abstract class ProductEntity extends Object
   String get customValue4;
 
   @BuiltValueField(wireName: 'in_stock_quantity')
-  int get inStockQuantity;
+  int get stockQuantity;
 
   @BuiltValueField(wireName: 'stock_notification_threshold')
   int get stockNotificationThreshold;
@@ -347,7 +347,7 @@ abstract class ProductEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(ProductEntityBuilder builder) => builder
-    ..inStockQuantity = 0
+    ..stockQuantity = 0
     ..stockNotification = true
     ..stockNotificationThreshold = 0;
 

@@ -43,6 +43,8 @@ class _ProductEditState extends State<ProductEdit> {
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
+  final _stockQuantityController = TextEditingController();
+  final _notificationThresholdController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -59,6 +61,8 @@ class _ProductEditState extends State<ProductEdit> {
       _custom2Controller,
       _custom3Controller,
       _custom4Controller,
+      _stockQuantityController,
+      _notificationThresholdController,
     ];
 
     _controllers
@@ -77,6 +81,16 @@ class _ProductEditState extends State<ProductEdit> {
     _custom2Controller.text = product.customValue2;
     _custom3Controller.text = product.customValue3;
     _custom4Controller.text = product.customValue4;
+    _stockQuantityController.text = formatNumber(
+      product.stockQuantity.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.int,
+    );
+    _notificationThresholdController.text = formatNumber(
+      product.stockNotificationThreshold.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.int,
+    );
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -245,6 +259,27 @@ class _ProductEditState extends State<ProductEdit> {
                   value: product.customValue4,
                   onSavePressed: viewModel.onSavePressed,
                 ),
+                if (company.trackInventory) ...[
+                  DecoratedFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _stockQuantityController,
+                    label: localization.stockQuantity,
+                  ),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    title: Text(localization.stockNotifications),
+                    value: product.stockNotification,
+                    subtitle: Text(localization.stockNotificationsHelp),
+                    onChanged: (value) => viewModel.onChanged(
+                        product.rebuild((b) => b..stockNotification = value)),
+                  ),
+                  if (product.stockNotification)
+                    DecoratedFormField(
+                      keyboardType: TextInputType.number,
+                      controller: _notificationThresholdController,
+                      label: localization.stockQuantity,
+                    ),
+                ],
               ],
             ),
           ],

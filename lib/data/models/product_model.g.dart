@@ -163,7 +163,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
       'in_stock_quantity',
-      serializers.serialize(object.inStockQuantity,
+      serializers.serialize(object.stockQuantity,
           specifiedType: const FullType(int)),
       'stock_notification_threshold',
       serializers.serialize(object.stockNotificationThreshold,
@@ -292,7 +292,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'in_stock_quantity':
-          result.inStockQuantity = serializers.deserialize(value,
+          result.stockQuantity = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'stock_notification_threshold':
@@ -565,7 +565,7 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String customValue4;
   @override
-  final int inStockQuantity;
+  final int stockQuantity;
   @override
   final int stockNotificationThreshold;
   @override
@@ -608,7 +608,7 @@ class _$ProductEntity extends ProductEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
-      this.inStockQuantity,
+      this.stockQuantity,
       this.stockNotificationThreshold,
       this.stockNotification,
       this.documents,
@@ -649,7 +649,7 @@ class _$ProductEntity extends ProductEntity {
     BuiltValueNullFieldError.checkNotNull(
         customValue4, 'ProductEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        inStockQuantity, 'ProductEntity', 'inStockQuantity');
+        stockQuantity, 'ProductEntity', 'stockQuantity');
     BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold,
         'ProductEntity', 'stockNotificationThreshold');
     BuiltValueNullFieldError.checkNotNull(
@@ -691,7 +691,7 @@ class _$ProductEntity extends ProductEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
-        inStockQuantity == other.inStockQuantity &&
+        stockQuantity == other.stockQuantity &&
         stockNotificationThreshold == other.stockNotificationThreshold &&
         stockNotification == other.stockNotification &&
         documents == other.documents &&
@@ -734,7 +734,7 @@ class _$ProductEntity extends ProductEntity {
                                                                 customValue2.hashCode),
                                                             customValue3.hashCode),
                                                         customValue4.hashCode),
-                                                    inStockQuantity.hashCode),
+                                                    stockQuantity.hashCode),
                                                 stockNotificationThreshold.hashCode),
                                             stockNotification.hashCode),
                                         documents.hashCode),
@@ -766,7 +766,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
-          ..add('inStockQuantity', inStockQuantity)
+          ..add('stockQuantity', stockQuantity)
           ..add('stockNotificationThreshold', stockNotificationThreshold)
           ..add('stockNotification', stockNotification)
           ..add('documents', documents)
@@ -846,10 +846,9 @@ class ProductEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
-  int _inStockQuantity;
-  int get inStockQuantity => _$this._inStockQuantity;
-  set inStockQuantity(int inStockQuantity) =>
-      _$this._inStockQuantity = inStockQuantity;
+  int _stockQuantity;
+  int get stockQuantity => _$this._stockQuantity;
+  set stockQuantity(int stockQuantity) => _$this._stockQuantity = stockQuantity;
 
   int _stockNotificationThreshold;
   int get stockNotificationThreshold => _$this._stockNotificationThreshold;
@@ -923,7 +922,7 @@ class ProductEntityBuilder
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
-      _inStockQuantity = $v.inStockQuantity;
+      _stockQuantity = $v.stockQuantity;
       _stockNotificationThreshold = $v.stockNotificationThreshold;
       _stockNotification = $v.stockNotification;
       _documents = $v.documents.toBuilder();
@@ -982,7 +981,7 @@ class ProductEntityBuilder
               customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ProductEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ProductEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ProductEntity', 'customValue4'),
-              inStockQuantity: BuiltValueNullFieldError.checkNotNull(inStockQuantity, 'ProductEntity', 'inStockQuantity'),
+              stockQuantity: BuiltValueNullFieldError.checkNotNull(stockQuantity, 'ProductEntity', 'stockQuantity'),
               stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, 'ProductEntity', 'stockNotificationThreshold'),
               stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, 'ProductEntity', 'stockNotification'),
               documents: documents.build(),
