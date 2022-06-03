@@ -504,8 +504,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
 
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
-      lineItems
-          .add(InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : 0));
+      lineItems.add(InvoiceItemEntity(
+          quantity: company.defaultQuantity || !company.enableProductQuantity
+              ? 1
+              : 0));
     }
 
     tableHeaderColumns.addAll([
