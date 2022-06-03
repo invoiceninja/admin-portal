@@ -26,6 +26,8 @@ enum ProductReportFields {
   product2,
   product3,
   product4,
+  stock_quantity,
+  notification_threshold
 }
 
 var memoizedProductReport = memo6((
@@ -141,6 +143,12 @@ ReportResult productReport(
             customFieldType: CustomFieldType.product4,
             company: userCompany.company,
           );
+          break;
+        case ProductReportFields.stock_quantity:
+          value = product.stockQuantity;
+          break;
+        case ProductReportFields.notification_threshold:
+          value = product.stockNotificationThreshold;
           break;
       }
 
