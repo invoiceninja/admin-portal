@@ -380,6 +380,7 @@ class SettingsSearch extends StatelessWidget {
           'company_gateways',
           'auto_bill_on',
           'use_available_credits',
+          'enable_applying_payments',
           'allow_over_payment',
           'allow_under_payment',
         ]
