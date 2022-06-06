@@ -122,7 +122,10 @@ class _ProductEditState extends State<ProductEdit> {
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+      ..customValue4 = _custom4Controller.text.trim()
+      ..stockQuantity = parseInt(_stockQuantityController.text.trim())
+      ..stockNotificationThreshold =
+          parseInt(_notificationThresholdController.text.trim()));
     if (product != widget.viewModel.product) {
       _debouncer.run(() {
         widget.viewModel.onChanged(product);
@@ -267,6 +270,7 @@ class _ProductEditState extends State<ProductEdit> {
                     keyboardType: TextInputType.number,
                     controller: _stockQuantityController,
                     label: localization.stockQuantity,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                   if (company.stockNotification) ...[
                     SizedBox(height: 16),
@@ -286,6 +290,7 @@ class _ProductEditState extends State<ProductEdit> {
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'
                                 : ''),
+                        onSavePressed: viewModel.onSavePressed,
                       ),
                   ],
                 ],
