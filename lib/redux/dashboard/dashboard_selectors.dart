@@ -689,7 +689,9 @@ List<ChartDataGroup> chartExpenses(
   expenseMap.forEach((int, expense) {
     final currencyId = expense.currencyId;
     final date = expense.date;
-    double amount = expense.grossAmount;
+
+    double amount =
+        settings.includeTaxes ? expense.grossAmount : expense.netAmount;
 
     if (expense.isDeleted) {
       // skip it
