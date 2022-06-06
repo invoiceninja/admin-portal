@@ -166,7 +166,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       },
                     ),
                   if (connectGateways.contains(companyGateway.gatewayId))
-                    if (companyGateway.isNew || accountId.isEmpty) ...[
+                    if (companyGateway.isNew ||
+                        (companyGateway.gatewayId == kGatewayStripeConnect &&
+                            accountId.isEmpty)) ...[
                       AppButton(
                         label: localization.gatewaySetup.toUpperCase(),
                         onPressed: viewModel.state.isSaving

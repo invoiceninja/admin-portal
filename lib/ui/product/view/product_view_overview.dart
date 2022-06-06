@@ -82,6 +82,18 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue4);
     }
 
+    if (company.trackInventory) {
+      fields[localization.stockQuantity] = formatNumber(
+          product.stockQuantity.toDouble(), context,
+          formatNumberType: FormatNumberType.int);
+
+      if (product.stockNotificationThreshold != 0) {
+        fields[localization.notificationThreshold] = formatNumber(
+            product.stockNotificationThreshold.toDouble(), context,
+            formatNumberType: FormatNumberType.int);
+      }
+    }
+
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(

@@ -105,6 +105,10 @@ abstract class CompanyEntity extends Object
       reportIncludeDrafts: false,
       stopOnUnpaidRecurring: false,
       useQuoteTermsOnConversion: false,
+      enableApplyingPayments: false,
+      trackInventory: false,
+      stockNotificationThreshold: 0,
+      stockNotification: true,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -257,6 +261,18 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'use_quote_terms_on_conversion')
   bool get useQuoteTermsOnConversion;
+
+  @BuiltValueField(wireName: 'enable_applying_payments')
+  bool get enableApplyingPayments;
+
+  @BuiltValueField(wireName: 'track_inventory')
+  bool get trackInventory;
+
+  @BuiltValueField(wireName: 'inventory_notification_threshold')
+  int get stockNotificationThreshold;
+
+  @BuiltValueField(wireName: 'stock_notification')
+  bool get stockNotification;
 
   BuiltList<GroupEntity> get groups;
 
@@ -605,6 +621,10 @@ abstract class CompanyEntity extends Object
     ..markdownEmailEnabled = true
     ..useCommaAsDecimalPlace = false
     ..useQuoteTermsOnConversion = false
+    ..enableApplyingPayments = false
+    ..trackInventory = false
+    ..stockNotificationThreshold = 0
+    ..stockNotification = true
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false

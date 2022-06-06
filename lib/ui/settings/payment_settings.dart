@@ -11,25 +11,25 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class OnlinePayments extends StatefulWidget {
-  const OnlinePayments({
+class PaymentSettings extends StatefulWidget {
+  const PaymentSettings({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final OnlinePaymentsVM viewModel;
+  final PaymentSettingsVM viewModel;
 
   @override
-  _OnlinePaymentsState createState() => _OnlinePaymentsState();
+  _PaymentSettingsState createState() => _PaymentSettingsState();
 }
 
-class _OnlinePaymentsState extends State<OnlinePayments> {
+class _PaymentSettingsState extends State<PaymentSettings> {
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_onlinePayments');
+      GlobalKey<FormState>(debugLabel: '_paymentSettings');
   FocusScopeNode _focusNode;
   final _minimumAmountController = TextEditingController();
   List<TextEditingController> _controllers = [];
@@ -82,7 +82,7 @@ class _OnlinePaymentsState extends State<OnlinePayments> {
     final settings = viewModel.settings;
 
     return EditScaffold(
-      title: localization.onlinePayments,
+      title: localization.paymentSettings,
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,

@@ -16,6 +16,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'payment_settings': 'Payment Settings',
+      'default': 'Default',
+      'stock_quantity': 'Stock Quantity',
+      'notification_threshold': 'Notification Threshold',
+      'track_inventory': 'Track Inventory',
+      'track_inventory_help':
+          'Display a product stock field and update when invoices are sent',
+      'stock_notifications': 'Stock Notifications',
+      'stock_notifications_help':
+          'Send an email when the stock reaches the threshold',
       'vat': 'VAT',
       'standing': 'Standing',
       'view_map': 'View Map',
@@ -70539,14 +70549,44 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['add_gateway_help_message'] ??
       _localizedValues['en']['add_gateway_help_message'];
 
-
   String get standing =>
       _localizedValues[localeCode]['standing'] ??
       _localizedValues['en']['standing'];
 
   String get vat =>
-      _localizedValues[localeCode]['vat'] ??
-      _localizedValues['en']['vat'];
+      _localizedValues[localeCode]['vat'] ?? _localizedValues['en']['vat'];
+
+  String get trackInventory =>
+      _localizedValues[localeCode]['track_inventory'] ??
+      _localizedValues['en']['track_inventory'];
+
+  String get trackInventoryHelp =>
+      _localizedValues[localeCode]['track_inventory_help'] ??
+      _localizedValues['en']['track_inventory_help'];
+
+  String get stockNotifications =>
+      _localizedValues[localeCode]['stock_notifications'] ??
+      _localizedValues['en']['stock_notifications'];
+
+  String get stockNotificationsHelp =>
+      _localizedValues[localeCode]['stock_notifications_help'] ??
+      _localizedValues['en']['stock_notifications_help'];
+
+  String get notificationThreshold =>
+      _localizedValues[localeCode]['notification_threshold'] ??
+      _localizedValues['en']['notification_threshold'];
+
+  String get stockQuantity =>
+      _localizedValues[localeCode]['stock_quantity'] ??
+      _localizedValues['en']['stock_quantity'];
+
+  String get defaultWord =>
+      _localizedValues[localeCode]['default'] ??
+      _localizedValues['en']['default'];
+
+  String get paymentSettings =>
+      _localizedValues[localeCode]['payment_settings'] ??
+      _localizedValues['en']['payment_settings'];
 
   // STARTER: lang field - do not remove comment
 

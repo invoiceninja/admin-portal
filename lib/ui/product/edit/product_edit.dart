@@ -43,6 +43,8 @@ class _ProductEditState extends State<ProductEdit> {
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
+  final _stockQuantityController = TextEditingController();
+  final _notificationThresholdController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -59,6 +61,8 @@ class _ProductEditState extends State<ProductEdit> {
       _custom2Controller,
       _custom3Controller,
       _custom4Controller,
+      _stockQuantityController,
+      _notificationThresholdController,
     ];
 
     _controllers
@@ -77,6 +81,19 @@ class _ProductEditState extends State<ProductEdit> {
     _custom2Controller.text = product.customValue2;
     _custom3Controller.text = product.customValue3;
     _custom4Controller.text = product.customValue4;
+    _stockQuantityController.text = formatNumber(
+      product.stockQuantity.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.int,
+    );
+    _notificationThresholdController.text =
+        product.stockNotificationThreshold == 0
+            ? ''
+            : formatNumber(
+                product.stockNotificationThreshold.toDouble(),
+                context,
+                formatNumberType: FormatNumberType.int,
+              );
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -105,7 +122,10 @@ class _ProductEditState extends State<ProductEdit> {
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+      ..customValue4 = _custom4Controller.text.trim()
+      ..stockQuantity = parseInt(_stockQuantityController.text.trim())
+      ..stockNotificationThreshold =
+          parseInt(_notificationThresholdController.text.trim()));
     if (product != widget.viewModel.product) {
       _debouncer.run(() {
         widget.viewModel.onChanged(product);
@@ -245,6 +265,35 @@ class _ProductEditState extends State<ProductEdit> {
                   value: product.customValue4,
                   onSavePressed: viewModel.onSavePressed,
                 ),
+                if (company.trackInventory) ...[
+                  DecoratedFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _stockQuantityController,
+                    label: localization.stockQuantity,
+                    onSavePressed: viewModel.onSavePressed,
+                  ),
+                  if (company.stockNotification) ...[
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.stockNotifications),
+                      value: product.stockNotification,
+                      onChanged: (value) => viewModel.onChanged(
+                          product.rebuild((b) => b..stockNotification = value)),
+                    ),
+                    if (product.stockNotification)
+                      DecoratedFormField(
+                        keyboardType: TextInputType.number,
+                        controller: _notificationThresholdController,
+                        label: localization.notificationThreshold +
+                            ((company.stockNotification &&
+                                    company.stockNotificationThreshold != 0)
+                                ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'
+                                : ''),
+                        onSavePressed: viewModel.onSavePressed,
+                      ),
+                  ],
+                ],
               ],
             ),
           ],

@@ -34,6 +34,8 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.taxName1,
       ProductFields.taxName2,
       ProductFields.taxName3,
+      ProductFields.stockQuantity,
+      ProductFields.notificationThreshold,
     ];
   }
 
@@ -91,6 +93,13 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.taxRate3:
         return Text(formatNumber(product.taxRate3, context,
             formatNumberType: FormatNumberType.percent));
+      case ProductFields.stockQuantity:
+        return Text(formatNumber(product.stockQuantity.toDouble(), context,
+            formatNumberType: FormatNumberType.int));
+      case ProductFields.notificationThreshold:
+        return Text(formatNumber(
+            product.stockNotificationThreshold.toDouble(), context,
+            formatNumberType: FormatNumberType.int));
     }
 
     return super.getField(field: field, context: context);

@@ -129,7 +129,6 @@ class ListScaffold extends StatelessWidget {
               title: Row(
                 children: [
                   Expanded(child: appBarTitle),
-                  ...appBarActions ?? <Widget>[],
                   if (isDesktop(context) && onCancelSettingsSection != null)
                     TextButton(
                         onPressed: () {
@@ -146,6 +145,7 @@ class ListScaffold extends StatelessWidget {
                 ],
               ),
               actions: [
+                ...appBarActions ?? <Widget>[],
                 if (!isSettings &&
                     (isMobile(context) || !state.prefState.isHistoryVisible))
                   Builder(builder: (context) {
