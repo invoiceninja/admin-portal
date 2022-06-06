@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
@@ -59,7 +60,6 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
@@ -758,8 +758,8 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsLocalization:
         screen = LocalizationScreen();
         break;
-      case kSettingsOnlinePayments:
-        screen = OnlinePaymentsScreen();
+      case kSettingsPaymentSettings:
+        screen = PaymentsSettingsScreen();
         break;
       case kSettingsCompanyGateways:
         screen = CompanyGatewayScreenBuilder();

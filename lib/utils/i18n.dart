@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'payment_settings': 'Payment Settings',
       'default': 'Default',
       'stock_quantity': 'Stock Quantity',
       'notification_threshold': 'Notification Threshold',
@@ -70582,6 +70583,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get defaultWord =>
       _localizedValues[localeCode]['default'] ??
       _localizedValues['en']['default'];
+
+  String get paymentSettings =>
+      _localizedValues[localeCode]['payment_settings'] ??
+      _localizedValues['en']['payment_settings'];
 
   // STARTER: lang field - do not remove comment
 

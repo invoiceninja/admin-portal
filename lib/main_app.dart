@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -68,7 +69,6 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
@@ -565,8 +565,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             UserDetailsScreen(),
                         LocalizationScreen.route: (context) =>
                             LocalizationScreen(),
-                        OnlinePaymentsScreen.route: (context) =>
-                            OnlinePaymentsScreen(),
+                        PaymentsSettingsScreen.route: (context) =>
+                            PaymentsSettingsScreen(),
                         CompanyGatewayScreen.route: (context) =>
                             CompanyGatewayScreenBuilder(),
                         CompanyGatewayViewScreen.route: (context) =>

@@ -121,7 +121,7 @@ class _SettingsListState extends State<SettingsList> {
               viewModel: widget.viewModel,
             ),
             SettingsListTile(
-              section: kSettingsOnlinePayments,
+              section: kSettingsPaymentSettings,
               viewModel: widget.viewModel,
             ),
             SettingsListTile(
@@ -375,7 +375,7 @@ class SettingsSearch extends StatelessWidget {
           'custom_labels',
         ],
       ],
-      kSettingsOnlinePayments: [
+      kSettingsPaymentSettings: [
         [
           'company_gateways',
           'auto_bill_on',

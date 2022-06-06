@@ -101,7 +101,7 @@ class CompanyGatewayScreen extends StatelessWidget {
                       store.dispatch(ResetSettings());
                     } else {
                       store.dispatch(
-                          ViewSettings(section: kSettingsOnlinePayments));
+                          ViewSettings(section: kSettingsPaymentSettings));
                     }
                   },
           )

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/settings/payment_settings.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -18,20 +19,19 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/ui/settings/online_payments.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class OnlinePaymentsScreen extends StatelessWidget {
-  const OnlinePaymentsScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsOnlinePayments';
+class PaymentsSettingsScreen extends StatelessWidget {
+  const PaymentsSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsPaymentSettings';
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, OnlinePaymentsVM>(
-      converter: OnlinePaymentsVM.fromStore,
+    return StoreConnector<AppState, PaymentSettingsVM>(
+      converter: PaymentSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return OnlinePayments(
+        return PaymentSettings(
           viewModel: viewModel,
           key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         );
@@ -40,8 +40,8 @@ class OnlinePaymentsScreen extends StatelessWidget {
   }
 }
 
-class OnlinePaymentsVM {
-  OnlinePaymentsVM({
+class PaymentSettingsVM {
+  PaymentSettingsVM({
     @required this.state,
     @required this.company,
     @required this.onCompanyChanged,
@@ -51,10 +51,10 @@ class OnlinePaymentsVM {
     @required this.onConfigureGatewaysPressed,
   });
 
-  static OnlinePaymentsVM fromStore(Store<AppState> store) {
+  static PaymentSettingsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return OnlinePaymentsVM(
+    return PaymentSettingsVM(
       state: state,
       company: state.uiState.settingsUIState.company,
       settings: state.uiState.settingsUIState.settings,
