@@ -96,32 +96,33 @@ class _ProductSettingsState extends State<ProductSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          FormCard(
-            children: [
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.trackInventory),
-                value: company.trackInventory,
-                subtitle: Text(localization.trackInventoryHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..trackInventory = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.stockNotifications),
-                value: company.stockNotification,
-                subtitle: Text(localization.stockNotificationsHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..stockNotification = value)),
-              ),
-              if (company.trackInventory && company.stockNotification)
-                DecoratedFormField(
-                  keyboardType: TextInputType.number,
-                  controller: _stockThresholdController,
-                  label: localization.notificationThreshold,
+          if (false)
+            FormCard(
+              children: [
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.trackInventory),
+                  value: company.trackInventory,
+                  subtitle: Text(localization.trackInventoryHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..trackInventory = value)),
                 ),
-            ],
-          ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.stockNotifications),
+                  value: company.stockNotification,
+                  subtitle: Text(localization.stockNotificationsHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..stockNotification = value)),
+                ),
+                if (company.trackInventory && company.stockNotification)
+                  DecoratedFormField(
+                    keyboardType: TextInputType.number,
+                    controller: _stockThresholdController,
+                    label: localization.notificationThreshold,
+                  ),
+              ],
+            ),
           FormCard(
             children: <Widget>[
               SwitchListTile(
