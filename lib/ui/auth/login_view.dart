@@ -633,7 +633,7 @@ class _LoginState extends State<LoginView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  if (!_createAccount && _emailLogin)
+                  if (!_createAccount)
                     InkWell(
                       onTap: () {
                         setState(() {
