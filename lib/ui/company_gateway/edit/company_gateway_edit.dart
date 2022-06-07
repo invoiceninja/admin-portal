@@ -83,6 +83,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void dispose() {
     _controller.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
