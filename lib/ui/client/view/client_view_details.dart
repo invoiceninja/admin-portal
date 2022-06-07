@@ -3,16 +3,14 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -61,26 +59,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
       contacts.forEach((contact) {
         listTiles.add(AppListTile(
-          buttons: [
-            Expanded(
-                child: OutlinedButton(
-              child: Text(localization.viewPortal.toUpperCase()),
-              onPressed: () {
-                launch(
-                    '${contact.silentLink}&client_hash=${client.clientHash}');
-              },
-            )),
-            SizedBox(width: kTableColumnGap),
-            Expanded(
-                child: OutlinedButton(
-              child: Text(localization.copyLink.toUpperCase()),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: contact.link));
-                showToast(
-                    localization.copiedToClipboard.replaceFirst(':value ', ''));
-              },
-            )),
-          ],
+          buttonRow: PortalLinks(
+            viewLink: contact.silentLink,
+            copyLink: contact.link,
+            client: client,
+          ),
           icon: Icons.email,
           title: contact.fullName.isEmpty
               ? localization.blankContact

@@ -17,7 +17,7 @@ class AppListTile extends StatelessWidget {
     this.dense = false,
     this.onTap,
     this.copyValue,
-    this.buttons,
+    this.buttonRow,
   });
 
   final IconData icon;
@@ -26,7 +26,7 @@ class AppListTile extends StatelessWidget {
   final bool dense;
   final Function onTap;
   final String copyValue;
-  final List<Widget> buttons;
+  final Widget buttonRow;
 
   void _onLongPress(BuildContext context) {
     if ((copyValue ?? title ?? '').isEmpty) {
@@ -47,18 +47,16 @@ class AppListTile extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
         leading: Icon(icon),
         title: Text(title),
-        subtitle: buttons != null || subtitle != null
+        subtitle: buttonRow != null || subtitle != null
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (subtitle != null) Text(subtitle),
-                  if (buttons != null)
+                  if (buttonRow != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: Row(
-                        children: buttons,
-                      ),
+                      child: buttonRow,
                     )
                 ],
               )
