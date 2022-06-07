@@ -89,7 +89,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     localization.details,
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 8),
                   if (client.idNumber.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
@@ -169,7 +169,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   localization.address,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
                   Row(
                     children: [
@@ -239,7 +239,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   localization.contacts,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 ...client.contacts.map((contact) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
