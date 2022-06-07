@@ -180,7 +180,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 2,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
             child: ListView(
