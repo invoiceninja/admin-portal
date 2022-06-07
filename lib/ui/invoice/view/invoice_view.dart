@@ -200,7 +200,7 @@ class _InvoiceViewState extends State<InvoiceView>
                 ),
                 BottomButtons(
                   entity: invoice,
-                  action1: invoice.isPaid
+                  action1: invoice.isPaid || !invoice.isInvoice
                       ? EntityAction.viewPdf
                       : EntityAction.newPayment,
                   action2: secondAction,
