@@ -619,7 +619,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final isSelected = uiState.filterEntityType != null &&
             prefState.isViewerFullScreen(uiState.filterEntityType) &&
-            uiState.isList
+            (prefState.isPreviewVisible || uiState.isList)
         ? widget.entityType == uiState.filterEntityType
         : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');
 
