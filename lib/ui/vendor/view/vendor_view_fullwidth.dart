@@ -81,7 +81,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   localization.details,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 if (vendor.idNumber.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),
@@ -144,7 +144,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   localization.address,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
                   Row(
                     children: [
@@ -180,7 +180,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 2,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
             child: ListView(
@@ -190,7 +191,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   localization.contacts,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 ...vendor.contacts.map((contact) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

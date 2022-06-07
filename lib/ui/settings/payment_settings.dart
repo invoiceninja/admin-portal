@@ -79,7 +79,9 @@ class _PaymentSettingsState extends State<PaymentSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final settings = viewModel.settings;
+    final company = viewModel.company;
 
     return EditScaffold(
       title: localization.paymentSettings,
@@ -127,6 +129,14 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   ),
                 ]),
             SizedBox(height: 16),
+            if (!state.uiState.settingsUIState.isFiltered)
+              BoolDropdownButton(
+                label: localization.enableApplyingPayments,
+                value: company.enableApplyingPayments,
+                helpLabel: localization.enableApplyingPaymentsHelp,
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableApplyingPayments = value)),
+              ),
             BoolDropdownButton(
               label: localization.allowOverPayment,
               value: settings.clientPortalAllowOverPayment,

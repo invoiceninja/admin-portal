@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -9,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
@@ -89,7 +88,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     localization.details,
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 8),
                   if (client.idNumber.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
@@ -169,7 +168,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   localization.address,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
                   Row(
                     children: [
@@ -229,7 +228,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding / 2,
+                right: kMobileDialogPadding /
+                    (state.prefState.isPreviewVisible ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
             child: ListView(
@@ -239,7 +239,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   localization.contacts,
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 ...client.contacts.map((contact) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,37 +267,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                           ),
                         ),
                       SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () => launch(
-                                    '${contact.silentLink}&client_hash=${client.clientHash}'),
-                                child: Text(
-                                  localization.clientPortal,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                          SizedBox(width: 4),
-                          Flexible(
-                            child: OutlinedButton(
-                                onPressed: () {
-                                  final url =
-                                      '${contact.link}&client_hash=${client.clientHash}';
-                                  Clipboard.setData(ClipboardData(text: url));
-                                  showToast(localization.copiedToClipboard
-                                      .replaceFirst(':value ', ''));
-                                },
-                                child: Text(
-                                  localization.copyLink,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                )),
-                          ),
-                        ],
+                      PortalLinks(
+                        viewLink: contact.silentLink,
+                        copyLink: contact.link,
+                        client: client,
                       ),
                       SizedBox(height: 16),
                     ],

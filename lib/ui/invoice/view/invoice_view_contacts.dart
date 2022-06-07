@@ -1,13 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -115,29 +112,10 @@ class _InvitationListTile extends StatelessWidget {
               ),
             ),
           SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                  child: OutlinedButton(
-                child: Text(localization.viewPortal.toUpperCase()),
-                onPressed: () {
-                  launch(
-                      '${invitation.silentLink}&client_hash=${client.clientHash}',
-                      forceWebView: false,
-                      forceSafariVC: false);
-                },
-              )),
-              SizedBox(width: kTableColumnGap),
-              Expanded(
-                  child: OutlinedButton(
-                child: Text(localization.copyLink.toUpperCase()),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: invitation.link));
-                  showToast(localization.copiedToClipboard
-                      .replaceFirst(':value ', ''));
-                },
-              )),
-            ],
+          PortalLinks(
+            viewLink: invitation.silentLink,
+            copyLink: invitation.link,
+            client: client,
           )
         ],
       ),

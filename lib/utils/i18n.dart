@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_applying_payments': 'Enable Applying Payments',
+      'enable_applying_payments_help':
+          'Support separately creating and applying payments',
       'payment_settings': 'Payment Settings',
       'default': 'Default',
       'stock_quantity': 'Stock Quantity',
@@ -70587,6 +70590,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get paymentSettings =>
       _localizedValues[localeCode]['payment_settings'] ??
       _localizedValues['en']['payment_settings'];
+
+  String get enableApplyingPayments =>
+      _localizedValues[localeCode]['enable_applying_payments'] ??
+      _localizedValues['en']['enable_applying_payments'];
+
+  String get enableApplyingPaymentsHelp =>
+      _localizedValues[localeCode]['enable_applying_payments_help'] ??
+      _localizedValues['en']['enable_applying_payments_help'];
 
   // STARTER: lang field - do not remove comment
 

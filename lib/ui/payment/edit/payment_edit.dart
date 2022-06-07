@@ -230,14 +230,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                DecoratedFormField(
-                  controller: _amountController,
-                  autocorrect: false,
-                  keyboardType: TextInputType.numberWithOptions(
-                      decimal: true, signed: true),
-                  label: amountPlaceholder,
-                  onSavePressed: viewModel.onSavePressed,
-                ),
+                if (state.company.enableApplyingPayments)
+                  DecoratedFormField(
+                    controller: _amountController,
+                    autocorrect: false,
+                    keyboardType: TextInputType.numberWithOptions(
+                        decimal: true, signed: true),
+                    label: amountPlaceholder,
+                    onSavePressed: viewModel.onSavePressed,
+                  ),
               ] else
                 DecoratedFormField(
                   controller: _numberController,

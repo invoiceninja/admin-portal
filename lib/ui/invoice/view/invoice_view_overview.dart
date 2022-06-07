@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -112,6 +113,18 @@ class InvoiceOverview extends StatelessWidget {
       ),
       ListDivider(),
     ];
+
+    widgets.addAll([
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: PortalLinks(
+          viewLink: invoice.invitationSilentLink,
+          copyLink: invoice.invitationLink,
+          client: client,
+        ),
+      ),
+      ListDivider(),
+    ]);
 
     if ((invoice.privateNotes ?? '').isNotEmpty) {
       widgets.addAll([

@@ -112,7 +112,7 @@ class EntityHeader extends StatelessWidget {
             ),
             Padding(
               padding: statusLabel != null || !entity.isActive
-                  ? const EdgeInsets.only(top: 25, bottom: 5)
+                  ? const EdgeInsets.only(top: 25)
                   : const EdgeInsets.all(0),
               child: Row(
                 children: [

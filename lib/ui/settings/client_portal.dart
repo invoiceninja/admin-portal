@@ -136,6 +136,7 @@ class _ClientPortalState extends State<ClientPortal>
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
@@ -47,6 +48,7 @@ class ClientOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String, String>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
+    final contact = client.primaryContact;
     final user =
         client.hasUser ? state.userState.get(client.assignedUserId) : null;
 
@@ -125,6 +127,15 @@ class ClientOverview extends StatelessWidget {
           secondLabel: localization.balanceDue,
           secondValue:
               formatNumber(client.balance, context, clientId: client.id),
+        ),
+        ListDivider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: PortalLinks(
+            viewLink: contact.silentLink,
+            copyLink: contact.link,
+            client: client,
+          ),
         ),
         ListDivider(),
         if ((client.privateNotes ?? '').isNotEmpty) ...[

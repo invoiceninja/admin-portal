@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class BottomButtons extends StatelessWidget {
@@ -52,14 +53,19 @@ class BottomButtons extends StatelessWidget {
                         handleEntityAction(entity, action1);
                       }
                     : null,
-                child: Center(
-                  child: Text(
-                    localization.lookup('$action1'),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: textColor.withOpacity(
-                            action1Enabled && !entity.isDeleted ? 1 : .5)),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(getEntityActionIcon(action1)),
+                    SizedBox(width: 12),
+                    Text(
+                      localization.lookup('$action1'),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: textColor.withOpacity(
+                              action1Enabled && !entity.isDeleted ? 1 : .5)),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -72,14 +78,19 @@ class BottomButtons extends StatelessWidget {
                           handleEntityAction(entity, action2);
                         }
                       : null,
-                  child: Center(
-                    child: Text(
-                      localization.lookup('$action2'),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: textColor.withOpacity(
-                              action2Enabled && !entity.isDeleted ? 1 : .6)),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(getEntityActionIcon(action2)),
+                      SizedBox(width: 12),
+                      Text(
+                        localization.lookup('$action2'),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: textColor.withOpacity(
+                                action2Enabled && !entity.isDeleted ? 1 : .6)),
+                      ),
+                    ],
                   ),
                 ),
               ),

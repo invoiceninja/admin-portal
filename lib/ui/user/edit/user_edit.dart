@@ -95,6 +95,7 @@ class _UserEditState extends State<UserEdit>
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controller.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
