@@ -91,7 +91,6 @@ class MenuDrawerVM {
 
         checkForChanges(
             store: store,
-            context: context,
             callback: () {
               store.dispatch(ClearEntityFilter());
               store.dispatch(DiscardChanges());

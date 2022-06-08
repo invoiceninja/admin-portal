@@ -54,13 +54,11 @@ class SubscriptionListItem extends StatelessWidget {
               ? subscriptionUIState.editing.id
               : subscriptionUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: subscription, context: context),
+        onTap: () =>
+            onTap != null ? onTap() : selectEntity(entity: subscription),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(
-                entity: subscription, context: context, longPress: true),
+            : selectEntity(entity: subscription, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

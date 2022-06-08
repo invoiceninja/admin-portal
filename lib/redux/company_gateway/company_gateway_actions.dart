@@ -277,7 +277,7 @@ void handleCompanyGatewayAction(BuildContext context,
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: companyGateway);
+      editEntity(entity: companyGateway);
       break;
     case EntityAction.restore:
       final message = companyGatewayIds.length > 1

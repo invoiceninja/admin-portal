@@ -280,7 +280,7 @@ void handleTaskStatusAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: taskStatus);
+      editEntity(entity: taskStatus);
       break;
     case EntityAction.restore:
       final message = taskStatusIds.length > 1

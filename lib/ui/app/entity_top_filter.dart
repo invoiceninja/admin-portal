@@ -99,8 +99,7 @@ class EntityTopFilter extends StatelessWidget {
                                   isFilterVisible: !prefState.isFilterVisible));
                             },
                             onLongPress: () {
-                              editEntity(
-                                  context: context, entity: filterEntity);
+                              editEntity(entity: filterEntity);
                             },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,7 +327,7 @@ class EntityTopFilterHeader extends StatelessWidget {
                       isFilterVisible: !prefState.isFilterVisible));
                 },
                 onLongPress: () {
-                  editEntity(context: context, entity: filterEntity);
+                  editEntity(entity: filterEntity);
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

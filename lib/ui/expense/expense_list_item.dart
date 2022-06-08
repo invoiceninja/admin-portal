@@ -90,14 +90,10 @@ class ExpenseListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(
-                        entity: expense,
-                        context: context,
-                      ),
-                onLongPress: () => selectEntity(
-                    entity: expense, context: context, longPress: true),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: expense),
+                onLongPress: () =>
+                    selectEntity(entity: expense, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -186,14 +182,10 @@ class ExpenseListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(
-                        entity: expense,
-                        context: context,
-                      ),
-                onLongPress: () => selectEntity(
-                    entity: expense, context: context, longPress: true),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: expense),
+                onLongPress: () =>
+                    selectEntity(entity: expense, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

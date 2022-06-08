@@ -109,7 +109,6 @@ class TaskViewVM {
       onFabPressed: (BuildContext context) => _toggleTask(context),
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
         editEntity(
-            context: context,
             entity: task,
             subIndex: task.getTaskTimes().indexOf(taskTime),
             completer: snackBarCompleter<ClientEntity>(

@@ -11,7 +11,6 @@ import 'package:redux/redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
@@ -163,9 +162,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
 
                 if (state.prefState.isEditorFullScreen(EntityType.expense) &&
                     state.prefState.editAfterSaving) {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedRecurringExpense);
+                  editEntity(entity: savedRecurringExpense);
                 }
               }
 

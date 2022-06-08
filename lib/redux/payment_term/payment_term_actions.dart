@@ -262,7 +262,7 @@ void handlePaymentTermAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: paymentTerm);
+      editEntity(entity: paymentTerm);
       break;
     case EntityAction.restore:
       final message = paymentTermIds.length > 1

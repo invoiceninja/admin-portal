@@ -51,12 +51,10 @@ class TaxRateListItem extends StatelessWidget {
       entity: taxRate,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: taxRate, context: context),
+        onTap: () => onTap != null ? onTap() : selectEntity(entity: taxRate),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(entity: taxRate, context: context, longPress: true),
+            : selectEntity(entity: taxRate, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

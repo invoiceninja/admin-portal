@@ -511,7 +511,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: invoice);
+      editEntity(entity: invoice);
       break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfInvoice(invoice: invoice, context: context));
@@ -583,9 +583,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(
-                        context: context,
-                        entity: state.clientState.get(invoice.clientId));
+                    editEntity(entity: state.clientState.get(invoice.clientId));
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

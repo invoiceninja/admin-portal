@@ -358,7 +358,7 @@ void handleRecurringExpenseAction(BuildContext context,
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: recurringExpense);
+      editEntity(entity: recurringExpense);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringExpensesRequest(

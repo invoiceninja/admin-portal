@@ -173,9 +173,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
 
                 if (state.prefState.isEditorFullScreen(EntityType.expense) &&
                     state.prefState.editAfterSaving) {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedExpense);
+                  editEntity(entity: savedExpense);
                 }
               }
 

@@ -68,12 +68,10 @@ class QuoteListItem extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => selectEntity(
-                      entity: quote,
-                      context: context,
-                      forceView: !showCheckbox),
-                  onLongPress: () => selectEntity(
-                      entity: quote, context: context, longPress: true),
+                  onTap: () =>
+                      selectEntity(entity: quote, forceView: !showCheckbox),
+                  onLongPress: () =>
+                      selectEntity(entity: quote, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -163,12 +161,10 @@ class QuoteListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => selectEntity(
-                      entity: quote,
-                      context: context,
-                      forceView: !showCheckbox),
-                  onLongPress: () => selectEntity(
-                      entity: quote, context: context, longPress: true),
+                  onTap: () =>
+                      selectEntity(entity: quote, forceView: !showCheckbox),
+                  onLongPress: () =>
+                      selectEntity(entity: quote, longPress: true),
                   leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

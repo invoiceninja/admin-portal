@@ -272,7 +272,7 @@ void handleProductAction(
       );
       break;
     case EntityAction.edit:
-      editEntity(context: context, entity: product);
+      editEntity(entity: product);
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: (product as ProductEntity).clone);

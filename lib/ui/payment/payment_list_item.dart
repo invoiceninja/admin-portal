@@ -72,12 +72,10 @@ class PaymentListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => selectEntity(
-                    entity: payment,
-                    context: context,
-                    forceView: !showCheckbox),
-                onLongPress: () => selectEntity(
-                    entity: payment, context: context, longPress: true),
+                onTap: () =>
+                    selectEntity(entity: payment, forceView: !showCheckbox),
+                onLongPress: () =>
+                    selectEntity(entity: payment, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -159,12 +157,10 @@ class PaymentListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => selectEntity(
-                    entity: payment,
-                    context: context,
-                    forceView: !showCheckbox),
-                onLongPress: () => selectEntity(
-                    entity: payment, context: context, longPress: true),
+                onTap: () =>
+                    selectEntity(entity: payment, forceView: !showCheckbox),
+                onLongPress: () =>
+                    selectEntity(entity: payment, longPress: true),
                 leading: isInMultiselect
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

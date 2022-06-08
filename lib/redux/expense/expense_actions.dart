@@ -261,7 +261,7 @@ void handleExpenseAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: expense);
+      editEntity(entity: expense);
       break;
     case EntityAction.clone:
     case EntityAction.cloneToExpense:

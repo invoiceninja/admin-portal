@@ -77,11 +77,10 @@ class RecurringInvoiceListItem extends StatelessWidget {
               ? InkWell(
                   onTap: () => selectEntity(
                     entity: invoice,
-                    context: context,
                     forceView: !showCheckbox,
                   ),
-                  onLongPress: () => selectEntity(
-                      entity: invoice, context: context, longPress: true),
+                  onLongPress: () =>
+                      selectEntity(entity: invoice, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -171,12 +170,10 @@ class RecurringInvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => selectEntity(
-                      entity: invoice,
-                      context: context,
-                      forceView: !showCheckbox),
-                  onLongPress: () => selectEntity(
-                      entity: invoice, context: context, longPress: true),
+                  onTap: () =>
+                      selectEntity(entity: invoice, forceView: !showCheckbox),
+                  onLongPress: () =>
+                      selectEntity(entity: invoice, longPress: true),
                   leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

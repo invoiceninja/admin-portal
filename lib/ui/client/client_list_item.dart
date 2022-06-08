@@ -60,13 +60,11 @@ class ClientListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: client, context: context),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: client),
                 onLongPress: () => onLongPress != null
                     ? onLongPress()
-                    : selectEntity(
-                        entity: client, context: context, longPress: true),
+                    : selectEntity(entity: client, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -148,13 +146,11 @@ class ClientListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: client, context: context),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: client),
                 onLongPress: () => onLongPress != null
                     ? onLongPress()
-                    : selectEntity(
-                        entity: client, context: context, longPress: true),
+                    : selectEntity(entity: client, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

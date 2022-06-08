@@ -50,12 +50,10 @@ class DesignListItem extends StatelessWidget {
       entity: design,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: design, context: context),
+        onTap: () => onTap != null ? onTap() : selectEntity(entity: design),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(entity: design, context: context, longPress: true),
+            : selectEntity(entity: design, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

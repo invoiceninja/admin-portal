@@ -322,7 +322,7 @@ void handleClientAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: client);
+      editEntity(entity: client);
       break;
     case EntityAction.viewStatement:
       store.dispatch(ShowPdfClient(client: client, context: context));

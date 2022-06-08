@@ -276,7 +276,7 @@ void handleDocumentAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: document);
+      editEntity(entity: document);
       break;
     case EntityAction.restore:
       final message = documentIds.length > 1

@@ -54,13 +54,10 @@ class TaskStatusListItem extends StatelessWidget {
               ? taskStatusUIState.editing.id
               : taskStatusUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: taskStatus, context: context),
+        onTap: () => onTap != null ? onTap() : selectEntity(entity: taskStatus),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(
-                entity: taskStatus, context: context, longPress: true),
+            : selectEntity(entity: taskStatus, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

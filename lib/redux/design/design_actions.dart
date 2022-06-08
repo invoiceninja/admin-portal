@@ -259,7 +259,7 @@ void handleDesignAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: design);
+      editEntity(entity: design);
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: design.clone);

@@ -54,13 +54,11 @@ class ExpenseCategoryListItem extends StatelessWidget {
               ? expenseCategoryUIState.editing.id
               : expenseCategoryUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: expenseCategory, context: context),
+        onTap: () =>
+            onTap != null ? onTap() : selectEntity(entity: expenseCategory),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(
-                entity: expenseCategory, context: context, longPress: true),
+            : selectEntity(entity: expenseCategory, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

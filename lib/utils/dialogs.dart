@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -550,10 +549,9 @@ void addToInvoiceDialog({
               onPressed: () {
                 Navigator.of(context).pop();
                 editEntity(
-                    context: navigatorKey.currentContext,
                     entity: invoice.rebuild(
-                      (b) => b..lineItems.addAll(items),
-                    ));
+                  (b) => b..lineItems.addAll(items),
+                ));
               },
             );
           }).toList(),

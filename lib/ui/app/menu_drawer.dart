@@ -1131,7 +1131,7 @@ void _showConnectStripe(BuildContext context) {
             Navigator.of(context).pop();
             final store = StoreProvider.of<AppState>(context);
             final gateway = getUnconnectedStripeAccount(store.state);
-            editEntity(context: context, entity: gateway);
+            editEntity(entity: gateway);
           },
         ),
       ]);

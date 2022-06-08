@@ -265,7 +265,7 @@ void handleWebhookAction(
       showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(context: context, entity: webhook);
+      editEntity(entity: webhook);
       break;
     case EntityAction.restore:
       final message = webhookIds.length > 1

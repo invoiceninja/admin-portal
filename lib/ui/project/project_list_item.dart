@@ -64,13 +64,11 @@ class ProjectListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: project, context: context),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: project),
                 onLongPress: () => onLongPress != null
                     ? onLongPress()
-                    : selectEntity(
-                        entity: project, context: context, longPress: true),
+                    : selectEntity(entity: project, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -160,13 +158,11 @@ class ProjectListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: project, context: context),
+                onTap: () =>
+                    onTap != null ? onTap() : selectEntity(entity: project),
                 onLongPress: () => onLongPress != null
                     ? onLongPress()
-                    : selectEntity(
-                        entity: project, context: context, longPress: true),
+                    : selectEntity(entity: project, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

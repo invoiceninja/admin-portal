@@ -106,7 +106,6 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
       client: client,
       onEditPressed: (BuildContext context, [int index]) {
         editEntity(
-            context: context,
             entity: invoice,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(

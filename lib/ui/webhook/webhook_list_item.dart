@@ -56,12 +56,10 @@ class WebhookListItem extends StatelessWidget {
               ? webhookUIState.editing.id
               : webhookUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: webhook, context: context),
+        onTap: () => onTap != null ? onTap() : selectEntity(entity: webhook),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(entity: webhook, context: context, longPress: true),
+            : selectEntity(entity: webhook, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
