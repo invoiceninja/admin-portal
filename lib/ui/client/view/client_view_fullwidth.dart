@@ -188,11 +188,15 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                       SizedBox(width: 8),
                       IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(billingAddress));
-                          },
-                          icon: Icon(Icons.map))
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(billingAddress));
+                        },
+                        icon: Icon(Icons.map),
+                        tooltip: state.prefState.enableTooltips
+                            ? localization.viewMap
+                            : '',
+                      )
                     ],
                   ),
                   SizedBox(height: 8),

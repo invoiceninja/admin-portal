@@ -58,7 +58,7 @@ class PortalLinks extends StatelessWidget {
           IconButton(
             onPressed: copyLinkPressed,
             icon: Icon(Icons.copy),
-            tooltip: prefState.enableTooltips ? localization.copy : '',
+            tooltip: prefState.enableTooltips ? localization.copyLink : '',
           ),
         ],
       );
