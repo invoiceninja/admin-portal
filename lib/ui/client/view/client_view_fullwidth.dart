@@ -271,6 +271,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         viewLink: contact.silentLink,
                         copyLink: contact.link,
                         client: client,
+                        useIcons: true,
                       ),
                       SizedBox(height: 16),
                     ],
