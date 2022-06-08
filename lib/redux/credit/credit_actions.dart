@@ -464,7 +464,7 @@ Future handleCreditAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: credit);
+      editEntity(entity: credit);
       break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfCredit(credit: credit, context: context));
@@ -497,9 +497,7 @@ Future handleCreditAction(
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(
-                        context: context,
-                        entity: state.clientState.get(credit.clientId));
+                    editEntity(entity: state.clientState.get(credit.clientId));
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

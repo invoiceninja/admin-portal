@@ -105,7 +105,6 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
       client: client,
       onEditPressed: (BuildContext context, [int index]) {
         editEntity(
-            context: context,
             entity: quote,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(

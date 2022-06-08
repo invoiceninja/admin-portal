@@ -285,7 +285,7 @@ void handleSubscriptionAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: subscription);
+      editEntity(entity: subscription);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSubscriptionsRequest(

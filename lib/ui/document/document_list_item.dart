@@ -55,12 +55,10 @@ class DocumentListItem extends StatelessWidget {
       userCompany: userCompany,
       entity: document,
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: document, context: context),
+        onTap: () => onTap != null ? onTap() : selectEntity(entity: document),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(entity: document, context: context, longPress: true),
+            : selectEntity(entity: document, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

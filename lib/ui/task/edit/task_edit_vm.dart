@@ -134,8 +134,7 @@ class TaskEditVM {
 
                 if (state.prefState.isEditorFullScreen(EntityType.task) &&
                     state.prefState.editAfterSaving) {
-                  editEntity(
-                      context: navigatorKey.currentContext, entity: savedTask);
+                  editEntity(entity: savedTask);
                 }
               }
 

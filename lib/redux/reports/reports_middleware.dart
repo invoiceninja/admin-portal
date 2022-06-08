@@ -26,7 +26,6 @@ Middleware<AppState> _viewReports() {
 
     checkForChanges(
         store: store,
-        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           const route = ReportsScreen.route;

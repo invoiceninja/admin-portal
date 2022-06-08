@@ -487,7 +487,7 @@ Future handleQuoteAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: quote);
+      editEntity(entity: quote);
       break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfQuote(quote: quote, context: context));
@@ -536,9 +536,7 @@ Future handleQuoteAction(
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(
-                        context: context,
-                        entity: state.clientState.get(quote.clientId));
+                    editEntity(entity: state.clientState.get(quote.clientId));
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

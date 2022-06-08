@@ -361,7 +361,7 @@ void handleTaskAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: task);
+      editEntity(entity: task);
       break;
     case EntityAction.start:
     case EntityAction.resume:

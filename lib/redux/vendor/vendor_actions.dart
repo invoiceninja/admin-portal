@@ -286,7 +286,7 @@ void handleVendorAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: vendor);
+      editEntity(entity: vendor);
       break;
     case EntityAction.newExpense:
       createEntity(

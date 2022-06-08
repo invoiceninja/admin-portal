@@ -227,7 +227,7 @@ void handleTaxRateAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: taxRate);
+      editEntity(entity: taxRate);
       break;
     case EntityAction.restore:
       final message = taxRateIds.length > 1

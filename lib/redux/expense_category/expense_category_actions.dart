@@ -280,7 +280,7 @@ void handleExpenseCategoryAction(BuildContext context,
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: expenseCategory);
+      editEntity(entity: expenseCategory);
       break;
     case EntityAction.restore:
       final message = expenseCategoryIds.length > 1

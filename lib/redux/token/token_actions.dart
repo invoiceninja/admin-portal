@@ -275,7 +275,7 @@ void handleTokenAction(
       showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(context: context, entity: token);
+      editEntity(entity: token);
       break;
     case EntityAction.restore:
       final message = tokenIds.length > 1

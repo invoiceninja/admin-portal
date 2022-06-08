@@ -54,7 +54,7 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
           }
         },
         onLongPress: () {
-          editEntity(context: context, entity: widget.entity);
+          editEntity(entity: widget.entity);
         },
       ),
     );

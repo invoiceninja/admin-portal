@@ -547,12 +547,11 @@ void addToInvoiceDialog({
                 ),
               ]),
               onPressed: () {
-                editEntity(
-                    context: context,
-                    entity: invoice.rebuild(
-                      (b) => b..lineItems.addAll(items),
-                    ));
                 Navigator.of(context).pop();
+                editEntity(
+                    entity: invoice.rebuild(
+                  (b) => b..lineItems.addAll(items),
+                ));
               },
             );
           }).toList(),

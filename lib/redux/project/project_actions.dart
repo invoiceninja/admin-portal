@@ -263,7 +263,7 @@ void handleProjectAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: project);
+      editEntity(entity: project);
       break;
     case EntityAction.newTask:
       createEntity(

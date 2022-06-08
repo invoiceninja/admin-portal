@@ -231,7 +231,7 @@ void handleGroupAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: group);
+      editEntity(entity: group);
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(

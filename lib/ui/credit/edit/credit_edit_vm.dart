@@ -126,9 +126,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
 
                 if (state.prefState.isEditorFullScreen(EntityType.credit) &&
                     state.prefState.editAfterSaving) {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedCredit);
+                  editEntity(entity: savedCredit);
                 }
               }
 

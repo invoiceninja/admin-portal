@@ -346,7 +346,7 @@ void handleUserAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: user);
+      editEntity(entity: user);
       break;
     case EntityAction.newClient:
       createEntity(

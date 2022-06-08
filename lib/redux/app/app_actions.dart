@@ -285,13 +285,13 @@ class FilterCompany implements PersistUI {
 }
 
 void filterByEntity({
-  @required BuildContext context,
   @required BaseEntity entity,
 }) {
   if (entity.isNew) {
     return;
   }
 
+  final context = navigatorKey.currentContext;
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(FilterByEntity(entity: entity));
 }
@@ -306,7 +306,6 @@ void viewEntitiesByType({
 
   checkForChanges(
       store: store,
-      context: navigatorKey.currentContext,
       callback: () {
         if (filterEntity != null) {
           if (uiState.filterEntityType != filterEntity.entityType ||
@@ -447,7 +446,6 @@ void viewEntityById({
 
   checkForChanges(
       store: store,
-      context: navigatorKey.currentContext,
       force: force,
       callback: () {
         if (addToStack) {
@@ -670,7 +668,6 @@ void createEntityByType({
 
   checkForChanges(
       store: store,
-      context: context,
       force: force,
       callback: () {
         if (state.uiState.previewStack.isNotEmpty) {
@@ -914,7 +911,6 @@ void createEntity({
 
   checkForChanges(
       store: store,
-      context: context,
       force: force,
       callback: () {
         if (uiState.previewStack.isNotEmpty) {
@@ -1097,13 +1093,13 @@ void createEntity({
 }
 
 void editEntity({
-  @required BuildContext context,
   @required BaseEntity entity,
   int subIndex,
   bool force = false,
   bool fullScreen = true,
   Completer completer,
 }) {
+  final context = navigatorKey.currentContext;
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -1111,7 +1107,6 @@ void editEntity({
 
   checkForChanges(
       store: store,
-      context: context,
       force: force,
       callback: () {
         if (state.prefState.isDesktop) {
@@ -1413,12 +1408,12 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
 }
 
 void selectEntity({
-  @required BuildContext context,
   @required BaseEntity entity,
   bool longPress = false,
   bool forceView = false,
   BaseEntity filterEntity,
 }) {
+  final context = navigatorKey.currentContext;
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   final state = store.state;
   final uiState = state.uiState;
@@ -1434,7 +1429,7 @@ void selectEntity({
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
     } else {
-      editEntity(context: context, entity: entity);
+      editEntity(entity: entity);
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
@@ -1459,7 +1454,7 @@ void selectEntity({
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else if (state.prefState.tapSelectedToEdit) {
-      editEntity(context: context, entity: entity);
+      editEntity(entity: entity);
     } else if (state.prefState.isModuleTable) {
       store.dispatch(TogglePreviewSidebar());
     }
@@ -1505,14 +1500,10 @@ void inspectEntity({
 
 void checkForChanges({
   @required Store<AppState> store,
-  @required BuildContext context,
   @required Function callback,
   bool force = false,
 }) {
-  if (context == null) {
-    print('WARNING: context is null in hasChanges');
-    return;
-  }
+  final context = navigatorKey.currentContext;
 
   if (force) {
     store.dispatch(DiscardChanges());

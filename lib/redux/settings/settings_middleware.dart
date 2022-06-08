@@ -55,7 +55,6 @@ Middleware<AppState> _viewSettings() {
 
     checkForChanges(
         store: store,
-        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           String route = SettingsScreen.route;

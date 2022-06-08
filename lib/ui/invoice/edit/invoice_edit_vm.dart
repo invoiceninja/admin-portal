@@ -175,9 +175,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
 
                 if (state.prefState.isEditorFullScreen(EntityType.invoice) &&
                     state.prefState.editAfterSaving) {
-                  editEntity(
-                      context: navigatorKey.currentContext,
-                      entity: savedInvoice);
+                  editEntity(entity: savedInvoice);
                 }
               }
 

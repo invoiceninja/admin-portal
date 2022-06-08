@@ -55,7 +55,7 @@ class CompanyGatewayListItem extends StatelessWidget {
       entity: companyGateway,
       isSelected: false,
       child: ListTile(
-        onTap: () => selectEntity(entity: companyGateway, context: context),
+        onTap: () => selectEntity(entity: companyGateway),
         trailing: onRemovePressed == null
             ? null
             : Padding(

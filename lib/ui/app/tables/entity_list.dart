@@ -87,8 +87,7 @@ class _EntityListState extends State<EntityList> {
       entityList: entityList.toList(),
       entityMap: entityMap,
       entityPresenter: widget.presenter,
-      onTap: (BaseEntity entity) =>
-          selectEntity(entity: entity, context: context),
+      onTap: (BaseEntity entity) => selectEntity(entity: entity),
     );
 
     // make sure the initial page shows the selected record

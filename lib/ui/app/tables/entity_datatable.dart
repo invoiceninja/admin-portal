@@ -117,7 +117,7 @@ class EntityDataTableSource extends AppDataTableSource {
                   tooltip: prefState.enableTooltips
                       ? AppLocalization.of(context).editRecord
                       : null,
-                  onPressed: () => editEntity(context: context, entity: entity),
+                  onPressed: () => editEntity(entity: entity),
                   icon: GestureDetector(
                     child: Icon(MdiIcons.circleEditOutline),
                     onLongPress: () => handleEntityAction(

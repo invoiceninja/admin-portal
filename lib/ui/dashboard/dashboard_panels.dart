@@ -449,8 +449,7 @@ class DashboardPanels extends StatelessWidget {
                         ),
                         onTap: () =>
                             viewEntity(entity: task, filterEntity: client),
-                        onLongPress: () =>
-                            editEntity(context: context, entity: task),
+                        onLongPress: () => editEntity(entity: task),
                         leading: ActionMenuButton(
                           entity: task,
                           entityActions: task.getActions(

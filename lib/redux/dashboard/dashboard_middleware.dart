@@ -26,7 +26,6 @@ Middleware<AppState> _createViewDashboard() {
 
     checkForChanges(
         store: store,
-        context: navigatorKey.currentContext,
         force: action.force,
         callback: () {
           if (store.state.isStale) {

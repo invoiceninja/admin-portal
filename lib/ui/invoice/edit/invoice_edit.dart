@@ -94,7 +94,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
             TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  editEntity(context: context, entity: client);
+                  editEntity(entity: client);
                 },
                 child: Text(localization.editClient.toUpperCase()))
           ]);

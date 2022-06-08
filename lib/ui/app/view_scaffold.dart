@@ -128,7 +128,7 @@ class ViewScaffold extends StatelessWidget {
                           onPressed: isDisabled
                               ? null
                               : () {
-                                  editEntity(context: context, entity: entity);
+                                  editEntity(entity: entity);
                                 },
                         );
                       }),

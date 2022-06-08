@@ -325,14 +325,12 @@ void handlePaymentAction(
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(context: context, entity: payment);
+      editEntity(entity: payment);
       break;
     case EntityAction.applyPayment:
       viewEntity(entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        editEntity(
-            context: context,
-            entity: payment.rebuild((b) => b..isApplying = true));
+        editEntity(entity: payment.rebuild((b) => b..isApplying = true));
       });
       break;
     case EntityAction.refundPayment:
