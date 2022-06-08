@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -308,7 +309,7 @@ void handleExpenseAction(
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceExpense) {
           createEntity(
-            context: context,
+            context: navigatorKey.currentContext,
             entity: InvoiceEntity(state: state, client: client).rebuild(
               (b) => b
                 ..lineItems.addAll(items)
