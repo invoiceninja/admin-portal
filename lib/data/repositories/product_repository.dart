@@ -67,8 +67,8 @@ class ProductRepository {
     return productResponse.data.toList();
   }
 
-  Future<ProductEntity> saveData(
-      Credentials credentials, ProductEntity product) async {
+  Future<ProductEntity> saveData(Credentials credentials, ProductEntity product,
+      {bool changedStock = false}) async {
     product = product.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
@@ -78,7 +78,10 @@ class ProductRepository {
           credentials.url + '/products', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/products/${product.id}';
+      var url = credentials.url + '/products/${product.id}';
+      if (changedStock) {
+        url += '?update_in_stock_quantity=true';
+      }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

@@ -60,6 +60,10 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);
 
+    final showStanding = !state.prefState.isPreviewVisible &&
+        !state.uiState.isEditing &&
+        state.prefState.isModuleTable;
+
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
       return Row(
@@ -160,11 +164,15 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       ),
                       SizedBox(width: 8),
                       IconButton(
-                          onPressed: () {
-                            launch('http://maps.google.com/?daddr=' +
-                                Uri.encodeQueryComponent(billingAddress));
-                          },
-                          icon: Icon(Icons.map))
+                        onPressed: () {
+                          launch('http://maps.google.com/?daddr=' +
+                              Uri.encodeQueryComponent(billingAddress));
+                        },
+                        icon: Icon(Icons.map),
+                        tooltip: state.prefState.enableTooltips
+                            ? localization.viewMap
+                            : '',
+                      )
                     ],
                   ),
                   SizedBox(height: 8),
@@ -180,8 +188,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding /
-                    (state.prefState.isPreviewVisible ? 1 : 2),
+                right: kMobileDialogPadding / (!showStanding ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
             child: ListView(
@@ -225,7 +232,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               ],
             ),
           )),
-          if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
+          if (showStanding)
             Expanded(
               flex: 2,
               child: FormCard(
