@@ -13,7 +13,7 @@ class PortalLinks extends StatelessWidget {
     @required this.viewLink,
     @required this.copyLink,
     @required this.client,
-    this.useIcons,
+    this.useIcons = false,
   }) : super(key: key);
 
   final String viewLink;

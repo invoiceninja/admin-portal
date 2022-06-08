@@ -65,6 +65,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final shippingAddress =
         formatAddress(state, object: client, isShipping: true);
 
+    final showStanding = !state.prefState.isPreviewVisible &&
+        !state.uiState.isEditing &&
+        state.prefState.isModuleTable;
+
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
       return Row(
@@ -228,8 +232,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
             crossAxisAlignment: CrossAxisAlignment.start,
             padding: EdgeInsets.only(
                 top: kMobileDialogPadding,
-                right: kMobileDialogPadding /
-                    (state.prefState.isPreviewVisible ? 1 : 2),
+                right: kMobileDialogPadding / (!showStanding ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
             child: ListView(
@@ -280,7 +283,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               ],
             ),
           )),
-          if (!state.prefState.isPreviewVisible && !state.uiState.isEditing)
+          if (showStanding)
             Expanded(
               flex: 2,
               child: FormCard(
