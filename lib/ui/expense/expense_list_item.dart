@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/colors.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -13,7 +14,9 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
@@ -37,6 +40,7 @@ class ExpenseListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
@@ -219,16 +223,36 @@ class ExpenseListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(filterMatch == null ? subtitle : filterMatch,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              color: textColor.withOpacity(kLighterOpacity),
-                            )),
-                    EntityStateLabel(expense),
+                subtitle: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(filterMatch == null ? subtitle : filterMatch,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color:
+                                        textColor.withOpacity(kLighterOpacity),
+                                  )),
+                          EntityStateLabel(expense),
+                        ],
+                      ),
+                    ),
+                    Text(
+                        localization.lookup(
+                            kExpenseStatuses[expense.calculatedStatusId]),
+                        style: TextStyle(
+                            color: category.color.isNotEmpty &&
+                                    category.color != '#fff'
+                                ? convertHexStringToColor(category.color)
+                                : ExpenseStatusColors(
+                                        state.prefState.colorThemeModel)
+                                    .colors[expense.calculatedStatusId])),
                   ],
                 ),
               );
