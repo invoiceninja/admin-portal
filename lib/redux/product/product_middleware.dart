@@ -176,8 +176,17 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
 Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProductRequest;
+
+    final product = action.product;
+    final origProduct = store.state.productState.get(product.id);
+    final changedStock = product.stockQuantity != origProduct.stockQuantity;
+
     repository
-        .saveData(store.state.credentials, action.product)
+        .saveData(
+      store.state.credentials,
+      product,
+      changedStock: changedStock,
+    )
         .then((ProductEntity product) {
       if (action.product.isNew) {
         store.dispatch(AddProductSuccess(product));
