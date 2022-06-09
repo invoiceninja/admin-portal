@@ -228,20 +228,24 @@ class _UserDetailsState extends State<UserDetails>
                                   ? localization.disconnectGoogle
                                   : localization.connectGoogle)
                               .toUpperCase()),
-                          onPressed: () {
-                            if (state.settingsUIState.isChanged) {
-                              showMessageDialog(
-                                  context: context,
-                                  message: localization.errorUnsavedChanges);
-                              return;
-                            }
+                          onPressed: state.user.isConnectedToGmail
+                              ? null
+                              : () {
+                                  if (state.settingsUIState.isChanged) {
+                                    showMessageDialog(
+                                        context: context,
+                                        message:
+                                            localization.errorUnsavedChanges);
+                                    return;
+                                  }
 
-                            if (state.user.isConnectedToGoogle) {
-                              viewModel.onDisconnectGooglePressed(context);
-                            } else {
-                              viewModel.onConnectGooglePressed(context);
-                            }
-                          },
+                                  if (state.user.isConnectedToGoogle) {
+                                    viewModel
+                                        .onDisconnectGooglePressed(context);
+                                  } else {
+                                    viewModel.onConnectGooglePressed(context);
+                                  }
+                                },
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
