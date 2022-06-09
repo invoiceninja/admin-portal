@@ -12,13 +12,13 @@ class InvoiceStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kInvoiceStatusDraft: _colorTheme.colorDarkGray,
+      kInvoiceStatusDraft: _colorTheme.colorGray,
       kInvoiceStatusSent: _colorTheme.colorInfo,
       kInvoiceStatusPartial: _colorTheme.colorPrimary,
       kInvoiceStatusPaid: _colorTheme.colorSuccess,
       kInvoiceStatusPastDue: _colorTheme.colorDanger,
-      kInvoiceStatusCancelled: _colorTheme.colorLightGray,
-      kInvoiceStatusReversed: _colorTheme.colorLightGray,
+      kInvoiceStatusCancelled: _colorTheme.colorGray,
+      kInvoiceStatusReversed: _colorTheme.colorGray,
       kInvoiceStatusViewed: _colorTheme.colorWarning,
     };
   }
@@ -31,11 +31,11 @@ class RecurringInvoiceStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kRecurringInvoiceStatusDraft: _colorTheme.colorDarkGray,
+      kRecurringInvoiceStatusDraft: _colorTheme.colorGray,
       kRecurringInvoiceStatusActive: _colorTheme.colorSuccess,
-      kRecurringInvoiceStatusPaused: _colorTheme.colorLightGray,
+      kRecurringInvoiceStatusPaused: _colorTheme.colorGray,
       kRecurringInvoiceStatusCompleted: _colorTheme.colorSuccess,
-      kRecurringInvoiceStatusPending: _colorTheme.colorLightGray,
+      kRecurringInvoiceStatusPending: _colorTheme.colorGray,
     };
   }
 }
@@ -47,7 +47,7 @@ class CreditStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kCreditStatusDraft: _colorTheme.colorDarkGray,
+      kCreditStatusDraft: _colorTheme.colorGray,
       kCreditStatusSent: _colorTheme.colorInfo,
       kCreditStatusPartial: _colorTheme.colorPrimary,
       kCreditStatusApplied: _colorTheme.colorSuccess,
@@ -62,7 +62,7 @@ class QuoteStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kQuoteStatusDraft: _colorTheme.colorDarkGray,
+      kQuoteStatusDraft: _colorTheme.colorGray,
       kQuoteStatusSent: _colorTheme.colorInfo,
       kQuoteStatusApproved: _colorTheme.colorPrimary,
       kQuoteStatusConverted: _colorTheme.colorSuccess,
@@ -79,14 +79,14 @@ class PaymentStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kPaymentStatusPending: _colorTheme.colorDarkGray,
-      kPaymentStatusCancelled: _colorTheme.colorLightGray,
+      kPaymentStatusPending: _colorTheme.colorGray,
+      kPaymentStatusCancelled: _colorTheme.colorGray,
       kPaymentStatusFailed: _colorTheme.colorDanger,
       kPaymentStatusCompleted: _colorTheme.colorSuccess,
       kPaymentStatusPartiallyRefunded: _colorTheme.colorPrimary,
-      kPaymentStatusRefunded: _colorTheme.colorLightGray,
-      kPaymentStatusUnapplied: _colorTheme.colorDarkGray,
-      kPaymentStatusPartiallyUnapplied: _colorTheme.colorDarkGray,
+      kPaymentStatusRefunded: _colorTheme.colorGray,
+      kPaymentStatusUnapplied: _colorTheme.colorGray,
+      kPaymentStatusPartiallyUnapplied: _colorTheme.colorGray,
     };
   }
 }
@@ -98,7 +98,7 @@ class ExpenseStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kExpenseStatusLogged: _colorTheme.colorDarkGray,
+      kExpenseStatusLogged: _colorTheme.colorGray,
       kExpenseStatusPending: _colorTheme.colorPrimary,
       kExpenseStatusInvoiced: _colorTheme.colorSuccess,
     };
@@ -112,7 +112,7 @@ class TaskStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kTaskStatusLogged: _colorTheme.colorDarkGray,
+      kTaskStatusLogged: _colorTheme.colorGray,
       kTaskStatusRunning: _colorTheme.colorPrimary,
       kTaskStatusInvoiced: _colorTheme.colorSuccess,
     };
