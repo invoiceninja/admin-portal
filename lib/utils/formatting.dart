@@ -322,7 +322,7 @@ DateTime convertSqlDateToDateTime([String date]) {
 }
 
 DateTime convertTimestampToDate(int timestamp) =>
-    DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000);
+    DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000, isUtc: true);
 
 String convertTimestampToDateString(int timestamp) =>
     convertTimestampToDate(timestamp).toIso8601String();
@@ -442,7 +442,8 @@ String formatDate(String value, BuildContext context,
                   : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
-    final parsed = DateTime.tryParse(value);
+    final parsed = DateTime.tryParse(value.endsWith('Z') ? value : value + 'Z');
+
     return parsed == null ? '' : formatter.format(parsed.toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;

@@ -315,9 +315,17 @@ class EntityTopFilterHeader extends StatelessWidget {
                 Icons.clear,
                 color: state.headerTextColor,
               ),
-              onPressed: () => store.dispatch(
-                FilterByEntity(entity: uiState.filterEntity),
-              ),
+              onPressed: () {
+                final entityType = uiState.filterEntityType;
+                if (entityType.hasFullWidthViewer &&
+                    state.prefState.isViewerFullScreen(entityType)) {
+                  viewEntitiesByType(entityType: entityType);
+                } else {
+                  store.dispatch(
+                    FilterByEntity(entity: uiState.filterEntity),
+                  );
+                }
+              },
             ),
             SizedBox(width: 4),
             if (!prefState.isFilterVisible)

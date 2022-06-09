@@ -212,10 +212,14 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ),
             ],
           ),
-          ScrollableListView(
-            children: <Widget>[
-              FormCard(children: <Widget>[
-                if (companyGateway.gatewayId != kGatewayCustom)
+          if (companyGateway.gatewayId == kGatewayCustom)
+            Center(
+              child: HelpText(localization.noPaymentTypesEnabled),
+            )
+          else
+            ScrollableListView(
+              children: <Widget>[
+                FormCard(children: <Widget>[
                   DecoratedFormField(
                     label: localization.label,
                     initialValue: companyGateway.label,
@@ -223,131 +227,133 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         companyGateway.rebuild((b) => b..label = value.trim())),
                     keyboardType: TextInputType.text,
                   ),
-                if (state.staticState.gatewayMap[companyGateway.gatewayId]
-                        ?.supportsTokenBilling ==
-                    true)
-                  AppDropdownButton<String>(
-                    labelText: localization.captureCard,
-                    value: companyGateway.tokenBilling,
-                    onChanged: (dynamic value) => viewModel.onChanged(
-                        companyGateway.rebuild((b) => b..tokenBilling = value)),
-                    items: [
-                      CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                      CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                      CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                      CompanyGatewayEntity.TOKEN_BILLING_OFF
-                    ]
-                        .map((value) => DropdownMenuItem(
-                              child: Text(localization.lookup(value)),
-                              value: value,
-                            ))
-                        .toList(),
-                  ),
-                SizedBox(height: 16),
-                for (var gatewayTypeId in gateway?.options?.keys ?? <String>[])
-                  SwitchListTile(
-                      title: Text(localization
-                          .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      value: companyGateway
-                          .getSettingsForGatewayTypeId(gatewayTypeId)
-                          .isEnabled,
-                      onChanged: (value) {
-                        final settings = companyGateway
-                            .getSettingsForGatewayTypeId(gatewayTypeId);
-                        viewModel.onChanged(companyGateway.rebuild((b) => b
-                          ..feesAndLimitsMap[gatewayTypeId] =
-                              settings.rebuild((b) => b..isEnabled = value)));
-                      }),
-              ]),
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, top: 16, bottom: 16),
-                    child: Text(
-                      localization.requiredFields,
-                      style: Theme.of(context).textTheme.headline6,
+                  if (state.staticState.gatewayMap[companyGateway.gatewayId]
+                          ?.supportsTokenBilling ==
+                      true)
+                    AppDropdownButton<String>(
+                      labelText: localization.captureCard,
+                      value: companyGateway.tokenBilling,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          companyGateway
+                              .rebuild((b) => b..tokenBilling = value)),
+                      items: [
+                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                        CompanyGatewayEntity.TOKEN_BILLING_OFF
+                      ]
+                          .map((value) => DropdownMenuItem(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList(),
                     ),
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.clientName),
-                    value: companyGateway.requireClientName,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireClientName = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.clientPhone),
-                    value: companyGateway.requireClientPhone,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireClientPhone = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.contactName),
-                    value: companyGateway.requireContactName,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireContactName = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.contactEmail),
-                    value: companyGateway.requireContactEmail,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireContactEmail = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.postalCode),
-                    value: companyGateway.requirePostalCode,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requirePostalCode = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.cvv),
-                    value: companyGateway.requireCvv,
-                    onChanged: (value) => viewModel.onChanged(
-                        companyGateway.rebuild((b) => b..requireCvv = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.billingAddress),
-                    value: companyGateway.requireBillingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireBillingAddress = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
-                  CheckboxListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.shippingAddress),
-                    value: companyGateway.requireShippingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..requireShippingAddress = value)),
-                    controlAffinity: ListTileControlAffinity.leading,
-                  ),
                   SizedBox(height: 16),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.updateAddress),
-                    subtitle: Text(localization.updateAddressHelp),
-                    value: companyGateway.updateDetails,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..updateDetails = value)),
-                  ),
-                ],
-              ),
-              // TODO enable once supported in backend
-              /*
+                  for (var gatewayTypeId
+                      in gateway?.options?.keys ?? <String>[])
+                    SwitchListTile(
+                        title: Text(localization
+                            .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        value: companyGateway
+                            .getSettingsForGatewayTypeId(gatewayTypeId)
+                            .isEnabled,
+                        onChanged: (value) {
+                          final settings = companyGateway
+                              .getSettingsForGatewayTypeId(gatewayTypeId);
+                          viewModel.onChanged(companyGateway.rebuild((b) => b
+                            ..feesAndLimitsMap[gatewayTypeId] =
+                                settings.rebuild((b) => b..isEnabled = value)));
+                        }),
+                ]),
+                FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                      child: Text(
+                        localization.requiredFields,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.clientName),
+                      value: companyGateway.requireClientName,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireClientName = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.clientPhone),
+                      value: companyGateway.requireClientPhone,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireClientPhone = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.contactName),
+                      value: companyGateway.requireContactName,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireContactName = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.contactEmail),
+                      value: companyGateway.requireContactEmail,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireContactEmail = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.postalCode),
+                      value: companyGateway.requirePostalCode,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requirePostalCode = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.cvv),
+                      value: companyGateway.requireCvv,
+                      onChanged: (value) => viewModel.onChanged(
+                          companyGateway.rebuild((b) => b..requireCvv = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.billingAddress),
+                      value: companyGateway.requireBillingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireBillingAddress = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    CheckboxListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.shippingAddress),
+                      value: companyGateway.requireShippingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..requireShippingAddress = value)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.updateAddress),
+                      subtitle: Text(localization.updateAddressHelp),
+                      value: companyGateway.updateDetails,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..updateDetails = value)),
+                    ),
+                  ],
+                ),
+                // TODO enable once supported in backend
+                /*
               if (gateway?.isOffsite != true)
                 FormCard(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,8 +394,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   ],
                 )
                 */
-            ],
-          ),
+              ],
+            ),
           if (enabledGatewayIds.isEmpty)
             Center(
               child: HelpText(localization.noPaymentTypesEnabled),
