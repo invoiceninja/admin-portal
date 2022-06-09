@@ -15,7 +15,9 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'company_model.g.dart';
@@ -720,13 +722,41 @@ abstract class GatewayEntity extends Object
 
     filter = filter.toLowerCase();
 
-    return name.toLowerCase().contains(filter);
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    final gatewayIds = options.keys.toList();
+    final localization = AppLocalization.of(navigatorKey.currentContext);
+
+    for (var i = 0; i < gatewayIds.length; i++) {
+      final gatewayTypeId = gatewayIds[i];
+      final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
+
+      if (gatewayType.toLowerCase().contains(filter)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   @override
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    final gatewayIds = options.keys.toList();
+    final localization = AppLocalization.of(navigatorKey.currentContext);
+
+    for (var i = 0; i < gatewayIds.length; i++) {
+      final gatewayTypeId = gatewayIds[i];
+      final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
+
+      if (gatewayType.toLowerCase().contains(filter)) {
+        return gatewayType;
+      }
     }
 
     return null;
