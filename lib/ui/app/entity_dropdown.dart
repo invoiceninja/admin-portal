@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -357,6 +358,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                     constraints: BoxConstraints(maxHeight: 270),
                     child: ScrollableListViewBuilder(
                       itemCount: options.length,
+                      separatorBuilder: (context, index) => ListDivider(),
                       itemBuilder: (BuildContext context, int index) {
                         return Builder(builder: (BuildContext context) {
                           final highlightedIndex =
