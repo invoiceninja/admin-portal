@@ -61,9 +61,10 @@ class _InvoiceViewState extends State<InvoiceView>
     }
 
     _controller = TabController(
-        vsync: this,
-        length: invoice.isRecurring ? 6 : 5,
-        initialIndex: widget.isFilter ? 0 : tabIndex);
+      vsync: this,
+      length: 5,
+      initialIndex: widget.isFilter ? 0 : tabIndex,
+    );
     _controller.addListener(_onTabChanged);
   }
 
@@ -139,7 +140,7 @@ class _InvoiceViewState extends State<InvoiceView>
                   ? localization.documents
                   : '${localization.documents} (${documents.length})'),
           if (invoice.isRecurring) Tab(text: localization.schedule),
-          Tab(text: localization.history),
+          if (!invoice.isRecurring) Tab(text: localization.history),
           Tab(text: localization.activity),
         ],
       ),
@@ -183,12 +184,13 @@ class _InvoiceViewState extends State<InvoiceView>
                             key: ValueKey(viewModel.invoice.id),
                           ),
                         ),
-                      RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: InvoiceViewHistory(
-                            viewModel: viewModel,
-                            key: ValueKey(viewModel.invoice.id)),
-                      ),
+                      if (!invoice.isRecurring)
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: InvoiceViewHistory(
+                              viewModel: viewModel,
+                              key: ValueKey(viewModel.invoice.id)),
+                        ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewActivity(
