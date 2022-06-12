@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'login_url': 'Login URL',
       'enable_applying_payments': 'Enable Applying Payments',
       'enable_applying_payments_help':
           'Support separately creating and applying payments',
@@ -70598,6 +70599,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableApplyingPaymentsHelp =>
       _localizedValues[localeCode]['enable_applying_payments_help'] ??
       _localizedValues['en']['enable_applying_payments_help'];
+
+
+  String get loginUrl =>
+      _localizedValues[localeCode]['login_url'] ??
+      _localizedValues['en']['login_url'];
+
 
   // STARTER: lang field - do not remove comment
 

@@ -135,7 +135,7 @@ String localeSelector(AppState state, {bool twoLetter = false}) {
   }
 }
 
-String portalRegistrationUrlSelector(AppState state) {
+String clientPortalUrlSelector(AppState state, {String route = 'login'}) {
   String url;
 
   final account = state.account;
@@ -151,7 +151,7 @@ String portalRegistrationUrlSelector(AppState state) {
     }
   }
 
-  url += '/client/register';
+  url += '/client/$route';
 
   if (state.companies.length > 1 && company.id != account.defaultCompanyId) {
     url += '/' + company.companyKey;
