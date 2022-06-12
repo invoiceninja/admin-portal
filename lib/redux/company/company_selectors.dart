@@ -153,7 +153,9 @@ String clientPortalUrlSelector(AppState state, {String route = 'login'}) {
 
   url += '/client/$route';
 
-  if (state.companies.length > 1 && company.id != account.defaultCompanyId) {
+  if (state.isSelfHosted &&
+      state.companies.length > 1 &&
+      company.id != account.defaultCompanyId) {
     url += '/' + company.companyKey;
   }
 
