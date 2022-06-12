@@ -236,9 +236,8 @@ class _ClientPortalState extends State<ClientPortal>
     final state = viewModel.state;
     final company = viewModel.company;
     final settings = viewModel.settings;
-    final registrationUrl = portalRegistrationUrlSelector(state);
-    final portalUrl =
-        kAppProductionUrl.replaceFirst('//', '//${state.company.subdomain}.');
+    final loginUrl = clientPortalUrlSelector(state);
+    final registrationUrl = clientPortalUrlSelector(state, route: 'register');
 
     return EditScaffold(
       title: localization.clientPortal,
@@ -331,10 +330,6 @@ class _ClientPortalState extends State<ClientPortal>
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(portalUrl),
-                      ),
                     ] else ...[
                       DecoratedFormField(
                         enabled: state.isEnterprisePlan,
@@ -373,6 +368,21 @@ class _ClientPortalState extends State<ClientPortal>
                       else
                         Text(localization.requiresAnEnterprisePlan)
                     ],
+                    SizedBox(height: 16),
+                    ListTile(
+                      title: Text(localization.loginUrl),
+                      subtitle: Text(
+                        loginUrl,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Icon(Icons.content_copy),
+                      onTap: () {
+                        Clipboard.setData(ClipboardData(text: loginUrl));
+                        showToast(localization.copiedToClipboard
+                            .replaceFirst(':value ', loginUrl));
+                      },
+                    ),
                   ],
                 ),
               FormCard(
@@ -466,7 +476,6 @@ class _ClientPortalState extends State<ClientPortal>
                     ),
                     if (state.company.clientCanRegister ?? false) ...[
                       SizedBox(height: 16),
-                      ListDivider(),
                       ListTile(
                         title: Text(localization.registrationUrl),
                         subtitle: Text(
@@ -482,7 +491,6 @@ class _ClientPortalState extends State<ClientPortal>
                               .replaceFirst(':value ', registrationUrl));
                         },
                       ),
-                      ListDivider(),
                     ],
                   ],
                 ),
