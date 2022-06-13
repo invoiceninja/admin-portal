@@ -101,6 +101,7 @@ class ExpenseStatusColors {
       kExpenseStatusLogged: _colorTheme.colorGray,
       kExpenseStatusPending: _colorTheme.colorPrimary,
       kExpenseStatusInvoiced: _colorTheme.colorSuccess,
+      kExpenseStatusPaid: _colorTheme.colorInfo,
     };
   }
 }
