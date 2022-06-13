@@ -757,10 +757,13 @@ class _DrawerTileState extends State<DrawerTile> {
           leading: _isHovered && isDesktop(context) && iconWidget != null
               ? iconWidget
               : isLoading
-                  ? SizedBox(
-                      child: CircularProgressIndicator(),
-                      width: 22,
-                      height: 22,
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 22,
+                        height: 22,
+                      ),
                     )
                   : FocusTraversalGroup(
                       descendantsAreTraversable: false,
