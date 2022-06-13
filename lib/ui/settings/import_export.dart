@@ -656,9 +656,15 @@ class _FieldMapper extends StatelessWidget {
     sorted.sort((fieldA, fieldB) {
       final partsA = fieldA.split('.');
       final partsB = fieldB.split('.');
+      if (partsA[0] == partsB[0]) {
+        return localization
+            .lookup(partsA[1])
+            .compareTo(localization.lookup(partsB[1]));
+      }
+
       return localization
-          .lookup(partsA[1])
-          .compareTo(localization.lookup(partsB[1]));
+          .lookup(partsA[0])
+          .compareTo(localization.lookup(partsB[0]));
     });
 
     return Row(
@@ -668,20 +674,6 @@ class _FieldMapper extends StatelessWidget {
         Expanded(
             child: DropdownButtonFormField<String>(
           isExpanded: true,
-          selectedItemBuilder: (BuildContext context) {
-            return [
-              Text(''),
-              ...sorted
-                  .map(
-                    (field) => Text(
-                      localization.lookup(
-                        field.split('.').last.replaceAll('_id', ''),
-                      ),
-                    ),
-                  )
-                  .toList(),
-            ];
-          },
           value: available.contains(mappedTo) ? mappedTo : null,
           validator: (value) => (value ?? '').isNotEmpty &&
                   mapping.values.where((element) => element == value).length > 1
@@ -700,7 +692,7 @@ class _FieldMapper extends StatelessWidget {
                 final fieldType = localization.lookup(field.split('.').first);
                 return DropdownMenuItem<String>(
                   child: Text(
-                    '$fieldLabel - $fieldType',
+                    '$fieldType - $fieldLabel',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
