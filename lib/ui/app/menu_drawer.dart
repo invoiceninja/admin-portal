@@ -689,16 +689,19 @@ class _DrawerTileState extends State<DrawerTile> {
         message: prefState.enableTooltips ? widget.title : '',
         child: ColoredBox(
           color: color,
-          child: InkWell(
-              onTap: onTap,
-              onLongPress: onLongPress,
-              child: SizedBox(
-                height: 40,
-                child: Icon(
-                  widget.icon,
-                  color: textColor,
-                ),
-              )),
+          child: Opacity(
+            opacity: isSelected ? 1 : .8,
+            child: InkWell(
+                onTap: onTap,
+                onLongPress: onLongPress,
+                child: SizedBox(
+                  height: 40,
+                  child: Icon(
+                    widget.icon,
+                    color: textColor,
+                  ),
+                )),
+          ),
         ),
       );
     }
