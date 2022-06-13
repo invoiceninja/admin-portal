@@ -45,6 +45,7 @@ class TaskPresenter extends EntityPresenter {
       TaskFields.customValue3,
       TaskFields.customValue4,
       TaskFields.documents,
+      TaskFields.date,
     ];
   }
 
@@ -85,6 +86,12 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.invoice:
         return Text(
             state.invoiceState.map[task.invoiceId]?.listDisplayName ?? '');
+      case TaskFields.date:
+        final taskTimes = task.getTaskTimes();
+        final taskTime = taskTimes.isEmpty ? null : taskTimes.first;
+        return Text(taskTime == null
+            ? ''
+            : formatDate(taskTime.startDate.toIso8601String(), context));
       case TaskFields.timeLog:
         final notes = <String>[];
         task
