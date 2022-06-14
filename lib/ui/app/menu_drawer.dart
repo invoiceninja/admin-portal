@@ -507,19 +507,18 @@ class MenuDrawer extends StatelessWidget {
                             ),
                             DrawerTile(
                               company: company,
+                              entityType: EntityType.purchaseOrder,
+                              icon: getEntityIcon(EntityType.purchaseOrder),
+                              title: localization.purchaseOrders,
+                            ),
+                            DrawerTile(
+                              company: company,
                               entityType: EntityType.expense,
                               icon: getEntityIcon(EntityType.expense),
                               title: localization.expenses,
                               iconTooltip: localization.newExpense,
                             ),
                             // STARTER: menu - do not remove comment
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.purchaseOrder,
-                              icon: getEntityIcon(EntityType.purchaseOrder),
-                              title: localization.purchaseOrders,
-                            ),
-
                             DrawerTile(
                               company: company,
                               entityType: EntityType.recurringExpense,
