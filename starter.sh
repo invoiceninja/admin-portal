@@ -94,7 +94,7 @@ if [ ${action} = "init" ]; then
         './lib/ui/app/app_search_button.dart'
         './lib/ui/app/dismissible_entity.dart'
         './lib/ui/home/home_screen.dart'
-        './stubs/data/models/stub_model'
+        #'./stubs/data/models/stub_model'
         './stubs/data/repositories/stub_repository'
         './stubs/redux/stub/stub_actions'
         './stubs/redux/stub/stub_reducer'
@@ -294,11 +294,11 @@ else
         if [ "$idx" -eq 0 ]; then
             comment="STARTER: sort default - do not remove comment"
             code="return ${module_camel}A.${element}.compareTo(${module_camel}B.${element});${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
             comment="STARTER: display name - do not remove comment"
             code="return ${element};${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
         fi
 
         if [ "$idx" -eq 1 ]; then
@@ -334,7 +334,7 @@ else
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/data\/models\/${module_snake}_model.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
+    #sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
     code="${Module}Entity,${lineBreak}${Module}ListResponse,${lineBreak}${Module}ItemResponse,${lineBreak}"
@@ -443,7 +443,7 @@ else
 
     comment="STARTER: entity type - do not remove comment"
     code="static const EntityType ${module_camel} = _\$${module_camel};${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
+    #sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
 
     echo "Generating built files.."
     flutter packages pub run build_runner clean
