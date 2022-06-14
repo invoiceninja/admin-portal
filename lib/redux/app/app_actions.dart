@@ -64,6 +64,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 class PersistUI {}
 
@@ -380,6 +381,9 @@ void viewEntitiesByType({
             action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.purchaseOrder:
+            action = ViewPurchaseOrderList();
+            break;
           case EntityType.recurringExpense:
             action = ViewRecurringExpenseList();
             break;
@@ -589,6 +593,13 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.purchaseOrder:
+            store.dispatch(ViewPurchaseOrder(
+              purchaseOrderId: entityId,
+              force: force,
+            ));
+            break;
+
           case EntityType.recurringExpense:
             store.dispatch(ViewRecurringExpense(
               recurringExpenseId: entityId,
@@ -814,6 +825,13 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.purchaseOrder:
+            store.dispatch(EditPurchaseOrder(
+              force: force,
+              purchaseOrder: InvoiceEntity(state: state),
+            ));
+            break;
+
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
               force: force,
@@ -1018,6 +1036,14 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.purchaseOrder:
+            store.dispatch(EditPurchaseOrder(
+              purchaseOrder: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
               recurringExpense: entity,
@@ -1204,6 +1230,11 @@ void editEntity({
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.purchaseOrder:
+            store.dispatch(
+                EditPurchaseOrder(purchaseOrder: entity, completer: completer));
+            break;
+
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
                 recurringExpense: entity, completer: completer));
@@ -1371,6 +1402,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.purchaseOrder:
+      handlePurchaseOrderAction(context, entities, action);
+      break;
+
     case EntityType.recurringExpense:
       handleRecurringExpenseAction(context, entities, action);
       break;

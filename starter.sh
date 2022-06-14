@@ -443,7 +443,7 @@ else
 
     comment="STARTER: entity type - do not remove comment"
     code="static const EntityType ${module_camel} = _\$${module_camel};${lineBreak}"
-    #sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
 
     echo "Generating built files.."
     flutter packages pub run build_runner clean

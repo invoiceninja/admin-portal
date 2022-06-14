@@ -88,6 +88,9 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
 
 part 'app_state.g.dart';
 
@@ -289,6 +292,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.purchaseOrder:
+        return purchaseOrderState.map;
+
       case EntityType.recurringExpense:
         return recurringExpenseState.map;
 
@@ -369,6 +375,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.purchaseOrder:
+        return purchaseOrderState.list;
+
       case EntityType.recurringExpense:
         return recurringExpenseState.list;
 
@@ -438,6 +447,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.purchaseOrder:
+        return purchaseOrderUIState;
+
       case EntityType.recurringExpense:
         return recurringExpenseUIState;
       case EntityType.subscription:
@@ -508,6 +520,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  PurchaseOrderState get purchaseOrderState =>
+      userCompanyState.purchaseOrderState;
+  ListUIState get purchaseOrderListState =>
+      uiState.purchaseOrderUIState.listUIState;
+  PurchaseOrderUIState get purchaseOrderUIState => uiState.purchaseOrderUIState;
+
   RecurringExpenseState get recurringExpenseState =>
       userCompanyState.recurringExpenseState;
   ListUIState get recurringExpenseListState =>
@@ -678,6 +696,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case PurchaseOrderEditScreen.route:
+        return hasPurchaseOrderChanges(
+            purchaseOrderUIState.editing, purchaseOrderState.map);
+
       case RecurringExpenseEditScreen.route:
         return hasRecurringExpenseChanges(
             recurringExpenseUIState.editing, recurringExpenseState.map);

@@ -1,18 +1,16 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class StubListItem extends StatelessWidget {
-  const StubListItem({
+class PurchaseOrderListItem extends StatelessWidget {
+  const PurchaseOrderListItem({
     @required this.user,
-    @required this.stub,
+    @required this.purchaseOrder,
     @required this.filter,
     this.onTap,
     this.onLongPress,
@@ -23,7 +21,7 @@ class StubListItem extends StatelessWidget {
   final UserEntity user;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  final StubEntity stub;
+  final InvoiceEntity purchaseOrder;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
@@ -33,29 +31,29 @@ class StubListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
-    final stubUIState = uiState.stubUIState;
-    final listUIState = stubUIState.listUIState;
+    final purchaseOrderUIState = uiState.purchaseOrderUIState;
+    final listUIState = purchaseOrderUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter.isNotEmpty
-        ? stub.matchesFilterValue(filter)
+        ? purchaseOrder.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
-      entity: stub,
-      isSelected: stub.id ==
-          (uiState.isEditing ? stubUIState.editing.id : stubUIState.selectedId),
+      entity: purchaseOrder,
+      isSelected: purchaseOrder.id ==
+          (uiState.isEditing
+              ? purchaseOrderUIState.editing.id
+              : purchaseOrderUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: stub),
+        onTap: () =>
+            onTap != null ? onTap() : selectEntity(entity: purchaseOrder),
         onLongPress: () => onLongPress != null
             ? onLongPress()
-            : selectEntity(
-                entity: stub, longPress: true),
+            : selectEntity(entity: purchaseOrder, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -73,11 +71,11 @@ class StubListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  stub.name,
+                  purchaseOrder.number,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              Text(formatNumber(stub.listDisplayAmount, context),
+              Text(formatNumber(purchaseOrder.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
@@ -92,7 +90,7 @@ class StubListItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(stub),
+            EntityStateLabel(purchaseOrder),
           ],
         ),
       ),
