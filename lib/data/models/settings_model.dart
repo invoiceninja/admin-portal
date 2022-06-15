@@ -853,10 +853,6 @@ abstract class SettingsEntity
   bool get requirePurchaseOrderSignature;
 
   @nullable
-  @BuiltValueField(wireName: 'purchase_order_public_notes')
-  String get purchaseOrderPublicNotes;
-
-  @nullable
   @BuiltValueField(wireName: 'purchase_order_terms')
   String get purchaseOrderTerms;
 
