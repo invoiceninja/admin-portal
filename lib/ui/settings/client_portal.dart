@@ -557,14 +557,25 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireInvoiceSignature = value)),
                   ),
-                  BoolDropdownButton(
-                    label: localization.requireQuoteSignature,
-                    helpLabel: localization.requireInvoiceSignatureHelp,
-                    value: settings.requireQuoteSignature,
-                    iconData: MdiIcons.signature,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..requireQuoteSignature = value)),
-                  ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    BoolDropdownButton(
+                      label: localization.requireQuoteSignature,
+                      helpLabel: localization.requireInvoiceSignatureHelp,
+                      value: settings.requireQuoteSignature,
+                      iconData: MdiIcons.signature,
+                      onChanged: (value) => viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..requireQuoteSignature = value)),
+                    ),
+                  if (company.isModuleEnabled(EntityType.purchaseOrder))
+                    BoolDropdownButton(
+                      label: localization.requirePurchaseOrderSignature,
+                      helpLabel: localization.requirePurchaseOrderSignatureHelp,
+                      value: settings.requirePurchaseOrderSignature,
+                      iconData: MdiIcons.signature,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..requirePurchaseOrderSignature = value)),
+                    ),
                   BoolDropdownButton(
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,

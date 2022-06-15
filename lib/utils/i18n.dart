@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'require_purchase_order_signature': 'Purchase Order Signature',
+      'require_purchase_order_signature_help':
+          'Require vendor to provide their signature.',
       'purchase_order': 'Purchase Order',
       'purchase_orders': 'Purchase Orders',
       'new_purchase_order': 'New Purchase Order',
@@ -70617,37 +70620,56 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['login_url'] ??
       _localizedValues['en']['login_url'];
 
-  // STARTER: lang field - do not remove comment
   String get purchaseOrder =>
       _localizedValues[localeCode]['purchase_order'] ??
       _localizedValues['en']['purchase_order'];
+
   String get purchaseOrders =>
       _localizedValues[localeCode]['purchase_orders'] ??
       _localizedValues['en']['purchase_orders'];
+
   String get newPurchaseOrder =>
       _localizedValues[localeCode]['new_purchase_order'] ??
       _localizedValues['en']['new_purchase_order'];
+
   String get createdPurchaseOrder =>
       _localizedValues[localeCode]['created_purchase_order'] ??
       _localizedValues['en']['created_purchase_order'];
+
   String get updatedPurchaseOrder =>
       _localizedValues[localeCode]['updated_purchase_order'] ??
       _localizedValues['en']['updated_purchase_order'];
+
   String get archivedPurchaseOrder =>
       _localizedValues[localeCode]['archived_purchase_order'] ??
       _localizedValues['en']['archived_purchase_order'];
+
   String get deletedPurchaseOrder =>
       _localizedValues[localeCode]['deleted_purchase_order'] ??
       _localizedValues['en']['deleted_purchase_order'];
+
   String get restoredPurchaseOrder =>
       _localizedValues[localeCode]['restored_purchase_order'] ??
       _localizedValues['en']['restored_purchase_order'];
+
   String get editPurchaseOrder =>
       _localizedValues[localeCode]['edit_purchase_order'] ??
       _localizedValues['en']['edit_purchase_order'];
+
   String get searchPurchaseOrder =>
       _localizedValues[localeCode]['search_purchase_order'] ??
       _localizedValues['en']['search_purchase_order'];
+
+  String get requirePurchaseOrderSignature =>
+      _localizedValues[localeCode]['require_purchase_order_signature'] ??
+      _localizedValues['en']['require_purchase_order_signature'];
+
+  String get requirePurchaseOrderSignatureHelp =>
+      _localizedValues[localeCode]['require_purchase_order_signature_help'] ??
+      _localizedValues['en']['require_purchase_order_signature_help'];
+
+
+// STARTER: lang field - do not remove comment
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
