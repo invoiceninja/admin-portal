@@ -67,6 +67,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       EntityType.project,
       EntityType.task,
       EntityType.vendor,
+      EntityType.purchaseOrder,
       EntityType.expense,
       EntityType.recurringExpense,
     ].forEach((entityType) {
@@ -143,6 +144,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       settings.projectNumberPattern,
       settings.taskNumberPattern,
       settings.vendorNumberPattern,
+      settings.purchaseOrderNumberPattern,
       settings.expenseNumberPattern,
       settings.recurringExpenseNumberPattern,
     ];
@@ -228,6 +230,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           if (company.isModuleEnabled(EntityType.vendor))
             Tab(
               text: localization.vendors,
+            ),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            Tab(
+              text: localization.purchaseOrders,
             ),
           if (company.isModuleEnabled(EntityType.expense))
             Tab(
@@ -421,6 +427,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                   viewModel.onSettingsChanged(settings.rebuild((b) => b
                     ..vendorNumberCounter = counter
                     ..vendorNumberPattern = pattern)),
+            ),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            EntityNumberSettings(
+              showClientFields: false,
+              counterValue: settings.purchaseOrderNumberCounter,
+              patternValue: settings.purchaseOrderNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..purchaseOrderNumberCounter = counter
+                    ..purchaseOrderNumberPattern = pattern)),
             ),
           if (company.isModuleEnabled(EntityType.expense))
             EntityNumberSettings(
