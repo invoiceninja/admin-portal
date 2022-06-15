@@ -587,6 +587,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           settings.rebuild(
                               (b) => b..defaultCreditDesignId = value.id)),
                     ),
+                  if (company.isModuleEnabled(EntityType.purchaseOrder))
+                    DesignPicker(
+                      label: localization.purchaseOrder,
+                      initialValue: settings.purchaseOrderDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..purchaseOrderDesignId = value.id)),
+                    ),
                 ]),
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
