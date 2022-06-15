@@ -16,18 +16,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'purchase_order': 'PurchaseOrder',
-      'purchase_orders': 'PurchaseOrders',
-      'new_purchase_order': 'New PurchaseOrder',
-      'edit_purchase_order': 'Edit PurchaseOrder',
-      'created_purchase_order': 'Successfully created purchase_order',
-      'updated_purchase_order': 'Successfully updated purchase_order',
-      'archived_purchase_order': 'Successfully archived purchase_order',
-      'deleted_purchase_order': 'Successfully deleted purchase_order',
-      'removed_purchase_order': 'Successfully removed purchase_order',
-      'restored_purchase_order': 'Successfully restored purchase_order',
-      'search_purchase_order': 'Search PurchaseOrder',
-
+      'purchase_order': 'Purchase Order',
+      'purchase_orders': 'Purchase Orders',
+      'new_purchase_order': 'New Purchase Order',
+      'edit_purchase_order': 'Edit Purchase Order',
+      'created_purchase_order': 'Successfully created purchase order',
+      'updated_purchase_order': 'Successfully updated purchase order',
+      'archived_purchase_order': 'Successfully archived purchase order',
+      'deleted_purchase_order': 'Successfully deleted purchase order',
+      'removed_purchase_order': 'Successfully removed purchase order',
+      'restored_purchase_order': 'Successfully restored purchase order',
+      'search_purchase_order': 'Search Purchase Order',
+      'search_purchase_orders': 'Search Purchase Orders',
       'login_url': 'Login URL',
       'enable_applying_payments': 'Enable Applying Payments',
       'enable_applying_payments_help':
