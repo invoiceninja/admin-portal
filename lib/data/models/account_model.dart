@@ -31,6 +31,7 @@ abstract class AccountEntity
       trialStarted: '',
       hostedClientCount: 0,
       hostedCompanyCount: 1,
+      setReactAsDefaultAP: false,
     );
   }
 
@@ -92,6 +93,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'hosted_company_count')
   int get hostedCompanyCount;
 
+  @BuiltValueField(wireName: 'set_react_as_default_ap')
+  bool get setReactAsDefaultAP;
+
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
@@ -116,7 +120,8 @@ abstract class AccountEntity
     ..trialStarted = ''
     ..defaultCompanyId = ''
     ..hostedClientCount = 0
-    ..hostedCompanyCount = 1;
+    ..hostedCompanyCount = 1
+    ..setReactAsDefaultAP = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

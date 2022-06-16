@@ -579,6 +579,10 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
+    if (entityType == EntityType.purchaseOrder) {
+      return false;
+    }
+
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
         enabledModules & kModuleInvoices == 0) {

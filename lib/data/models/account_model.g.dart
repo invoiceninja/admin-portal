@@ -71,6 +71,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'hosted_company_count',
       serializers.serialize(object.hostedCompanyCount,
           specifiedType: const FullType(int)),
+      'set_react_as_default_ap',
+      serializers.serialize(object.setReactAsDefaultAP,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -160,6 +163,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.hostedCompanyCount = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'set_react_as_default_ap':
+          result.setReactAsDefaultAP = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -204,6 +211,8 @@ class _$AccountEntity extends AccountEntity {
   final int hostedClientCount;
   @override
   final int hostedCompanyCount;
+  @override
+  final bool setReactAsDefaultAP;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -226,7 +235,8 @@ class _$AccountEntity extends AccountEntity {
       this.disableAutoUpdate,
       this.defaultCompanyId,
       this.hostedClientCount,
-      this.hostedCompanyCount})
+      this.hostedCompanyCount,
+      this.setReactAsDefaultAP})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -262,6 +272,8 @@ class _$AccountEntity extends AccountEntity {
         hostedClientCount, 'AccountEntity', 'hostedClientCount');
     BuiltValueNullFieldError.checkNotNull(
         hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount');
+    BuiltValueNullFieldError.checkNotNull(
+        setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP');
   }
 
   @override
@@ -292,7 +304,8 @@ class _$AccountEntity extends AccountEntity {
         disableAutoUpdate == other.disableAutoUpdate &&
         defaultCompanyId == other.defaultCompanyId &&
         hostedClientCount == other.hostedClientCount &&
-        hostedCompanyCount == other.hostedCompanyCount;
+        hostedCompanyCount == other.hostedCompanyCount &&
+        setReactAsDefaultAP == other.setReactAsDefaultAP;
   }
 
   int __hashCode;
@@ -316,30 +329,32 @@ class _$AccountEntity extends AccountEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            id
+                                                                            $jc(
+                                                                                0,
+                                                                                id
+                                                                                    .hashCode),
+                                                                            trialPlan
                                                                                 .hashCode),
-                                                                        trialPlan
+                                                                        trialStarted
                                                                             .hashCode),
-                                                                    trialStarted
+                                                                    defaultUrl
                                                                         .hashCode),
-                                                                defaultUrl
+                                                                reportErrors
                                                                     .hashCode),
-                                                            reportErrors
-                                                                .hashCode),
-                                                        plan.hashCode),
-                                                    planExpires.hashCode),
-                                                latestVersion.hashCode),
-                                            currentVersion.hashCode),
-                                        debugEnabled.hashCode),
-                                    isDocker.hashCode),
-                                isMigrated.hashCode),
-                            isHosted.hashCode),
-                        isSchedulerRunning.hashCode),
-                    disableAutoUpdate.hashCode),
-                defaultCompanyId.hashCode),
-            hostedClientCount.hashCode),
-        hostedCompanyCount.hashCode));
+                                                            plan.hashCode),
+                                                        planExpires.hashCode),
+                                                    latestVersion.hashCode),
+                                                currentVersion.hashCode),
+                                            debugEnabled.hashCode),
+                                        isDocker.hashCode),
+                                    isMigrated.hashCode),
+                                isHosted.hashCode),
+                            isSchedulerRunning.hashCode),
+                        disableAutoUpdate.hashCode),
+                    defaultCompanyId.hashCode),
+                hostedClientCount.hashCode),
+            hostedCompanyCount.hashCode),
+        setReactAsDefaultAP.hashCode));
   }
 
   @override
@@ -362,7 +377,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('disableAutoUpdate', disableAutoUpdate)
           ..add('defaultCompanyId', defaultCompanyId)
           ..add('hostedClientCount', hostedClientCount)
-          ..add('hostedCompanyCount', hostedCompanyCount))
+          ..add('hostedCompanyCount', hostedCompanyCount)
+          ..add('setReactAsDefaultAP', setReactAsDefaultAP))
         .toString();
   }
 }
@@ -450,6 +466,11 @@ class AccountEntityBuilder
   set hostedCompanyCount(int hostedCompanyCount) =>
       _$this._hostedCompanyCount = hostedCompanyCount;
 
+  bool _setReactAsDefaultAP;
+  bool get setReactAsDefaultAP => _$this._setReactAsDefaultAP;
+  set setReactAsDefaultAP(bool setReactAsDefaultAP) =>
+      _$this._setReactAsDefaultAP = setReactAsDefaultAP;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -475,6 +496,7 @@ class AccountEntityBuilder
       _defaultCompanyId = $v.defaultCompanyId;
       _hostedClientCount = $v.hostedClientCount;
       _hostedCompanyCount = $v.hostedCompanyCount;
+      _setReactAsDefaultAP = $v.setReactAsDefaultAP;
       _$v = null;
     }
     return this;
@@ -521,7 +543,8 @@ class AccountEntityBuilder
             disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate'),
             defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'),
             hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, 'AccountEntity', 'hostedClientCount'),
-            hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount'));
+            hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount'),
+            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP'));
     replace(_$result);
     return _$result;
   }
