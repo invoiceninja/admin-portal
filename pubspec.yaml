@@ -20,12 +20,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  google_sign_in: ^5.0.7
-  flutter_redux: ^0.8.2
+  google_sign_in: ^5.3.3
+  flutter_redux: ^0.10.0
   redux_logging: ^0.5.0
-  http: ^0.13.3
-  path_provider: ^2.0.2
-  shared_preferences: ^2.0.6
+  http: ^0.13.4
+  path_provider: ^2.0.11
+  shared_preferences: ^2.0.15
   material_design_icons_flutter: ^5.0.6295
   built_value: ^8.1.2
   built_collection: ^5.1.0
