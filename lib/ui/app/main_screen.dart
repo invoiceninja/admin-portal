@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -166,6 +172,12 @@ class MainScreen extends StatelessWidget {
         case CreditScreen.route:
           screen = EntityScreens(
             entityType: EntityType.credit,
+            editingFilterEntity: editingFilterEntity,
+          );
+          break;
+        case PurchaseOrderScreen.route:
+          screen = EntityScreens(
+            entityType: EntityType.purchaseOrder,
             editingFilterEntity: editingFilterEntity,
           );
           break;
@@ -392,6 +404,13 @@ class EntityScreens extends StatelessWidget {
                   ? CreditEmailScreen()
                   : CreditEditScreen();
           break;
+        case PurchaseOrderScreen.route:
+          child = isPdf
+              ? PurchaseOrderPdfScreen()
+              : isEmail
+                  ? PurchaseOrderEmailScreen()
+                  : PurchaseOrderEditScreen();
+          break;
         case RecurringInvoiceScreen.route:
           child = isPdf
               ? RecurringInvoicePdfScreen()
@@ -447,6 +466,9 @@ class EntityScreens extends StatelessWidget {
         case EntityType.credit:
           child = CreditEditScreen();
           break;
+        case EntityType.purchaseOrder:
+          child = PurchaseOrderEditScreen();
+          break;
         case EntityType.project:
           child = ProjectEditScreen();
           break;
@@ -496,6 +518,9 @@ class EntityScreens extends StatelessWidget {
             break;
           case EntityType.credit:
             child = CreditViewScreen();
+            break;
+          case EntityType.purchaseOrder:
+            child = PurchaseOrderViewScreen();
             break;
           case EntityType.project:
             child = ProjectViewScreen();
@@ -561,6 +586,11 @@ class EntityScreens extends StatelessWidget {
             leftFilterChild = editingFilterEntity && !uiState.isEditing
                 ? CreditViewScreen()
                 : CreditViewScreen(isFilter: true);
+            break;
+          case EntityType.purchaseOrder:
+            leftFilterChild = editingFilterEntity && !uiState.isEditing
+                ? PurchaseOrderViewScreen()
+                : PurchaseOrderViewScreen(isFilter: true);
             break;
           case EntityType.payment:
             leftFilterChild = editingFilterEntity && !uiState.isEditing
@@ -649,6 +679,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.credit:
           listWidget = CreditScreenBuilder();
+          break;
+        case EntityType.purchaseOrder:
+          listWidget = PurchaseOrderScreenBuilder();
           break;
         case EntityType.project:
           listWidget = ProjectScreenBuilder();

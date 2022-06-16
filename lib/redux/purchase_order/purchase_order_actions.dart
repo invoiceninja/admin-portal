@@ -194,6 +194,33 @@ class RestorePurchaseOrdersFailure implements StopSaving {
   final List<InvoiceEntity> purchaseOrders;
 }
 
+class EmailPurchaseOrderRequest implements StartSaving {
+  EmailPurchaseOrderRequest(
+      {this.completer,
+      this.purchaseOrderId,
+      this.template,
+      this.subject,
+      this.body});
+
+  final Completer completer;
+  final String purchaseOrderId;
+  final EmailTemplate template;
+  final String subject;
+  final String body;
+}
+
+class EmailPurchaseOrderSuccess implements StopSaving, PersistData {
+  EmailPurchaseOrderSuccess(this.quote);
+
+  final InvoiceEntity quote;
+}
+
+class EmailPurchaseOrderFailure implements StopSaving {
+  EmailPurchaseOrderFailure(this.error);
+
+  final dynamic error;
+}
+
 class FilterPurchaseOrders implements PersistUI {
   FilterPurchaseOrders(this.filter);
 

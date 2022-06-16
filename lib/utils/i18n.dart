@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'emailed_purchase_order': 'Successfully queued purchase order to be sent',
+      'emailed_purchase_orders':
+          'Successfully queued purchase orders to be sent',
       'enable_react_app': 'Change to the React web app',
       'purchase_order_design': 'Purchase Order Design',
       'purchase_order_terms': 'Purchase Order Terms',
@@ -70687,6 +70690,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableReactApp =>
       _localizedValues[localeCode]['enable_react_app'] ??
       _localizedValues['en']['enable_react_app'];
+
+  String get emailedPurchaseOrder =>
+      _localizedValues[localeCode]['emailed_purchase_orderk'] ??
+      _localizedValues['en']['emailed_purchase_order'];
+
+  String get emailedPurchaseOrders =>
+      _localizedValues[localeCode]['emailed_purchase_orders'] ??
+      _localizedValues['en']['emailed_purchase_orders'];
 
 // STARTER: lang field - do not remove comment
 
