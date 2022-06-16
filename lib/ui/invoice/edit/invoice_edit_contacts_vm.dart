@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -83,6 +84,8 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       entity = state.creditUIState.editing;
     } else if (entityType == EntityType.recurringInvoice) {
       entity = state.recurringInvoiceUIState.editing;
+    } else if (entityType == EntityType.purchaseOrder) {
+      entity = state.purchaseOrderUIState.editing;
     } else {
       print(
           'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
@@ -114,6 +117,9 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
         } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(
               AddInvoiceContact(contact: contact, invitation: invitation));
+        } else if (entity.entityType == EntityType.purchaseOrder) {
+          store.dispatch(AddPurchaseOrderContact(
+              contact: contact, invitation: invitation));
         } else {
           print(
               'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
@@ -128,6 +134,8 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
           store.dispatch(RemoveRecurringInvoiceContact(invitation: invitation));
         } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(RemoveInvoiceContact(invitation: invitation));
+        } else if (entity.entityType == EntityType.invoice) {
+          store.dispatch(RemovePurchaseOrderContact(invitation: invitation));
         } else {
           print(
               'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');

@@ -221,6 +221,54 @@ class EmailPurchaseOrderFailure implements StopSaving {
   final dynamic error;
 }
 
+class AddPurchaseOrderContact implements PersistUI {
+  AddPurchaseOrderContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemovePurchaseOrderContact implements PersistUI {
+  RemovePurchaseOrderContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
+class AddPurchaseOrderItem implements PersistUI {
+  AddPurchaseOrderItem({this.purchaseOrderItem});
+
+  final InvoiceItemEntity purchaseOrderItem;
+}
+
+class MovePurchaseOrderItem implements PersistUI {
+  MovePurchaseOrderItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
+class AddPurchaseOrderItems implements PersistUI {
+  AddPurchaseOrderItems(this.lineItems);
+
+  final List<InvoiceItemEntity> lineItems;
+}
+
+class UpdatePurchaseOrderItem implements PersistUI {
+  UpdatePurchaseOrderItem({this.index, this.purchaseOrderItem});
+
+  final int index;
+  final InvoiceItemEntity purchaseOrderItem;
+}
+
+class DeletePurchaseOrderItem implements PersistUI {
+  DeletePurchaseOrderItem(this.index);
+
+  final int index;
+}
+
 class FilterPurchaseOrders implements PersistUI {
   FilterPurchaseOrders(this.filter);
 
