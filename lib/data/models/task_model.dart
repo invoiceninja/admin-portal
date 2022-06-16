@@ -76,6 +76,7 @@ class TaskFields {
   static const String isDeleted = 'is_deleted';
   static const String status = 'status';
   static const String isInvoiced = 'is_invoiced';
+  static const String date = 'date';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
@@ -695,6 +696,7 @@ abstract class TaskEntity extends Object
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
+      case TaskFields.date:
       case TaskFields.timeLog:
         response =
             taskA.timeLog.toLowerCase().compareTo(taskB.timeLog.toLowerCase());

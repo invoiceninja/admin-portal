@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 
 // Package imports:
@@ -442,11 +441,12 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       action.page,
       state.createdAtLimit,
       state.filterDeletedClients,
+      state.recordsPerPage,
     )
         .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
 
-      if (data.length == kRecordsPerPage) {
+      if (data.length == state.recordsPerPage) {
         store.dispatch(LoadInvoices(
           completer: action.completer,
           page: action.page + 1,

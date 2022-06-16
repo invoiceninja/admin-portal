@@ -7,8 +7,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
@@ -91,11 +93,13 @@ class _DatePickerState extends State<DatePicker> {
       firstDate = DateTime(1920, 1);
     }
 
+    final store = StoreProvider.of<AppState>(context);
     final DateTime selectedDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: DateTime(2101),
+      locale: AppLocalization.createLocale(localeSelector(store.state)),
       //initialEntryMode: DatePickerEntryMode.input,
     );
 

@@ -140,6 +140,7 @@ abstract class CompanyEntity extends Object
       subscriptions: BuiltList<SubscriptionEntity>(),
       systemLogs: BuiltList<SystemLogEntity>(),
       clientRegistrationFields: BuiltList<RegistrationFieldEntity>(),
+      purchaseOrders: BuiltList<InvoiceEntity>(),
     );
   }
 
@@ -313,6 +314,9 @@ abstract class CompanyEntity extends Object
   BuiltList<InvoiceEntity> get quotes;
 
   BuiltList<InvoiceEntity> get credits;
+
+  @BuiltValueField(wireName: 'purchase_orders')
+  BuiltList<InvoiceEntity> get purchaseOrders;
 
   BuiltList<TaskEntity> get tasks;
 
@@ -563,6 +567,7 @@ abstract class CompanyEntity extends Object
           ..invoices.clear()
           ..payments.clear()
           ..quotes.clear()
+          ..purchaseOrders.clear()
           ..credits.clear()
           ..tasks.clear()
           ..projects.clear()
@@ -574,6 +579,10 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
+    if (entityType == EntityType.purchaseOrder) {
+      return false;
+    }
+
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
         enabledModules & kModuleInvoices == 0) {
@@ -633,7 +642,8 @@ abstract class CompanyEntity extends Object
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
-    ..clientRegistrationFields.replace(BuiltList<RegistrationFieldEntity>());
+    ..clientRegistrationFields.replace(BuiltList<RegistrationFieldEntity>())
+    ..purchaseOrders.replace(BuiltList<InvoiceEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

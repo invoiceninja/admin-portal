@@ -40,6 +40,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 PrefState prefReducer(
     PrefState state, dynamic action, String selectedCompanyId) {
@@ -529,6 +530,19 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
+  TypedReducer<BuiltList<HistoryRecord>, ViewPurchaseOrder>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.purchaseOrderId,
+              entityType: EntityType.purchaseOrder))),
+  TypedReducer<BuiltList<HistoryRecord>, EditPurchaseOrder>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.purchaseOrder.id,
+              entityType: EntityType.purchaseOrder))),
+
   TypedReducer<BuiltList<HistoryRecord>, ViewRecurringExpense>(
       (historyList, action) => _addToHistory(
           historyList,

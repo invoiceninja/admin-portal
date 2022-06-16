@@ -50,6 +50,7 @@ const EntityType _$document = const EntityType._('document');
 const EntityType _$timezone = const EntityType._('timezone');
 const EntityType _$dateFormat = const EntityType._('dateFormat');
 const EntityType _$font = const EntityType._('font');
+const EntityType _$purchaseOrder = const EntityType._('purchaseOrder');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -141,6 +142,8 @@ EntityType _$typeValueOf(String name) {
       return _$dateFormat;
     case 'font':
       return _$font;
+    case 'purchaseOrder':
+      return _$purchaseOrder;
     default:
       throw new ArgumentError(name);
   }
@@ -192,6 +195,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$timezone,
   _$dateFormat,
   _$font,
+  _$purchaseOrder,
 ]);
 
 const EntityState _$active = const EntityState._('active');

@@ -172,8 +172,12 @@ class _PaymentViewState extends State<PaymentView> {
                 ),
                 BottomButtons(
                   entity: payment,
-                  action1: EntityAction.applyPayment,
-                  action1Enabled: payment.applied < payment.amount,
+                  action1: state.company.enableApplyingPayments
+                      ? EntityAction.applyPayment
+                      : EntityAction.emailPayment,
+                  action1Enabled: state.company.enableApplyingPayments
+                      ? payment.applied < payment.amount
+                      : true,
                   action2: EntityAction.refundPayment,
                   action2Enabled: payment.refunded < payment.amount,
                 ),

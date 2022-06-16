@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -424,10 +423,11 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       action.page,
       state.createdAtLimit,
       state.filterDeletedClients,
+      state.recordsPerPage,
     )
         .then((data) {
       store.dispatch(LoadQuotesSuccess(data));
-      if (data.length == kRecordsPerPage) {
+      if (data.length == state.recordsPerPage) {
         store.dispatch(LoadQuotes(
           completer: action.completer,
           page: action.page + 1,

@@ -63,7 +63,6 @@ class AppTitleBar extends StatelessWidget {
                 onPressed: () {
                   checkForChanges(
                     store: store,
-                    context: context,
                     callback: () {
                       appWindow.close();
                     },

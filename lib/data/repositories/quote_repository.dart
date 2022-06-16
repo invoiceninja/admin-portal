@@ -38,9 +38,9 @@ class QuoteRepository {
   }
 
   Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
-      int createdAt, bool filterDeleted) async {
+      int createdAt, bool filterDeleted, int recordsPerPage) async {
     String url = credentials.url +
-        '/quotes?per_page=$kRecordsPerPage&page=$page&created_at=$createdAt';
+        '/quotes?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';

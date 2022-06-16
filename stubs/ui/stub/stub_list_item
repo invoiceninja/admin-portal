@@ -51,11 +51,11 @@ class StubListItem extends StatelessWidget {
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
-            : selectEntity(entity: stub, context: context),
+            : selectEntity(entity: stub),
         onLongPress: () => onLongPress != null
             ? onLongPress()
             : selectEntity(
-                entity: stub, context: context, longPress: true),
+                entity: stub, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

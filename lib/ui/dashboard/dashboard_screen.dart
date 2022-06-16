@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +9,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -22,9 +27,14 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_sidebar.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_wizard.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -220,6 +230,41 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
         actions: [
+          if (!kReleaseMode ||
+              (kIsWeb && state.isSelfHosted && state.userCompany.isAdmin))
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: IconButton(
+                tooltip: localization.enableReactApp,
+                onPressed: () async {
+                  final credentials = state.credentials;
+                  final account = state.account
+                      .rebuild((b) => b..setReactAsDefaultAP = true);
+                  final url = '${credentials.url}/accounts/${account.id}';
+                  final data = serializers.serializeWith(
+                      AccountEntity.serializer, account);
+
+                  passwordCallback(
+                      context: context,
+                      callback: (password, idToken) async {
+                        store.dispatch(StartSaving());
+                        WebClient()
+                            .put(url, credentials.token,
+                                data: json.encode(data),
+                                password: password,
+                                idToken: idToken)
+                            .then((dynamic _) {
+                          store.dispatch(StopSaving());
+                          WebUtils.reloadBrowser();
+                        }).catchError((Object error) {
+                          store.dispatch(StopSaving());
+                          showErrorDialog(context: context, message: error);
+                        });
+                      });
+                },
+                icon: Icon(MdiIcons.react),
+              ),
+            ),
           if (isMobile(context) || !state.prefState.isHistoryVisible)
             Builder(
               builder: (context) => IconButton(

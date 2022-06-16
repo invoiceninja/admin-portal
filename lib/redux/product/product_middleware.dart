@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -237,11 +236,14 @@ Middleware<AppState> _loadProduct(ProductRepository repository) {
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProducts;
+    final state = store.state;
 
     store.dispatch(LoadProductsRequest());
-    repository.loadList(store.state.credentials, action.page).then((data) {
+    repository
+        .loadList(state.credentials, action.page, state.recordsPerPage)
+        .then((data) {
       store.dispatch(LoadProductsSuccess(data));
-      if (data.length == kRecordsPerPage) {
+      if (data.length == state.recordsPerPage) {
         store.dispatch(LoadProducts(
           completer: action.completer,
           page: action.page + 1,

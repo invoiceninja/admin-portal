@@ -638,6 +638,11 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(compare: false)
   int get loadedAt;
 
+  bool get isPaid =>
+      paymentDate.isNotEmpty ||
+      paymentTypeId.isNotEmpty ||
+      transactionReference.isNotEmpty;
+
   bool isBetween(String startDate, String endDate) {
     return (startDate ?? '').compareTo(date ?? '') <= 0 &&
         (endDate ?? '').compareTo(date ?? '') >= 0;
@@ -787,6 +792,8 @@ abstract class ExpenseEntity extends Object
         return kExpenseStatusInvoiced;
       } else if (shouldBeInvoiced) {
         return kExpenseStatusPending;
+      } else if (isPaid) {
+        return kExpenseStatusPaid;
       } else {
         return kExpenseStatusLogged;
       }

@@ -76,6 +76,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _quoteFooterController = TextEditingController();
   final _creditTermsController = TextEditingController();
   final _creditFooterController = TextEditingController();
+  final _purchaseOrderTermsController = TextEditingController();
+  final _purchaseOrderFooterController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -122,6 +124,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _quoteTermsController,
       _creditFooterController,
       _creditTermsController,
+      _purchaseOrderFooterController,
+      _purchaseOrderTermsController,
     ];
 
     _controllers.forEach(
@@ -151,6 +155,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _quoteFooterController.text = settings.defaultQuoteFooter;
     _creditFooterController.text = settings.defaultCreditFooter;
     _creditTermsController.text = settings.defaultCreditTerms;
+    _purchaseOrderFooterController.text = settings.purchaseOrderFooter;
+    _purchaseOrderTermsController.text = settings.purchaseOrderTerms;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -192,7 +198,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..defaultQuoteFooter = _quoteFooterController.text.trim()
       ..defaultQuoteTerms = _quoteTermsController.text.trim()
       ..defaultCreditFooter = _creditFooterController.text.trim()
-      ..defaultCreditTerms = _creditTermsController.text.trim());
+      ..defaultCreditTerms = _creditTermsController.text.trim()
+      ..purchaseOrderFooter = _purchaseOrderFooterController.text.trim()
+      ..purchaseOrderTerms = _purchaseOrderTermsController.text.trim());
     if (settings != widget.viewModel.settings) {
       _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
@@ -579,6 +587,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           settings.rebuild(
                               (b) => b..defaultCreditDesignId = value.id)),
                     ),
+                  if (company.isModuleEnabled(EntityType.purchaseOrder))
+                    DesignPicker(
+                      label: localization.purchaseOrder,
+                      initialValue: settings.purchaseOrderDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..purchaseOrderDesignId = value.id)),
+                    ),
                 ]),
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -653,6 +669,20 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.creditFooter,
                       controller: _creditFooterController,
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                  ],
+                  if (company.isModuleEnabled(EntityType.purchaseOrder)) ...[
+                    DecoratedFormField(
+                      label: localization.purchaseOrderTerms,
+                      controller: _purchaseOrderTermsController,
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                    ),
+                    DecoratedFormField(
+                      label: localization.purchaseOrderFooter,
+                      controller: _purchaseOrderFooterController,
                       maxLines: 4,
                       keyboardType: TextInputType.multiline,
                     ),

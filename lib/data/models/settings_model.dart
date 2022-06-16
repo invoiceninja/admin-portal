@@ -848,6 +848,30 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'page_numbering_alignment')
   String get pageNumberingAlignment;
 
+  @nullable
+  @BuiltValueField(wireName: 'require_purchase_order_signature')
+  bool get requirePurchaseOrderSignature;
+
+  @nullable
+  @BuiltValueField(wireName: 'purchase_order_terms')
+  String get purchaseOrderTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'purchase_order_design_id')
+  String get purchaseOrderDesignId;
+
+  @nullable
+  @BuiltValueField(wireName: 'purchase_order_footer')
+  String get purchaseOrderFooter;
+
+  @nullable
+  @BuiltValueField(wireName: 'purchase_order_number_pattern')
+  String get purchaseOrderNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'purchase_order_number_counter')
+  int get purchaseOrderNumberCounter;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

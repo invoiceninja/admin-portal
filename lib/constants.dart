@@ -152,7 +152,8 @@ const int kMaxNumberOfHistory = 50;
 const int kMaxPostSeconds = 60;
 const int kMaxRawPostSeconds = 300;
 const int kMaxEntitiesPerBulkAction = 100;
-const int kRecordsPerPage = 20000;
+const int kHostedRecordsPerPage = 20000;
+const int kSelfhostedRecordsPerPage = 5000;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
@@ -584,6 +585,7 @@ const Map<int, String> kModules = {
   kModuleProjects: 'projects',
   kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
+  //kModulePurchaseOrders: 'purchase_orders',
   kModuleExpenses: 'expenses',
   kModuleRecurringExpenses: 'recurring_expenses',
   //kModuleTickets: 'tickets',
