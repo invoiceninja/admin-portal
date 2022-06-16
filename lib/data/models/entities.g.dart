@@ -36,7 +36,6 @@ const EntityType _$subscription = const EntityType._('subscription');
 const EntityType _$webhook = const EntityType._('webhook');
 const EntityType _$token = const EntityType._('token');
 const EntityType _$paymentTerm = const EntityType._('paymentTerm');
-const EntityType _$quoteItem = const EntityType._('quoteItem');
 const EntityType _$contact = const EntityType._('contact');
 const EntityType _$vendorContact = const EntityType._('vendorContact');
 const EntityType _$country = const EntityType._('country');
@@ -114,8 +113,6 @@ EntityType _$typeValueOf(String name) {
       return _$token;
     case 'paymentTerm':
       return _$paymentTerm;
-    case 'quoteItem':
-      return _$quoteItem;
     case 'contact':
       return _$contact;
     case 'vendorContact':
@@ -181,7 +178,6 @@ final BuiltSet<EntityType> _$typeValues =
   _$webhook,
   _$token,
   _$paymentTerm,
-  _$quoteItem,
   _$contact,
   _$vendorContact,
   _$country,
