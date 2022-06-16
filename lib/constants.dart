@@ -249,6 +249,18 @@ const kCreditStatuses = {
   kCreditStatusApplied: 'applied',
 };
 
+const String kPurchaseOrderStatusDraft = '1';
+const String kPurchaseOrderStatusSent = '2';
+const String kPurchaseOrderStatusAccepted = '3';
+const String kPurchaseOrderStatusCancelled = '4';
+
+const kPurchaseOrderStatuses = {
+  kPurchaseOrderStatusDraft: 'draft',
+  kPurchaseOrderStatusSent: 'sent',
+  kPurchaseOrderStatusAccepted: 'accepted',
+  kPurchaseOrderStatusCancelled: 'cancelled',
+};
+
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
