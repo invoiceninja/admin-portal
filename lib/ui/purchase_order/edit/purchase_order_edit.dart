@@ -57,7 +57,7 @@ class _PurchaseOrderEditState extends State<PurchaseOrderEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final purchaseOrder = viewModel.purchaseOrder;
+    final purchaseOrder = viewModel.invoice;
 
     return EditScaffold(
       title: purchaseOrder.isNew

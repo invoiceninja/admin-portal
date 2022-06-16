@@ -699,15 +699,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case PurchaseOrderEditScreen.route:
         return hasPurchaseOrderChanges(
             purchaseOrderUIState.editing, purchaseOrderState.map);
-
       case RecurringExpenseEditScreen.route:
         return hasRecurringExpenseChanges(
             recurringExpenseUIState.editing, recurringExpenseState.map);
-
       case SubscriptionEditScreen.route:
         return hasSubscriptionChanges(
             subscriptionUIState.editing, subscriptionState.map);
-
       case TaskStatusEditScreen.route:
         return hasTaskStatusChanges(
             taskStatusUIState.editing, taskStatusState.map);

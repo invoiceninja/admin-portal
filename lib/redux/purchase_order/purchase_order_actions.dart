@@ -38,6 +38,28 @@ class EditPurchaseOrder implements PersistUI, PersistPrefs {
   final bool force;
 }
 
+class ShowEmailPurchaseOrder {
+  ShowEmailPurchaseOrder({this.purchaseOrder, this.context, this.completer});
+
+  final InvoiceEntity purchaseOrder;
+  final BuildContext context;
+  final Completer completer;
+}
+
+class ShowPdfPurchaseOrder {
+  ShowPdfPurchaseOrder({this.purchaseOrder, this.context, this.activityId});
+
+  final InvoiceEntity purchaseOrder;
+  final BuildContext context;
+  final String activityId;
+}
+
+class EditPurchaseOrderItem implements PersistUI {
+  EditPurchaseOrderItem([this.itemIndex]);
+
+  final int itemIndex;
+}
+
 class UpdatePurchaseOrder implements PersistUI {
   UpdatePurchaseOrder(this.purchaseOrder);
 
@@ -113,10 +135,15 @@ class LoadPurchaseOrdersSuccess implements StopLoading {
 }
 
 class SavePurchaseOrderRequest implements StartSaving {
-  SavePurchaseOrderRequest({this.completer, this.purchaseOrder});
+  SavePurchaseOrderRequest({
+    this.completer,
+    this.purchaseOrder,
+    this.action,
+  });
 
   final Completer completer;
   final InvoiceEntity purchaseOrder;
+  final EntityAction action;
 }
 
 class SavePurchaseOrderSuccess implements StopSaving, PersistData, PersistUI {

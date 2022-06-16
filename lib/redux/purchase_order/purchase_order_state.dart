@@ -72,6 +72,10 @@ abstract class PurchaseOrderUIState extends Object
   @nullable
   InvoiceEntity get editing;
 
+  @nullable
+  @BuiltValueField(serialize: false)
+  int get editingItemIndex;
+
   @override
   bool get isCreatingNew => editing.isNew;
 
