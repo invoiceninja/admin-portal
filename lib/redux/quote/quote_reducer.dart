@@ -151,7 +151,7 @@ InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
-  return action.purchaseOrder;
+  return action.quote;
 }
 
 InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
@@ -367,7 +367,7 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 }
 
 QuoteState _updateQuote(QuoteState invoiceState, dynamic action) {
-  final InvoiceEntity quote = action.purchaseOrder;
+  final InvoiceEntity quote = action.quote;
   return invoiceState.rebuild((b) => b
     ..map[quote.id] = quote
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
