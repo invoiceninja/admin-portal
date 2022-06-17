@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
@@ -859,6 +860,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       RecurringInvoiceScreen.route,
       RecurringExpenseScreen.route,
       TaskScreen.route,
+      PurchaseOrderScreen.route,
     ].contains(mainRoute)) {
       if (isEmail || isPdf) {
         isFullScreen = true;
