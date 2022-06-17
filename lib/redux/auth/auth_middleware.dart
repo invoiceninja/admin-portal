@@ -296,8 +296,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         });
       });
 
-      if (permissionsWereChanged) {
-        store.dispatch(ClearData());
+      if (permissionsWereChanged && !action.clearData) {
         store.dispatch(
             RefreshData(completer: action.completer, clearData: true));
       } else {
