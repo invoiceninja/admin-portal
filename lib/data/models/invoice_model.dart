@@ -906,6 +906,8 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.bulkEmailCredit);
             } else if (entityType == EntityType.invoice) {
               actions.add(EntityAction.bulkEmailInvoice);
+            } else if (entityType == EntityType.purchaseOrder) {
+              actions.add(EntityAction.bulkEmailPurchaseOrder);
             }
           } else {
             if (entityType == EntityType.quote) {
@@ -914,6 +916,8 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.emailCredit);
             } else if (entityType == EntityType.invoice) {
               actions.add(EntityAction.emailInvoice);
+            } else if (entityType == EntityType.purchaseOrder) {
+              actions.add(EntityAction.emailPurchaseOrder);
             } else if (entityType == EntityType.recurringInvoice && isDraft) {
               actions.add(EntityAction.emailInvoice);
             }
