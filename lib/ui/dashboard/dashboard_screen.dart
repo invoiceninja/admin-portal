@@ -35,6 +35,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -233,7 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           if (!kReleaseMode ||
               (kIsWeb && state.isSelfHosted && state.userCompany.isAdmin))
             Padding(
-              padding: const EdgeInsets.only(right: 12),
+              padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                 tooltip: localization.enableReactApp,
                 onPressed: () async {
@@ -264,6 +265,19 @@ class _DashboardScreenState extends State<DashboardScreen>
                 },
                 icon: Icon(MdiIcons.react),
               ),
+            ),
+          if (state.userCompany.isOwner &&
+              state.isSelfHosted &&
+              !isPaidAccount(context) &&
+              !isApple())
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                  tooltip: state.prefState.enableTooltips
+                      ? localization.upgrade
+                      : null,
+                  onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                  icon: Icon(Icons.arrow_circle_up)),
             ),
           if (isMobile(context) || !state.prefState.isHistoryVisible)
             Builder(
