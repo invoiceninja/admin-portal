@@ -396,28 +396,46 @@ class _LoginState extends State<LoginView> {
                         if (!_isSelfHosted &&
                             (!kReleaseMode || !_hideGoogle)) ...[
                           RuledText(localization.selectMethod),
-                          AppToggleButtons(
-                            tabLabels: [
-                              'Google',
-                              'Microsoft',
-                              localization.email,
-                            ],
-                            selectedIndex: _loginType == LOGIN_TYPE_EMAIL
-                                ? 2
-                                : _loginType == LOGIN_TYPE_MICROSOFT
-                                    ? 1
-                                    : 0,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _loginType = index == 2
-                                    ? LOGIN_TYPE_EMAIL
-                                    : index == 1
-                                        ? LOGIN_TYPE_MICROSOFT
-                                        : LOGIN_TYPE_GOOGLE;
-                                _loginError = '';
-                              });
-                            },
-                          ),
+                          if (kIsWeb)
+                            AppToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                'Microsoft',
+                                localization.email,
+                              ],
+                              selectedIndex: _loginType == LOGIN_TYPE_EMAIL
+                                  ? 2
+                                  : _loginType == LOGIN_TYPE_MICROSOFT
+                                      ? 1
+                                      : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _loginType = index == 2
+                                      ? LOGIN_TYPE_EMAIL
+                                      : index == 1
+                                          ? LOGIN_TYPE_MICROSOFT
+                                          : LOGIN_TYPE_GOOGLE;
+                                  _loginError = '';
+                                });
+                              },
+                            )
+                          else
+                            AppToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                localization.email,
+                              ],
+                              selectedIndex:
+                                  _loginType == LOGIN_TYPE_EMAIL ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _loginType = index == 1
+                                      ? LOGIN_TYPE_EMAIL
+                                      : LOGIN_TYPE_GOOGLE;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
