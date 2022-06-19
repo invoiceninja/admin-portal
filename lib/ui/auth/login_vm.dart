@@ -2,12 +2,16 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:aad_oauth/model/config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:aad_oauth/aad_oauth.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -106,6 +110,17 @@ class LoginVM {
   final Function(BuildContext, Completer<Null> completer)
       onMicrosoftSignUpPressed;
 
+  static final Config config = Config(
+    tenant: '3196aaac-9636-4f91-8f04-3297e2654909',
+    clientId: '1023b9ce-5b09-4f04-98f8-e1ed85a72332',
+    scope: 'openid profile offline_access',
+    redirectUri: kIsWeb
+        ? 'http://localhost:8483'
+        : 'https://login.live.com/oauth20_desktop.srf',
+    navigatorKey: navigatorKey,
+  );
+  static final AadOAuth oauth = AadOAuth(config);
+
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
@@ -168,6 +183,7 @@ class LoginVM {
                 url: _formatApiUrl(url),
                 secret: secret.trim(),
                 platform: getPlatform(context),
+                provider: kOAuthProviderGoogle,
                 oneTimePassword: oneTimePassword,
               ));
               completer.future.then((_) => _handleLogin(context: context));
@@ -196,6 +212,7 @@ class LoginVM {
                 completer: completer,
                 idToken: idToken,
                 accessToken: accessToken,
+                provider: kOAuthProviderGoogle,
               ));
               completer.future
                   .then((_) => _handleLogin(context: context, isSignUp: true));
@@ -218,31 +235,20 @@ class LoginVM {
         @required String oneTimePassword,
       }) async {
         try {
-          /*
-          await GoogleOAuth.signOut();
-          final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
-            if (idToken.isEmpty || accessToken.isEmpty) {
-              GoogleOAuth.signOut();
-              completer.completeError(
-                  AppLocalization.of(context).anErrorOccurredTryAgain);
-            } else {
-              store.dispatch(OAuthLoginRequest(
-                completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
-                url: _formatApiUrl(url),
-                secret: secret.trim(),
-                platform: getPlatform(context),
-                oneTimePassword: oneTimePassword,
-              ));
-              completer.future.then((_) => _handleLogin(context: context));
-            }
-          });
-          if (!signedIn) {
-            completer.completeError(
-                AppLocalization.of(context).anErrorOccurredTryAgain);
-          }
-          */
+          await oauth.logout();
+          await oauth.login();
+          final accessToken = await oauth.getAccessToken();
+          store.dispatch(OAuthLoginRequest(
+            completer: completer,
+            idToken: '',
+            accessToken: accessToken,
+            url: _formatApiUrl(url),
+            secret: secret.trim(),
+            platform: getPlatform(context),
+            provider: kOAuthProviderMicrosoft,
+            oneTimePassword: oneTimePassword,
+          ));
+          completer.future.then((_) => _handleLogin(context: context));
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftLoginPressed: $error');

@@ -94,6 +94,9 @@ const String kProductPlanEnterprise5 = 'v1_enterprise_5_yearly';
 const String kProductPlanEnterprise10 = 'v1_enterprise_10_yearly';
 const String kProductPlanEnterprise20 = 'v1_enterprise_20_yearly';
 
+const String kOAuthProviderMicrosoft = 'microsoft';
+const String kOAuthProviderGoogle = 'google';
+
 const kProductPlans = [
   kProductPlanPro,
   kProductPlanEnterprise2,

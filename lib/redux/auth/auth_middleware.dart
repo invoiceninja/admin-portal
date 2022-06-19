@@ -173,6 +173,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
             accessToken: action.accessToken,
             url: action.url,
             secret: action.secret,
+            provider: action.provider,
             platform: action.platform)
         .then((data) {
       _saveAuthLocal(action.url);
