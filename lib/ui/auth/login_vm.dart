@@ -2,16 +2,13 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
 import 'package:msal_js/msal_js.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:aad_oauth/aad_oauth.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -109,16 +106,6 @@ class LoginVM {
       String oneTimePassword}) onMicrosoftLoginPressed;
   final Function(BuildContext, Completer<Null> completer)
       onMicrosoftSignUpPressed;
-
-  static final Config config = Config(
-    tenant: '3196aaac-9636-4f91-8f04-3297e2654909',
-    clientId: '1023b9ce-5b09-4f04-98f8-e1ed85a72332',
-    scope: 'openid profile offline_access',
-    redirectUri: 'https://invoicing.co/auth/microsoft',
-    //redirectUri: kIsWeb ? 'http://localhost:8483' : 'https://login.live.com/oauth20_desktop.srf',
-    navigatorKey: navigatorKey,
-  );
-  static final AadOAuth oauth = AadOAuth(config);
 
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
