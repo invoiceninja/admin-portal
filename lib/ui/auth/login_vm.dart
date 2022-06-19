@@ -257,28 +257,17 @@ class LoginVM {
       onMicrosoftSignUpPressed:
           (BuildContext context, Completer<Null> completer) async {
         try {
-          /*
-          await GoogleOAuth.signOut();
-          final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
-            if (idToken.isEmpty || accessToken.isEmpty) {
-              GoogleOAuth.signOut();
-              completer.completeError(
-                  AppLocalization.of(context).anErrorOccurredTryAgain);
-            } else {
-              store.dispatch(OAuthSignUpRequest(
-                completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
-              ));
-              completer.future
-                  .then((_) => _handleLogin(context: context, isSignUp: true));
-            }
-          });
-          if (!signedIn) {
-            completer.completeError(
-                AppLocalization.of(context).anErrorOccurredTryAgain);
-          }
-          */
+          await oauth.logout();
+          await oauth.login();
+          final accessToken = await oauth.getAccessToken();
+          store.dispatch(OAuthSignUpRequest(
+            completer: completer,
+            idToken: '',
+            provider: kOAuthProviderMicrosoft,
+            accessToken: accessToken,
+          ));
+          completer.future
+              .then((_) => _handleLogin(context: context, isSignUp: true));
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftSignUpPressed: $error');
