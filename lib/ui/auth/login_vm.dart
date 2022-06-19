@@ -4,6 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:aad_oauth/model/config.dart';
 import 'package:flutter/material.dart';
+import 'package:msal_js/msal_js.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -256,6 +257,24 @@ class LoginVM {
       onMicrosoftSignUpPressed:
           (BuildContext context, Completer<Null> completer) async {
         try {
+          final config = Configuration()
+            ..auth = (BrowserAuthOptions()
+              ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
+          final publicClientApp = PublicClientApplication(config);
+          final loginRequest = RedirectRequest()..scopes = ['user.read'];
+          //'openid profile offline_access'
+
+          publicClientApp.loginRedirect(loginRequest);
+
+          final popupRequest = PopupRequest()..scopes = ['user.read'];
+
+          final AuthenticationResult result =
+              await publicClientApp.loginPopup(popupRequest);
+
+          print(
+              '## RESULT: acces: ${result.accessToken}, id: ${result.idToken}');
+
+          /*
           await oauth.logout();
           await oauth.login();
           final accessToken = await oauth.getAccessToken();
@@ -268,6 +287,7 @@ class LoginVM {
           ));
           completer.future
               .then((_) => _handleLogin(context: context, isSignUp: true));
+              */
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftSignUpPressed: $error');

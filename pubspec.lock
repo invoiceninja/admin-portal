@@ -731,6 +731,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  msal_js:
+    dependency: "direct main"
+    description:
+      name: msal_js
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.14.0"
   msix:
     dependency: "direct dev"
     description:
