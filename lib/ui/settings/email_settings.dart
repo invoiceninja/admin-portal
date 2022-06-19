@@ -150,23 +150,25 @@ class _EmailSettingsState extends State<EmailSettings> {
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                BoolDropdownButton(
-                  showBlank: state.uiState.settingsUIState.isFiltered,
-                  label: localization.sendFromGmail,
-                  value: settings.emailSendingMethod == null
-                      ? null
-                      : settings.emailSendingMethod ==
-                          SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
-                  iconData: MdiIcons.gmail,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b
-                        ..emailSendingMethod = (value == null
-                            ? null
-                            : value == true
-                                ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
-                                : SettingsEntity
-                                    .EMAIL_SENDING_METHOD_DEFAULT))),
-                ),
+                AppDropdownButton<String>(
+                    showBlank: state.uiState.settingsUIState.isFiltered,
+                    labelText: localization.emailProvider,
+                    value: settings.emailSendingMethod,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..emailSendingMethod = value));
+                    },
+                    items: [
+                      DropdownMenuItem(
+                          child: Text(localization.defaultWord),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
+                      DropdownMenuItem(
+                          child: Text('Gmail'),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
+                      DropdownMenuItem(
+                          child: Text('Microsoft'),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
+                    ]),
                 if (settings.emailSendingMethod ==
                     SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
                   if (gmailUserIds.isEmpty) ...[

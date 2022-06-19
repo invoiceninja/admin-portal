@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'email_provider': 'Email Provider',
       'connect_microsoft': 'Connect Microsoft',
       'disconnect_microsoft': 'Disconnect Microsoft',
       'connected_microsoft': 'Successfully connected Microsoft',
@@ -70733,6 +70734,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get connectedMicrosoft =>
       _localizedValues[localeCode]['connected_microsoft'] ??
       _localizedValues['en']['connected_microsoft'] ??
+      '';
+
+  String get emailProvider =>
+      _localizedValues[localeCode]['email_provider'] ??
+      _localizedValues['en']['email_provider'] ??
       '';
 
 // STARTER: lang field - do not remove comment

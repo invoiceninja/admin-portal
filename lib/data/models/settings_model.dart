@@ -95,6 +95,7 @@ abstract class SettingsEntity
 
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
+  static const EMAIL_SENDING_METHOD_MICROSOFT = 'microsoft';
 
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_SENT = 'when_sent';
