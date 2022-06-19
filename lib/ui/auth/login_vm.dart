@@ -235,7 +235,7 @@ class LoginVM {
             url: _formatApiUrl(url),
             secret: secret.trim(),
             platform: getPlatform(context),
-            provider: kOAuthProviderMicrosoft,
+            provider: kOAuthProviderpsoft,
             oneTimePassword: oneTimePassword,
           ));
           completer.future.then((_) => _handleLogin(context: context));
