@@ -236,6 +236,7 @@ class LoginVM {
         try {
           final config = Configuration()
             ..auth = (BrowserAuthOptions()
+              ..redirectUri = 'https://invoicing.co/auth/microsoft'
               ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
           final publicClientApp = PublicClientApplication(config);
           final loginRequest = RedirectRequest()..scopes = ['user.read'];
