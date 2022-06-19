@@ -314,6 +314,9 @@ abstract class UserEntity extends Object
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
 
+  bool get isConnectedToMicrosoft =>
+      oauthProvider == UserEntity.OAUTH_PROVIDER_MICROSOFT;
+
   bool get isConnectedToGmail =>
       isConnectedToGoogle && oauthUserToken.isNotEmpty;
 

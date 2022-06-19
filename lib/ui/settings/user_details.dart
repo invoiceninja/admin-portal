@@ -228,7 +228,8 @@ class _UserDetailsState extends State<UserDetails>
                                   ? localization.disconnectGoogle
                                   : localization.connectGoogle)
                               .toUpperCase()),
-                          onPressed: state.user.isConnectedToGmail
+                          onPressed: state.user.isConnectedToGmail ||
+                                  state.user.isConnectedToMicrosoft
                               ? null
                               : () {
                                   if (state.settingsUIState.isChanged) {
@@ -249,31 +250,56 @@ class _UserDetailsState extends State<UserDetails>
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
-                      Expanded(
-                        child: OutlinedButton(
-                          child: Text((user.isConnectedToGmail
-                                  ? localization.disconnectGmail
-                                  : localization.connectGmail)
-                              .toUpperCase()),
-                          onPressed: !state.user.isConnectedToGoogle
-                              ? null
-                              : () async {
-                                  if (state.settingsUIState.isChanged) {
-                                    showMessageDialog(
-                                        context: context,
-                                        message:
-                                            localization.errorUnsavedChanges);
-                                    return;
-                                  }
+                      if (kIsWeb && !state.user.isConnectedToGoogle)
+                        Expanded(
+                          child: OutlinedButton(
+                            child: Text((state.user.isConnectedToMicrosoft
+                                    ? localization.disconnectMicrosoft
+                                    : localization.connectMicrosoft)
+                                .toUpperCase()),
+                            onPressed: () async {
+                              if (state.settingsUIState.isChanged) {
+                                showMessageDialog(
+                                    context: context,
+                                    message: localization.errorUnsavedChanges);
+                                return;
+                              }
 
-                                  if (state.user.isConnectedToGmail) {
-                                    viewModel.onDisconnectGmailPressed(context);
-                                  } else {
-                                    launch('$kAppProductionUrl/auth/google');
-                                  }
-                                },
+                              if (state.user.isConnectedToMicrosoft) {
+                                viewModel.onDisconnectMicrosoftPressed(context);
+                              } else {
+                                viewModel.onConnectMicrosoftPressed(context);
+                              }
+                            },
+                          ),
+                        )
+                      else
+                        Expanded(
+                          child: OutlinedButton(
+                            child: Text((user.isConnectedToGmail
+                                    ? localization.disconnectGmail
+                                    : localization.connectGmail)
+                                .toUpperCase()),
+                            onPressed: !state.user.isConnectedToGoogle
+                                ? null
+                                : () async {
+                                    if (state.settingsUIState.isChanged) {
+                                      showMessageDialog(
+                                          context: context,
+                                          message:
+                                              localization.errorUnsavedChanges);
+                                      return;
+                                    }
+
+                                    if (state.user.isConnectedToGmail) {
+                                      viewModel
+                                          .onDisconnectGmailPressed(context);
+                                    } else {
+                                      launch('$kAppProductionUrl/auth/google');
+                                    }
+                                  },
+                          ),
                         ),
-                      ),
                       SizedBox(width: kTableColumnGap),
                     ],
                     Expanded(

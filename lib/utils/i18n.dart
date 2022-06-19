@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'connect_microsoft': 'Connect Microsoft',
+      'disconnect_microsoft': 'Disconnect Microsoft',
       'connected_microsoft': 'Successfully connected Microsoft',
       'disconnected_microsoft': 'Successfully disconnected Microsoft',
       'microsoft_sign_in': 'Login with Microsoft',
@@ -70718,9 +70720,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['disconnected_microsoft'] ??
       '';
 
+  String get connectMicrosoft =>
+      _localizedValues[localeCode]['connect_microsoft'] ??
+      _localizedValues['en']['connect_microsoft'] ??
+      '';
+
+  String get disconnectMicrosoft =>
+      _localizedValues[localeCode]['disconnect_microsoft'] ??
+      _localizedValues['en']['disconnect_microsoft'] ??
+      '';
+
   String get connectedMicrosoft =>
-      _localizedValues[localeCode]['connected_google'] ??
-      _localizedValues['en']['connected_googlek'] ??
+      _localizedValues[localeCode]['connected_microsoft'] ??
+      _localizedValues['en']['connected_microsoft'] ??
       '';
 
 // STARTER: lang field - do not remove comment
