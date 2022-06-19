@@ -114,9 +114,8 @@ class LoginVM {
     tenant: '3196aaac-9636-4f91-8f04-3297e2654909',
     clientId: '1023b9ce-5b09-4f04-98f8-e1ed85a72332',
     scope: 'openid profile offline_access',
-    redirectUri: kIsWeb
-        ? 'http://localhost:8483'
-        : 'https://login.live.com/oauth20_desktop.srf',
+    redirectUri: 'https://invoicing.co/auth/microsoft',
+    //redirectUri: kIsWeb ? 'http://localhost:8483' : 'https://login.live.com/oauth20_desktop.srf',
     navigatorKey: navigatorKey,
   );
   static final AadOAuth oauth = AadOAuth(config);
