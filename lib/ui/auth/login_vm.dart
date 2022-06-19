@@ -234,29 +234,6 @@ class LoginVM {
         @required String oneTimePassword,
       }) async {
         try {
-          await oauth.logout();
-          await oauth.login();
-          final accessToken = await oauth.getAccessToken();
-          final idToken = await oauth.getIdToken();
-          store.dispatch(OAuthLoginRequest(
-            completer: completer,
-            idToken: idToken,
-            accessToken: accessToken,
-            url: _formatApiUrl(url),
-            secret: secret.trim(),
-            platform: getPlatform(context),
-            provider: kOAuthProviderMicrosoft,
-            oneTimePassword: oneTimePassword,
-          ));
-          completer.future.then((_) => _handleLogin(context: context));
-        } catch (error) {
-          completer.completeError(error);
-          print('## onMicrosoftLoginPressed: $error');
-        }
-      },
-      onMicrosoftSignUpPressed:
-          (BuildContext context, Completer<Null> completer) async {
-        try {
           final config = Configuration()
             ..auth = (BrowserAuthOptions()
               ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
@@ -274,6 +251,31 @@ class LoginVM {
           print(
               '## RESULT: acces: ${result.accessToken}, id: ${result.idToken}');
 
+          /*
+          await oauth.logout();
+          await oauth.login();
+          final accessToken = await oauth.getAccessToken();
+          final idToken = await oauth.getIdToken();
+          store.dispatch(OAuthLoginRequest(
+            completer: completer,
+            idToken: idToken,
+            accessToken: accessToken,
+            url: _formatApiUrl(url),
+            secret: secret.trim(),
+            platform: getPlatform(context),
+            provider: kOAuthProviderMicrosoft,
+            oneTimePassword: oneTimePassword,
+          ));
+          completer.future.then((_) => _handleLogin(context: context));
+          */
+        } catch (error) {
+          completer.completeError(error);
+          print('## onMicrosoftLoginPressed: $error');
+        }
+      },
+      onMicrosoftSignUpPressed:
+          (BuildContext context, Completer<Null> completer) async {
+        try {
           /*
           await oauth.logout();
           await oauth.login();
