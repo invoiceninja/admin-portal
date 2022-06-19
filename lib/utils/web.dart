@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 // Package imports:
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:redux/redux.dart';
 import 'package:msal_js/msal_js.dart';
 
@@ -72,8 +73,8 @@ class WebUtils {
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
         //..redirectUri = 'https://invoicing.co/auth/microsoft'
-        ..redirectUri = 'https://react.invoicing.co/'
-        ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
+        ..redirectUri = browserUrl
+        ..clientId = Config.MICROSOFT_CLIENT_ID);
     final publicClientApp = PublicClientApplication(config);
 
     final loginRequest = PopupRequest()..scopes = ['user.read'];
