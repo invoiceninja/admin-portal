@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -171,7 +171,7 @@ class LoginVM {
                 url: _formatApiUrl(url),
                 secret: secret.trim(),
                 platform: getPlatform(context),
-                provider: kOAuthProviderGoogle,
+                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                 oneTimePassword: oneTimePassword,
               ));
               completer.future.then((_) => _handleLogin(context: context));
@@ -200,7 +200,7 @@ class LoginVM {
                 completer: completer,
                 idToken: idToken,
                 accessToken: accessToken,
-                provider: kOAuthProviderGoogle,
+                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
               ));
               completer.future
                   .then((_) => _handleLogin(context: context, isSignUp: true));
