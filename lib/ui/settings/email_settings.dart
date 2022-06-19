@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -133,6 +134,8 @@ class _EmailSettingsState extends State<EmailSettings> {
     final state = viewModel.state;
     final settings = viewModel.settings;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
+    final microsoftUserIds =
+        memoizedMicrosoftUserList(viewModel.state.userState.map);
 
     final gmailSendingUserId = settings.gmailSendingUserId ?? '';
     final disableSave = settings.emailSendingMethod ==
@@ -199,6 +202,43 @@ class _EmailSettingsState extends State<EmailSettings> {
                         entityType: EntityType.user,
                         entityId: settings.gmailSendingUserId,
                         entityIds: gmailUserIds,
+                        overrideSuggestedLabel: (entity) {
+                          final user = entity as UserEntity;
+                          return '${user.fullName} • ${user.email}';
+                        },
+                      ),
+                    ),
+                if (settings.emailSendingMethod ==
+                    SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT)
+                  if (microsoftUserIds.isEmpty) ...[
+                    SizedBox(height: 16),
+                    if (isApple() || !kIsWeb)
+                      Text(
+                        localization.useWebAppToConnectMicrosoft,
+                        textAlign: TextAlign.center,
+                      )
+                    else
+                      OutlinedButton(
+                        child:
+                            Text(localization.connectMicrosoft.toUpperCase()),
+                        onPressed: () {
+                          final store = StoreProvider.of<AppState>(context);
+                          store.dispatch(ViewSettings(
+                            section: kSettingsUserDetails,
+                            force: true,
+                          ));
+                        },
+                      )
+                  ] else
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: DynamicSelector(
+                        onChanged: (userId) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..gmailSendingUserId = userId)),
+                        entityType: EntityType.user,
+                        entityId: settings.gmailSendingUserId,
+                        entityIds: microsoftUserIds,
                         overrideSuggestedLabel: (entity) {
                           final user = entity as UserEntity;
                           return '${user.fullName} • ${user.email}';

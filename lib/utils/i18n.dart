@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_web_app_to_connect_microsoft':
+          'Please use the web app to connect to Microsoft',
       'email_provider': 'Email Provider',
       'connect_microsoft': 'Connect Microsoft',
       'disconnect_microsoft': 'Disconnect Microsoft',
@@ -70708,38 +70710,35 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get microsoftSignUp =>
       _localizedValues[localeCode]['microsoft_sign_up'] ??
-      _localizedValues['en']['microsoft_sign_up'] ??
-      '';
+      _localizedValues['en']['microsoft_sign_up'];
 
   String get microsoftSignIn =>
       _localizedValues[localeCode]['microsoft_sign_in'] ??
-      _localizedValues['en']['microsoft_sign_in'] ??
-      '';
+      _localizedValues['en']['microsoft_sign_in'];
 
   String get disconnectedMicrosoft =>
       _localizedValues[localeCode]['disconnected_microsoft'] ??
-      _localizedValues['en']['disconnected_microsoft'] ??
-      '';
+      _localizedValues['en']['disconnected_microsoft'];
 
   String get connectMicrosoft =>
       _localizedValues[localeCode]['connect_microsoft'] ??
-      _localizedValues['en']['connect_microsoft'] ??
-      '';
+      _localizedValues['en']['connect_microsoft'];
 
   String get disconnectMicrosoft =>
       _localizedValues[localeCode]['disconnect_microsoft'] ??
-      _localizedValues['en']['disconnect_microsoft'] ??
-      '';
+      _localizedValues['en']['disconnect_microsoft'];
 
   String get connectedMicrosoft =>
       _localizedValues[localeCode]['connected_microsoft'] ??
-      _localizedValues['en']['connected_microsoft'] ??
-      '';
+      _localizedValues['en']['connected_microsoft'];
 
   String get emailProvider =>
       _localizedValues[localeCode]['email_provider'] ??
-      _localizedValues['en']['email_provider'] ??
-      '';
+      _localizedValues['en']['email_provider'];
+
+  String get useWebAppToConnectMicrosoft =>
+      _localizedValues[localeCode]['use_web_app_to_connect_microsoft'] ??
+      _localizedValues['en']['use_web_app_to_connect_microsoft'];
 
 // STARTER: lang field - do not remove comment
 
