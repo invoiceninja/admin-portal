@@ -241,12 +241,14 @@ class LoginVM {
               ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
           final publicClientApp = PublicClientApplication(config);
 
-          final AuthenticationResult redirectResult =
-              await publicClientApp.handleRedirectFuture();
+          final loginRequest = PopupRequest()..scopes = ['user.read'];
 
-          if (redirectResult != null) {
+          final AuthenticationResult result =
+              await publicClientApp.loginPopup(loginRequest);
+
+          if (result != null) {
             print(
-                '## RESULT: acces: ${redirectResult.accessToken}, id: ${redirectResult.idToken}');
+                '## RESULT: acces: ${result.accessToken}, id: ${result.idToken}');
           } else {
             // Normal page load, did not just come back from an
             // auth redirect
