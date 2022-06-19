@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:aad_oauth/model/config.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -237,9 +236,10 @@ class LoginVM {
           await oauth.logout();
           await oauth.login();
           final accessToken = await oauth.getAccessToken();
+          final idToken = await oauth.getIdToken();
           store.dispatch(OAuthLoginRequest(
             completer: completer,
-            idToken: '',
+            idToken: idToken,
             accessToken: accessToken,
             url: _formatApiUrl(url),
             secret: secret.trim(),
@@ -259,9 +259,10 @@ class LoginVM {
           await oauth.logout();
           await oauth.login();
           final accessToken = await oauth.getAccessToken();
+          final idToken = await oauth.getIdToken();
           store.dispatch(OAuthSignUpRequest(
             completer: completer,
-            idToken: '',
+            idToken: idToken,
             provider: kOAuthProviderMicrosoft,
             accessToken: accessToken,
           ));
