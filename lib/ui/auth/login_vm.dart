@@ -239,18 +239,17 @@ class LoginVM {
               ..redirectUri = 'https://invoicing.co/auth/microsoft'
               ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
           final publicClientApp = PublicClientApplication(config);
-          final loginRequest = RedirectRequest()..scopes = ['user.read'];
-          //'openid profile offline_access'
 
-          publicClientApp.loginRedirect(loginRequest);
+          final AuthenticationResult redirectResult =
+              await publicClientApp.handleRedirectFuture();
 
-          final popupRequest = PopupRequest()..scopes = ['user.read'];
-
-          final AuthenticationResult result =
-              await publicClientApp.loginPopup(popupRequest);
-
-          print(
-              '## RESULT: acces: ${result.accessToken}, id: ${result.idToken}');
+          if (redirectResult != null) {
+            print(
+                '## RESULT: acces: ${redirectResult.accessToken}, id: ${redirectResult.idToken}');
+          } else {
+            // Normal page load, did not just come back from an
+            // auth redirect
+          }
 
           /*
           await oauth.logout();
