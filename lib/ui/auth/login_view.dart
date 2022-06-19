@@ -203,6 +203,8 @@ class _LoginState extends State<LoginView> {
         email: _emailController.text,
         password: _passwordController.text,
       );
+    } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
+      viewModel.onMicrosoftSignUpPressed(context, completer);
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
     }
@@ -273,6 +275,11 @@ class _LoginState extends State<LoginView> {
           oneTimePassword: _oneTimePasswordController.text,
         );
       }
+    } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
+      viewModel.onMicrosoftLoginPressed(context, completer,
+          url: url,
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text);
     } else {
       viewModel.onGoogleLoginPressed(context, completer,
           url: url,
@@ -575,6 +582,8 @@ class _LoginState extends State<LoginView> {
                           children: [
                             if (_loginType == LOGIN_TYPE_EMAIL)
                               Icon(Icons.mail, color: Colors.white)
+                            else if (_loginType == LOGIN_TYPE_MICROSOFT)
+                              Icon(MdiIcons.microsoft, color: Colors.white)
                             else
                               ClipOval(
                                 child: Image.asset(
