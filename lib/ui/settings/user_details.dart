@@ -221,7 +221,7 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (state.isHosted && !isApple()) ...[
+                    if (state.isHosted && !isApple() && !isDesktopOS()) ...[
                       Expanded(
                         child: OutlinedButton(
                           child: Text((state.user.isConnectedToGoogle

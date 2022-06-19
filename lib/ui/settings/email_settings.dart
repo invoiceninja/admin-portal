@@ -176,7 +176,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                     SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
                   if (gmailUserIds.isEmpty) ...[
                     SizedBox(height: 16),
-                    if (isApple())
+                    if (isApple() || isDesktopOS())
                       Text(
                         localization.useWebAppToConnectGmail,
                         textAlign: TextAlign.center,
