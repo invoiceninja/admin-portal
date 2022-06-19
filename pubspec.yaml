@@ -45,7 +45,7 @@ dependencies:
   image_picker: ^0.8.3+1
   flutter_colorpicker: ^1.0.3
   flutter_json_viewer: ^1.0.1
-  webview_flutter: ^2.0.10
+  webview_flutter: ^3.0.4
   timeago: ^3.1.0
   package_info: ^2.0.2
   rounded_loading_button: ^2.0.5
@@ -69,6 +69,7 @@ dependencies:
   html2md: ^1.2.5
   printing: ^5.8.0
   image_cropper: ^2.0.2
+  aad_oauth: ^0.4.0
   # bitsdojo_window: ^0.1.2
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1

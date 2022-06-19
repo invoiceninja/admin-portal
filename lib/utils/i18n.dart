@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'microsoft_sign_in': 'Login with Microsoft',
+      'microsoft_sign_up': 'Sign up with Microsoft',
       'emailed_purchase_order': 'Successfully queued purchase order to be sent',
       'emailed_purchase_orders':
           'Successfully queued purchase orders to be sent',
@@ -70698,6 +70700,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get emailedPurchaseOrders =>
       _localizedValues[localeCode]['emailed_purchase_orders'] ??
       _localizedValues['en']['emailed_purchase_orders'];
+
+  String get microsoftSignUp =>
+      _localizedValues[localeCode]['microsoft_sign_up'] ??
+      _localizedValues['en']['microsoft_sign_up'] ??
+      '';
+
+  String get microsoftSignIn =>
+      _localizedValues[localeCode]['microsoft_sign_in'] ??
+      _localizedValues['en']['microsoft_sign_in'] ??
+      '';
 
 // STARTER: lang field - do not remove comment
 

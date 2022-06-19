@@ -55,6 +55,8 @@ class LoginVM {
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
     @required this.onGoogleSignUpPressed,
+    @required this.onMicrosoftLoginPressed,
+    @required this.onMicrosoftSignUpPressed,
     @required this.onTokenLoginPressed,
   });
 
@@ -96,6 +98,13 @@ class LoginVM {
   final Function(BuildContext, Completer<Null> completer,
       {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
   final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
+
+  final Function(BuildContext, Completer<Null> completer,
+      {String url,
+      String secret,
+      String oneTimePassword}) onMicrosoftLoginPressed;
+  final Function(BuildContext, Completer<Null> completer)
+      onMicrosoftSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
@@ -199,6 +208,74 @@ class LoginVM {
         } catch (error) {
           completer.completeError(error);
           print('## onGoogleSignUpPressed: $error');
+        }
+      },
+      onMicrosoftLoginPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String url,
+        @required String secret,
+        @required String oneTimePassword,
+      }) async {
+        try {
+          /*
+          await GoogleOAuth.signOut();
+          final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
+            if (idToken.isEmpty || accessToken.isEmpty) {
+              GoogleOAuth.signOut();
+              completer.completeError(
+                  AppLocalization.of(context).anErrorOccurredTryAgain);
+            } else {
+              store.dispatch(OAuthLoginRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+                url: _formatApiUrl(url),
+                secret: secret.trim(),
+                platform: getPlatform(context),
+                oneTimePassword: oneTimePassword,
+              ));
+              completer.future.then((_) => _handleLogin(context: context));
+            }
+          });
+          if (!signedIn) {
+            completer.completeError(
+                AppLocalization.of(context).anErrorOccurredTryAgain);
+          }
+          */
+        } catch (error) {
+          completer.completeError(error);
+          print('## onMicrosoftLoginPressed: $error');
+        }
+      },
+      onMicrosoftSignUpPressed:
+          (BuildContext context, Completer<Null> completer) async {
+        try {
+          /*
+          await GoogleOAuth.signOut();
+          final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
+            if (idToken.isEmpty || accessToken.isEmpty) {
+              GoogleOAuth.signOut();
+              completer.completeError(
+                  AppLocalization.of(context).anErrorOccurredTryAgain);
+            } else {
+              store.dispatch(OAuthSignUpRequest(
+                completer: completer,
+                idToken: idToken,
+                accessToken: accessToken,
+              ));
+              completer.future
+                  .then((_) => _handleLogin(context: context, isSignUp: true));
+            }
+          });
+          if (!signedIn) {
+            completer.completeError(
+                AppLocalization.of(context).anErrorOccurredTryAgain);
+          }
+          */
+        } catch (error) {
+          completer.completeError(error);
+          print('## onMicrosoftSignUpPressed: $error');
         }
       },
       onSignUpPressed: (
