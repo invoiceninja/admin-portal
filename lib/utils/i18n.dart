@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'use_web_app_to_connect_microsoft':
+            'use_web_app_to_connect_microsoft':
           'Please use the web app to connect to Microsoft',
       'email_provider': 'Email Provider',
       'connect_microsoft': 'Connect Microsoft',
