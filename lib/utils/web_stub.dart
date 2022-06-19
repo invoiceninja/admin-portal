@@ -24,6 +24,8 @@ class WebUtils {
 
   static void warnChanges(Store<AppState> store) {}
 
+  static void microsoftLogin(Function(String, String) callback) async {}
+
 /*
   static String loadToken() => null;
 

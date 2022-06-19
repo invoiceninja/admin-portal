@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:msal_js/msal_js.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -25,6 +24,9 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -221,31 +223,11 @@ class LoginVM {
         @required String oneTimePassword,
       }) async {
         try {
-          final config = Configuration()
-            ..auth = (BrowserAuthOptions()
-              //..redirectUri = 'https://invoicing.co/auth/microsoft'
-              ..redirectUri = 'https://react.invoicing.co/'
-              ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
-          final publicClientApp = PublicClientApplication(config);
-
-          final loginRequest = PopupRequest()..scopes = ['user.read'];
-
-          final AuthenticationResult result =
-              await publicClientApp.loginPopup(loginRequest);
-
-          if (result != null) {
-            print(
-                '## RESULT: acces: ${result.accessToken}, id: ${result.idToken}');
-          } else {
-            // Normal page load, did not just come back from an
-            // auth redirect
-          }
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            print('## RESULT: acces: $accessToken id: $idToken');
+          });
 
           /*
-          await oauth.logout();
-          await oauth.login();
-          final accessToken = await oauth.getAccessToken();
-          final idToken = await oauth.getIdToken();
           store.dispatch(OAuthLoginRequest(
             completer: completer,
             idToken: idToken,
@@ -266,11 +248,11 @@ class LoginVM {
       onMicrosoftSignUpPressed:
           (BuildContext context, Completer<Null> completer) async {
         try {
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            print('## RESULT: acces: $accessToken id: $idToken');
+          });
+
           /*
-          await oauth.logout();
-          await oauth.login();
-          final accessToken = await oauth.getAccessToken();
-          final idToken = await oauth.getIdToken();
           store.dispatch(OAuthSignUpRequest(
             completer: completer,
             idToken: idToken,

@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 
 // Package imports:
 import 'package:redux/redux.dart';
+import 'package:msal_js/msal_js.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -65,6 +66,22 @@ class WebUtils {
             'Changes you made may not be saved.';
       }
     });
+  }
+
+  static void microsoftLogin(Function(String, String) callback) async {
+    final config = Configuration()
+      ..auth = (BrowserAuthOptions()
+        //..redirectUri = 'https://invoicing.co/auth/microsoft'
+        ..redirectUri = 'https://react.invoicing.co/'
+        ..clientId = '1023b9ce-5b09-4f04-98f8-e1ed85a72332');
+    final publicClientApp = PublicClientApplication(config);
+
+    final loginRequest = PopupRequest()..scopes = ['user.read'];
+
+    final AuthenticationResult result =
+        await publicClientApp.loginPopup(loginRequest);
+
+    callback(result?.idToken, result?.accessToken);
   }
 
 /*
