@@ -9,7 +9,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -49,6 +51,11 @@ class VendorPicker extends StatelessWidget {
           : null,
       onSelected: onSelected,
       onAddPressed: onAddPressed,
+      onCreateNew: (completer, name) {
+        store.dispatch(SaveVendorRequest(
+            vendor: VendorEntity().rebuild((b) => b..name = name),
+            completer: completer));
+      },
     );
   }
 }
