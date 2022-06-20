@@ -935,7 +935,10 @@ class _$InvitationEntitySerializer
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
       'client_contact_id',
-      serializers.serialize(object.contactId,
+      serializers.serialize(object.clientContactId,
+          specifiedType: const FullType(String)),
+      'vendor_contact_id',
+      serializers.serialize(object.vendorContactId,
           specifiedType: const FullType(String)),
       'sent_date',
       serializers.serialize(object.sentDate,
@@ -1025,7 +1028,11 @@ class _$InvitationEntitySerializer
               specifiedType: const FullType(String)) as String;
           break;
         case 'client_contact_id':
-          result.contactId = serializers.deserialize(value,
+          result.clientContactId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_contact_id':
+          result.vendorContactId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'sent_date':
@@ -2806,7 +2813,9 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String link;
   @override
-  final String contactId;
+  final String clientContactId;
+  @override
+  final String vendorContactId;
   @override
   final String sentDate;
   @override
@@ -2841,7 +2850,8 @@ class _$InvitationEntity extends InvitationEntity {
   _$InvitationEntity._(
       {this.key,
       this.link,
-      this.contactId,
+      this.clientContactId,
+      this.vendorContactId,
       this.sentDate,
       this.viewedDate,
       this.openedDate,
@@ -2859,7 +2869,9 @@ class _$InvitationEntity extends InvitationEntity {
     BuiltValueNullFieldError.checkNotNull(key, 'InvitationEntity', 'key');
     BuiltValueNullFieldError.checkNotNull(link, 'InvitationEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
-        contactId, 'InvitationEntity', 'contactId');
+        clientContactId, 'InvitationEntity', 'clientContactId');
+    BuiltValueNullFieldError.checkNotNull(
+        vendorContactId, 'InvitationEntity', 'vendorContactId');
     BuiltValueNullFieldError.checkNotNull(
         sentDate, 'InvitationEntity', 'sentDate');
     BuiltValueNullFieldError.checkNotNull(
@@ -2889,7 +2901,8 @@ class _$InvitationEntity extends InvitationEntity {
     return other is InvitationEntity &&
         key == other.key &&
         link == other.link &&
-        contactId == other.contactId &&
+        clientContactId == other.clientContactId &&
+        vendorContactId == other.vendorContactId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2914,9 +2927,11 @@ class _$InvitationEntity extends InvitationEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, key.hashCode),
-                                                link.hashCode),
-                                            contactId.hashCode),
+                                            $jc(
+                                                $jc($jc(0, key.hashCode),
+                                                    link.hashCode),
+                                                clientContactId.hashCode),
+                                            vendorContactId.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -2933,7 +2948,8 @@ class _$InvitationEntity extends InvitationEntity {
     return (newBuiltValueToStringHelper('InvitationEntity')
           ..add('key', key)
           ..add('link', link)
-          ..add('contactId', contactId)
+          ..add('clientContactId', clientContactId)
+          ..add('vendorContactId', vendorContactId)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
           ..add('openedDate', openedDate)
@@ -2963,9 +2979,15 @@ class InvitationEntityBuilder
   String get link => _$this._link;
   set link(String link) => _$this._link = link;
 
-  String _contactId;
-  String get contactId => _$this._contactId;
-  set contactId(String contactId) => _$this._contactId = contactId;
+  String _clientContactId;
+  String get clientContactId => _$this._clientContactId;
+  set clientContactId(String clientContactId) =>
+      _$this._clientContactId = clientContactId;
+
+  String _vendorContactId;
+  String get vendorContactId => _$this._vendorContactId;
+  set vendorContactId(String vendorContactId) =>
+      _$this._vendorContactId = vendorContactId;
 
   String _sentDate;
   String get sentDate => _$this._sentDate;
@@ -3021,14 +3043,17 @@ class InvitationEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  InvitationEntityBuilder();
+  InvitationEntityBuilder() {
+    InvitationEntity._initializeBuilder(this);
+  }
 
   InvitationEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _key = $v.key;
       _link = $v.link;
-      _contactId = $v.contactId;
+      _clientContactId = $v.clientContactId;
+      _vendorContactId = $v.vendorContactId;
       _sentDate = $v.sentDate;
       _viewedDate = $v.viewedDate;
       _openedDate = $v.openedDate;
@@ -3066,8 +3091,10 @@ class InvitationEntityBuilder
                 key, 'InvitationEntity', 'key'),
             link: BuiltValueNullFieldError.checkNotNull(
                 link, 'InvitationEntity', 'link'),
-            contactId: BuiltValueNullFieldError.checkNotNull(
-                contactId, 'InvitationEntity', 'contactId'),
+            clientContactId: BuiltValueNullFieldError.checkNotNull(
+                clientContactId, 'InvitationEntity', 'clientContactId'),
+            vendorContactId: BuiltValueNullFieldError.checkNotNull(
+                vendorContactId, 'InvitationEntity', 'vendorContactId'),
             sentDate: BuiltValueNullFieldError.checkNotNull(
                 sentDate, 'InvitationEntity', 'sentDate'),
             viewedDate: BuiltValueNullFieldError.checkNotNull(
@@ -3078,10 +3105,9 @@ class InvitationEntityBuilder
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, 'InvitationEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'InvitationEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, 'InvitationEntity', 'archivedAt'),
+            updatedAt:
+                BuiltValueNullFieldError.checkNotNull(updatedAt, 'InvitationEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'InvitationEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,

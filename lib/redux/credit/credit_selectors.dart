@@ -8,8 +8,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 ContactEntity creditContactSelector(InvoiceEntity credit, ClientEntity client) {
-  var contactIds =
-      credit.invitations.map((invitation) => invitation.contactId).toList();
+  var contactIds = credit.invitations
+      .map((invitation) => invitation.clientContactId)
+      .toList();
   if (contactIds.contains(client.primaryContact.id)) {
     contactIds = [client.primaryContact.id];
   }

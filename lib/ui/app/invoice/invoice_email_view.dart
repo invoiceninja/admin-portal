@@ -177,7 +177,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final settings = getClientSettings(state, client);
     final contacts = invoice.invitations
         .map((invitation) => client.contacts.firstWhere(
-            (contact) => contact.id == invitation.contactId,
+            (contact) => contact.id == invitation.clientContactId,
             orElse: () => null))
         .toList();
 

@@ -43,6 +43,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.da
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -567,6 +568,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             RecurringInvoiceEditItemsScreen(
               viewModel: widget.entityViewModel,
               isTasks: _showTasksTable,
+            )
+          else if (entityType == EntityType.purchaseOrder)
+            PurchaseOrderEditItemsScreen(
+              viewModel: widget.entityViewModel,
             )
           else
             SizedBox(),

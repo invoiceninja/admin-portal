@@ -209,7 +209,7 @@ abstract class InvoiceEntity extends Object
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.emailContacts
-              .map((contact) => InvitationEntity(contactId: contact.id))
+              .map((contact) => InvitationEntity(clientContactId: contact.id))
               .toList()),
       updatedAt: 0,
       archivedAt: 0,
@@ -275,7 +275,8 @@ abstract class InvoiceEntity extends Object
             (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
         .toList())
     ..invitations.replace(invitations
-        .map((invitation) => InvitationEntity(contactId: invitation.contactId))
+        .map((invitation) =>
+            InvitationEntity(clientContactId: invitation.clientContactId))
         .toList()));
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
@@ -1193,7 +1194,7 @@ abstract class InvoiceEntity extends Object
 
   InvitationEntity getInvitationForContact(ContactEntity contact) {
     return invitations.firstWhere(
-        (invitation) => invitation.contactId == contact.id,
+        (invitation) => invitation.clientContactId == contact.id,
         orElse: () => null);
   }
 
@@ -1579,11 +1580,15 @@ abstract class InvoiceItemEntity
 abstract class InvitationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  factory InvitationEntity({String contactId}) {
+  factory InvitationEntity({
+    String clientContactId,
+    String vendorContactId,
+  }) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
-      contactId: contactId ?? '',
+      clientContactId: clientContactId ?? '',
+      vendorContactId: vendorContactId ?? '',
       createdAt: 0,
       key: '',
       link: '',
@@ -1611,7 +1616,10 @@ abstract class InvitationEntity extends Object
   String get link;
 
   @BuiltValueField(wireName: 'client_contact_id')
-  String get contactId;
+  String get clientContactId;
+
+  @BuiltValueField(wireName: 'vendor_contact_id')
+  String get vendorContactId;
 
   @BuiltValueField(wireName: 'sent_date', compare: false)
   String get sentDate;
@@ -1661,6 +1669,11 @@ abstract class InvitationEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  // ignore: unused_element
+  static void _initializeBuilder(InvitationEntityBuilder builder) => builder
+    ..clientContactId = ''
+    ..vendorContactId = '';
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;

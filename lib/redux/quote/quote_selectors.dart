@@ -13,8 +13,9 @@ ClientEntity quoteClientSelector(
 }
 
 ContactEntity quoteContactSelector(InvoiceEntity quote, ClientEntity client) {
-  var contactIds =
-      quote.invitations.map((invitation) => invitation.contactId).toList();
+  var contactIds = quote.invitations
+      .map((invitation) => invitation.clientContactId)
+      .toList();
   if (contactIds.contains(client.primaryContact.id)) {
     contactIds = [client.primaryContact.id];
   }

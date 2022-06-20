@@ -130,7 +130,7 @@ ReportResult quoteReport(
       continue;
     }
 
-    final contact = client.getContact(quote.invitations.first.contactId);
+    final contact = client.getContact(quote.invitations.first.clientContactId);
     //final vendor = vendorMap[quote.vendorId];
 
     if (quote.isDeleted || client.isDeleted) {
