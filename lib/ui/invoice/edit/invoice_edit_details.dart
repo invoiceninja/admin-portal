@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -162,14 +163,25 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           isLast: true,
           children: <Widget>[
             invoice.isNew
-                ? ClientPicker(
-                    clientId: invoice.clientId,
-                    clientState: state.clientState,
-                    onSelected: (client) =>
-                        viewModel.onClientChanged(context, invoice, client),
-                    onAddPressed: (completer) =>
-                        viewModel.onAddClientPressed(context, completer),
-                  )
+                ? invoice.isPurchaseOrder
+                    ? VendorPicker(
+                        autofocus: true,
+                        vendorId: invoice.vendorId,
+                        vendorState: state.vendorState,
+                        onSelected: (vendor) {
+                          viewModel.onVendorChanged(context, invoice, vendor);
+                        },
+                        onAddPressed: (completer) =>
+                            viewModel.onAddVendorPressed(context, completer),
+                      )
+                    : ClientPicker(
+                        clientId: invoice.clientId,
+                        clientState: state.clientState,
+                        onSelected: (client) =>
+                            viewModel.onClientChanged(context, invoice, client),
+                        onAddPressed: (completer) =>
+                            viewModel.onAddClientPressed(context, completer),
+                      )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
                     label: widget.entityType == EntityType.credit
@@ -444,7 +456,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   }
                 },
               ),
-            if (company.isModuleEnabled(EntityType.vendor))
+            if (invoice.isPurchaseOrder)
+              ClientPicker(
+                clientId: invoice.clientId,
+                clientState: state.clientState,
+                onSelected: (client) {
+                  viewModel.onChanged(
+                      invoice.rebuild((b) => b..clientId = client?.id ?? ''));
+                },
+              )
+            else if (company.isModuleEnabled(EntityType.vendor))
               EntityDropdown(
                 entityType: EntityType.vendor,
                 entityId: invoice.vendorId,
