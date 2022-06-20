@@ -271,6 +271,8 @@ class UserDetailsVM {
                       completer: completer,
                     ),
                   );
+                }, (dynamic error) {
+                  showErrorDialog(context: context, message: error);
                 });
               } catch (error) {
                 showErrorDialog(context: context, message: error);

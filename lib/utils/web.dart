@@ -69,7 +69,10 @@ class WebUtils {
     });
   }
 
-  static void microsoftLogin(Function(String, String) callback) async {
+  static void microsoftLogin(
+    Function(String, String) succesCallback,
+    Function(dynamic) failureCallback,
+  ) async {
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
         //..redirectUri = 'https://invoicing.co/auth/microsoft'
@@ -81,10 +84,11 @@ class WebUtils {
 
     final loginRequest = PopupRequest()..scopes = ['user.read'];
 
-    final AuthenticationResult result =
-        await publicClientApp.loginPopup(loginRequest);
-
-    callback(result?.idToken, result?.accessToken);
+    publicClientApp.loginPopup(loginRequest).then((result) {
+      succesCallback(result?.idToken, result?.accessToken);
+    }).catchError((dynamic error) {
+      failureCallback(error);
+    });
   }
 
 /*

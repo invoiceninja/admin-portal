@@ -225,9 +225,8 @@ class LoginVM {
         try {
           WebUtils.microsoftLogin((idToken, accessToken) {
             print('## RESULT: acces: $accessToken id: $idToken');
-          });
 
-          /*
+            /*
           store.dispatch(OAuthLoginRequest(
             completer: completer,
             idToken: idToken,
@@ -240,6 +239,9 @@ class LoginVM {
           ));
           completer.future.then((_) => _handleLogin(context: context));
           */
+          }, (dynamic error) {
+            completer.completeError(error);
+          });
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftLoginPressed: $error');
@@ -249,19 +251,17 @@ class LoginVM {
           (BuildContext context, Completer<Null> completer) async {
         try {
           WebUtils.microsoftLogin((idToken, accessToken) {
-            print('## RESULT: acces: $accessToken id: $idToken');
+            store.dispatch(OAuthSignUpRequest(
+              completer: completer,
+              idToken: idToken,
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              accessToken: accessToken,
+            ));
+            completer.future
+                .then((_) => _handleLogin(context: context, isSignUp: true));
+          }, (dynamic error) {
+            completer.completeError(error);
           });
-
-          /*
-          store.dispatch(OAuthSignUpRequest(
-            completer: completer,
-            idToken: idToken,
-            provider: kOAuthProviderMicrosoft,
-            accessToken: accessToken,
-          ));
-          completer.future
-              .then((_) => _handleLogin(context: context, isSignUp: true));
-              */
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftSignUpPressed: $error');
