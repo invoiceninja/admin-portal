@@ -20,7 +20,7 @@ class ClientPicker extends StatelessWidget {
     @required this.clientId,
     @required this.clientState,
     @required this.onSelected,
-    @required this.onAddPressed,
+    this.onAddPressed,
     this.autofocus,
   });
 

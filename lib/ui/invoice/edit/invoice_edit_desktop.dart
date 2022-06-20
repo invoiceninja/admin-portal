@@ -696,7 +696,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       }
                                     },
                                   ),
-                                if (company.isModuleEnabled(EntityType.vendor))
+                                if (invoice.isPurchaseOrder)
+                                  ClientPicker(
+                                    clientId: invoice.clientId,
+                                    clientState: state.clientState,
+                                    onSelected: (client) {
+                                      viewModel.onChanged(invoice.rebuild((b) =>
+                                          b..clientId = client?.id ?? ''));
+                                    },
+                                  )
+                                else if (company
+                                    .isModuleEnabled(EntityType.vendor))
                                   EntityDropdown(
                                     entityType: EntityType.vendor,
                                     entityId: invoice.vendorId,
