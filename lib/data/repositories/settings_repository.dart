@@ -60,6 +60,7 @@ class SettingsRepository {
 
   Future<UserEntity> connectOAuthUser(
     Credentials credentials,
+    String provider,
     String password,
     String idToken,
   ) async {
@@ -72,11 +73,10 @@ class SettingsRepository {
       data: json.encode(
         {
           'id_token': idToken,
-          'provider': UserEntity.OAUTH_PROVIDER_GOOGLE,
+          'provider': provider,
         },
       ),
       password: password,
-      idToken: idToken,
     );
 
     final UserItemResponse userResponse =
