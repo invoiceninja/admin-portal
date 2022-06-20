@@ -1,21 +1,31 @@
+// Dart imports:
 import 'dart:async';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
-import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class PurchaseOrderEditScreen extends StatelessWidget {
   const PurchaseOrderEditScreen({Key key}) : super(key: key);
+
   static const String route = '/purchase_order/edit';
 
   @override
@@ -27,90 +37,130 @@ class PurchaseOrderEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return PurchaseOrderEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.purchaseOrder.updatedAt),
+          key: ValueKey(viewModel.invoice.updatedAt),
         );
       },
     );
   }
 }
 
-class PurchaseOrderEditVM {
+class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
   PurchaseOrderEditVM({
-    @required this.state,
-    @required this.purchaseOrder,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origPurchaseOrder,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
-  });
+    AppState state,
+    CompanyEntity company,
+    InvoiceEntity purchaseOrder,
+    int invoiceItemIndex,
+    InvoiceEntity origInvoice,
+    Function(BuildContext) onSavePressed,
+    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
+    bool isSaving,
+    Function(BuildContext) onCancelPressed,
+  }) : super(
+          state: state,
+          company: company,
+          invoice: purchaseOrder,
+          invoiceItemIndex: invoiceItemIndex,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
+        );
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
-    final state = store.state;
+    final AppState state = store.state;
     final purchaseOrder = state.purchaseOrderUIState.editing;
 
     return PurchaseOrderEditVM(
       state: state,
-      isLoading: state.isLoading,
-      isSaving: state.isSaving,
-      origPurchaseOrder: state.purchaseOrderState.map[purchaseOrder.id],
-      purchaseOrder: purchaseOrder,
       company: state.company,
-      onChanged: (InvoiceEntity purchaseOrder) {
-        store.dispatch(UpdatePurchaseOrder(purchaseOrder));
+      isSaving: state.isSaving,
+      purchaseOrder: purchaseOrder,
+      invoiceItemIndex: state.purchaseOrderUIState.editingItemIndex,
+      origInvoice: store.state.purchaseOrderState.map[purchaseOrder.id],
+      onSavePressed: (BuildContext context, [EntityAction action]) {
+        Debouncer.runOnComplete(() {
+          final purchaseOrder = store.state.purchaseOrderUIState.editing;
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
+          if (purchaseOrder.clientId.isEmpty) {
+            showDialog<ErrorDialog>(
+                context: navigatorKey.currentContext,
+                builder: (BuildContext context) {
+                  return ErrorDialog(localization.pleaseSelectAClient);
+                });
+            return null;
+          }
+          if (purchaseOrder.isOld &&
+              !hasPurchaseOrderChanges(
+                  purchaseOrder, state.purchaseOrderState.map) &&
+              action != null &&
+              action.isClientSide) {
+            handleEntityAction(purchaseOrder, action);
+          } else {
+            final Completer<InvoiceEntity> completer =
+                Completer<InvoiceEntity>();
+            store.dispatch(SavePurchaseOrderRequest(
+              completer: completer,
+              purchaseOrder: purchaseOrder,
+              action: action,
+            ));
+            return completer.future.then((savedPurchaseOrder) {
+              showToast(purchaseOrder.isNew
+                  ? localization.createdPurchaseOrder
+                  : localization.updatedPurchaseOrder);
+
+              if (state.prefState.isMobile) {
+                store.dispatch(
+                    UpdateCurrentRoute(PurchaseOrderViewScreen.route));
+                if (purchaseOrder.isNew) {
+                  navigator.pushReplacementNamed(PurchaseOrderViewScreen.route);
+                } else {
+                  navigator.pop(savedPurchaseOrder);
+                }
+              } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
+
+                viewEntity(entity: savedPurchaseOrder);
+
+                if (state.prefState.isEditorFullScreen(EntityType.invoice) &&
+                    state.prefState.editAfterSaving) {
+                  editEntity(entity: savedPurchaseOrder);
+                }
+              }
+
+              if (action != null && action.isClientSide) {
+                handleEntityAction(savedPurchaseOrder, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedPurchaseOrder, action);
+                viewEntity(entity: savedPurchaseOrder, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
+            });
+          }
+        });
+      },
+      onItemsAdded: (items, clientId, projectId) {
+        if (items.length == 1) {
+          store.dispatch(EditPurchaseOrderItem(purchaseOrder.lineItems.length));
+        }
+        store.dispatch(AddPurchaseOrderItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: InvoiceEntity(), force: true);
-        if (state.purchaseOrderUIState.cancelCompleter != null) {
-          state.purchaseOrderUIState.cancelCompleter.complete();
+        if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
+          viewEntitiesByType(entityType: EntityType.purchaseOrder);
         } else {
+          createEntity(context: context, entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onSavePressed: (BuildContext context) {
-        Debouncer.runOnComplete(() {
-          final purchaseOrder = store.state.purchaseOrderUIState.editing;
-          final localization = AppLocalization.of(context);
-          final Completer<InvoiceEntity> completer =
-              new Completer<InvoiceEntity>();
-          store.dispatch(SavePurchaseOrderRequest(
-              completer: completer, purchaseOrder: purchaseOrder));
-          return completer.future.then((savedPurchaseOrder) {
-            showToast(purchaseOrder.isNew
-                ? localization.createdPurchaseOrder
-                : localization.updatedPurchaseOrder);
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(PurchaseOrderViewScreen.route));
-              if (purchaseOrder.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(PurchaseOrderViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedPurchaseOrder);
-              }
-            } else {
-              viewEntity(entity: savedPurchaseOrder, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
-        });
-      },
     );
   }
-
-  final InvoiceEntity purchaseOrder;
-  final CompanyEntity company;
-  final Function(InvoiceEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final bool isLoading;
-  final bool isSaving;
-  final InvoiceEntity origPurchaseOrder;
-  final AppState state;
 }

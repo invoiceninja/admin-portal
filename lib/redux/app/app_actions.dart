@@ -828,7 +828,10 @@ void createEntityByType({
           case EntityType.purchaseOrder:
             store.dispatch(EditPurchaseOrder(
               force: force,
-              purchaseOrder: InvoiceEntity(state: state),
+              purchaseOrder: InvoiceEntity(
+                state: state,
+                entityType: EntityType.purchaseOrder,
+              ),
             ));
             break;
 

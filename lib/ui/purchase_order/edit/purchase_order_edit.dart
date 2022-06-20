@@ -1,9 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_footer.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 
 class PurchaseOrderEdit extends StatefulWidget {
   const PurchaseOrderEdit({
@@ -11,85 +20,164 @@ class PurchaseOrderEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final PurchaseOrderEditVM viewModel;
+  final AbstractInvoiceEditVM viewModel;
 
   @override
   _PurchaseOrderEditState createState() => _PurchaseOrderEditState();
 }
 
-class _PurchaseOrderEditState extends State<PurchaseOrderEdit> {
+class _PurchaseOrderEditState extends State<PurchaseOrderEdit>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
+
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_purchaseOrderEdit');
 
-  List<TextEditingController> _controllers = [];
+  static const kDetailsScreen = 0;
+  static const kItemScreen = 2;
+
+  //static const kNotesScreen = 2;
 
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      // STARTER: array - do not remove comment
-    ];
+  void initState() {
+    super.initState();
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    final viewModel = widget.viewModel;
 
-    // STARTER: read value - do not remove comment
-    //_purchase_ordersController.text = purchase_order.purchase_orders;
+    final index =
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    _controller = TabController(vsync: this, length: 5, initialIndex: index);
+  }
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-    super.didChangeDependencies();
+    if (widget.viewModel.invoiceItemIndex != null) {
+      _controller.animateTo(kItemScreen);
+    }
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
+    _controller.dispose();
     super.dispose();
   }
 
-  void _onChanged() {
-    //
+  void _onSavePressed(BuildContext context, [EntityAction action]) {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context, action);
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final purchaseOrder = viewModel.purchaseOrder;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final state = viewModel.state;
+    final prefState = state.prefState;
+    final client = state.clientState.get(invoice.clientId);
+    final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
 
     return EditScaffold(
-      title: purchaseOrder.isNew
+      isFullscreen: isFullscreen,
+      entity: invoice,
+      title: invoice.isNew
           ? localization.newPurchaseOrder
           : localization.editPurchaseOrder,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-          */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(context),
+      actions: invoice.getActions(
+        userCompany: state.userCompany,
+        client: client,
+      ),
+      onActionPressed: (context, action) => _onSavePressed(context, action),
+      appBarBottom: TabBar(
+        controller: _controller,
+        isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.items,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+          Tab(
+            text: localization.pdf,
+          ),
+        ],
+      ),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
-            return ScrollableListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[],
-                ),
-              ],
-            );
-          })),
+        key: _formKey,
+        child: isFullscreen
+            ? PurchaseOrderEditDetailsScreen(
+                viewModel: widget.viewModel,
+              )
+            : TabBarView(
+                key: ValueKey(
+                    '__purchaseOrder_${invoice.id}_${invoice.updatedAt}__'),
+                controller: _controller,
+                children: <Widget>[
+                  PurchaseOrderEditDetailsScreen(
+                    viewModel: widget.viewModel,
+                  ),
+                  InvoiceEditContactsScreen(
+                    entityType: invoice.entityType,
+                  ),
+                  PurchaseOrderEditItemsScreen(
+                    viewModel: widget.viewModel,
+                  ),
+                  PurchaseOrderEditNotesScreen(),
+                  PurchaseOrderEditPDFScreen(),
+                ],
+              ),
+      ),
+      bottomNavigationBar: InvoiceEditFooter(invoice: invoice),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'purchaseOrder_edit_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          showDialog<InvoiceItemSelector>(
+              context: context,
+              builder: (BuildContext context) {
+                return InvoiceItemSelector(
+                  showTasksAndExpenses: false,
+                  excluded: invoice.lineItems
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
+                          ? viewModel.state.taskState.map[item.taskId]
+                          : viewModel.state.expenseState.map[item.expenseId])
+                      .toList(),
+                  clientId: invoice.clientId,
+                  onItemsSelected: (items, [clientId, projectId]) {
+                    viewModel.onItemsAdded(items, clientId, projectId);
+                    if (!isFullscreen) {
+                      _controller.animateTo(kItemScreen);
+                    }
+                  },
+                );
+              });
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+        tooltip: localization.addItem,
+      ),
     );
   }
 }

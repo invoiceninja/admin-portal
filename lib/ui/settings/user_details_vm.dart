@@ -23,6 +23,9 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
 class UserDetailsScreen extends StatelessWidget {
   const UserDetailsScreen({Key key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsUserDetails';
@@ -51,6 +54,9 @@ class UserDetailsVM {
     @required this.onConnectGmailPressed,
     @required this.onDisconnectGmailPressed,
     @required this.onDisableTwoFactorPressed,
+    @required this.onConnectMicrosoftPressed,
+    @required this.onDisconnectMicrosoftPressed,
+    @required this.onDisconnectMicrosoftEmailPressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -92,6 +98,26 @@ class UserDetailsVM {
           completer.completeError(error);
         }
         */
+      },
+      onDisconnectMicrosoftEmailPressed: (context) {
+        confirmCallback(
+            context: context,
+            callback: (_) {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    final completer = snackBarCompleter<Null>(
+                        context, AppLocalization.of(context).disconnectedEmail);
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user.rebuild((b) => b..oauthUserToken = ''),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
+            });
       },
       onDisconnectGmailPressed: (context) {
         confirmCallback(
@@ -201,6 +227,58 @@ class UserDetailsVM {
               }
             });
       },
+      onDisconnectMicrosoftPressed: (context) {
+        if (!state.user.hasPassword) {
+          showErrorDialog(
+              context: context,
+              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+          return;
+        }
+
+        confirmCallback(
+            context: context,
+            callback: (_) {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context).disconnectedMicrosoft);
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user.rebuild((b) => b..oauthProvider = ''),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
+            });
+      },
+      onConnectMicrosoftPressed: (context) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).connectedMicrosoft);
+
+        passwordCallback(
+            context: context,
+            callback: (password, idToken) async {
+              try {
+                WebUtils.microsoftLogin((idToken, accessToken) {
+                  store.dispatch(
+                    ConnecOAuthUserRequest(
+                      provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+                      password: password,
+                      idToken: idToken,
+                      completer: completer,
+                    ),
+                  );
+                }, (dynamic error) {
+                  showErrorDialog(context: context, message: error);
+                });
+              } catch (error) {
+                showErrorDialog(context: context, message: error);
+              }
+            });
+      },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
           final localization = AppLocalization.of(context);
@@ -265,6 +343,9 @@ class UserDetailsVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onConnectGooglePressed;
   final Function(BuildContext) onDisconnectGooglePressed;
+  final Function(BuildContext) onConnectMicrosoftPressed;
+  final Function(BuildContext) onDisconnectMicrosoftPressed;
+  final Function(BuildContext) onDisconnectMicrosoftEmailPressed;
   final Function(BuildContext, Completer, String) onConnectGmailPressed;
   final Function(BuildContext) onDisconnectGmailPressed;
   final Function(BuildContext) onDisableTwoFactorPressed;

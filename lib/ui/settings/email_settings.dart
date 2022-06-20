@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,7 +20,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -109,23 +109,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     }
   }
 
-  void _onSavePressed(BuildContext context) {
-    final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
-    final sendingUserId = settings.gmailSendingUserId ?? '';
-    final sendingMethod = settings.emailSendingMethod;
-
-    if (sendingMethod == SettingsEntity.EMAIL_SENDING_METHOD_GMAIL &&
-        sendingUserId.isEmpty) {
-      showErrorDialog(
-          context: context,
-          message: AppLocalization.of(context).selectAGmailUser);
-      return;
-    }
-
-    viewModel.onSavePressed(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -133,15 +116,17 @@ class _EmailSettingsState extends State<EmailSettings> {
     final state = viewModel.state;
     final settings = viewModel.settings;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
+    final microsoftUserIds =
+        memoizedMicrosoftUserList(viewModel.state.userState.map);
 
     final gmailSendingUserId = settings.gmailSendingUserId ?? '';
-    final disableSave = settings.emailSendingMethod ==
-            SettingsEntity.EMAIL_SENDING_METHOD_GMAIL &&
+    final disableSave = settings.emailSendingMethod !=
+            SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT &&
         (gmailSendingUserId.isEmpty || gmailSendingUserId == '0');
 
     return EditScaffold(
       title: localization.emailSettings,
-      onSavePressed: disableSave ? null : _onSavePressed,
+      onSavePressed: disableSave ? null : viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -150,28 +135,30 @@ class _EmailSettingsState extends State<EmailSettings> {
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                BoolDropdownButton(
-                  showBlank: state.uiState.settingsUIState.isFiltered,
-                  label: localization.sendFromGmail,
-                  value: settings.emailSendingMethod == null
-                      ? null
-                      : settings.emailSendingMethod ==
-                          SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
-                  iconData: MdiIcons.gmail,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b
-                        ..emailSendingMethod = (value == null
-                            ? null
-                            : value == true
-                                ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
-                                : SettingsEntity
-                                    .EMAIL_SENDING_METHOD_DEFAULT))),
-                ),
+                AppDropdownButton<String>(
+                    showBlank: state.uiState.settingsUIState.isFiltered,
+                    labelText: localization.emailProvider,
+                    value: settings.emailSendingMethod,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..emailSendingMethod = value));
+                    },
+                    items: [
+                      DropdownMenuItem(
+                          child: Text(localization.defaultWord),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
+                      DropdownMenuItem(
+                          child: Text('Gmail'),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
+                      DropdownMenuItem(
+                          child: Text('Microsoft'),
+                          value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
+                    ]),
                 if (settings.emailSendingMethod ==
                     SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
                   if (gmailUserIds.isEmpty) ...[
                     SizedBox(height: 16),
-                    if (isApple())
+                    if (isApple() || isDesktopOS())
                       Text(
                         localization.useWebAppToConnectGmail,
                         textAlign: TextAlign.center,
@@ -197,6 +184,43 @@ class _EmailSettingsState extends State<EmailSettings> {
                         entityType: EntityType.user,
                         entityId: settings.gmailSendingUserId,
                         entityIds: gmailUserIds,
+                        overrideSuggestedLabel: (entity) {
+                          final user = entity as UserEntity;
+                          return '${user.fullName} • ${user.email}';
+                        },
+                      ),
+                    ),
+                if (settings.emailSendingMethod ==
+                    SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT)
+                  if (microsoftUserIds.isEmpty) ...[
+                    SizedBox(height: 16),
+                    if (isApple() || !kIsWeb)
+                      Text(
+                        localization.useWebAppToConnectMicrosoft,
+                        textAlign: TextAlign.center,
+                      )
+                    else
+                      OutlinedButton(
+                        child:
+                            Text(localization.connectMicrosoft.toUpperCase()),
+                        onPressed: () {
+                          final store = StoreProvider.of<AppState>(context);
+                          store.dispatch(ViewSettings(
+                            section: kSettingsUserDetails,
+                            force: true,
+                          ));
+                        },
+                      )
+                  ] else
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: DynamicSelector(
+                        onChanged: (userId) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..gmailSendingUserId = userId)),
+                        entityType: EntityType.user,
+                        entityId: settings.gmailSendingUserId,
+                        entityIds: microsoftUserIds,
                         overrideSuggestedLabel: (entity) {
                           final user = entity as UserEntity;
                           return '${user.fullName} • ${user.email}';

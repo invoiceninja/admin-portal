@@ -95,7 +95,18 @@ List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
-    return user.isActive && user.isConnectedToGmail;
+    return user.isActive && user.isConnectedToEmail;
+  }).toList();
+}
+
+var memoizedMicrosoftUserList =
+    memo1((BuiltMap<String, UserEntity> userMap) => microsoftUserList(userMap));
+
+List<String> microsoftUserList(BuiltMap<String, UserEntity> userMap) {
+  return userList(userMap).where((userId) {
+    final user = (userMap[userId] ?? UserEntity) as UserEntity;
+
+    return user.isActive && user.isConnectedToMicrosoft;
   }).toList();
 }
 

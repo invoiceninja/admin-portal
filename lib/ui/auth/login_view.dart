@@ -62,10 +62,14 @@ class _LoginState extends State<LoginView> {
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
+  static const String LOGIN_TYPE_EMAIL = 'email';
+  static const String LOGIN_TYPE_GOOGLE = 'google';
+  static const String LOGIN_TYPE_MICROSOFT = 'microsoft';
+
   String _loginError = '';
+  String _loginType = LOGIN_TYPE_GOOGLE;
 
   bool _tokenLogin = false;
-  bool _emailLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = false;
   bool _hideGoogle = false;
@@ -83,15 +87,15 @@ class _LoginState extends State<LoginView> {
       final authState = widget.viewModel.authState;
       _isSelfHosted = authState.isSelfHost;
       if (_isSelfHosted) {
-        _emailLogin = true;
+        _loginType = LOGIN_TYPE_EMAIL;
       } else if (WebUtils.getHtmlValue('login') == 'false') {
         _createAccount = true;
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
-      _emailLogin = true;
+      _loginType = LOGIN_TYPE_EMAIL;
       _hideGoogle = true;
     } else if (isWindows() || isLinux()) {
-      _emailLogin = true;
+      _loginType = LOGIN_TYPE_EMAIL;
       _hideGoogle = true;
     }
   }
@@ -107,7 +111,7 @@ class _LoginState extends State<LoginView> {
       _lastNameController.text = 'TEST';
       _privacyChecked = true;
       _termsChecked = true;
-      _emailLogin = true;
+      _loginType = LOGIN_TYPE_EMAIL;
     }
 
     if (_urlController.text.isEmpty) {
@@ -192,13 +196,15 @@ class _LoginState extends State<LoginView> {
       });
     });
 
-    if (_emailLogin) {
+    if (_loginType == LOGIN_TYPE_EMAIL) {
       viewModel.onSignUpPressed(
         context,
         completer,
         email: _emailController.text,
         password: _passwordController.text,
       );
+    } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
+      viewModel.onMicrosoftSignUpPressed(context, completer);
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
     }
@@ -249,7 +255,7 @@ class _LoginState extends State<LoginView> {
                 ? kAppStagingUrl
                 : kAppProductionUrl;
 
-    if (_emailLogin) {
+    if (_loginType == LOGIN_TYPE_EMAIL) {
       if (_recoverPassword) {
         viewModel.onRecoverPressed(
           context,
@@ -269,6 +275,11 @@ class _LoginState extends State<LoginView> {
           oneTimePassword: _oneTimePasswordController.text,
         );
       }
+    } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
+      viewModel.onMicrosoftLoginPressed(context, completer,
+          url: url,
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text);
     } else {
       viewModel.onGoogleLoginPressed(context, completer,
           url: url,
@@ -376,44 +387,62 @@ class _LoginState extends State<LoginView> {
                                 _createAccount = false;
                                 _loginError = '';
                                 if (index == 1) {
-                                  _emailLogin = true;
+                                  _loginType == LOGIN_TYPE_EMAIL;
                                 }
                               });
                             },
                           ),
                         ],
-                        if (!_isSelfHosted && !_hideGoogle) ...[
+                        if (!_isSelfHosted &&
+                            (!kReleaseMode || !_hideGoogle)) ...[
                           RuledText(localization.selectMethod),
-                          AppToggleButtons(
-                            tabLabels:
-                                calculateLayout(context) == AppLayout.mobile
-                                    ? [
-                                        'Google',
-                                        localization.email,
-                                      ]
-                                    : [
-                                        _createAccount
-                                            ? localization.googleSignUp
-                                            : localization.googleSignIn,
-                                        _createAccount
-                                            ? localization.emailSignUp
-                                            : localization.emailSignIn,
-                                      ],
-                            selectedIndex: _emailLogin ? 1 : 0,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _emailLogin = index == 1;
-                                _loginError = '';
-                              });
-                            },
-                          ),
+                          if (kIsWeb)
+                            AppToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                'Microsoft',
+                                localization.email,
+                              ],
+                              selectedIndex: _loginType == LOGIN_TYPE_EMAIL
+                                  ? 2
+                                  : _loginType == LOGIN_TYPE_MICROSOFT
+                                      ? 1
+                                      : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _loginType = index == 2
+                                      ? LOGIN_TYPE_EMAIL
+                                      : index == 1
+                                          ? LOGIN_TYPE_MICROSOFT
+                                          : LOGIN_TYPE_GOOGLE;
+                                  _loginError = '';
+                                });
+                              },
+                            )
+                          else
+                            AppToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                localization.email,
+                              ],
+                              selectedIndex:
+                                  _loginType == LOGIN_TYPE_EMAIL ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _loginType = index == 1
+                                      ? LOGIN_TYPE_EMAIL
+                                      : LOGIN_TYPE_GOOGLE;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: horizontalPadding),
                           child: Column(
                             children: [
-                              if (_emailLogin)
+                              if (_loginType == LOGIN_TYPE_EMAIL)
                                 DecoratedFormField(
                                   controller: _emailController,
                                   label: localization.email,
@@ -427,7 +456,8 @@ class _LoginState extends State<LoginView> {
                                   autofocus: true,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
-                              if (_emailLogin && !_recoverPassword)
+                              if (_loginType == LOGIN_TYPE_EMAIL &&
+                                  !_recoverPassword)
                                 PasswordFormField(
                                   controller: _passwordController,
                                   autoValidate: false,
@@ -568,8 +598,10 @@ class _LoginState extends State<LoginView> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (_emailLogin)
+                            if (_loginType == LOGIN_TYPE_EMAIL)
                               Icon(Icons.mail, color: Colors.white)
+                            else if (_loginType == LOGIN_TYPE_MICROSOFT)
+                              Icon(MdiIcons.microsoft, color: Colors.white)
                             else
                               ClipOval(
                                 child: Image.asset(
@@ -582,12 +614,16 @@ class _LoginState extends State<LoginView> {
                               _recoverPassword
                                   ? localization.recoverPassword
                                   : _createAccount
-                                      ? (_emailLogin
+                                      ? (_loginType == LOGIN_TYPE_EMAIL
                                           ? localization.emailSignUp
-                                          : localization.googleSignUp)
-                                      : (_emailLogin
+                                          : _loginType == LOGIN_TYPE_MICROSOFT
+                                              ? localization.microsoftSignUp
+                                              : localization.googleSignUp)
+                                      : (_loginType == LOGIN_TYPE_EMAIL
                                           ? localization.emailSignIn
-                                          : localization.googleSignIn),
+                                          : _loginType == LOGIN_TYPE_MICROSOFT
+                                              ? localization.microsoftSignIn
+                                              : localization.googleSignIn),
                               style:
                                   TextStyle(fontSize: 18, color: Colors.white),
                             )

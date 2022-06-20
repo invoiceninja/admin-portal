@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -579,7 +580,7 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
-    if (entityType == EntityType.purchaseOrder) {
+    if (kReleaseMode && entityType == EntityType.purchaseOrder) {
       return false;
     }
 

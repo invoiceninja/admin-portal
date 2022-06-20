@@ -20,8 +20,10 @@ class AppToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
-      final double toggleWidth =
-          isDesktop ? 208 : (constraints.maxWidth - 36) / 2;
+      double toggleWidth = (constraints.maxWidth - 36) / tabLabels.length;
+      if (isDesktop) {
+        toggleWidth -= 46 / tabLabels.length;
+      }
 
       return Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -37,8 +39,22 @@ class AppToggleButtons extends StatelessWidget {
               height: 40,
               child: Center(child: Text(tabLabels[1])),
             ),
+            if (tabLabels.length == 3)
+              Container(
+                width: toggleWidth,
+                height: 40,
+                child: Center(child: Text(tabLabels[2])),
+              ),
           ],
-          isSelected: selectedIndex == 0 ? [true, false] : [false, true],
+          isSelected: tabLabels.length == 3
+              ? (selectedIndex == 0
+                  ? [true, false, false]
+                  : selectedIndex == 1
+                      ? [false, true, false]
+                      : [false, false, true])
+              : selectedIndex == 0
+                  ? [true, false]
+                  : [false, true],
           onPressed: (index) => onTabChanged(index),
         ),
       );

@@ -38,6 +38,28 @@ class EditPurchaseOrder implements PersistUI, PersistPrefs {
   final bool force;
 }
 
+class ShowEmailPurchaseOrder {
+  ShowEmailPurchaseOrder({this.purchaseOrder, this.context, this.completer});
+
+  final InvoiceEntity purchaseOrder;
+  final BuildContext context;
+  final Completer completer;
+}
+
+class ShowPdfPurchaseOrder {
+  ShowPdfPurchaseOrder({this.purchaseOrder, this.context, this.activityId});
+
+  final InvoiceEntity purchaseOrder;
+  final BuildContext context;
+  final String activityId;
+}
+
+class EditPurchaseOrderItem implements PersistUI {
+  EditPurchaseOrderItem([this.itemIndex]);
+
+  final int itemIndex;
+}
+
 class UpdatePurchaseOrder implements PersistUI {
   UpdatePurchaseOrder(this.purchaseOrder);
 
@@ -113,10 +135,15 @@ class LoadPurchaseOrdersSuccess implements StopLoading {
 }
 
 class SavePurchaseOrderRequest implements StartSaving {
-  SavePurchaseOrderRequest({this.completer, this.purchaseOrder});
+  SavePurchaseOrderRequest({
+    this.completer,
+    this.purchaseOrder,
+    this.action,
+  });
 
   final Completer completer;
   final InvoiceEntity purchaseOrder;
+  final EntityAction action;
 }
 
 class SavePurchaseOrderSuccess implements StopSaving, PersistData, PersistUI {
@@ -192,6 +219,81 @@ class RestorePurchaseOrdersFailure implements StopSaving {
   RestorePurchaseOrdersFailure(this.purchaseOrders);
 
   final List<InvoiceEntity> purchaseOrders;
+}
+
+class EmailPurchaseOrderRequest implements StartSaving {
+  EmailPurchaseOrderRequest(
+      {this.completer,
+      this.purchaseOrderId,
+      this.template,
+      this.subject,
+      this.body});
+
+  final Completer completer;
+  final String purchaseOrderId;
+  final EmailTemplate template;
+  final String subject;
+  final String body;
+}
+
+class EmailPurchaseOrderSuccess implements StopSaving, PersistData {
+  EmailPurchaseOrderSuccess(this.quote);
+
+  final InvoiceEntity quote;
+}
+
+class EmailPurchaseOrderFailure implements StopSaving {
+  EmailPurchaseOrderFailure(this.error);
+
+  final dynamic error;
+}
+
+class AddPurchaseOrderContact implements PersistUI {
+  AddPurchaseOrderContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemovePurchaseOrderContact implements PersistUI {
+  RemovePurchaseOrderContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
+class AddPurchaseOrderItem implements PersistUI {
+  AddPurchaseOrderItem({this.purchaseOrderItem});
+
+  final InvoiceItemEntity purchaseOrderItem;
+}
+
+class MovePurchaseOrderItem implements PersistUI {
+  MovePurchaseOrderItem({
+    this.oldIndex,
+    this.newIndex,
+  });
+
+  final int oldIndex;
+  final int newIndex;
+}
+
+class AddPurchaseOrderItems implements PersistUI {
+  AddPurchaseOrderItems(this.lineItems);
+
+  final List<InvoiceItemEntity> lineItems;
+}
+
+class UpdatePurchaseOrderItem implements PersistUI {
+  UpdatePurchaseOrderItem({this.index, this.purchaseOrderItem});
+
+  final int index;
+  final InvoiceItemEntity purchaseOrderItem;
+}
+
+class DeletePurchaseOrderItem implements PersistUI {
+  DeletePurchaseOrderItem(this.index);
+
+  final int index;
 }
 
 class FilterPurchaseOrders implements PersistUI {

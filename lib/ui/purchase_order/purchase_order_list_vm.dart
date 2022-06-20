@@ -1,73 +1,98 @@
+// Dart imports:
 import 'dart:async';
-import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+// Package imports:
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_list_item.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_presenter.dart';
 import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 class PurchaseOrderListBuilder extends StatelessWidget {
   const PurchaseOrderListBuilder({Key key}) : super(key: key);
 
+  static const String route = '/purchase_orders/edit';
+
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PurchaseOrderListVM>(
-      converter: PurchaseOrderListVM.fromStore,
-      builder: (context, viewModel) {
-        return EntityList(
-            entityType: EntityType.purchaseOrder,
-            presenter: PurchaseOrderPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.purchaseOrderList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final purchaseOrderId = viewModel.purchaseOrderList[index];
-              final purchaseOrder = viewModel.purchaseOrderMap[purchaseOrderId];
-              final listState = state.getListState(EntityType.purchaseOrder);
-              final isInMultiselect = listState.isInMultiselect();
+        converter: PurchaseOrderListVM.fromStore,
+        builder: (context, viewModel) {
+          return EntityList(
+              onClearMultiselect: viewModel.onClearMultiselect,
+              entityType: EntityType.purchaseOrder,
+              presenter: PurchaseOrderPresenter(),
+              state: viewModel.state,
+              entityList: viewModel.invoiceList,
+              tableColumns: viewModel.tableColumns,
+              onRefreshed: viewModel.onRefreshed,
+              onSortColumn: viewModel.onSortColumn,
+              itemBuilder: (BuildContext context, index) {
+                final state = viewModel.state;
+                final invoiceId = viewModel.invoiceList[index];
+                final invoice = viewModel.invoiceMap[invoiceId];
+                final listUIState =
+                    state.getListState(EntityType.purchaseOrder);
+                final isInMultiselect = listUIState.isInMultiselect();
 
-              return PurchaseOrderListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                purchaseOrder: purchaseOrder,
-                isChecked:
-                    isInMultiselect && listState.isSelected(purchaseOrder.id),
-              );
-            });
-      },
-    );
+                return PurchaseOrderListItem(
+                  user: state.user,
+                  filter: viewModel.filter,
+                  purchaseOrder: invoice,
+                  client:
+                      viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
+                  isChecked:
+                      isInMultiselect && listUIState.isSelected(invoice.id),
+                );
+              });
+        });
   }
 }
 
-class PurchaseOrderListVM {
+class PurchaseOrderListVM extends EntityListVM {
   PurchaseOrderListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.purchaseOrderList,
-    @required this.purchaseOrderMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
-  });
+    @required AppState state,
+    @required List<String> invoiceList,
+    @required BuiltMap<String, InvoiceEntity> invoiceMap,
+    @required BuiltMap<String, ClientEntity> clientMap,
+    @required String filter,
+    @required bool isLoading,
+    @required Function(BuildContext) onRefreshed,
+    @required
+        Function(BuildContext, List<InvoiceEntity>, EntityAction)
+            onEntityAction,
+    @required List<String> tableColumns,
+    @required EntityType entityType,
+    @required Function(String) onSortColumn,
+    @required Function onClearMultiselect,
+  }) : super(
+          state: state,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          onRefreshed: onRefreshed,
+          tableColumns: tableColumns,
+          entityType: entityType,
+          onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
+        );
 
   static PurchaseOrderListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -84,41 +109,27 @@ class PurchaseOrderListVM {
 
     return PurchaseOrderListVM(
       state: state,
-      userCompany: state.userCompany,
-      listState: state.purchaseOrderListState,
-      purchaseOrderList: memoizedFilteredPurchaseOrderList(
-        state.getUISelection(EntityType.purchaseOrder),
-        state.purchaseOrderState.map,
-        state.purchaseOrderState.list,
-        state.clientState.map,
-        state.purchaseOrderListState,
-        state.userState.map,
-      ),
-      purchaseOrderMap: state.purchaseOrderState.map,
+      invoiceList: memoizedFilteredPurchaseOrderList(
+          state.getUISelection(EntityType.purchaseOrder),
+          state.purchaseOrderState.map,
+          state.purchaseOrderState.list,
+          state.clientState.map,
+          state.purchaseOrderListState,
+          state.userState.map),
+      invoiceMap: state.purchaseOrderState.map,
+      clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      filter: state.purchaseOrderUIState.listUIState.filter,
+      filter: state.purchaseOrderListState.filter,
+      onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, List<BaseEntity> purchaseOrders,
               EntityAction action) =>
           handlePurchaseOrderAction(context, purchaseOrders, action),
-      onRefreshed: (context) => _handleRefresh(context),
       tableColumns: state.userCompany.settings
               ?.getTableColumns(EntityType.purchaseOrder) ??
           PurchaseOrderPresenter.getDefaultTableFields(state.userCompany),
+      entityType: EntityType.purchaseOrder,
       onSortColumn: (field) => store.dispatch(SortPurchaseOrders(field)),
-      onClearMultielsect: () => store.dispatch(ClearPurchaseOrderMultiselect()),
+      onClearMultiselect: () => store.dispatch(ClearPurchaseOrderMultiselect()),
     );
   }
-
-  final AppState state;
-  final UserCompanyEntity userCompany;
-  final List<String> purchaseOrderList;
-  final BuiltMap<String, InvoiceEntity> purchaseOrderMap;
-  final ListUIState listState;
-  final String filter;
-  final bool isLoading;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final List<String> tableColumns;
-  final Function(String) onSortColumn;
-  final Function onClearMultielsect;
 }

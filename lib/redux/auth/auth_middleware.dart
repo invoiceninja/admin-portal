@@ -173,6 +173,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
             accessToken: action.accessToken,
             url: action.url,
             secret: action.secret,
+            provider: action.provider,
             platform: action.platform)
         .then((data) {
       _saveAuthLocal(action.url);
@@ -205,6 +206,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
         .oauthSignUp(
             accessToken: action.accessToken,
             idToken: action.idToken,
+            provider: action.provider,
             referralCode: state.authState.referralCode)
         .then((data) {
       _saveAuthLocal(kAppProductionUrl);
@@ -296,8 +298,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         });
       });
 
-      if (permissionsWereChanged) {
-        store.dispatch(ClearData());
+      if (permissionsWereChanged && !action.clearData) {
         store.dispatch(
             RefreshData(completer: action.completer, clearData: true));
       } else {

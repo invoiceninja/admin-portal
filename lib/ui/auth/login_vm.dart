@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -24,6 +24,9 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -55,6 +58,8 @@ class LoginVM {
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
     @required this.onGoogleSignUpPressed,
+    @required this.onMicrosoftLoginPressed,
+    @required this.onMicrosoftSignUpPressed,
     @required this.onTokenLoginPressed,
   });
 
@@ -96,6 +101,13 @@ class LoginVM {
   final Function(BuildContext, Completer<Null> completer,
       {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
   final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
+
+  final Function(BuildContext, Completer<Null> completer,
+      {String url,
+      String secret,
+      String oneTimePassword}) onMicrosoftLoginPressed;
+  final Function(BuildContext, Completer<Null> completer)
+      onMicrosoftSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
@@ -159,6 +171,7 @@ class LoginVM {
                 url: _formatApiUrl(url),
                 secret: secret.trim(),
                 platform: getPlatform(context),
+                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                 oneTimePassword: oneTimePassword,
               ));
               completer.future.then((_) => _handleLogin(context: context));
@@ -187,6 +200,7 @@ class LoginVM {
                 completer: completer,
                 idToken: idToken,
                 accessToken: accessToken,
+                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
               ));
               completer.future
                   .then((_) => _handleLogin(context: context, isSignUp: true));
@@ -199,6 +213,54 @@ class LoginVM {
         } catch (error) {
           completer.completeError(error);
           print('## onGoogleSignUpPressed: $error');
+        }
+      },
+      onMicrosoftLoginPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String url,
+        @required String secret,
+        @required String oneTimePassword,
+      }) async {
+        try {
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            store.dispatch(OAuthLoginRequest(
+              completer: completer,
+              idToken: idToken,
+              accessToken: accessToken,
+              url: _formatApiUrl(url),
+              secret: secret.trim(),
+              platform: getPlatform(context),
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              oneTimePassword: oneTimePassword,
+            ));
+            completer.future.then((_) => _handleLogin(context: context));
+          }, (dynamic error) {
+            completer.completeError(error);
+          });
+        } catch (error) {
+          completer.completeError(error);
+          print('## onMicrosoftLoginPressed: $error');
+        }
+      },
+      onMicrosoftSignUpPressed:
+          (BuildContext context, Completer<Null> completer) async {
+        try {
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            store.dispatch(OAuthSignUpRequest(
+              completer: completer,
+              idToken: idToken,
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              accessToken: accessToken,
+            ));
+            completer.future
+                .then((_) => _handleLogin(context: context, isSignUp: true));
+          }, (dynamic error) {
+            completer.completeError(error);
+          });
+        } catch (error) {
+          completer.completeError(error);
+          print('## onMicrosoftSignUpPressed: $error');
         }
       },
       onSignUpPressed: (

@@ -384,6 +384,7 @@ class MenuDrawer extends StatelessWidget {
                                   ),
                                 ),
                             if (state.userCompany.isOwner &&
+                                state.isHosted &&
                                 !isPaidAccount(context) &&
                                 !isApple())
                               Material(

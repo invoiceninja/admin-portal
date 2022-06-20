@@ -39,10 +39,12 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.bulkEmailCredit:
     case EntityAction.bulkEmailInvoice:
     case EntityAction.bulkEmailQuote:
+    case EntityAction.bulkEmailPurchaseOrder:
     case EntityAction.emailQuote:
     case EntityAction.emailInvoice:
     case EntityAction.emailCredit:
     case EntityAction.emailPayment:
+    case EntityAction.emailPurchaseOrder:
     case EntityAction.resendInvite:
       return Icons.send;
     case EntityAction.archive:

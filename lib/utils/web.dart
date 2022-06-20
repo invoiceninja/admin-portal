@@ -5,7 +5,9 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 // Package imports:
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:redux/redux.dart';
+import 'package:msal_js/msal_js.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -64,6 +66,28 @@ class WebUtils {
         (e as BeforeUnloadEvent).returnValue =
             'Changes you made may not be saved.';
       }
+    });
+  }
+
+  static void microsoftLogin(
+    Function(String, String) succesCallback,
+    Function(dynamic) failureCallback,
+  ) async {
+    final config = Configuration()
+      ..auth = (BrowserAuthOptions()
+        //..redirectUri = 'https://invoicing.co/auth/microsoft'
+        //..redirectUri = browserUrl
+        //..redirectUri = 'https://staging.invoicing.co/'
+        ..redirectUri = 'http://localhost:8080/'
+        ..clientId = Config.MICROSOFT_CLIENT_ID);
+    final publicClientApp = PublicClientApplication(config);
+
+    final loginRequest = PopupRequest()..scopes = ['user.read'];
+
+    publicClientApp.loginPopup(loginRequest).then((result) {
+      succesCallback(result?.idToken, result?.accessToken);
+    }).catchError((dynamic error) {
+      failureCallback(error);
     });
   }
 

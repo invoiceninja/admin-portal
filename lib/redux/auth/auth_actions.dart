@@ -29,6 +29,7 @@ class OAuthLoginRequest implements StartLoading {
     @required this.url,
     @required this.secret,
     @required this.platform,
+    @required this.provider,
     @required this.oneTimePassword,
   });
 
@@ -39,6 +40,7 @@ class OAuthLoginRequest implements StartLoading {
   final String url;
   final String secret;
   final String platform;
+  final String provider;
   final String oneTimePassword;
 }
 
@@ -130,11 +132,13 @@ class OAuthSignUpRequest implements StartLoading {
     @required this.completer,
     @required this.idToken,
     @required this.accessToken,
+    @required this.provider,
   });
 
   final Completer completer;
   final String idToken;
   final String accessToken;
+  final String provider;
 }
 
 class UserVerifiedPassword {}

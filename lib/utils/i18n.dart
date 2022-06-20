@@ -16,6 +16,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'purchase_order_total': 'Purchase Order Total',
+      'email_purchase_order': 'Email Purchase Order',
+      'disconnected_email': 'Successfully connected email',
+      'connect_email': 'Connect Email',
+      'disconnect_email': 'Disconnect Email',
+      'use_web_app_to_connect_microsoft':
+          'Please use the web app to connect to Microsoft',
+      'email_provider': 'Email Provider',
+      'connect_microsoft': 'Connect Microsoft',
+      'disconnect_microsoft': 'Disconnect Microsoft',
+      'connected_microsoft': 'Successfully connected Microsoft',
+      'disconnected_microsoft': 'Successfully disconnected Microsoft',
+      'microsoft_sign_in': 'Login with Microsoft',
+      'microsoft_sign_up': 'Sign up with Microsoft',
+      'emailed_purchase_order': 'Successfully queued purchase order to be sent',
+      'emailed_purchase_orders':
+          'Successfully queued purchase orders to be sent',
       'enable_react_app': 'Change to the React web app',
       'purchase_order_design': 'Purchase Order Design',
       'purchase_order_terms': 'Purchase Order Terms',
@@ -70687,6 +70704,66 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableReactApp =>
       _localizedValues[localeCode]['enable_react_app'] ??
       _localizedValues['en']['enable_react_app'];
+
+  String get emailedPurchaseOrder =>
+      _localizedValues[localeCode]['emailed_purchase_orderk'] ??
+      _localizedValues['en']['emailed_purchase_order'];
+
+  String get emailedPurchaseOrders =>
+      _localizedValues[localeCode]['emailed_purchase_orders'] ??
+      _localizedValues['en']['emailed_purchase_orders'];
+
+  String get microsoftSignUp =>
+      _localizedValues[localeCode]['microsoft_sign_up'] ??
+      _localizedValues['en']['microsoft_sign_up'];
+
+  String get microsoftSignIn =>
+      _localizedValues[localeCode]['microsoft_sign_in'] ??
+      _localizedValues['en']['microsoft_sign_in'];
+
+  String get disconnectedMicrosoft =>
+      _localizedValues[localeCode]['disconnected_microsoft'] ??
+      _localizedValues['en']['disconnected_microsoft'];
+
+  String get connectMicrosoft =>
+      _localizedValues[localeCode]['connect_microsoft'] ??
+      _localizedValues['en']['connect_microsoft'];
+
+  String get disconnectMicrosoft =>
+      _localizedValues[localeCode]['disconnect_microsoft'] ??
+      _localizedValues['en']['disconnect_microsoft'];
+
+  String get connectedMicrosoft =>
+      _localizedValues[localeCode]['connected_microsoft'] ??
+      _localizedValues['en']['connected_microsoft'];
+
+  String get emailProvider =>
+      _localizedValues[localeCode]['email_provider'] ??
+      _localizedValues['en']['email_provider'];
+
+  String get useWebAppToConnectMicrosoft =>
+      _localizedValues[localeCode]['use_web_app_to_connect_microsoft'] ??
+      _localizedValues['en']['use_web_app_to_connect_microsoft'];
+
+  String get connectEmail =>
+      _localizedValues[localeCode]['connect_email'] ??
+      _localizedValues['en']['connect_email'];
+
+  String get disconnectEmail =>
+      _localizedValues[localeCode]['disconnect_email'] ??
+      _localizedValues['en']['disconnect_email'];
+
+  String get disconnectedEmail =>
+      _localizedValues[localeCode]['disconnected_email'] ??
+      _localizedValues['en']['disconnected_email'];
+
+  String get emailPurchaseOrder =>
+      _localizedValues[localeCode]['email_purchase_order'] ??
+      _localizedValues['en']['email_purchase_order'];
+
+  String get purchaseOrderTotal =>
+      _localizedValues[localeCode]['purchase_order_total'] ??
+      _localizedValues['en']['purchase_order_total'];
 
 // STARTER: lang field - do not remove comment
 

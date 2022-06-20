@@ -231,13 +231,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     if (company.isModuleEnabled(EntityType.purchaseOrder)) ...[
                       DesignPicker(
                         label: localization.purchaseOrderDesign,
-                        initialValue: settings.purchaseOrderDesignId,
+                        initialValue: settings.defaultPurchaseOrderDesignId,
                         onSelected: (value) {
                           setState(() {
                             _wasPurchaseOrderDesignChanged = true;
                           });
-                          viewModel.onSettingsChanged(settings.rebuild(
-                              (b) => b..purchaseOrderDesignId = value.id));
+                          viewModel.onSettingsChanged(settings.rebuild((b) =>
+                              b..defaultPurchaseOrderDesignId = value.id));
                         },
                       ),
                       if (!isFiltered &&

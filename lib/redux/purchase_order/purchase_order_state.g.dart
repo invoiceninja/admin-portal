@@ -264,6 +264,8 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
   @override
   final InvoiceEntity editing;
   @override
+  final int editingItemIndex;
+  @override
   final ListUIState listUIState;
   @override
   final String selectedId;
@@ -282,6 +284,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
 
   _$PurchaseOrderUIState._(
       {this.editing,
+      this.editingItemIndex,
       this.listUIState,
       this.selectedId,
       this.forceSelected,
@@ -309,6 +312,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
     if (identical(other, this)) return true;
     return other is PurchaseOrderUIState &&
         editing == other.editing &&
+        editingItemIndex == other.editingItemIndex &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         forceSelected == other.forceSelected &&
@@ -324,7 +328,11 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, editing.hashCode),
+                                editingItemIndex.hashCode),
+                            listUIState.hashCode),
                         selectedId.hashCode),
                     forceSelected.hashCode),
                 tabIndex.hashCode),
@@ -336,6 +344,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
   String toString() {
     return (newBuiltValueToStringHelper('PurchaseOrderUIState')
           ..add('editing', editing)
+          ..add('editingItemIndex', editingItemIndex)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('forceSelected', forceSelected)
@@ -354,6 +363,11 @@ class PurchaseOrderUIStateBuilder
   InvoiceEntityBuilder get editing =>
       _$this._editing ??= new InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+
+  int _editingItemIndex;
+  int get editingItemIndex => _$this._editingItemIndex;
+  set editingItemIndex(int editingItemIndex) =>
+      _$this._editingItemIndex = editingItemIndex;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -390,6 +404,7 @@ class PurchaseOrderUIStateBuilder
     final $v = _$v;
     if ($v != null) {
       _editing = $v.editing?.toBuilder();
+      _editingItemIndex = $v.editingItemIndex;
       _listUIState = $v.listUIState.toBuilder();
       _selectedId = $v.selectedId;
       _forceSelected = $v.forceSelected;
@@ -419,6 +434,7 @@ class PurchaseOrderUIStateBuilder
       _$result = _$v ??
           new _$PurchaseOrderUIState._(
               editing: _editing?.build(),
+              editingItemIndex: editingItemIndex,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               forceSelected: forceSelected,
@@ -431,6 +447,7 @@ class PurchaseOrderUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
