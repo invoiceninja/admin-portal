@@ -121,8 +121,8 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return invoice.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
-      ..invitations.replace((client?.emailContacts ?? <ContactEntity>[])
-          .map((contact) => InvitationEntity(contactId: contact.id))
+      ..invitations.replace((client?.emailContacts ?? <ClientContactEntity>[])
+          .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toList()));
   }),
   TypedReducer<InvoiceEntity, RestoreInvoicesSuccess>((invoices, action) {
@@ -141,8 +141,8 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
   TypedReducer<InvoiceEntity, AddInvoiceContact>((invoice, action) {
     return invoice.rebuild((b) => b
-      ..invitations.add(
-          action.invitation ?? InvitationEntity(contactId: action.contact.id)));
+      ..invitations.add(action.invitation ??
+          InvitationEntity(clientContactId: action.contact.id)));
   }),
   TypedReducer<InvoiceEntity, RemoveInvoiceContact>((invoice, action) {
     return invoice.rebuild((b) => b..invitations.remove(action.invitation));

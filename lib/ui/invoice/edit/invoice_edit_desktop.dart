@@ -36,6 +36,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -43,6 +44,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.da
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -255,16 +257,28 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       left: kMobileDialogPadding),
                   children: <Widget>[
                     if (invoice.isNew)
-                      ClientPicker(
-                        autofocus: true,
-                        clientId: invoice.clientId,
-                        clientState: state.clientState,
-                        onSelected: (client) {
-                          viewModel.onClientChanged(context, invoice, client);
-                        },
-                        onAddPressed: (completer) =>
-                            viewModel.onAddClientPressed(context, completer),
-                      )
+                      if (invoice.isPurchaseOrder)
+                        VendorPicker(
+                          autofocus: true,
+                          vendorId: invoice.vendorId,
+                          vendorState: state.vendorState,
+                          onSelected: (vendor) {
+                            viewModel.onVendorChanged(context, invoice, vendor);
+                          },
+                          onAddPressed: (completer) =>
+                              viewModel.onAddVendorPressed(context, completer),
+                        )
+                      else
+                        ClientPicker(
+                          autofocus: true,
+                          clientId: invoice.clientId,
+                          clientState: state.clientState,
+                          onSelected: (client) {
+                            viewModel.onClientChanged(context, invoice, client);
+                          },
+                          onAddPressed: (completer) =>
+                              viewModel.onAddClientPressed(context, completer),
+                        )
                     else
                       ConstrainedBox(
                         constraints: BoxConstraints(
@@ -568,6 +582,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               viewModel: widget.entityViewModel,
               isTasks: _showTasksTable,
             )
+          else if (entityType == EntityType.purchaseOrder)
+            PurchaseOrderEditItemsScreen(
+              viewModel: widget.entityViewModel,
+            )
           else
             SizedBox(),
           Row(
@@ -678,7 +696,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       }
                                     },
                                   ),
-                                if (company.isModuleEnabled(EntityType.vendor))
+                                if (invoice.isPurchaseOrder)
+                                  ClientPicker(
+                                    clientId: invoice.clientId,
+                                    clientState: state.clientState,
+                                    onSelected: (client) {
+                                      viewModel.onChanged(invoice.rebuild((b) =>
+                                          b..clientId = client?.id ?? ''));
+                                    },
+                                  )
+                                else if (company
+                                    .isModuleEnabled(EntityType.vendor))
                                   EntityDropdown(
                                     entityType: EntityType.vendor,
                                     entityId: invoice.vendorId,

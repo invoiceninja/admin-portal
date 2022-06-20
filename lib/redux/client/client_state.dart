@@ -63,7 +63,7 @@ abstract class ClientUIState extends Object
       listUIState: ListUIState(sortField?.field ?? ClientFields.name,
           sortAscending: sortField?.ascending),
       editing: ClientEntity(),
-      editingContact: ContactEntity(),
+      editingContact: ClientContactEntity(),
       saveCompleter: null,
       tabIndex: 0,
     );
@@ -79,7 +79,7 @@ abstract class ClientUIState extends Object
   ClientEntity get editing;
 
   @nullable
-  ContactEntity get editingContact;
+  ClientContactEntity get editingContact;
 
   @override
   bool get isCreatingNew => editing.isNew;

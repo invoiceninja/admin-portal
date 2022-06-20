@@ -122,7 +122,12 @@ class InvoiceTotalFields {
 }
 
 abstract class InvoiceEntity extends Object
-    with BaseEntity, SelectableEntity, CalculateInvoiceTotal, BelongsToClient
+    with
+        BaseEntity,
+        SelectableEntity,
+        CalculateInvoiceTotal,
+        BelongsToClient,
+        BelongsToVendor
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity({
     String id,
@@ -209,7 +214,7 @@ abstract class InvoiceEntity extends Object
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.emailContacts
-              .map((contact) => InvitationEntity(contactId: contact.id))
+              .map((contact) => InvitationEntity(clientContactId: contact.id))
               .toList()),
       updatedAt: 0,
       archivedAt: 0,
@@ -275,7 +280,8 @@ abstract class InvoiceEntity extends Object
             (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
         .toList())
     ..invitations.replace(invitations
-        .map((invitation) => InvitationEntity(contactId: invitation.contactId))
+        .map((invitation) =>
+            InvitationEntity(clientContactId: invitation.clientContactId))
         .toList()));
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
@@ -285,6 +291,43 @@ abstract class InvoiceEntity extends Object
         fromCurrencyId: state.company.currencyId,
         toCurrencyId: client.currencyId);
     final settings = getClientSettings(state, client);
+
+    return rebuild((b) => b
+      ..exchangeRate = exchangeRate
+      ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
+              (settings.defaultTaxName1 ?? '').isNotEmpty
+          ? settings.defaultTaxName1
+          : taxName1
+      ..taxRate1 = state.company.numberOfInvoiceTaxRates >= 1 &&
+              (settings.defaultTaxName1 ?? '').isNotEmpty
+          ? settings.defaultTaxRate1
+          : taxRate1
+      ..taxName2 = state.company.numberOfInvoiceTaxRates >= 2 &&
+              (settings.defaultTaxName2 ?? '').isNotEmpty
+          ? settings.defaultTaxName2
+          : taxName2
+      ..taxRate2 = state.company.numberOfInvoiceTaxRates >= 2 &&
+              (settings.defaultTaxName2 ?? '').isNotEmpty
+          ? settings.defaultTaxRate2
+          : taxRate2
+      ..taxName3 = state.company.numberOfInvoiceTaxRates >= 3 &&
+              (settings.defaultTaxName3 ?? '').isNotEmpty
+          ? settings.defaultTaxName3
+          : taxName3
+      ..taxRate3 = state.company.numberOfInvoiceTaxRates >= 3 &&
+              (settings.defaultTaxName3 ?? '').isNotEmpty
+          ? settings.defaultTaxRate3
+          : taxRate3);
+  }
+
+  InvoiceEntity applyVendor(AppState state, VendorEntity vendor) {
+    vendor ??= VendorEntity();
+
+    final exchangeRate = getExchangeRate(state.staticState.currencyMap,
+        fromCurrencyId: state.company.currencyId,
+        toCurrencyId: vendor.currencyId);
+
+    final settings = state.company.settings;
 
     return rebuild((b) => b
       ..exchangeRate = exchangeRate
@@ -330,6 +373,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
+  @override
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
@@ -1093,6 +1137,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isInvoice => entityType == EntityType.invoice;
 
+  bool get isPurchaseOrder => entityType == EntityType.purchaseOrder;
+
   bool get isQuote => entityType == EntityType.quote;
 
   bool get isCredit => entityType == EntityType.credit;
@@ -1191,9 +1237,15 @@ abstract class InvoiceEntity extends Object
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
-  InvitationEntity getInvitationForContact(ContactEntity contact) {
+  InvitationEntity getInvitationForClientContact(ClientContactEntity contact) {
     return invitations.firstWhere(
-        (invitation) => invitation.contactId == contact.id,
+        (invitation) => invitation.clientContactId == contact.id,
+        orElse: () => null);
+  }
+
+  InvitationEntity getInvitationForVendorContact(VendorContactEntity contact) {
+    return invitations.firstWhere(
+        (invitation) => invitation.vendorContactId == contact.id,
         orElse: () => null);
   }
 
@@ -1579,11 +1631,15 @@ abstract class InvoiceItemEntity
 abstract class InvitationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  factory InvitationEntity({String contactId}) {
+  factory InvitationEntity({
+    String clientContactId,
+    String vendorContactId,
+  }) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
-      contactId: contactId ?? '',
+      clientContactId: clientContactId ?? '',
+      vendorContactId: vendorContactId ?? '',
       createdAt: 0,
       key: '',
       link: '',
@@ -1611,7 +1667,10 @@ abstract class InvitationEntity extends Object
   String get link;
 
   @BuiltValueField(wireName: 'client_contact_id')
-  String get contactId;
+  String get clientContactId;
+
+  @BuiltValueField(wireName: 'vendor_contact_id')
+  String get vendorContactId;
 
   @BuiltValueField(wireName: 'sent_date', compare: false)
   String get sentDate;
@@ -1661,6 +1720,11 @@ abstract class InvitationEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  // ignore: unused_element
+  static void _initializeBuilder(InvitationEntityBuilder builder) => builder
+    ..clientContactId = ''
+    ..vendorContactId = '';
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;

@@ -438,6 +438,12 @@ abstract class VendorEntity extends Object
     }
   }
 
+  List<VendorContactEntity> get emailContacts {
+    //final list = contacts.where((contact) => contact.sendEmail).toList();
+    final list = contacts.where((contact) => true).toList();
+    return list.isEmpty ? [primaryContact] : list;
+  }
+
   VendorContactEntity get primaryContact =>
       contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => VendorContactEntity());

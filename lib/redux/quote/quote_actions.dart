@@ -150,7 +150,7 @@ class LoadQuotesSuccess implements StopLoading {
 class AddQuoteContact implements PersistUI {
   AddQuoteContact({this.contact, this.invitation});
 
-  final ContactEntity contact;
+  final ClientContactEntity contact;
   final InvitationEntity invitation;
 }
 

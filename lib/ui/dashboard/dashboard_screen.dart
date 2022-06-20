@@ -245,23 +245,20 @@ class _DashboardScreenState extends State<DashboardScreen>
                   final data = serializers.serializeWith(
                       AccountEntity.serializer, account);
 
-                  passwordCallback(
-                      context: context,
-                      callback: (password, idToken) async {
-                        store.dispatch(StartSaving());
-                        WebClient()
-                            .put(url, credentials.token,
-                                data: json.encode(data),
-                                password: password,
-                                idToken: idToken)
-                            .then((dynamic _) {
-                          store.dispatch(StopSaving());
-                          WebUtils.reloadBrowser();
-                        }).catchError((Object error) {
-                          store.dispatch(StopSaving());
-                          showErrorDialog(context: context, message: error);
-                        });
-                      });
+                  store.dispatch(StartSaving());
+                  WebClient()
+                      .put(
+                    url,
+                    credentials.token,
+                    data: json.encode(data),
+                  )
+                      .then((dynamic _) {
+                    store.dispatch(StopSaving());
+                    WebUtils.reloadBrowser();
+                  }).catchError((Object error) {
+                    store.dispatch(StopSaving());
+                    showErrorDialog(context: context, message: error);
+                  });
                 },
                 icon: Icon(MdiIcons.react),
               ),

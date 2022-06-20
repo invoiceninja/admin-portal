@@ -152,7 +152,8 @@ ReportResult recurringInvoiceReport(
       continue;
     }
 
-    final contact = client.getContact(invoice.invitations.first.contactId);
+    final contact =
+        client.getContact(invoice.invitations.first.clientContactId);
 
     if (invoice.isDeleted || client.isDeleted) {
       continue;

@@ -203,7 +203,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             ..projectId = projectId ?? ''
             ..invitations.replace(BuiltList<InvitationEntity>(client
                 .emailContacts
-                .map((contact) => InvitationEntity(contactId: contact.id))
+                .map((contact) => InvitationEntity(clientContactId: contact.id))
                 .toList())))));
         }
         store.dispatch(AddInvoiceItems(items));

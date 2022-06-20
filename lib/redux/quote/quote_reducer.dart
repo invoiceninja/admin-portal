@@ -118,8 +118,8 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return quote.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
-      ..invitations.replace((client?.emailContacts ?? <ContactEntity>[])
-          .map((contact) => InvitationEntity(contactId: contact.id))
+      ..invitations.replace((client?.emailContacts ?? <ClientContactEntity>[])
+          .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toList()));
   }),
   TypedReducer<InvoiceEntity, RestoreQuotesSuccess>((quotes, action) {
@@ -138,8 +138,8 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
   TypedReducer<InvoiceEntity, AddQuoteContact>((invoice, action) {
     return invoice.rebuild((b) => b
-      ..invitations.add(
-          action.invitation ?? InvitationEntity(contactId: action.contact.id)));
+      ..invitations.add(action.invitation ??
+          InvitationEntity(clientContactId: action.contact.id)));
   }),
   TypedReducer<InvoiceEntity, RemoveQuoteContact>((invoice, action) {
     return invoice.rebuild((b) => b..invitations.remove(action.invitation));
@@ -151,7 +151,7 @@ InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
-  return action.quote;
+  return action.purchaseOrder;
 }
 
 InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
@@ -367,7 +367,7 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 }
 
 QuoteState _updateQuote(QuoteState invoiceState, dynamic action) {
-  final InvoiceEntity quote = action.quote;
+  final InvoiceEntity quote = action.purchaseOrder;
   return invoiceState.rebuild((b) => b
     ..map[quote.id] = quote
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));

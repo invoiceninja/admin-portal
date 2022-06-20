@@ -49,7 +49,7 @@ class EditClient implements PersistUI, PersistPrefs {
       this.force = false});
 
   final ClientEntity client;
-  final ContactEntity contact;
+  final ClientContactEntity contact;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -58,7 +58,7 @@ class EditClient implements PersistUI, PersistPrefs {
 class EditContact implements PersistUI {
   EditContact([this.contact]);
 
-  final ContactEntity contact;
+  final ClientContactEntity contact;
 }
 
 class ShowPdfClient {
@@ -146,14 +146,14 @@ class LoadClientsSuccess implements StopLoading {
 class AddContact implements PersistUI {
   AddContact([this.contact]);
 
-  final ContactEntity contact;
+  final ClientContactEntity contact;
 }
 
 class UpdateContact implements PersistUI {
   UpdateContact({this.index, this.contact});
 
   final int index;
-  final ContactEntity contact;
+  final ClientContactEntity contact;
 }
 
 class DeleteContact implements PersistUI {

@@ -150,7 +150,7 @@ class LoadCreditsSuccess implements StopLoading {
 class AddCreditContact implements PersistUI {
   AddCreditContact({this.contact, this.invitation});
 
-  final ContactEntity contact;
+  final ClientContactEntity contact;
   final InvitationEntity invitation;
 }
 

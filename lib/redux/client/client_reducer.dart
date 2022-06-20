@@ -59,12 +59,12 @@ final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
   }),
 ]);
 
-final editingContactReducer = combineReducers<ContactEntity>([
-  TypedReducer<ContactEntity, EditClient>((contact, action) {
-    return action.contact ?? ContactEntity();
+final editingContactReducer = combineReducers<ClientContactEntity>([
+  TypedReducer<ClientContactEntity, EditClient>((contact, action) {
+    return action.contact ?? ClientContactEntity();
   }),
-  TypedReducer<ContactEntity, EditContact>((contact, action) {
-    return action.contact ?? ContactEntity();
+  TypedReducer<ClientContactEntity, EditContact>((contact, action) {
+    return action.contact ?? ClientContactEntity();
   }),
 ]);
 
@@ -123,8 +123,8 @@ final editingReducer = combineReducers<ClientEntity>([
     return action.client.rebuild((b) => b..isChanged = true);
   }),
   TypedReducer<ClientEntity, AddContact>((client, action) {
-    return client
-        .rebuild((b) => b..contacts.add(action.contact ?? ContactEntity()));
+    return client.rebuild(
+        (b) => b..contacts.add(action.contact ?? ClientContactEntity()));
   }),
   TypedReducer<ClientEntity, DeleteContact>((client, action) {
     return client.rebuild((b) => b..contacts.removeAt(action.index));

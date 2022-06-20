@@ -476,6 +476,10 @@ abstract class BelongsToClient {
   String get clientId;
 }
 
+abstract class BelongsToVendor {
+  String get vendorId;
+}
+
 abstract class ErrorMessage
     implements Built<ErrorMessage, ErrorMessageBuilder> {
   factory ErrorMessage([void updates(ErrorMessageBuilder b)]) = _$ErrorMessage;
@@ -808,7 +812,7 @@ abstract class ActivityEntity
     InvoiceEntity recurringInvoice,
     ExpenseEntity recurringExpense,
   }) {
-    ContactEntity contact;
+    ClientContactEntity contact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
       contact = client.getContact(contactId);
     }

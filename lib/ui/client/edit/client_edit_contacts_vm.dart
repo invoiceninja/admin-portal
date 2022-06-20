@@ -54,7 +54,7 @@ class ClientEditContactsVM {
         client: client,
         contact: state.clientUIState.editingContact,
         onAddContactPressed: () {
-          final contact = ContactEntity();
+          final contact = ClientContactEntity();
           store.dispatch(AddContact(contact));
           store.dispatch(EditContact(contact));
         },
@@ -69,9 +69,9 @@ class ClientEditContactsVM {
 
   final CompanyEntity company;
   final ClientEntity client;
-  final ContactEntity contact;
+  final ClientContactEntity contact;
   final Function() onAddContactPressed;
   final Function(int) onRemoveContactPressed;
   final Function(BuildContext) onDoneContactPressed;
-  final Function(ContactEntity, int) onChangedContact;
+  final Function(ClientContactEntity, int) onChangedContact;
 }

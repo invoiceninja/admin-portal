@@ -9,23 +9,25 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/client/client_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ClientPicker extends StatelessWidget {
-  const ClientPicker({
-    @required this.clientId,
-    @required this.clientState,
+class VendorPicker extends StatelessWidget {
+  const VendorPicker({
+    @required this.vendorId,
+    @required this.vendorState,
     @required this.onSelected,
-    this.onAddPressed,
+    @required this.onAddPressed,
     this.autofocus,
   });
 
-  final String clientId;
-  final ClientState clientState;
+  final String vendorId;
+  final VendorState vendorState;
   final Function(SelectableEntity) onSelected;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
   final bool autofocus;
@@ -37,18 +39,23 @@ class ClientPicker extends StatelessWidget {
     final state = store.state;
 
     return EntityDropdown(
-      entityType: EntityType.client,
-      labelText: localization.client,
-      entityId: clientId,
+      entityType: EntityType.vendor,
+      labelText: localization.vendor,
+      entityId: vendorId,
       autofocus: autofocus,
-      entityList: memoizedDropdownClientList(clientState.map, clientState.list,
+      entityList: memoizedDropdownVendorList(vendorState.map, vendorState.list,
           state.userState.map, state.staticState),
-      entityMap: clientState.map,
+      entityMap: vendorState.map,
       validator: (String val) => val.trim().isEmpty
-          ? AppLocalization.of(context).pleaseSelectAClient
+          ? AppLocalization.of(context).pleaseSelectAVendor
           : null,
       onSelected: onSelected,
       onAddPressed: onAddPressed,
+      onCreateNew: (completer, name) {
+        store.dispatch(SaveVendorRequest(
+            vendor: VendorEntity().rebuild((b) => b..name = name),
+            completer: completer));
+      },
     );
   }
 }

@@ -58,19 +58,24 @@ class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
     Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity) onVendorChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
   }) : super(
           state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,
           onClientChanged: onClientChanged,
+          onVendorChanged: onVendorChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
         );
 
   factory PurchaseOrderEditDetailsVM.fromStore(Store<AppState> store) {
@@ -86,17 +91,15 @@ class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
           store.dispatch(UpdatePurchaseOrder(purchaseOrder)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (context, purchaseOrder, client) {
-        /*
+      onVendorChanged: (context, purchaseOrder, vendor) {
         store.dispatch(
-            UpdatePurchaseOrder(purchaseOrder.applyClient(state, client)));
-        store.dispatch(UpdatePurchaseOrderClient(client: client));
-        */
+            UpdatePurchaseOrder(purchaseOrder.applyVendor(state, vendor)));
+        store.dispatch(UpdatePurchaseOrderVendor(vendor: vendor));
       },
-      onAddClientPressed: (context, completer) {
+      onAddVendorPressed: (context, completer) {
         createEntity(
             context: context,
-            entity: ClientEntity(),
+            entity: VendorEntity(state: state),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()

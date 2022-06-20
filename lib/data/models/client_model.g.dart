@@ -12,8 +12,8 @@ Serializer<ClientItemResponse> _$clientItemResponseSerializer =
     new _$ClientItemResponseSerializer();
 Serializer<ClientEntity> _$clientEntitySerializer =
     new _$ClientEntitySerializer();
-Serializer<ContactEntity> _$contactEntitySerializer =
-    new _$ContactEntitySerializer();
+Serializer<ClientContactEntity> _$clientContactEntitySerializer =
+    new _$ClientContactEntitySerializer();
 
 class _$ClientListResponseSerializer
     implements StructuredSerializer<ClientListResponse> {
@@ -214,8 +214,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'contacts',
       serializers.serialize(object.contacts,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(ContactEntity)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ClientContactEntity)])),
       'activities',
       serializers.serialize(object.activities,
           specifiedType: const FullType(
@@ -440,7 +440,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ContactEntity)]))
+                      BuiltList, const [const FullType(ClientContactEntity)]))
               as BuiltList<Object>);
           break;
         case 'activities':
@@ -512,14 +512,19 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   }
 }
 
-class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
+class _$ClientContactEntitySerializer
+    implements StructuredSerializer<ClientContactEntity> {
   @override
-  final Iterable<Type> types = const [ContactEntity, _$ContactEntity];
+  final Iterable<Type> types = const [
+    ClientContactEntity,
+    _$ClientContactEntity
+  ];
   @override
-  final String wireName = 'ContactEntity';
+  final String wireName = 'ClientContactEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ContactEntity object,
+  Iterable<Object> serialize(
+      Serializers serializers, ClientContactEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'first_name',
@@ -608,10 +613,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
   }
 
   @override
-  ContactEntity deserialize(
+  ClientContactEntity deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ContactEntityBuilder();
+    final result = new ClientContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -971,7 +976,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String customValue4;
   @override
-  final BuiltList<ContactEntity> contacts;
+  final BuiltList<ClientContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
   @override
@@ -1438,10 +1443,10 @@ class ClientEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
-  ListBuilder<ContactEntity> _contacts;
-  ListBuilder<ContactEntity> get contacts =>
-      _$this._contacts ??= new ListBuilder<ContactEntity>();
-  set contacts(ListBuilder<ContactEntity> contacts) =>
+  ListBuilder<ClientContactEntity> _contacts;
+  ListBuilder<ClientContactEntity> get contacts =>
+      _$this._contacts ??= new ListBuilder<ClientContactEntity>();
+  set contacts(ListBuilder<ClientContactEntity> contacts) =>
       _$this._contacts = contacts;
 
   ListBuilder<ActivityEntity> _activities;
@@ -1672,7 +1677,7 @@ class ClientEntityBuilder
   }
 }
 
-class _$ContactEntity extends ContactEntity {
+class _$ClientContactEntity extends ClientContactEntity {
   @override
   final String firstName;
   @override
@@ -1718,10 +1723,11 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String id;
 
-  factory _$ContactEntity([void Function(ContactEntityBuilder) updates]) =>
-      (new ContactEntityBuilder()..update(updates)).build();
+  factory _$ClientContactEntity(
+          [void Function(ClientContactEntityBuilder) updates]) =>
+      (new ClientContactEntityBuilder()..update(updates)).build();
 
-  _$ContactEntity._(
+  _$ClientContactEntity._(
       {this.firstName,
       this.lastName,
       this.email,
@@ -1746,50 +1752,54 @@ class _$ContactEntity extends ContactEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        firstName, 'ContactEntity', 'firstName');
+        firstName, 'ClientContactEntity', 'firstName');
     BuiltValueNullFieldError.checkNotNull(
-        lastName, 'ContactEntity', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(email, 'ContactEntity', 'email');
+        lastName, 'ClientContactEntity', 'lastName');
     BuiltValueNullFieldError.checkNotNull(
-        password, 'ContactEntity', 'password');
-    BuiltValueNullFieldError.checkNotNull(phone, 'ContactEntity', 'phone');
+        email, 'ClientContactEntity', 'email');
     BuiltValueNullFieldError.checkNotNull(
-        contactKey, 'ContactEntity', 'contactKey');
+        password, 'ClientContactEntity', 'password');
     BuiltValueNullFieldError.checkNotNull(
-        isPrimary, 'ContactEntity', 'isPrimary');
+        phone, 'ClientContactEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
-        sendEmail, 'ContactEntity', 'sendEmail');
+        contactKey, 'ClientContactEntity', 'contactKey');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'ContactEntity', 'customValue1');
+        isPrimary, 'ClientContactEntity', 'isPrimary');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'ContactEntity', 'customValue2');
+        sendEmail, 'ClientContactEntity', 'sendEmail');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'ContactEntity', 'customValue3');
+        customValue1, 'ClientContactEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'ContactEntity', 'customValue4');
+        customValue2, 'ClientContactEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        lastLogin, 'ContactEntity', 'lastLogin');
-    BuiltValueNullFieldError.checkNotNull(link, 'ContactEntity', 'link');
+        customValue3, 'ClientContactEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ContactEntity', 'createdAt');
+        customValue4, 'ClientContactEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ContactEntity', 'updatedAt');
+        lastLogin, 'ClientContactEntity', 'lastLogin');
+    BuiltValueNullFieldError.checkNotNull(link, 'ClientContactEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ContactEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ContactEntity', 'id');
+        createdAt, 'ClientContactEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, 'ClientContactEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, 'ClientContactEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, 'ClientContactEntity', 'id');
   }
 
   @override
-  ContactEntity rebuild(void Function(ContactEntityBuilder) updates) =>
+  ClientContactEntity rebuild(
+          void Function(ClientContactEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ContactEntityBuilder toBuilder() => new ContactEntityBuilder()..replace(this);
+  ClientContactEntityBuilder toBuilder() =>
+      new ClientContactEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ContactEntity &&
+    return other is ClientContactEntity &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         email == other.email &&
@@ -1859,7 +1869,7 @@ class _$ContactEntity extends ContactEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ContactEntity')
+    return (newBuiltValueToStringHelper('ClientContactEntity')
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
@@ -1886,9 +1896,9 @@ class _$ContactEntity extends ContactEntity {
   }
 }
 
-class ContactEntityBuilder
-    implements Builder<ContactEntity, ContactEntityBuilder> {
-  _$ContactEntity _$v;
+class ClientContactEntityBuilder
+    implements Builder<ClientContactEntity, ClientContactEntityBuilder> {
+  _$ClientContactEntity _$v;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -1980,9 +1990,9 @@ class ContactEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  ContactEntityBuilder();
+  ClientContactEntityBuilder();
 
-  ContactEntityBuilder get _$this {
+  ClientContactEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _firstName = $v.firstName;
@@ -2013,52 +2023,51 @@ class ContactEntityBuilder
   }
 
   @override
-  void replace(ContactEntity other) {
+  void replace(ClientContactEntity other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ContactEntity;
+    _$v = other as _$ClientContactEntity;
   }
 
   @override
-  void update(void Function(ContactEntityBuilder) updates) {
+  void update(void Function(ClientContactEntityBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$ContactEntity build() {
+  _$ClientContactEntity build() {
     final _$result = _$v ??
-        new _$ContactEntity._(
+        new _$ClientContactEntity._(
             firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, 'ContactEntity', 'firstName'),
+                firstName, 'ClientContactEntity', 'firstName'),
             lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, 'ContactEntity', 'lastName'),
+                lastName, 'ClientContactEntity', 'lastName'),
             email: BuiltValueNullFieldError.checkNotNull(
-                email, 'ContactEntity', 'email'),
+                email, 'ClientContactEntity', 'email'),
             password: BuiltValueNullFieldError.checkNotNull(
-                password, 'ContactEntity', 'password'),
+                password, 'ClientContactEntity', 'password'),
             phone: BuiltValueNullFieldError.checkNotNull(
-                phone, 'ContactEntity', 'phone'),
+                phone, 'ClientContactEntity', 'phone'),
             contactKey: BuiltValueNullFieldError.checkNotNull(
-                contactKey, 'ContactEntity', 'contactKey'),
+                contactKey, 'ClientContactEntity', 'contactKey'),
             isPrimary: BuiltValueNullFieldError.checkNotNull(
-                isPrimary, 'ContactEntity', 'isPrimary'),
+                isPrimary, 'ClientContactEntity', 'isPrimary'),
             sendEmail: BuiltValueNullFieldError.checkNotNull(
-                sendEmail, 'ContactEntity', 'sendEmail'),
-            customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, 'ContactEntity', 'customValue1'),
-            customValue2:
-                BuiltValueNullFieldError.checkNotNull(customValue2, 'ContactEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ContactEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ContactEntity', 'customValue4'),
-            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ContactEntity', 'lastLogin'),
-            link: BuiltValueNullFieldError.checkNotNull(link, 'ContactEntity', 'link'),
+                sendEmail, 'ClientContactEntity', 'sendEmail'),
+            customValue1:
+                BuiltValueNullFieldError.checkNotNull(customValue1, 'ClientContactEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ClientContactEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ClientContactEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ClientContactEntity', 'customValue4'),
+            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ClientContactEntity', 'lastLogin'),
+            link: BuiltValueNullFieldError.checkNotNull(link, 'ClientContactEntity', 'link'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ContactEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ClientContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ClientContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ClientContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'ContactEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, 'ClientContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }

@@ -46,8 +46,8 @@ class _InvitationListTile extends StatelessWidget {
     final state = viewModel.state;
     final client = state.clientState.get(viewModel.invoice.clientId);
     final contact = client.contacts.firstWhere(
-        (contact) => contact.id == invitation.contactId,
-        orElse: () => ContactEntity());
+        (contact) => contact.id == invitation.clientContactId,
+        orElse: () => ClientContactEntity());
 
     if (contact.isNew) {
       return SizedBox();

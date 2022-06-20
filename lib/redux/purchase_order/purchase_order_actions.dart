@@ -29,11 +29,13 @@ class EditPurchaseOrder implements PersistUI, PersistPrefs {
   EditPurchaseOrder(
       {@required this.purchaseOrder,
       this.completer,
+      this.purchaseOrderItemIndex,
       this.cancelCompleter,
       this.force = false});
 
   final InvoiceEntity purchaseOrder;
   final Completer completer;
+  final int purchaseOrderItemIndex;
   final Completer cancelCompleter;
   final bool force;
 }
@@ -64,6 +66,12 @@ class UpdatePurchaseOrder implements PersistUI {
   UpdatePurchaseOrder(this.purchaseOrder);
 
   final InvoiceEntity purchaseOrder;
+}
+
+class UpdatePurchaseOrderVendor implements PersistUI {
+  UpdatePurchaseOrderVendor({this.vendor});
+
+  final VendorEntity vendor;
 }
 
 class LoadPurchaseOrder {
@@ -237,9 +245,9 @@ class EmailPurchaseOrderRequest implements StartSaving {
 }
 
 class EmailPurchaseOrderSuccess implements StopSaving, PersistData {
-  EmailPurchaseOrderSuccess(this.quote);
+  EmailPurchaseOrderSuccess(this.purchaseOrder);
 
-  final InvoiceEntity quote;
+  final InvoiceEntity purchaseOrder;
 }
 
 class EmailPurchaseOrderFailure implements StopSaving {
@@ -248,10 +256,48 @@ class EmailPurchaseOrderFailure implements StopSaving {
   final dynamic error;
 }
 
+class MarkSentPurchaseOrdersRequest implements StartSaving {
+  MarkSentPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class MarkSentPurchaseOrderSuccess implements StopSaving, PersistData {
+  MarkSentPurchaseOrderSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class MarkSentPurchaseOrderFailure implements StopSaving {
+  MarkSentPurchaseOrderFailure(this.error);
+
+  final Object error;
+}
+
+class ApprovePurchaseOrders implements StartSaving {
+  ApprovePurchaseOrders(this.completer, this.purchaseOrderIds);
+
+  final List<String> purchaseOrderIds;
+  final Completer completer;
+}
+
+class ApprovePurchaseOrderSuccess implements StopSaving {
+  ApprovePurchaseOrderSuccess({this.purchaseOrders});
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class ApprovePurchaseOrderFailure implements StopSaving {
+  ApprovePurchaseOrderFailure(this.error);
+
+  final dynamic error;
+}
+
 class AddPurchaseOrderContact implements PersistUI {
   AddPurchaseOrderContact({this.contact, this.invitation});
 
-  final ContactEntity contact;
+  final VendorContactEntity contact;
   final InvitationEntity invitation;
 }
 
@@ -312,6 +358,18 @@ class FilterPurchaseOrdersByState implements PersistUI {
   FilterPurchaseOrdersByState(this.state);
 
   final EntityState state;
+}
+
+class FilterPurchaseOrdersByStatus implements PersistUI {
+  FilterPurchaseOrdersByStatus(this.status);
+
+  final EntityStatus status;
+}
+
+class FilterPurchaseOrderDropdown {
+  FilterPurchaseOrderDropdown(this.filter);
+
+  final String filter;
 }
 
 class FilterPurchaseOrdersByCustom1 implements PersistUI {
