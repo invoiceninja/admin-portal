@@ -83,11 +83,11 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           final purchaseOrder = store.state.purchaseOrderUIState.editing;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
-          if (purchaseOrder.clientId.isEmpty) {
+          if (purchaseOrder.vendorId.isEmpty) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAClient);
+                  return ErrorDialog(localization.pleaseSelectAVendor);
                 });
             return null;
           }
