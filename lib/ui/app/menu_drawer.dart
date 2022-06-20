@@ -386,7 +386,8 @@ class MenuDrawer extends StatelessWidget {
                             if (state.userCompany.isOwner &&
                                 state.isHosted &&
                                 !isPaidAccount(context) &&
-                                !isApple())
+                                !isApple() &&
+                                kReleaseMode)
                               Material(
                                 child: Tooltip(
                                   message: state.isMenuCollapsed
