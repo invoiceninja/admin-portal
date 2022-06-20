@@ -149,8 +149,10 @@ abstract class ClientEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
-      contacts: BuiltList<ContactEntity>(
-        <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
+      contacts: BuiltList<ClientContactEntity>(
+        <ClientContactEntity>[
+          ClientContactEntity().rebuild((b) => b..isPrimary = true)
+        ],
       ),
       activities: BuiltList<ActivityEntity>(),
       ledger: BuiltList<LedgerEntity>(),
@@ -295,7 +297,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  BuiltList<ContactEntity> get contacts;
+  BuiltList<ClientContactEntity> get contacts;
 
   BuiltList<ActivityEntity> get activities;
 
@@ -356,11 +358,11 @@ abstract class ClientEntity extends Object
     return template;
   }
 
-  ContactEntity get primaryContact =>
+  ClientContactEntity get primaryContact =>
       contacts.firstWhere((contact) => contact.isPrimary,
-          orElse: () => ContactEntity());
+          orElse: () => ClientContactEntity());
 
-  List<ContactEntity> get emailContacts {
+  List<ClientContactEntity> get emailContacts {
     final list = contacts.where((contact) => contact.sendEmail).toList();
     return list.isEmpty ? [primaryContact] : list;
   }
@@ -740,7 +742,7 @@ abstract class ClientEntity extends Object
 
   String get languageId => settings.languageId;
 
-  ContactEntity getContact(String contactId) => contacts
+  ClientContactEntity getContact(String contactId) => contacts
       .firstWhere((contact) => contact.id == contactId, orElse: () => null);
 
   bool get hasNameSet {
@@ -781,11 +783,11 @@ class ContactFields {
   static const String custom4 = 'custom4';
 }
 
-abstract class ContactEntity extends Object
+abstract class ClientContactEntity extends Object
     with BaseEntity, SelectableEntity
-    implements Built<ContactEntity, ContactEntityBuilder> {
-  factory ContactEntity() {
-    return _$ContactEntity._(
+    implements Built<ClientContactEntity, ClientContactEntityBuilder> {
+  factory ClientContactEntity() {
+    return _$ClientContactEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
       firstName: '',
@@ -811,7 +813,7 @@ abstract class ContactEntity extends Object
     );
   }
 
-  ContactEntity._();
+  ClientContactEntity._();
 
   @override
   @memoized
@@ -938,5 +940,6 @@ abstract class ContactEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  static Serializer<ContactEntity> get serializer => _$contactEntitySerializer;
+  static Serializer<ClientContactEntity> get serializer =>
+      _$clientContactEntitySerializer;
 }

@@ -94,7 +94,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       result
         ..add('editingContact')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(ContactEntity)));
+            specifiedType: const FullType(ClientContactEntity)));
     }
     value = object.selectedId;
     if (value != null) {
@@ -131,7 +131,8 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
           break;
         case 'editingContact':
           result.editingContact.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ContactEntity)) as ContactEntity);
+                  specifiedType: const FullType(ClientContactEntity))
+              as ClientContactEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -261,7 +262,7 @@ class _$ClientUIState extends ClientUIState {
   @override
   final ClientEntity editing;
   @override
-  final ContactEntity editingContact;
+  final ClientContactEntity editingContact;
   @override
   final ListUIState listUIState;
   @override
@@ -358,10 +359,10 @@ class ClientUIStateBuilder
       _$this._editing ??= new ClientEntityBuilder();
   set editing(ClientEntityBuilder editing) => _$this._editing = editing;
 
-  ContactEntityBuilder _editingContact;
-  ContactEntityBuilder get editingContact =>
-      _$this._editingContact ??= new ContactEntityBuilder();
-  set editingContact(ContactEntityBuilder editingContact) =>
+  ClientContactEntityBuilder _editingContact;
+  ClientContactEntityBuilder get editingContact =>
+      _$this._editingContact ??= new ClientContactEntityBuilder();
+  set editingContact(ClientContactEntityBuilder editingContact) =>
       _$this._editingContact = editingContact;
 
   ListUIStateBuilder _listUIState;

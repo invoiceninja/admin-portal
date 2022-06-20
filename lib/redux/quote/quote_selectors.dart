@@ -12,7 +12,8 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-ContactEntity quoteContactSelector(InvoiceEntity quote, ClientEntity client) {
+ClientContactEntity quoteContactSelector(
+    InvoiceEntity quote, ClientEntity client) {
   var contactIds = quote.invitations
       .map((invitation) => invitation.clientContactId)
       .toList();

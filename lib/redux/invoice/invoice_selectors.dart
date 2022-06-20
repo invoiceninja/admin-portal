@@ -18,7 +18,7 @@ InvoiceEntity invoiceQuoteSelector(
   return invoiceQuote;
 }
 
-ContactEntity invoiceContactSelector(
+ClientContactEntity invoiceContactSelector(
     InvoiceEntity invoice, ClientEntity client) {
   var contactIds = invoice.invitations
       .map((invitation) => invitation.clientContactId)

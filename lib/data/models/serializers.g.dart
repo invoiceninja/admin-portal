@@ -13,6 +13,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppSidebarMode.serializer)
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
+      ..add(ClientContactEntity.serializer)
       ..add(ClientEntity.serializer)
       ..add(ClientItemResponse.serializer)
       ..add(ClientListResponse.serializer)
@@ -26,7 +27,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CompanyGatewayUIState.serializer)
       ..add(CompanyItemResponse.serializer)
       ..add(CompanyPrefState.serializer)
-      ..add(ContactEntity.serializer)
       ..add(CountryEntity.serializer)
       ..add(CountryItemResponse.serializer)
       ..add(CountryListResponse.serializer)
@@ -212,15 +212,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(WebhookState.serializer)
       ..add(WebhookUIState.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ClientEntity)]),
-          () => new ListBuilder<ClientEntity>())
-      ..addBuilderFactory(
           const FullType(
-              BuiltList, const [const FullType(CompanyGatewayEntity)]),
-          () => new ListBuilder<CompanyGatewayEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ContactEntity)]),
-          () => new ListBuilder<ContactEntity>())
+              BuiltList, const [const FullType(ClientContactEntity)]),
+          () => new ListBuilder<ClientContactEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ActivityEntity)]),
           () => new ListBuilder<ActivityEntity>())
@@ -236,6 +230,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
           () => new ListBuilder<SystemLogEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ClientEntity)]),
+          () => new ListBuilder<ClientEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(CompanyGatewayEntity)]),
+          () => new ListBuilder<CompanyGatewayEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CountryEntity)]),
           () => new ListBuilder<CountryEntity>())

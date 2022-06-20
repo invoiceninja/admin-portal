@@ -66,7 +66,7 @@ final editingVendorContactReducer = combineReducers<VendorContactEntity>([
 
 VendorContactEntity editVendorContact(
     VendorContactEntity contact, dynamic action) {
-  return action.contact ?? VendorContactEntity();
+  return action.clientContact ?? VendorContactEntity();
 }
 
 Reducer<String> selectedIdReducer = combineReducers([

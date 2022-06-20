@@ -122,7 +122,12 @@ class InvoiceTotalFields {
 }
 
 abstract class InvoiceEntity extends Object
-    with BaseEntity, SelectableEntity, CalculateInvoiceTotal, BelongsToClient
+    with
+        BaseEntity,
+        SelectableEntity,
+        CalculateInvoiceTotal,
+        BelongsToClient,
+        BelongsToVendor
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity({
     String id,
@@ -368,6 +373,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
+  @override
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
@@ -1231,9 +1237,15 @@ abstract class InvoiceEntity extends Object
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
-  InvitationEntity getInvitationForContact(ContactEntity contact) {
+  InvitationEntity getInvitationForClientContact(ClientContactEntity contact) {
     return invitations.firstWhere(
         (invitation) => invitation.clientContactId == contact.id,
+        orElse: () => null);
+  }
+
+  InvitationEntity getInvitationForVendorContact(VendorContactEntity contact) {
+    return invitations.firstWhere(
+        (invitation) => invitation.vendorContactId == contact.id,
         orElse: () => null);
   }
 

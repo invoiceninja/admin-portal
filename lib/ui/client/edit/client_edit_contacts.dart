@@ -31,9 +31,9 @@ class ClientEditContacts extends StatefulWidget {
 }
 
 class _ClientEditContactsState extends State<ClientEditContacts> {
-  ContactEntity selectedContact;
+  ClientContactEntity selectedContact;
 
-  void _showContactEditor(ContactEntity contact, BuildContext context) {
+  void _showContactEditor(ClientContactEntity contact, BuildContext context) {
     showDialog<ResponsivePadding>(
         context: context,
         builder: (BuildContext context) {
@@ -130,7 +130,7 @@ class ContactListTile extends StatelessWidget {
   });
 
   final Function onTap;
-  final ContactEntity contact;
+  final ClientContactEntity contact;
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +172,7 @@ class ContactEditDetails extends StatefulWidget {
   }) : super(key: key);
 
   final int index;
-  final ContactEntity contact;
+  final ClientContactEntity contact;
   final ClientEditContactsVM viewModel;
   final ClientEditVM clientViewModel;
   final bool isDialog;
@@ -194,7 +194,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
-  ContactEntity _contact;
+  ClientContactEntity _contact;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {

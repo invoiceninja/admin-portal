@@ -297,7 +297,7 @@ class ApprovePurchaseOrderFailure implements StopSaving {
 class AddPurchaseOrderContact implements PersistUI {
   AddPurchaseOrderContact({this.contact, this.invitation});
 
-  final ContactEntity contact;
+  final VendorContactEntity contact;
   final InvitationEntity invitation;
 }
 

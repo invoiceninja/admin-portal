@@ -24,7 +24,7 @@ class InvoiceEditContacts extends StatelessWidget {
     final invoice = viewModel.invoice;
     final client = viewModel.client;
 
-    List<ContactEntity> contacts;
+    List<ClientContactEntity> contacts;
     if (client == null) {
       if (viewModel.state.prefState.isDesktop) {
         contacts = [];
@@ -46,13 +46,13 @@ class InvoiceEditContacts extends StatelessWidget {
 
     return ScrollableListView(
       children: contacts.map((contact) {
-        final invitation = invoice.getInvitationForContact(contact);
+        final invitation = invoice.getInvitationForClientContact(contact);
         return _ContactListTile(
-          contact: contact,
+          clientContact: contact,
           invoice: invoice,
           invitation: invitation,
           onTap: () => invitation == null
-              ? viewModel.onAddContact(contact)
+              ? viewModel.onAddClientContact(contact)
               : viewModel.onRemoveContact(invitation),
         );
       }).toList(),
@@ -62,14 +62,14 @@ class InvoiceEditContacts extends StatelessWidget {
 
 class _ContactListTile extends StatelessWidget {
   const _ContactListTile({
-    this.contact,
+    this.clientContact,
     this.invoice,
     this.invitation,
     this.onTap,
   });
 
   final InvoiceEntity invoice;
-  final ContactEntity contact;
+  final ClientContactEntity clientContact;
   final InvitationEntity invitation;
   final Function onTap;
 
@@ -78,10 +78,10 @@ class _ContactListTile extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return ListTile(
-      title: Text(contact.fullName.isNotEmpty
-          ? contact.fullName
+      title: Text(clientContact.fullName.isNotEmpty
+          ? clientContact.fullName
           : AppLocalization.of(context).blankContact),
-      subtitle: contact.email != null ? Text(contact.email) : null,
+      subtitle: clientContact.email != null ? Text(clientContact.email) : null,
       onTap: onTap,
       leading: IgnorePointer(
         child: Checkbox(
