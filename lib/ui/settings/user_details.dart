@@ -335,7 +335,7 @@ class _UserDetailsState extends State<UserDetails>
                       ] else ...[
                         googleButton,
                         SizedBox(width: kTableColumnGap),
-                        microsoftButton,
+                        if (kIsWeb) microsoftButton else gmailButton,
                         SizedBox(width: kTableColumnGap),
                       ]
                     ],
