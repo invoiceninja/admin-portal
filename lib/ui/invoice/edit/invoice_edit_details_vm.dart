@@ -125,7 +125,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
       onAddClientPressed: (context, completer) {
         createEntity(
             context: context,
-            entity: ClientEntity(),
+            entity: ClientEntity(state: state),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()

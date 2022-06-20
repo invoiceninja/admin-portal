@@ -91,17 +91,15 @@ class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
           store.dispatch(UpdatePurchaseOrder(purchaseOrder)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (context, purchaseOrder, client) {
-        /*
+      onVendorChanged: (context, purchaseOrder, vendor) {
         store.dispatch(
-            UpdatePurchaseOrder(purchaseOrder.applyClient(state, client)));
-        store.dispatch(UpdatePurchaseOrderClient(client: client));
-        */
+            UpdatePurchaseOrder(purchaseOrder.applyVendor(state, vendor)));
+        store.dispatch(UpdatePurchaseOrderVendor(vendor: vendor));
       },
-      onAddClientPressed: (context, completer) {
+      onAddVendorPressed: (context, completer) {
         createEntity(
             context: context,
-            entity: ClientEntity(),
+            entity: VendorEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
