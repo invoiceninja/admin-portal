@@ -157,7 +157,7 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
           store.dispatch(RemoveRecurringInvoiceContact(invitation: invitation));
         } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(RemoveInvoiceContact(invitation: invitation));
-        } else if (entity.entityType == EntityType.invoice) {
+        } else if (entity.entityType == EntityType.purchaseOrder) {
           store.dispatch(RemovePurchaseOrderContact(invitation: invitation));
         } else {
           print(

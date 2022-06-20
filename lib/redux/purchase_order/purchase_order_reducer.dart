@@ -162,7 +162,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, AddPurchaseOrderContact>((invoice, action) {
     return invoice.rebuild((b) => b
       ..invitations.add(action.invitation ??
-          InvitationEntity(clientContactId: action.contact.id)));
+          InvitationEntity(vendorContactId: action.contact.id)));
   }),
   TypedReducer<InvoiceEntity, RemovePurchaseOrderContact>((invoice, action) {
     return invoice.rebuild((b) => b..invitations.remove(action.invitation));
