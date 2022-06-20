@@ -61,7 +61,7 @@ class AuthRepository {
       'privacy_policy': true,
       'token_name': _tokenName,
       'id_token': idToken,
-      //'access_token': accessToken,
+      'access_token': accessToken,
       'provider': provider,
       'platform': getPlatformName(),
     };
