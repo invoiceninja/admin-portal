@@ -1094,6 +1094,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isInvoice => entityType == EntityType.invoice;
 
+  bool get isPurchaseOrder => entityType == EntityType.purchaseOrder;
+
   bool get isQuote => entityType == EntityType.quote;
 
   bool get isCredit => entityType == EntityType.credit;

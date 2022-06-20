@@ -55,9 +55,11 @@ class EntityEditDetailsVM {
     @required this.invoice,
     @required this.onChanged,
     @required this.onClientChanged,
+    @required this.onVendorChanged,
     @required this.clientMap,
     @required this.clientList,
     @required this.onAddClientPressed,
+    @required this.onAddVendorPressed,
   });
 
   final AppState state;
@@ -66,10 +68,14 @@ class EntityEditDetailsVM {
   final Function(InvoiceEntity) onChanged;
   final Function(BuildContext context, InvoiceEntity, ClientEntity)
       onClientChanged;
+  final Function(BuildContext context, InvoiceEntity, VendorEntity)
+      onVendorChanged;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddClientPressed;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddVendorPressed;
 }
 
 class InvoiceEditDetailsVM extends EntityEditDetailsVM {
@@ -79,19 +85,24 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
     Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity) onVendorChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
   }) : super(
           state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,
           onClientChanged: onClientChanged,
+          onVendorChanged: onVendorChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
         );
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {

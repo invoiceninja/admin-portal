@@ -57,19 +57,24 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
     Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity) onVendorChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
+    Function(BuildContext context, Completer<SelectableEntity> completer)
+        onAddVendorPressed,
   }) : super(
           state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,
           onClientChanged: onClientChanged,
+          onVendorChanged: onVendorChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
         );
 
   factory QuoteEditDetailsVM.fromStore(Store<AppState> store) {

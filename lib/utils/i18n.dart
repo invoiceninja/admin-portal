@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
       'email_purchase_order': 'Email Purchase Order',
       'disconnected_email': 'Successfully connected email',
@@ -70764,6 +70765,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get purchaseOrderTotal =>
       _localizedValues[localeCode]['purchase_order_total'] ??
       _localizedValues['en']['purchase_order_total'];
+
+  String get pleaseSelectAVendor =>
+      _localizedValues[localeCode]['please_select_a_vendor'] ??
+      _localizedValues['en']['please_select_a_vendor'];
 
 // STARTER: lang field - do not remove comment
 

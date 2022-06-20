@@ -36,6 +36,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -256,16 +257,28 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       left: kMobileDialogPadding),
                   children: <Widget>[
                     if (invoice.isNew)
-                      ClientPicker(
-                        autofocus: true,
-                        clientId: invoice.clientId,
-                        clientState: state.clientState,
-                        onSelected: (client) {
-                          viewModel.onClientChanged(context, invoice, client);
-                        },
-                        onAddPressed: (completer) =>
-                            viewModel.onAddClientPressed(context, completer),
-                      )
+                      if (invoice.isPurchaseOrder)
+                        VendorPicker(
+                          autofocus: true,
+                          vendorId: invoice.vendorId,
+                          vendorState: state.vendorState,
+                          onSelected: (vendor) {
+                            viewModel.onVendorChanged(context, invoice, vendor);
+                          },
+                          onAddPressed: (completer) =>
+                              viewModel.onAddVendorPressed(context, completer),
+                        )
+                      else
+                        ClientPicker(
+                          autofocus: true,
+                          clientId: invoice.clientId,
+                          clientState: state.clientState,
+                          onSelected: (client) {
+                            viewModel.onClientChanged(context, invoice, client);
+                          },
+                          onAddPressed: (completer) =>
+                              viewModel.onAddClientPressed(context, completer),
+                        )
                     else
                       ConstrainedBox(
                         constraints: BoxConstraints(
