@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'email_purchase_order': 'Email Purchase Order',
       'disconnected_email': 'Successfully connected email',
       'connect_email': 'Connect Email',
       'disconnect_email': 'Disconnect Email',
@@ -70755,6 +70756,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['disconnected_email'] ??
       _localizedValues['en']['disconnected_email'];
 
+  String get emailPurchaseOrder =>
+      _localizedValues[localeCode]['email_purchase_order'] ??
+      _localizedValues['en']['email_purchase_order'];
 
 // STARTER: lang field - do not remove comment
 

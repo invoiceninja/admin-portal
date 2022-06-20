@@ -155,8 +155,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _quoteFooterController.text = settings.defaultQuoteFooter;
     _creditFooterController.text = settings.defaultCreditFooter;
     _creditTermsController.text = settings.defaultCreditTerms;
-    _purchaseOrderFooterController.text = settings.purchaseOrderFooter;
-    _purchaseOrderTermsController.text = settings.purchaseOrderTerms;
+    _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter;
+    _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -199,8 +199,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..defaultQuoteTerms = _quoteTermsController.text.trim()
       ..defaultCreditFooter = _creditFooterController.text.trim()
       ..defaultCreditTerms = _creditTermsController.text.trim()
-      ..purchaseOrderFooter = _purchaseOrderFooterController.text.trim()
-      ..purchaseOrderTerms = _purchaseOrderTermsController.text.trim());
+      ..defaultPurchaseOrderFooter = _purchaseOrderFooterController.text.trim()
+      ..defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim());
     if (settings != widget.viewModel.settings) {
       _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
@@ -590,10 +590,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   if (company.isModuleEnabled(EntityType.purchaseOrder))
                     DesignPicker(
                       label: localization.purchaseOrder,
-                      initialValue: settings.purchaseOrderDesignId,
+                      initialValue: settings.defaultPurchaseOrderDesignId,
                       onSelected: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..purchaseOrderDesignId = value.id)),
+                          settings.rebuild((b) =>
+                              b..defaultPurchaseOrderDesignId = value.id)),
                     ),
                 ]),
               FormCard(

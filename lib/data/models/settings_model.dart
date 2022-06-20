@@ -855,15 +855,15 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'purchase_order_terms')
-  String get purchaseOrderTerms;
+  String get defaultPurchaseOrderTerms;
 
   @nullable
   @BuiltValueField(wireName: 'purchase_order_design_id')
-  String get purchaseOrderDesignId;
+  String get defaultPurchaseOrderDesignId;
 
   @nullable
   @BuiltValueField(wireName: 'purchase_order_footer')
-  String get purchaseOrderFooter;
+  String get defaultPurchaseOrderFooter;
 
   @nullable
   @BuiltValueField(wireName: 'purchase_order_number_pattern')
@@ -909,6 +909,8 @@ abstract class SettingsEntity
         return defaultQuoteDesignId;
       case EntityType.credit:
         return defaultCreditDesignId;
+      case EntityType.purchaseOrder:
+        return defaultPurchaseOrderDesignId;
     }
 
     print('## Error: unhandled entity type: $entityType for design id');
@@ -925,6 +927,8 @@ abstract class SettingsEntity
         return defaultQuoteTerms;
       case EntityType.credit:
         return defaultCreditTerms;
+      case EntityType.purchaseOrder:
+        return defaultPurchaseOrderTerms;
       default:
         print('## ERROR: getDefaultTerms not defined for $entityType');
         return '';
@@ -940,6 +944,8 @@ abstract class SettingsEntity
         return defaultQuoteFooter;
       case EntityType.credit:
         return defaultCreditFooter;
+      case EntityType.purchaseOrder:
+        return defaultPurchaseOrderFooter;
       default:
         print('## ERROR: getDefaultFooter not defined for $entityType');
         return '';

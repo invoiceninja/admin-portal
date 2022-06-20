@@ -1316,21 +1316,21 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.purchaseOrderTerms;
+    value = object.defaultPurchaseOrderTerms;
     if (value != null) {
       result
         ..add('purchase_order_terms')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.purchaseOrderDesignId;
+    value = object.defaultPurchaseOrderDesignId;
     if (value != null) {
       result
         ..add('purchase_order_design_id')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.purchaseOrderFooter;
+    value = object.defaultPurchaseOrderFooter;
     if (value != null) {
       result
         ..add('purchase_order_footer')
@@ -2119,15 +2119,15 @@ class _$SettingsEntitySerializer
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'purchase_order_terms':
-          result.purchaseOrderTerms = serializers.deserialize(value,
+          result.defaultPurchaseOrderTerms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'purchase_order_design_id':
-          result.purchaseOrderDesignId = serializers.deserialize(value,
+          result.defaultPurchaseOrderDesignId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'purchase_order_footer':
-          result.purchaseOrderFooter = serializers.deserialize(value,
+          result.defaultPurchaseOrderFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'purchase_order_number_pattern':
@@ -2521,11 +2521,11 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool requirePurchaseOrderSignature;
   @override
-  final String purchaseOrderTerms;
+  final String defaultPurchaseOrderTerms;
   @override
-  final String purchaseOrderDesignId;
+  final String defaultPurchaseOrderDesignId;
   @override
-  final String purchaseOrderFooter;
+  final String defaultPurchaseOrderFooter;
   @override
   final String purchaseOrderNumberPattern;
   @override
@@ -2722,9 +2722,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.pageNumbering,
       this.pageNumberingAlignment,
       this.requirePurchaseOrderSignature,
-      this.purchaseOrderTerms,
-      this.purchaseOrderDesignId,
-      this.purchaseOrderFooter,
+      this.defaultPurchaseOrderTerms,
+      this.defaultPurchaseOrderDesignId,
+      this.defaultPurchaseOrderFooter,
       this.purchaseOrderNumberPattern,
       this.purchaseOrderNumberCounter})
       : super._();
@@ -2931,9 +2931,9 @@ class _$SettingsEntity extends SettingsEntity {
         pageNumbering == other.pageNumbering &&
         pageNumberingAlignment == other.pageNumberingAlignment &&
         requirePurchaseOrderSignature == other.requirePurchaseOrderSignature &&
-        purchaseOrderTerms == other.purchaseOrderTerms &&
-        purchaseOrderDesignId == other.purchaseOrderDesignId &&
-        purchaseOrderFooter == other.purchaseOrderFooter &&
+        defaultPurchaseOrderTerms == other.defaultPurchaseOrderTerms &&
+        defaultPurchaseOrderDesignId == other.defaultPurchaseOrderDesignId &&
+        defaultPurchaseOrderFooter == other.defaultPurchaseOrderFooter &&
         purchaseOrderNumberPattern == other.purchaseOrderNumberPattern &&
         purchaseOrderNumberCounter == other.purchaseOrderNumberCounter;
   }
@@ -2974,9 +2974,9 @@ class _$SettingsEntity extends SettingsEntity {
                                     pageNumbering.hashCode),
                                 pageNumberingAlignment.hashCode),
                             requirePurchaseOrderSignature.hashCode),
-                        purchaseOrderTerms.hashCode),
-                    purchaseOrderDesignId.hashCode),
-                purchaseOrderFooter.hashCode),
+                        defaultPurchaseOrderTerms.hashCode),
+                    defaultPurchaseOrderDesignId.hashCode),
+                defaultPurchaseOrderFooter.hashCode),
             purchaseOrderNumberPattern.hashCode),
         purchaseOrderNumberCounter.hashCode));
   }
@@ -3174,9 +3174,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('pageNumbering', pageNumbering)
           ..add('pageNumberingAlignment', pageNumberingAlignment)
           ..add('requirePurchaseOrderSignature', requirePurchaseOrderSignature)
-          ..add('purchaseOrderTerms', purchaseOrderTerms)
-          ..add('purchaseOrderDesignId', purchaseOrderDesignId)
-          ..add('purchaseOrderFooter', purchaseOrderFooter)
+          ..add('defaultPurchaseOrderTerms', defaultPurchaseOrderTerms)
+          ..add('defaultPurchaseOrderDesignId', defaultPurchaseOrderDesignId)
+          ..add('defaultPurchaseOrderFooter', defaultPurchaseOrderFooter)
           ..add('purchaseOrderNumberPattern', purchaseOrderNumberPattern)
           ..add('purchaseOrderNumberCounter', purchaseOrderNumberCounter))
         .toString();
@@ -4100,20 +4100,21 @@ class SettingsEntityBuilder
   set requirePurchaseOrderSignature(bool requirePurchaseOrderSignature) =>
       _$this._requirePurchaseOrderSignature = requirePurchaseOrderSignature;
 
-  String _purchaseOrderTerms;
-  String get purchaseOrderTerms => _$this._purchaseOrderTerms;
-  set purchaseOrderTerms(String purchaseOrderTerms) =>
-      _$this._purchaseOrderTerms = purchaseOrderTerms;
+  String _defaultPurchaseOrderTerms;
+  String get defaultPurchaseOrderTerms => _$this._defaultPurchaseOrderTerms;
+  set defaultPurchaseOrderTerms(String defaultPurchaseOrderTerms) =>
+      _$this._defaultPurchaseOrderTerms = defaultPurchaseOrderTerms;
 
-  String _purchaseOrderDesignId;
-  String get purchaseOrderDesignId => _$this._purchaseOrderDesignId;
-  set purchaseOrderDesignId(String purchaseOrderDesignId) =>
-      _$this._purchaseOrderDesignId = purchaseOrderDesignId;
+  String _defaultPurchaseOrderDesignId;
+  String get defaultPurchaseOrderDesignId =>
+      _$this._defaultPurchaseOrderDesignId;
+  set defaultPurchaseOrderDesignId(String defaultPurchaseOrderDesignId) =>
+      _$this._defaultPurchaseOrderDesignId = defaultPurchaseOrderDesignId;
 
-  String _purchaseOrderFooter;
-  String get purchaseOrderFooter => _$this._purchaseOrderFooter;
-  set purchaseOrderFooter(String purchaseOrderFooter) =>
-      _$this._purchaseOrderFooter = purchaseOrderFooter;
+  String _defaultPurchaseOrderFooter;
+  String get defaultPurchaseOrderFooter => _$this._defaultPurchaseOrderFooter;
+  set defaultPurchaseOrderFooter(String defaultPurchaseOrderFooter) =>
+      _$this._defaultPurchaseOrderFooter = defaultPurchaseOrderFooter;
 
   String _purchaseOrderNumberPattern;
   String get purchaseOrderNumberPattern => _$this._purchaseOrderNumberPattern;
@@ -4317,9 +4318,9 @@ class SettingsEntityBuilder
       _pageNumbering = $v.pageNumbering;
       _pageNumberingAlignment = $v.pageNumberingAlignment;
       _requirePurchaseOrderSignature = $v.requirePurchaseOrderSignature;
-      _purchaseOrderTerms = $v.purchaseOrderTerms;
-      _purchaseOrderDesignId = $v.purchaseOrderDesignId;
-      _purchaseOrderFooter = $v.purchaseOrderFooter;
+      _defaultPurchaseOrderTerms = $v.defaultPurchaseOrderTerms;
+      _defaultPurchaseOrderDesignId = $v.defaultPurchaseOrderDesignId;
+      _defaultPurchaseOrderFooter = $v.defaultPurchaseOrderFooter;
       _purchaseOrderNumberPattern = $v.purchaseOrderNumberPattern;
       _purchaseOrderNumberCounter = $v.purchaseOrderNumberCounter;
       _$v = null;
@@ -4531,9 +4532,9 @@ class SettingsEntityBuilder
               pageNumbering: pageNumbering,
               pageNumberingAlignment: pageNumberingAlignment,
               requirePurchaseOrderSignature: requirePurchaseOrderSignature,
-              purchaseOrderTerms: purchaseOrderTerms,
-              purchaseOrderDesignId: purchaseOrderDesignId,
-              purchaseOrderFooter: purchaseOrderFooter,
+              defaultPurchaseOrderTerms: defaultPurchaseOrderTerms,
+              defaultPurchaseOrderDesignId: defaultPurchaseOrderDesignId,
+              defaultPurchaseOrderFooter: defaultPurchaseOrderFooter,
               purchaseOrderNumberPattern: purchaseOrderNumberPattern,
               purchaseOrderNumberCounter: purchaseOrderNumberCounter);
     } catch (_) {
