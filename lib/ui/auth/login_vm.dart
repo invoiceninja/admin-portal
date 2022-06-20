@@ -224,21 +224,17 @@ class LoginVM {
       }) async {
         try {
           WebUtils.microsoftLogin((idToken, accessToken) {
-            print('## RESULT: acces: $accessToken id: $idToken');
-
-            /*
-          store.dispatch(OAuthLoginRequest(
-            completer: completer,
-            idToken: idToken,
-            accessToken: accessToken,
-            url: _formatApiUrl(url),
-            secret: secret.trim(),
-            platform: getPlatform(context),
-            provider: kOAuthProviderpsoft,
-            oneTimePassword: oneTimePassword,
-          ));
-          completer.future.then((_) => _handleLogin(context: context));
-          */
+            store.dispatch(OAuthLoginRequest(
+              completer: completer,
+              idToken: idToken,
+              accessToken: accessToken,
+              url: _formatApiUrl(url),
+              secret: secret.trim(),
+              platform: getPlatform(context),
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              oneTimePassword: oneTimePassword,
+            ));
+            completer.future.then((_) => _handleLogin(context: context));
           }, (dynamic error) {
             completer.completeError(error);
           });
