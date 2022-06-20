@@ -74,7 +74,8 @@ class WebUtils {
       ..auth = (BrowserAuthOptions()
         //..redirectUri = 'https://invoicing.co/auth/microsoft'
         //..redirectUri = browserUrl
-        ..redirectUri = 'https://staging.invoicing.co/'
+        //..redirectUri = 'https://staging.invoicing.co/'
+        ..redirectUri = 'http://localhost:8080/'
         ..clientId = Config.MICROSOFT_CLIENT_ID);
     final publicClientApp = PublicClientApplication(config);
 
