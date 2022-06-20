@@ -16,7 +16,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-            'use_web_app_to_connect_microsoft':
+      'disconnected_email': 'Successfully connected email',
+      'connect_email': 'Connect Email',
+      'disconnect_email': 'Disconnect Email',
+      'use_web_app_to_connect_microsoft':
           'Please use the web app to connect to Microsoft',
       'email_provider': 'Email Provider',
       'connect_microsoft': 'Connect Microsoft',
@@ -70739,6 +70742,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get useWebAppToConnectMicrosoft =>
       _localizedValues[localeCode]['use_web_app_to_connect_microsoft'] ??
       _localizedValues['en']['use_web_app_to_connect_microsoft'];
+
+  String get connectEmail =>
+      _localizedValues[localeCode]['connect_email'] ??
+      _localizedValues['en']['connect_email'];
+
+  String get disconnectEmail =>
+      _localizedValues[localeCode]['disconnect_email'] ??
+      _localizedValues['en']['disconnect_email'];
+
+  String get disconnectedEmail =>
+      _localizedValues[localeCode]['disconnected_email'] ??
+      _localizedValues['en']['disconnected_email'];
+
 
 // STARTER: lang field - do not remove comment
 

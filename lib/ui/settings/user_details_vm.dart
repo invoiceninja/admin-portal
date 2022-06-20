@@ -56,6 +56,7 @@ class UserDetailsVM {
     @required this.onDisableTwoFactorPressed,
     @required this.onConnectMicrosoftPressed,
     @required this.onDisconnectMicrosoftPressed,
+    @required this.onDisconnectMicrosoftEmailPressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -97,6 +98,26 @@ class UserDetailsVM {
           completer.completeError(error);
         }
         */
+      },
+      onDisconnectMicrosoftEmailPressed: (context) {
+        confirmCallback(
+            context: context,
+            callback: (_) {
+              passwordCallback(
+                  context: context,
+                  callback: (password, idToken) {
+                    final completer = snackBarCompleter<Null>(
+                        context, AppLocalization.of(context).disconnectedEmail);
+                    store.dispatch(
+                      SaveAuthUserRequest(
+                        user: state.user.rebuild((b) => b..oauthUserToken = ''),
+                        password: password,
+                        idToken: idToken,
+                        completer: completer,
+                      ),
+                    );
+                  });
+            });
       },
       onDisconnectGmailPressed: (context) {
         confirmCallback(
@@ -322,6 +343,7 @@ class UserDetailsVM {
   final Function(BuildContext) onDisconnectGooglePressed;
   final Function(BuildContext) onConnectMicrosoftPressed;
   final Function(BuildContext) onDisconnectMicrosoftPressed;
+  final Function(BuildContext) onDisconnectMicrosoftEmailPressed;
   final Function(BuildContext, Completer, String) onConnectGmailPressed;
   final Function(BuildContext) onDisconnectGmailPressed;
   final Function(BuildContext) onDisableTwoFactorPressed;

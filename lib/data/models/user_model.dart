@@ -311,14 +311,16 @@ abstract class UserEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => null;
 
+  bool get isConnectedToOAuth => isConnectedToGoogle || isConnectedToMicrosoft;
+
   bool get isConnectedToGoogle =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
 
   bool get isConnectedToMicrosoft =>
       oauthProvider == UserEntity.OAUTH_PROVIDER_MICROSOFT;
 
-  bool get isConnectedToGmail =>
-      isConnectedToGoogle && oauthUserToken.isNotEmpty;
+  bool get isConnectedToEmail =>
+      isConnectedToOAuth && oauthUserToken.isNotEmpty;
 
   bool get isEmailVerified => emailVerifiedAt != null;
 
