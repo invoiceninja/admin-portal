@@ -80,6 +80,7 @@ class WebUtils {
         //..redirectUri = 'https://staging.invoicing.co/'
         //..redirectUri = 'http://localhost:8080/'
         ..clientId = Config.MICROSOFT_CLIENT_ID);
+    print('## redirectUri: $browserUrl');
     final publicClientApp = PublicClientApplication(config);
 
     final loginRequest = PopupRequest()..scopes = ['user.read'];
