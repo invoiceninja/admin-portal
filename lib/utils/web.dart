@@ -75,14 +75,10 @@ class WebUtils {
   ) async {
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
-        //..redirectUri = 'https://invoicing.co/auth/microsoft'
-        ..redirectUri = browserUrl
-        //..redirectUri = 'https://staging.invoicing.co/'
-        //..redirectUri = 'http://localhost:8080/'
+        ..redirectUri = cleanApiUrl(browserUrl)
         ..clientId = Config.MICROSOFT_CLIENT_ID);
-    print('## redirectUri: $browserUrl');
-    final publicClientApp = PublicClientApplication(config);
 
+    final publicClientApp = PublicClientApplication(config);
     final loginRequest = PopupRequest()..scopes = ['user.read'];
 
     publicClientApp.loginPopup(loginRequest).then((result) {
