@@ -108,6 +108,7 @@ class AuthRepository {
     final credentials = {
       'id_token': idToken,
       'provider': provider,
+      'access_token': accessToken,
     };
     url = formatApiUrl(url) + '/oauth_login';
 
