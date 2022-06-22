@@ -88,7 +88,7 @@ class _LoginState extends State<LoginView> {
       _isSelfHosted = authState.isSelfHost;
       if (_isSelfHosted) {
         _loginType = LOGIN_TYPE_EMAIL;
-      } else if (WebUtils.getHtmlValue('login') == 'false') {
+      } else if (WebUtils.getHtmlValue('signup') == 'true') {
         _createAccount = true;
       }
     } else if (isApple() || !GoogleOAuth.isEnabled) {
