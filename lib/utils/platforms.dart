@@ -24,6 +24,9 @@ bool supportsInlineBrowser() => !isDesktopOS();
 // TODO remove this function
 bool supportsGoogleOAuth() => !isDesktopOS();
 
+// TODO remove this function
+bool supportsMicrosoftOAuth() => kIsWeb;
+
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 
 bool isMobileOS() => isAndroid() || isIOS();

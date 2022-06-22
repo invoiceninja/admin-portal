@@ -26,6 +26,9 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
 void showRefreshDataDialog(
     {@required BuildContext context, bool includeStatic = false}) async {
   final store = StoreProvider.of<AppState>(context);
@@ -208,7 +211,9 @@ void passwordCallback({
     return;
   }
 
-  if (user.oauthProvider.isEmpty || !supportsGoogleOAuth()) {
+  if (user.oauthProvider.isEmpty ||
+      (user.isConnectedToGoogle && !supportsGoogleOAuth()) ||
+      (user.isConnectedToMicrosoft && !supportsMicrosoftOAuth())) {
     showDialog<Null>(
       context: context,
       barrierDismissible: false,
@@ -223,30 +228,54 @@ void passwordCallback({
   }
 
   try {
-    GoogleOAuth.signIn((idToken, accessToken) {
-      if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
-          !user.hasPassword) {
-        print('## 4');
-        callback(null, idToken);
-      } else {
-        print('## 5');
-        showDialog<AlertDialog>(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return PasswordConfirmation(
-              callback: callback,
-              idToken: idToken,
-            );
-          },
-        );
-      }
-    }, isSilent: true);
+    if (user.isConnectedToGoogle) {
+      GoogleOAuth.signIn((idToken, accessToken) {
+        if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
+            !user.hasPassword) {
+          print('## 4');
+          callback(null, idToken);
+        } else {
+          print('## 5');
+          showDialog<AlertDialog>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return PasswordConfirmation(
+                callback: callback,
+                idToken: idToken,
+              );
+            },
+          );
+        }
+      }, isSilent: true);
+    } else if (user.isConnectedToMicrosoft) {
+      WebUtils.microsoftLogin((idToken, accessToken) {
+        if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
+            !user.hasPassword) {
+          print('## 6');
+          callback(null, idToken);
+        } else {
+          print('## 7');
+          showDialog<AlertDialog>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return PasswordConfirmation(
+                callback: callback,
+                idToken: idToken,
+              );
+            },
+          );
+        }
+      }, (dynamic error) {
+        showErrorDialog(context: context, message: error);
+      });
+    }
   } catch (error) {
     showErrorDialog(context: context, message: '$error');
   }
 
-  print('## 6');
+  print('## 8');
 }
 
 class PasswordConfirmation extends StatefulWidget {
