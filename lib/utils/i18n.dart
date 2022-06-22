@@ -70796,7 +70796,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['cancelled_purchase_order'] ??
       _localizedValues['en']['cancelled_purchase_order'];
 
-  String get cancelledPurchaseOrder =>
+  String get cancelledPurchaseOrders =>
       _localizedValues[localeCode]['cancelled_purchase_orders'] ??
       _localizedValues['en']['cancelled_purchase_orders'];
 
