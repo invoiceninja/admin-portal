@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -32,6 +33,29 @@ class PurchaseOrderScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kPurchaseOrderStatusDraft
+          ..name = localization.draft,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kPurchaseOrderStatusSent
+          ..name = localization.sent,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kPurchaseOrderStatusAccepted
+          ..name = localization.accepted,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kPurchaseOrderStatusCancelled
+          ..name = localization.cancelled,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.purchaseOrder,
       onHamburgerLongPress: () =>
@@ -48,6 +72,10 @@ class PurchaseOrderScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPurchaseOrdersByState(state));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterPurchaseOrdersByStatus(status));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.purchaseOrderListState.isInMultiselect()) {
@@ -73,6 +101,10 @@ class PurchaseOrderScreen extends StatelessWidget {
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPurchaseOrdersByState(state));
+        },
+        statuses: statuses,
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterPurchaseOrdersByStatus(status));
         },
         onCheckboxPressed: () {
           if (store.state.purchaseOrderListState.isInMultiselect()) {
