@@ -69,6 +69,18 @@ class WebUtils {
     });
   }
 
+  static void microsoftLogout() {
+    final config = Configuration()
+      ..auth = (BrowserAuthOptions()
+        ..redirectUri = cleanApiUrl(browserUrl)
+        ..clientId = Config.MICROSOFT_CLIENT_ID);
+
+    final publicClientApp = PublicClientApplication(config);
+    final logoutRequest = EndSessionPopupRequest();
+
+    publicClientApp.logoutPopup(logoutRequest);
+  }
+
   static void microsoftLogin(
     Function(String, String) succesCallback,
     Function(dynamic) failureCallback,
