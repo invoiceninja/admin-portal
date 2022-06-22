@@ -66,7 +66,7 @@ dependencies:
     git:
       url: https://github.com/superlistapp/super_editor.git
       path: super_editor
-      ref: c284ee9b0a008fd507d9cc3dae7f03078592f9eb
+      ref: 631_paint-multiple-selections
   html2md: ^1.2.5
   printing: ^5.8.0
   image_cropper: ^2.0.2
