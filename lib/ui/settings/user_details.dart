@@ -234,7 +234,7 @@ class _UserDetailsState extends State<UserDetails>
                 if (state.user.isConnectedToEmail) {
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
-                  launch('$kAppProductionUrl/auth/microsoft');
+                  launch('${state.account.defaultUrl}/auth/microsoft');
                 }
               },
       ),
