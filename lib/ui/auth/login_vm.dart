@@ -100,13 +100,14 @@ class LoginVM {
 
   final Function(BuildContext, Completer<Null> completer,
       {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
-  final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
+  final Function(BuildContext, Completer<Null> completer, String url)
+      onGoogleSignUpPressed;
 
   final Function(BuildContext, Completer<Null> completer,
       {String url,
       String secret,
       String oneTimePassword}) onMicrosoftLoginPressed;
-  final Function(BuildContext, Completer<Null> completer)
+  final Function(BuildContext, Completer<Null> completer, String url)
       onMicrosoftSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
@@ -187,7 +188,7 @@ class LoginVM {
         }
       },
       onGoogleSignUpPressed:
-          (BuildContext context, Completer<Null> completer) async {
+          (BuildContext context, Completer<Null> completer, String url) async {
         try {
           await GoogleOAuth.signOut();
           final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
@@ -197,6 +198,7 @@ class LoginVM {
                   AppLocalization.of(context).anErrorOccurredTryAgain);
             } else {
               store.dispatch(OAuthSignUpRequest(
+                url: url,
                 completer: completer,
                 idToken: idToken,
                 accessToken: accessToken,
@@ -244,10 +246,11 @@ class LoginVM {
         }
       },
       onMicrosoftSignUpPressed:
-          (BuildContext context, Completer<Null> completer) async {
+          (BuildContext context, Completer<Null> completer, String url) async {
         try {
           WebUtils.microsoftLogin((idToken, accessToken) {
             store.dispatch(OAuthSignUpRequest(
+              url: url,
               completer: completer,
               idToken: idToken,
               provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,

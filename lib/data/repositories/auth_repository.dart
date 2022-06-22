@@ -51,6 +51,7 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthSignUp({
+    @required String url,
     @required String idToken,
     @required String accessToken,
     @required String referralCode,
@@ -67,8 +68,7 @@ class AuthRepository {
     };
 
     return sendRequest(
-        url: formatApiUrl(Constants.hostedApiUrl) +
-            '/oauth_login?create=true&rc=$referralCode',
+        url: formatApiUrl(url) + '/oauth_login?create=true&rc=$referralCode',
         data: credentials,
         secret: Config.API_SECRET);
   }

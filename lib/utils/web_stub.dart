@@ -24,6 +24,8 @@ class WebUtils {
 
   static void warnChanges(Store<AppState> store) {}
 
+  static void microsoftLogout() {}
+
   static void microsoftLogin(
     Function(String, String) successCallback,
     Function(dynamic) failureCallback,

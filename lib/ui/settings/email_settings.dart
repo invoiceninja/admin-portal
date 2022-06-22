@@ -151,7 +151,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                           child: Text('Gmail'),
                           value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
                       DropdownMenuItem(
-                          child: Text('Microsoft'),
+                          child: Text('Microsoft - Beta'),
                           value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                     ]),
                 if (settings.emailSendingMethod ==
