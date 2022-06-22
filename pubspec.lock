@@ -1178,7 +1178,7 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: HEAD
+      ref: c284ee9b0a008fd507d9cc3dae7f03078592f9eb
       resolved-ref: c284ee9b0a008fd507d9cc3dae7f03078592f9eb
       url: "https://github.com/superlistapp/super_editor.git"
     source: git
