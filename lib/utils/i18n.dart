@@ -16,7 +16,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-
+      'marked_purchase_order_as_sent':
+          'Successfully marked purchase order as sent',
+      'marked_purchase_orders_as_sent':
+          'Successfully marked purchase orders as sent',
+      'accepted_purchase_order': 'Successfully accepted purchase order',
+      'accepted_purchase_orders': 'Successfully accepted purchase orders',
+      'cancelled_purchase_order': 'Successfully cancelled purchase order',
+      'cancelled_purchase_orders': 'Successfully cancelled purchase orders',
       'accepted': 'Accepted',
       'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
