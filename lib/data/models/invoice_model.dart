@@ -258,32 +258,54 @@ abstract class InvoiceEntity extends Object
     return invoice;
   }
 
-  InvoiceEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..isChanged = false
-    ..isDeleted = false
-    ..statusId = kInvoiceStatusDraft
-    ..balance = 0
-    ..amount = 0
-    ..paidToDate = 0
-    ..remainingCycles = -1
-    ..invoiceId = ''
-    ..projectId = ''
-    ..subscriptionId = ''
-    ..number = ''
-    ..date = convertDateTimeToSqlDate()
-    ..dueDate = ''
-    ..documents.clear()
-    ..lineItems.replace(lineItems
-        .where(
-            (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
-        .toList())
-    ..invitations.replace(invitations
-        .map((invitation) => InvitationEntity(
-              clientContactId: invitation.clientContactId,
-              vendorContactId: invitation.vendorContactId,
-            ))
-        .toList()));
+  InvoiceEntity recreateInvitations(AppState state) {
+    if (entityType == EntityType.purchaseOrder) {
+      final vendor = state.vendorState.get(vendorId);
+      final invitations = vendor.contacts
+          .map((contact) => InvitationEntity(vendorContactId: contact.id))
+          .toBuiltList();
+      return rebuild((b) => b..invitations.replace(invitations));
+    } else {
+      final client = state.clientState.get(clientId);
+      final invitations = client.contacts
+          .map((contact) => InvitationEntity(clientContactId: contact.id))
+          .toBuiltList();
+      return rebuild((b) => b..invitations.replace(invitations));
+    }
+  }
+
+  InvoiceEntity get clone {
+    return rebuild(
+      (b) => b
+        ..id = BaseEntity.nextId
+        ..isChanged = false
+        ..isDeleted = false
+        ..statusId = kInvoiceStatusDraft
+        ..balance = 0
+        ..amount = 0
+        ..paidToDate = 0
+        ..remainingCycles = -1
+        ..invoiceId = ''
+        ..projectId = ''
+        ..subscriptionId = ''
+        ..number = ''
+        ..date = convertDateTimeToSqlDate()
+        ..dueDate = ''
+        ..documents.clear()
+        ..lineItems.replace(lineItems
+            .where((lineItem) =>
+                lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
+            .toList())
+        ..invitations.replace(
+          invitations
+              .map((invitation) => InvitationEntity(
+                    clientContactId: invitation.clientContactId,
+                    vendorContactId: invitation.vendorContactId,
+                  ))
+              .toList(),
+        ),
+    );
+  }
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
     client ??= ClientEntity();

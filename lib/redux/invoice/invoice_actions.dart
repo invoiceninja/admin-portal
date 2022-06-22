@@ -646,9 +646,11 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           entityType: EntityType.purchaseOrder);
       createEntity(
           context: context,
-          entity: invoice.clone.rebuild((b) => b
-            ..entityType = EntityType.purchaseOrder
-            ..designId = designId));
+          entity: invoice.clone
+              .rebuild((b) => b
+                ..entityType = EntityType.purchaseOrder
+                ..designId = designId)
+              .recreateInvitations(state));
       break;
     case EntityAction.cloneToRecurring:
       createEntity(

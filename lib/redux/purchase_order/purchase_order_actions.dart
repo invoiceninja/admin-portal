@@ -256,21 +256,21 @@ class EmailPurchaseOrderFailure implements StopSaving {
   final dynamic error;
 }
 
-class MarkSentPurchaseOrdersRequest implements StartSaving {
-  MarkSentPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+class MarkPurchaseOrdersSentRequest implements StartSaving {
+  MarkPurchaseOrdersSentRequest(this.completer, this.purchaseOrderIds);
 
   final Completer completer;
   final List<String> purchaseOrderIds;
 }
 
-class MarkSentPurchaseOrderSuccess implements StopSaving, PersistData {
-  MarkSentPurchaseOrderSuccess(this.purchaseOrders);
+class MarkPurchaseOrderSentSuccess implements StopSaving, PersistData {
+  MarkPurchaseOrderSentSuccess(this.purchaseOrders);
 
   final List<InvoiceEntity> purchaseOrders;
 }
 
-class MarkSentPurchaseOrderFailure implements StopSaving {
-  MarkSentPurchaseOrderFailure(this.error);
+class MarkPurchaseOrderSentFailure implements StopSaving {
+  MarkPurchaseOrderSentFailure(this.error);
 
   final Object error;
 }
@@ -451,6 +451,15 @@ void handlePurchaseOrderAction(BuildContext context,
     case EntityAction.delete:
       store.dispatch(DeletePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.deletedPurchaseOrder),
+          purchaseOrderIds));
+      break;
+    case EntityAction.markSent:
+      store.dispatch(MarkPurchaseOrdersSentRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.markedInvoiceAsSent
+                  : localization.markedInvoicesAsSent),
           purchaseOrderIds));
       break;
     case EntityAction.toggleMultiselect:

@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+
       'accepted': 'Accepted',
       'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
@@ -70775,6 +70776,29 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['accepted'] ??
       _localizedValues['en']['accepted'];
 
+  String get markedPurchaseOrderAsSent =>
+      _localizedValues[localeCode]['marked_purchase_order_as_sent'] ??
+      _localizedValues['en']['marked_purchase_order_as_sent'];
+
+  String get markedPurchaseOrdersAsSent =>
+      _localizedValues[localeCode]['marked_purchase_orders_as_sent'] ??
+      _localizedValues['en']['marked_purchase_orders_as_sent'];
+
+  String get acceptedPurchaseOrder =>
+      _localizedValues[localeCode]['accepted_purchase_order'] ??
+      _localizedValues['en']['accepted_purchase_order'];
+
+  String get acceptedPurchaseOrders =>
+      _localizedValues[localeCode]['accepted_purchase_orders'] ??
+      _localizedValues['en']['accepted_purchase_orders'];
+
+  String get cancelledPurchaseOrder =>
+      _localizedValues[localeCode]['cancelled_purchase_order'] ??
+      _localizedValues['en']['cancelled_purchase_order'];
+
+  String get cancelledPurchaseOrder =>
+      _localizedValues[localeCode]['cancelled_purchase_orders'] ??
+      _localizedValues['en']['cancelled_purchase_orders'];
 
 // STARTER: lang field - do not remove comment
 
