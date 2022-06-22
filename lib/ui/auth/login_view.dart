@@ -149,6 +149,14 @@ class _LoginState extends State<LoginView> {
     final isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final authState = viewModel.state.authState;
+    final url = _isSelfHosted
+        ? _urlController.text
+        : authState.isLargeTest
+            ? kAppLargeTestUrl
+            : authState.isStaging
+                ? kAppStagingUrl
+                : kAppProductionUrl;
 
     setState(() {
       _autoValidate = !isValid ?? false;
@@ -204,9 +212,9 @@ class _LoginState extends State<LoginView> {
         password: _passwordController.text,
       );
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
-      viewModel.onMicrosoftSignUpPressed(context, completer);
+      viewModel.onMicrosoftSignUpPressed(context, completer, url);
     } else {
-      viewModel.onGoogleSignUpPressed(context, completer);
+      viewModel.onGoogleSignUpPressed(context, completer, url);
     }
   }
 

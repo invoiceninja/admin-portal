@@ -204,6 +204,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
 
     repository
         .oauthSignUp(
+            url: action.url,
             accessToken: action.accessToken,
             idToken: action.idToken,
             provider: action.provider,
