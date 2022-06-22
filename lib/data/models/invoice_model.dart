@@ -269,7 +269,6 @@ abstract class InvoiceEntity extends Object
     ..remainingCycles = -1
     ..invoiceId = ''
     ..projectId = ''
-    ..vendorId = ''
     ..subscriptionId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
@@ -280,8 +279,10 @@ abstract class InvoiceEntity extends Object
             (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
         .toList())
     ..invitations.replace(invitations
-        .map((invitation) =>
-            InvitationEntity(clientContactId: invitation.clientContactId))
+        .map((invitation) => InvitationEntity(
+              clientContactId: invitation.clientContactId,
+              vendorContactId: invitation.vendorContactId,
+            ))
         .toList()));
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {

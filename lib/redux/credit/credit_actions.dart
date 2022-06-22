@@ -524,6 +524,17 @@ Future handleCreditAction(
             });
       }
       break;
+    case EntityAction.cloneToPurchaseOrder:
+      final designId = getDesignIdForVendorByEntity(
+          state: state,
+          vendorId: credit.vendorId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: credit.clone.rebuild((b) => b
+            ..entityType = EntityType.purchaseOrder
+            ..designId = designId));
+      break;
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: credit);
       break;

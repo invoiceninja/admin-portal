@@ -461,6 +461,17 @@ void handleRecurringInvoiceAction(BuildContext context,
             forceSafariVC: false, forceWebView: false);
       }
       break;
+    case EntityAction.cloneToPurchaseOrder:
+      final designId = getDesignIdForVendorByEntity(
+          state: state,
+          vendorId: recurringInvoice.vendorId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone.rebuild((b) => b
+            ..entityType = EntityType.purchaseOrder
+            ..designId = designId));
+      break;
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: recurringInvoice);
       break;

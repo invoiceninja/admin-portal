@@ -563,6 +563,17 @@ Future handleQuoteAction(
             });
       }
       break;
+    case EntityAction.cloneToPurchaseOrder:
+      final designId = getDesignIdForVendorByEntity(
+          state: state,
+          vendorId: quote.vendorId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: quote.clone.rebuild((b) => b
+            ..entityType = EntityType.purchaseOrder
+            ..designId = designId));
+      break;
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: quote);
       break;
