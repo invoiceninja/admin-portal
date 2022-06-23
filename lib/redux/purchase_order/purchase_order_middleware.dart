@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/repositories/purchase_order_repository.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
@@ -429,7 +430,7 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
         if (action.completer != null) {
           action.completer.complete(null);
         }
-        store.dispatch(LoadCredits());
+        store.dispatch(LoadExpenses());
       }
     }).catchError((Object error) {
       print(error);
