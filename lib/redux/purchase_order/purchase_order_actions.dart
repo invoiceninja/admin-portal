@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
@@ -170,6 +171,25 @@ class SavePurchaseOrderFailure implements StopSaving {
   SavePurchaseOrderFailure(this.error);
 
   final Object error;
+}
+
+class BulkEmailPurchaseOrdersRequest implements StartSaving {
+  BulkEmailPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class BulkEmailPurchaseOrdersSuccess implements StopSaving, PersistData {
+  BulkEmailPurchaseOrdersSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class BulkEmailPurchaseOrdersFailure implements StopSaving {
+  BulkEmailPurchaseOrdersFailure(this.error);
+
+  final dynamic error;
 }
 
 class ArchivePurchaseOrdersRequest implements StartSaving {
@@ -429,6 +449,7 @@ void handlePurchaseOrderAction(BuildContext context,
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final purchaseOrder = purchaseOrders.first as InvoiceEntity;
   final purchaseOrderIds =
@@ -480,6 +501,54 @@ void handlePurchaseOrderAction(BuildContext context,
         }
       }
       break;
+    case EntityAction.emailPurchaseOrder:
+    case EntityAction.bulkEmailPurchaseOrder:
+      bool emailValid = true;
+      purchaseOrders.forEach((purchaseOrder) {
+        final client = state.clientState.get(
+          (purchaseOrder as InvoiceEntity).clientId,
+        );
+        if (!client.hasEmailAddress) {
+          emailValid = false;
+        }
+      });
+      if (!emailValid) {
+        showMessageDialog(
+            context: context,
+            message: localization.clientEmailNotSet,
+            secondaryActions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    editEntity(
+                        entity: state.clientState.get(purchaseOrder.clientId));
+                  },
+                  child: Text(localization.editClient.toUpperCase()))
+            ]);
+        return;
+      }
+      if (action == EntityAction.emailQuote) {
+        store.dispatch(ShowEmailPurchaseOrder(
+            completer: snackBarCompleter<Null>(
+                context, localization.emailedPurchaseOrder),
+            purchaseOrder: purchaseOrder,
+            context: context));
+      } else {
+        confirmCallback(
+            context: context,
+            message: localization.bulkEmailQuote,
+            callback: (_) {
+              store.dispatch(BulkEmailPurchaseOrdersRequest(
+                  snackBarCompleter<Null>(
+                      context,
+                      purchaseOrderIds.length == 1
+                          ? localization.emailedPurchaseOrder
+                          : localization.emailedPurchaseOrders),
+                  purchaseOrderIds));
+            });
+      }
+      break;
+
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [purchaseOrder],

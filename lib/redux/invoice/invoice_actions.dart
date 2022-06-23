@@ -569,8 +569,10 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.emailInvoice:
     case EntityAction.bulkEmailInvoice:
       bool emailValid = true;
-      invoiceIds.forEach((element) {
-        final client = state.clientState.get(invoice.clientId);
+      invoices.forEach((invoice) {
+        final client = state.clientState.get(
+          (invoice as InvoiceEntity).clientId,
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }

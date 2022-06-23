@@ -522,8 +522,10 @@ Future handleQuoteAction(
     case EntityAction.emailQuote:
     case EntityAction.bulkEmailQuote:
       bool emailValid = true;
-      quoteIds.forEach((element) {
-        final client = state.clientState.get(quote.clientId);
+      quotes.forEach((quote) {
+        final client = state.clientState.get(
+          (quote as InvoiceEntity).clientId,
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }

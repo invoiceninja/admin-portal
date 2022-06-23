@@ -483,8 +483,10 @@ Future handleCreditAction(
     case EntityAction.emailCredit:
     case EntityAction.bulkEmailCredit:
       bool emailValid = true;
-      creditIds.forEach((element) {
-        final client = state.clientState.get(credit.clientId);
+      credits.forEach((credit) {
+        final client = state.clientState.get(
+          (credit as InvoiceEntity).clientId,
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
