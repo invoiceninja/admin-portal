@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 
 List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
