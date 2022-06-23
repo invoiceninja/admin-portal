@@ -86,6 +86,7 @@ const EntityAction _$changeStatus = const EntityAction._('changeStatus');
 const EntityAction _$addToInvoice = const EntityAction._('addToInvoice');
 const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$save = const EntityAction._('save');
+const EntityAction _$accept = const EntityAction._('accept');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -227,6 +228,8 @@ EntityAction _$valueOf(String name) {
       return _$cancel;
     case 'save':
       return _$save;
+    case 'accept':
+      return _$accept;
     default:
       throw new ArgumentError(name);
   }
@@ -303,6 +306,7 @@ final BuiltSet<EntityAction> _$values =
   _$addToInvoice,
   _$cancel,
   _$save,
+  _$accept,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

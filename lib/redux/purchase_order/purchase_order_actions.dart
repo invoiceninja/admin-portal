@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -92,9 +93,10 @@ class LoadPurchaseOrderActivity {
 }
 
 class LoadPurchaseOrders {
-  LoadPurchaseOrders({this.completer});
+  LoadPurchaseOrders({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadPurchaseOrderRequest implements StartLoading {}
@@ -143,6 +145,31 @@ class LoadPurchaseOrdersSuccess implements StopLoading {
   String toString() {
     return 'LoadPurchaseOrdersSuccess{purchaseOrders: $purchaseOrders}';
   }
+}
+
+class SavePurchaseOrderDocumentRequest implements StartSaving {
+  SavePurchaseOrderDocumentRequest({
+    @required this.completer,
+    @required this.multipartFile,
+    @required this.purchaseOrder,
+  });
+
+  final Completer completer;
+  final MultipartFile multipartFile;
+  final InvoiceEntity purchaseOrder;
+}
+
+class SavePurchaseOrderDocumentSuccess
+    implements StopSaving, PersistData, PersistUI {
+  SavePurchaseOrderDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SavePurchaseOrderDocumentFailure implements StopSaving {
+  SavePurchaseOrderDocumentFailure(this.error);
+
+  final Object error;
 }
 
 class SavePurchaseOrderRequest implements StartSaving {
