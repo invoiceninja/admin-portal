@@ -5,10 +5,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewPurchaseOrderList implements PersistUI {
   ViewPurchaseOrderList({this.force = false});
@@ -228,6 +230,21 @@ class DeletePurchaseOrdersFailure implements StopSaving {
   DeletePurchaseOrdersFailure(this.purchaseOrders);
 
   final List<InvoiceEntity> purchaseOrders;
+}
+
+class DownloadPurchaseOrdersRequest implements StartSaving {
+  DownloadPurchaseOrdersRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class DownloadPurchaseOrdersSuccess implements StopSaving {}
+
+class DownloadPurchaseOrdersFailure implements StopSaving {
+  DownloadPurchaseOrdersFailure(this.error);
+
+  final Object error;
 }
 
 class RestorePurchaseOrdersRequest implements StartSaving {
@@ -548,7 +565,73 @@ void handlePurchaseOrderAction(BuildContext context,
             });
       }
       break;
-
+    case EntityAction.cloneToQuote:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: purchaseOrder.clientId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: purchaseOrder.clone
+              .rebuild((b) => b
+                ..entityType = EntityType.quote
+                ..designId = designId)
+              .recreateInvitations(state));
+      break;
+    case EntityAction.cloneToOther:
+      cloneToDialog(context: context, invoice: purchaseOrder);
+      break;
+    case EntityAction.cloneToInvoice:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: purchaseOrder.clientId,
+          entityType: EntityType.invoice);
+      createEntity(
+          context: context,
+          entity: purchaseOrder.clone
+              .rebuild((b) => b
+                ..entityType = EntityType.invoice
+                ..designId = designId)
+              .recreateInvitations(state));
+      break;
+    case EntityAction.clone:
+    case EntityAction.cloneToPurchaseOrder:
+      createEntity(context: context, entity: purchaseOrder.clone);
+      break;
+    case EntityAction.cloneToCredit:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: purchaseOrder.clientId,
+          entityType: EntityType.credit);
+      createEntity(
+          context: context,
+          entity: purchaseOrder.clone
+              .rebuild((b) => b
+                ..entityType = EntityType.credit
+                ..designId = designId)
+              .recreateInvitations(state));
+      break;
+    case EntityAction.cloneToRecurring:
+      final designId = getDesignIdForClientByEntity(
+          state: state,
+          clientId: purchaseOrder.clientId,
+          entityType: EntityType.invoice);
+      createEntity(
+          context: context,
+          entity: purchaseOrder.clone
+              .rebuild((b) => b
+                ..entityType = EntityType.recurringInvoice
+                ..designId = designId)
+              .recreateInvitations(state));
+      break;
+    case EntityAction.download:
+      launch(purchaseOrder.invitationDownloadLink);
+      break;
+    case EntityAction.bulkDownload:
+      store.dispatch(DownloadPurchaseOrdersRequest(
+          snackBarCompleter<Null>(context, localization.exportedData),
+          purchaseOrderIds));
+      break;
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [purchaseOrder],
