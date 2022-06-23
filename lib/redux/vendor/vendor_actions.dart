@@ -288,6 +288,16 @@ void handleVendorAction(
     case EntityAction.edit:
       editEntity(entity: vendor);
       break;
+    case EntityAction.newPurchaseOrder:
+      createEntity(
+        context: context,
+        entity: InvoiceEntity(
+          state: state,
+          vendor: vendor,
+          entityType: EntityType.purchaseOrder,
+        ),
+      );
+      break;
     case EntityAction.newExpense:
       createEntity(
         context: context,

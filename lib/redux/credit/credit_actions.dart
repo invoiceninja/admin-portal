@@ -483,8 +483,10 @@ Future handleCreditAction(
     case EntityAction.emailCredit:
     case EntityAction.bulkEmailCredit:
       bool emailValid = true;
-      creditIds.forEach((element) {
-        final client = state.clientState.get(credit.clientId);
+      credits.forEach((credit) {
+        final client = state.clientState.get(
+          (credit as InvoiceEntity).clientId,
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -523,6 +525,17 @@ Future handleCreditAction(
                   creditIds));
             });
       }
+      break;
+    case EntityAction.cloneToPurchaseOrder:
+      final designId = getDesignIdForVendorByEntity(
+          state: state,
+          vendorId: credit.vendorId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: credit.clone.rebuild((b) => b
+            ..entityType = EntityType.purchaseOrder
+            ..designId = designId));
       break;
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: credit);

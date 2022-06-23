@@ -60,6 +60,7 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToQuote = _$cloneToQuote;
   static const EntityAction cloneToExpense = _$cloneToExpense;
   static const EntityAction cloneToRecurring = _$cloneToRecurring;
+  static const EntityAction cloneToPurchaseOrder = _$cloneToPurchaseOrder;
   static const EntityAction convertToInvoice = _$convertToInvoice;
   static const EntityAction approve = _$approve;
   static const EntityAction applyCredit = _$applyCredit;
@@ -115,6 +116,7 @@ class EntityAction extends EnumClass {
   static const EntityAction addToInvoice = _$addToInvoice;
   static const EntityAction cancel = _$cancel;
   static const EntityAction save = _$save;
+  static const EntityAction accept = _$accept;
 
   @override
   String toString() {

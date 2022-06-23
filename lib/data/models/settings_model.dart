@@ -26,6 +26,10 @@ abstract class SettingsEntity
       defaultCreditDesignId: clientSettings?.defaultCreditDesignId ??
           groupSettings?.defaultCreditDesignId ??
           companySettings?.defaultCreditDesignId,
+      defaultPurchaseOrderDesignId:
+          clientSettings?.defaultPurchaseOrderDesignId ??
+              groupSettings?.defaultPurchaseOrderDesignId ??
+              companySettings?.defaultPurchaseOrderDesignId,
       defaultInvoiceTerms: clientSettings?.defaultInvoiceTerms ??
           groupSettings?.defaultInvoiceTerms ??
           companySettings?.defaultInvoiceTerms,

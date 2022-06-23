@@ -203,6 +203,10 @@ abstract class VendorEntity extends Object
         actions.add(EntityAction.edit);
       }
 
+      if (userCompany.canCreate(EntityType.purchaseOrder)) {
+        actions.add(EntityAction.newPurchaseOrder);
+      }
+
       if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }

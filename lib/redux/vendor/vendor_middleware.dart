@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -213,7 +214,6 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      store.dispatch(LoadExpenses());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorFailure(error));
@@ -237,7 +237,7 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      store.dispatch(LoadExpenses());
+      store.dispatch(LoadPurchaseOrders());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorsFailure(error));

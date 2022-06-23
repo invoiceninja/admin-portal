@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -25,8 +26,20 @@ class PurchaseOrderRepository {
     return purchaseOrderResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/purchase_orders?';
+  Future<BuiltList<InvoiceEntity>> loadList(
+    Credentials credentials,
+    int page,
+    int createdAt,
+    bool filterDeleted,
+    int recordsPerPage,
+  ) async {
+    String url = credentials.url +
+        '/purchase_orders?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
+
+    if (filterDeleted) {
+      url += '&filter_deleted_clients=true';
+    }
+
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse purchaseOrderResponse =
@@ -52,17 +65,32 @@ class PurchaseOrderRepository {
   }
 
   Future<InvoiceEntity> saveData(
-      Credentials credentials, InvoiceEntity purchaseOrder) async {
+    Credentials credentials,
+    InvoiceEntity purchaseOrder,
+    EntityAction action,
+  ) async {
+    purchaseOrder = purchaseOrder.rebuild((b) => b..documents.clear());
     final data =
         serializers.serializeWith(InvoiceEntity.serializer, purchaseOrder);
+    String url;
     dynamic response;
 
     if (purchaseOrder.isNew) {
-      response = await webClient.post(
-          credentials.url + '/purchase_orders', credentials.token,
-          data: json.encode(data));
+      url = credentials.url + '/purchase_orders';
     } else {
-      final url = '${credentials.url}/purchase_orders/${purchaseOrder.id}';
+      url = '${credentials.url}/purchase_orders/${purchaseOrder.id}';
+    }
+
+    if (action == EntityAction.markSent) {
+      url += '&mark_sent=true';
+    } else if (action == EntityAction.accept) {
+      url += '&accept=true';
+    }
+
+    if (purchaseOrder.isNew) {
+      response =
+          await webClient.post(url, credentials.token, data: json.encode(data));
+    } else {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
@@ -71,5 +99,47 @@ class PurchaseOrderRepository {
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return purchaseOrderResponse.data;
+  }
+
+  Future<InvoiceEntity> emailPurchaseOrder(
+      Credentials credentials,
+      InvoiceEntity purchaseOrder,
+      EmailTemplate template,
+      String subject,
+      String body) async {
+    final data = {
+      'entity': '${purchaseOrder.entityType}',
+      'entity_id': purchaseOrder.id,
+      'template': 'email_template_$template',
+      'body': body,
+      'subject': subject,
+    };
+
+    final dynamic response = await webClient.post(
+        credentials.url + '/emails', credentials.token,
+        data: json.encode(data));
+
+    final InvoiceItemResponse invoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
+  }
+
+  Future<InvoiceEntity> uploadDocument(Credentials credentials,
+      BaseEntity entity, MultipartFile multipartFile) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/purchase_orders/${entity.id}/upload',
+        credentials.token,
+        data: fields,
+        multipartFiles: [multipartFile]);
+
+    final InvoiceItemResponse invoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
   }
 }

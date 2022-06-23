@@ -352,7 +352,7 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
   TypedReducer<PurchaseOrderState, LoadPurchaseOrderSuccess>(
       _updatePurchaseOrder),
   TypedReducer<PurchaseOrderState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<PurchaseOrderState, MarkSentPurchaseOrderSuccess>(
+  TypedReducer<PurchaseOrderState, MarkPurchaseOrderSentSuccess>(
       _markSentPurchaseOrderSuccess),
   TypedReducer<PurchaseOrderState, EmailPurchaseOrderSuccess>(
       _emailPurchaseOrderSuccess),
@@ -368,7 +368,7 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
 
 PurchaseOrderState _markSentPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState,
-    MarkSentPurchaseOrderSuccess action) {
+    MarkPurchaseOrderSentSuccess action) {
   final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,

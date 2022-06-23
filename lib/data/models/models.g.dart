@@ -20,6 +20,8 @@ const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$cloneToExpense = const EntityAction._('cloneToExpense');
 const EntityAction _$cloneToRecurring =
     const EntityAction._('cloneToRecurring');
+const EntityAction _$cloneToPurchaseOrder =
+    const EntityAction._('cloneToPurchaseOrder');
 const EntityAction _$convertToInvoice =
     const EntityAction._('convertToInvoice');
 const EntityAction _$approve = const EntityAction._('approve');
@@ -84,6 +86,7 @@ const EntityAction _$changeStatus = const EntityAction._('changeStatus');
 const EntityAction _$addToInvoice = const EntityAction._('addToInvoice');
 const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$save = const EntityAction._('save');
+const EntityAction _$accept = const EntityAction._('accept');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -113,6 +116,8 @@ EntityAction _$valueOf(String name) {
       return _$cloneToExpense;
     case 'cloneToRecurring':
       return _$cloneToRecurring;
+    case 'cloneToPurchaseOrder':
+      return _$cloneToPurchaseOrder;
     case 'convertToInvoice':
       return _$convertToInvoice;
     case 'approve':
@@ -223,6 +228,8 @@ EntityAction _$valueOf(String name) {
       return _$cancel;
     case 'save':
       return _$save;
+    case 'accept':
+      return _$accept;
     default:
       throw new ArgumentError(name);
   }
@@ -243,6 +250,7 @@ final BuiltSet<EntityAction> _$values =
   _$cloneToQuote,
   _$cloneToExpense,
   _$cloneToRecurring,
+  _$cloneToPurchaseOrder,
   _$convertToInvoice,
   _$approve,
   _$applyCredit,
@@ -298,6 +306,7 @@ final BuiltSet<EntityAction> _$values =
   _$addToInvoice,
   _$cancel,
   _$save,
+  _$accept,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

@@ -480,6 +480,16 @@ void cloneToDialog({
                     handleEntityAction(invoice, EntityAction.cloneToRecurring);
                   },
                 ),
+              if (userCompany.canCreate(EntityType.purchaseOrder))
+                ListTile(
+                  leading: Icon(getEntityIcon(EntityType.purchaseOrder)),
+                  title: Text(localization.purchaseOrder),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    handleEntityAction(
+                        invoice, EntityAction.cloneToPurchaseOrder);
+                  },
+                ),
             ],
           ),
           actions: [

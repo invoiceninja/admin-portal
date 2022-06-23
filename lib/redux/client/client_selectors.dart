@@ -146,6 +146,22 @@ SettingsEntity getClientSettings(AppState state, ClientEntity client) {
   );
 }
 
+SettingsEntity getVendorSettings(AppState state, VendorEntity vendor) {
+  if (state == null) {
+    return SettingsEntity();
+  }
+
+  vendor ??= VendorEntity();
+  final company = state.company;
+  //final group = state.groupState.get(vendor.groupId);
+
+  return SettingsEntity(
+    clientSettings: SettingsEntity(), // client.settings,
+    groupSettings: SettingsEntity(), // group.settings,
+    companySettings: company.settings,
+  );
+}
+
 bool hasClientChanges(
         ClientEntity client, BuiltMap<String, ClientEntity> clientMap) =>
     client.isNew ? client.isChanged : client != clientMap[client.id];

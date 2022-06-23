@@ -522,8 +522,10 @@ Future handleQuoteAction(
     case EntityAction.emailQuote:
     case EntityAction.bulkEmailQuote:
       bool emailValid = true;
-      quoteIds.forEach((element) {
-        final client = state.clientState.get(quote.clientId);
+      quotes.forEach((quote) {
+        final client = state.clientState.get(
+          (quote as InvoiceEntity).clientId,
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -562,6 +564,17 @@ Future handleQuoteAction(
                   quoteIds));
             });
       }
+      break;
+    case EntityAction.cloneToPurchaseOrder:
+      final designId = getDesignIdForVendorByEntity(
+          state: state,
+          vendorId: quote.vendorId,
+          entityType: EntityType.purchaseOrder);
+      createEntity(
+          context: context,
+          entity: quote.clone.rebuild((b) => b
+            ..entityType = EntityType.purchaseOrder
+            ..designId = designId));
       break;
     case EntityAction.cloneToOther:
       cloneToDialog(context: context, invoice: quote);

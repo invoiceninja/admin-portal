@@ -84,3 +84,17 @@ String getDesignIdForClientByEntity(
       return settings.defaultInvoiceDesignId;
   }
 }
+
+String getDesignIdForVendorByEntity(
+    {AppState state, String vendorId, EntityType entityType}) {
+  final vendor = state.vendorState.get(vendorId);
+
+  final settings = getVendorSettings(state, vendor);
+  switch (entityType) {
+    case EntityType.purchaseOrder:
+      return settings.defaultPurchaseOrderDesignId;
+    default:
+      print('## ERROR: undefined entity type $entityType in design_selectors');
+      return settings.defaultInvoiceDesignId;
+  }
+}

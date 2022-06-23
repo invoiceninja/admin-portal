@@ -25,10 +25,6 @@ class UserPicker extends StatelessWidget {
       return SizedBox();
     }
 
-    if (state.isHosted && !state.isEnterprisePlan) {
-      return SizedBox();
-    }
-
     return DynamicSelector(
       onChanged: onChanged,
       entityType: EntityType.user,
