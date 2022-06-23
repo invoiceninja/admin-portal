@@ -458,8 +458,8 @@ void handlePurchaseOrderAction(BuildContext context,
           snackBarCompleter<Null>(
               context,
               purchaseOrders.length == 1
-                  ? localization.markedInvoiceAsSent
-                  : localization.markedInvoicesAsSent),
+                  ? localization.markedPurchaseOrderAsSent
+                  : localization.markedPurchaseOrdersAsSent),
           purchaseOrderIds));
       break;
     case EntityAction.toggleMultiselect:
