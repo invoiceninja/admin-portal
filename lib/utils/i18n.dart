@@ -28,7 +28,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
       'email_purchase_order': 'Email Purchase Order',
-      'disconnected_email': 'Successfully connected email',
+      'disconnected_email': 'Successfully disconnected email',
       'connect_email': 'Connect Email',
       'disconnect_email': 'Disconnect Email',
       'use_web_app_to_connect_microsoft':

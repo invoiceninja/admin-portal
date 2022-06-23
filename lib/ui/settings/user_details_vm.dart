@@ -243,6 +243,9 @@ class UserDetailsVM {
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context).disconnectedMicrosoft);
+                    completer.future.then((value) {
+                      WebUtils.microsoftLogout();
+                    });
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
