@@ -69,6 +69,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newRecurringInvoice:
     case EntityAction.newRecurringQuote:
     case EntityAction.newRecurringExpense:
+    case EntityAction.newPurchaseOrder:
     case EntityAction.invoiceTask:
     case EntityAction.invoiceExpense:
     case EntityAction.invoiceProject:
