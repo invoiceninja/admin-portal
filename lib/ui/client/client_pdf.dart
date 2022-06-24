@@ -359,8 +359,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: Text(localization.email,
                         style: TextStyle(color: state.headerTextColor)),
                     onPressed: () {
-                      handleEntityAction(client,
-                          EntityAction.emailEntityType(client.entityType));
+                      handleEntityAction(client, EntityAction.sendEmail);
                     },
                   ),
                 AppTextButton(

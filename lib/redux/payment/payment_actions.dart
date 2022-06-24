@@ -348,7 +348,7 @@ void handlePaymentAction(
         ));
       });
       break;
-    case EntityAction.emailPayment:
+    case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
           snackBarCompleter<Null>(context, localization.emailedPayment),
           paymentIds));

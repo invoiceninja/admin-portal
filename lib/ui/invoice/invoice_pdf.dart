@@ -226,8 +226,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       child: Text(localization.email,
                           style: TextStyle(color: state.headerTextColor)),
                       onPressed: () {
-                        handleEntityAction(invoice,
-                            EntityAction.emailEntityType(invoice.entityType));
+                        handleEntityAction(invoice, EntityAction.sendEmail);
                       },
                     ),
                   if (!invoice.isRecurring)

@@ -545,8 +545,8 @@ void handlePurchaseOrderAction(BuildContext context,
         }
       }
       break;
-    case EntityAction.emailPurchaseOrder:
-    case EntityAction.bulkEmailPurchaseOrder:
+    case EntityAction.sendEmail:
+    case EntityAction.bulkSendEmail:
       bool emailValid = true;
       purchaseOrders.forEach((purchaseOrder) {
         final client = state.clientState.get(
@@ -571,7 +571,7 @@ void handlePurchaseOrderAction(BuildContext context,
             ]);
         return;
       }
-      if (action == EntityAction.emailQuote) {
+      if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailPurchaseOrder(
             completer: snackBarCompleter<Null>(
                 context, localization.emailedPurchaseOrder),

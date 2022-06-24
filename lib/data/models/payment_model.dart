@@ -407,7 +407,7 @@ abstract class PaymentEntity extends Object
         }
 
         if (client != null && client.hasEmailAddress) {
-          actions.add(EntityAction.emailPayment);
+          actions.add(EntityAction.sendEmail);
         }
       }
     }

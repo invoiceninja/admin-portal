@@ -519,8 +519,8 @@ Future handleQuoteAction(
           snackBarCompleter<Null>(context, localization.markedQuoteAsSent),
           quoteIds));
       break;
-    case EntityAction.emailQuote:
-    case EntityAction.bulkEmailQuote:
+    case EntityAction.sendEmail:
+    case EntityAction.bulkSendEmail:
       bool emailValid = true;
       quotes.forEach((quote) {
         final client = state.clientState.get(
@@ -544,7 +544,7 @@ Future handleQuoteAction(
             ]);
         return;
       }
-      if (action == EntityAction.emailQuote) {
+      if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailQuote(
             completer:
                 snackBarCompleter<Null>(context, localization.emailedQuote),

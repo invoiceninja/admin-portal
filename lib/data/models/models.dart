@@ -68,15 +68,8 @@ class EntityAction extends EnumClass {
   static const EntityAction download = _$download;
   static const EntityAction documents = _$documents;
   static const EntityAction bulkDownload = _$bulkDownload;
-  static const EntityAction emailInvoice = _$emailInvoice;
-  static const EntityAction emailQuote = _$emailQuote;
-  static const EntityAction emailCredit = _$emailCredit;
-  static const EntityAction emailPurchaseOrder = _$emailPurchaseOrder;
-  static const EntityAction bulkEmailInvoice = _$bulkEmailInvoice;
-  static const EntityAction bulkEmailQuote = _$bulkEmailQuote;
-  static const EntityAction bulkEmailCredit = _$bulkEmailCredit;
-  static const EntityAction bulkEmailPurchaseOrder = _$bulkEmailPurchaseOrder;
-  static const EntityAction emailPayment = _$emailPayment;
+  static const EntityAction sendEmail = _$sendEmail;
+  static const EntityAction bulkSendEmail = _$bulkSendEmail;
   static const EntityAction markSent = _$markSent;
   static const EntityAction markPaid = _$markPaid;
   static const EntityAction newClient = _$newClient;
@@ -164,19 +157,6 @@ class EntityAction extends EnumClass {
     // }
 
     return value;
-  }
-
-  static EntityAction emailEntityType(EntityType entityType) {
-    switch (entityType) {
-      case EntityType.invoice:
-        return EntityAction.emailInvoice;
-      case EntityType.quote:
-        return EntityAction.emailQuote;
-      case EntityType.credit:
-        return EntityAction.emailCredit;
-      default:
-        return null;
-    }
   }
 
   static EntityAction newEntityType(EntityType entityType) {

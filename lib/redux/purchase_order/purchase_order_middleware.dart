@@ -386,7 +386,7 @@ Middleware<AppState> _bulkEmailPurchaseOrders(
 
     repository
         .bulkAction(store.state.credentials, action.purchaseOrderIds,
-            EntityAction.emailPurchaseOrder)
+            EntityAction.sendEmail)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(BulkEmailPurchaseOrdersSuccess(purchaseOrders));
       if (action.completer != null) {
