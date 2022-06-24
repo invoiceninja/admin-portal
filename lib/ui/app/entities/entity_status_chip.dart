@@ -76,6 +76,12 @@ class EntityStatusChip extends StatelessWidget {
           color = CreditStatusColors(state.prefState.colorThemeModel)
               .colors[credit.statusId];
           break;
+        case EntityType.purchaseOrder:
+          final purchaseOrder = entity as InvoiceEntity;
+          label = kPurchaseOrderStatuses[purchaseOrder.statusId];
+          color = CreditStatusColors(state.prefState.colorThemeModel)
+              .colors[purchaseOrder.statusId];
+          break;
         case EntityType.expense:
           final expense = entity as ExpenseEntity;
           final category = state.expenseCategoryState.get(expense.categoryId);
