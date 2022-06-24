@@ -549,17 +549,17 @@ void handlePurchaseOrderAction(BuildContext context,
     case EntityAction.bulkSendEmail:
       bool emailValid = true;
       purchaseOrders.forEach((purchaseOrder) {
-        final client = state.clientState.get(
-          (purchaseOrder as InvoiceEntity).clientId,
+        final vendor = state.vendorState.get(
+          (purchaseOrder as InvoiceEntity).vendorId,
         );
-        if (!client.hasEmailAddress) {
+        if (!vendor.hasEmailAddress) {
           emailValid = false;
         }
       });
       if (!emailValid) {
         showMessageDialog(
             context: context,
-            message: localization.clientEmailNotSet,
+            message: localization.vendorEmailNotSet,
             secondaryActions: [
               TextButton(
                   onPressed: () {
