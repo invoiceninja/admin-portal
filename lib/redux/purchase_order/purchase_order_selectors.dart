@@ -124,6 +124,9 @@ List<String> filteredPurchaseOrdersSelector(
     } else if (filterEntityType == EntityType.quote &&
         invoice.invoiceId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.vendor &&
+        invoice.vendorId != filterEntityId) {
+      return false;
     }
 
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
