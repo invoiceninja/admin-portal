@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -216,6 +217,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = state.clientState.get(invoice.clientId);
+    final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
     final originalInvoice =
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
@@ -287,7 +289,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           padding: const EdgeInsets.all(6),
                           child: Text(
                             EntityPresenter()
-                                .initialize(client, context)
+                                .initialize(
+                                    invoice.isPurchaseOrder ? vendor : client,
+                                    context)
                                 .title(),
                             style: Theme.of(context).textTheme.headline6,
                             maxLines: 2,
