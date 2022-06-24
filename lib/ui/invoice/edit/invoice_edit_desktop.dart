@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -468,11 +467,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   children: <Widget>[
                     DecoratedFormField(
                       controller: _invoiceNumberController,
-                      label: entityType == EntityType.credit
-                          ? localization.creditNumber
-                          : entityType == EntityType.quote
-                              ? localization.quoteNumber
-                              : localization.invoiceNumber,
+                      label: entityType == EntityType.purchaseOrder
+                          ? localization.poNumber
+                          : entityType == EntityType.credit
+                              ? localization.creditNumber
+                              : entityType == EntityType.quote
+                                  ? localization.quoteNumber
+                                  : localization.invoiceNumber,
                       validator: (String val) => val.trim().isEmpty &&
                               invoice.isOld &&
                               originalInvoice.number.isNotEmpty
@@ -482,12 +483,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       keyboardType: TextInputType.text,
                       onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
-                    DecoratedFormField(
-                      label: localization.poNumber,
-                      controller: _poNumberController,
-                      onSavePressed: widget.entityViewModel.onSavePressed,
-                      keyboardType: TextInputType.text,
-                    ),
+                    if (!invoice.isPurchaseOrder)
+                      DecoratedFormField(
+                        label: localization.poNumber,
+                        controller: _poNumberController,
+                        onSavePressed: widget.entityViewModel.onSavePressed,
+                        keyboardType: TextInputType.text,
+                      ),
                     DiscountField(
                       controller: _discountController,
                       value: invoice.discount,
