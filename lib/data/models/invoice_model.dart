@@ -973,27 +973,9 @@ abstract class InvoiceEntity extends Object
 
         if (!isCancelledOrReversed) {
           if (multiselect) {
-            if (entityType == EntityType.quote) {
-              actions.add(EntityAction.bulkEmailQuote);
-            } else if (entityType == EntityType.credit) {
-              actions.add(EntityAction.bulkEmailCredit);
-            } else if (entityType == EntityType.invoice) {
-              actions.add(EntityAction.bulkEmailInvoice);
-            } else if (entityType == EntityType.purchaseOrder) {
-              actions.add(EntityAction.bulkEmailPurchaseOrder);
-            }
+            actions.add(EntityAction.bulkSendEmail);
           } else {
-            if (entityType == EntityType.quote) {
-              actions.add(EntityAction.emailQuote);
-            } else if (entityType == EntityType.credit) {
-              actions.add(EntityAction.emailCredit);
-            } else if (entityType == EntityType.invoice) {
-              actions.add(EntityAction.emailInvoice);
-            } else if (entityType == EntityType.purchaseOrder) {
-              actions.add(EntityAction.emailPurchaseOrder);
-            } else if (entityType == EntityType.recurringInvoice && isDraft) {
-              actions.add(EntityAction.emailInvoice);
-            }
+            actions.add(EntityAction.sendEmail);
           }
         }
       }

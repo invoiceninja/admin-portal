@@ -184,11 +184,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                       )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
-                    label: widget.entityType == EntityType.credit
-                        ? localization.creditNumber
-                        : widget.entityType == EntityType.quote
-                            ? localization.quoteNumber
-                            : localization.invoiceNumber,
+                    label: widget.entityType == EntityType.purchaseOrder
+                        ? localization.poNumber
+                        : widget.entityType == EntityType.credit
+                            ? localization.creditNumber
+                            : widget.entityType == EntityType.quote
+                                ? localization.quoteNumber
+                                : localization.invoiceNumber,
                     keyboardType: TextInputType.text,
                     validator: (String val) => val.trim().isEmpty &&
                             invoice.isOld &&
@@ -318,11 +320,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   },
                 ),
             ],
-            DecoratedFormField(
-              label: localization.poNumber,
-              controller: _poNumberController,
-              keyboardType: TextInputType.text,
-            ),
+            if (!invoice.isPurchaseOrder)
+              DecoratedFormField(
+                label: localization.poNumber,
+                controller: _poNumberController,
+                keyboardType: TextInputType.text,
+              ),
             DiscountField(
               controller: _discountController,
               value: invoice.discount,

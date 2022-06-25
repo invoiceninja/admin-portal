@@ -590,7 +590,7 @@ void handleRecurringInvoiceAction(BuildContext context,
         ),
       );
       break;
-    case EntityAction.emailInvoice:
+    case EntityAction.sendEmail:
       store.dispatch(SaveRecurringInvoiceRequest(
           recurringInvoice: recurringInvoice,
           action: action,

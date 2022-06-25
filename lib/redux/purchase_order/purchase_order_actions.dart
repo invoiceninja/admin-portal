@@ -545,21 +545,21 @@ void handlePurchaseOrderAction(BuildContext context,
         }
       }
       break;
-    case EntityAction.emailPurchaseOrder:
-    case EntityAction.bulkEmailPurchaseOrder:
+    case EntityAction.sendEmail:
+    case EntityAction.bulkSendEmail:
       bool emailValid = true;
       purchaseOrders.forEach((purchaseOrder) {
-        final client = state.clientState.get(
-          (purchaseOrder as InvoiceEntity).clientId,
+        final vendor = state.vendorState.get(
+          (purchaseOrder as InvoiceEntity).vendorId,
         );
-        if (!client.hasEmailAddress) {
+        if (!vendor.hasEmailAddress) {
           emailValid = false;
         }
       });
       if (!emailValid) {
         showMessageDialog(
             context: context,
-            message: localization.clientEmailNotSet,
+            message: localization.vendorEmailNotSet,
             secondaryActions: [
               TextButton(
                   onPressed: () {
@@ -571,7 +571,7 @@ void handlePurchaseOrderAction(BuildContext context,
             ]);
         return;
       }
-      if (action == EntityAction.emailQuote) {
+      if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailPurchaseOrder(
             completer: snackBarCompleter<Null>(
                 context, localization.emailedPurchaseOrder),

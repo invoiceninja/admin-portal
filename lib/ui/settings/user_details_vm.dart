@@ -211,6 +211,7 @@ class UserDetailsVM {
                         provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                         password: password,
                         idToken: idToken,
+                        accessToken: accessToken,
                         completer: completer,
                       ),
                     );
@@ -271,6 +272,7 @@ class UserDetailsVM {
                       provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
                       password: password,
                       idToken: idToken,
+                      accessToken: accessToken,
                       completer: completer,
                     ),
                   );

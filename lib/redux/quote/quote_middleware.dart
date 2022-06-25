@@ -393,7 +393,7 @@ Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.quoteIds, EntityAction.emailQuote)
+            store.state.credentials, action.quoteIds, EntityAction.sendEmail)
         .then((List<InvoiceEntity> quotes) {
       store.dispatch(BulkEmailQuotesSuccess(quotes));
       if (action.completer != null) {

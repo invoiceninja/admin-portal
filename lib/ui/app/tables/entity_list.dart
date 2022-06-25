@@ -219,10 +219,6 @@ class _EntityListState extends State<EntityList> {
           ],
         );
       } else {
-        if (widget.tableColumns.isEmpty) {
-          return SizedBox();
-        }
-
         final rowsPerPage = state.prefState.rowsPerPage;
 
         return Column(

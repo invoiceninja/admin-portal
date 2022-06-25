@@ -6,6 +6,23 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+ClientEntity purchaseOrderClientSelector(
+    InvoiceEntity purchaseOrder, BuiltMap<String, ClientEntity> clientMap) {
+  return clientMap[purchaseOrder.clientId];
+}
+
+ClientContactEntity purchaseOrderContactSelector(
+    InvoiceEntity purchaseOrder, ClientEntity client) {
+  var contactIds = purchaseOrder.invitations
+      .map((invitation) => invitation.clientContactId)
+      .toList();
+  if (contactIds.contains(client.primaryContact.id)) {
+    contactIds = [client.primaryContact.id];
+  }
+  return client.contacts
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
+}
+
 var memoizedDropdownPurchaseOrderList = memo6(
     (BuiltMap<String, InvoiceEntity> purchaseOrderMap,
             BuiltList<String> purchaseOrderList,
@@ -106,6 +123,9 @@ List<String> filteredPurchaseOrdersSelector(
       return false;
     } else if (filterEntityType == EntityType.quote &&
         invoice.invoiceId != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.vendor &&
+        invoice.vendorId != filterEntityId) {
       return false;
     }
 

@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 
 List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
@@ -387,7 +386,7 @@ Middleware<AppState> _bulkEmailPurchaseOrders(
 
     repository
         .bulkAction(store.state.credentials, action.purchaseOrderIds,
-            EntityAction.emailPurchaseOrder)
+            EntityAction.sendEmail)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(BulkEmailPurchaseOrdersSuccess(purchaseOrders));
       if (action.completer != null) {

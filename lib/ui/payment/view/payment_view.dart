@@ -174,7 +174,7 @@ class _PaymentViewState extends State<PaymentView> {
                   entity: payment,
                   action1: state.company.enableApplyingPayments
                       ? EntityAction.applyPayment
-                      : EntityAction.emailPayment,
+                      : EntityAction.sendEmail,
                   action1Enabled: state.company.enableApplyingPayments
                       ? payment.applied < payment.amount
                       : true,

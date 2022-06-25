@@ -96,7 +96,7 @@ class PurchaseOrderScreen extends StatelessWidget {
         sortFields: [
           PurchaseOrderFields.number,
           PurchaseOrderFields.date,
-          PurchaseOrderFields.dueDate,
+          PurchaseOrderFields.validUntil,
           EntityFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {

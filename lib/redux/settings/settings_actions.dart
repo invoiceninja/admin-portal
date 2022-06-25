@@ -136,6 +136,7 @@ class ConnecOAuthUserRequest implements StartSaving {
   ConnecOAuthUserRequest({
     @required this.provider,
     @required this.idToken,
+    @required this.accessToken,
     this.completer,
     this.password,
   });
@@ -144,6 +145,7 @@ class ConnecOAuthUserRequest implements StartSaving {
   final String provider;
   final String password;
   final String idToken;
+  final String accessToken;
 }
 
 class ConnecOAuthUserSuccess

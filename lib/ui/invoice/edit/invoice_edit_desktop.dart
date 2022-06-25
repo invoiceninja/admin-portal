@@ -216,6 +216,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = state.clientState.get(invoice.clientId);
+    final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
     final originalInvoice =
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
@@ -287,7 +288,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           padding: const EdgeInsets.all(6),
                           child: Text(
                             EntityPresenter()
-                                .initialize(client, context)
+                                .initialize(
+                                    invoice.isPurchaseOrder ? vendor : client,
+                                    context)
                                 .title(),
                             style: Theme.of(context).textTheme.headline6,
                             maxLines: 2,
@@ -464,11 +467,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   children: <Widget>[
                     DecoratedFormField(
                       controller: _invoiceNumberController,
-                      label: entityType == EntityType.credit
-                          ? localization.creditNumber
-                          : entityType == EntityType.quote
-                              ? localization.quoteNumber
-                              : localization.invoiceNumber,
+                      label: entityType == EntityType.purchaseOrder
+                          ? localization.poNumber
+                          : entityType == EntityType.credit
+                              ? localization.creditNumber
+                              : entityType == EntityType.quote
+                                  ? localization.quoteNumber
+                                  : localization.invoiceNumber,
                       validator: (String val) => val.trim().isEmpty &&
                               invoice.isOld &&
                               originalInvoice.number.isNotEmpty
@@ -478,12 +483,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       keyboardType: TextInputType.text,
                       onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
-                    DecoratedFormField(
-                      label: localization.poNumber,
-                      controller: _poNumberController,
-                      onSavePressed: widget.entityViewModel.onSavePressed,
-                      keyboardType: TextInputType.text,
-                    ),
+                    if (!invoice.isPurchaseOrder)
+                      DecoratedFormField(
+                        label: localization.poNumber,
+                        controller: _poNumberController,
+                        onSavePressed: widget.entityViewModel.onSavePressed,
+                        keyboardType: TextInputType.text,
+                      ),
                     DiscountField(
                       controller: _discountController,
                       value: invoice.discount,

@@ -351,8 +351,8 @@ Middleware<AppState> _bulkEmailInvoices(InvoiceRepository repository) {
     final action = dynamicAction as BulkEmailInvoicesRequest;
 
     repository
-        .bulkAction(store.state.credentials, action.invoiceIds,
-            EntityAction.emailInvoice)
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.sendEmail)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(BulkEmailInvoicesSuccess(invoices));
       if (action.completer != null) {

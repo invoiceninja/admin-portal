@@ -143,6 +143,7 @@ Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
       action.provider,
       action.password,
       action.idToken,
+      action.accessToken,
     )
         .then((user) {
       store.dispatch(ConnecOAuthUserSuccess(user));

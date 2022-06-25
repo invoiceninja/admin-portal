@@ -76,9 +76,10 @@ class PurchaseOrderRepository {
     dynamic response;
 
     if (purchaseOrder.isNew) {
-      url = credentials.url + '/purchase_orders';
+      url = credentials.url + '/purchase_orders?include=activities';
     } else {
-      url = '${credentials.url}/purchase_orders/${purchaseOrder.id}';
+      url =
+          '${credentials.url}/purchase_orders/${purchaseOrder.id}?include=activities';
     }
 
     if (action == EntityAction.markSent) {

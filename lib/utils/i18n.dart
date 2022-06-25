@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'vendor_email_not_set': 'Vendor does not have an email address set',
+      'bulk_send_email': 'Send Email',
       'marked_purchase_order_as_sent':
           'Successfully marked purchase order as sent',
       'marked_purchase_orders_as_sent':
@@ -28,6 +30,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
       'email_purchase_order': 'Email Purchase Order',
+      'bulk_email_purchase_order': 'Email Purchase Order',
       'disconnected_email': 'Successfully disconnected email',
       'connect_email': 'Connect Email',
       'disconnect_email': 'Disconnect Email',
@@ -70767,10 +70770,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['disconnected_email'] ??
       _localizedValues['en']['disconnected_email'];
 
-  String get emailPurchaseOrder =>
-      _localizedValues[localeCode]['email_purchase_order'] ??
-      _localizedValues['en']['email_purchase_order'];
-
   String get purchaseOrderTotal =>
       _localizedValues[localeCode]['purchase_order_total'] ??
       _localizedValues['en']['purchase_order_total'];
@@ -70806,6 +70805,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get cancelledPurchaseOrders =>
       _localizedValues[localeCode]['cancelled_purchase_orders'] ??
       _localizedValues['en']['cancelled_purchase_orders'];
+
+  String get vendorEmailNotSet =>
+      _localizedValues[localeCode]['vendor_email_not_set'] ??
+      _localizedValues['en']['vendor_email_not_set'];
 
 // STARTER: lang field - do not remove comment
 

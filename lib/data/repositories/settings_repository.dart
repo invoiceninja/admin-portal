@@ -63,6 +63,7 @@ class SettingsRepository {
     String provider,
     String password,
     String idToken,
+    String accessToken,
   ) async {
     dynamic response;
 
@@ -73,6 +74,7 @@ class SettingsRepository {
       data: json.encode(
         {
           'id_token': idToken,
+          'access_token': accessToken,
           'provider': provider,
         },
       ),

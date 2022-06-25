@@ -120,10 +120,8 @@ class _InvoiceViewState extends State<InvoiceView>
       secondAction = invoice.isRunning ? EntityAction.stop : EntityAction.start;
     } else if (invoice.isCredit) {
       secondAction = EntityAction.applyCredit;
-    } else if (invoice.isQuote) {
-      secondAction = EntityAction.emailQuote;
     } else {
-      secondAction = EntityAction.emailInvoice;
+      secondAction = EntityAction.sendEmail;
     }
 
     return ViewScaffold(

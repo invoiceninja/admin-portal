@@ -30,18 +30,8 @@ const EntityAction _$applyPayment = const EntityAction._('applyPayment');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$documents = const EntityAction._('documents');
 const EntityAction _$bulkDownload = const EntityAction._('bulkDownload');
-const EntityAction _$emailInvoice = const EntityAction._('emailInvoice');
-const EntityAction _$emailQuote = const EntityAction._('emailQuote');
-const EntityAction _$emailCredit = const EntityAction._('emailCredit');
-const EntityAction _$emailPurchaseOrder =
-    const EntityAction._('emailPurchaseOrder');
-const EntityAction _$bulkEmailInvoice =
-    const EntityAction._('bulkEmailInvoice');
-const EntityAction _$bulkEmailQuote = const EntityAction._('bulkEmailQuote');
-const EntityAction _$bulkEmailCredit = const EntityAction._('bulkEmailCredit');
-const EntityAction _$bulkEmailPurchaseOrder =
-    const EntityAction._('bulkEmailPurchaseOrder');
-const EntityAction _$emailPayment = const EntityAction._('emailPayment');
+const EntityAction _$sendEmail = const EntityAction._('sendEmail');
+const EntityAction _$bulkSendEmail = const EntityAction._('bulkSendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
@@ -132,24 +122,10 @@ EntityAction _$valueOf(String name) {
       return _$documents;
     case 'bulkDownload':
       return _$bulkDownload;
-    case 'emailInvoice':
-      return _$emailInvoice;
-    case 'emailQuote':
-      return _$emailQuote;
-    case 'emailCredit':
-      return _$emailCredit;
-    case 'emailPurchaseOrder':
-      return _$emailPurchaseOrder;
-    case 'bulkEmailInvoice':
-      return _$bulkEmailInvoice;
-    case 'bulkEmailQuote':
-      return _$bulkEmailQuote;
-    case 'bulkEmailCredit':
-      return _$bulkEmailCredit;
-    case 'bulkEmailPurchaseOrder':
-      return _$bulkEmailPurchaseOrder;
-    case 'emailPayment':
-      return _$emailPayment;
+    case 'sendEmail':
+      return _$sendEmail;
+    case 'bulkSendEmail':
+      return _$bulkSendEmail;
     case 'markSent':
       return _$markSent;
     case 'markPaid':
@@ -258,15 +234,8 @@ final BuiltSet<EntityAction> _$values =
   _$download,
   _$documents,
   _$bulkDownload,
-  _$emailInvoice,
-  _$emailQuote,
-  _$emailCredit,
-  _$emailPurchaseOrder,
-  _$bulkEmailInvoice,
-  _$bulkEmailQuote,
-  _$bulkEmailCredit,
-  _$bulkEmailPurchaseOrder,
-  _$emailPayment,
+  _$sendEmail,
+  _$bulkSendEmail,
   _$markSent,
   _$markPaid,
   _$newClient,
