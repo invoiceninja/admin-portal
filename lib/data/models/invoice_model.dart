@@ -1195,9 +1195,12 @@ abstract class InvoiceEntity extends Object
 
   bool get isReversed => isInvoice && statusId == kInvoiceStatusReversed;
 
-  bool get isCancelled => isInvoice && statusId == kInvoiceStatusCancelled;
+  bool get isCancelled =>
+      (isInvoice && statusId == kInvoiceStatusCancelled) ||
+      (isPurchaseOrder && statusId == kPurchaseOrderStatusCancelled);
 
-  bool get isCancelledOrReversed => isInvoice && (isCancelled || isReversed);
+  bool get isCancelledOrReversed =>
+      (isInvoice || isPurchaseOrder) && (isCancelled || isReversed);
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
 
