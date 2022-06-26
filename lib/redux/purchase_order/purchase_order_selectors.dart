@@ -6,20 +6,20 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-ClientEntity purchaseOrderClientSelector(
-    InvoiceEntity purchaseOrder, BuiltMap<String, ClientEntity> clientMap) {
-  return clientMap[purchaseOrder.clientId];
+VendorEntity purchaseOrderClientSelector(
+    InvoiceEntity purchaseOrder, BuiltMap<String, VendorEntity> vendorMap) {
+  return vendorMap[purchaseOrder.vendorId];
 }
 
-ClientContactEntity purchaseOrderContactSelector(
-    InvoiceEntity purchaseOrder, ClientEntity client) {
+VendorContactEntity purchaseOrderContactSelector(
+    InvoiceEntity purchaseOrder, VendorEntity vendor) {
   var contactIds = purchaseOrder.invitations
       .map((invitation) => invitation.clientContactId)
       .toList();
-  if (contactIds.contains(client.primaryContact.id)) {
-    contactIds = [client.primaryContact.id];
+  if (contactIds.contains(vendor.primaryContact.id)) {
+    contactIds = [vendor.primaryContact.id];
   }
-  return client.contacts
+  return vendor.contacts
       .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
 
