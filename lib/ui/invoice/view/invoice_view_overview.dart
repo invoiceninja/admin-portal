@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -80,6 +81,10 @@ class InvoiceOverview extends StatelessWidget {
       statuses = kRecurringInvoiceStatuses;
       colors =
           RecurringInvoiceStatusColors(state.prefState.colorThemeModel).colors;
+    } else if (invoice.entityType == EntityType.purchaseOrder) {
+      statuses = kPurchaseOrderStatuses;
+      colors =
+          PurchaseOrderStatusColors(state.prefState.colorThemeModel).colors;
     } else {
       statuses = kInvoiceStatuses;
       colors = InvoiceStatusColors(state.prefState.colorThemeModel).colors;
@@ -137,7 +142,7 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     String dueDateField = InvoiceFields.dueDate;
-    if (invoice.isQuote) {
+    if (invoice.isQuote || invoice.isPurchaseOrder) {
       dueDateField = QuoteFields.validUntil;
     }
 
@@ -146,6 +151,8 @@ class InvoiceOverview extends StatelessWidget {
         QuoteFields.date: formatDate(invoice.date, context)
       else if (invoice.isCredit)
         CreditFields.date: formatDate(invoice.date, context)
+      else if (invoice.isPurchaseOrder)
+        PurchaseOrderFields.date: formatDate(invoice.date, context)
       else if (invoice.isInvoice)
         InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
