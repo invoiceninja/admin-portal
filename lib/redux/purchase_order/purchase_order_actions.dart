@@ -274,15 +274,15 @@ class DownloadPurchaseOrdersFailure implements StopSaving {
   final Object error;
 }
 
-class AcceptPurchaseOrders implements StartSaving {
-  AcceptPurchaseOrders(this.completer, this.purchaseOrderIds);
+class AcceptPurchaseOrdersRequest implements StartSaving {
+  AcceptPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
 
   final List<String> purchaseOrderIds;
   final Completer completer;
 }
 
 class AcceptPurchaseOrderSuccess implements StopSaving {
-  AcceptPurchaseOrderSuccess({this.purchaseOrders});
+  AcceptPurchaseOrderSuccess(this.purchaseOrders);
 
   final List<InvoiceEntity> purchaseOrders;
 }
@@ -293,15 +293,15 @@ class AcceptPurchaseOrderFailure implements StopSaving {
   final dynamic error;
 }
 
-class CancelPurchaseOrders implements StartSaving {
-  CancelPurchaseOrders(this.completer, this.purchaseOrderIds);
+class CancelPurchaseOrdersRequest implements StartSaving {
+  CancelPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
 
   final List<String> purchaseOrderIds;
   final Completer completer;
 }
 
 class CancelPurchaseOrderSuccess implements StopSaving {
-  CancelPurchaseOrderSuccess({this.purchaseOrders});
+  CancelPurchaseOrderSuccess(this.purchaseOrders);
 
   final List<InvoiceEntity> purchaseOrders;
 }
@@ -566,7 +566,7 @@ void handlePurchaseOrderAction(BuildContext context,
           purchaseOrderIds));
       break;
     case EntityAction.cancelInvoice:
-      store.dispatch(CancelPurchaseOrders(
+      store.dispatch(CancelPurchaseOrdersRequest(
           snackBarCompleter<Null>(
               context,
               purchaseOrders.length == 1
@@ -575,7 +575,7 @@ void handlePurchaseOrderAction(BuildContext context,
           purchaseOrderIds));
       break;
     case EntityAction.accept:
-      store.dispatch(AcceptPurchaseOrders(
+      store.dispatch(AcceptPurchaseOrdersRequest(
           snackBarCompleter<Null>(
               context,
               purchaseOrders.length == 1

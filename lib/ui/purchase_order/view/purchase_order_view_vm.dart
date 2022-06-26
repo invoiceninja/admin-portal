@@ -27,6 +27,7 @@ class PurchaseOrderViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
+
   final bool isFilter;
   static const String route = '/purchase_order/view';
 
