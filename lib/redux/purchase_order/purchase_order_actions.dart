@@ -541,6 +541,10 @@ void handlePurchaseOrderAction(BuildContext context,
     case EntityAction.edit:
       editEntity(entity: purchaseOrder);
       break;
+    case EntityAction.viewPdf:
+      store.dispatch(
+          ShowPdfPurchaseOrder(purchaseOrder: purchaseOrder, context: context));
+      break;
     case EntityAction.restore:
       store.dispatch(RestorePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.restoredPurchaseOrder),
