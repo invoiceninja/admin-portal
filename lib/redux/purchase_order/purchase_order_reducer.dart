@@ -14,15 +14,14 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState purchaseOrderUIReducer(
     PurchaseOrderUIState state, dynamic action) {
   return state.rebuild((b) => b
-        ..listUIState
-            .replace(purchaseOrderListReducer(state.listUIState, action))
-        ..editing.replace(editingReducer(state.editing, action))
-        ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
-        ..selectedId = selectedIdReducer(state.selectedId, action)
-        ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-        ..tabIndex = tabIndexReducer(state.tabIndex, action)
-      //..historyActivityId = historyActivityIdReducer(state.historyActivityId, action)
-      );
+    ..listUIState.replace(purchaseOrderListReducer(state.listUIState, action))
+    ..editing.replace(editingReducer(state.editing, action))
+    ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
+    ..selectedId = selectedIdReducer(state.selectedId, action)
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+    ..tabIndex = tabIndexReducer(state.tabIndex, action)
+    ..historyActivityId =
+        historyActivityIdReducer(state.historyActivityId, action));
 }
 
 final forceSelectedReducer = combineReducers<bool>([
