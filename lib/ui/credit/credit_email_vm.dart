@@ -57,6 +57,7 @@ class EmailCreditVM extends EmailEntityVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
+    VendorEntity vendor,
     Function loadClient,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
@@ -66,6 +67,7 @@ class EmailCreditVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
+          vendor: vendor,
           onSendPressed: onSendPressed,
         );
 

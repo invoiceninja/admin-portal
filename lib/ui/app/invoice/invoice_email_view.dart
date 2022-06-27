@@ -4,7 +4,6 @@ import 'package:html2md/html2md.dart' as html2md;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -173,12 +172,15 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final viewModel = widget.viewModel;
     final invoice = widget.viewModel.invoice;
     final client = viewModel.client;
+    final vendor = viewModel.vendor;
     final state = viewModel.state;
     final settings = getClientSettings(state, client);
     final contacts = invoice.invitations
-        .map((invitation) => client.contacts.firstWhere(
-            (contact) => contact.id == invitation.clientContactId,
-            orElse: () => null))
+        .map((invitation) => (invoice.isPurchaseOrder
+                ? vendor.contacts
+                : client.contacts)
+            .firstWhere((contact) => contact.id == invitation.clientContactId,
+                orElse: () => null))
         .toList();
 
     return Padding(
@@ -190,7 +192,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   ': ' +
                   contacts
                       .where((contact) => contact != null)
-                      .map((contact) => contact.fullNameWithEmail)
+                      .map((contact) => invoice.isPurchaseOrder
+                          ? (contact as VendorContactEntity).fullNameOrEmail
+                          : (contact as ClientContactEntity).fullNameWithEmail)
                       .join(', '))),
           SizedBox(width: 4),
           DropdownButtonHideUnderline(

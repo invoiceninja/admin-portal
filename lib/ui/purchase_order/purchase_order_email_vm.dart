@@ -9,7 +9,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -25,15 +24,17 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EmailPurchaseOrderVM>(
+      /*
       onInit: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
         final purchaseOrder = state.purchaseOrderState.map[purchaseOrderId];
-        final client = state.clientState.map[purchaseOrder.clientId];
-        if (client.isStale) {
-          store.dispatch(LoadClient(clientId: client.id));
+        final vendor = state.vendorState.map[purchaseOrder.vendorId];
+        if (vendor.isStale) {
+          store.dispatch(LoadVendor(vendorId: vendor.id));
         }
       },
+      */
       converter: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
@@ -57,6 +58,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
     @required CompanyEntity company,
     @required InvoiceEntity invoice,
     @required ClientEntity client,
+    @required VendorEntity vendor,
     @required
         Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
@@ -66,6 +68,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
+          vendor: vendor,
           onSendPressed: onSendPressed,
         );
 
@@ -80,6 +83,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
       company: state.company,
       invoice: purchaseOrder,
       client: state.clientState.map[purchaseOrder.clientId],
+      vendor: state.vendorState.map[purchaseOrder.vendorId],
       onSendPressed: (context, template, subject, body) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedPurchaseOrder,

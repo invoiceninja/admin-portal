@@ -529,6 +529,20 @@ abstract class VendorContactEntity extends Object
     }
   }
 
+  String get fullNameWithEmail {
+    String name = fullName;
+
+    if (email.isNotEmpty) {
+      if (name.isEmpty) {
+        name += email;
+      } else {
+        name += ' • $email';
+      }
+    }
+
+    return name;
+  }
+
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {

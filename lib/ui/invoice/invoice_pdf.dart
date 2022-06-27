@@ -321,6 +321,8 @@ Future<Response> _loadPDF(
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
+    print('## link: ${invitation.link}');
+    print('## link: ${invitation.downloadLink}');
     response = await WebClient().get(url, '', rawResponse: true);
   }
 
