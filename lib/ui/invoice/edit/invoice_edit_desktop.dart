@@ -1001,7 +1001,13 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    if (!widget.invoice.hasClient) {
+    final invoice = widget.invoice;
+
+    if (invoice.isPurchaseOrder) {
+      if (!invoice.hasVendor) {
+        return;
+      }
+    } else if (!invoice.hasClient) {
       return;
     }
 
@@ -1019,16 +1025,17 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final credentials = state.credentials;
     final webClient = WebClient();
     String url =
-        '${credentials.url}/live_preview?entity=${widget.invoice.entityType.snakeCase}';
-    if (widget.invoice.isOld) {
-      url += '&entity_id=${widget.invoice.id}';
+        '${credentials.url}/live_preview?entity=${invoice.entityType.snakeCase}';
+    if (invoice.isOld) {
+      url += '&entity_id=${invoice.id}';
     }
-    if (state.isHosted) {
+    if (state.isStaging) {
+      url = url.replaceFirst('//staging.', '//preview.');
+    } else if (state.isHosted) {
       url = url.replaceFirst('//', '//preview.');
     }
 
-    final data =
-        serializers.serializeWith(InvoiceEntity.serializer, widget.invoice);
+    final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     webClient
         .post(url, credentials.token,
             data: json.encode(data), rawResponse: true)
@@ -1054,6 +1061,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
         }
       });
     }).catchError((dynamic error) {
+      print('## error: $error');
       setState(() {
         _isLoading = false;
       });

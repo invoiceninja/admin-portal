@@ -601,6 +601,8 @@ abstract class InvoiceEntity extends Object
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
+  bool get hasVendor => '${vendorId ?? ''}'.isNotEmpty;
+
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
   double get netAmount => amount - taxAmount;
