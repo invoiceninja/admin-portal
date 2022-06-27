@@ -459,6 +459,9 @@ abstract class VendorEntity extends Object
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
+  VendorContactEntity getContact(String contactId) => contacts
+      .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 
   bool get hasNameSet {

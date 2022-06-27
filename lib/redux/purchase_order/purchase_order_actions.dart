@@ -601,6 +601,9 @@ void handlePurchaseOrderAction(BuildContext context,
         }
       }
       break;
+    case EntityAction.clientPortal:
+      launch(purchaseOrder.invitationSilentLink);
+      break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
       bool emailValid = true;
