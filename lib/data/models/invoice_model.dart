@@ -1060,6 +1060,12 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.cloneToRecurring);
         }
       }
+      if (userCompany.canCreate(EntityType.purchaseOrder)) {
+        countOtherTypes++;
+        if (isPurchaseOrder) {
+          actions.add(EntityAction.cloneToPurchaseOrder);
+        }
+      }
       if (countOtherTypes == 2) {
         if (userCompany.canCreate(EntityType.invoice) && !isInvoice) {
           actions.add(EntityAction.cloneToInvoice);

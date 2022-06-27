@@ -31,6 +31,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
     case EntityAction.cloneToRecurring:
+    case EntityAction.cloneToPurchaseOrder:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.public;
