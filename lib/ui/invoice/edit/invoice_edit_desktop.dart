@@ -1061,7 +1061,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
         }
       });
     }).catchError((dynamic error) {
-      print('## error: $error');
+      print('## Error: $error');
       setState(() {
         _isLoading = false;
       });
