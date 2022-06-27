@@ -358,8 +358,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
-    final activities = client.getActivities(
-        invoiceId: invoice.id, typeId: kActivityEmailInvoice);
+    final vendor = widget.viewModel.vendor;
+
+    final activities = ((invoice.isPurchaseOrder ? vendor : client)
+            as HasActivities)
+        .getActivities(invoiceId: invoice.id, typeId: kActivityEmailInvoice);
 
     if (activities.isEmpty) {
       return HelpText(localization.noHistory);

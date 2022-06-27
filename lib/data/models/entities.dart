@@ -474,6 +474,18 @@ abstract class BaseEntity implements SelectableEntity {
 
 abstract class HasActivities {
   BuiltList<ActivityEntity> get activities;
+
+  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
+    return activities.where((activity) {
+      if (invoiceId != null && activity.invoiceId != invoiceId) {
+        return false;
+      }
+      if (typeId != null && activity.activityTypeId != typeId) {
+        return false;
+      }
+      return true;
+    });
+  }
 }
 
 abstract class BelongsToClient {

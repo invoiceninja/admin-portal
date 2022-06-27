@@ -331,18 +331,6 @@ abstract class ClientEntity extends Object
     }
   }
 
-  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
-    return activities.where((activity) {
-      if (invoiceId != null && activity.invoiceId != invoiceId) {
-        return false;
-      }
-      if (typeId != null && activity.activityTypeId != typeId) {
-        return false;
-      }
-      return true;
-    });
-  }
-
   EmailTemplate getNextEmailTemplate(String invoiceId) {
     EmailTemplate template = EmailTemplate.invoice;
     getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
