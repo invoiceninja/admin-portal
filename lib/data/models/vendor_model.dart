@@ -77,7 +77,7 @@ class VendorFields {
 }
 
 abstract class VendorEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, HasActivities
     implements Built<VendorEntity, VendorEntityBuilder> {
   factory VendorEntity({String id, AppState state, UserEntity user}) {
     return _$VendorEntity._(
@@ -102,6 +102,7 @@ abstract class VendorEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      activities: BuiltList<ActivityEntity>(),
       contacts: BuiltList<VendorContactEntity>(
         <VendorContactEntity>[
           VendorContactEntity().rebuild((b) => b..isPrimary = true)
@@ -186,6 +187,9 @@ abstract class VendorEntity extends Object
   String get customValue4;
 
   BuiltList<VendorContactEntity> get contacts;
+
+  @override
+  BuiltList<ActivityEntity> get activities;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -459,17 +463,20 @@ abstract class VendorEntity extends Object
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
-  VendorContactEntity getContact(String contactId) => contacts
-      .firstWhere((contact) => contact.id == contactId, orElse: () => null);
-
-  static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
-
   bool get hasNameSet {
     final contact = contacts.first;
     return name.isNotEmpty ||
         contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
   }
+
+  VendorContactEntity getContact(String contactId) => contacts
+      .firstWhere((contact) => contact.id == contactId, orElse: () => null);
+
+  static void _initializeBuilder(VendorEntityBuilder builder) =>
+      builder..activities.replace(BuiltList<ActivityEntity>());
+
+  static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }
 
 abstract class VendorContactEntity extends Object

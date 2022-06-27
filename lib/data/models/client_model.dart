@@ -105,7 +105,7 @@ class ClientFields {
 }
 
 abstract class ClientEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, HasActivities
     implements Built<ClientEntity, ClientEntityBuilder> {
   factory ClientEntity({
     String id,
@@ -299,6 +299,7 @@ abstract class ClientEntity extends Object
 
   BuiltList<ClientContactEntity> get contacts;
 
+  @override
   BuiltList<ActivityEntity> get activities;
 
   BuiltList<LedgerEntity> get ledger;

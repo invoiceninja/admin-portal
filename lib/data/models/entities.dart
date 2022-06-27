@@ -472,6 +472,10 @@ abstract class BaseEntity implements SelectableEntity {
   }
 }
 
+abstract class HasActivities {
+  BuiltList<ActivityEntity> get activities;
+}
+
 abstract class BelongsToClient {
   String get clientId;
 }

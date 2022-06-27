@@ -553,6 +553,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(VendorContactEntity)]),
           () => new ListBuilder<VendorContactEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
+          () => new ListBuilder<ActivityEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(
