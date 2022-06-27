@@ -1018,6 +1018,10 @@ abstract class InvoiceEntity extends Object
           } else {
             actions.add(EntityAction.viewInvoice);
           }
+        } else if (isPurchaseOrder) {
+          if (!isCancelled) {
+            actions.add(EntityAction.accept);
+          }
         }
       }
 

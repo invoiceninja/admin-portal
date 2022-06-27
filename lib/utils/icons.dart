@@ -52,6 +52,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.convertToInvoice:
       return Icons.content_copy;
     case EntityAction.approve:
+    case EntityAction.accept:
       return Icons.check_circle_outline;
     case EntityAction.newInvoice:
     case EntityAction.newExpense:
