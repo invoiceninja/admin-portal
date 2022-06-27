@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -440,11 +441,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     Expanded(
                       child: TabBarView(
                         children: [
-                          invoice.isCredit
-                              ? CreditPdfScreen(showAppBar: false)
-                              : invoice.isQuote
-                                  ? QuotePdfScreen(showAppBar: false)
-                                  : InvoicePdfScreen(showAppBar: false),
+                          invoice.isPurchaseOrder
+                              ? PurchaseOrderPdfScreen(showAppBar: false)
+                              : invoice.isCredit
+                                  ? CreditPdfScreen(showAppBar: false)
+                                  : invoice.isQuote
+                                      ? QuotePdfScreen(showAppBar: false)
+                                      : InvoicePdfScreen(showAppBar: false),
                           _buildHistory(context),
                         ],
                       ),
