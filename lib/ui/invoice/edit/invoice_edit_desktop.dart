@@ -1031,12 +1031,12 @@ class __PdfPreviewState extends State<_PdfPreview> {
     }
 
     url += '?entity=${invoice.entityType.snakeCase}';
+
     if (invoice.isOld) {
       url += '&entity_id=${invoice.id}';
     }
-    if (state.isStaging) {
-      url = url.replaceFirst('//staging.', '//preview.');
-    } else if (state.isHosted) {
+
+    if (state.isHosted && !state.isStaging) {
       url = url.replaceFirst('//', '//preview.');
     }
 
