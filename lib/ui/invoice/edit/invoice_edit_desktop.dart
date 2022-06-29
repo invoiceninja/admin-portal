@@ -1024,8 +1024,13 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final state = store.state;
     final credentials = state.credentials;
     final webClient = WebClient();
-    String url =
-        '${credentials.url}/live_preview?entity=${invoice.entityType.snakeCase}';
+    String url = '${credentials.url}/live_preview';
+
+    if (invoice.isPurchaseOrder) {
+      url += '/purchase_order';
+    }
+
+    url += '?entity=${invoice.entityType.snakeCase}';
     if (invoice.isOld) {
       url += '&entity_id=${invoice.id}';
     }

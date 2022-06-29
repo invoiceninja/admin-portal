@@ -192,6 +192,7 @@ class _DesignEditState extends State<DesignEdit>
         context: context,
         design: design,
         isDraftMode: _isDraftMode,
+        isPurchaseOrder: false,
         onComplete: (response) async {
           setState(() {
             _isLoading = false;

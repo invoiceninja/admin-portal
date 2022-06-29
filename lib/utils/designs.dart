@@ -20,6 +20,7 @@ void loadDesign({
   @required BuildContext context,
   @required DesignEntity design,
   @required bool isDraftMode,
+  @required bool isPurchaseOrder,
   @required Function(Response) onComplete,
 }) {
   if (Config.DEMO_MODE) {
@@ -31,6 +32,10 @@ void loadDesign({
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
   String url = '${credentials.url}/preview';
+
+  if (isPurchaseOrder) {
+    url += '/purchase_order';
+  }
 
   if (isDraftMode) {
     url += '?html=true';
