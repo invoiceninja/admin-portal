@@ -116,8 +116,6 @@ class EntityAction extends EnumClass {
     return toSnakeCase(super.toString());
   }
 
-  bool get isEmail => toString().startsWith('email');
-
   bool get isServerSide => [
         EntityAction.start,
         EntityAction.stop,

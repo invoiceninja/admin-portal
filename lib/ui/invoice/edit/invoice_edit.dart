@@ -84,21 +84,39 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final client = viewModel.state.clientState.get(invoice.clientId);
+    final vendor = viewModel.state.vendorState.get(invoice.vendorId);
     final localization = AppLocalization.of(context);
 
-    if (action != null && action.isEmail && !client.hasEmailAddress) {
-      showMessageDialog(
-          context: context,
-          message: localization.clientEmailNotSet,
-          secondaryActions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  editEntity(entity: client);
-                },
-                child: Text(localization.editClient.toUpperCase()))
-          ]);
-      return;
+    if (action == EntityAction.sendEmail) {
+      if (invoice.isPurchaseOrder) {
+        if (!vendor.hasEmailAddress) {
+          showMessageDialog(
+              context: context,
+              message: localization.vendorEmailNotSet,
+              secondaryActions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      editEntity(entity: vendor);
+                    },
+                    child: Text(localization.editVendor.toUpperCase()))
+              ]);
+          return;
+        }
+      } else {
+        showMessageDialog(
+            context: context,
+            message: localization.clientEmailNotSet,
+            secondaryActions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    editEntity(entity: client);
+                  },
+                  child: Text(localization.editClient.toUpperCase()))
+            ]);
+        return;
+      }
     }
 
     widget.viewModel.onSavePressed(context, action);
