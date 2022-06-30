@@ -105,7 +105,7 @@ class ClientFields {
 }
 
 abstract class ClientEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, HasActivities
     implements Built<ClientEntity, ClientEntityBuilder> {
   factory ClientEntity({
     String id,
@@ -299,6 +299,7 @@ abstract class ClientEntity extends Object
 
   BuiltList<ClientContactEntity> get contacts;
 
+  @override
   BuiltList<ActivityEntity> get activities;
 
   BuiltList<LedgerEntity> get ledger;
@@ -328,18 +329,6 @@ abstract class ClientEntity extends Object
     } else {
       return company.settings.clientManualPaymentNotification;
     }
-  }
-
-  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
-    return activities.where((activity) {
-      if (invoiceId != null && activity.invoiceId != invoiceId) {
-        return false;
-      }
-      if (typeId != null && activity.activityTypeId != typeId) {
-        return false;
-      }
-      return true;
-    });
   }
 
   EmailTemplate getNextEmailTemplate(String invoiceId) {

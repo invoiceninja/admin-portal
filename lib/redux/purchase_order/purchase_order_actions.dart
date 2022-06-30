@@ -274,6 +274,44 @@ class DownloadPurchaseOrdersFailure implements StopSaving {
   final Object error;
 }
 
+class AcceptPurchaseOrdersRequest implements StartSaving {
+  AcceptPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+
+  final List<String> purchaseOrderIds;
+  final Completer completer;
+}
+
+class AcceptPurchaseOrderSuccess implements StopSaving {
+  AcceptPurchaseOrderSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class AcceptPurchaseOrderFailure implements StopSaving {
+  AcceptPurchaseOrderFailure(this.error);
+
+  final dynamic error;
+}
+
+class CancelPurchaseOrdersRequest implements StartSaving {
+  CancelPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+
+  final List<String> purchaseOrderIds;
+  final Completer completer;
+}
+
+class CancelPurchaseOrderSuccess implements StopSaving {
+  CancelPurchaseOrderSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class CancelPurchaseOrderFailure implements StopSaving {
+  CancelPurchaseOrderFailure(this.error);
+
+  final dynamic error;
+}
+
 class RestorePurchaseOrdersRequest implements StartSaving {
   RestorePurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
 
@@ -503,6 +541,10 @@ void handlePurchaseOrderAction(BuildContext context,
     case EntityAction.edit:
       editEntity(entity: purchaseOrder);
       break;
+    case EntityAction.viewPdf:
+      store.dispatch(
+          ShowPdfPurchaseOrder(purchaseOrder: purchaseOrder, context: context));
+      break;
     case EntityAction.restore:
       store.dispatch(RestorePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.restoredPurchaseOrder),
@@ -527,6 +569,24 @@ void handlePurchaseOrderAction(BuildContext context,
                   : localization.markedPurchaseOrdersAsSent),
           purchaseOrderIds));
       break;
+    case EntityAction.cancelInvoice:
+      store.dispatch(CancelPurchaseOrdersRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.cancelledPurchaseOrder
+                  : localization.cancelledPurchaseOrders),
+          purchaseOrderIds));
+      break;
+    case EntityAction.accept:
+      store.dispatch(AcceptPurchaseOrdersRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.acceptedPurchaseOrder
+                  : localization.acceptedPurchaseOrders),
+          purchaseOrderIds));
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.purchaseOrderListState.isInMultiselect()) {
         store.dispatch(StartPurchaseOrderMultiselect());
@@ -544,6 +604,9 @@ void handlePurchaseOrderAction(BuildContext context,
               RemoveFromPurchaseOrderMultiselect(entity: purchaseOrder));
         }
       }
+      break;
+    case EntityAction.clientPortal:
+      launch(purchaseOrder.invitationSilentLink);
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:

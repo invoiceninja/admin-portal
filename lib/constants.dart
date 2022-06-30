@@ -171,6 +171,7 @@ const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
 const String kCountryCanada = '124';
+const String kCountrySwitzerland = '756';
 
 const String kInvoiceStatusViewed = '-3';
 const String kInvoiceStatusUnpaid = '-2';
@@ -508,6 +509,7 @@ const String kReportInvoiceItem = 'invoice_item';
 const String kReportQuoteItem = 'quote_item';
 const String kReportRecurringExpense = 'recurring_expense';
 const String kReportRecurringInvoice = 'recurring_invoice';
+const String kReportPurchaseOrder = 'purchase_order';
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
@@ -516,6 +518,8 @@ const String kPdfFieldsInvoiceDetails = 'invoice_details';
 const String kPdfFieldsQuoteDetails = 'quote_details';
 const String kPdfFieldsCreditDetails = 'credit_details';
 const String kPdfFieldsProductColumns = 'product_columns';
+const String kPdfFieldsVendorDetails = 'vendor_details';
+const String kPdfFieldsPurchaseOrderDetails = 'purchase_order_details';
 const String kPdfFieldsTaskColumns = 'task_columns';
 const String kPdfFieldsTotalFields = 'total_columns';
 

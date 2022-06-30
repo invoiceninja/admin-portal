@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -62,10 +63,27 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   @override
   void initState() {
     super.initState();
-    final settingsUIState = widget.viewModel.state.settingsUIState;
+    final state = widget.viewModel.state;
+    final settingsUIState = state.settingsUIState;
     _focusNode = FocusScopeNode();
+
+    int tabs = 6;
+
+    [
+      EntityType.invoice,
+      EntityType.quote,
+      EntityType.credit,
+      EntityType.task,
+      EntityType.vendor,
+      EntityType.purchaseOrder,
+    ].forEach((entityType) {
+      if (state.company.isModuleEnabled(entityType)) {
+        tabs++;
+      }
+    });
+
     _controller = TabController(
-        vsync: this, length: 10, initialIndex: settingsUIState.tabIndex);
+        vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
 
@@ -110,11 +128,19 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(text: localization.clientDetails),
           Tab(text: localization.companyDetails),
           Tab(text: localization.companyAddress),
-          Tab(text: localization.invoiceDetails),
-          Tab(text: localization.quoteDetails),
-          Tab(text: localization.creditDetails),
+          if (company.isModuleEnabled(EntityType.invoice))
+            Tab(text: localization.invoiceDetails),
+          if (company.isModuleEnabled(EntityType.quote))
+            Tab(text: localization.quoteDetails),
+          if (company.isModuleEnabled(EntityType.credit))
+            Tab(text: localization.creditDetails),
+          if (company.isModuleEnabled(EntityType.vendor))
+            Tab(text: localization.vendorDetails),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            Tab(text: localization.purchaseOrderDetails),
           Tab(text: localization.productColumns),
-          Tab(text: localization.taskColumns),
+          if (company.isModuleEnabled(EntityType.task))
+            Tab(text: localization.taskColumns),
           Tab(text: localization.totalFields),
         ],
       ),
@@ -143,7 +169,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  if (state.isProPlan) ...[
+                  if (state.isProPlan || state.isTrial) ...[
                     if (company.isModuleEnabled(EntityType.invoice)) ...[
                       DesignPicker(
                         label: localization.invoiceDesign,
@@ -579,119 +605,209 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'company',
             ),
           ),
-          FormCard(
-            isLast: true,
-            child: MultiSelectList(
-              options: [
-                ...[
+          if (company.isModuleEnabled(EntityType.invoice))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    InvoiceFields.number,
+                    InvoiceFields.poNumber,
+                    InvoiceFields.date,
+                    InvoiceFields.dueDate,
+                    InvoiceFields.amount,
+                    InvoiceFields.balance,
+                    InvoiceFields.balanceDue,
+                    InvoiceFields.customValue1,
+                    InvoiceFields.customValue2,
+                    InvoiceFields.customValue3,
+                    InvoiceFields.customValue4,
+                    InvoiceFields.project,
+                    InvoiceFields.vendor,
+                  ].map((field) => '\$invoice.$field'),
+                  ...[
+                    ClientFields.balance,
+                  ].map((field) => '\$client.$field')
+                ],
+                defaultSelected: [
                   InvoiceFields.number,
                   InvoiceFields.poNumber,
                   InvoiceFields.date,
                   InvoiceFields.dueDate,
-                  InvoiceFields.amount,
-                  InvoiceFields.balance,
+                  InvoiceFields.total,
                   InvoiceFields.balanceDue,
-                  InvoiceFields.customValue1,
-                  InvoiceFields.customValue2,
-                  InvoiceFields.customValue3,
-                  InvoiceFields.customValue4,
-                  InvoiceFields.project,
-                  InvoiceFields.vendor,
-                ].map((field) => '\$invoice.$field'),
-                ...[
-                  ClientFields.balance,
-                ].map((field) => '\$client.$field')
-              ],
-              defaultSelected: [
-                InvoiceFields.number,
-                InvoiceFields.poNumber,
-                InvoiceFields.date,
-                InvoiceFields.dueDate,
-                InvoiceFields.total,
-                InvoiceFields.balanceDue,
-              ].map((field) => '\$invoice.$field').toList(),
-              selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
-              onSelected: (values) {
-                viewModel.onSettingsChanged(settings.setFieldsForSection(
-                    kPdfFieldsInvoiceDetails, values));
-              },
-              addTitle: localization.addField,
-              liveChanges: true,
-              prefix: 'invoice',
+                ].map((field) => '\$invoice.$field').toList(),
+                selected:
+                    settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsInvoiceDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'invoice',
+              ),
             ),
-          ),
-          FormCard(
-            isLast: true,
-            child: MultiSelectList(
-              options: [
-                ...[
+          if (company.isModuleEnabled(EntityType.quote))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    QuoteFields.number,
+                    QuoteFields.poNumber,
+                    QuoteFields.date,
+                    QuoteFields.validUntil,
+                    QuoteFields.total,
+                    QuoteFields.customValue1,
+                    QuoteFields.customValue2,
+                    QuoteFields.customValue3,
+                    QuoteFields.customValue4,
+                  ].map((field) => '\$quote.$field'),
+                  ...[
+                    ClientFields.balance,
+                  ].map((field) => '\$client.$field')
+                ],
+                defaultSelected: [
                   QuoteFields.number,
                   QuoteFields.poNumber,
                   QuoteFields.date,
                   QuoteFields.validUntil,
                   QuoteFields.total,
-                  QuoteFields.customValue1,
-                  QuoteFields.customValue2,
-                  QuoteFields.customValue3,
-                  QuoteFields.customValue4,
-                ].map((field) => '\$quote.$field'),
-                ...[
-                  ClientFields.balance,
-                ].map((field) => '\$client.$field')
-              ],
-              defaultSelected: [
-                QuoteFields.number,
-                QuoteFields.poNumber,
-                QuoteFields.date,
-                QuoteFields.validUntil,
-                QuoteFields.total,
-              ].map((field) => '\$quote.$field').toList(),
-              selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
-              onSelected: (values) {
-                viewModel.onSettingsChanged(settings.setFieldsForSection(
-                    kPdfFieldsQuoteDetails, values));
-              },
-              addTitle: localization.addField,
-              liveChanges: true,
-              prefix: 'quote',
+                ].map((field) => '\$quote.$field').toList(),
+                selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsQuoteDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'quote',
+              ),
             ),
-          ),
-          FormCard(
-            isLast: true,
-            child: MultiSelectList(
-              options: [
-                ...[
+          if (company.isModuleEnabled(EntityType.credit))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    CreditFields.number,
+                    CreditFields.poNumber,
+                    CreditFields.date,
+                    CreditFields.total,
+                    CreditFields.balance,
+                    CreditFields.customValue1,
+                    CreditFields.customValue2,
+                    CreditFields.customValue3,
+                    CreditFields.customValue4,
+                  ].map((field) => '\$credit.$field'),
+                  ...[
+                    ClientFields.balance,
+                  ].map((field) => '\$client.$field')
+                ],
+                defaultSelected: [
                   CreditFields.number,
                   CreditFields.poNumber,
                   CreditFields.date,
-                  CreditFields.total,
                   CreditFields.balance,
-                  CreditFields.customValue1,
-                  CreditFields.customValue2,
-                  CreditFields.customValue3,
-                  CreditFields.customValue4,
-                ].map((field) => '\$credit.$field'),
-                ...[
-                  ClientFields.balance,
-                ].map((field) => '\$client.$field')
-              ],
-              defaultSelected: [
-                CreditFields.number,
-                CreditFields.poNumber,
-                CreditFields.date,
-                CreditFields.balance,
-                CreditFields.total,
-              ].map((field) => '\$credit.$field').toList(),
-              selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
-              onSelected: (values) {
-                viewModel.onSettingsChanged(settings.setFieldsForSection(
-                    kPdfFieldsCreditDetails, values));
-              },
-              addTitle: localization.addField,
-              liveChanges: true,
-              prefix: 'credit',
+                  CreditFields.total,
+                ].map((field) => '\$credit.$field').toList(),
+                selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsCreditDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'credit',
+              ),
             ),
-          ),
+          if (company.isModuleEnabled(EntityType.vendor))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    VendorFields.name,
+                    VendorFields.number,
+                    VendorFields.vatNumber,
+                    VendorFields.address1,
+                    VendorFields.address2,
+                    VendorFields.cityStatePostal,
+                    //VendorFields.postalCityState,
+                    VendorFields.country,
+                    VendorFields.customValue1,
+                    VendorFields.customValue2,
+                    VendorFields.customValue3,
+                    VendorFields.customValue4,
+                  ].map((field) => '\$vendor.$field'),
+                  ...[
+                    ContactFields.email,
+                  ].map((field) => '\$contact.$field'),
+                ],
+                defaultSelected: [
+                  ...[
+                    VendorFields.name,
+                    VendorFields.number,
+                    VendorFields.vatNumber,
+                    VendorFields.address1,
+                    VendorFields.address2,
+                    VendorFields.cityStatePostal,
+                  ].map((field) => '\$vendor.$field'),
+                  ...[
+                    ContactFields.email,
+                  ].map((field) => '\$contact.$field'),
+                ],
+                selected: settings.getFieldsForSection(kPdfFieldsVendorDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsVendorDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'vendor',
+              ),
+            ),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    PurchaseOrderFields.number,
+                    PurchaseOrderFields.date,
+                    PurchaseOrderFields.dueDate,
+                    PurchaseOrderFields.total,
+                    PurchaseOrderFields.balanceDue,
+                    //PurchaseOrderFields.customValue1,
+                    //PurchaseOrderFields.customValue2,
+                    //PurchaseOrderFields.customValue3,
+                    //PurchaseOrderFields.customValue4,
+                  ].map((field) => '\$credit.$field'),
+                  /*
+                  ...[
+                    ClientFields.balance,
+                  ].map((field) => '\$client.$field')
+                  */
+                ],
+                defaultSelected: [
+                  PurchaseOrderFields.number,
+                  PurchaseOrderFields.date,
+                  PurchaseOrderFields.dueDate,
+                  PurchaseOrderFields.total,
+                  PurchaseOrderFields.balanceDue,
+                ].map((field) => '\$purchase_order.$field').toList(),
+                selected: settings
+                    .getFieldsForSection(kPdfFieldsPurchaseOrderDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsPurchaseOrderDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'purchase_order',
+              ),
+            ),
           FormCard(
             isLast: true,
             child: MultiSelectList(
@@ -728,42 +844,43 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'product',
             ),
           ),
-          FormCard(
-            isLast: true,
-            child: MultiSelectList(
-              options: [
-                TaskItemFields.service,
-                TaskItemFields.description,
-                TaskItemFields.hours,
-                TaskItemFields.rate,
-                if (company.hasItemTaxes) TaskItemFields.tax,
-                if (company.enableProductDiscount) TaskItemFields.discount,
-                TaskItemFields.lineTotal,
-                TaskItemFields.custom1,
-                TaskItemFields.custom2,
-                TaskItemFields.custom3,
-                TaskItemFields.custom4,
-                TaskItemFields.grossLineTotal,
-              ].map((field) => '\$task.$field').toList(),
-              defaultSelected: [
-                TaskItemFields.service,
-                TaskItemFields.description,
-                TaskItemFields.rate,
-                TaskItemFields.hours,
-                if (company.enableProductDiscount) TaskItemFields.discount,
-                if (company.hasItemTaxes) TaskItemFields.tax,
-                TaskItemFields.lineTotal,
-              ].map((field) => '\$task.$field').toList(),
-              selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
-              onSelected: (values) {
-                viewModel.onSettingsChanged(settings.setFieldsForSection(
-                    kPdfFieldsTaskColumns, values));
-              },
-              addTitle: localization.addField,
-              liveChanges: true,
-              prefix: 'task',
+          if (company.isModuleEnabled(EntityType.task))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  TaskItemFields.service,
+                  TaskItemFields.description,
+                  TaskItemFields.hours,
+                  TaskItemFields.rate,
+                  if (company.hasItemTaxes) TaskItemFields.tax,
+                  if (company.enableProductDiscount) TaskItemFields.discount,
+                  TaskItemFields.lineTotal,
+                  TaskItemFields.custom1,
+                  TaskItemFields.custom2,
+                  TaskItemFields.custom3,
+                  TaskItemFields.custom4,
+                  TaskItemFields.grossLineTotal,
+                ].map((field) => '\$task.$field').toList(),
+                defaultSelected: [
+                  TaskItemFields.service,
+                  TaskItemFields.description,
+                  TaskItemFields.rate,
+                  TaskItemFields.hours,
+                  if (company.enableProductDiscount) TaskItemFields.discount,
+                  if (company.hasItemTaxes) TaskItemFields.tax,
+                  TaskItemFields.lineTotal,
+                ].map((field) => '\$task.$field').toList(),
+                selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsTaskColumns, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'task',
+              ),
             ),
-          ),
           FormCard(
             isLast: true,
             child: MultiSelectList(

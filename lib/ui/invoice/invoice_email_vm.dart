@@ -57,6 +57,7 @@ abstract class EmailEntityVM {
     @required this.company,
     @required this.invoice,
     @required this.client,
+    @required this.vendor,
     @required this.onSendPressed,
   });
 
@@ -66,6 +67,7 @@ abstract class EmailEntityVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
+  final VendorEntity vendor;
   final Function(BuildContext, EmailTemplate, String, String) onSendPressed;
 }
 
@@ -77,6 +79,7 @@ class EmailInvoiceVM extends EmailEntityVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
+    VendorEntity vendor,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
           state: state,
@@ -85,6 +88,7 @@ class EmailInvoiceVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
+          vendor: vendor,
           onSendPressed: onSendPressed,
         );
 

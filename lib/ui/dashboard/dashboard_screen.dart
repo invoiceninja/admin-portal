@@ -265,6 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
           if (state.userCompany.isOwner &&
               state.isSelfHosted &&
+              !state.isDemo &&
               !isPaidAccount(context) &&
               !isApple())
             Padding(

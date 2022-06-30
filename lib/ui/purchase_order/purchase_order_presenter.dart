@@ -22,10 +22,10 @@ class PurchaseOrderPresenter extends EntityPresenter {
     return [
       PurchaseOrderFields.status,
       PurchaseOrderFields.number,
-      PurchaseOrderFields.client,
+      PurchaseOrderFields.vendor,
       PurchaseOrderFields.amount,
       PurchaseOrderFields.date,
-      PurchaseOrderFields.validUntil,
+      PurchaseOrderFields.dueDate,
     ];
   }
 
@@ -47,13 +47,13 @@ class PurchaseOrderPresenter extends EntityPresenter {
       PurchaseOrderFields.isViewed,
       PurchaseOrderFields.lastSentDate,
       PurchaseOrderFields.project,
-      PurchaseOrderFields.vendor,
+      PurchaseOrderFields.client,
       PurchaseOrderFields.contactName,
       PurchaseOrderFields.contactEmail,
-      PurchaseOrderFields.clientState,
-      PurchaseOrderFields.clientCity,
-      PurchaseOrderFields.clientPostalCode,
-      PurchaseOrderFields.clientCountry,
+      PurchaseOrderFields.vendorState,
+      PurchaseOrderFields.vendorCity,
+      PurchaseOrderFields.vendorPostalCode,
+      PurchaseOrderFields.vendorCountry,
       PurchaseOrderFields.partial,
       PurchaseOrderFields.partialDueDate,
     ];
@@ -65,6 +65,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
     final state = StoreProvider.of<AppState>(context).state;
     final purchaseOrder = entity as InvoiceEntity;
     final client = state.clientState.get(purchaseOrder.clientId);
+    final vendor = state.vendorState.get(purchaseOrder.vendorId);
 
     switch (field) {
       case PurchaseOrderFields.status:
@@ -85,7 +86,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
           child: Text(formatNumber(purchaseOrder.amount, context,
               clientId: purchaseOrder.clientId)),
         );
-      case PurchaseOrderFields.validUntil:
+      case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
       case PurchaseOrderFields.customValue1:
         return Text(presentCustomField(context, purchaseOrder.customValue1));
@@ -125,18 +126,18 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.vendor:
         final vendor = state.vendorState.get(purchaseOrder.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: purchaseOrder);
-      case PurchaseOrderFields.clientState:
-        return Text(client.state);
-      case PurchaseOrderFields.clientCity:
-        return Text(client.city);
-      case PurchaseOrderFields.clientPostalCode:
-        return Text(client.postalCode);
-      case PurchaseOrderFields.clientCountry:
+      case PurchaseOrderFields.vendorState:
+        return Text(vendor.state);
+      case PurchaseOrderFields.vendorCity:
+        return Text(vendor.city);
+      case PurchaseOrderFields.vendorPostalCode:
+        return Text(vendor.postalCode);
+      case PurchaseOrderFields.vendorCountry:
         return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case PurchaseOrderFields.contactName:
       case PurchaseOrderFields.contactEmail:
         final contact = purchaseOrderContactSelector(
-            purchaseOrder, state.clientState.get(purchaseOrder.clientId));
+            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId));
         if (contact == null) {
           return SizedBox();
         }

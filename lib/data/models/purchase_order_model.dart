@@ -13,7 +13,7 @@ class PurchaseOrderFields {
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
   static const String date = 'date';
-  static const String validUntil = 'valid_until';
+  static const String dueDate = 'due_date';
   static const String nextSendDate = 'next_send_date';
   static const String lastSentDate = 'last_sent_date';
   static const String terms = 'terms';
@@ -43,10 +43,10 @@ class PurchaseOrderFields {
   static const String autoBillEnabled = 'auto_bill_enabled';
   static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
-  static const String clientCity = 'client_city';
-  static const String clientState = 'client_state';
-  static const String clientPostalCode = 'client_postal_code';
-  static const String clientCountry = 'client_country';
+  static const String vendorCity = 'vendor_city';
+  static const String vendorState = 'vendor_state';
+  static const String vendorPostalCode = 'vendor_postal_code';
+  static const String vendorCountry = 'vendor_country';
   static const String quote = 'quote';
   static const String recurringInvoice = 'recurring_invoice';
 }

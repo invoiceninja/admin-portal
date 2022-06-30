@@ -405,7 +405,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ),
                       DatePicker(
                         key: ValueKey('__terms_${client.id}__'),
-                        labelText: entityType == EntityType.invoice
+                        labelText: entityType == EntityType.invoice ||
+                                entityType == EntityType.purchaseOrder
                             ? localization.dueDate
                             : localization.validUntil,
                         selectedDate: invoice.dueDate,
@@ -1001,7 +1002,13 @@ class __PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    if (!widget.invoice.hasClient) {
+    final invoice = widget.invoice;
+
+    if (invoice.isPurchaseOrder) {
+      if (!invoice.hasVendor) {
+        return;
+      }
+    } else if (!invoice.hasClient) {
       return;
     }
 
@@ -1018,17 +1025,23 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final state = store.state;
     final credentials = state.credentials;
     final webClient = WebClient();
-    String url =
-        '${credentials.url}/live_preview?entity=${widget.invoice.entityType.snakeCase}';
-    if (widget.invoice.isOld) {
-      url += '&entity_id=${widget.invoice.id}';
+    String url = '${credentials.url}/live_preview';
+
+    if (invoice.isPurchaseOrder) {
+      url += '/purchase_order';
     }
-    if (state.isHosted) {
+
+    url += '?entity=${invoice.entityType.snakeCase}';
+
+    if (invoice.isOld) {
+      url += '&entity_id=${invoice.id}';
+    }
+
+    if (state.isHosted && !state.isStaging) {
       url = url.replaceFirst('//', '//preview.');
     }
 
-    final data =
-        serializers.serializeWith(InvoiceEntity.serializer, widget.invoice);
+    final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     webClient
         .post(url, credentials.token,
             data: json.encode(data), rawResponse: true)
@@ -1054,6 +1067,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
         }
       });
     }).catchError((dynamic error) {
+      print('## Error: $error');
       setState(() {
         _isLoading = false;
       });

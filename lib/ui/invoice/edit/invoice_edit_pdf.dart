@@ -48,19 +48,25 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       _isLoading = true;
     });
 
+    final invoice = viewModel.invoice;
     final credentials = viewModel.state.credentials;
     final webClient = WebClient();
-    String url =
-        '${credentials.url}/live_preview?entity=${viewModel.invoice.entityType.snakeCase}';
-    if (viewModel.invoice.isOld) {
-      url += '&entity_id=${viewModel.invoice.id}';
+    String url = '${credentials.url}/live_preview';
+
+    if (invoice.isPurchaseOrder) {
+      url += '/purchase_order';
+    }
+
+    url += '?entity=${invoice.entityType.snakeCase}';
+
+    if (invoice.isOld) {
+      url += '&entity_id=${invoice.id}';
     }
     if (viewModel.state.isHosted) {
       url = url.replaceFirst('//', '//preview.');
     }
 
-    final data =
-        serializers.serializeWith(InvoiceEntity.serializer, viewModel.invoice);
+    final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     webClient
         .post(url, credentials.token,
             data: json.encode(data), rawResponse: true)

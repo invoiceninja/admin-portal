@@ -37,6 +37,8 @@ List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
   final emailPurchaseOrder = _emailPurchaseOrder(repository);
   final bulkEmailPurchaseOrders = _bulkEmailPurchaseOrders(repository);
   final markSentPurchaseOrder = _markSentPurchaseOrder(repository);
+  final acceptPurchaseOrders = _acceptPurchaseOrders(repository);
+  final cancelPurchaseOrders = _cancelPurchaseOrders(repository);
   final downloadPurchaseOrders = _downloadPurchaseOrders(repository);
   final saveDocument = _saveDocument(repository);
 
@@ -60,6 +62,10 @@ List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
         bulkEmailPurchaseOrders),
     TypedMiddleware<AppState, MarkPurchaseOrdersSentRequest>(
         markSentPurchaseOrder),
+    TypedMiddleware<AppState, AcceptPurchaseOrdersRequest>(
+        acceptPurchaseOrders),
+    TypedMiddleware<AppState, CancelPurchaseOrdersRequest>(
+        cancelPurchaseOrders),
     TypedMiddleware<AppState, DownloadPurchaseOrdersRequest>(
         downloadPurchaseOrders),
     TypedMiddleware<AppState, SavePurchaseOrderDocumentRequest>(saveDocument),
@@ -265,6 +271,52 @@ Middleware<AppState> _markSentPurchaseOrder(
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkPurchaseOrderSentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _acceptPurchaseOrders(PurchaseOrderRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as AcceptPurchaseOrdersRequest;
+    repository
+        .bulkAction(store.state.credentials, action.purchaseOrderIds,
+            EntityAction.accept)
+        .then((purchaseOrders) {
+      store.dispatch(AcceptPurchaseOrderSuccess(purchaseOrders));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(AcceptPurchaseOrderFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _cancelPurchaseOrders(PurchaseOrderRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as CancelPurchaseOrdersRequest;
+    repository
+        .bulkAction(store.state.credentials, action.purchaseOrderIds,
+            EntityAction.cancel)
+        .then((purchaseOrders) {
+      store.dispatch(CancelPurchaseOrderSuccess(purchaseOrders));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(CancelPurchaseOrderFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

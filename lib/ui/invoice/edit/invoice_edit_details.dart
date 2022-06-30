@@ -284,7 +284,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 },
               ),
               DatePicker(
-                labelText: widget.entityType == EntityType.invoice
+                labelText: widget.entityType == EntityType.invoice ||
+                        widget.entityType == EntityType.purchaseOrder
                     ? localization.dueDate
                     : localization.validUntil,
                 selectedDate: invoice.dueDate,

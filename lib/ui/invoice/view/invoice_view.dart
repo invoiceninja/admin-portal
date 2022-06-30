@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
@@ -56,6 +57,8 @@ class _InvoiceViewState extends State<InvoiceView>
       tabIndex = state.quoteUIState.tabIndex;
     } else if (invoice.isCredit) {
       tabIndex = state.creditUIState.tabIndex;
+    } else if (invoice.isPurchaseOrder) {
+      tabIndex = state.purchaseOrderUIState.tabIndex;
     } else {
       tabIndex = state.invoiceUIState.tabIndex;
     }
@@ -82,6 +85,8 @@ class _InvoiceViewState extends State<InvoiceView>
       store.dispatch(UpdateQuoteTab(tabIndex: _controller.index));
     } else if (invoice.isCredit) {
       store.dispatch(UpdateCreditTab(tabIndex: _controller.index));
+    } else if (invoice.isPurchaseOrder) {
+      store.dispatch(UpdatePurchaseOrderTab(tabIndex: _controller.index));
     } else {
       store.dispatch(UpdateInvoiceTab(tabIndex: _controller.index));
     }

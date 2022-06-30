@@ -561,6 +561,14 @@ abstract class SettingsEntity
   String get emailBodyStatement;
 
   @nullable
+  @BuiltValueField(wireName: 'email_subject_purchase_order')
+  String get emailSubjectPurchaseOrder;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_purchase_order')
+  String get emailBodyPurchaseOrder;
+
+  @nullable
   @BuiltValueField(wireName: 'enable_client_portal_password')
   bool get enablePortalPassword;
 
@@ -877,6 +885,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'purchase_order_number_counter')
   int get purchaseOrderNumberCounter;
 
+  @nullable
+  @BuiltValueField(wireName: 'qr_iban')
+  String get qrIban;
+
+  @nullable
+  @BuiltValueField(wireName: 'besr_id')
+  String get besrId;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
@@ -982,6 +998,8 @@ abstract class SettingsEntity
         return emailSubjectCustom2;
       case EmailTemplate.custom3:
         return emailSubjectCustom3;
+      case EmailTemplate.purchase_order:
+        return emailSubjectPurchaseOrder;
       default:
         return 'Error: template not defined for $emailTemplate';
     }
@@ -1013,6 +1031,8 @@ abstract class SettingsEntity
         return emailBodyCustom2;
       case EmailTemplate.custom3:
         return emailBodyCustom3;
+      case EmailTemplate.purchase_order:
+        return emailBodyPurchaseOrder;
       default:
         return 'Error: template not defined for $template';
     }

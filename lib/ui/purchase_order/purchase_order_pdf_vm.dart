@@ -56,7 +56,7 @@ class PurchaseOrderPdfVM extends EntityPdfVM {
     return PurchaseOrderPdfVM(
       state: state,
       invoice: invoice,
-      //activityId: purchaseOrderUIState.historyActivityId,
+      activityId: purchaseOrderUIState.historyActivityId,
     );
   }
 }

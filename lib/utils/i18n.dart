@@ -16,6 +16,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'vendor_details': 'Vendor Details',
+      'purchase_order_details': 'Purchase Order Details',
+      'qr_iban': 'QR IBAN',
+      'besr_id': 'BESR ID',
+      'accept': 'Accept',
+      'clone_to_purchase_order': 'Clone to PO',
       'vendor_email_not_set': 'Vendor does not have an email address set',
       'bulk_send_email': 'Send Email',
       'marked_purchase_order_as_sent':
@@ -70809,6 +70815,30 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get vendorEmailNotSet =>
       _localizedValues[localeCode]['vendor_email_not_set'] ??
       _localizedValues['en']['vendor_email_not_set'];
+
+  String get cloneToPurchaseOrder =>
+      _localizedValues[localeCode]['clone_to_purchase_order'] ??
+      _localizedValues['en']['clone_to_purchase_order'];
+
+  String get accept =>
+      _localizedValues[localeCode]['accept'] ??
+      _localizedValues['en']['accept'];
+
+  String get qrIban =>
+      _localizedValues[localeCode]['qr_iban'] ??
+      _localizedValues['en']['qr_iban'];
+
+  String get besrId =>
+      _localizedValues[localeCode]['besr_id'] ??
+      _localizedValues['en']['besr_id'];
+
+  String get vendorDetails =>
+      _localizedValues[localeCode]['vendor_details'] ??
+      _localizedValues['en']['vendor_details'];
+
+  String get purchaseOrderDetails =>
+      _localizedValues[localeCode]['purchase_order_details'] ??
+      _localizedValues['en']['purchase_order_details'];
 
 // STARTER: lang field - do not remove comment
 

@@ -31,6 +31,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
     case EntityAction.cloneToRecurring:
+    case EntityAction.cloneToPurchaseOrder:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.public;
@@ -51,6 +52,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.convertToInvoice:
       return Icons.content_copy;
     case EntityAction.approve:
+    case EntityAction.accept:
       return Icons.check_circle_outline;
     case EntityAction.newInvoice:
     case EntityAction.newExpense:

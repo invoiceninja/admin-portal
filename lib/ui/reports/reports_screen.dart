@@ -112,6 +112,10 @@ class ReportsScreen extends StatelessWidget {
       kReportProduct,
       kReportProfitAndLoss,
       kReportTask,
+      if (state.company.isModuleEnabled(EntityType.vendor)) ...[
+        if (state.company.isModuleEnabled(EntityType.purchaseOrder))
+          kReportPurchaseOrder,
+      ],
     ]..sort((a, b) => a.compareTo(b));
 
     final reportChildren = [

@@ -601,6 +601,8 @@ abstract class InvoiceEntity extends Object
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
+  bool get hasVendor => '${vendorId ?? ''}'.isNotEmpty;
+
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
   double get netAmount => amount - taxAmount;
@@ -1018,6 +1020,10 @@ abstract class InvoiceEntity extends Object
           } else {
             actions.add(EntityAction.viewInvoice);
           }
+        } else if (isPurchaseOrder) {
+          if (!isCancelled) {
+            //actions.add(EntityAction.accept);
+          }
         }
       }
 
@@ -1058,6 +1064,12 @@ abstract class InvoiceEntity extends Object
         countOtherTypes++;
         if (isRecurringInvoice) {
           actions.add(EntityAction.cloneToRecurring);
+        }
+      }
+      if (userCompany.canCreate(EntityType.purchaseOrder)) {
+        countOtherTypes++;
+        if (isPurchaseOrder) {
+          actions.add(EntityAction.cloneToPurchaseOrder);
         }
       }
       if (countOtherTypes == 2) {
@@ -1195,9 +1207,12 @@ abstract class InvoiceEntity extends Object
 
   bool get isReversed => isInvoice && statusId == kInvoiceStatusReversed;
 
-  bool get isCancelled => isInvoice && statusId == kInvoiceStatusCancelled;
+  bool get isCancelled =>
+      (isInvoice && statusId == kInvoiceStatusCancelled) ||
+      (isPurchaseOrder && statusId == kPurchaseOrderStatusCancelled);
 
-  bool get isCancelledOrReversed => isInvoice && (isCancelled || isReversed);
+  bool get isCancelledOrReversed =>
+      (isInvoice || isPurchaseOrder) && (isCancelled || isReversed);
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
 

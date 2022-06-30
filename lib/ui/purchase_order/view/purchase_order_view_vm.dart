@@ -1,56 +1,95 @@
+// Dart imports:
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:redux/redux.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class PurchaseOrderViewScreen extends StatelessWidget {
   const PurchaseOrderViewScreen({
     Key key,
     this.isFilter = false,
   }) : super(key: key);
-  static const String route = '/purchase_order/view';
+
   final bool isFilter;
+  static const String route = '/purchase_order/view';
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PurchaseOrderViewVM>(
+      //distinct: true,
       converter: (Store<AppState> store) {
         return PurchaseOrderViewVM.fromStore(store);
       },
-      builder: (context, vm) {
-        return PurchaseOrderView(
-          viewModel: vm,
+      builder: (context, viewModel) {
+        return InvoiceView(
+          viewModel: viewModel,
           isFilter: isFilter,
+          tabIndex: viewModel.state.purchaseOrderUIState.tabIndex,
         );
       },
     );
   }
 }
 
-class PurchaseOrderViewVM {
+class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
   PurchaseOrderViewVM({
-    @required this.state,
-    @required this.purchaseOrder,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-  });
+    AppState state,
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    ClientEntity client,
+    bool isSaving,
+    bool isDirty,
+    Function(BuildContext, EntityAction) onEntityAction,
+    Function(BuildContext, [int]) onEditPressed,
+    Function(BuildContext) onPaymentsPressed,
+    Function(BuildContext, PaymentEntity) onPaymentPressed,
+    Function(BuildContext) onRefreshed,
+    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, DocumentEntity) onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
+  }) : super(
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
+        );
 
   factory PurchaseOrderViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final purchaseOrder =
         state.purchaseOrderState.map[state.purchaseOrderUIState.selectedId] ??
             InvoiceEntity(id: state.purchaseOrderUIState.selectedId);
+    final client = store.state.clientState.map[purchaseOrder.clientId] ??
+        ClientEntity(id: purchaseOrder.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -64,21 +103,54 @@ class PurchaseOrderViewVM {
       state: state,
       company: state.company,
       isSaving: state.isSaving,
-      isLoading: state.isLoading,
       isDirty: purchaseOrder.isNew,
-      purchaseOrder: purchaseOrder,
+      invoice: purchaseOrder,
+      client: client,
+      onEditPressed: (BuildContext context, [int index]) {
+        editEntity(
+            entity: purchaseOrder,
+            subIndex: index,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedPurchaseOrder));
+      },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([purchaseOrder], action, autoPop: true),
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SavePurchaseOrderDocumentRequest(
+            multipartFile: multipartFile,
+            purchaseOrder: purchaseOrder,
+            completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>((value) => store
+            .dispatch(LoadPurchaseOrder(purchaseOrderId: purchaseOrder.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+          idToken: idToken,
+        ));
+      },
+      onViewPdf: (context, purchaseOrder, [activityId]) {
+        store.dispatch(ShowPdfPurchaseOrder(
+            context: context,
+            purchaseOrder: purchaseOrder,
+            activityId: activityId));
+      },
     );
   }
-
-  final AppState state;
-  final InvoiceEntity purchaseOrder;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onRefreshed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 }

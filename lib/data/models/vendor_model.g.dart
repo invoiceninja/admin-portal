@@ -171,6 +171,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
+      'activities',
+      serializers.serialize(object.activities,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ActivityEntity)])),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -310,6 +314,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'activities':
+          result.activities.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<Object>);
           break;
         case 'documents':
@@ -729,6 +739,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final BuiltList<VendorContactEntity> contacts;
   @override
+  final BuiltList<ActivityEntity> activities;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -771,6 +783,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue3,
       this.customValue4,
       this.contacts,
+      this.activities,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -811,6 +824,8 @@ class _$VendorEntity extends VendorEntity {
     BuiltValueNullFieldError.checkNotNull(
         customValue4, 'VendorEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(contacts, 'VendorEntity', 'contacts');
+    BuiltValueNullFieldError.checkNotNull(
+        activities, 'VendorEntity', 'activities');
     BuiltValueNullFieldError.checkNotNull(
         documents, 'VendorEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
@@ -853,6 +868,7 @@ class _$VendorEntity extends VendorEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         contacts == other.contacts &&
+        activities == other.activities &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -885,17 +901,17 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode),
-                                                                                website.hashCode),
-                                                                            number.hashCode),
-                                                                        vatNumber.hashCode),
-                                                                    idNumber.hashCode),
-                                                                currencyId.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode),
+                                                                                number.hashCode),
+                                                                            vatNumber.hashCode),
+                                                                        idNumber.hashCode),
+                                                                    currencyId.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                contacts.hashCode),
+                                            activities.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -930,6 +946,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('contacts', contacts)
+          ..add('activities', activities)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -1029,6 +1046,12 @@ class VendorEntityBuilder
   set contacts(ListBuilder<VendorContactEntity> contacts) =>
       _$this._contacts = contacts;
 
+  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity> get activities =>
+      _$this._activities ??= new ListBuilder<ActivityEntity>();
+  set activities(ListBuilder<ActivityEntity> activities) =>
+      _$this._activities = activities;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -1069,7 +1092,9 @@ class VendorEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  VendorEntityBuilder();
+  VendorEntityBuilder() {
+    VendorEntity._initializeBuilder(this);
+  }
 
   VendorEntityBuilder get _$this {
     final $v = _$v;
@@ -1094,6 +1119,7 @@ class VendorEntityBuilder
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
       _contacts = $v.contacts.toBuilder();
+      _activities = $v.activities.toBuilder();
       _documents = $v.documents.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -1155,6 +1181,7 @@ class VendorEntityBuilder
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'VendorEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorEntity', 'customValue4'),
               contacts: contacts.build(),
+              activities: activities.build(),
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorEntity', 'createdAt'),
@@ -1169,6 +1196,8 @@ class VendorEntityBuilder
       try {
         _$failedField = 'contacts';
         contacts.build();
+        _$failedField = 'activities';
+        activities.build();
         _$failedField = 'documents';
         documents.build();
       } catch (e) {

@@ -246,6 +246,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
+  static const EmailTemplate purchase_order = _$purchase_order;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 
@@ -469,6 +470,22 @@ abstract class BaseEntity implements SelectableEntity {
     }
 
     return false;
+  }
+}
+
+abstract class HasActivities {
+  BuiltList<ActivityEntity> get activities;
+
+  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
+    return activities.where((activity) {
+      if (invoiceId != null && activity.invoiceId != invoiceId) {
+        return false;
+      }
+      if (typeId != null && activity.activityTypeId != typeId) {
+        return false;
+      }
+      return true;
+    });
   }
 }
 
