@@ -808,7 +808,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   int get createdAtLimit {
-    final numberYearsActive = userCompany.settings.numberYearsActive;
+    final numberYearsActive = userCompany.settings?.numberYearsActive ?? 0;
 
     if (!company.isLarge || numberYearsActive == 0) {
       return 0;
