@@ -50,9 +50,7 @@ void loadEmailTemplate({
           data: json.encode({
             'entity': '${invoice?.entityType ?? ''}',
             'entity_id': '${invoice?.id ?? ''}',
-            'template': (subject.isEmpty && body.isEmpty && template != null)
-                ? template
-                : '',
+            'template': template,
             'subject': subject,
             'body': body,
           }))
