@@ -160,6 +160,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.editAfterSaving,
     this.enableTouchEvents,
     this.enableTooltips,
+    this.flexibleSearch,
   });
 
   final AppLayout appLayout;
@@ -186,6 +187,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool editAfterSaving;
   final bool enableTouchEvents;
   final bool enableTooltips;
+  final bool flexibleSearch;
 }
 
 class LoadAccountSuccess implements StopLoading {

@@ -232,6 +232,15 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       }
                     },
                   ),
+                  SwitchListTile(
+                    title: Text(localization.enableFlexibleSearch),
+                    subtitle: Text(localization.enableFlexibleSearchHelp),
+                    value: prefState.enableFlexibleSearch,
+                    onChanged: (value) =>
+                        viewModel.onEnableFlexibleSearchChanged(context, value),
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    secondary: Icon(Icons.search),
+                  ),
                   if (isDesktop(context)) ...[
                     SwitchListTile(
                       title: Text(localization.enableTooltips),

@@ -60,6 +60,7 @@ class DeviceSettingsVM {
     @required this.onEditAfterSavingChanged,
     @required this.onEnableTouchEventsChanged,
     @required this.onEnableTooltipsChanged,
+    @required this.onEnableFlexibleSearchChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -119,6 +120,9 @@ class DeviceSettingsVM {
       },
       onEnableTooltipsChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(enableTooltips: value));
+      },
+      onEnableFlexibleSearchChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(flexibleSearch: value));
       },
       onColorThemeChanged: (context, value) async {
         if (store.state.prefState.colorTheme != value) {
@@ -212,6 +216,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onEnableJSPDFChanged;
   final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, bool) onEnableTooltipsChanged;
+  final Function(BuildContext, bool) onEnableFlexibleSearchChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
   final Future<bool> authenticationSupported;
 }

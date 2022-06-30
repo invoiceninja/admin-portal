@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'enable_flexible_search': 'Enable Flexible Search',
+      'enable_flexible_search_help':
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -70839,6 +70842,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get purchaseOrderDetails =>
       _localizedValues[localeCode]['purchase_order_details'] ??
       _localizedValues['en']['purchase_order_details'];
+
+  String get enableFlexibleSearch =>
+      _localizedValues[localeCode]['enable_flexible_search'] ??
+      _localizedValues['en']['enable_flexible_search'];
+
+  String get enableFlexibleSearchHelp =>
+      _localizedValues[localeCode]['enable_flexible_search_help'] ??
+      _localizedValues['en']['enable_flexible_search_help'];
 
 // STARTER: lang field - do not remove comment
 
