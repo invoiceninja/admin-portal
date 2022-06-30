@@ -1,3 +1,7 @@
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+
 bool isAllDigits(String value) {
   return value.replaceAll(RegExp('[^\\d]'), '') == value;
 }
@@ -119,16 +123,19 @@ bool matchesString({String haystack, String needle}) {
     return true;
   }
 
-  return haystack.toLowerCase().contains(needle.toLowerCase());
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final state = store.state;
 
-  /*
-  String regExp = '';
-  needle.toLowerCase().runes.forEach((int rune) {
-    final character = RegExp.escape(String.fromCharCode(rune));
-    regExp += character + '.*?';
-  });
-  return RegExp(regExp).hasMatch(haystack.toLowerCase());
-  */
+  if (state.prefState.enableFlexibleSearch) {
+    String regExp = '';
+    needle.toLowerCase().runes.forEach((int rune) {
+      final character = RegExp.escape(String.fromCharCode(rune));
+      regExp += character + '.*?';
+    });
+    return RegExp(regExp).hasMatch(haystack.toLowerCase());
+  } else {
+    return haystack.toLowerCase().contains(needle.toLowerCase());
+  }
 }
 
 String matchesStringsValue({
