@@ -171,6 +171,7 @@ const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
 const String kCountryCanada = '124';
+const String kCountrySwitzerland = '756';
 
 const String kInvoiceStatusViewed = '-3';
 const String kInvoiceStatusUnpaid = '-2';

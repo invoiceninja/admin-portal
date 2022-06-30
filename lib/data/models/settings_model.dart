@@ -885,6 +885,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'purchase_order_number_counter')
   int get purchaseOrderNumberCounter;
 
+  @nullable
+  @BuiltValueField(wireName: 'qr_iban')
+  String get qrIban;
+
+  @nullable
+  @BuiltValueField(wireName: 'besr_id')
+  String get besrId;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

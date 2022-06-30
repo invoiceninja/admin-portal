@@ -619,6 +619,8 @@ abstract class CompanyEntity extends Object
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
+  bool get supportsQrIban => settings.countryId == kCountrySwitzerland;
+
   // ignore: unused_element
   static void _initializeBuilder(CompanyEntityBuilder builder) => builder
     ..calculateExpenseTaxByAmount = false

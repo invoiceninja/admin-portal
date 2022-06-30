@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'qr_iban': 'QR IBAN',
+      'besr_id': 'BESR ID',
       'accept': 'Accept',
       'clone_to_purchase_order': 'Clone to PO',
       'vendor_email_not_set': 'Vendor does not have an email address set',
@@ -70819,6 +70821,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get accept =>
       _localizedValues[localeCode]['accept'] ??
       _localizedValues['en']['accept'];
+
+  String get qrIban =>
+      _localizedValues[localeCode]['qr_iban'] ??
+      _localizedValues['en']['qr_iban'];
+
+  String get besrId =>
+      _localizedValues[localeCode]['besr_id'] ??
+      _localizedValues['en']['besr_id'];
+
 
 // STARTER: lang field - do not remove comment
 

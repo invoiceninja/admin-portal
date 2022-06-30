@@ -78,6 +78,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _creditFooterController = TextEditingController();
   final _purchaseOrderTermsController = TextEditingController();
   final _purchaseOrderFooterController = TextEditingController();
+  final _qrIbanController = TextEditingController();
+  final _besrIdController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -126,6 +128,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _creditTermsController,
       _purchaseOrderFooterController,
       _purchaseOrderTermsController,
+      _qrIbanController,
+      _besrIdController,
     ];
 
     _controllers.forEach(
@@ -157,6 +161,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _creditTermsController.text = settings.defaultCreditTerms;
     _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter;
     _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms;
+    _qrIbanController.text = settings.qrIban;
+    _besrIdController.text = settings.besrId;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -200,7 +206,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..defaultCreditFooter = _creditFooterController.text.trim()
       ..defaultCreditTerms = _creditTermsController.text.trim()
       ..defaultPurchaseOrderFooter = _purchaseOrderFooterController.text.trim()
-      ..defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim());
+      ..defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim()
+      ..qrIban = _qrIbanController.text.trim()
+      ..besrId = _besrIdController.text.trim());
     if (settings != widget.viewModel.settings) {
       _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
@@ -323,6 +331,23 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
+              if (company.supportsQrIban)
+                FormCard(
+                  children: [
+                    DecoratedFormField(
+                      label: localization.qrIban,
+                      controller: _qrIbanController,
+                      onSavePressed: viewModel.onSavePressed,
+                      keyboardType: TextInputType.text,
+                    ),
+                    DecoratedFormField(
+                      label: localization.besrId,
+                      controller: _besrIdController,
+                      onSavePressed: viewModel.onSavePressed,
+                      keyboardType: TextInputType.text,
+                    ),
+                  ],
+                ),
               if (!state.settingsUIState.isFiltered)
                 FormCard(
                   isLast: true,
