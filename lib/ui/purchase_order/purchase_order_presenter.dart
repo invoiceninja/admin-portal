@@ -25,7 +25,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       PurchaseOrderFields.vendor,
       PurchaseOrderFields.amount,
       PurchaseOrderFields.date,
-      PurchaseOrderFields.validUntil,
+      PurchaseOrderFields.dueDate,
     ];
   }
 
@@ -86,7 +86,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
           child: Text(formatNumber(purchaseOrder.amount, context,
               clientId: purchaseOrder.clientId)),
         );
-      case PurchaseOrderFields.validUntil:
+      case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
       case PurchaseOrderFields.customValue1:
         return Text(presentCustomField(context, purchaseOrder.customValue1));

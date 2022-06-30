@@ -144,7 +144,7 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     String dueDateField = InvoiceFields.dueDate;
-    if (invoice.isQuote || invoice.isPurchaseOrder) {
+    if (invoice.isQuote || invoice.isCredit) {
       dueDateField = QuoteFields.validUntil;
     }
 

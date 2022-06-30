@@ -58,6 +58,7 @@ class VendorFields {
   static const String state = 'state';
   static const String postalCode = 'postal_code';
   static const String countryId = 'country_id';
+  static const String country = 'country';
   static const String phone = 'phone';
   static const String privateNotes = 'private_notes';
   static const String publicNotes = 'public_notes';
@@ -74,6 +75,8 @@ class VendorFields {
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
   static const String contacts = 'contacts';
+  static const String cityStatePostal = 'city_state_postal';
+  static const String postalCityState = 'postal_city_state';
 }
 
 abstract class VendorEntity extends Object

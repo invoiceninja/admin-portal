@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -73,6 +74,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       EntityType.quote,
       EntityType.credit,
       EntityType.task,
+      EntityType.vendor,
+      EntityType.purchaseOrder,
     ].forEach((entityType) {
       if (state.company.isModuleEnabled(entityType)) {
         tabs++;
@@ -131,6 +134,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             Tab(text: localization.quoteDetails),
           if (company.isModuleEnabled(EntityType.credit))
             Tab(text: localization.creditDetails),
+          if (company.isModuleEnabled(EntityType.vendor))
+            Tab(text: localization.vendorDetails),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            Tab(text: localization.purchaseOrderDetails),
           Tab(text: localization.productColumns),
           if (company.isModuleEnabled(EntityType.task))
             Tab(text: localization.taskColumns),
@@ -713,6 +720,92 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 addTitle: localization.addField,
                 liveChanges: true,
                 prefix: 'credit',
+              ),
+            ),
+          if (company.isModuleEnabled(EntityType.vendor))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    VendorFields.name,
+                    VendorFields.number,
+                    VendorFields.vatNumber,
+                    VendorFields.address1,
+                    VendorFields.address2,
+                    VendorFields.cityStatePostal,
+                    //VendorFields.postalCityState,
+                    VendorFields.country,
+                    VendorFields.customValue1,
+                    VendorFields.customValue2,
+                    VendorFields.customValue3,
+                    VendorFields.customValue4,
+                  ].map((field) => '\$vendor.$field'),
+                  ...[
+                    ContactFields.email,
+                  ].map((field) => '\$contact.$field'),
+                ],
+                defaultSelected: [
+                  ...[
+                    VendorFields.name,
+                    VendorFields.number,
+                    VendorFields.vatNumber,
+                    VendorFields.address1,
+                    VendorFields.address2,
+                    VendorFields.cityStatePostal,
+                  ].map((field) => '\$vendor.$field'),
+                  ...[
+                    ContactFields.email,
+                  ].map((field) => '\$contact.$field'),
+                ],
+                selected: settings.getFieldsForSection(kPdfFieldsVendorDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsVendorDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'vendor',
+              ),
+            ),
+          if (company.isModuleEnabled(EntityType.purchaseOrder))
+            FormCard(
+              isLast: true,
+              child: MultiSelectList(
+                options: [
+                  ...[
+                    PurchaseOrderFields.number,
+                    PurchaseOrderFields.date,
+                    PurchaseOrderFields.dueDate,
+                    PurchaseOrderFields.total,
+                    PurchaseOrderFields.balanceDue,
+                    //PurchaseOrderFields.customValue1,
+                    //PurchaseOrderFields.customValue2,
+                    //PurchaseOrderFields.customValue3,
+                    //PurchaseOrderFields.customValue4,
+                  ].map((field) => '\$credit.$field'),
+                  /*
+                  ...[
+                    ClientFields.balance,
+                  ].map((field) => '\$client.$field')
+                  */
+                ],
+                defaultSelected: [
+                  PurchaseOrderFields.number,
+                  PurchaseOrderFields.date,
+                  PurchaseOrderFields.dueDate,
+                  PurchaseOrderFields.total,
+                  PurchaseOrderFields.balanceDue,
+                ].map((field) => '\$purchase_order.$field').toList(),
+                selected: settings
+                    .getFieldsForSection(kPdfFieldsPurchaseOrderDetails),
+                onSelected: (values) {
+                  viewModel.onSettingsChanged(settings.setFieldsForSection(
+                      kPdfFieldsPurchaseOrderDetails, values));
+                },
+                addTitle: localization.addField,
+                liveChanges: true,
+                prefix: 'purchase_order',
               ),
             ),
           FormCard(

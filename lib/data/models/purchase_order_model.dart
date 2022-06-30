@@ -13,7 +13,7 @@ class PurchaseOrderFields {
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
   static const String date = 'date';
-  static const String validUntil = 'valid_until';
+  static const String dueDate = 'due_date';
   static const String nextSendDate = 'next_send_date';
   static const String lastSentDate = 'last_sent_date';
   static const String terms = 'terms';

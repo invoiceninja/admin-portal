@@ -405,7 +405,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ),
                       DatePicker(
                         key: ValueKey('__terms_${client.id}__'),
-                        labelText: entityType == EntityType.invoice
+                        labelText: entityType == EntityType.invoice ||
+                                entityType == EntityType.purchaseOrder
                             ? localization.dueDate
                             : localization.validUntil,
                         selectedDate: invoice.dueDate,
