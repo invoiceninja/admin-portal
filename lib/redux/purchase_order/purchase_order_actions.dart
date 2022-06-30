@@ -628,9 +628,9 @@ void handlePurchaseOrderAction(BuildContext context,
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(
-                        entity: state.clientState.get(purchaseOrder.clientId));
+                        entity: state.vendorState.get(purchaseOrder.vendorId));
                   },
-                  child: Text(localization.editClient.toUpperCase()))
+                  child: Text(localization.editVendor.toUpperCase()))
             ]);
         return;
       }
