@@ -584,7 +584,8 @@ abstract class CompanyEntity extends Object
     if (entityType == EntityType.purchaseOrder) {
       // TODO remove this
       final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
-      if (store.state.isHosted && !store.state.isStaging) {
+      //if (store.state.isHosted && !store.state.isStaging) {
+      if (!store.state.isStaging) {
         return false;
       }
     }
