@@ -190,12 +190,12 @@ ReportResult invoiceReport(
         case InvoiceReportFields.converted_amount:
           value = invoice.isCancelled
               ? 0
-              : (invoice.amount * 1 / invoice.exchangeRate);
+              : round(invoice.amount * 1 / invoice.exchangeRate, 2);
           break;
         case InvoiceReportFields.converted_balance:
           value = invoice.isCancelled
               ? 0
-              : (invoice.balanceOrAmount * 1 / invoice.exchangeRate);
+              : round(invoice.balanceOrAmount * 1 / invoice.exchangeRate, 2);
           break;
         case InvoiceReportFields.client:
           value = client.displayName;

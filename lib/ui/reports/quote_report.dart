@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -155,7 +156,7 @@ ReportResult quoteReport(
           value = quote.amount;
           break;
         case QuoteReportFields.converted_amount:
-          value = quote.amount * 1 / quote.exchangeRate;
+          value = round(quote.amount * 1 / quote.exchangeRate, 2);
           break;
         case QuoteReportFields.number:
           value = quote.number;
