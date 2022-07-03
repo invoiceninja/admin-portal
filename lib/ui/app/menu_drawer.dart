@@ -877,7 +877,9 @@ class SidebarFooter extends StatelessWidget {
                     clearErrorOnDismiss: true,
                   ),
                 )
-              else if (state.isSelfHosted && state.isUpdateAvailable)
+              else if (state.isSelfHosted &&
+                  !state.account.disableAutoUpdate &&
+                  state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips
                       ? localization.updateAvailable

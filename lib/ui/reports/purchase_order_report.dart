@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -158,7 +159,8 @@ ReportResult purchaseOrderReport(
           value = purchaseOrder.amount;
           break;
         case PurchaseOrderReportFields.converted_amount:
-          value = purchaseOrder.amount * 1 / purchaseOrder.exchangeRate;
+          value =
+              round(purchaseOrder.amount * 1 / purchaseOrder.exchangeRate, 2);
           break;
         case PurchaseOrderReportFields.number:
           value = purchaseOrder.number;

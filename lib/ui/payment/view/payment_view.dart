@@ -105,6 +105,7 @@ class _PaymentViewState extends State<PaymentView> {
                       EntityListTile(
                         isFilter: widget.isFilter,
                         entity: client,
+                        subtitle: client.primaryContact.email,
                       ),
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(

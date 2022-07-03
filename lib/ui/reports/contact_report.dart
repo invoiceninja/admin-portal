@@ -311,19 +311,23 @@ ReportResult contactReport(
             break;
           case ContactReportFields.converted_total:
             value = contact.isPrimary
-                ? ((client.balance + client.paidToDate) * exchangeRate)
+                ? round((client.balance + client.paidToDate) * exchangeRate, 2)
                 : 0.0;
             break;
           case ContactReportFields.converted_balance:
-            value = contact.isPrimary ? (client.balance * exchangeRate) : 0.0;
+            value = contact.isPrimary
+                ? round(client.balance * exchangeRate, 2)
+                : 0.0;
             break;
           case ContactReportFields.converted_credit_balance:
-            value =
-                contact.isPrimary ? (client.creditBalance * exchangeRate) : 0.0;
+            value = contact.isPrimary
+                ? round(client.creditBalance * exchangeRate, 2)
+                : 0.0;
             break;
           case ContactReportFields.converted_paid_to_date:
-            value =
-                contact.isPrimary ? (client.paidToDate * exchangeRate) : 0.0;
+            value = contact.isPrimary
+                ? round(client.paidToDate * exchangeRate, 2)
+                : 0.0;
             break;
           case ContactReportFields.is_active:
             value = client.isActive;

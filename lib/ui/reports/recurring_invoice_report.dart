@@ -177,7 +177,7 @@ ReportResult recurringInvoiceReport(
           value = invoice.amount;
           break;
         case RecurringInvoiceReportFields.converted_amount:
-          value = invoice.amount * 1 / invoice.exchangeRate;
+          value = round(invoice.amount * 1 / invoice.exchangeRate, 2);
           break;
         case RecurringInvoiceReportFields.client:
           value = client.displayName;
