@@ -45,12 +45,32 @@ class _InvitationListTile extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final client = state.clientState.get(viewModel.invoice.clientId);
-    final contact = client.contacts.firstWhere(
-        (contact) => contact.id == invitation.clientContactId,
-        orElse: () => ClientContactEntity());
+    final vendor = state.vendorState.get(viewModel.invoice.vendorId);
 
-    if (contact.isNew) {
-      return SizedBox();
+    String contactName = '';
+
+    if (viewModel.invoice.isPurchaseOrder) {
+      final contact = vendor.contacts.firstWhere(
+          (contact) => contact.id == invitation.vendorContactId,
+          orElse: () => VendorContactEntity());
+      if (contact.isNew) {
+        return SizedBox();
+      }
+      contactName = contact.fullNameOrEmail;
+      if (contactName.isEmpty) {
+        contactName = vendor.name;
+      }
+    } else {
+      final contact = client.contacts.firstWhere(
+          (contact) => contact.id == invitation.clientContactId,
+          orElse: () => ClientContactEntity());
+      if (contact.isNew) {
+        return SizedBox();
+      }
+      contactName = contact.fullNameOrEmail;
+      if (contactName.isEmpty) {
+        contactName = client.displayName;
+      }
     }
 
     Widget icon = Icon(Icons.contacts);
@@ -73,11 +93,6 @@ class _InvitationListTile extends StatelessWidget {
           message: localization.spam,
         );
         break;
-    }
-
-    var contactName = contact.fullNameOrEmail;
-    if (contactName.isEmpty) {
-      contactName = client.displayName;
     }
 
     return ListTile(
