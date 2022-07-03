@@ -93,6 +93,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       case EntityType.credit:
         selectedTemplate = EmailTemplate.credit;
         break;
+      case EntityType.purchaseOrder:
+        selectedTemplate = EmailTemplate.purchase_order;
+        break;
     }
   }
 
@@ -229,6 +232,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   DropdownMenuItem<EmailTemplate>(
                     child: Text(localization.thirdReminder),
                     value: EmailTemplate.reminder3,
+                  ),
+                ],
+                if (invoice.isPurchaseOrder) ...[
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.purchaseOrder),
+                    value: EmailTemplate.purchase_order,
                   ),
                 ],
                 if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
