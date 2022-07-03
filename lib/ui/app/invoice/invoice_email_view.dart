@@ -234,12 +234,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     value: EmailTemplate.reminder3,
                   ),
                 ],
-                if (invoice.isPurchaseOrder) ...[
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.purchaseOrder),
-                    value: EmailTemplate.purchase_order,
-                  ),
-                ],
                 if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
                   DropdownMenuItem<EmailTemplate>(
                     child: Text(localization.firstCustom),
