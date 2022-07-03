@@ -521,6 +521,41 @@ GroupTotals calculateReportTotals({
     return GroupTotals();
   }
 
+  bool shouldConverCurrencies = false;
+  final Map<String, Map<String, String>> groupCurrencies = {};
+  for (var i = 0; i < data.length; i++) {
+    final row = data[i];
+    final columnIndex = columns.indexOf(reportState.group);
+
+    if (columnIndex == -1) {
+      print('## ERROR: colum not found - ${reportState.group}');
+      continue;
+    }
+
+    final groupCell = row[columnIndex];
+    final group = groupCell.stringValue;
+
+    if (!groupCurrencies.containsKey(group)) {
+      groupCurrencies[group] = {};
+    }
+
+    for (var j = 0; j < row.length; j++) {
+      final cell = row[j];
+      final column = columns[j];
+
+      if (cell is ReportNumberValue) {
+        final currencyId = groupCurrencies[group][column] ?? '';
+
+        if (currencyId.isNotEmpty && currencyId != cell.currencyId) {
+          shouldConverCurrencies = true;
+          break;
+        }
+
+        groupCurrencies[group][column] = cell.currencyId;
+      }
+    }
+  }
+
   for (var i = 0; i < data.length; i++) {
     final row = data[i];
     final columnIndex = columns.indexOf(reportState.group);
@@ -581,9 +616,14 @@ GroupTotals calculateReportTotals({
           totals[group][column] = 0;
         }
 
+        if (cell is ReportNumberValue) {
+          totals[group]['${column}_currency_id'] = parseDouble(cell.currencyId);
+        }
+
         if (cell is ReportNumberValue &&
             cell.currencyId != null &&
-            cell.currencyId != company.currencyId) {
+            cell.currencyId != company.currencyId &&
+            shouldConverCurrencies) {
           double cellValue = cell.value;
           var rate = cell.exchangeRate;
           if (rate == null || rate == 0 || rate == 1) {

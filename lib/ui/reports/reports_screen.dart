@@ -1327,7 +1327,8 @@ class ReportResult {
           value = formatNumber(values[column], context,
               formatNumberType: column == 'quantity'
                   ? FormatNumberType.double
-                  : FormatNumberType.money);
+                  : FormatNumberType.money,
+              currencyId: values['${column}_currency_id'].round().toString());
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values[column].toInt()));
         }
