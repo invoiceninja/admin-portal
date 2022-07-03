@@ -1172,11 +1172,13 @@ abstract class InvoiceEntity extends Object
 
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
 
-  EmailTemplate get emailTemplate => isQuote
-      ? EmailTemplate.quote
-      : isCredit
-          ? EmailTemplate.credit
-          : EmailTemplate.invoice;
+  EmailTemplate get emailTemplate => isPurchaseOrder
+      ? EmailTemplate.purchase_order
+      : isQuote
+          ? EmailTemplate.quote
+          : isCredit
+              ? EmailTemplate.credit
+              : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
