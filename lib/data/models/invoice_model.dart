@@ -699,6 +699,8 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
     final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
     final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
+    final vendorA = vendorMap[invoiceA.vendorId] ?? VendorEntity();
+    final vendorB = vendorMap[invoiceB.vendorId] ?? VendorEntity();
     switch (sortField) {
       case InvoiceFields.number:
         var invoiceANumber =
@@ -859,6 +861,10 @@ abstract class InvoiceEntity extends Object
         break;
       case InvoiceFields.partialDueDate:
         response = invoiceA.partialDueDate.compareTo(invoiceB.partialDueDate);
+        break;
+      case InvoiceFields.vendor:
+        response =
+            vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');

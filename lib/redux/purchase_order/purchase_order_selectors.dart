@@ -23,15 +23,16 @@ VendorContactEntity purchaseOrderContactSelector(
       .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
 
-var memoizedDropdownPurchaseOrderList = memo6(
+var memoizedDropdownPurchaseOrderList = memo7(
     (BuiltMap<String, InvoiceEntity> purchaseOrderMap,
             BuiltList<String> purchaseOrderList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
             BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             String clientId) =>
         dropdownPurchaseOrdersSelector(purchaseOrderMap, purchaseOrderList,
-            staticState, userMap, clientMap, clientId));
+            staticState, userMap, clientMap, vendorMap, clientId));
 
 List<String> dropdownPurchaseOrdersSelector(
     BuiltMap<String, InvoiceEntity> purchaseOrderMap,
@@ -39,6 +40,7 @@ List<String> dropdownPurchaseOrdersSelector(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     String clientId) {
   final list = purchaseOrderList.where((purchaseOrderId) {
     final purchaseOrder = purchaseOrderMap[purchaseOrderId];
@@ -59,6 +61,7 @@ List<String> dropdownPurchaseOrdersSelector(
       sortField: PurchaseOrderFields.number,
       userMap: userMap,
       clientMap: clientMap,
+      vendorMap: vendorMap,
     );
   });
 

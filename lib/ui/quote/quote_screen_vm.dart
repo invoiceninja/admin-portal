@@ -52,6 +52,7 @@ class QuoteScreenVM {
           state.quoteState.map,
           state.quoteState.list,
           state.clientState.map,
+          state.vendorState.map,
           state.quoteListState,
           state.userState.map),
       userCompany: state.userCompany,
