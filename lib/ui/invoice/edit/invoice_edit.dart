@@ -104,18 +104,20 @@ class _InvoiceEditState extends State<InvoiceEdit>
           return;
         }
       } else {
-        showMessageDialog(
-            context: context,
-            message: localization.clientEmailNotSet,
-            secondaryActions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    editEntity(entity: client);
-                  },
-                  child: Text(localization.editClient.toUpperCase()))
-            ]);
-        return;
+        if (!client.hasEmailAddress) {
+          showMessageDialog(
+              context: context,
+              message: localization.clientEmailNotSet,
+              secondaryActions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      editEntity(entity: client);
+                    },
+                    child: Text(localization.editClient.toUpperCase()))
+              ]);
+          return;
+        }
       }
     }
 
