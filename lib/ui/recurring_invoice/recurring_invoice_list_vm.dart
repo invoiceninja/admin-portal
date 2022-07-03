@@ -92,6 +92,7 @@ class RecurringInvoiceListVM {
           state.getUISelection(EntityType.recurringInvoice),
           state.recurringInvoiceState.map,
           state.clientState.map,
+          state.vendorState.map,
           state.recurringInvoiceState.list,
           state.recurringInvoiceListState,
           state.userState.map),

@@ -541,19 +541,17 @@ abstract class ClientEntity extends Object
   }
 
   bool matchesNameOrEmail(String filter) {
-    filter = filter.toLowerCase();
-
-    if (name.toLowerCase().contains(filter)) {
+    if (matchesString(haystack: name, needle: filter)) {
       return true;
     }
 
     for (var i = 0; i < contacts.length; i++) {
       final contact = contacts[i];
-      if (contact.fullName.toLowerCase().contains(filter)) {
+      if (matchesString(haystack: contact.fullName, needle: filter)) {
         return true;
       }
 
-      if (contact.email.toLowerCase().contains(filter)) {
+      if (matchesString(haystack: contact.email, needle: filter)) {
         return true;
       }
     }

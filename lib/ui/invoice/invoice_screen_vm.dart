@@ -52,6 +52,7 @@ class InvoiceScreenVM {
         state.invoiceState.map,
         state.invoiceState.list,
         state.clientState.map,
+        state.vendorState.map,
         state.paymentState.map,
         state.invoiceListState,
         state.userState.map,

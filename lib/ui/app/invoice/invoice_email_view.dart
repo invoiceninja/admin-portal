@@ -180,11 +180,15 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final state = viewModel.state;
     final settings = getClientSettings(state, client);
     final contacts = invoice.invitations
-        .map((invitation) => (invoice.isPurchaseOrder
-                ? vendor.contacts
-                : client.contacts)
-            .firstWhere((contact) => contact.id == invitation.clientContactId,
-                orElse: () => null))
+        .map((invitation) =>
+            (invoice.isPurchaseOrder ? vendor.contacts : client.contacts)
+                .firstWhere(
+                    (contact) =>
+                        contact.id ==
+                        (invoice.isPurchaseOrder
+                            ? invitation.vendorContactId
+                            : invitation.clientContactId),
+                    orElse: () => null))
         .toList();
 
     return Padding(

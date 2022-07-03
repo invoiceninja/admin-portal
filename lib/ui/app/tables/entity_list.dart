@@ -293,6 +293,7 @@ class _EntityListState extends State<EntityList> {
                       10,
                       25,
                       50,
+                      100,
                     ],
                     onRowsPerPageChanged: (value) {
                       store.dispatch(UpdateUserPreferences(rowsPerPage: value));

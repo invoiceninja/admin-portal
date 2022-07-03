@@ -615,6 +615,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final paymentList = memoizedDropdownInvoiceList(
       state.invoiceState.map,
       state.clientState.map,
+      state.vendorState.map,
       state.invoiceState.list,
       payment.clientId,
       state.userState.map,
@@ -625,6 +626,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final creditList = memoizedDropdownCreditList(
         state.creditState.map,
         state.clientState.map,
+        state.vendorState.map,
         state.creditState.list,
         payment.clientId,
         state.userState.map,
