@@ -114,6 +114,7 @@ class PurchaseOrderListVM extends EntityListVM {
           state.purchaseOrderState.map,
           state.purchaseOrderState.list,
           state.clientState.map,
+          state.vendorState.map,
           state.purchaseOrderListState,
           state.userState.map),
       invoiceMap: state.purchaseOrderState.map,

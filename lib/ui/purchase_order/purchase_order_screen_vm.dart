@@ -51,6 +51,7 @@ class PurchaseOrderScreenVM {
         state.purchaseOrderState.map,
         state.purchaseOrderState.list,
         state.clientState.map,
+        state.vendorState.map,
         state.purchaseOrderListState,
         state.userState.map,
       ),

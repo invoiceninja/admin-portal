@@ -690,6 +690,7 @@ abstract class InvoiceEntity extends Object
     String sortField,
     bool sortAscending,
     BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     String recurringPrefix = '',
   }) {

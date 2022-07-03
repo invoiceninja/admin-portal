@@ -65,22 +65,24 @@ List<String> dropdownPurchaseOrdersSelector(
   return list;
 }
 
-var memoizedFilteredPurchaseOrderList = memo6((
+var memoizedFilteredPurchaseOrderList = memo7((
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   ListUIState invoiceListState,
   BuiltMap<String, UserEntity> userMap,
 ) =>
     filteredPurchaseOrdersSelector(selectionState, invoiceMap, invoiceList,
-        clientMap, invoiceListState, userMap));
+        clientMap, vendorMap, invoiceListState, userMap));
 
 List<String> filteredPurchaseOrdersSelector(
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   ListUIState invoiceListState,
   BuiltMap<String, UserEntity> userMap,
 ) {
@@ -89,19 +91,19 @@ List<String> filteredPurchaseOrdersSelector(
 
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
-    final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+    final vendor =
+        vendorMap[invoice.vendorId] ?? VendorEntity(id: invoice.vendorId);
 
     if (invoice.id == selectionState.selectedId) {
       return true;
     }
 
-    if (!client.isActive &&
-        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
+    if (!vendor.isActive &&
+        !vendor.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
-    if (filterEntityType == EntityType.client && client.id != filterEntityId) {
+    if (filterEntityType == EntityType.vendor && vendor.id != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.user &&
         invoice.assignedUserId != filterEntityId) {
@@ -115,17 +117,17 @@ List<String> filteredPurchaseOrdersSelector(
     } else if (filterEntityType == EntityType.design &&
         invoice.designId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.group &&
-        client.groupId != filterEntityId) {
-      return false;
+//    } else if (filterEntityType == EntityType.group &&
+//        vendor.groupId != filterEntityId) {
+//      return false;
     } else if (filterEntityType == EntityType.project &&
         invoice.projectId != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.quote &&
         invoice.invoiceId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.vendor &&
-        invoice.vendorId != filterEntityId) {
+    } else if (filterEntityType == EntityType.client &&
+        invoice.clientId != filterEntityId) {
       return false;
     }
 
@@ -136,7 +138,7 @@ List<String> filteredPurchaseOrdersSelector(
       return false;
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.matchesNameOrEmail(invoiceListState.filter)) {
+        !vendor.matchesNameOrEmail(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&
@@ -161,6 +163,7 @@ List<String> filteredPurchaseOrdersSelector(
       sortField: invoiceListState.sortField,
       sortAscending: invoiceListState.sortAscending,
       clientMap: clientMap,
+      vendorMap: vendorMap,
       userMap: userMap,
     );
   });
