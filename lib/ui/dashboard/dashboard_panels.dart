@@ -499,7 +499,7 @@ class DashboardPanels extends StatelessWidget {
                   return Column(
                     children: [
                       if (!state.prefState.hideReviewApp &&
-                          state.company.daysActive > 60)
+                          state.company.daysActive > (isMobileOS() ? 60 : 120))
                         ReviewApp(),
                       if (state.userCompany.isAdmin &&
                           state.company.daysActive < 30 &&

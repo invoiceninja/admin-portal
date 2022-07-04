@@ -28,6 +28,11 @@ class _ReviewAppState extends State<ReviewApp> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
 
+    // TODO remove this code
+    if (!isMobileOS()) {
+      return SizedBox();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: FormCard(
