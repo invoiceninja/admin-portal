@@ -16,6 +16,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'are_you_enjoying_the_app': 'Are you enjoying the app?',
+      'yes_its_great': 'Yes, it\'s great!',
+      'not_so_much': 'Not so much',
+      'would_you_leave_a_review':
+          'Great to hear! Would you like to leave a review?',
+      'would_you_tell_us_more':
+          'Sorry to hear it! Would you like to tell us more?',
+      'sure_happy_to': 'Sure, happy to',
+      'no_not_now': 'No, not now',
       'add': 'Add',
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
@@ -70859,6 +70868,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get add =>
       _localizedValues[localeCode]['add'] ?? _localizedValues['en']['add'];
+
+  String get areYouEnjoyingTheApp =>
+      _localizedValues[localeCode]['are_you_enjoying_the_app'] ??
+      _localizedValues['en']['are_you_enjoying_the_app'];
+
+  String get wouldYouLeaveAReview =>
+      _localizedValues[localeCode]['would_you_leave_a_review'] ??
+      _localizedValues['en']['would_you_leave_a_review'];
+
+  String get wouldYouTellUsMore =>
+      _localizedValues[localeCode]['would_you_tell_us_more'] ??
+      _localizedValues['en']['would_you_tell_us_more'];
+
+  String get yesItsGreat =>
+      _localizedValues[localeCode]['yes_its_great'] ??
+      _localizedValues['en']['yes_its_great'];
+
+  String get notSoMuch =>
+      _localizedValues[localeCode]['not_so_much'] ??
+      _localizedValues['en']['not_so_much'];
+
+  String get sureHappyTo =>
+      _localizedValues[localeCode]['sure_happy_to'] ??
+      _localizedValues['en']['sure_happy_to'];
+
+  String get noNotNow =>
+      _localizedValues[localeCode]['no_not_now'] ??
+      _localizedValues['en']['no_not_now'];
 
 // STARTER: lang field - do not remove comment
 
