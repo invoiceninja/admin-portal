@@ -833,6 +833,7 @@ void createEntityByType({
               purchaseOrder: InvoiceEntity(
                 state: state,
                 entityType: EntityType.purchaseOrder,
+                vendor: vendor,
               ),
             ));
             break;
@@ -1048,7 +1049,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
               recurringExpense: entity,
