@@ -498,7 +498,9 @@ class DashboardPanels extends StatelessWidget {
                 case EntityType.dashboard:
                   return Column(
                     children: [
-                      if (!state.prefState.hideReviewApp) ReviewApp(),
+                      if (!state.prefState.hideReviewApp &&
+                          state.company.daysActive > 60)
+                        ReviewApp(),
                       if (state.userCompany.isAdmin &&
                           state.company.daysActive < 30 &&
                           !state.prefState.hideGatewayWarning &&

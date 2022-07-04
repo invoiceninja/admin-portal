@@ -27,11 +27,6 @@ class _ReviewAppState extends State<ReviewApp> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-
-    if (state.company.daysActive < 60) {
-      return SizedBox();
-    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
