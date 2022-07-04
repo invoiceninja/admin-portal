@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -1379,7 +1380,17 @@ void _showAbout(BuildContext context) async {
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
                       color: Colors.purple,
-                      onPressed: () => launch(getRateAppURL(context)),
+                      onPressed: () {
+                        if (kIsWeb || isLinux()) {
+                          launch(getRateAppURL(context));
+                        } else {
+                          final InAppReview inAppReview = InAppReview.instance;
+                          inAppReview.openStoreListing(
+                            appStoreId: kAppStoreId,
+                            microsoftStoreId: kMicrosoftAppStoreId,
+                          );
+                        }
+                      },
                     ),
                   SizedBox(height: 22),
                   Wrap(

@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -7,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class ReviewApp extends StatefulWidget {
   const ReviewApp({Key key}) : super(key: key);
@@ -17,6 +20,8 @@ class ReviewApp extends StatefulWidget {
 
 class _ReviewAppState extends State<ReviewApp> {
   bool _likesTheApp;
+
+  final InAppReview inAppReview = InAppReview.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +38,7 @@ class _ReviewAppState extends State<ReviewApp> {
             _likesTheApp == null
                 ? localization.areYouEnjoyingTheApp
                 : _likesTheApp == true
-                    ? localization.wouldYouLeaveAReview
+                    ? localization.wouldYouRateIt
                     : localization.wouldYouTellUsMore,
             style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
@@ -42,14 +47,23 @@ class _ReviewAppState extends State<ReviewApp> {
           Wrap(
             children: [
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_likesTheApp == null) {
                     setState(() {
                       _likesTheApp = true;
                     });
                   } else {
                     if (_likesTheApp == true) {
-                      launch(getRateAppURL(context));
+                      if (await inAppReview.isAvailable()) {
+                        inAppReview.requestReview();
+                      } else if (kIsWeb || isLinux()) {
+                        launch(getRateAppURL(context));
+                      } else {
+                        inAppReview.openStoreListing(
+                          appStoreId: kAppStoreId,
+                          microsoftStoreId: kMicrosoftAppStoreId,
+                        );
+                      }
                     } else {
                       showDialog<void>(
                         context: context,

@@ -19,8 +19,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
       'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
-      'would_you_leave_a_review':
-          'Great to hear! Would you like to leave a review?',
+      'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
           'Sorry to hear it! Would you like to tell us more?',
       'sure_happy_to': 'Sure, happy to',
@@ -70873,9 +70872,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['are_you_enjoying_the_app'] ??
       _localizedValues['en']['are_you_enjoying_the_app'];
 
-  String get wouldYouLeaveAReview =>
-      _localizedValues[localeCode]['would_you_leave_a_review'] ??
-      _localizedValues['en']['would_you_leave_a_review'];
+  String get wouldYouRateIt =>
+      _localizedValues[localeCode]['would_you_rate_it'] ??
+      _localizedValues['en']['would_you_rate_it'];
 
   String get wouldYouTellUsMore =>
       _localizedValues[localeCode]['would_you_tell_us_more'] ??
