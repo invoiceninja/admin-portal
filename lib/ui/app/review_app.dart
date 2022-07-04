@@ -42,13 +42,15 @@ class _ReviewAppState extends State<ReviewApp> {
                   }
                 },
                 child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints(minWidth: 100, minHeight: 32),
-                  child: Text(
-                    _likesTheApp == null
-                        ? localization.yesItsGreat
-                        : localization.sureHappyTo,
-                    textAlign: TextAlign.center,
+                  constraints: const BoxConstraints(minWidth: 100),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      _likesTheApp == null
+                          ? localization.yesItsGreat
+                          : localization.sureHappyTo,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
@@ -61,13 +63,15 @@ class _ReviewAppState extends State<ReviewApp> {
                   }
                 },
                 child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints(minWidth: 100, minHeight: 32),
-                  child: Text(
-                    _likesTheApp == null
-                        ? localization.notSoMuch
-                        : localization.noNotNow,
-                    textAlign: TextAlign.center,
+                  constraints: const BoxConstraints(minWidth: 100),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      _likesTheApp == null
+                          ? localization.notSoMuch
+                          : localization.noNotNow,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
