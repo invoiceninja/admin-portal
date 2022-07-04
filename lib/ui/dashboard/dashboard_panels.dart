@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -498,7 +499,8 @@ class DashboardPanels extends StatelessWidget {
                 case EntityType.dashboard:
                   return Column(
                     children: [
-                      if (!state.prefState.hideReviewApp) ReviewApp(),
+                      if (!kReleaseMode || !state.prefState.hideReviewApp)
+                        ReviewApp(),
                       if (state.userCompany.isAdmin &&
                           !state.prefState.hideGatewayWarning &&
                           state.companyGatewayState.list.isEmpty)

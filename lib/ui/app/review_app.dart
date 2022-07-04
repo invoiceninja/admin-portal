@@ -28,6 +28,7 @@ class _ReviewAppState extends State<ReviewApp> {
       child: FormCard(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: 12),
           Text(
             _likesTheApp == null
                 ? localization.areYouEnjoyingTheApp
