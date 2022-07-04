@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReviewApp extends StatefulWidget {
   const ReviewApp({Key key}) : super(key: key);
@@ -15,6 +21,7 @@ class _ReviewAppState extends State<ReviewApp> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),
@@ -39,6 +46,17 @@ class _ReviewAppState extends State<ReviewApp> {
                     setState(() {
                       _likesTheApp = true;
                     });
+                  } else {
+                    if (_likesTheApp == true) {
+                      launch(getRateAppURL(context));
+                    } else {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) => ContactUsDialog(),
+                      );
+                    }
+
+                    store.dispatch(DismissReviewAppPermanently());
                   }
                 },
                 child: ConstrainedBox(
@@ -55,11 +73,13 @@ class _ReviewAppState extends State<ReviewApp> {
                 ),
               ),
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_likesTheApp == null) {
                     setState(() {
                       _likesTheApp = false;
                     });
+                  } else {
+                    store.dispatch(DismissReviewAppPermanently());
                   }
                 },
                 child: ConstrainedBox(

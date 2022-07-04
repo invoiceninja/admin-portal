@@ -60,6 +60,7 @@ PrefState prefReducer(
           hideDesktopWarningReducer(state.hideDesktopWarning, action)
       ..hideGatewayWarning =
           hideGatewayWarningReducer(state.hideGatewayWarning, action)
+      ..hideReviewApp = hideReviewAppReducer(state.hideReviewApp, action)
       ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
       ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
       ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
@@ -238,6 +239,12 @@ Reducer<bool> hideDesktopWarningReducer = combineReducers([
 
 Reducer<bool> hideGatewayWarningReducer = combineReducers([
   TypedReducer<bool, DismissGatewayWarningPermanently>((filter, action) {
+    return true;
+  }),
+]);
+
+Reducer<bool> hideReviewAppReducer = combineReducers([
+  TypedReducer<bool, DismissReviewAppPermanently>((filter, action) {
     return true;
   }),
 ]);
