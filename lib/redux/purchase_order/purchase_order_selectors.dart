@@ -174,6 +174,27 @@ List<String> filteredPurchaseOrdersSelector(
   return list;
 }
 
+var memoizedPurchaseOrderStatsForVendor = memo2(
+    (String vendorId, BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
+        purchaseOrderStatsForVendor(vendorId, purchaseOrderMap));
+
+EntityStats purchaseOrderStatsForVendor(
+    String vendorId, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
+    if (purchaseOrder.vendorId == vendorId) {
+      if (purchaseOrder.isActive) {
+        countActive++;
+      } else if (purchaseOrder.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasPurchaseOrderChanges(InvoiceEntity purchaseOrder,
         BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
     purchaseOrder.isNew

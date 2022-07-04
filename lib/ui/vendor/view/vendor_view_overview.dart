@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -101,6 +102,16 @@ class VendorOverview extends StatelessWidget {
             isFilter: isFilter,
           ),
         FieldGrid(fields),
+        if (company.isModuleEnabled(EntityType.purchaseOrder))
+          EntitiesListTile(
+            entity: vendor,
+            title: localization.purchaseOrders,
+            entityType: EntityType.purchaseOrder,
+            isFilter: isFilter,
+            subtitle: memoizedPurchaseOrderStatsForVendor(
+                    vendor.id, state.purchaseOrderState.map)
+                .present(localization.active, localization.archived),
+          ),
         if (company.isModuleEnabled(EntityType.expense))
           EntitiesListTile(
             entity: vendor,

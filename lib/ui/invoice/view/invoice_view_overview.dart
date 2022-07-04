@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
-import 'package:flutter_redux/flutter_redux.dart';
-
 // Project imports:
 import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -12,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
@@ -41,11 +37,12 @@ class InvoiceOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
+    final vendor = state.vendorState.get(invoice.vendorId);
     final company = viewModel.company;
 
-    final state = StoreProvider.of<AppState>(context).state;
     final creditMap = <PaymentableEntity, PaymentEntity>{};
     final paymentMap = <PaymentableEntity, PaymentEntity>{};
     final payments = invoice.isInvoice
@@ -230,13 +227,23 @@ class InvoiceOverview extends StatelessWidget {
           value: invoice.customValue4);
     }
 
-    widgets.add(
-      EntityListTile(
-        isFilter: isFilter,
-        entity: client,
-        subtitle: client.primaryContact.email,
-      ),
-    );
+    if (invoice.isPurchaseOrder) {
+      widgets.add(
+        EntityListTile(
+          isFilter: isFilter,
+          entity: vendor,
+          subtitle: vendor.primaryContact.email,
+        ),
+      );
+    } else {
+      widgets.add(
+        EntityListTile(
+          isFilter: isFilter,
+          entity: client,
+          subtitle: client.primaryContact.email,
+        ),
+      );
+    }
 
     if ((invoice.projectId ?? '').isNotEmpty) {
       final project = state.projectState.get(invoice.projectId);
