@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
           'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
@@ -70850,6 +70851,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableFlexibleSearchHelp =>
       _localizedValues[localeCode]['enable_flexible_search_help'] ??
       _localizedValues['en']['enable_flexible_search_help'];
+
+  String get lastSentTemplate =>
+      _localizedValues[localeCode]['last_sent_template'] ??
+      _localizedValues['en']['last_sent_template'];
 
 // STARTER: lang field - do not remove comment
 

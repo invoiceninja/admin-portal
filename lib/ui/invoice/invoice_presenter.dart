@@ -51,6 +51,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.isViewed,
       InvoiceFields.autoBillEnabled,
       InvoiceFields.lastSentDate,
+      InvoiceFields.lastSentTemplate,
       InvoiceFields.nextSendDate,
       InvoiceFields.project,
       InvoiceFields.vendor,
@@ -187,6 +188,21 @@ class InvoicePresenter extends EntityPresenter {
             state.recurringInvoiceState.get(invoice.recurringId);
         return LinkTextRelatedEntity(
             entity: recurringInvoice, relation: invoice);
+      case InvoiceFields.lastSentTemplate:
+        if (invoice.reminderLastSent.isNotEmpty &&
+            invoice.reminderLastSent != invoice.reminder3Sent) {
+          return Text(localization.endlessReminder);
+        } else if ((invoice.reminder3Sent ?? '').isNotEmpty) {
+          return Text(localization.thirdReminder);
+        } else if ((invoice.reminder2Sent ?? '').isNotEmpty) {
+          return Text(localization.secondReminder);
+        } else if ((invoice.reminder1Sent ?? '').isNotEmpty) {
+          return Text(localization.firstReminder);
+        } else if ((invoice.lastSentDate ?? '').isNotEmpty) {
+          return Text(localization.initialEmail);
+        } else {
+          return Text('');
+        }
     }
 
     return super.getField(field: field, context: context);
