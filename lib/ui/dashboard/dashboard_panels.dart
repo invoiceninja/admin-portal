@@ -504,30 +504,40 @@ class DashboardPanels extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: FormCard(
-                        child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(localization.addGatewayHelpMessage),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              createEntityByType(
+                        child: InkWell(
+                      onTap: isMobile(context)
+                          ? () => createEntityByType(
                                 context: context,
                                 entityType: EntityType.companyGateway,
-                              );
-                            },
-                            child: Text(localization.addGateway)),
-                        IconButton(
-                            onPressed: () {
-                              final store = StoreProvider.of<AppState>(context);
-                              store
-                                  .dispatch(DismissGatewayWarningPermanently());
-                            },
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ))
-                      ],
+                              )
+                          : null,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(localization.addGatewayHelpMessage),
+                          ),
+                          if (isDesktop(context))
+                            TextButton(
+                                onPressed: () {
+                                  createEntityByType(
+                                    context: context,
+                                    entityType: EntityType.companyGateway,
+                                  );
+                                },
+                                child: Text(localization.addGateway)),
+                          IconButton(
+                              onPressed: () {
+                                final store =
+                                    StoreProvider.of<AppState>(context);
+                                store.dispatch(
+                                    DismissGatewayWarningPermanently());
+                              },
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.grey,
+                              ))
+                        ],
+                      ),
                     )),
                   );
                 case EntityType.invoice:

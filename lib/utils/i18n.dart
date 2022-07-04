@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'add': 'Add',
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
@@ -70855,6 +70856,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get lastSentTemplate =>
       _localizedValues[localeCode]['last_sent_template'] ??
       _localizedValues['en']['last_sent_template'];
+
+  String get add =>
+      _localizedValues[localeCode]['add'] ?? _localizedValues['en']['add'];
 
 // STARTER: lang field - do not remove comment
 
