@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -121,7 +122,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       child: CopyToClipboard(
                         value: client.website,
                         child: IconText(
-                            icon: MdiIcons.earth, text: client.website),
+                            icon: MdiIcons.earth,
+                            text: trimUrl(client.website)),
                       ),
                     ),
                   SizedBox(height: 4),
