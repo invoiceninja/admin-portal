@@ -92,6 +92,8 @@ class DismissNativeWarningPermanently implements PersistUI, PersistPrefs {}
 
 class DismissGatewayWarningPermanently implements PersistUI, PersistPrefs {}
 
+class DismissReviewAppPermanently implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
 

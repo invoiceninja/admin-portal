@@ -25,16 +25,18 @@ const String kSourceCodeFrontend =
     'https://github.com/invoiceninja/admin-portal';
 const String kSourceCodeFrontendSDK = 'https://pub.dev/packages/invoiceninja';
 
+const String kAppStoreId = 'com.invoiceninja.app';
+const String kMicrosoftAppStoreId = '9n3f2bbcfdr6';
 const String kAppleStoreUrl =
     'https://apps.apple.com/us/app/invoice-ninja-v5/id1503970375';
 const String kGoogleStoreUrl =
-    'https://play.google.com/store/apps/details?id=com.invoiceninja.app';
+    'https://play.google.com/store/apps/details?id=$kAppStoreId';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app';
 const String kMacOSUrl = 'https://apps.apple.com/app/id1503970375';
 const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
-    'https://www.microsoft.com/en-us/p/invoice-ninja/9n3f2bbcfdr6';
+    'https://www.microsoft.com/en-us/p/invoice-ninja/$kMicrosoftAppStoreId';
 
 const String kSlackUrl = 'http://slack.invoiceninja.com';
 const String kGitHubUrl = 'https://github.com/invoiceninja';

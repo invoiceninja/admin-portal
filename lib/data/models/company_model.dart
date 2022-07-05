@@ -622,6 +622,9 @@ abstract class CompanyEntity extends Object
     return true;
   }
 
+  int get daysActive =>
+      DateTime.now().difference(convertTimestampToDate(createdAt)).inDays;
+
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
   bool get supportsQrIban => settings.countryId == kCountrySwitzerland;

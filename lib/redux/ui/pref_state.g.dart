@@ -197,6 +197,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideGatewayWarning',
       serializers.serialize(object.hideGatewayWarning,
           specifiedType: const FullType(bool)),
+      'hideReviewApp',
+      serializers.serialize(object.hideReviewApp,
+          specifiedType: const FullType(bool)),
       'editAfterSaving',
       serializers.serialize(object.editAfterSaving,
           specifiedType: const FullType(bool)),
@@ -340,6 +343,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'hideGatewayWarning':
           result.hideGatewayWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'hideReviewApp':
+          result.hideReviewApp = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'editAfterSaving':
@@ -649,6 +656,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideGatewayWarning;
   @override
+  final bool hideReviewApp;
+  @override
   final bool editAfterSaving;
   @override
   final double textScaleFactor;
@@ -688,6 +697,7 @@ class _$PrefState extends PrefState {
       this.colorTheme,
       this.hideDesktopWarning,
       this.hideGatewayWarning,
+      this.hideReviewApp,
       this.editAfterSaving,
       this.textScaleFactor,
       this.sortFields,
@@ -746,6 +756,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideGatewayWarning, 'PrefState', 'hideGatewayWarning');
     BuiltValueNullFieldError.checkNotNull(
+        hideReviewApp, 'PrefState', 'hideReviewApp');
+    BuiltValueNullFieldError.checkNotNull(
         editAfterSaving, 'PrefState', 'editAfterSaving');
     BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, 'PrefState', 'textScaleFactor');
@@ -793,6 +805,7 @@ class _$PrefState extends PrefState {
         colorTheme == other.colorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
         hideGatewayWarning == other.hideGatewayWarning &&
+        hideReviewApp == other.hideReviewApp &&
         editAfterSaving == other.editAfterSaving &&
         textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
@@ -820,22 +833,22 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), useSidebarViewer.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode), enableTouchEvents.hashCode),
-                                                                                enableFlexibleSearch.hashCode),
-                                                                            isHistoryVisible.hashCode),
-                                                                        enableDarkMode.hashCode),
-                                                                    isFilterVisible.hashCode),
-                                                                persistData.hashCode),
-                                                            persistUI.hashCode),
-                                                        longPressSelectionIsDefault.hashCode),
-                                                    requireAuthentication.hashCode),
-                                                tapSelectedToEdit.hashCode),
-                                            enableJSPDF.hashCode),
-                                        rowsPerPage.hashCode),
-                                    enableTooltips.hashCode),
-                                colorTheme.hashCode),
-                            hideDesktopWarning.hashCode),
-                        hideGatewayWarning.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), useSidebarViewer.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode), enableTouchEvents.hashCode), enableFlexibleSearch.hashCode),
+                                                                                isHistoryVisible.hashCode),
+                                                                            enableDarkMode.hashCode),
+                                                                        isFilterVisible.hashCode),
+                                                                    persistData.hashCode),
+                                                                persistUI.hashCode),
+                                                            longPressSelectionIsDefault.hashCode),
+                                                        requireAuthentication.hashCode),
+                                                    tapSelectedToEdit.hashCode),
+                                                enableJSPDF.hashCode),
+                                            rowsPerPage.hashCode),
+                                        enableTooltips.hashCode),
+                                    colorTheme.hashCode),
+                                hideDesktopWarning.hashCode),
+                            hideGatewayWarning.hashCode),
+                        hideReviewApp.hashCode),
                     editAfterSaving.hashCode),
                 textScaleFactor.hashCode),
             sortFields.hashCode),
@@ -872,6 +885,7 @@ class _$PrefState extends PrefState {
           ..add('colorTheme', colorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
           ..add('hideGatewayWarning', hideGatewayWarning)
+          ..add('hideReviewApp', hideReviewApp)
           ..add('editAfterSaving', editAfterSaving)
           ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
@@ -1014,6 +1028,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideGatewayWarning(bool hideGatewayWarning) =>
       _$this._hideGatewayWarning = hideGatewayWarning;
 
+  bool _hideReviewApp;
+  bool get hideReviewApp => _$this._hideReviewApp;
+  set hideReviewApp(bool hideReviewApp) =>
+      _$this._hideReviewApp = hideReviewApp;
+
   bool _editAfterSaving;
   bool get editAfterSaving => _$this._editAfterSaving;
   set editAfterSaving(bool editAfterSaving) =>
@@ -1070,6 +1089,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _colorTheme = $v.colorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
       _hideGatewayWarning = $v.hideGatewayWarning;
+      _hideReviewApp = $v.hideReviewApp;
       _editAfterSaving = $v.editAfterSaving;
       _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
@@ -1131,6 +1151,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, 'PrefState', 'colorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, 'PrefState', 'hideDesktopWarning'),
               hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, 'PrefState', 'hideGatewayWarning'),
+              hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, 'PrefState', 'hideReviewApp'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, 'PrefState', 'editAfterSaving'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, 'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),

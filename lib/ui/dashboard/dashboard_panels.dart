@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
+import 'package:invoiceninja_flutter/ui/app/review_app.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -495,40 +496,56 @@ class DashboardPanels extends StatelessWidget {
 
               switch (entityTypes[index]) {
                 case EntityType.dashboard:
-                  if (!state.userCompany.isAdmin ||
-                      state.prefState.hideGatewayWarning ||
-                      state.companyGatewayState.list.isNotEmpty) {
-                    return SizedBox();
-                  }
-
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: FormCard(
-                        child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(localization.addGatewayHelpMessage),
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              createEntityByType(
-                                context: context,
-                                entityType: EntityType.companyGateway,
-                              );
-                            },
-                            child: Text(localization.addGateway)),
-                        IconButton(
-                            onPressed: () {
-                              final store = StoreProvider.of<AppState>(context);
-                              store
-                                  .dispatch(DismissGatewayWarningPermanently());
-                            },
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ))
-                      ],
-                    )),
+                  return Column(
+                    children: [
+                      if (!state.prefState.hideReviewApp &&
+                          state.company.daysActive > (isMobileOS() ? 60 : 120))
+                        ReviewApp(),
+                      if (state.userCompany.isAdmin &&
+                          state.company.daysActive < 30 &&
+                          !state.prefState.hideGatewayWarning &&
+                          state.companyGatewayState.list.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: FormCard(
+                              child: InkWell(
+                            onTap: isMobile(context)
+                                ? () => createEntityByType(
+                                      context: context,
+                                      entityType: EntityType.companyGateway,
+                                    )
+                                : null,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child:
+                                      Text(localization.addGatewayHelpMessage),
+                                ),
+                                if (isDesktop(context))
+                                  TextButton(
+                                      onPressed: () {
+                                        createEntityByType(
+                                          context: context,
+                                          entityType: EntityType.companyGateway,
+                                        );
+                                      },
+                                      child: Text(localization.addGateway)),
+                                IconButton(
+                                    onPressed: () {
+                                      final store =
+                                          StoreProvider.of<AppState>(context);
+                                      store.dispatch(
+                                          DismissGatewayWarningPermanently());
+                                    },
+                                    icon: Icon(
+                                      Icons.clear,
+                                      color: Colors.grey,
+                                    ))
+                              ],
+                            ),
+                          )),
+                        )
+                    ],
                   );
                 case EntityType.invoice:
                   return _InvoiceChart(

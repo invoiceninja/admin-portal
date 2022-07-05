@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -41,7 +42,6 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -1166,10 +1166,6 @@ void _showAbout(BuildContext context) async {
     height: 40.0,
   );
 
-  final daysActive = DateTime.now()
-      .difference(convertTimestampToDate(state.company.createdAt))
-      .inDays;
-
   showDialog<Null>(
       context: context,
       builder: (BuildContext context) {
@@ -1374,12 +1370,22 @@ void _showAbout(BuildContext context) async {
                         onPressed: () => _showUpdate(context),
                       ),
                   ],
-                  if (daysActive > 30)
+                  if (state.company.daysActive > 30)
                     AppButton(
                       label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
                       color: Colors.purple,
-                      onPressed: () => launch(getRateAppURL(context)),
+                      onPressed: () {
+                        if (kIsWeb || isLinux()) {
+                          launch(getRateAppURL(context));
+                        } else {
+                          final InAppReview inAppReview = InAppReview.instance;
+                          inAppReview.openStoreListing(
+                            appStoreId: kAppStoreId,
+                            microsoftStoreId: kMicrosoftAppStoreId,
+                          );
+                        }
+                      },
                     ),
                   SizedBox(height: 22),
                   Wrap(
