@@ -299,15 +299,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             padding: const EdgeInsets.only(bottom: 10),
             child: IconMessage(
               localization.customEmailsDisabledHelp,
-              trailing: TextButton(
-                child: Text(
-                  localization.upgrade.toUpperCase(),
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () => launch(state.userCompany.ninjaPortalUrl),
-              ),
+              trailing: isApple()
+                  ? null
+                  : TextButton(
+                      child: Text(
+                        localization.upgrade.toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                    ),
             ),
           ),
         ColoredBox(
