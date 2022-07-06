@@ -86,6 +86,7 @@ jobs:
       - name: Build Selfhosted App
         run: |
           cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
+          cp lib/ui/app/app_review.dart.foss lib/ui/app/app_review.dart
           cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
           cp pubspec.foss.yaml pubspec.yaml 
           flutter pub get
