@@ -584,8 +584,8 @@ void handlePurchaseOrderAction(BuildContext context,
           snackBarCompleter<Null>(
               context,
               purchaseOrders.length == 1
-                  ? localization.markedPurchaseOrderAsSent
-                  : localization.markedPurchaseOrdersAsSent),
+                  ? localization.addedPurchaseOrderToInventory
+                  : localization.addedPurchaseOrdersToInventory),
           purchaseOrderIds));
       break;
     case EntityAction.markSent:

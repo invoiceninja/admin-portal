@@ -37,6 +37,8 @@ List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
   final emailPurchaseOrder = _emailPurchaseOrder(repository);
   final bulkEmailPurchaseOrders = _bulkEmailPurchaseOrders(repository);
   final markSentPurchaseOrder = _markSentPurchaseOrder(repository);
+  final addPurchaseOrdersToInventory =
+      _addPurchaseOrdersToInventory(repository);
   final acceptPurchaseOrders = _acceptPurchaseOrders(repository);
   final cancelPurchaseOrders = _cancelPurchaseOrders(repository);
   final downloadPurchaseOrders = _downloadPurchaseOrders(repository);
@@ -62,6 +64,8 @@ List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
         bulkEmailPurchaseOrders),
     TypedMiddleware<AppState, MarkPurchaseOrdersSentRequest>(
         markSentPurchaseOrder),
+    TypedMiddleware<AppState, AddPurchaseOrdersToInventoryRequest>(
+        addPurchaseOrdersToInventory),
     TypedMiddleware<AppState, AcceptPurchaseOrdersRequest>(
         acceptPurchaseOrders),
     TypedMiddleware<AppState, CancelPurchaseOrdersRequest>(
@@ -271,6 +275,30 @@ Middleware<AppState> _markSentPurchaseOrder(
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkPurchaseOrderSentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _addPurchaseOrdersToInventory(
+    PurchaseOrderRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as AddPurchaseOrdersToInventoryRequest;
+    repository
+        .bulkAction(store.state.credentials, action.purchaseOrderIds,
+            EntityAction.addToInventory)
+        .then((purchaseOrders) {
+      store.dispatch(AddPurchaseOrdersToInventorySuccess(purchaseOrders));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(AddPurchaseOrdersToInventoryFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
