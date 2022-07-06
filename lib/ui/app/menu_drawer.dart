@@ -5,13 +5,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:in_app_review/in_app_review.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/utils/review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -1379,11 +1379,7 @@ void _showAbout(BuildContext context) async {
                         if (kIsWeb || isLinux()) {
                           launch(getRateAppURL(context));
                         } else {
-                          final InAppReview inAppReview = InAppReview.instance;
-                          inAppReview.openStoreListing(
-                            appStoreId: kAppStoreId,
-                            microsoftStoreId: kMicrosoftAppStoreId,
-                          );
+                          AppReview.openStoreListing();
                         }
                       },
                     ),

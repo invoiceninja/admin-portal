@@ -412,10 +412,12 @@ class ReportsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     HelpText(localization.upgradeToViewReports),
-                    AppButton(
-                      label: localization.upgrade.toUpperCase(),
-                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
-                    )
+                    if (!isApple())
+                      AppButton(
+                        label: localization.upgrade.toUpperCase(),
+                        onPressed: () =>
+                            launch(state.userCompany.ninjaPortalUrl),
+                      )
                   ],
                 ),
               )

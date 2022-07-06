@@ -190,3 +190,13 @@ int secondToLastIndexOf(String string, String pattern) {
 
   return string.lastIndexOf(pattern);
 }
+
+String trimUrl(String url) {
+  url = url.replaceFirst('http://', '').replaceFirst('https://', '');
+
+  if (url.startsWith('www.')) {
+    url = url.replaceFirst('www.', '');
+  }
+
+  return url;
+}

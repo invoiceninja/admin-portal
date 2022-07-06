@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -113,8 +114,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: CopyToClipboard(
                       value: vendor.website,
-                      child:
-                          IconText(icon: MdiIcons.earth, text: vendor.website),
+                      child: IconText(
+                          icon: MdiIcons.earth, text: trimUrl(vendor.website)),
                     ),
                   ),
                 SizedBox(height: 4),

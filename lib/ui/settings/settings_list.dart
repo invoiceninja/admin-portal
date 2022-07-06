@@ -454,6 +454,8 @@ class SettingsSearch extends StatelessWidget {
         [
           'long_press_multiselect',
           'biometric_authentication',
+          'enable_flexible_search',
+          'enable_tooltips',
           'show_pdf_preview',
           'refresh_data',
         ],
