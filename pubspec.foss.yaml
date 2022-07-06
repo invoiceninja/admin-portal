@@ -21,6 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # google_sign_in: ^5.0.7
+  # in_app_review: ^2.0.4
   flutter_redux: ^0.8.2
   redux_logging: ^0.5.0
   http: ^0.13.3
@@ -71,7 +72,6 @@ dependencies:
   printing: ^5.8.0
   image_cropper: ^2.0.2
   msal_js: ^2.14.0
-  in_app_review: ^2.0.4
   # bitsdojo_window: ^0.1.2
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1

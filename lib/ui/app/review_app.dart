@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/review.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:in_app_review/in_app_review.dart';
 
 class ReviewApp extends StatefulWidget {
   const ReviewApp({Key key}) : super(key: key);
@@ -20,8 +19,6 @@ class ReviewApp extends StatefulWidget {
 
 class _ReviewAppState extends State<ReviewApp> {
   bool _likesTheApp;
-
-  final InAppReview inAppReview = InAppReview.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -59,15 +56,12 @@ class _ReviewAppState extends State<ReviewApp> {
                     });
                   } else {
                     if (_likesTheApp == true) {
-                      if (await inAppReview.isAvailable()) {
-                        inAppReview.requestReview();
+                      if (await AppReview.isAvailable()) {
+                        AppReview.requestReview();
                       } else if (kIsWeb || isLinux()) {
                         launch(getRateAppURL(context));
                       } else {
-                        inAppReview.openStoreListing(
-                          appStoreId: kAppStoreId,
-                          microsoftStoreId: kMicrosoftAppStoreId,
-                        );
+                        AppReview.openStoreListing();
                       }
                     } else {
                       showDialog<void>(
