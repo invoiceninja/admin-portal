@@ -293,6 +293,7 @@ Middleware<AppState> _addPurchaseOrdersToInventory(
             EntityAction.addToInventory)
         .then((purchaseOrders) {
       store.dispatch(AddPurchaseOrdersToInventorySuccess(purchaseOrders));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
