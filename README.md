@@ -37,6 +37,7 @@ Note: if you don't have an Invoice Ninja backend setup you can test the app with
 ```
 cp android/build.gradle.foss android/build.gradle
 cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
+cp lib/utils/review.dart.foss lib/utils/review.dart
 cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
 cp android/app/src/main/AndroidManifest.foss.xml android/app/src/main/AndroidManifest.xml
 cp pubspec.foss.yaml pubspec.yaml 
