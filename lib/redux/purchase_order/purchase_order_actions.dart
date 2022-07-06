@@ -588,6 +588,29 @@ void handlePurchaseOrderAction(BuildContext context,
                   : localization.addedPurchaseOrdersToInventory),
           purchaseOrderIds));
       break;
+    case EntityAction.convertToExpense:
+      final vendor = state.vendorState.get(purchaseOrder.vendorId);
+      final client = state.clientState.get(purchaseOrder.clientId);
+      final project = state.projectState.get(purchaseOrder.projectId);
+      editEntity(
+          entity: ExpenseEntity(
+        state: state,
+        vendor: vendor,
+        client: client,
+        project: project,
+      ).rebuild((b) => b
+            ..purchaseOrderId = purchaseOrder.id
+            ..amount = purchaseOrder.usesInclusiveTaxes
+                ? purchaseOrder.amount
+                : purchaseOrder.netAmount
+            ..taxRate1 = purchaseOrder.taxRate1
+            ..taxName1 = purchaseOrder.taxName1
+            ..taxRate2 = purchaseOrder.taxRate2
+            ..taxName2 = purchaseOrder.taxName2
+            ..taxRate3 = purchaseOrder.taxRate3
+            ..taxName3 = purchaseOrder.taxName3
+            ..usesInclusiveTaxes = purchaseOrder.usesInclusiveTaxes));
+      break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
           snackBarCompleter<Null>(
