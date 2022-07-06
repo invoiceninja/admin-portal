@@ -1007,8 +1007,13 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (userCompany.company.trackInventory) {
-          actions.add(EntityAction.addToInventory);
+        if (isPurchaseOrder) {
+          if (userCompany.canCreate(EntityType.expense)) {
+            actions.add(EntityAction.convertToExpense);
+          }
+          if (userCompany.company.trackInventory) {
+            actions.add(EntityAction.addToInventory);
+          }
         }
 
         if (userCompany.canCreate(EntityType.payment)) {
