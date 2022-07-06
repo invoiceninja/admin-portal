@@ -16,6 +16,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'added_purchase_order_to_inventory':
+          'Successfully added purchase order to inventory',
+      'added_purchase_orders_to_inventory':
+          'Successfully added purchase orders to inventory',
       'client_document_upload': 'Client Document Upload',
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
@@ -70910,6 +70914,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientDocumentUpload =>
       _localizedValues[localeCode]['client_document_upload'] ??
       _localizedValues['en']['client_document_upload'];
+
+  String get addedPurchaseOrderToInventory =>
+      _localizedValues[localeCode]['added_purchase_order_to_inventory'] ??
+      _localizedValues['en']['added_purchase_order_to_inventory'];
+
+  String get addedPurchaseOrdersToInventory =>
+      _localizedValues[localeCode]['added_purchase_orders_to_inventory'] ??
+      _localizedValues['en']['added_purchase_orders_to_inventory'];
 
 // STARTER: lang field - do not remove comment
 

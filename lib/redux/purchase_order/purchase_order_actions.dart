@@ -377,6 +377,25 @@ class MarkPurchaseOrderSentFailure implements StopSaving {
   final Object error;
 }
 
+class AddPurchaseOrdersToInventoryRequest implements StartSaving {
+  AddPurchaseOrdersToInventoryRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class AddPurchaseOrdersToInventorySuccess implements StopSaving, PersistData {
+  AddPurchaseOrdersToInventorySuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class AddPurchaseOrdersToInventoryFailure implements StopSaving {
+  AddPurchaseOrdersToInventoryFailure(this.error);
+
+  final Object error;
+}
+
 class ApprovePurchaseOrders implements StartSaving {
   ApprovePurchaseOrders(this.completer, this.purchaseOrderIds);
 
@@ -558,6 +577,15 @@ void handlePurchaseOrderAction(BuildContext context,
     case EntityAction.delete:
       store.dispatch(DeletePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.deletedPurchaseOrder),
+          purchaseOrderIds));
+      break;
+    case EntityAction.addToInventory:
+      store.dispatch(AddPurchaseOrdersToInventoryRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.markedPurchaseOrderAsSent
+                  : localization.markedPurchaseOrdersAsSent),
           purchaseOrderIds));
       break;
     case EntityAction.markSent:

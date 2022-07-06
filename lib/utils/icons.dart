@@ -99,6 +99,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.cancel_outlined;
     case EntityAction.save:
       return Icons.cloud_upload;
+    case EntityAction.addToInventory:
+      return Icons.inventory;
     default:
       return null;
   }
