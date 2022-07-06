@@ -1,5 +1,6 @@
 import 'package:in_app_review/in_app_review.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AppReview {
   static final InAppReview inAppReview = InAppReview.instance;
@@ -9,5 +10,5 @@ class AppReview {
   static void requestReview() => inAppReview.requestReview();
 
   static void openStoreListing() => inAppReview.openStoreListing(
-      appStoreId: kAppStoreId, microsoftStoreId: kMicrosoftAppStoreId);
+      appStoreId: isAndroid() ? kPlayStoreAppId : kAppStoreAppId, microsoftStoreId: kMicrosoftAppStoreId);
 }
