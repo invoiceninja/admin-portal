@@ -617,6 +617,10 @@ void handlePurchaseOrderAction(BuildContext context,
                   : localization.convertedToExpenses),
           purchaseOrderIds));
       break;
+    case EntityAction.viewExpense:
+      viewEntityById(
+          entityId: purchaseOrder.expenseId, entityType: EntityType.expense);
+      break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
           snackBarCompleter<Null>(
