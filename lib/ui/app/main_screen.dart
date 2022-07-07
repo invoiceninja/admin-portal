@@ -745,11 +745,8 @@ class EntityScreens extends StatelessWidget {
           Expanded(
             flex: isFullScreen ? (listFlex + previewFlex) : previewFlex,
             child: AppBorder(
-              child: AppBorder(
-                child: child,
-                isTop: isFullScreen,
-              ),
               isLeft: true,
+              child: child,
             ),
           ),
         if (prefState.showHistory)

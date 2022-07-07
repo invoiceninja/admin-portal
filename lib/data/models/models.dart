@@ -105,11 +105,14 @@ class EntityAction extends EnumClass {
   static const EntityAction resendInvite = _$resendInvite;
   static const EntityAction disconnect = _$disconnect;
   static const EntityAction viewInvoice = _$viewInvoice;
+  static const EntityAction viewExpense = _$viewExpense;
   static const EntityAction changeStatus = _$changeStatus;
   static const EntityAction addToInvoice = _$addToInvoice;
   static const EntityAction cancel = _$cancel;
   static const EntityAction save = _$save;
   static const EntityAction accept = _$accept;
+  static const EntityAction addToInventory = _$addToInventory;
+  static const EntityAction convertToExpense = _$convertToExpense;
 
   @override
   String toString() {

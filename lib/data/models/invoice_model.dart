@@ -163,6 +163,7 @@ abstract class InvoiceEntity extends Object
       taxAmount: 0,
       poNumber: '',
       projectId: '',
+      expenseId: '',
       vendorId: vendor?.id ?? '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
@@ -294,6 +295,7 @@ abstract class InvoiceEntity extends Object
         ..remainingCycles = -1
         ..invoiceId = ''
         ..projectId = ''
+        ..expenseId = ''
         ..subscriptionId = ''
         ..number = ''
         ..date = convertDateTimeToSqlDate()
@@ -402,6 +404,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
+
+  @BuiltValueField(wireName: 'expense_id')
+  String get expenseId;
 
   @override
   @BuiltValueField(wireName: 'vendor_id')
@@ -1007,6 +1012,19 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
+        if (isPurchaseOrder) {
+          if (expenseId.isEmpty) {
+            if (userCompany.canCreate(EntityType.expense)) {
+              actions.add(EntityAction.convertToExpense);
+            }
+          } else {
+            actions.add(EntityAction.viewExpense);
+          }
+          if (statusId == kPurchaseOrderStatusAccepted) {
+            actions.add(EntityAction.addToInventory);
+          }
+        }
+
         if (userCompany.canCreate(EntityType.payment)) {
           if (isPayable && isInvoice) {
             actions.addAll([EntityAction.markPaid, EntityAction.newPayment]);
@@ -1408,6 +1426,7 @@ abstract class InvoiceEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..paidToDate = 0
     ..projectId = ''
+    ..expenseId = ''
     ..vendorId = ''
     ..autoBillEnabled = false
     ..subscriptionId = '';

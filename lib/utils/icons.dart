@@ -50,6 +50,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.restore:
       return Icons.restore;
     case EntityAction.convertToInvoice:
+    case EntityAction.convertToExpense:
       return Icons.content_copy;
     case EntityAction.approve:
     case EntityAction.accept:
@@ -99,6 +100,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.cancel_outlined;
     case EntityAction.save:
       return Icons.cloud_upload;
+    case EntityAction.addToInventory:
+      return Icons.inventory;
     default:
       return null;
   }

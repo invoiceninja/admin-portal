@@ -625,8 +625,11 @@ class _DrawerTileState extends State<DrawerTile> {
       route = widget.entityType.name;
     }
 
+    // Workaround to show clients/vendors as selected when
+    // viewing their sub-entities
     final isSelected = uiState.filterEntityType != null &&
             prefState.isViewerFullScreen(uiState.filterEntityType) &&
+            !uiState.isEditing &&
             (prefState.isPreviewVisible || uiState.isList)
         ? widget.entityType == uiState.filterEntityType
         : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');

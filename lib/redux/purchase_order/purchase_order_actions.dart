@@ -377,6 +377,45 @@ class MarkPurchaseOrderSentFailure implements StopSaving {
   final Object error;
 }
 
+class ConvertPurchaseOrdersToExpensesRequest implements StartSaving {
+  ConvertPurchaseOrdersToExpensesRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class ConvertPurchaseOrdersToExpensesSuccess
+    implements StopSaving, PersistData {
+  ConvertPurchaseOrdersToExpensesSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class ConvertPurchaseOrdersToExpensesFailure implements StopSaving {
+  ConvertPurchaseOrdersToExpensesFailure(this.error);
+
+  final Object error;
+}
+
+class AddPurchaseOrdersToInventoryRequest implements StartSaving {
+  AddPurchaseOrdersToInventoryRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class AddPurchaseOrdersToInventorySuccess implements StopSaving, PersistData {
+  AddPurchaseOrdersToInventorySuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class AddPurchaseOrdersToInventoryFailure implements StopSaving {
+  AddPurchaseOrdersToInventoryFailure(this.error);
+
+  final Object error;
+}
+
 class ApprovePurchaseOrders implements StartSaving {
   ApprovePurchaseOrders(this.completer, this.purchaseOrderIds);
 
@@ -559,6 +598,28 @@ void handlePurchaseOrderAction(BuildContext context,
       store.dispatch(DeletePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.deletedPurchaseOrder),
           purchaseOrderIds));
+      break;
+    case EntityAction.addToInventory:
+      store.dispatch(AddPurchaseOrdersToInventoryRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.addedPurchaseOrderToInventory
+                  : localization.addedPurchaseOrdersToInventory),
+          purchaseOrderIds));
+      break;
+    case EntityAction.convertToExpense:
+      store.dispatch(ConvertPurchaseOrdersToExpensesRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.convertedToExpense
+                  : localization.convertedToExpenses),
+          purchaseOrderIds));
+      break;
+    case EntityAction.viewExpense:
+      viewEntityById(
+          entityId: purchaseOrder.expenseId, entityType: EntityType.expense);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(

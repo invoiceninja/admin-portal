@@ -353,6 +353,10 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
   TypedReducer<PurchaseOrderState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<PurchaseOrderState, MarkPurchaseOrderSentSuccess>(
       _markSentPurchaseOrderSuccess),
+  TypedReducer<PurchaseOrderState, ConvertPurchaseOrdersToExpensesSuccess>(
+      _convertPurchaseOrdersToExpenses),
+  TypedReducer<PurchaseOrderState, AddPurchaseOrdersToInventorySuccess>(
+      _addPurchaseOrdersToInventorySuccess),
   TypedReducer<PurchaseOrderState, AcceptPurchaseOrderSuccess>(
       _acceptPurchaseOrderSuccess),
   TypedReducer<PurchaseOrderState, CancelPurchaseOrderSuccess>(
@@ -372,6 +376,28 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
 PurchaseOrderState _markSentPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState,
     MarkPurchaseOrderSentSuccess action) {
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+    action.purchaseOrders,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return purchaseOrderState.rebuild((b) => b..map.addAll(purchaseOrderMap));
+}
+
+PurchaseOrderState _convertPurchaseOrdersToExpenses(
+    PurchaseOrderState purchaseOrderState,
+    ConvertPurchaseOrdersToExpensesSuccess action) {
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+    action.purchaseOrders,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return purchaseOrderState.rebuild((b) => b..map.addAll(purchaseOrderMap));
+}
+
+PurchaseOrderState _addPurchaseOrdersToInventorySuccess(
+    PurchaseOrderState purchaseOrderState,
+    AddPurchaseOrdersToInventorySuccess action) {
   final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,

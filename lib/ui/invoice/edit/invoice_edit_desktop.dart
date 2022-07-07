@@ -392,11 +392,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         validator: (String val) => val.trim().isEmpty
                             ? AppLocalization.of(context).pleaseSelectADate
                             : null,
-                        labelText: entityType == EntityType.credit
-                            ? localization.creditDate
-                            : entityType == EntityType.quote
-                                ? localization.quoteDate
-                                : localization.invoiceDate,
+                        labelText: entityType == EntityType.purchaseOrder
+                            ? localization.purchaseOrderDate
+                            : entityType == EntityType.credit
+                                ? localization.creditDate
+                                : entityType == EntityType.quote
+                                    ? localization.quoteDate
+                                    : localization.invoiceDate,
                         selectedDate: invoice.date,
                         onSelected: (date, _) {
                           viewModel.onChanged(
@@ -623,43 +625,31 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         controller: _optionTabController,
                         children: <Widget>[
                           DecoratedFormField(
-                            maxLines: 7,
+                            maxLines: 8,
                             controller: _termsController,
                             keyboardType: TextInputType.multiline,
-                            label: entityType == EntityType.credit
-                                ? localization.creditTerms
-                                : entityType == EntityType.quote
-                                    ? localization.quoteTerms
-                                    : localization.invoiceTerms,
                             hint: invoice.isOld && !invoice.isRecurringInvoice
                                 ? ''
                                 : settings.getDefaultTerms(invoice.entityType),
                           ),
                           DecoratedFormField(
-                            maxLines: 7,
+                            maxLines: 8,
                             controller: _footerController,
                             keyboardType: TextInputType.multiline,
-                            label: entityType == EntityType.credit
-                                ? localization.creditFooter
-                                : entityType == EntityType.quote
-                                    ? localization.quoteFooter
-                                    : localization.invoiceFooter,
                             hint: invoice.isOld && !invoice.isRecurringInvoice
                                 ? ''
                                 : settings.getDefaultFooter(invoice.entityType),
                           ),
                           DecoratedFormField(
-                            maxLines: 7,
+                            maxLines: 8,
                             controller: _publicNotesController,
                             keyboardType: TextInputType.multiline,
-                            label: localization.publicNotes,
                             hint: client.publicNotes,
                           ),
                           DecoratedFormField(
-                            maxLines: 7,
+                            maxLines: 8,
                             controller: _privateNotesController,
                             keyboardType: TextInputType.multiline,
-                            label: localization.privateNotes,
                           ),
                           LayoutBuilder(builder: (context, constraints) {
                             return GridView.count(

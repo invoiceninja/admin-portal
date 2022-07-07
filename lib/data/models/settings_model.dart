@@ -191,7 +191,11 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'client_portal_enable_uploads')
-  bool get enablePortalUploads;
+  bool get enableClientPortalUploads;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_portal_enable_uploads')
+  bool get enableVendorPortalUploads;
 
   @nullable
   @BuiltValueField(wireName: 'email_style')
