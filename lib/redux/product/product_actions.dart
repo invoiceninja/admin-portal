@@ -271,6 +271,26 @@ void handleProductAction(
         ),
       );
       break;
+    case EntityAction.newPurchaseOrder:
+      final invoice =
+          InvoiceEntity(state: state, entityType: EntityType.purchaseOrder);
+      createEntity(
+        context: context,
+        entity: invoice.rebuild(
+          (b) => b
+            ..lineItems.addAll(
+              productIds.map(
+                (productId) => convertProductToInvoiceItem(
+                  company: state.company,
+                  invoice: invoice,
+                  product: state.productState.map[productId],
+                  currencyMap: state.staticState.currencyMap,
+                ),
+              ),
+            ),
+        ),
+      );
+      break;
     case EntityAction.edit:
       editEntity(entity: product);
       break;

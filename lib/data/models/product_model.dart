@@ -330,6 +330,10 @@ abstract class ProductEntity extends Object
       if (userCompany.canCreate(EntityType.invoice) && !isDeleted) {
         actions.add(EntityAction.newInvoice);
       }
+
+      if (userCompany.canCreate(EntityType.purchaseOrder) && !isDeleted) {
+        actions.add(EntityAction.newPurchaseOrder);
+      }
     }
 
     if (userCompany.canCreate(EntityType.product) && !multiselect) {
