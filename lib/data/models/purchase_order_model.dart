@@ -47,6 +47,6 @@ class PurchaseOrderFields {
   static const String vendorState = 'vendor_state';
   static const String vendorPostalCode = 'vendor_postal_code';
   static const String vendorCountry = 'vendor_country';
-  static const String quote = 'quote';
+  static const String expense = 'expense';
   static const String recurringInvoice = 'recurring_invoice';
 }

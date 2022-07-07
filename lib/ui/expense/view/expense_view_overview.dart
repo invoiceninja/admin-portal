@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -40,6 +42,12 @@ class ExpenseOverview extends StatelessWidget {
     final user = state.userState.get(expense.assignedUserId);
     final recurringExpense =
         state.recurringExpenseState.get(expense.recurringId);
+
+    InvoiceEntity purchaseOrder;
+    if (state.company.isModuleEnabled(EntityType.purchaseOrder)) {
+      purchaseOrder = memoizedExpensePurchaseOrderSelector(
+          expense, state.purchaseOrderState.map);
+    }
 
     final fields = <String, String>{};
     if (expense.customValue1.isNotEmpty) {
@@ -185,6 +193,7 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(entity: category, isFilter: isFilter),
         EntityListTile(entity: user, isFilter: isFilter),
         EntityListTile(entity: invoice, isFilter: isFilter),
+        EntityListTile(entity: purchaseOrder, isFilter: isFilter),
         if ((expense.recurringId ?? '').isNotEmpty)
           EntityListTile(entity: recurringExpense, isFilter: isFilter),
         if (expense.isRecurring)

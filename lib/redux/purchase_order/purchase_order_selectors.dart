@@ -132,6 +132,9 @@ List<String> filteredPurchaseOrdersSelector(
     } else if (filterEntityType == EntityType.client &&
         invoice.clientId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.expense &&
+        invoice.expenseId != filterEntityId) {
+      return false;
     }
 
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
