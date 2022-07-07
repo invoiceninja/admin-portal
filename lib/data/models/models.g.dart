@@ -72,6 +72,7 @@ const EntityAction _$invoiceProject = const EntityAction._('invoiceProject');
 const EntityAction _$resendInvite = const EntityAction._('resendInvite');
 const EntityAction _$disconnect = const EntityAction._('disconnect');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
+const EntityAction _$viewExpense = const EntityAction._('viewExpense');
 const EntityAction _$changeStatus = const EntityAction._('changeStatus');
 const EntityAction _$addToInvoice = const EntityAction._('addToInvoice');
 const EntityAction _$cancel = const EntityAction._('cancel');
@@ -199,6 +200,8 @@ EntityAction _$valueOf(String name) {
       return _$disconnect;
     case 'viewInvoice':
       return _$viewInvoice;
+    case 'viewExpense':
+      return _$viewExpense;
     case 'changeStatus':
       return _$changeStatus;
     case 'addToInvoice':
@@ -278,6 +281,7 @@ final BuiltSet<EntityAction> _$values =
   _$resendInvite,
   _$disconnect,
   _$viewInvoice,
+  _$viewExpense,
   _$changeStatus,
   _$addToInvoice,
   _$cancel,

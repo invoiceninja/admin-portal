@@ -134,7 +134,6 @@ abstract class ExpenseEntity extends Object
           ? client.settings.currencyId // TODO handle group currency
           : (state?.company?.currencyId ?? kDefaultCurrencyId),
       documents: BuiltList<DocumentEntity>(),
-      purchaseOrderId: '',
       taxName1: '',
       taxName2: '',
       taxName3: '',
@@ -306,9 +305,6 @@ abstract class ExpenseEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'recurring_id')
   String get recurringId;
-
-  @BuiltValueField(wireName: 'purchase_order_id')
-  String get purchaseOrderId;
 
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
@@ -830,7 +826,6 @@ abstract class ExpenseEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(ExpenseEntityBuilder builder) => builder
     ..entityType = EntityType.expense
-    ..purchaseOrderId = ''
     ..frequencyId = ''
     ..lastSentDate = ''
     ..nextSendDate = ''

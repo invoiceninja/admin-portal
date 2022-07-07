@@ -377,6 +377,26 @@ class MarkPurchaseOrderSentFailure implements StopSaving {
   final Object error;
 }
 
+class ConvertPurchaseOrdersToExpensesRequest implements StartSaving {
+  ConvertPurchaseOrdersToExpensesRequest(this.completer, this.purchaseOrderIds);
+
+  final Completer completer;
+  final List<String> purchaseOrderIds;
+}
+
+class ConvertPurchaseOrdersToExpensesSuccess
+    implements StopSaving, PersistData {
+  ConvertPurchaseOrdersToExpensesSuccess(this.purchaseOrders);
+
+  final List<InvoiceEntity> purchaseOrders;
+}
+
+class ConvertPurchaseOrdersToExpensesFailure implements StopSaving {
+  ConvertPurchaseOrdersToExpensesFailure(this.error);
+
+  final Object error;
+}
+
 class AddPurchaseOrdersToInventoryRequest implements StartSaving {
   AddPurchaseOrdersToInventoryRequest(this.completer, this.purchaseOrderIds);
 
@@ -589,27 +609,13 @@ void handlePurchaseOrderAction(BuildContext context,
           purchaseOrderIds));
       break;
     case EntityAction.convertToExpense:
-      final vendor = state.vendorState.get(purchaseOrder.vendorId);
-      final client = state.clientState.get(purchaseOrder.clientId);
-      final project = state.projectState.get(purchaseOrder.projectId);
-      editEntity(
-          entity: ExpenseEntity(
-        state: state,
-        vendor: vendor,
-        client: client,
-        project: project,
-      ).rebuild((b) => b
-            ..purchaseOrderId = purchaseOrder.id
-            ..amount = purchaseOrder.usesInclusiveTaxes
-                ? purchaseOrder.amount
-                : purchaseOrder.netAmount
-            ..taxRate1 = purchaseOrder.taxRate1
-            ..taxName1 = purchaseOrder.taxName1
-            ..taxRate2 = purchaseOrder.taxRate2
-            ..taxName2 = purchaseOrder.taxName2
-            ..taxRate3 = purchaseOrder.taxRate3
-            ..taxName3 = purchaseOrder.taxName3
-            ..usesInclusiveTaxes = purchaseOrder.usesInclusiveTaxes));
+      store.dispatch(ConvertPurchaseOrdersToExpensesRequest(
+          snackBarCompleter<Null>(
+              context,
+              purchaseOrders.length == 1
+                  ? localization.convertedToExpense
+                  : localization.convertedToExpenses),
+          purchaseOrderIds));
       break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
