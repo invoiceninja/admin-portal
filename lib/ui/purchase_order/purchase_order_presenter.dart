@@ -23,6 +23,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       PurchaseOrderFields.status,
       PurchaseOrderFields.number,
       PurchaseOrderFields.vendor,
+      PurchaseOrderFields.expense,
       PurchaseOrderFields.amount,
       PurchaseOrderFields.date,
       PurchaseOrderFields.dueDate,
@@ -66,6 +67,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
     final purchaseOrder = entity as InvoiceEntity;
     final client = state.clientState.get(purchaseOrder.clientId);
     final vendor = state.vendorState.get(purchaseOrder.vendorId);
+    final expense = state.expenseState.get(purchaseOrder.expenseId);
 
     switch (field) {
       case PurchaseOrderFields.status:
@@ -153,6 +155,8 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return Text(formatNumber(purchaseOrder.partial, context));
       case PurchaseOrderFields.partialDueDate:
         return Text(formatDate(purchaseOrder.partialDueDate, context));
+      case PurchaseOrderFields.expense:
+        return LinkTextRelatedEntity(entity: expense, relation: purchaseOrder);
     }
 
     return super.getField(field: field, context: context);
