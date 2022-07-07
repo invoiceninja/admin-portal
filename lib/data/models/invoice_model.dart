@@ -1011,7 +1011,7 @@ abstract class InvoiceEntity extends Object
           if (userCompany.canCreate(EntityType.expense)) {
             actions.add(EntityAction.convertToExpense);
           }
-          if (userCompany.company.trackInventory) {
+          if (statusId == kPurchaseOrderStatusAccepted) {
             actions.add(EntityAction.addToInventory);
           }
         }

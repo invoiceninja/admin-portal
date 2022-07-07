@@ -257,12 +257,14 @@ const kCreditStatuses = {
 const String kPurchaseOrderStatusDraft = '1';
 const String kPurchaseOrderStatusSent = '2';
 const String kPurchaseOrderStatusAccepted = '3';
-const String kPurchaseOrderStatusCancelled = '4';
+const String kPurchaseOrderStatusReceived = '4';
+const String kPurchaseOrderStatusCancelled = '5';
 
 const kPurchaseOrderStatuses = {
   kPurchaseOrderStatusDraft: 'draft',
   kPurchaseOrderStatusSent: 'sent',
   kPurchaseOrderStatusAccepted: 'accepted',
+  kPurchaseOrderStatusReceived: 'received',
   kPurchaseOrderStatusCancelled: 'cancelled',
 };
 

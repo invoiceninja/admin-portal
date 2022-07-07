@@ -64,7 +64,8 @@ class PurchaseOrderStatusColors {
     return {
       kPurchaseOrderStatusDraft: _colorTheme.colorGray,
       kPurchaseOrderStatusSent: _colorTheme.colorInfo,
-      kPurchaseOrderStatusAccepted: _colorTheme.colorSuccess,
+      kPurchaseOrderStatusAccepted: _colorTheme.colorPrimary,
+      kPurchaseOrderStatusReceived: _colorTheme.colorSuccess,
       kPurchaseOrderStatusCancelled: _colorTheme.colorDanger,
     };
   }
