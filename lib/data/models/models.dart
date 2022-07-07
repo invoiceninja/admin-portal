@@ -151,6 +151,8 @@ class EntityAction extends EnumClass {
 
     if (this == EntityAction.cancelInvoice) {
       return 'cancel';
+    } else if (this == EntityAction.convertToExpense) {
+      return 'expense';
     }
 
     // else if (value == 'approve') {

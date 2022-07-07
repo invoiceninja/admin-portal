@@ -58,6 +58,9 @@ class PurchaseOrderRepository {
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
+    print(
+        '## DATA: ${json.encode({'ids': ids, 'action': action.toApiParam()})}');
+
     final InvoiceListResponse purchaseOrderResponse =
         serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
