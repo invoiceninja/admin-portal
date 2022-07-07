@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart'
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEdit extends StatefulWidget {
@@ -79,7 +80,16 @@ class _InvoiceEditState extends State<InvoiceEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    if (action == EntityAction.cancelInvoice) {
+      confirmCallback(
+          context: context,
+          message: AppLocalization.of(context).cancelInvoice,
+          callback: (_) {
+            widget.viewModel.onSavePressed(context, action);
+          });
+    } else {
+      widget.viewModel.onSavePressed(context, action);
+    }
   }
 
   @override
