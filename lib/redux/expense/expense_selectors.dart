@@ -14,6 +14,21 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedExpensePurchaseOrderSelector = memo2(
+    (ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
+        expensePurchaseOrderSelector(expense, purchaseOrderMap));
+
+InvoiceEntity expensePurchaseOrderSelector(
+    ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
+  InvoiceEntity purchaseOrder;
+  purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
+    if (purchaseOrder.expenseId == expense.id) {
+      purchaseOrder = purchaseOrder;
+    }
+  });
+  return purchaseOrder;
+}
+
 InvoiceItemEntity convertExpenseToInvoiceItem({
   @required ExpenseEntity expense,
   @required BuildContext context,
