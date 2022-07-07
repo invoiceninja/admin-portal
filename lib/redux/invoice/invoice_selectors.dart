@@ -7,6 +7,10 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+var memoizedInvoiceQuoteSelector = memo2(
+    (InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) =>
+        invoiceQuoteSelector(invoice, quoteMap));
+
 InvoiceEntity invoiceQuoteSelector(
     InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) {
   InvoiceEntity invoiceQuote;
@@ -29,10 +33,6 @@ ClientContactEntity invoiceContactSelector(
   return client.contacts
       .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
-
-var memoizedInvoiceQuoteSelector = memo2(
-    (InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) =>
-        invoiceQuoteSelector(invoice, quoteMap));
 
 var memoizedDropdownInvoiceList = memo8(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
