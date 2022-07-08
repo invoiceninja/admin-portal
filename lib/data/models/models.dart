@@ -145,11 +145,9 @@ class EntityAction extends EnumClass {
   String toApiParam() {
     final value = toString();
 
-    if (value.endsWith('email')) {
+    if (this == EntityAction.sendEmail || this == EntityAction.bulkSendEmail) {
       return 'email';
-    }
-
-    if (this == EntityAction.cancelInvoice) {
+    } else if (this == EntityAction.cancelInvoice) {
       return 'cancel';
     } else if (this == EntityAction.convertToExpense) {
       return 'expense';
