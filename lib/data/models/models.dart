@@ -145,7 +145,7 @@ class EntityAction extends EnumClass {
   String toApiParam() {
     final value = toString();
 
-    if (value.startsWith('email')) {
+    if (value.endsWith('email')) {
       return 'email';
     }
 
