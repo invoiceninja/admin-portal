@@ -527,13 +527,14 @@ class MenuDrawer extends StatelessWidget {
                               icon: getEntityIcon(EntityType.recurringExpense),
                               title: localization.recurringExpenses,
                             ),
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.reports),
-                              title: localization.reports,
-                              onTap: () => viewEntitiesByType(
-                                  entityType: EntityType.reports),
-                            ),
+                            if (!isApple() || state.isProPlan)
+                              DrawerTile(
+                                company: company,
+                                icon: getEntityIcon(EntityType.reports),
+                                title: localization.reports,
+                                onTap: () => viewEntitiesByType(
+                                    entityType: EntityType.reports),
+                              ),
                             DrawerTile(
                               company: company,
                               icon: getEntityIcon(EntityType.settings),

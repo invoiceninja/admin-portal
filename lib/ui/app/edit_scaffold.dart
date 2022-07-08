@@ -124,7 +124,7 @@ class EditScaffold extends StatelessWidget {
         child: Scaffold(
           body: state.companies.isEmpty
               ? LoadingIndicator()
-              : showUpgradeBanner
+              : showUpgradeBanner && !isApple()
                   ? Column(
                       children: [
                         InkWell(
@@ -132,7 +132,7 @@ class EditScaffold extends StatelessWidget {
                             upgradeMessage,
                             color: Colors.orange,
                           ),
-                          onTap: state.userCompany.isOwner && !isApple()
+                          onTap: state.userCompany.isOwner
                               ? () async {
                                   launch(state.userCompany.ninjaPortalUrl);
                                 }
