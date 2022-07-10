@@ -440,7 +440,7 @@ class _LoginState extends State<LoginView> {
                                           ? localization.pleaseEnterYourEmail
                                           : null,
                                   autofillHints: [AutofillHints.email],
-                                  autofocus: true,
+                                  autofocus: _loginType == LOGIN_TYPE_EMAIL,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
