@@ -48,7 +48,7 @@ class AppToggleButtons extends StatelessWidget {
                 width: toggleWidth,
                 height: 40,
                 child: Center(
-                    child: Text(label[0].toUpperCase() + label.substring(1))),
+                    child: Text(label[0].toUpperCase() + label.substring(1), maxLines: 1, overflow: TextOverflow.clip,)),
               ))
           .toList();
 

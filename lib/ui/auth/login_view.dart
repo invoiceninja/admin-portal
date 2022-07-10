@@ -101,10 +101,7 @@ class _LoginState extends State<LoginView> {
       if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
       if (!kReleaseMode || kIsWeb || isApple()) LOGIN_TYPE_APPLE,
     ];
-  }
 
-  @override
-  void didChangeDependencies() {
     if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
@@ -120,8 +117,6 @@ class _LoginState extends State<LoginView> {
     if (_urlController.text.isEmpty) {
       _urlController.text = widget.viewModel.authState.url;
     }
-
-    super.didChangeDependencies();
   }
 
   @override
@@ -577,7 +572,7 @@ class _LoginState extends State<LoginView> {
                           top: 20, bottom: 10, left: 16, right: 16),
                       child: _loginType == LOGIN_TYPE_APPLE
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding:  const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 3),
                               child: SignInWithAppleButton(
                                 onPressed: () async {
