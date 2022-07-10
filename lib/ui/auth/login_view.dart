@@ -406,7 +406,7 @@ class _LoginState extends State<LoginView> {
                                 _createAccount = false;
                                 _loginError = '';
                                 if (index == 1) {
-                                  _loginType == LOGIN_TYPE_EMAIL;
+                                  _loginType = LOGIN_TYPE_EMAIL;
                                 }
                               });
                             },
