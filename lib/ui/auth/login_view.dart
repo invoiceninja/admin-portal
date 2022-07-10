@@ -572,8 +572,8 @@ class _LoginState extends State<LoginView> {
                           top: 20, bottom: 10, left: 16, right: 16),
                       child: _loginType == LOGIN_TYPE_APPLE
                           ? Padding(
-                              padding:  const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 3),
+                              padding: calculateLayout(context) == AppLayout.desktop  ?  const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 3) :  const EdgeInsets.all(0),
                               child: SignInWithAppleButton(
                                 onPressed: () async {
                                   final credential = await SignInWithApple
