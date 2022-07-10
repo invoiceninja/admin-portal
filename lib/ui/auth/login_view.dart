@@ -99,8 +99,7 @@ class _LoginState extends State<LoginView> {
       LOGIN_TYPE_EMAIL,
       if (!kReleaseMode || kIsWeb || isMobileOS()) LOGIN_TYPE_GOOGLE,
       if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
-      if (!kReleaseMode || kIsWeb || isMobileOS() || isMacOS())
-        LOGIN_TYPE_APPLE,
+      if (!kReleaseMode || kIsWeb || isApple()) LOGIN_TYPE_APPLE,
     ];
   }
 
