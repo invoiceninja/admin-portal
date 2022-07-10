@@ -60,6 +60,8 @@ class LoginVM {
     @required this.onGoogleSignUpPressed,
     @required this.onMicrosoftLoginPressed,
     @required this.onMicrosoftSignUpPressed,
+    @required this.onAppleLoginPressed,
+    @required this.onAppleSignUpPressed,
     @required this.onTokenLoginPressed,
   });
 
@@ -109,6 +111,11 @@ class LoginVM {
       String oneTimePassword}) onMicrosoftLoginPressed;
   final Function(BuildContext, Completer<Null> completer, String url)
       onMicrosoftSignUpPressed;
+
+  final Function(BuildContext, Completer<Null> completer,
+      {String url, String secret, String oneTimePassword}) onAppleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer, String url)
+      onAppleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     void _handleLogin({BuildContext context, bool isSignUp = false}) {
@@ -264,6 +271,59 @@ class LoginVM {
         } catch (error) {
           completer.completeError(error);
           print('## onMicrosoftSignUpPressed: $error');
+        }
+      },
+      onAppleLoginPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String url,
+        @required String secret,
+        @required String oneTimePassword,
+      }) async {
+        try {
+          /*
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            store.dispatch(OAuthLoginRequest(
+              completer: completer,
+              idToken: idToken,
+              accessToken: accessToken,
+              url: _formatApiUrl(url),
+              secret: secret.trim(),
+              platform: getPlatform(context),
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              oneTimePassword: oneTimePassword,
+            ));
+            completer.future.then((_) => _handleLogin(context: context));
+          }, (dynamic error) {
+            completer.completeError(error);
+          });
+          */
+        } catch (error) {
+          completer.completeError(error);
+          print('## onAppleLoginPressed: $error');
+        }
+      },
+      onAppleSignUpPressed:
+          (BuildContext context, Completer<Null> completer, String url) async {
+        try {
+          /*
+          WebUtils.microsoftLogin((idToken, accessToken) {
+            store.dispatch(OAuthSignUpRequest(
+              url: url,
+              completer: completer,
+              idToken: idToken,
+              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+              accessToken: accessToken,
+            ));
+            completer.future
+                .then((_) => _handleLogin(context: context, isSignUp: true));
+          }, (dynamic error) {
+            completer.completeError(error);
+          });
+          */
+        } catch (error) {
+          completer.completeError(error);
+          print('## onAppleSignUpPressed: $error');
         }
       },
       onSignUpPressed: (

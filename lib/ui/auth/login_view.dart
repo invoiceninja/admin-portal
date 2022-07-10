@@ -65,14 +65,16 @@ class _LoginState extends State<LoginView> {
   static const String LOGIN_TYPE_EMAIL = 'email';
   static const String LOGIN_TYPE_GOOGLE = 'google';
   static const String LOGIN_TYPE_MICROSOFT = 'microsoft';
+  static const String LOGIN_TYPE_APPLE = 'apple';
 
   String _loginError = '';
-  String _loginType = LOGIN_TYPE_GOOGLE;
+  String _loginType = LOGIN_TYPE_EMAIL;
+
+  List<String> _loginTypes;
 
   bool _tokenLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = false;
-  bool _hideGoogle = false;
 
   bool _recoverPassword = false;
   bool _autoValidate = false;
@@ -91,13 +93,15 @@ class _LoginState extends State<LoginView> {
       } else if (WebUtils.getHtmlValue('signup') == 'true') {
         _createAccount = true;
       }
-    } else if (isApple() || !GoogleOAuth.isEnabled) {
-      _loginType = LOGIN_TYPE_EMAIL;
-      _hideGoogle = true;
-    } else if (isWindows() || isLinux()) {
-      _loginType = LOGIN_TYPE_EMAIL;
-      _hideGoogle = true;
     }
+
+    _loginTypes = [
+      LOGIN_TYPE_EMAIL,
+      if (!kReleaseMode || kIsWeb || isMobileOS()) LOGIN_TYPE_GOOGLE,
+      if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
+      if (!kReleaseMode || kIsWeb || isMobileOS() || isMacOS())
+        LOGIN_TYPE_APPLE,
+    ];
   }
 
   @override
@@ -213,6 +217,8 @@ class _LoginState extends State<LoginView> {
       );
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
       viewModel.onMicrosoftSignUpPressed(context, completer, url);
+    } else if (_loginType == LOGIN_TYPE_APPLE) {
+      viewModel.onAppleSignUpPressed(context, completer, url);
     } else {
       viewModel.onGoogleSignUpPressed(context, completer, url);
     }
@@ -285,6 +291,11 @@ class _LoginState extends State<LoginView> {
       }
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
       viewModel.onMicrosoftLoginPressed(context, completer,
+          url: url,
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text);
+    } else if (_loginType == LOGIN_TYPE_APPLE) {
+      viewModel.onAppleLoginPressed(context, completer,
           url: url,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
@@ -401,49 +412,18 @@ class _LoginState extends State<LoginView> {
                             },
                           ),
                         ],
-                        if (!_isSelfHosted &&
-                            (!kReleaseMode || !_hideGoogle)) ...[
+                        if (!_isSelfHosted && _loginTypes.length > 1) ...[
                           RuledText(localization.selectMethod),
-                          if (kIsWeb)
-                            AppToggleButtons(
-                              tabLabels: [
-                                'Google',
-                                'Microsoft',
-                                localization.email,
-                              ],
-                              selectedIndex: _loginType == LOGIN_TYPE_EMAIL
-                                  ? 2
-                                  : _loginType == LOGIN_TYPE_MICROSOFT
-                                      ? 1
-                                      : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _loginType = index == 2
-                                      ? LOGIN_TYPE_EMAIL
-                                      : index == 1
-                                          ? LOGIN_TYPE_MICROSOFT
-                                          : LOGIN_TYPE_GOOGLE;
-                                  _loginError = '';
-                                });
-                              },
-                            )
-                          else
-                            AppToggleButtons(
-                              tabLabels: [
-                                'Google',
-                                localization.email,
-                              ],
-                              selectedIndex:
-                                  _loginType == LOGIN_TYPE_EMAIL ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _loginType = index == 1
-                                      ? LOGIN_TYPE_EMAIL
-                                      : LOGIN_TYPE_GOOGLE;
-                                  _loginError = '';
-                                });
-                              },
-                            ),
+                          AppToggleButtons(
+                            tabLabels: _loginTypes,
+                            selectedIndex: _loginTypes.indexOf(_loginType),
+                            onTabChanged: (index) {
+                              setState(() {
+                                _loginType = _loginTypes[index];
+                                _loginError = '';
+                              });
+                            },
+                          )
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -610,6 +590,8 @@ class _LoginState extends State<LoginView> {
                               Icon(Icons.mail, color: Colors.white)
                             else if (_loginType == LOGIN_TYPE_MICROSOFT)
                               Icon(MdiIcons.microsoft, color: Colors.white)
+                            else if (_loginType == LOGIN_TYPE_APPLE)
+                              Icon(MdiIcons.apple, color: Colors.white)
                             else
                               ClipOval(
                                 child: Image.asset(
