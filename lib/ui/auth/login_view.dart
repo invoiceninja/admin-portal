@@ -28,7 +28,6 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -578,55 +577,59 @@ class _LoginState extends State<LoginView> {
                       padding: EdgeInsets.only(
                           top: 20, bottom: 10, left: 16, right: 16),
                       child: _loginType == LOGIN_TYPE_APPLE
-                          ? SignInWithAppleButton(
-                              onPressed: () async {
-                                final credential =
-                                    await SignInWithApple.getAppleIDCredential(
-                                  scopes: [
-                                    AppleIDAuthorizationScopes.email,
-                                    AppleIDAuthorizationScopes.fullName,
-                                  ],
-                                  webAuthenticationOptions:
-                                      WebAuthenticationOptions(
-                                    clientId: 'com.invoiceninja.client',
-                                    redirectUri: kIsWeb
-                                        ? Uri.parse(
-                                            'https://staging.invoicing.co/')
-                                        : Uri.parse(
-                                            'https://invoicing.co/auth/apple'),
-                                  ),
-                                );
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 3),
+                              child: SignInWithAppleButton(
+                                onPressed: () async {
+                                  final credential = await SignInWithApple
+                                      .getAppleIDCredential(
+                                    scopes: [
+                                      AppleIDAuthorizationScopes.email,
+                                      AppleIDAuthorizationScopes.fullName,
+                                    ],
+                                    webAuthenticationOptions:
+                                        WebAuthenticationOptions(
+                                      clientId: 'com.invoiceninja.client',
+                                      redirectUri: kIsWeb
+                                          ? Uri.parse(
+                                              'https://staging.invoicing.co/')
+                                          : Uri.parse(
+                                              'https://invoicing.co/auth/apple'),
+                                    ),
+                                  );
 
-                                // ignore: avoid_print
-                                print('## credentials: $credential');
+                                  // ignore: avoid_print
+                                  print('## credentials: $credential');
 
-                                /*
-                                // This is the endpoint that will convert an authorization code obtained
-                                // via Sign in with Apple into a session in your system
-                                final signInWithAppleEndpoint = Uri(
-                                  scheme: 'https',
-                                  host:
-                                      'flutter-sign-in-with-apple-example.glitch.me',
-                                  path: '/sign_in_with_apple',
-                                  queryParameters: <String, String>{
-                                    'code': credential.authorizationCode,
-                                    if (credential.givenName != null)
-                                      'firstName': credential.givenName,
-                                    if (credential.familyName != null)
-                                      'lastName': credential.familyName,
-                                  },
-                                );
+                                  /*
+                                  // This is the endpoint that will convert an authorization code obtained
+                                  // via Sign in with Apple into a session in your system
+                                  final signInWithAppleEndpoint = Uri(
+                                    scheme: 'https',
+                                    host:
+                                        'flutter-sign-in-with-apple-example.glitch.me',
+                                    path: '/sign_in_with_apple',
+                                    queryParameters: <String, String>{
+                                      'code': credential.authorizationCode,
+                                      if (credential.givenName != null)
+                                        'firstName': credential.givenName,
+                                      if (credential.familyName != null)
+                                        'lastName': credential.familyName,
+                                    },
+                                  );
 
-                                final session = await http.Client().post(
-                                  signInWithAppleEndpoint,
-                                );
+                                  final session = await http.Client().post(
+                                    signInWithAppleEndpoint,
+                                  );
 
-                                // If we got this far, a session based on the Apple ID credential has been created in your system,
-                                // and you can now set this as the app's session
-                                // ignore: avoid_print
-                                print(session);
-                                */
-                              },
+                                  // If we got this far, a session based on the Apple ID credential has been created in your system,
+                                  // and you can now set this as the app's session
+                                  // ignore: avoid_print
+                                  print(session);
+                                  */
+                                },
+                              ),
                             )
                           : RoundedLoadingButton(
                               height: 50,
