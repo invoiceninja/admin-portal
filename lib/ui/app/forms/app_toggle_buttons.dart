@@ -25,28 +25,15 @@ class AppToggleButtons extends StatelessWidget {
         toggleWidth -= 46 / tabLabels.length;
       }
 
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: ToggleButtons(
-          children: [
-            Container(
-              width: toggleWidth,
-              height: 40,
-              child: Center(child: Text(tabLabels[0])),
-            ),
-            Container(
-              width: toggleWidth,
-              height: 40,
-              child: Center(child: Text(tabLabels[1])),
-            ),
-            if (tabLabels.length == 3)
-              Container(
-                width: toggleWidth,
-                height: 40,
-                child: Center(child: Text(tabLabels[2])),
-              ),
-          ],
-          isSelected: tabLabels.length == 3
+      final isSelected = tabLabels.length == 4
+          ? (selectedIndex == 0
+              ? [true, false, false, false]
+              : selectedIndex == 1
+                  ? [false, true, false, false]
+                  : selectedIndex == 2
+                      ? [false, false, true, false]
+                      : [false, false, false, true])
+          : tabLabels.length == 3
               ? (selectedIndex == 0
                   ? [true, false, false]
                   : selectedIndex == 1
@@ -54,7 +41,22 @@ class AppToggleButtons extends StatelessWidget {
                       : [false, false, true])
               : selectedIndex == 0
                   ? [true, false]
-                  : [false, true],
+                  : [false, true];
+
+      final children = tabLabels
+          .map((label) => Container(
+                width: toggleWidth,
+                height: 40,
+                child: Center(
+                    child: Text(label[0].toUpperCase() + label.substring(1))),
+              ))
+          .toList();
+
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: ToggleButtons(
+          children: children,
+          isSelected: isSelected,
           onPressed: (index) => onTabChanged(index),
         ),
       );

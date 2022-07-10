@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -65,14 +66,16 @@ class _LoginState extends State<LoginView> {
   static const String LOGIN_TYPE_EMAIL = 'email';
   static const String LOGIN_TYPE_GOOGLE = 'google';
   static const String LOGIN_TYPE_MICROSOFT = 'microsoft';
+  static const String LOGIN_TYPE_APPLE = 'apple';
 
   String _loginError = '';
-  String _loginType = LOGIN_TYPE_GOOGLE;
+  String _loginType = LOGIN_TYPE_EMAIL;
+
+  List<String> _loginTypes;
 
   bool _tokenLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = false;
-  bool _hideGoogle = false;
 
   bool _recoverPassword = false;
   bool _autoValidate = false;
@@ -91,13 +94,15 @@ class _LoginState extends State<LoginView> {
       } else if (WebUtils.getHtmlValue('signup') == 'true') {
         _createAccount = true;
       }
-    } else if (isApple() || !GoogleOAuth.isEnabled) {
-      _loginType = LOGIN_TYPE_EMAIL;
-      _hideGoogle = true;
-    } else if (isWindows() || isLinux()) {
-      _loginType = LOGIN_TYPE_EMAIL;
-      _hideGoogle = true;
     }
+
+    _loginTypes = [
+      LOGIN_TYPE_EMAIL,
+      if (!kReleaseMode || kIsWeb || isMobileOS()) LOGIN_TYPE_GOOGLE,
+      if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
+      if (!kReleaseMode || kIsWeb || isMobileOS() || isMacOS())
+        LOGIN_TYPE_APPLE,
+    ];
   }
 
   @override
@@ -213,6 +218,8 @@ class _LoginState extends State<LoginView> {
       );
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
       viewModel.onMicrosoftSignUpPressed(context, completer, url);
+    } else if (_loginType == LOGIN_TYPE_APPLE) {
+      viewModel.onAppleSignUpPressed(context, completer, url);
     } else {
       viewModel.onGoogleSignUpPressed(context, completer, url);
     }
@@ -285,6 +292,11 @@ class _LoginState extends State<LoginView> {
       }
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
       viewModel.onMicrosoftLoginPressed(context, completer,
+          url: url,
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text);
+    } else if (_loginType == LOGIN_TYPE_APPLE) {
+      viewModel.onAppleLoginPressed(context, completer,
           url: url,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
@@ -401,49 +413,18 @@ class _LoginState extends State<LoginView> {
                             },
                           ),
                         ],
-                        if (!_isSelfHosted &&
-                            (!kReleaseMode || !_hideGoogle)) ...[
+                        if (!_isSelfHosted && _loginTypes.length > 1) ...[
                           RuledText(localization.selectMethod),
-                          if (kIsWeb)
-                            AppToggleButtons(
-                              tabLabels: [
-                                'Google',
-                                'Microsoft',
-                                localization.email,
-                              ],
-                              selectedIndex: _loginType == LOGIN_TYPE_EMAIL
-                                  ? 2
-                                  : _loginType == LOGIN_TYPE_MICROSOFT
-                                      ? 1
-                                      : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _loginType = index == 2
-                                      ? LOGIN_TYPE_EMAIL
-                                      : index == 1
-                                          ? LOGIN_TYPE_MICROSOFT
-                                          : LOGIN_TYPE_GOOGLE;
-                                  _loginError = '';
-                                });
-                              },
-                            )
-                          else
-                            AppToggleButtons(
-                              tabLabels: [
-                                'Google',
-                                localization.email,
-                              ],
-                              selectedIndex:
-                                  _loginType == LOGIN_TYPE_EMAIL ? 1 : 0,
-                              onTabChanged: (index) {
-                                setState(() {
-                                  _loginType = index == 1
-                                      ? LOGIN_TYPE_EMAIL
-                                      : LOGIN_TYPE_GOOGLE;
-                                  _loginError = '';
-                                });
-                              },
-                            ),
+                          AppToggleButtons(
+                            tabLabels: _loginTypes,
+                            selectedIndex: _loginTypes.indexOf(_loginType),
+                            onTabChanged: (index) {
+                              setState(() {
+                                _loginType = _loginTypes[index];
+                                _loginError = '';
+                              });
+                            },
+                          )
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -596,48 +577,107 @@ class _LoginState extends State<LoginView> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: 20, bottom: 10, left: 16, right: 16),
-                      child: RoundedLoadingButton(
-                        height: 50,
-                        borderRadius: 4,
-                        width: 430,
-                        controller: _buttonController,
-                        color: state.accentColor,
-                        onPressed: () => _submitForm(),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (_loginType == LOGIN_TYPE_EMAIL)
-                              Icon(Icons.mail, color: Colors.white)
-                            else if (_loginType == LOGIN_TYPE_MICROSOFT)
-                              Icon(MdiIcons.microsoft, color: Colors.white)
-                            else
-                              ClipOval(
-                                child: Image.asset(
-                                    'assets/images/google_logo.png',
-                                    width: 30,
-                                    height: 30),
-                              ),
-                            SizedBox(width: 10),
-                            Text(
-                              _recoverPassword
-                                  ? localization.recoverPassword
-                                  : _createAccount
-                                      ? (_loginType == LOGIN_TYPE_EMAIL
-                                          ? localization.emailSignUp
-                                          : _loginType == LOGIN_TYPE_MICROSOFT
-                                              ? localization.microsoftSignUp
-                                              : localization.googleSignUp)
-                                      : (_loginType == LOGIN_TYPE_EMAIL
-                                          ? localization.emailSignIn
-                                          : _loginType == LOGIN_TYPE_MICROSOFT
-                                              ? localization.microsoftSignIn
-                                              : localization.googleSignIn),
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
+                      child: _loginType == LOGIN_TYPE_APPLE
+                          ? SignInWithAppleButton(
+                              onPressed: () async {
+                                final credential =
+                                    await SignInWithApple.getAppleIDCredential(
+                                  scopes: [
+                                    AppleIDAuthorizationScopes.email,
+                                    AppleIDAuthorizationScopes.fullName,
+                                  ],
+                                  webAuthenticationOptions:
+                                      WebAuthenticationOptions(
+                                    clientId: 'com.invoiceninja.client',
+                                    redirectUri: kIsWeb
+                                        ? Uri.parse(
+                                            'https://staging.invoicing.co/')
+                                        : Uri.parse(
+                                            'https://invoicing.co/auth/apple'),
+                                  ),
+                                );
+
+                                // ignore: avoid_print
+                                print('## credentials: $credential');
+
+                                /*
+                                // This is the endpoint that will convert an authorization code obtained
+                                // via Sign in with Apple into a session in your system
+                                final signInWithAppleEndpoint = Uri(
+                                  scheme: 'https',
+                                  host:
+                                      'flutter-sign-in-with-apple-example.glitch.me',
+                                  path: '/sign_in_with_apple',
+                                  queryParameters: <String, String>{
+                                    'code': credential.authorizationCode,
+                                    if (credential.givenName != null)
+                                      'firstName': credential.givenName,
+                                    if (credential.familyName != null)
+                                      'lastName': credential.familyName,
+                                  },
+                                );
+
+                                final session = await http.Client().post(
+                                  signInWithAppleEndpoint,
+                                );
+
+                                // If we got this far, a session based on the Apple ID credential has been created in your system,
+                                // and you can now set this as the app's session
+                                // ignore: avoid_print
+                                print(session);
+                                */
+                              },
                             )
-                          ],
-                        ),
-                      ),
+                          : RoundedLoadingButton(
+                              height: 50,
+                              borderRadius: 4,
+                              width: 430,
+                              controller: _buttonController,
+                              color: state.accentColor,
+                              onPressed: () => _submitForm(),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (_loginType == LOGIN_TYPE_EMAIL)
+                                    Icon(Icons.mail, color: Colors.white)
+                                  else if (_loginType == LOGIN_TYPE_MICROSOFT)
+                                    Icon(MdiIcons.microsoft,
+                                        color: Colors.white)
+                                  else if (_loginType == LOGIN_TYPE_APPLE)
+                                    Icon(MdiIcons.apple, color: Colors.white)
+                                  else
+                                    ClipOval(
+                                      child: Image.asset(
+                                          'assets/images/google_logo.png',
+                                          width: 30,
+                                          height: 30),
+                                    ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    _recoverPassword
+                                        ? localization.recoverPassword
+                                        : _createAccount
+                                            ? (_loginType == LOGIN_TYPE_EMAIL
+                                                ? localization.emailSignUp
+                                                : _loginType ==
+                                                        LOGIN_TYPE_MICROSOFT
+                                                    ? localization
+                                                        .microsoftSignUp
+                                                    : localization.googleSignUp)
+                                            : (_loginType == LOGIN_TYPE_EMAIL
+                                                ? localization.emailSignIn
+                                                : _loginType ==
+                                                        LOGIN_TYPE_MICROSOFT
+                                                    ? localization
+                                                        .microsoftSignIn
+                                                    : localization
+                                                        .googleSignIn),
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
                     ),
                     if (!_isSelfHosted &&
                         !_recoverPassword &&
