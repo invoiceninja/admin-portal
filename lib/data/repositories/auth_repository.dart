@@ -56,6 +56,10 @@ class AuthRepository {
     @required String accessToken,
     @required String referralCode,
     @required String provider,
+    @required String firstName,
+    @required String lastName,
+    @required String email,
+    @required String authCode,
   }) async {
     final credentials = {
       'terms_of_service': true,
@@ -65,6 +69,10 @@ class AuthRepository {
       'access_token': accessToken,
       'provider': provider,
       'platform': getPlatformName(),
+      'auth_code': authCode,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
     };
 
     return sendRequest(
@@ -98,17 +106,22 @@ class AuthRepository {
     );
   }
 
-  Future<LoginResponse> oauthLogin(
-      {@required String idToken,
-      @required String accessToken,
-      @required String url,
-      @required String secret,
-      @required String platform,
-      @required String provider}) async {
+  Future<LoginResponse> oauthLogin({
+    @required String idToken,
+    @required String accessToken,
+    @required String url,
+    @required String secret,
+    @required String platform,
+    @required String provider,
+    @required String email,
+    @required String authCode,
+  }) async {
     final credentials = {
       'id_token': idToken,
       'provider': provider,
       'access_token': accessToken,
+      'email': email,
+      'auth_code': authCode,
     };
     url = formatApiUrl(url) + '/oauth_login';
 

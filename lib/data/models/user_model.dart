@@ -147,6 +147,7 @@ abstract class UserEntity extends Object
 
   static const OAUTH_PROVIDER_GOOGLE = 'google';
   static const OAUTH_PROVIDER_MICROSOFT = 'microsoft';
+  static const OAUTH_PROVIDER_APPLE = 'apple';
 
   @override
   @memoized
