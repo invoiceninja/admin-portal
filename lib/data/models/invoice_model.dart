@@ -972,6 +972,10 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isRecurringInvoice) {
+          if ((lastSentDate ?? '').isEmpty) {
+            actions.add(EntityAction.sendNow);
+          }
+
           if ([
             kRecurringInvoiceStatusDraft,
             kRecurringInvoiceStatusPaused,
@@ -984,13 +988,13 @@ abstract class InvoiceEntity extends Object
           ].contains(statusId)) {
             actions.add(EntityAction.stop);
           }
-        }
-
-        if (!isCancelledOrReversed) {
-          if (multiselect) {
-            actions.add(EntityAction.bulkSendEmail);
-          } else {
-            actions.add(EntityAction.sendEmail);
+        } else {
+          if (!isCancelledOrReversed) {
+            if (multiselect) {
+              actions.add(EntityAction.bulkSendEmail);
+            } else {
+              actions.add(EntityAction.sendEmail);
+            }
           }
         }
       }

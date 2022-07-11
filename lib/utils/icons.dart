@@ -40,6 +40,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
     case EntityAction.resendInvite:
+    case EntityAction.sendNow:
       return Icons.send;
     case EntityAction.archive:
       return Icons.archive;

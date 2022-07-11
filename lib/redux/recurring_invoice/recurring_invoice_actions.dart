@@ -277,6 +277,25 @@ class ArchiveRecurringInvoicesFailure implements StopSaving {
   final List<InvoiceEntity> recurringInvoices;
 }
 
+class SendNowRecurringInvoicesRequest implements StartSaving {
+  SendNowRecurringInvoicesRequest(this.completer, this.recurringInvoiceIds);
+
+  final Completer completer;
+  final List<String> recurringInvoiceIds;
+}
+
+class SendNowRecurringInvoicesSuccess implements StopSaving, PersistData {
+  SendNowRecurringInvoicesSuccess(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class SendNowRecurringInvoicesFailure implements StopSaving {
+  SendNowRecurringInvoicesFailure(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
 class DeleteRecurringInvoicesRequest implements StartSaving {
   DeleteRecurringInvoicesRequest(this.completer, this.recurringInvoiceIds);
 
@@ -590,14 +609,15 @@ void handleRecurringInvoiceAction(BuildContext context,
         ),
       );
       break;
-    case EntityAction.sendEmail:
-      store.dispatch(SaveRecurringInvoiceRequest(
-          recurringInvoice: recurringInvoice,
-          action: action,
-          completer: snackBarCompleter<InvoiceEntity>(
+    case EntityAction.sendNow:
+      store.dispatch(SendNowRecurringInvoicesRequest(
+        snackBarCompleter<Null>(
             context,
-            localization.emailedInvoice,
-          )));
+            recurringInvoiceIds.length == 1
+                ? localization.emailedInvoice
+                : localization.emailedInvoice),
+        recurringInvoiceIds,
+      ));
       break;
   }
 }

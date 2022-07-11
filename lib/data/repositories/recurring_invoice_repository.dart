@@ -87,7 +87,7 @@ class RecurringInvoiceRepository {
       url += '&start=true';
     } else if (action == EntityAction.stop) {
       url += '&stop=true';
-    } else if (action == EntityAction.sendEmail) {
+    } else if (action == EntityAction.sendNow) {
       url += '&send_now=true';
     }
 

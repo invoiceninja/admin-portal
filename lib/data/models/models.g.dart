@@ -31,6 +31,7 @@ const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$documents = const EntityAction._('documents');
 const EntityAction _$bulkDownload = const EntityAction._('bulkDownload');
 const EntityAction _$sendEmail = const EntityAction._('sendEmail');
+const EntityAction _$sendNow = const EntityAction._('sendNow');
 const EntityAction _$bulkSendEmail = const EntityAction._('bulkSendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$markPaid = const EntityAction._('markPaid');
@@ -128,6 +129,8 @@ EntityAction _$valueOf(String name) {
       return _$bulkDownload;
     case 'sendEmail':
       return _$sendEmail;
+    case 'sendNow':
+      return _$sendNow;
     case 'bulkSendEmail':
       return _$bulkSendEmail;
     case 'markSent':
@@ -245,6 +248,7 @@ final BuiltSet<EntityAction> _$values =
   _$documents,
   _$bulkDownload,
   _$sendEmail,
+  _$sendNow,
   _$bulkSendEmail,
   _$markSent,
   _$markPaid,
