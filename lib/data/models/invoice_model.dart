@@ -972,7 +972,10 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isRecurringInvoice) {
-          if ((lastSentDate ?? '').isEmpty) {
+          if ([
+            kRecurringInvoiceStatusDraft,
+            kRecurringInvoiceStatusPending,
+          ].contains(statusId)) {
             actions.add(EntityAction.sendNow);
           }
 
