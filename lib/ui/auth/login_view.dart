@@ -28,7 +28,6 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/oauth.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -100,13 +99,9 @@ class _LoginState extends State<LoginView> {
       LOGIN_TYPE_EMAIL,
       if (!kReleaseMode || kIsWeb || isMobileOS()) LOGIN_TYPE_GOOGLE,
       if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
-      if (!kReleaseMode || kIsWeb || isMobileOS() || isMacOS())
-        LOGIN_TYPE_APPLE,
+      if (!kReleaseMode || kIsWeb || isApple()) LOGIN_TYPE_APPLE,
     ];
-  }
 
-  @override
-  void didChangeDependencies() {
     if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
@@ -122,8 +117,6 @@ class _LoginState extends State<LoginView> {
     if (_urlController.text.isEmpty) {
       _urlController.text = widget.viewModel.authState.url;
     }
-
-    super.didChangeDependencies();
   }
 
   @override
@@ -407,7 +400,7 @@ class _LoginState extends State<LoginView> {
                                 _createAccount = false;
                                 _loginError = '';
                                 if (index == 1) {
-                                  _loginType == LOGIN_TYPE_EMAIL;
+                                  _loginType = LOGIN_TYPE_EMAIL;
                                 }
                               });
                             },
@@ -442,7 +435,7 @@ class _LoginState extends State<LoginView> {
                                           ? localization.pleaseEnterYourEmail
                                           : null,
                                   autofillHints: [AutofillHints.email],
-                                  autofocus: true,
+                                  autofocus: _loginType == LOGIN_TYPE_EMAIL,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
@@ -578,55 +571,14 @@ class _LoginState extends State<LoginView> {
                       padding: EdgeInsets.only(
                           top: 20, bottom: 10, left: 16, right: 16),
                       child: _loginType == LOGIN_TYPE_APPLE
-                          ? SignInWithAppleButton(
-                              onPressed: () async {
-                                final credential =
-                                    await SignInWithApple.getAppleIDCredential(
-                                  scopes: [
-                                    AppleIDAuthorizationScopes.email,
-                                    AppleIDAuthorizationScopes.fullName,
-                                  ],
-                                  webAuthenticationOptions:
-                                      WebAuthenticationOptions(
-                                    clientId: 'com.invoiceninja.client',
-                                    redirectUri: kIsWeb
-                                        ? Uri.parse(
-                                            'https://staging.invoicing.co/')
-                                        : Uri.parse(
-                                            'https://invoicing.co/auth/apple'),
-                                  ),
-                                );
-
-                                // ignore: avoid_print
-                                print('## credentials: $credential');
-
-                                /*
-                                // This is the endpoint that will convert an authorization code obtained
-                                // via Sign in with Apple into a session in your system
-                                final signInWithAppleEndpoint = Uri(
-                                  scheme: 'https',
-                                  host:
-                                      'flutter-sign-in-with-apple-example.glitch.me',
-                                  path: '/sign_in_with_apple',
-                                  queryParameters: <String, String>{
-                                    'code': credential.authorizationCode,
-                                    if (credential.givenName != null)
-                                      'firstName': credential.givenName,
-                                    if (credential.familyName != null)
-                                      'lastName': credential.familyName,
-                                  },
-                                );
-
-                                final session = await http.Client().post(
-                                  signInWithAppleEndpoint,
-                                );
-
-                                // If we got this far, a session based on the Apple ID credential has been created in your system,
-                                // and you can now set this as the app's session
-                                // ignore: avoid_print
-                                print(session);
-                                */
-                              },
+                          ? Padding(
+                              padding:
+                                  calculateLayout(context) == AppLayout.desktop
+                                      ? const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 3)
+                                      : const EdgeInsets.all(0),
+                              child:
+                                  SignInWithAppleButton(onPressed: _submitForm),
                             )
                           : RoundedLoadingButton(
                               height: 50,

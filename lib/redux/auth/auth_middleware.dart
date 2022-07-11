@@ -169,12 +169,15 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
 
     repository
         .oauthLogin(
-            idToken: action.idToken,
-            accessToken: action.accessToken,
-            url: action.url,
-            secret: action.secret,
-            provider: action.provider,
-            platform: action.platform)
+      idToken: action.idToken,
+      accessToken: action.accessToken,
+      url: action.url,
+      secret: action.secret,
+      provider: action.provider,
+      platform: action.platform,
+      authCode: action.authCode,
+      email: action.email,
+    )
         .then((data) {
       _saveAuthLocal(action.url);
 
@@ -204,11 +207,16 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
 
     repository
         .oauthSignUp(
-            url: action.url,
-            accessToken: action.accessToken,
-            idToken: action.idToken,
-            provider: action.provider,
-            referralCode: state.authState.referralCode)
+      url: action.url,
+      accessToken: action.accessToken,
+      idToken: action.idToken,
+      provider: action.provider,
+      referralCode: state.authState.referralCode,
+      firstName: action.firstName,
+      lastName: action.lastName,
+      email: action.email,
+      authCode: action.authCode,
+    )
         .then((data) {
       _saveAuthLocal(kAppProductionUrl);
 

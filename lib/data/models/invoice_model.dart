@@ -974,6 +974,13 @@ abstract class InvoiceEntity extends Object
         if (isRecurringInvoice) {
           if ([
             kRecurringInvoiceStatusDraft,
+            kRecurringInvoiceStatusPending,
+          ].contains(statusId)) {
+            actions.add(EntityAction.sendNow);
+          }
+
+          if ([
+            kRecurringInvoiceStatusDraft,
             kRecurringInvoiceStatusPaused,
             kRecurringInvoiceStatusCompleted,
           ].contains(statusId)) {
@@ -984,13 +991,13 @@ abstract class InvoiceEntity extends Object
           ].contains(statusId)) {
             actions.add(EntityAction.stop);
           }
-        }
-
-        if (!isCancelledOrReversed) {
-          if (multiselect) {
-            actions.add(EntityAction.bulkSendEmail);
-          } else {
-            actions.add(EntityAction.sendEmail);
+        } else {
+          if (!isCancelledOrReversed) {
+            if (multiselect) {
+              actions.add(EntityAction.bulkSendEmail);
+            } else {
+              actions.add(EntityAction.sendEmail);
+            }
           }
         }
       }

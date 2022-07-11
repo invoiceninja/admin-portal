@@ -376,6 +376,8 @@ final recurringInvoicesReducer = combineReducers<RecurringInvoiceState>([
       _deleteRecurringInvoiceSuccess),
   TypedReducer<RecurringInvoiceState, RestoreRecurringInvoicesSuccess>(
       _restoreRecurringInvoiceSuccess),
+  TypedReducer<RecurringInvoiceState, SendNowRecurringInvoicesSuccess>(
+      _sendNowRecurringInvoiceSuccess),
 ]);
 
 RecurringInvoiceState _archiveRecurringInvoiceSuccess(
@@ -408,6 +410,16 @@ RecurringInvoiceState _emailRecurringInvoiceSuccess(
 RecurringInvoiceState _restoreRecurringInvoiceSuccess(
     RecurringInvoiceState recurringInvoiceState,
     RestoreRecurringInvoicesSuccess action) {
+  return recurringInvoiceState.rebuild((b) {
+    for (final recurringInvoice in action.recurringInvoices) {
+      b.map[recurringInvoice.id] = recurringInvoice;
+    }
+  });
+}
+
+RecurringInvoiceState _sendNowRecurringInvoiceSuccess(
+    RecurringInvoiceState recurringInvoiceState,
+    SendNowRecurringInvoicesSuccess action) {
   return recurringInvoiceState.rebuild((b) {
     for (final recurringInvoice in action.recurringInvoices) {
       b.map[recurringInvoice.id] = recurringInvoice;
