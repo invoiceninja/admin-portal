@@ -240,6 +240,28 @@ class _UserDetailsState extends State<UserDetails>
       ),
     );
 
+    final appleButton = Expanded(
+      child: OutlinedButton(
+        child: Text((state.user.isConnectedToApple
+                ? localization.disconnectApple
+                : localization.connectApple)
+            .toUpperCase()),
+        onPressed: () {
+          if (state.settingsUIState.isChanged) {
+            showMessageDialog(
+                context: context, message: localization.errorUnsavedChanges);
+            return;
+          }
+
+          if (state.user.isConnectedToApple) {
+            viewModel.onDisconnectApplePressed(context);
+          } else {
+            // do nothing
+          }
+        },
+      ),
+    );
+
     return EditScaffold(
       title: localization.userDetails,
       onSavePressed: (context) {
@@ -321,7 +343,7 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (state.isHosted && !isApple() && !isDesktopOS()) ...[
+                    if (state.isHosted && !isDesktopOS()) ...[
                       if (user.isConnectedToGoogle) ...[
                         googleButton,
                         SizedBox(width: kTableColumnGap),
@@ -331,6 +353,9 @@ class _UserDetailsState extends State<UserDetails>
                         microsoftButton,
                         SizedBox(width: kTableColumnGap),
                         office365Button,
+                        SizedBox(width: kTableColumnGap),
+                      ] else if (user.isConnectedToApple) ...[
+                        appleButton,
                         SizedBox(width: kTableColumnGap),
                       ] else ...[
                         googleButton,
