@@ -324,7 +324,7 @@ class LoginVM {
             webAuthenticationOptions: WebAuthenticationOptions(
               clientId: 'com.invoiceninja.client',
               redirectUri: kIsWeb
-                  ? Uri.parse(WebUtils.browserUrl)
+                  ? Uri.parse(WebUtils.apiUrl)
                   : Uri.parse('https://invoicing.co/auth/apple'),
             ),
           );

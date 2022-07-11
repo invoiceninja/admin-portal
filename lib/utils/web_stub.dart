@@ -8,6 +8,8 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class WebUtils {
+  static String get apiUrl => null;
+
   static String get browserUrl => null;
 
   static String get browserRoute => null;
