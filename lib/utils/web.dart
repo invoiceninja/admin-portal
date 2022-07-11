@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class WebUtils {
-  static String get browserUrl {
+  static String get apiUrl {
     var url = window.location.href;
 
     if (url.contains('?')) {
@@ -27,6 +27,8 @@ class WebUtils {
 
     return formatApiUrl(url);
   }
+
+  static String get browserUrl => cleanApiUrl(apiUrl);
 
   static String get browserRoute => window.location.hash.replaceFirst('#', '');
 
@@ -72,7 +74,7 @@ class WebUtils {
   static void microsoftLogout() {
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
-        ..redirectUri = cleanApiUrl(browserUrl)
+        ..redirectUri = cleanApiUrl(apiUrl)
         ..clientId = Config.MICROSOFT_CLIENT_ID);
 
     final publicClientApp = PublicClientApplication(config);
@@ -87,7 +89,7 @@ class WebUtils {
   ) async {
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
-        ..redirectUri = cleanApiUrl(browserUrl)
+        ..redirectUri = cleanApiUrl(apiUrl)
         ..clientId = Config.MICROSOFT_CLIENT_ID);
 
     final publicClientApp = PublicClientApplication(config);
