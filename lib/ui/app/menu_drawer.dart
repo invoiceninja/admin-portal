@@ -883,6 +883,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.isSelfHosted &&
                   !state.account.disableAutoUpdate &&
+                  !state.account.isDocker &&
                   state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips
@@ -1363,7 +1364,8 @@ void _showAbout(BuildContext context) async {
                             });
                       },
                     ),
-                    if (!state.account.disableAutoUpdate)
+                    if (!state.account.disableAutoUpdate &&
+                        !state.account.isDocker)
                       AppButton(
                         label: (state.isUpdateAvailable
                                 ? localization.updateApp
