@@ -133,6 +133,7 @@ class EntityAction extends EnumClass {
         EntityAction.delete,
         EntityAction.restore,
         EntityAction.purge,
+        EntityAction.sendNow,
       ].contains(this);
 
   bool get requiresSecondRequest => [
