@@ -26,7 +26,7 @@ class _ReviewAppState extends State<ReviewApp> {
     final store = StoreProvider.of<AppState>(context);
 
     // TODO remove this code
-    if (!isMobileOS()) {
+    if (kIsWeb || isLinux()) {
       return SizedBox();
     }
 
