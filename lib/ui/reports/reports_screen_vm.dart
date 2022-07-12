@@ -161,6 +161,7 @@ class ReportsScreenVM {
           state.invoiceState.map,
           state.clientState.map,
           state.vendorState.map,
+          state.projectState.map,
           state.userState.map,
           state.staticState,
         );

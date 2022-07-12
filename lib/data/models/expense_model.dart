@@ -62,6 +62,7 @@ class ExpenseFields {
   static const String currencyId = 'currency_id';
   static const String categoryId = 'category_id';
   static const String category = 'category';
+  static const String project = 'project';
   static const String netAmount = 'net_amount';
   static const String convertedAmount = 'converted_amount';
   static const String amount = 'amount';

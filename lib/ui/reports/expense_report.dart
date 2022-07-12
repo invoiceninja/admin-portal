@@ -34,6 +34,7 @@ enum ExpenseReportFields {
   invoice_amount,
   invoice_date,
   vendor,
+  project,
   expense1,
   expense2,
   expense3,
@@ -48,7 +49,7 @@ enum ExpenseReportFields {
   tax_amount3,
 }
 
-var memoizedExpenseReport = memo9((
+var memoizedExpenseReport = memo10((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ExpenseEntity> expenseMap,
@@ -56,6 +57,7 @@ var memoizedExpenseReport = memo9((
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
@@ -67,6 +69,7 @@ var memoizedExpenseReport = memo9((
       invoiceMap,
       clientMap,
       vendorMap,
+      projectMap,
       userMap,
       staticState,
     ));
@@ -79,6 +82,7 @@ ReportResult expenseReport(
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
@@ -115,6 +119,7 @@ ReportResult expenseReport(
     final client = clientMap[expense.clientId] ?? ClientEntity();
     final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
+    final project = projectMap[expense.projectId] ?? ProjectEntity();
 
     if (expense.isDeleted) {
       continue;
@@ -194,6 +199,9 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.vendor:
           value = vendor?.listDisplayName;
+          break;
+        case ExpenseReportFields.project:
+          value = project?.name;
           break;
         case ExpenseReportFields.expense1:
           value = presentCustomField(
