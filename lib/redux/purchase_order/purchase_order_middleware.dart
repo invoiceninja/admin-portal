@@ -524,7 +524,7 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
       state.credentials,
       action.page,
       state.createdAtLimit,
-      state.filterDeletedClients,
+      //state.filterDeletedClients,
       state.recordsPerPage,
     )
         .then((data) {
