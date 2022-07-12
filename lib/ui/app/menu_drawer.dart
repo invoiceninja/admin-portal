@@ -1351,6 +1351,12 @@ void _showAbout(BuildContext context) async {
                       },
                     ),
                   ),
+                  AppButton(
+                    label: (localization.releaseNotes).toUpperCase(),
+                    iconData: MdiIcons.note,
+                    color: Colors.cyan,
+                    onPressed: () => launch(kReleaseNotesUrl),
+                  ),
                   if (state.isSelfHosted || !kReleaseMode) ...[
                     AppButton(
                       label: localization.healthCheck.toUpperCase(),
