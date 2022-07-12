@@ -30,15 +30,17 @@ class PurchaseOrderRepository {
     Credentials credentials,
     int page,
     int createdAt,
-    bool filterDeleted,
+    //bool filterDeleted,
     int recordsPerPage,
   ) async {
     String url = credentials.url +
         '/purchase_orders?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
 
+    /*
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';
     }
+    */
 
     final dynamic response = await webClient.get(url, credentials.token);
 
