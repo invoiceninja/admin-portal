@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -57,6 +56,7 @@ class EditScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final account = state.account;
     final localization = AppLocalization.of(context);
 
     bool showUpgradeBanner = false;
@@ -72,16 +72,12 @@ class EditScaffold extends StatelessWidget {
             ? localization.startFreeTrialMessage
             : localization.upgradeToPaidPlan)
         : localization.ownerUpgradeToPaidPlan;
-    if (state.account.isTrial) {
-      final trialStarted = convertSqlDateToDateTime(state.account.trialStarted);
-      final trialEnds = trialStarted.add(Duration(days: 14));
-      final countDays = trialEnds.difference(DateTime.now()).inDays;
-
-      if (countDays <= 1) {
+    if (account.isTrial) {
+      if (account.trialDaysLeft <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
       } else {
         upgradeMessage = localization.freeTrialEndsInDays
-            .replaceFirst(':count', countDays.toString());
+            .replaceFirst(':count', account.trialDaysLeft.toString());
       }
     }
 

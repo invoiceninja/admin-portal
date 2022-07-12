@@ -21,9 +21,6 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'trial_plan',
-      serializers.serialize(object.trialPlan,
-          specifiedType: const FullType(String)),
       'trial_started',
       serializers.serialize(object.trialStarted,
           specifiedType: const FullType(String)),
@@ -74,6 +71,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'set_react_as_default_ap',
       serializers.serialize(object.setReactAsDefaultAP,
           specifiedType: const FullType(bool)),
+      'trial_days_left',
+      serializers.serialize(object.trialDaysLeft,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -93,10 +93,6 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'trial_plan':
-          result.trialPlan = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'trial_started':
@@ -167,6 +163,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.setReactAsDefaultAP = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'trial_days_left':
+          result.trialDaysLeft = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
       }
     }
 
@@ -177,8 +177,6 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
 class _$AccountEntity extends AccountEntity {
   @override
   final String id;
-  @override
-  final String trialPlan;
   @override
   final String trialStarted;
   @override
@@ -213,13 +211,14 @@ class _$AccountEntity extends AccountEntity {
   final int hostedCompanyCount;
   @override
   final bool setReactAsDefaultAP;
+  @override
+  final int trialDaysLeft;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
 
   _$AccountEntity._(
       {this.id,
-      this.trialPlan,
       this.trialStarted,
       this.defaultUrl,
       this.reportErrors,
@@ -236,11 +235,10 @@ class _$AccountEntity extends AccountEntity {
       this.defaultCompanyId,
       this.hostedClientCount,
       this.hostedCompanyCount,
-      this.setReactAsDefaultAP})
+      this.setReactAsDefaultAP,
+      this.trialDaysLeft})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(
-        trialPlan, 'AccountEntity', 'trialPlan');
     BuiltValueNullFieldError.checkNotNull(
         trialStarted, 'AccountEntity', 'trialStarted');
     BuiltValueNullFieldError.checkNotNull(
@@ -274,6 +272,8 @@ class _$AccountEntity extends AccountEntity {
         hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount');
     BuiltValueNullFieldError.checkNotNull(
         setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP');
+    BuiltValueNullFieldError.checkNotNull(
+        trialDaysLeft, 'AccountEntity', 'trialDaysLeft');
   }
 
   @override
@@ -288,7 +288,6 @@ class _$AccountEntity extends AccountEntity {
     if (identical(other, this)) return true;
     return other is AccountEntity &&
         id == other.id &&
-        trialPlan == other.trialPlan &&
         trialStarted == other.trialStarted &&
         defaultUrl == other.defaultUrl &&
         reportErrors == other.reportErrors &&
@@ -305,7 +304,8 @@ class _$AccountEntity extends AccountEntity {
         defaultCompanyId == other.defaultCompanyId &&
         hostedClientCount == other.hostedClientCount &&
         hostedCompanyCount == other.hostedCompanyCount &&
-        setReactAsDefaultAP == other.setReactAsDefaultAP;
+        setReactAsDefaultAP == other.setReactAsDefaultAP &&
+        trialDaysLeft == other.trialDaysLeft;
   }
 
   int __hashCode;
@@ -333,35 +333,34 @@ class _$AccountEntity extends AccountEntity {
                                                                                 0,
                                                                                 id
                                                                                     .hashCode),
-                                                                            trialPlan
+                                                                            trialStarted
                                                                                 .hashCode),
-                                                                        trialStarted
+                                                                        defaultUrl
                                                                             .hashCode),
-                                                                    defaultUrl
+                                                                    reportErrors
                                                                         .hashCode),
-                                                                reportErrors
-                                                                    .hashCode),
-                                                            plan.hashCode),
-                                                        planExpires.hashCode),
-                                                    latestVersion.hashCode),
-                                                currentVersion.hashCode),
-                                            debugEnabled.hashCode),
-                                        isDocker.hashCode),
-                                    isMigrated.hashCode),
-                                isHosted.hashCode),
-                            isSchedulerRunning.hashCode),
-                        disableAutoUpdate.hashCode),
-                    defaultCompanyId.hashCode),
-                hostedClientCount.hashCode),
-            hostedCompanyCount.hashCode),
-        setReactAsDefaultAP.hashCode));
+                                                                plan.hashCode),
+                                                            planExpires
+                                                                .hashCode),
+                                                        latestVersion.hashCode),
+                                                    currentVersion.hashCode),
+                                                debugEnabled.hashCode),
+                                            isDocker.hashCode),
+                                        isMigrated.hashCode),
+                                    isHosted.hashCode),
+                                isSchedulerRunning.hashCode),
+                            disableAutoUpdate.hashCode),
+                        defaultCompanyId.hashCode),
+                    hostedClientCount.hashCode),
+                hostedCompanyCount.hashCode),
+            setReactAsDefaultAP.hashCode),
+        trialDaysLeft.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AccountEntity')
           ..add('id', id)
-          ..add('trialPlan', trialPlan)
           ..add('trialStarted', trialStarted)
           ..add('defaultUrl', defaultUrl)
           ..add('reportErrors', reportErrors)
@@ -378,7 +377,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('defaultCompanyId', defaultCompanyId)
           ..add('hostedClientCount', hostedClientCount)
           ..add('hostedCompanyCount', hostedCompanyCount)
-          ..add('setReactAsDefaultAP', setReactAsDefaultAP))
+          ..add('setReactAsDefaultAP', setReactAsDefaultAP)
+          ..add('trialDaysLeft', trialDaysLeft))
         .toString();
   }
 }
@@ -390,10 +390,6 @@ class AccountEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
-
-  String _trialPlan;
-  String get trialPlan => _$this._trialPlan;
-  set trialPlan(String trialPlan) => _$this._trialPlan = trialPlan;
 
   String _trialStarted;
   String get trialStarted => _$this._trialStarted;
@@ -471,6 +467,10 @@ class AccountEntityBuilder
   set setReactAsDefaultAP(bool setReactAsDefaultAP) =>
       _$this._setReactAsDefaultAP = setReactAsDefaultAP;
 
+  int _trialDaysLeft;
+  int get trialDaysLeft => _$this._trialDaysLeft;
+  set trialDaysLeft(int trialDaysLeft) => _$this._trialDaysLeft = trialDaysLeft;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -479,7 +479,6 @@ class AccountEntityBuilder
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
-      _trialPlan = $v.trialPlan;
       _trialStarted = $v.trialStarted;
       _defaultUrl = $v.defaultUrl;
       _reportErrors = $v.reportErrors;
@@ -497,6 +496,7 @@ class AccountEntityBuilder
       _hostedClientCount = $v.hostedClientCount;
       _hostedCompanyCount = $v.hostedCompanyCount;
       _setReactAsDefaultAP = $v.setReactAsDefaultAP;
+      _trialDaysLeft = $v.trialDaysLeft;
       _$v = null;
     }
     return this;
@@ -519,8 +519,6 @@ class AccountEntityBuilder
         new _$AccountEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'AccountEntity', 'id'),
-            trialPlan: BuiltValueNullFieldError.checkNotNull(
-                trialPlan, 'AccountEntity', 'trialPlan'),
             trialStarted: BuiltValueNullFieldError.checkNotNull(
                 trialStarted, 'AccountEntity', 'trialStarted'),
             defaultUrl: BuiltValueNullFieldError.checkNotNull(
@@ -535,7 +533,8 @@ class AccountEntityBuilder
                 latestVersion, 'AccountEntity', 'latestVersion'),
             currentVersion: BuiltValueNullFieldError.checkNotNull(
                 currentVersion, 'AccountEntity', 'currentVersion'),
-            debugEnabled: BuiltValueNullFieldError.checkNotNull(debugEnabled, 'AccountEntity', 'debugEnabled'),
+            debugEnabled: BuiltValueNullFieldError.checkNotNull(
+                debugEnabled, 'AccountEntity', 'debugEnabled'),
             isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, 'AccountEntity', 'isDocker'),
             isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, 'AccountEntity', 'isMigrated'),
             isHosted: BuiltValueNullFieldError.checkNotNull(isHosted, 'AccountEntity', 'isHosted'),
@@ -544,7 +543,8 @@ class AccountEntityBuilder
             defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'),
             hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, 'AccountEntity', 'hostedClientCount'),
             hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount'),
-            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP'));
+            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP'),
+            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, 'AccountEntity', 'trialDaysLeft'));
     replace(_$result);
     return _$result;
   }
