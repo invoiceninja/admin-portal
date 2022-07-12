@@ -514,6 +514,14 @@ abstract class CompanyEntity extends Object
       field = field.replaceFirst('quote', 'invoice');
     } else if (field.contains('credit')) {
       field = field.replaceFirst('credit', 'invoice');
+    } else if (field.contains('recurring_invoice')) {
+      field = field.replaceFirst('recurring_invoice', 'invoice');
+    } else if (field.contains('purchase_order')) {
+      field = field.replaceFirst('purchase_order', 'invoice');
+    }
+
+    if (field.contains('recurring_expense')) {
+      field = field.replaceFirst('recurring_expense', 'expense');
     }
 
     if (customFields.containsKey(field)) {

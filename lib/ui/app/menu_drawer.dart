@@ -883,6 +883,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.isSelfHosted &&
                   !state.account.disableAutoUpdate &&
+                  !state.account.isDocker &&
                   state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips
@@ -1350,6 +1351,12 @@ void _showAbout(BuildContext context) async {
                       },
                     ),
                   ),
+                  AppButton(
+                    label: (localization.releaseNotes).toUpperCase(),
+                    iconData: MdiIcons.note,
+                    color: Colors.cyan,
+                    onPressed: () => launch(kReleaseNotesUrl),
+                  ),
                   if (state.isSelfHosted || !kReleaseMode) ...[
                     AppButton(
                       label: localization.healthCheck.toUpperCase(),
@@ -1363,7 +1370,8 @@ void _showAbout(BuildContext context) async {
                             });
                       },
                     ),
-                    if (!state.account.disableAutoUpdate)
+                    if (!state.account.disableAutoUpdate &&
+                        !state.account.isDocker)
                       AppButton(
                         label: (state.isUpdateAvailable
                                 ? localization.updateApp

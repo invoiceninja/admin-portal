@@ -180,6 +180,7 @@ void passwordCallback({
   @required BuildContext context,
   @required Function(String, String) callback,
   bool alwaysRequire = false,
+  bool skipOAuth = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -212,7 +213,9 @@ void passwordCallback({
   }
 
   if (user.oauthProvider.isEmpty ||
+      skipOAuth ||
       (user.isConnectedToGoogle && !supportsGoogleOAuth()) ||
+      (user.isConnectedToApple && !supportsAppleOAuth()) ||
       (user.isConnectedToMicrosoft && !supportsMicrosoftOAuth())) {
     showDialog<Null>(
       context: context,
@@ -279,7 +282,7 @@ void passwordCallback({
 }
 
 class PasswordConfirmation extends StatefulWidget {
-  const PasswordConfirmation({@required this.callback, this.idToken});
+  const PasswordConfirmation({@required this.callback, this.idToken = ''});
 
   final Function(String, String) callback;
   final String idToken;

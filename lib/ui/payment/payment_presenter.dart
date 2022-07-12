@@ -60,6 +60,7 @@ class PaymentPresenter extends EntityPresenter {
         return ConstrainedBox(
           constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
           child: Wrap(
+            clipBehavior: Clip.antiAlias,
             children: payment.invoicePaymentables
                 .map((paymentable) =>
                     state.invoiceState.map[paymentable.invoiceId])

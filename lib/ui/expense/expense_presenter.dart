@@ -37,6 +37,7 @@ class ExpensePresenter extends EntityPresenter {
       ExpenseFields.shouldBeInvoiced,
       ExpenseFields.transactionReference,
       ExpenseFields.category,
+      ExpenseFields.project,
       ExpenseFields.paymentDate,
       ExpenseFields.paymentType,
       ExpenseFields.exchangeRate,
@@ -102,6 +103,9 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.category:
         final category = state.expenseCategoryState.map[expense.categoryId];
         return LinkTextRelatedEntity(entity: category, relation: expense);
+      case ExpenseFields.project:
+        final project = state.projectState.map[expense.projectId];
+        return LinkTextRelatedEntity(entity: project, relation: expense);
       case ExpenseFields.paymentType:
         return Text(state.staticState.paymentTypeMap[expense.paymentTypeId]
                 ?.listDisplayName ??

@@ -97,9 +97,9 @@ class _LoginState extends State<LoginView> {
 
     _loginTypes = [
       LOGIN_TYPE_EMAIL,
-      if (!kReleaseMode || kIsWeb || isMobileOS()) LOGIN_TYPE_GOOGLE,
-      if (!kReleaseMode || kIsWeb) LOGIN_TYPE_MICROSOFT,
-      if (!kReleaseMode || kIsWeb || isApple()) LOGIN_TYPE_APPLE,
+      if (!kReleaseMode || supportsGoogleOAuth()) LOGIN_TYPE_GOOGLE,
+      if (!kReleaseMode || supportsMicrosoftOAuth()) LOGIN_TYPE_MICROSOFT,
+      if (!kReleaseMode || supportsAppleOAuth()) LOGIN_TYPE_APPLE,
     ];
 
     if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {

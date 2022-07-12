@@ -173,6 +173,7 @@ class UserDetailsVM {
             callback: (_) {
               passwordCallback(
                   context: context,
+                  skipOAuth: true,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context).disconnectedGoogle);
@@ -239,6 +240,7 @@ class UserDetailsVM {
 
         confirmCallback(
             context: context,
+            skip: true,
             callback: (_) {
               passwordCallback(
                   context: context,
@@ -272,6 +274,7 @@ class UserDetailsVM {
             callback: (_) {
               passwordCallback(
                   context: context,
+                  skipOAuth: true,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context).disconnectedMicrosoft);

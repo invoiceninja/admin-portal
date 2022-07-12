@@ -297,6 +297,7 @@ Middleware<AppState> _convertPurchaseOrdersToExpense(
             EntityAction.convertToExpense)
         .then((purchaseOrders) {
       store.dispatch(ConvertPurchaseOrdersToExpensesSuccess(purchaseOrders));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
