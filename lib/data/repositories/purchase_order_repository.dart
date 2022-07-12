@@ -33,7 +33,7 @@ class PurchaseOrderRepository {
     //bool filterDeleted,
     int recordsPerPage,
   ) async {
-    String url = credentials.url +
+    final url = credentials.url +
         '/purchase_orders?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
 
     /*
