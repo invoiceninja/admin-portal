@@ -11,6 +11,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -383,7 +384,7 @@ class MenuDrawer extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                            if (state.userCompany.isOwner &&
+                            if (true || state.userCompany.isOwner &&
                                 state.isHosted &&
                                 !isPaidAccount(context) &&
                                 !isApple() &&
@@ -397,15 +398,14 @@ class MenuDrawer extends StatelessWidget {
                                     dense: true,
                                     tileColor: Colors.green,
                                     leading: Padding(
-                                      padding: const EdgeInsets.only(left: 9),
+                                      padding: const EdgeInsets.only(left: 6),
                                       child: Icon(
                                         Icons.arrow_circle_up,
                                         size: 22,
                                         color: Colors.white,
                                       ),
                                     ),
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
+                                    contentPadding: const EdgeInsets.only(left: 20),
                                     title: state.isMenuCollapsed
                                         ? SizedBox()
                                         : Text(
@@ -419,11 +419,16 @@ class MenuDrawer extends StatelessWidget {
                                                 ),
                                           ),
                                     onTap: () {
+
+                                      showDialog<void>(context: context, builder: (BuildContext context) => UpgradeDialog());
+
+                                      /*
                                       store.dispatch(ViewSettings(
                                           clearFilter: true,
                                           company: company,
                                           user: state.user,
                                           section: kSettingsAccountManagement));
+                                       */
                                     },
                                   ),
                                 ),

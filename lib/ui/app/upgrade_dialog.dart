@@ -13,6 +13,7 @@ import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -22,7 +23,6 @@ class UpgradeDialog extends StatefulWidget {
 class _UpgradeDialogState extends State<UpgradeDialog> {
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>> _subscription;
-  List<String> _notFoundIds = <String>[];
   List<ProductDetails> _products = <ProductDetails>[];
   List<PurchaseDetails> _purchases = <PurchaseDetails>[];
   bool _isAvailable = false;
@@ -53,7 +53,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         _isAvailable = isAvailable;
         _products = <ProductDetails>[];
         _purchases = <PurchaseDetails>[];
-        _notFoundIds = <String>[];
         _purchasePending = false;
         _loading = false;
       });
@@ -75,7 +74,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
         _purchases = <PurchaseDetails>[];
-        _notFoundIds = productDetailResponse.notFoundIDs;
         _purchasePending = false;
         _loading = false;
       });
@@ -88,7 +86,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
         _purchases = <PurchaseDetails>[];
-        _notFoundIds = productDetailResponse.notFoundIDs;
         _purchasePending = false;
         _loading = false;
       });
@@ -98,7 +95,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     setState(() {
       _isAvailable = isAvailable;
       _products = productDetailResponse.productDetails;
-      _notFoundIds = productDetailResponse.notFoundIDs;
       _purchasePending = false;
       _loading = false;
     });
@@ -150,7 +146,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       );
     }
 
-    return Stack(children: stack);
+    return AlertDialog(content: Stack(children: stack));
   }
 
   Card _buildConnectionCheckTile() {
@@ -194,13 +190,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final store = StoreProvider.of<AppState>(context);
     final account = store.state.account;
 
-    if (_notFoundIds.isNotEmpty) {
-      productList.add(ListTile(
-          title: Text('[${_notFoundIds.join(", ")}] not found',
-              style: TextStyle(color: ThemeData.light().errorColor)),
-          subtitle: const Text(
-              'This app needs special configuration to run. Please see example/README.md for instructions.')));
-    }
+
 
     // This loading previous purchases code is just a demo. Please do not use this as it is.
     // In your app you should always verify the purchase data using the `verificationData` inside the [PurchaseDetails] object before trusting it.
@@ -216,44 +206,61 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     productList.addAll(_products.map(
       (ProductDetails productDetails) {
         final PurchaseDetails previousPurchase = purchases[productDetails.id];
+
+        String title = productDetails.title;
+        String description = productDetails.description;
+
+        // TODO remove this code
+        // Workaround for product in app store with blank values
+        if (title.isEmpty && productDetails.id == kProductEnterprisePlanMonth_10) {
+          title = 'Enterprise - Month (6-10)';
+          description = 'One month of the Enterprise Plan (10 users)';
+        }
+
         return ListTile(
           title: Text(
-            productDetails.title,
+            title
           ),
-          subtitle: Text(
-            productDetails.description,
-          ),
-          trailing: previousPurchase != null
-              ? IconButton(
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                description
+              ),
+              previousPurchase != null
+                  ? IconButton(
                   onPressed: () => confirmPriceChange(context),
                   icon: const Icon(Icons.upgrade))
-              : TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.green[800],
-                    // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
-                    // ignore: deprecated_member_use
-                    primary: Colors.white,
-                  ),
-                  onPressed: () {
-                    PurchaseParam purchaseParam;
-
-                    if (Platform.isAndroid) {
-                      purchaseParam = GooglePlayPurchaseParam(
-                          productDetails: productDetails,
-                          applicationUserName: account.id);
-                    } else {
-                      purchaseParam = PurchaseParam(
-                        productDetails: productDetails,
-                        applicationUserName: account.id,
-                      );
-                    }
-
-                    _inAppPurchase.buyNonConsumable(
-                      purchaseParam: purchaseParam,
-                    );
-                  },
-                  child: Text(productDetails.price),
+                  : TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.green[800],
+                  // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
+                  // ignore: deprecated_member_use
+                  primary: Colors.white,
                 ),
+                onPressed: () {
+                  PurchaseParam purchaseParam;
+
+                  if (Platform.isAndroid) {
+                    purchaseParam = GooglePlayPurchaseParam(
+                        productDetails: productDetails,
+                        applicationUserName: account.id);
+                  } else {
+                    purchaseParam = PurchaseParam(
+                      productDetails: productDetails,
+                      applicationUserName: account.id,
+                    );
+                  }
+
+                  _inAppPurchase.buyNonConsumable(
+                    purchaseParam: purchaseParam,
+                  );
+                },
+                child: Text(productDetails.price),
+              ),
+              SizedBox(height: 20),
+            ],
+          ),
         );
       },
     ));
