@@ -14,6 +14,7 @@ import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -114,12 +115,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
       stack.add(
         ListView(
           children: <Widget>[
-            _buildConnectionCheckTile(),
             _buildProductList(),
             _buildRestoreButton(),
           ],
@@ -146,36 +147,10 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       );
     }
 
-    return AlertDialog(content: Stack(children: stack));
+    return AlertDialog(title: Text(localization.upgrade), content: Stack(children: stack),);
   }
 
-  Card _buildConnectionCheckTile() {
-    if (_loading) {
-      return const Card(child: ListTile(title: Text('Trying to connect...')));
-    }
-    final Widget storeHeader = ListTile(
-      leading: Icon(_isAvailable ? Icons.check : Icons.block,
-          color: _isAvailable ? Colors.green : ThemeData.light().errorColor),
-      title:
-          Text('The store is ${_isAvailable ? 'available' : 'unavailable'}.'),
-    );
-    final List<Widget> children = <Widget>[storeHeader];
-
-    if (!_isAvailable) {
-      children.addAll(<Widget>[
-        const Divider(),
-        ListTile(
-          title: Text('Not connected',
-              style: TextStyle(color: ThemeData.light().errorColor)),
-          subtitle: const Text(
-              'Unable to connect to the payments processor. Has this app been configured correctly? See the example README for instructions.'),
-        ),
-      ]);
-    }
-    return Card(child: Column(children: children));
-  }
-
-  Card _buildProductList() {
+  Widget _buildProductList() {
     if (_loading) {
       return const Card(
           child: ListTile(
@@ -185,7 +160,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     if (!_isAvailable) {
       return const Card();
     }
-    const ListTile productHeader = ListTile(title: Text('Products for Sale'));
     final List<ListTile> productList = <ListTile>[];
     final store = StoreProvider.of<AppState>(context);
     final account = store.state.account;
@@ -261,9 +235,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       },
     ));
 
-    return Card(
-        child: Column(
-            children: <Widget>[productHeader, const Divider()] + productList));
+    return Column(
+        children: productList);
   }
 
   Widget _buildRestoreButton() {
