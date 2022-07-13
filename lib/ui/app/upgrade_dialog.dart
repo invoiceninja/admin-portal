@@ -150,16 +150,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       );
     }
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('IAP Example'),
-        ),
-        body: Stack(
-          children: stack,
-        ),
-      ),
-    );
+    return Stack(children: stack);
   }
 
   Card _buildConnectionCheckTile() {
@@ -310,6 +301,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       _purchases.add(purchaseDetails);
       _purchasePending = false;
     });
+
+    print('## PLAN UNLOCKED');
   }
 
   void handleError(IAPError error) {
