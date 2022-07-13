@@ -197,11 +197,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             previousPurchase != null
-                  ? IconButton(
-                  onPressed: () => confirmPriceChange(context),
-                  icon: const Icon(Icons.upgrade))
-                  : TextButton(
+             TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
                   // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
@@ -209,24 +205,29 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                   primary: Colors.white,
                 ),
                 onPressed: () {
-                  PurchaseParam purchaseParam;
-
-                  if (Platform.isAndroid) {
-                    purchaseParam = GooglePlayPurchaseParam(
-                        productDetails: productDetails,
-                        applicationUserName: account.id);
+                  if (previousPurchase != null) {
+                    confirmPriceChange(context);
                   } else {
-                    purchaseParam = PurchaseParam(
-                      productDetails: productDetails,
-                      applicationUserName: account.id,
+                    PurchaseParam purchaseParam;
+
+                    if (Platform.isAndroid) {
+                      purchaseParam = GooglePlayPurchaseParam(
+                          productDetails: productDetails,
+                          applicationUserName: account.id);
+                    } else {
+                      purchaseParam = PurchaseParam(
+                        productDetails: productDetails,
+                        applicationUserName: account.id,
+                      );
+                    }
+
+                    _inAppPurchase.buyNonConsumable(
+                      purchaseParam: purchaseParam,
                     );
                   }
-
-                  _inAppPurchase.buyNonConsumable(
-                    purchaseParam: purchaseParam,
-                  );
                 },
-                child: Text(productDetails.price),
+                child: Text(previousPurchase != null
+                    ? AppLocalization.of(context).activate : productDetails.price),
               ),
               SizedBox(height: 20),
             ],

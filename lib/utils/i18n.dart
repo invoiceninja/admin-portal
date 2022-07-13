@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'activate': 'Activate',
       'connect_apple': 'Connect Apple',
       'disconnect_apple': 'Disconnect Apple',
       'disconnected_apple': 'Successfully disconnected Apple',
@@ -76185,6 +76186,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disconnectApple =>
       _localizedValues[localeCode]['disconnect_apple'] ??
       _localizedValues['en']['disconnect_apple'];
+
+  String get activate =>
+      _localizedValues[localeCode]['activate'] ??
+      _localizedValues['en']['activate'];
 
 
 // STARTER: lang field - do not remove comment
