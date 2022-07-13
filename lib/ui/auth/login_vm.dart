@@ -333,10 +333,6 @@ class LoginVM {
             url: url,
             completer: completer,
             provider: UserEntity.OAUTH_PROVIDER_APPLE,
-            firstName: credentials.givenName,
-            lastName: credentials.familyName,
-            email: credentials.email,
-            authCode: credentials.authorizationCode,
             idToken: credentials.identityToken,
           ));
           completer.future
