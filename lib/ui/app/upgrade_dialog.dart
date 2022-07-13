@@ -203,31 +203,27 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       }
       return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
     }));
+    _products.sort((p1, p2) => p1.rawPrice.compareTo(p2.rawPrice));
     productList.addAll(_products.map(
       (ProductDetails productDetails) {
         final PurchaseDetails previousPurchase = purchases[productDetails.id];
 
-        String title = productDetails.title;
         String description = productDetails.description;
 
         // TODO remove this code
         // Workaround for product in app store with blank values
-        if (title.isEmpty && productDetails.id == kProductEnterprisePlanMonth_10) {
-          title = 'Enterprise - Month (6-10)';
+        if (description.isEmpty && productDetails.id == kProductEnterprisePlanMonth_10) {
           description = 'One month of the Enterprise Plan (10 users)';
         }
 
         return ListTile(
           title: Text(
-            title
+              description
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                description
-              ),
-              previousPurchase != null
+             previousPurchase != null
                   ? IconButton(
                   onPressed: () => confirmPriceChange(context),
                   icon: const Icon(Icons.upgrade))
