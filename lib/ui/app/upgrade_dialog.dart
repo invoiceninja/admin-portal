@@ -12,8 +12,8 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UpgradeDialog extends StatefulWidget {
@@ -147,7 +147,10 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       );
     }
 
-    return AlertDialog(title: Text(localization.upgrade), content: Stack(children: stack),);
+    return AlertDialog(
+      title: Text(localization.upgrade),
+      content: Stack(children: stack),
+    );
   }
 
   Widget _buildProductList() {
@@ -163,8 +166,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final List<ListTile> productList = <ListTile>[];
     final store = StoreProvider.of<AppState>(context);
     final account = store.state.account;
-
-
 
     // This loading previous purchases code is just a demo. Please do not use this as it is.
     // In your app you should always verify the purchase data using the `verificationData` inside the [PurchaseDetails] object before trusting it.
@@ -186,18 +187,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
         // TODO remove this code
         // Workaround for product in app store with blank values
-        if (description.isEmpty && productDetails.id == kProductEnterprisePlanMonth_10) {
+        if (description.isEmpty &&
+            productDetails.id == kProductEnterprisePlanMonth_10) {
           description = 'One month of the Enterprise Plan (10 users)';
         }
 
         return ListTile(
-          title: Text(
-              description
-          ),
+          title: Text(description),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             TextButton(
+              TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
                   // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
@@ -227,7 +227,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                   }
                 },
                 child: Text(previousPurchase != null
-                    ? AppLocalization.of(context).activate : productDetails.price),
+                    ? AppLocalization.of(context).activate
+                    : productDetails.price),
               ),
               SizedBox(height: 20),
             ],
@@ -236,8 +237,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       },
     ));
 
-    return Column(
-        children: productList);
+    return Column(children: productList);
   }
 
   Widget _buildRestoreButton() {
@@ -333,11 +333,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         sku: 'purchaseId',
       );
       if (priceChangeConfirmationResult.responseCode == BillingResponse.ok) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(navigatorKey.currentContext)
+            .showSnackBar(const SnackBar(
           content: Text('Price change accepted'),
         ));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(navigatorKey.currentContext).showSnackBar(SnackBar(
           content: Text(
             priceChangeConfirmationResult.debugMessage ??
                 'Price change failed with code ${priceChangeConfirmationResult.responseCode}',

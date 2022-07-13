@@ -384,11 +384,12 @@ class MenuDrawer extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                            if (true || state.userCompany.isOwner &&
-                                state.isHosted &&
-                                !isPaidAccount(context) &&
-                                !isApple() &&
-                                kReleaseMode)
+                            if (true ||
+                                state.userCompany.isOwner &&
+                                    state.isHosted &&
+                                    !isPaidAccount(context) &&
+                                    !isApple() &&
+                                    kReleaseMode)
                               Material(
                                 child: Tooltip(
                                   message: state.isMenuCollapsed
@@ -405,7 +406,8 @@ class MenuDrawer extends StatelessWidget {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    contentPadding: const EdgeInsets.only(left: 20),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 20),
                                     title: state.isMenuCollapsed
                                         ? SizedBox()
                                         : Text(
@@ -419,8 +421,10 @@ class MenuDrawer extends StatelessWidget {
                                                 ),
                                           ),
                                     onTap: () {
-
-                                      showDialog<void>(context: context, builder: (BuildContext context) => UpgradeDialog());
+                                      showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              UpgradeDialog());
 
                                       /*
                                       store.dispatch(ViewSettings(
@@ -1474,7 +1478,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
           builder: (BuildContext context) {
             return MessageDialog(localization.yourMessageHasBeenReceived);
           });
-      Navigator.pop(context);
+      Navigator.pop(navigatorKey.currentContext);
     }).catchError((dynamic error) {
       print('## ERROR: $error');
       setState(() => _isSaving = false);

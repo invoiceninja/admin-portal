@@ -228,7 +228,7 @@ Middleware<AppState> _createLoadState(
             ..staticState.replace(staticState)
             ..userCompanyStates.replace(companyStates));
 
-      AppBuilder.of(action.context).rebuild();
+      AppBuilder.of(navigatorKey.currentContext).rebuild();
       store.dispatch(LoadStateSuccess(appState));
       store.dispatch(RefreshData(
           completer: Completer<Null>()
@@ -282,7 +282,7 @@ Middleware<AppState> _createLoadState(
       }
 
       if (token.isNotEmpty) {
-        if (calculateLayout(action.context) == AppLayout.mobile) {
+        if (calculateLayout(navigatorKey.currentContext) == AppLayout.mobile) {
           store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
         } else {
           store.dispatch(ViewMainScreen());
@@ -290,7 +290,7 @@ Middleware<AppState> _createLoadState(
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           store.dispatch(ViewDashboard());
         });
-        AppBuilder.of(action.context).rebuild();
+        AppBuilder.of(navigatorKey.currentContext).rebuild();
       } else {
         store.dispatch(UserLogout());
       }

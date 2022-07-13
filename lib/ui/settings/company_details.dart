@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -475,7 +476,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                                 fileType: FileType.image,
                               );
                               if (multipartFile != null) {
-                                viewModel.onUploadLogo(context, multipartFile);
+                                viewModel.onUploadLogo(
+                                    navigatorKey.currentContext, multipartFile);
                               }
                             },
                           ),

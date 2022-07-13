@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -105,7 +106,7 @@ class _DatePickerState extends State<DatePicker> {
 
     if (selectedDate != null) {
       final date = convertDateTimeToSqlDate(selectedDate);
-      _textController.text = formatDate(date, context);
+      _textController.text = formatDate(date, navigatorKey.currentContext);
       widget.onSelected(date, false);
     }
   }
