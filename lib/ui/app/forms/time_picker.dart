@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -102,7 +103,8 @@ class _TimePickerState extends State<TimePicker> {
     if (selectedTime != null) {
       final dateTime = convertTimeOfDayToDateTime(selectedTime);
 
-      _textController.text = formatDate(dateTime.toIso8601String(), context,
+      _textController.text = formatDate(
+          dateTime.toIso8601String(), navigatorKey.currentContext,
           showTime: true, showDate: false);
 
       widget.onSelected(dateTime.toLocal());

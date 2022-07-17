@@ -222,8 +222,8 @@ class UserDetailsVM {
                 if (!signedIn) {
                   showErrorDialog(
                       context: context,
-                      message:
-                          AppLocalization.of(context).anErrorOccurredTryAgain);
+                      message: AppLocalization.of(navigatorKey.currentContext)
+                          .anErrorOccurredTryAgain);
                 }
               } catch (error) {
                 showErrorDialog(context: context, message: error);

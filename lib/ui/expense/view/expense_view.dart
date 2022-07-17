@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -185,7 +186,8 @@ class _ExpenseViewState extends State<ExpenseView>
                     }
                   }
                   if (multipartFile != null) {
-                    viewModel.onUploadDocument(context, multipartFile);
+                    viewModel.onUploadDocument(
+                        navigatorKey.currentContext, multipartFile);
                   }
                 },
                 child: Icon(

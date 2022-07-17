@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -189,7 +190,8 @@ class LoginVM {
           });
           if (!signedIn) {
             completer.completeError(
-                AppLocalization.of(context).anErrorOccurredTryAgain);
+                AppLocalization.of(navigatorKey.currentContext)
+                    .anErrorOccurredTryAgain);
           }
         } catch (error) {
           completer.completeError(error);
@@ -219,7 +221,8 @@ class LoginVM {
           });
           if (!signedIn) {
             completer.completeError(
-                AppLocalization.of(context).anErrorOccurredTryAgain);
+                AppLocalization.of(navigatorKey.currentContext)
+                    .anErrorOccurredTryAgain);
           }
         } catch (error) {
           completer.completeError(error);
@@ -300,7 +303,7 @@ class LoginVM {
             completer: completer,
             url: _formatApiUrl(url),
             secret: secret.trim(),
-            platform: getPlatform(context),
+            platform: getPlatform(navigatorKey.currentContext),
             provider: UserEntity.OAUTH_PROVIDER_APPLE,
             oneTimePassword: oneTimePassword,
             email: credentials.email,
@@ -333,10 +336,6 @@ class LoginVM {
             url: url,
             completer: completer,
             provider: UserEntity.OAUTH_PROVIDER_APPLE,
-            firstName: credentials.givenName,
-            lastName: credentials.familyName,
-            email: credentials.email,
-            authCode: credentials.authorizationCode,
             idToken: credentials.identityToken,
           ));
           completer.future

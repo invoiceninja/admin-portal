@@ -394,18 +394,18 @@ class MenuDrawer extends StatelessWidget {
                                       ? localization.upgrade
                                       : '',
                                   child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 12),
                                     dense: true,
                                     tileColor: Colors.green,
                                     leading: Padding(
-                                      padding: const EdgeInsets.only(left: 9),
+                                      padding: const EdgeInsets.only(left: 10),
                                       child: Icon(
                                         Icons.arrow_circle_up,
                                         size: 22,
                                         color: Colors.white,
                                       ),
                                     ),
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
                                     title: state.isMenuCollapsed
                                         ? SizedBox()
                                         : Text(
@@ -419,6 +419,13 @@ class MenuDrawer extends StatelessWidget {
                                                 ),
                                           ),
                                     onTap: () {
+                                      /*
+                                      showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              UpgradeDialog());
+                                      */
+
                                       store.dispatch(ViewSettings(
                                           clearFilter: true,
                                           company: company,
@@ -1469,7 +1476,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
           builder: (BuildContext context) {
             return MessageDialog(localization.yourMessageHasBeenReceived);
           });
-      Navigator.pop(context);
+      Navigator.pop(navigatorKey.currentContext);
     }).catchError((dynamic error) {
       print('## ERROR: $error');
       setState(() => _isSaving = false);

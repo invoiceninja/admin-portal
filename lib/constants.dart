@@ -92,18 +92,28 @@ const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
 
-const String kProductPlanPro = 'v1_pro_yearly';
-const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';
-const String kProductPlanEnterprise5 = 'v1_enterprise_5_yearly';
-const String kProductPlanEnterprise10 = 'v1_enterprise_10_yearly';
-const String kProductPlanEnterprise20 = 'v1_enterprise_20_yearly';
+const String kProductProPlanMonth = 'pro_plan';
+const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
+const String kProductEnterprisePlanMonth_5 = 'enterprise_plan_5';
+const String kProductEnterprisePlanMonth_10 = 'enterprise_plan_10';
+const String kProductEnterprisePlanMonth_20 = 'enterprise_plan_20';
+const String kProductProPlanYear = 'pro_plan_annual';
+const String kProductEnterprisePlanYear_2 = 'enterprise_plan_annual';
+const String kProductEnterprisePlanYear_5 = 'enterprise_plan_annual_5';
+const String kProductEnterprisePlanYear_10 = 'enterprise_plan_annual_10';
+const String kProductEnterprisePlanYear_20 = 'enterprise_plan_annual_20';
 
 const kProductPlans = [
-  kProductPlanPro,
-  kProductPlanEnterprise2,
-  kProductPlanEnterprise5,
-  kProductPlanEnterprise10,
-  kProductPlanEnterprise20,
+  kProductProPlanMonth,
+  kProductEnterprisePlanMonth_2,
+  kProductEnterprisePlanMonth_5,
+  kProductEnterprisePlanMonth_10,
+  kProductEnterprisePlanMonth_20,
+  kProductProPlanYear,
+  kProductEnterprisePlanYear_2,
+  kProductEnterprisePlanYear_5,
+  kProductEnterprisePlanYear_10,
+  kProductEnterprisePlanYear_20,
 ];
 
 const double kMobileLayoutWidth = 700;
