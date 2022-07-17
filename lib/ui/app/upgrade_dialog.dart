@@ -296,7 +296,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'account_id': state.account.id,
       'plan': '',
       'plan_term': '',
-      'plan_paid': DateTime.now().millisecondsSinceEpoch,
+      'plan_paid': (int.parse(purchase.transactionDate) / 1000).floor(),
     }));
    */
   }
