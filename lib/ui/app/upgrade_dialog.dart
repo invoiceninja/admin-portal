@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -123,6 +124,14 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       stack.add(
         ListView(
           children: <Widget>[
+            if (Platform.isIOS)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
             _buildProductList(),
           ],
         ),
@@ -150,15 +159,25 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     return AlertDialog(
       title: Text(localization.upgrade),
-      content: Stack(children: stack),
+      content: Column(
+        children: [
+
+          Expanded(child: Stack(children: stack)),
+        ],
+      ),
       actions: [
         if (!_loading)
         TextButton(onPressed: () {
           _inAppPurchase.restorePurchases();
         }, child: Text(localization.restorePurchases)),
-        TextButton(onPressed: () {
-          Navigator.of(context).pop();
-        }, child: Text(localization.close)),
+        TextButton(
+          child: Text(localization.termsOfService),
+          onPressed: () => launch(kTermsOfServiceURL),
+        ),
+        TextButton(
+          child: Text(localization.privacyPolicy),
+          onPressed: () => launch(kPrivacyPolicyURL),
+        ),
       ],
     );
   }
