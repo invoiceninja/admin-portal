@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -12,6 +13,7 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -262,6 +264,22 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
 
     print('## PLAN UNLOCKED');
+    print('## ${purchaseDetails.purchaseID}');
+    print('## ${purchaseDetails.productID}');
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) + '/admin/subscription';
+
+  /*
+    await WebClient().post(url, state.credentials.token, data: jsonEncode({
+      'inapp_transaction_id': purchaseDetails.purchaseID,
+      'account_id': state.account.id,
+      'plan': '',
+      'plan_term': '',
+      'plan_paid': DateTime.now().millisecondsSinceEpoch,
+    }));
+   */
   }
 
   void handleError(IAPError error) {
