@@ -122,7 +122,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         ListView(
           children: <Widget>[
             _buildProductList(),
-            _buildRestoreButton(),
           ],
         ),
       );
@@ -150,6 +149,15 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     return AlertDialog(
       title: Text(localization.upgrade),
       content: Stack(children: stack),
+      actions: [
+        if (!_loading)
+        TextButton(onPressed: () {
+          _inAppPurchase.restorePurchases();
+        }, child: Text(localization.restorePurchases)),
+        TextButton(onPressed: () {
+          Navigator.of(context).pop();
+        }, child: Text(localization.close)),
+      ],
     );
   }
 
@@ -238,32 +246,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     ));
 
     return Column(children: productList);
-  }
-
-  Widget _buildRestoreButton() {
-    if (_loading) {
-      return Container();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-              // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
-              // ignore: deprecated_member_use
-              primary: Colors.white,
-            ),
-            onPressed: () => _inAppPurchase.restorePurchases(),
-            child: const Text('Restore purchases'),
-          ),
-        ],
-      ),
-    );
   }
 
   void showPendingUI() {
