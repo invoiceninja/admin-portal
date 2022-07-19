@@ -398,16 +398,13 @@ class MenuDrawer extends StatelessWidget {
                                   child: ListTile(
                                     dense: true,
                                     tileColor: Colors.green,
-                                    leading: Padding(
-                                      padding: const EdgeInsets.only(left: 6),
-                                      child: Icon(
+                                    leading: IconButton(
+                                      onPressed: () => null,
+                                      icon: Icon(
                                         Icons.arrow_circle_up,
-                                        size: 22,
                                         color: Colors.white,
                                       ),
                                     ),
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 20),
                                     title: state.isMenuCollapsed
                                         ? SizedBox()
                                         : Text(
