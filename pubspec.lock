@@ -1227,8 +1227,8 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: "631_paint-multiple-selections"
-      resolved-ref: d935ba41f6855b9e673819195f20046ed694afc5
+      ref: HEAD
+      resolved-ref: "1b4da8e9c197564795aadee7c231cf18bf904418"
       url: "https://github.com/superlistapp/super_editor.git"
     source: git
     version: "0.2.0"
