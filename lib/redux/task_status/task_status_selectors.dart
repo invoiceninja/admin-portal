@@ -94,6 +94,9 @@ List<String> filteredTaskStatusesSelector(
     if (!taskStatus.matchesStates(taskStatusListState.stateFilters)) {
       return false;
     }
+    if (!taskStatus.matchesStatuses(taskStatusListState.statusFilters)) {
+      return false;
+    }
     return taskStatus.matchesFilter(taskStatusListState.filter);
   }).toList();
 
