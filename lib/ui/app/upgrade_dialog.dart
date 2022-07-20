@@ -161,15 +161,16 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       title: Text(localization.upgrade),
       content: Column(
         children: [
-
           Expanded(child: Stack(children: stack)),
         ],
       ),
       actions: [
         if (!_loading)
-        TextButton(onPressed: () {
-          _inAppPurchase.restorePurchases();
-        }, child: Text(localization.restorePurchases)),
+          TextButton(
+              onPressed: () {
+                _inAppPurchase.restorePurchases();
+              },
+              child: Text(localization.restorePurchases)),
         TextButton(
           child: Text(localization.termsOfService),
           onPressed: () => launch(kTermsOfServiceURL),
@@ -288,17 +289,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) + '/admin/subscription';
+    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
+        '/admin/subscription';
 
-  /*
-    await WebClient().post(url, state.credentials.token, data: jsonEncode({
-      'inapp_transaction_id': purchaseDetails.purchaseID,
-      'account_id': state.account.id,
-      'plan': '',
-      'plan_term': '',
-      'plan_paid': (int.parse(purchase.transactionDate) / 1000).floor(),
-    }));
-   */
+    await WebClient().post(url, state.credentials.token,
+        data: jsonEncode({
+          'inapp_transaction_id': purchaseDetails.purchaseID,
+          'account_id': state.account.id,
+          'plan': purchaseDetails.productID,
+          'plan_paid':
+              (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
+        }));
   }
 
   void handleError(IAPError error) {
