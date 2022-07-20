@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -338,19 +339,15 @@ class MenuDrawer extends StatelessWidget {
                                   child: ListTile(
                                     contentPadding:
                                         const EdgeInsets.only(left: 12),
-                                    onTap: () {
-                                      // TODO once v4 is sunset change to ViewSettings
-                                      launch(
-                                          'https://invoiceninja.github.io/docs/hosted-activate/');
-                                      /*
-                                      store.dispatch(ViewSettings(
+                                    leading: IconButton(
+                                      onPressed: () =>
+                                          store.dispatch(ViewSettings(
                                         section: kSettingsAccountManagement,
                                         company: company,
-                                      ));
-                                      */
-                                    },
-                                    leading: Icon(Icons.warning,
-                                        color: Colors.orange),
+                                      )),
+                                      icon: Icon(Icons.warning,
+                                          color: Colors.orange),
+                                    ),
                                   ),
                                 )
                               else
@@ -370,16 +367,10 @@ class MenuDrawer extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
-                                      // TODO once v4 is sunset change to ViewSettings
-                                      launch(
-                                          'https://invoiceninja.github.io/docs/hosted-activate/');
-
-                                      /*
                                       store.dispatch(ViewSettings(
                                         section: kSettingsAccountManagement,
                                         company: company,
                                       ));
-                                      */
                                     },
                                   ),
                                 ),
