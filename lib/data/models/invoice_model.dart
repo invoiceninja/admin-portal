@@ -1131,7 +1131,7 @@ abstract class InvoiceEntity extends Object
     if (userCompany.canEditEntity(this) &&
         !isDeleted &&
         !isCancelledOrReversed) {
-      if (!isQuote && !isCredit && !isRecurringInvoice && isSent) {
+      if (isInvoice && isSent) {
         if (!isPaid) {
           actions.add(EntityAction.cancelInvoice);
         }

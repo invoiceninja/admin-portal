@@ -3,18 +3,22 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
   @override
@@ -121,8 +125,15 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       stack.add(
         ListView(
           children: <Widget>[
+            if (Platform.isIOS)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
             _buildProductList(),
-            _buildRestoreButton(),
           ],
         ),
       );
@@ -149,7 +160,27 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     return AlertDialog(
       title: Text(localization.upgrade),
-      content: Stack(children: stack),
+      content: Column(
+        children: [
+          Expanded(child: Stack(children: stack)),
+        ],
+      ),
+      actions: [
+        if (!_loading)
+          TextButton(
+              onPressed: () {
+                _inAppPurchase.restorePurchases();
+              },
+              child: Text(localization.restorePurchases)),
+        TextButton(
+          child: Text(localization.termsOfService),
+          onPressed: () => launch(kTermsOfServiceURL),
+        ),
+        TextButton(
+          child: Text(localization.privacyPolicy),
+          onPressed: () => launch(kPrivacyPolicyURL),
+        ),
+      ],
     );
   }
 
@@ -240,32 +271,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     return Column(children: productList);
   }
 
-  Widget _buildRestoreButton() {
-    if (_loading) {
-      return Container();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-              // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
-              // ignore: deprecated_member_use
-              primary: Colors.white,
-            ),
-            onPressed: () => _inAppPurchase.restorePurchases(),
-            child: const Text('Restore purchases'),
-          ),
-        ],
-      ),
-    );
-  }
-
   void showPendingUI() {
     setState(() {
       _purchasePending = true;
@@ -280,22 +285,28 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
 
     print('## PLAN UNLOCKED');
+    print('## ${purchaseDetails.purchaseID}');
+    print('## ${purchaseDetails.productID}');
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
+        '/admin/subscription';
+
+    await WebClient().post(url, state.credentials.token,
+        data: jsonEncode({
+          'inapp_transaction_id': purchaseDetails.purchaseID,
+          'account_id': state.account.id,
+          'plan': purchaseDetails.productID,
+          'plan_paid':
+              (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
+        }));
   }
 
   void handleError(IAPError error) {
     setState(() {
       _purchasePending = false;
     });
-  }
-
-  Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
-    // IMPORTANT!! Always verify a purchase before delivering the product.
-    // For the purpose of an example, we directly return true.
-    return Future<bool>.value(true);
-  }
-
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    // handle invalid purchase here if  _verifyPurchase` failed.
   }
 
   Future<void> _listenToPurchaseUpdated(
@@ -308,13 +319,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           handleError(purchaseDetails.error);
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          final bool valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
-            deliverProduct(purchaseDetails);
-          } else {
-            _handleInvalidPurchase(purchaseDetails);
-            return;
-          }
+          deliverProduct(purchaseDetails);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
@@ -325,6 +330,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   Future<void> confirmPriceChange(BuildContext context) async {
     if (Platform.isAndroid) {
+      final localization = AppLocalization.of(context);
       final InAppPurchaseAndroidPlatformAddition androidAddition =
           _inAppPurchase
               .getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
@@ -332,18 +338,15 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           await androidAddition.launchPriceChangeConfirmationFlow(
         sku: 'purchaseId',
       );
+
       if (priceChangeConfirmationResult.responseCode == BillingResponse.ok) {
-        ScaffoldMessenger.of(navigatorKey.currentContext)
-            .showSnackBar(const SnackBar(
-          content: Text('Price change accepted'),
-        ));
+        showToast(localization.priceChangeAccepted);
       } else {
-        ScaffoldMessenger.of(navigatorKey.currentContext).showSnackBar(SnackBar(
-          content: Text(
-            priceChangeConfirmationResult.debugMessage ??
-                'Price change failed with code ${priceChangeConfirmationResult.responseCode}',
-          ),
-        ));
+        showErrorDialog(
+            context: context,
+            message: priceChangeConfirmationResult.debugMessage ??
+                localization.priceChangeFailed +
+                    ' ${priceChangeConfirmationResult.responseCode}');
       }
     }
     if (Platform.isIOS) {

@@ -442,7 +442,8 @@ abstract class TaskEntity extends Object
       return null;
     }
 
-    return last[1];
+    // TODO remove this, it shouldn't be needed
+    return last[1].round();
   }
 
   List<TaskTime> getTaskTimes({bool sort = true}) {
