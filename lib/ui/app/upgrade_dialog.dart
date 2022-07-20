@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
@@ -14,8 +15,8 @@ import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -308,16 +309,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
   }
 
-  Future<bool> _verifyPurchase(PurchaseDetails purchaseDetails) {
-    // IMPORTANT!! Always verify a purchase before delivering the product.
-    // For the purpose of an example, we directly return true.
-    return Future<bool>.value(true);
-  }
-
-  void _handleInvalidPurchase(PurchaseDetails purchaseDetails) {
-    // handle invalid purchase here if  _verifyPurchase` failed.
-  }
-
   Future<void> _listenToPurchaseUpdated(
       List<PurchaseDetails> purchaseDetailsList) async {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
@@ -328,13 +319,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           handleError(purchaseDetails.error);
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          final bool valid = await _verifyPurchase(purchaseDetails);
-          if (valid) {
-            deliverProduct(purchaseDetails);
-          } else {
-            _handleInvalidPurchase(purchaseDetails);
-            return;
-          }
+          deliverProduct(purchaseDetails);
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
@@ -345,6 +330,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   Future<void> confirmPriceChange(BuildContext context) async {
     if (Platform.isAndroid) {
+      final localization = AppLocalization.of(context);
       final InAppPurchaseAndroidPlatformAddition androidAddition =
           _inAppPurchase
               .getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
@@ -352,18 +338,15 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           await androidAddition.launchPriceChangeConfirmationFlow(
         sku: 'purchaseId',
       );
+
       if (priceChangeConfirmationResult.responseCode == BillingResponse.ok) {
-        ScaffoldMessenger.of(navigatorKey.currentContext)
-            .showSnackBar(const SnackBar(
-          content: Text('Price change accepted'),
-        ));
+        showToast(localization.priceChangeAccepted);
       } else {
-        ScaffoldMessenger.of(navigatorKey.currentContext).showSnackBar(SnackBar(
-          content: Text(
-            priceChangeConfirmationResult.debugMessage ??
-                'Price change failed with code ${priceChangeConfirmationResult.responseCode}',
-          ),
-        ));
+        showErrorDialog(
+            context: context,
+            message: priceChangeConfirmationResult.debugMessage ??
+                localization.priceChangeFailed +
+                    ' ${priceChangeConfirmationResult.responseCode}');
       }
     }
     if (Platform.isIOS) {
