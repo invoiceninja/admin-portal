@@ -11,6 +11,17 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
+int productNotificationThreshold({
+  @required ProductEntity product,
+  @required CompanyEntity company,
+}) {
+  if (product.stockNotificationThreshold != 0) {
+    return product.stockNotificationThreshold;
+  }
+
+  return company.stockNotificationThreshold;
+}
+
 InvoiceItemEntity convertProductToInvoiceItem({
   @required ProductEntity product,
   @required CompanyEntity company,
