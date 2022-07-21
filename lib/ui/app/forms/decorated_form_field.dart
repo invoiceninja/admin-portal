@@ -109,7 +109,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
     InputDecoration inputDecoration;
     if (widget.decoration != null) {
       inputDecoration = widget.decoration;
-    } else if (widget.label == null) {
+    } else if (widget.label == null && widget.hint == null) {
       inputDecoration = null;
     } else {
       var icon = widget.suffixIcon ?? iconButton;
@@ -123,8 +123,8 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       }
 
       inputDecoration = InputDecoration(
-          labelText: widget.label,
-          hintText: widget.hint,
+          labelText: widget.label ?? '',
+          hintText: widget.hint ?? '',
           suffixIcon: icon == null ? null : icon,
           floatingLabelBehavior:
               (widget.hint ?? '').isNotEmpty && (widget.label ?? '').isEmpty
