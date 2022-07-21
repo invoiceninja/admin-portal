@@ -182,14 +182,14 @@ ReportResult invoiceReport(
           value = invoice.id;
           break;
         case InvoiceReportFields.amount:
-          value = invoice.isCancelled ? 0 : invoice.amount;
+          value = invoice.isCancelled ? 0.0 : invoice.amount;
           break;
         case InvoiceReportFields.balance:
-          value = invoice.isCancelled ? 0 : invoice.balanceOrAmount;
+          value = invoice.isCancelled ? 0.0 : invoice.balanceOrAmount;
           break;
         case InvoiceReportFields.converted_amount:
           value = invoice.isCancelled
-              ? 0
+              ? 0.0
               : round(invoice.amount * 1 / invoice.exchangeRate, 2);
           break;
         case InvoiceReportFields.converted_balance:
@@ -313,13 +313,13 @@ ReportResult invoiceReport(
           value = invoice.isDeleted;
           break;
         case InvoiceReportFields.tax_amount:
-          value = invoice.isCancelled ? 0 : invoice.taxAmount;
+          value = invoice.isCancelled ? 0.0 : invoice.taxAmount;
           break;
         case InvoiceReportFields.net_amount:
-          value = invoice.isCancelled ? 0 : invoice.netAmount;
+          value = invoice.isCancelled ? 0.0 : invoice.netAmount;
           break;
         case InvoiceReportFields.net_balance:
-          value = invoice.isCancelled ? 0 : invoice.netBalanceOrAmount;
+          value = invoice.isCancelled ? 0.0 : invoice.netBalanceOrAmount;
           break;
         case InvoiceReportFields.exchange_rate:
           value = invoice.exchangeRate;

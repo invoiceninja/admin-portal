@@ -1227,8 +1227,8 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: HEAD
-      resolved-ref: "1b4da8e9c197564795aadee7c231cf18bf904418"
+      ref: typing-fade-prototype
+      resolved-ref: b081a314ed3acfd1a40b6291832f36603229ceed
       url: "https://github.com/superlistapp/super_editor.git"
     source: git
     version: "0.2.0"

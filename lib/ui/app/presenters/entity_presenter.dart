@@ -151,6 +151,7 @@ class EntityPresenter {
       'age_group_120',
       'stock_quantity',
       'notification_threshold',
+      'partial',
     ].contains(field);
 
     return value;

@@ -1450,9 +1450,10 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        final canTotal = cell is ReportNumberValue ||
-            cell is ReportDurationValue ||
-            cell is ReportAgeValue;
+        final canTotal = (cell is ReportNumberValue ||
+                cell is ReportDurationValue ||
+                cell is ReportAgeValue) &&
+            !column.contains('_rate');
 
         String currencyId = '';
         if (canTotal) {
