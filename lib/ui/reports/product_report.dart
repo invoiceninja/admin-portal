@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -148,7 +149,8 @@ ReportResult productReport(
           value = product.stockQuantity;
           break;
         case ProductReportFields.notification_threshold:
-          value = product.stockNotificationThreshold;
+          value = productNotificationThreshold(
+              product: product, company: userCompany.company);
           break;
       }
 
@@ -168,6 +170,10 @@ ReportResult productReport(
           value: value,
           currencyId: userCompany.company.currencyId,
           formatNumberType: FormatNumberType.double,
+        ));
+      } else if (column == ProductReportFields.notification_threshold) {
+        row.add(product.getReportInt(
+          value: value,
         ));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(product.getReportDouble(

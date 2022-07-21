@@ -710,6 +710,18 @@ enum ReportColumnType {
   duration,
 }
 
+bool canTotalColumn(String column) {
+  if (column == 'notification_threshold') {
+    return false;
+  }
+
+  if (column.contains('_rate')) {
+    return false;
+  }
+
+  return true;
+}
+
 ReportColumnType getReportColumnType(String column, BuildContext context) {
   column = toSnakeCase(column);
 
@@ -1391,7 +1403,9 @@ class ReportResult {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
     final localization = AppLocalization.of(context);
-    final sortedColumns = columns.toList()
+    final sortedColumns = columns
+        .where((column) => canTotalColumn(column))
+        .toList()
       ..sort((String str1, String str2) => str1.compareTo(str2));
 
     //for (String column in sortedColumns)
@@ -1453,7 +1467,7 @@ class ReportResult {
         final canTotal = (cell is ReportNumberValue ||
                 cell is ReportDurationValue ||
                 cell is ReportAgeValue) &&
-            !column.contains('_rate');
+            canTotalColumn(column);
 
         String currencyId = '';
         if (canTotal) {
