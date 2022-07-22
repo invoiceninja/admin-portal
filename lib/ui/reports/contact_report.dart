@@ -103,6 +103,7 @@ ReportResult contactReport(
     ContactReportFields.balance,
     ContactReportFields.paid_to_date,
     ContactReportFields.country,
+    ContactReportFields.created_at,
   ];
 
   if (clientReportSettings.columns.isNotEmpty) {

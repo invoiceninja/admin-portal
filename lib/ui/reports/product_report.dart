@@ -28,7 +28,9 @@ enum ProductReportFields {
   product3,
   product4,
   stock_quantity,
-  notification_threshold
+  notification_threshold,
+  created_at,
+  updated_at,
 }
 
 var memoizedProductReport = memo6((
@@ -65,6 +67,7 @@ ReportResult productReport(
     ProductReportFields.price,
     ProductReportFields.cost,
     ProductReportFields.quantity,
+    ProductReportFields.created_at,
   ];
 
   if (productReportSettings.columns.isNotEmpty) {
@@ -151,6 +154,12 @@ ReportResult productReport(
         case ProductReportFields.notification_threshold:
           value = productNotificationThreshold(
               product: product, company: userCompany.company);
+          break;
+        case ProductReportFields.updated_at:
+          value = convertTimestampToDateString(product.updatedAt);
+          break;
+        case ProductReportFields.created_at:
+          value = convertTimestampToDateString(product.createdAt);
           break;
       }
 

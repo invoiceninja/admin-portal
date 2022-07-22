@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -47,6 +48,8 @@ enum ExpenseReportFields {
   tax_amount1,
   tax_amount2,
   tax_amount3,
+  created_at,
+  updated_at,
 }
 
 var memoizedExpenseReport = memo10((
@@ -103,6 +106,7 @@ ReportResult expenseReport(
     ExpenseReportFields.invoice,
     ExpenseReportFields.vendor,
     ExpenseReportFields.category,
+    ExpenseReportFields.date,
   ];
 
   if (expenseReportSettings.columns.isNotEmpty) {
@@ -254,6 +258,12 @@ ReportResult expenseReport(
           break;
         case ExpenseReportFields.tax_amount3:
           value = expense.calculateTaxAmount3;
+          break;
+        case ExpenseReportFields.updated_at:
+          value = convertTimestampToDateString(expense.updatedAt);
+          break;
+        case ExpenseReportFields.created_at:
+          value = convertTimestampToDateString(expense.createdAt);
           break;
       }
 
