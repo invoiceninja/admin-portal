@@ -52,7 +52,8 @@ class UserRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url + '/users/bulk?include=company_user';
+    final url = credentials.url +
+        '/users/bulk?per_page=$kMaxEntitiesPerBulkAction&include=company_user';
     final dynamic response = await webClient.post(
       url,
       credentials.token,

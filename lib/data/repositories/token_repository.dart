@@ -46,7 +46,8 @@ class TokenRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url + '/tokens/bulk';
+    final url =
+        credentials.url + '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 

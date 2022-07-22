@@ -59,7 +59,7 @@ class ClientRepository {
     }
 
     final url = credentials.url +
-        '/clients/bulk?include=gateway_tokens,activities,ledger,system_logs,documents';
+        '/clients/bulk?per_page=$kMaxEntitiesPerBulkAction&include=gateway_tokens,activities,ledger,system_logs,documents';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
