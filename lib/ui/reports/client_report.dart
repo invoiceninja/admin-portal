@@ -108,6 +108,7 @@ ReportResult clientReport(
     ClientReportFields.balance,
     ClientReportFields.paid_to_date,
     ClientReportFields.country,
+    ClientReportFields.created_at,
   ];
 
   if (clientReportSettings.columns.isNotEmpty) {
