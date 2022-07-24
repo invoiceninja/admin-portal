@@ -224,9 +224,9 @@ class MergeClientsRequest implements StartSaving {
 }
 
 class MergeClientsSuccess implements StopSaving, PersistData {
-  MergeClientsSuccess(this.clients);
+  MergeClientsSuccess(this.clientId);
 
-  final List<ClientEntity> clients;
+  final String clientId;
 }
 
 class MergeClientsFailure implements StopSaving {
@@ -268,7 +268,11 @@ class PurgeClientRequest implements StartSaving {
   final String idToken;
 }
 
-class PurgeClientSuccess implements StopSaving, PersistData {}
+class PurgeClientSuccess implements StopSaving, PersistData {
+  PurgeClientSuccess(this.clientId);
+
+  final String clientId;
+}
 
 class PurgeClientFailure implements StopSaving {
   PurgeClientFailure(this.error);
@@ -606,6 +610,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
           ClientPicker(
             clientId: _mergeIntoClientId,
             clientState: state.clientState,
+            excludeIds: [widget.client.id],
             onSelected: (client) =>
                 setState(() => _mergeIntoClientId = client?.id),
           ),
