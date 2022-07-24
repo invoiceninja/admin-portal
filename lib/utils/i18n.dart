@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'merged_clients': 'Successfully merged clients',
+      'merge_into': 'Merge Into',
+      'merge': 'Merge',
       'php81_required': 'Note: v5.5 requires PHP 8.1',
       'price_change_accepted': 'Price change accepted',
       'price_change_failed': 'Price change failed with code',
@@ -85188,6 +85191,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get php81Required =>
       _localizedValues[localeCode]['php81_required'] ??
       _localizedValues['en']['php81_required'];
+
+  String get merge =>
+      _localizedValues[localeCode]['merge'] ?? _localizedValues['en']['merge'];
+
+  String get mergeInto =>
+      _localizedValues[localeCode]['merge_into'] ??
+      _localizedValues['en']['merge_into'];
+
+  String get mergedClients =>
+      _localizedValues[localeCode]['merged_clients'] ??
+      _localizedValues['en']['merged_clients'];
 
 // STARTER: lang field - do not remove comment
 

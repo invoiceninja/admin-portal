@@ -615,6 +615,9 @@ abstract class CompanyEntity extends Object
     } else if (entityType == EntityType.recurringExpense &&
         enabledModules & kModuleRecurringExpenses == 0) {
       return false;
+    } else if (entityType == EntityType.purchaseOrder &&
+        enabledModules & kModulePurchaseOrders == 0) {
+      return false;
     }
 
     return true;

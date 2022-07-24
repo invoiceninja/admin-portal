@@ -652,14 +652,6 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.newPayment);
       }
 
-      if (userCompany.canCreate(EntityType.quote)) {
-        actions.add(EntityAction.newQuote);
-      }
-
-      if (userCompany.canCreate(EntityType.credit)) {
-        actions.add(EntityAction.newCredit);
-      }
-
       if (userCompany.canCreate(EntityType.task)) {
         actions.add(EntityAction.newTask);
       }
@@ -671,6 +663,10 @@ abstract class ClientEntity extends Object
 
     if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
+    }
+
+    if (userCompany.isAdmin && !multiselect) {
+      actions.add(EntityAction.merge);
     }
 
     actions..addAll(super.getActions(userCompany: userCompany));
