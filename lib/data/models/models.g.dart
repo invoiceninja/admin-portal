@@ -82,6 +82,7 @@ const EntityAction _$accept = const EntityAction._('accept');
 const EntityAction _$addToInventory = const EntityAction._('addToInventory');
 const EntityAction _$convertToExpense =
     const EntityAction._('convertToExpense');
+const EntityAction _$merge = const EntityAction._('merge');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -219,6 +220,8 @@ EntityAction _$valueOf(String name) {
       return _$addToInventory;
     case 'convertToExpense':
       return _$convertToExpense;
+    case 'merge':
+      return _$merge;
     default:
       throw new ArgumentError(name);
   }
@@ -293,6 +296,7 @@ final BuiltSet<EntityAction> _$values =
   _$accept,
   _$addToInventory,
   _$convertToExpense,
+  _$merge,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

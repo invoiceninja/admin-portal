@@ -103,6 +103,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.cloud_upload;
     case EntityAction.addToInventory:
       return Icons.inventory;
+    case EntityAction.merge:
+      return MdiIcons.merge;
     default:
       return null;
   }
