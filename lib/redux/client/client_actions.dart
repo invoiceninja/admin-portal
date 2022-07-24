@@ -610,6 +610,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
           ClientPicker(
             clientId: _mergeIntoClientId,
             clientState: state.clientState,
+            excludeIds: [widget.client.id],
             onSelected: (client) =>
                 setState(() => _mergeIntoClientId = client?.id),
           ),
