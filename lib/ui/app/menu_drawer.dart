@@ -135,7 +135,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   entityType: history.entityType,
                                 );
                             }
-                            print('## 3');
                           },
                     icon: Icon(Icons.arrow_circle_left_outlined))
                 : Padding(
