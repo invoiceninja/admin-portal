@@ -89,6 +89,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                       Text(
                           '• ${localization.latestVersion}: v${account.latestVersion}'),
                     ],
+                    // TODO remove this in a few months
                     SizedBox(height: 20),
                     Text(localization.php81Required),
                     if (account.isDocker) ...[

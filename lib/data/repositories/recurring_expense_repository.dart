@@ -48,7 +48,8 @@ class RecurringExpenseRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url + '/recurring_expenses/bulk';
+    final url = credentials.url +
+        '/recurring_expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 

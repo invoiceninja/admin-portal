@@ -55,7 +55,8 @@ class RecurringInvoiceRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url + '/recurring_invoices/bulk';
+    final url = credentials.url +
+        '/recurring_invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 

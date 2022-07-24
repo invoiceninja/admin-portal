@@ -617,7 +617,7 @@ GroupTotals calculateReportTotals({
           totals[group][column] = 0;
         }
 
-        if (cell is ReportNumberValue) {
+        if (cell is ReportNumberValue && cell.currencyId != null) {
           totals[group]['${column}_currency_id'] = parseDouble(cell.currencyId);
         }
 

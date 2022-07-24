@@ -61,7 +61,8 @@ class QuoteRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url + '/quotes/bulk';
+    final url =
+        credentials.url + '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 

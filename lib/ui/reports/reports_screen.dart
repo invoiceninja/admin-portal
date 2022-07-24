@@ -1338,11 +1338,13 @@ class ReportResult {
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
+          final currencyId = values['${column}_currency_id'];
           value = formatNumber(values[column], context,
               formatNumberType: column == 'quantity'
                   ? FormatNumberType.double
                   : FormatNumberType.money,
-              currencyId: values['${column}_currency_id'].round().toString());
+              currencyId:
+                  currencyId == null ? null : currencyId.round().toString());
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values[column].toInt()));
         }

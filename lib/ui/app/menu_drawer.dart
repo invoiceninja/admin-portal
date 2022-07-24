@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
@@ -48,7 +49,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends StatefulWidget {
   const MenuDrawer({
     Key key,
     @required this.viewModel,
@@ -58,12 +59,19 @@ class MenuDrawer extends StatelessWidget {
   static const LOGO_WIDTH = 38.0;
 
   @override
+  State<MenuDrawer> createState() => _MenuDrawerState();
+}
+
+class _MenuDrawerState extends State<MenuDrawer> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
-    final company = viewModel.selectedCompany;
+    final company = widget.viewModel.selectedCompany;
     final inactiveColor = state.prefState
             .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
@@ -90,35 +98,74 @@ class MenuDrawer extends StatelessWidget {
           .firstWhere(
               (userCompanyState) => userCompanyState.company.id == company.id)
           .userCompany;
-      return Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          _companyLogo(company),
-          SizedBox(width: 12, height: kTopBottomBarHeight),
-          Expanded(
-            child: Text(
-              company.displayName.isEmpty
-                  ? localization.newCompany
-                  : company.displayName,
-              style: Theme.of(context).textTheme.subtitle1,
-              overflow: TextOverflow.ellipsis,
+      return MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            !showAccentColor && _isHovered && isDesktopOS()
+                ? IconButton(
+                    onPressed: store.state.historyList.isEmpty
+                        ? () => store.dispatch(ViewDashboard())
+                        : () {
+                            store.dispatch(PopLastHistory());
+                            if (store.state.historyList.isEmpty) {
+                              store.dispatch(ViewDashboard());
+                              return;
+                            }
+                            final history = store.state.historyList.first;
+                            switch (history.entityType) {
+                              case EntityType.dashboard:
+                                store.dispatch(ViewDashboard());
+                                break;
+                              case EntityType.reports:
+                                store.dispatch(ViewReports());
+                                break;
+                              case EntityType.settings:
+                                store.dispatch(ViewSettings(
+                                  section: history.id,
+                                  company: state.company,
+                                ));
+                                break;
+                              default:
+                                viewEntityById(
+                                  entityId: history.id,
+                                  entityType: history.entityType,
+                                );
+                            }
+                          },
+                    icon: Icon(Icons.arrow_circle_left_outlined))
+                : Padding(
+                    padding: const EdgeInsets.only(right: 2),
+                    child: _companyLogo(company),
+                  ),
+            SizedBox(width: 10, height: kTopBottomBarHeight),
+            Expanded(
+              child: Text(
+                company.displayName.isEmpty
+                    ? localization.newCompany
+                    : company.displayName,
+                style: Theme.of(context).textTheme.subtitle1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          if (showAccentColor &&
-              userCompany.settings.accentColor != null &&
-              state.companies.length > 1)
-            Container(
-              padding: const EdgeInsets.only(right: 2),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: convertHexStringToColor(
-                      userCompany.settings.accentColor)),
-              width: 10,
-              height: 10,
-              //color: Colors.red,
-            ),
-        ],
+            if (showAccentColor &&
+                userCompany.settings.accentColor != null &&
+                state.companies.length > 1)
+              Container(
+                padding: const EdgeInsets.only(right: 2),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: convertHexStringToColor(
+                        userCompany.settings.accentColor)),
+                width: 10,
+                height: 10,
+                //color: Colors.red,
+              ),
+          ],
+        ),
       );
     }
 
@@ -127,11 +174,11 @@ class MenuDrawer extends StatelessWidget {
       child: SizedBox(
         height: kTopBottomBarHeight,
         width: MenuDrawer.LOGO_WIDTH,
-        child: _companyLogo(viewModel.selectedCompany),
+        child: _companyLogo(widget.viewModel.selectedCompany),
       ),
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
-        ...viewModel.state.companies
+        ...widget.viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
                   child: _companyListItem(company),
                   value: company.id,
@@ -169,7 +216,7 @@ class MenuDrawer extends StatelessWidget {
       ],
       onSelected: (String companyId) {
         if (companyId == 'logout') {
-          viewModel.onLogoutTap(context);
+          widget.viewModel.onLogoutTap(context);
         } else if (state.isLoading) {
           showMessageDialog(
               context: context, message: localization.waitForLoading);
@@ -183,12 +230,12 @@ class MenuDrawer extends StatelessWidget {
               context: context, message: localization.waitForData);
           return;
         } else if (companyId == 'company') {
-          viewModel.onAddCompany(context);
+          widget.viewModel.onAddCompany(context);
         } else {
           final company =
               state.companies.firstWhere((company) => company.id == companyId);
           final index = state.companies.indexOf(company);
-          viewModel.onCompanyChanged(context, index, company);
+          widget.viewModel.onCompanyChanged(context, index, company);
         }
       },
     );
@@ -199,7 +246,7 @@ class MenuDrawer extends StatelessWidget {
             height: kTopBottomBarHeight,
             child: AppDropdownButton<String>(
               key: ValueKey(kSelectCompanyDropdownKey),
-              value: viewModel.selectedCompanyIndex,
+              value: widget.viewModel.selectedCompanyIndex,
               selectedItemBuilder: (context) => state.companies
                   .map((company) =>
                       _companyListItem(company, showAccentColor: false))
@@ -242,7 +289,7 @@ class MenuDrawer extends StatelessWidget {
               ],
               onChanged: (dynamic value) {
                 if (value == 'logout' && !state.isLoading && !state.isSaving) {
-                  viewModel.onLogoutTap(context);
+                  widget.viewModel.onLogoutTap(context);
                 } else if (state.isLoading) {
                   showMessageDialog(
                       context: context, message: localization.waitForLoading);
@@ -256,11 +303,11 @@ class MenuDrawer extends StatelessWidget {
                       context: context, message: localization.waitForData);
                   return;
                 } else if (value == 'company') {
-                  viewModel.onAddCompany(context);
+                  widget.viewModel.onAddCompany(context);
                 } else {
                   final index = int.parse(value);
-                  viewModel.onCompanyChanged(
-                      context, index, state.companies[index]);
+                  widget.viewModel
+                      .onCompanyChanged(context, index, state.companies[index]);
                 }
               },
             ),
