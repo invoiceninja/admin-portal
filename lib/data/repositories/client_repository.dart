@@ -83,6 +83,24 @@ class ClientRepository {
     return true;
   }
 
+  Future<ClientEntity> merge({
+    @required Credentials credentials,
+    @required String clientId,
+    @required String mergeIntoClientId,
+    @required String password,
+    @required String idToken,
+  }) async {
+    final url = credentials.url + '/clients/$mergeIntoClientId/$clientId/merge';
+
+    final dynamic response = await webClient.post(url, credentials.token,
+        password: password, idToken: idToken);
+
+    final ClientItemResponse clientResponse =
+        serializers.deserializeWith(ClientItemResponse.serializer, response);
+
+    return clientResponse.data;
+  }
+
   Future<ClientEntity> saveData(
       Credentials credentials, ClientEntity client) async {
     client = client.rebuild((b) => b..documents.clear());

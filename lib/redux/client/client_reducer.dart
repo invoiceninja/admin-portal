@@ -263,6 +263,8 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, ArchiveClientsSuccess>(_archiveClientSuccess),
   TypedReducer<ClientState, DeleteClientsSuccess>(_deleteClientSuccess),
   TypedReducer<ClientState, RestoreClientSuccess>(_restoreClientSuccess),
+  TypedReducer<ClientState, MergeClientsSuccess>(_mergeClientSuccess),
+  TypedReducer<ClientState, PurgeClientSuccess>(_purgeClientSuccess),
 ]);
 
 ClientState _archiveClientSuccess(
@@ -310,6 +312,20 @@ ClientState _setLoadedClient(
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
+}
+
+ClientState _mergeClientSuccess(
+    ClientState clientState, MergeClientsSuccess action) {
+  return clientState.rebuild((b) => b
+    ..map.remove(action.clientId)
+    ..list.remove(action.clientId));
+}
+
+ClientState _purgeClientSuccess(
+    ClientState clientState, PurgeClientSuccess action) {
+  return clientState.rebuild((b) => b
+    ..map.remove(action.clientId)
+    ..list.remove(action.clientId));
 }
 
 ClientState _setLoadedClients(

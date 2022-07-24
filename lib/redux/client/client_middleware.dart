@@ -1,6 +1,4 @@
 // Flutter imports:
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -32,6 +30,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final loadClient = _loadClient(repository);
   final saveClient = _saveClient(repository);
   final archiveClient = _archiveClient(repository);
+  final mergeClients = _mergeClients(repository);
   final deleteClient = _deleteClient(repository);
   final purgeClient = _purgeClient(repository);
   final restoreClient = _restoreClient(repository);
@@ -45,6 +44,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, LoadClients>(loadClients),
     TypedMiddleware<AppState, LoadClient>(loadClient),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
+    TypedMiddleware<AppState, MergeClientsRequest>(mergeClients),
     TypedMiddleware<AppState, ArchiveClientsRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientsRequest>(deleteClient),
     TypedMiddleware<AppState, PurgeClientRequest>(purgeClient),
@@ -126,6 +126,34 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
   };
 }
 
+Middleware<AppState> _mergeClients(ClientRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MergeClientsRequest;
+    repository
+        .merge(
+      credentials: store.state.credentials,
+      clientId: action.clientId,
+      mergeIntoClientId: action.mergeIntoClientId,
+      idToken: action.idToken,
+      password: action.password,
+    )
+        .then((client) {
+      store.dispatch(MergeClientsSuccess(action.clientId));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      store.dispatch(MergeClientsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteClientsRequest;
@@ -162,13 +190,10 @@ Middleware<AppState> _purgeClient(ClientRepository repository) {
       idToken: action.idToken,
     )
         .then((_) {
-      store.dispatch(PurgeClientSuccess());
-      store.dispatch(RefreshData(
-          clearData: true,
-          completer: Completer<Null>()
-            ..future.then((value) {
-              action.completer.complete(null);
-            })));
+      store.dispatch(PurgeClientSuccess(action.clientId));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(PurgeClientFailure(error));
