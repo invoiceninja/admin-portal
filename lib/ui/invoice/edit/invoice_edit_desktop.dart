@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -281,20 +282,26 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               viewModel.onAddClientPressed(context, completer),
                         )
                     else
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minWidth: double.infinity, minHeight: 40),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Text(
-                            EntityPresenter()
-                                .initialize(
-                                    invoice.isPurchaseOrder ? vendor : client,
-                                    context)
-                                .title(),
-                            style: Theme.of(context).textTheme.headline6,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                      InkWell(
+                        onLongPress: () => editEntity(
+                            entity: invoice.isPurchaseOrder ? vendor : client),
+                        onTap: () => viewEntity(
+                            entity: invoice.isPurchaseOrder ? vendor : client),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                              minWidth: double.infinity, minHeight: 40),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              EntityPresenter()
+                                  .initialize(
+                                      invoice.isPurchaseOrder ? vendor : client,
+                                      context)
+                                  .title(),
+                              style: Theme.of(context).textTheme.headline6,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ),
