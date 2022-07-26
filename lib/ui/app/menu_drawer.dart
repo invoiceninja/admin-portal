@@ -379,10 +379,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   ),
                                 ),
                             if (!state.account.accountSmsVerified &&
-                                state.isHosted)
+                                state.isHosted &&
+                                state.company.displayName.isNotEmpty)
                               if (state.isMenuCollapsed)
                                 Tooltip(
-                                  message: localization.verifyPhoneHelp,
+                                  message: localization.verifyPhoneNumberHelp,
                                   child: ListTile(
                                     contentPadding:
                                         const EdgeInsets.only(left: 12),
@@ -404,7 +405,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   child: ListTile(
                                     tileColor: Colors.orange.shade800,
                                     subtitle: Text(
-                                      localization.verifyPhoneHelp,
+                                      localization.verifyPhoneNumberHelp,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {

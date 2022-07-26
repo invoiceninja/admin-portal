@@ -121,7 +121,7 @@ class _UserDetailsState extends State<UserDetails>
 
   void _onChanged() {
     var phone = _phoneController.text.trim();
-    if (!phone.startsWith('+')) {
+    if (phone.isNotEmpty && !phone.startsWith('+')) {
       phone = '+$phone';
     }
 
@@ -383,6 +383,38 @@ class _UserDetailsState extends State<UserDetails>
                         if (kIsWeb) microsoftButton else gmailButton,
                         SizedBox(width: kTableColumnGap),
                       ]
+                    ],
+                    if (!state.account.accountSmsVerified) ...[
+                      Expanded(
+                        child: OutlinedButton(
+                          child: Text(
+                            localization.verifyPhoneNumber.toUpperCase(),
+                          ),
+                          onPressed: () {
+                            if (state.settingsUIState.isChanged) {
+                              showMessageDialog(
+                                  context: context,
+                                  message: localization.errorUnsavedChanges);
+                              return;
+                            }
+
+                            if (state.user.phone.isEmpty ||
+                                user.phone.isEmpty) {
+                              showMessageDialog(
+                                  context: context,
+                                  message: localization.enterPhoneNumber);
+                              return;
+                            }
+
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  _SmsVerification(state: viewModel.state),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
                     ],
                     Expanded(
                       child: OutlinedButton(
@@ -677,6 +709,68 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             ),
           ),
         ]
+      ],
+    );
+  }
+}
+
+class _SmsVerification extends StatefulWidget {
+  const _SmsVerification({@required this.state});
+
+  final AppState state;
+
+  @override
+  State<_SmsVerification> createState() => __SmsVerificationState();
+}
+
+class __SmsVerificationState extends State<_SmsVerification> {
+  bool _isLoading = false;
+
+  void _sendCode() {
+    //
+  }
+
+  void _verifyCode() {
+    //
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localization.verifyPhoneNumber),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(localization.codeWasSent),
+          SizedBox(height: 8),
+          DecoratedFormField(
+            label: localization.code,
+            keyboardType: TextInputType.number,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            localization.cancel.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: () => _sendCode(),
+          child: Text(
+            localization.resend.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: () => _verifyCode(),
+          child: Text(
+            localization.verify.toUpperCase(),
+          ),
+        ),
       ],
     );
   }
