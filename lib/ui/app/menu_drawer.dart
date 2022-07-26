@@ -378,7 +378,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     onTap: () => launch(kDebugModeUrl),
                                   ),
                                 ),
-                            if (!state.account.accountSmsVerified)
+                            if (!state.account.accountSmsVerified &&
+                                state.isHosted)
                               if (state.isMenuCollapsed)
                                 Tooltip(
                                   message: localization.verifyPhoneHelp,

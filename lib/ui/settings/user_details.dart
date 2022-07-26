@@ -120,11 +120,16 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onChanged() {
+    var phone = _phoneController.text.trim();
+    if (!phone.startsWith('+')) {
+      phone = '+$phone';
+    }
+
     final user = widget.viewModel.user.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim()
+      ..phone = phone
       ..password = _passwordController.text.trim());
     if (user != widget.viewModel.user) {
       _debouncer.run(() {
@@ -135,7 +140,6 @@ class _UserDetailsState extends State<UserDetails>
 
   void _onSavePressed(BuildContext context) {
     final bool isValid = _formKey.currentState.validate();
-    print('## onSavePressed: $isValid');
 
     setState(() {
       autoValidate = !isValid ?? false;
@@ -336,6 +340,10 @@ class _UserDetailsState extends State<UserDetails>
                     keyboardType: TextInputType.phone,
                     hint: '+12125550000',
                     validator: (value) {
+                      if (value.isEmpty || state.isSelfHosted) {
+                        return null;
+                      }
+
                       if (!value.startsWith('+')) {
                         value = '+$value';
                       }
