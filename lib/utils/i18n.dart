@@ -16,6 +16,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'code_was_sent': 'A code has been sent via SMS',
+      'resend': 'Resend',
+      'verify': 'Verify',
+      'enter_phone_number': 'Please provide a phone number',
+      'invalid_phone_number': 'Invalid phone number',
+      'verify_phone_number': 'Verify Phone Number',
+      'verify_phone_number_help':
+          'Please verify your phone number to send emails',
       'merged_clients': 'Successfully merged clients',
       'merge_into': 'Merge Into',
       'merge': 'Merge',
@@ -717,8 +725,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'capture_card': 'Capture Card',
       'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
-      'line_taxes': 'Line Taxes',
-      'total_fields': 'Total Fields',
+      'line_taxes': 'Line Taxes', 'total_fields': 'Total Fields',
       'stopped_recurring_invoice': 'Successfully stopped recurring invoice',
       'started_recurring_invoice': 'Successfully started recurring invoice',
       'resumed_recurring_invoice': 'Successfully resumed recurring invoice',
@@ -85202,6 +85209,38 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get mergedClients =>
       _localizedValues[localeCode]['merged_clients'] ??
       _localizedValues['en']['merged_clients'];
+
+  String get verifyPhoneNumber =>
+      _localizedValues[localeCode]['verify_phone_number'] ??
+      _localizedValues['en']['verify_phone_number'];
+
+  String get verifyPhoneNumberHelp =>
+      _localizedValues[localeCode]['verify_phone_number_help'] ??
+      _localizedValues['en']['verify_phone_number_help'];
+
+  String get invalidPhoneNumber =>
+      _localizedValues[localeCode]['invalid_phone_number'] ??
+      _localizedValues['en']['invalid_phone_number'];
+
+  String get enterPhoneNumber =>
+      _localizedValues[localeCode]['enter_phone_number'] ??
+      _localizedValues['en']['enter_phone_number'];
+
+  String get resend =>
+      _localizedValues[localeCode]['resend'] ??
+      _localizedValues['en']['resend'];
+
+  String get verify =>
+      _localizedValues[localeCode]['verify'] ??
+      _localizedValues['en']['verify'];
+
+  String get codeWasSent =>
+      _localizedValues[localeCode]['code_was_sent'] ??
+      _localizedValues['en']['code_was_sent'];
+
+        String get pleaseEnterACode =>
+      _localizedValues[localeCode]['please_enter_a_code'] ?? _localizedValues['en']['please_enter_a_code'];
+
 
 // STARTER: lang field - do not remove comment
 

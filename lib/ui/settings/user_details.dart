@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -120,17 +121,36 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onChanged() {
+    var phone = _phoneController.text.trim();
+    if (phone.isNotEmpty && !phone.startsWith('+')) {
+      phone = '+$phone';
+    }
+
     final user = widget.viewModel.user.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim()
+      ..phone = phone
       ..password = _passwordController.text.trim());
     if (user != widget.viewModel.user) {
       _debouncer.run(() {
         widget.viewModel.onChanged(user);
       });
     }
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      autoValidate = !isValid ?? false;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
   }
 
   @override
@@ -264,19 +284,7 @@ class _UserDetailsState extends State<UserDetails>
 
     return EditScaffold(
       title: localization.userDetails,
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [
@@ -303,7 +311,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterAFirstName
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
@@ -313,7 +321,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterALastName
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
@@ -323,19 +331,32 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterYourEmail
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 DecoratedFormField(
-                  label: localization.phone,
-                  controller: _phoneController,
-                  onSavePressed: viewModel.onSavePressed,
-                  keyboardType: TextInputType.phone,
-                ),
+                    label: localization.phone,
+                    controller: _phoneController,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.phone,
+                    hint: '+12125550000',
+                    validator: (value) {
+                      if (value.isEmpty || state.isSelfHosted) {
+                        return null;
+                      }
+
+                      if (!value.startsWith('+')) {
+                        value = '+$value';
+                      }
+
+                      return RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(value)
+                          ? null
+                          : localization.invalidPhoneNumber;
+                    }),
                 PasswordFormField(
                   controller: _passwordController,
                   autoValidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
               ]),
               Padding(
@@ -363,6 +384,38 @@ class _UserDetailsState extends State<UserDetails>
                         if (kIsWeb) microsoftButton else gmailButton,
                         SizedBox(width: kTableColumnGap),
                       ]
+                    ],
+                    if (!state.account.accountSmsVerified) ...[
+                      Expanded(
+                        child: OutlinedButton(
+                          child: Text(
+                            localization.verifyPhoneNumber.toUpperCase(),
+                          ),
+                          onPressed: () {
+                            if (state.settingsUIState.isChanged) {
+                              showMessageDialog(
+                                  context: context,
+                                  message: localization.errorUnsavedChanges);
+                              return;
+                            }
+
+                            if (state.user.phone.isEmpty ||
+                                user.phone.isEmpty) {
+                              showMessageDialog(
+                                  context: context,
+                                  message: localization.enterPhoneNumber);
+                              return;
+                            }
+
+                            showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  _SmsVerification(state: viewModel.state),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
                     ],
                     Expanded(
                       child: OutlinedButton(
@@ -657,6 +710,151 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             ),
           ),
         ]
+      ],
+    );
+  }
+}
+
+class _SmsVerification extends StatefulWidget {
+  const _SmsVerification({@required this.state});
+
+  final AppState state;
+
+  @override
+  State<_SmsVerification> createState() => __SmsVerificationState();
+}
+
+class __SmsVerificationState extends State<_SmsVerification> {
+  bool _isLoading = true;
+  String _code = '';
+  bool _autoValidate = false;
+  final _webClient = WebClient();
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_verifyPhone');
+  final FocusScopeNode _focusNode = FocusScopeNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _sendCode();
+  }
+
+  void _sendCode() {
+    final state = widget.state;
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/verify';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode({'phone': state.user.phone}))
+        .then((dynamic data) {
+      print('## VERIFY Response: $data');
+      showMessageDialog(
+          context: navigatorKey.currentContext, message: 'Response: $data');
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
+  }
+
+  void _verifyCode() {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      _autoValidate = !isValid ?? false;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/verify/confirm';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token, data: json.encode({'code': _code}))
+        .then((dynamic data) {
+      print('## CONFIRM Response: $data');
+      showMessageDialog(
+          context: navigatorKey.currentContext, message: 'Response: $data');
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localization.verifyPhoneNumber),
+      content: _isLoading
+          ? LoadingIndicator(height: 80)
+          : AppForm(
+              focusNode: _focusNode,
+              formKey: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(localization.codeWasSent),
+                  SizedBox(height: 8),
+                  DecoratedFormField(
+                    label: localization.code,
+                    keyboardType: TextInputType.number,
+                    autovalidate: _autoValidate,
+                    validator: (value) =>
+                        value.isEmpty ? localization.pleaseEnterACode : null,
+                  ),
+                ],
+              ),
+            ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            localization.cancel.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: () => _sendCode(),
+          child: Text(
+            localization.resend.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: () => _verifyCode(),
+          child: Text(
+            localization.verify.toUpperCase(),
+          ),
+        ),
       ],
     );
   }

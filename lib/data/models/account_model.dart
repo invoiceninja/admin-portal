@@ -23,6 +23,7 @@ abstract class AccountEntity
       debugEnabled: false,
       isDocker: false,
       isHosted: false,
+      accountSmsVerified: false,
       isSchedulerRunning: false,
       disableAutoUpdate: false,
       isMigrated: false,
@@ -93,6 +94,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'set_react_as_default_ap')
   bool get setReactAsDefaultAP;
 
+  @BuiltValueField(wireName: 'account_sms_verified')
+  bool get accountSmsVerified;
+
   @BuiltValueField(wireName: 'trial_days_left')
   int get trialDaysLeft;
 
@@ -121,6 +125,7 @@ abstract class AccountEntity
     ..trialDaysLeft = 0
     ..hostedClientCount = 0
     ..hostedCompanyCount = 1
+    ..accountSmsVerified = false
     ..setReactAsDefaultAP = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
