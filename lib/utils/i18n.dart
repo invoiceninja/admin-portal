@@ -85238,6 +85238,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['code_was_sent'] ??
       _localizedValues['en']['code_was_sent'];
 
+        String get pleaseEnterACode =>
+      _localizedValues[localeCode]['please_enter_a_code'] ?? _localizedValues['en']['please_enter_a_code'];
+
+
 // STARTER: lang field - do not remove comment
 
   String lookup(String key) {

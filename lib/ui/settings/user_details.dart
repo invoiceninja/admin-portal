@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -724,14 +725,88 @@ class _SmsVerification extends StatefulWidget {
 }
 
 class __SmsVerificationState extends State<_SmsVerification> {
-  bool _isLoading = false;
+  bool _isLoading = true;
+  String _code = '';
+  bool _autoValidate = false;
+  final _webClient = WebClient();
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_verifyPhone');
+  final FocusScopeNode _focusNode = FocusScopeNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _sendCode();
+  }
 
   void _sendCode() {
-    //
+    final state = widget.state;
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/verify';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode({'phone': state.user.phone}))
+        .then((dynamic data) {
+      print('## VERIFY Response: $data');
+      showMessageDialog(
+          context: navigatorKey.currentContext, message: 'Response: $data');
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
   }
 
   void _verifyCode() {
-    //
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      _autoValidate = !isValid ?? false;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/verify/confirm';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token, data: json.encode({'code': _code}))
+        .then((dynamic data) {
+      print('## CONFIRM Response: $data');
+      showMessageDialog(
+          context: navigatorKey.currentContext, message: 'Response: $data');
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -740,18 +815,27 @@ class __SmsVerificationState extends State<_SmsVerification> {
 
     return AlertDialog(
       title: Text(localization.verifyPhoneNumber),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(localization.codeWasSent),
-          SizedBox(height: 8),
-          DecoratedFormField(
-            label: localization.code,
-            keyboardType: TextInputType.number,
-          ),
-        ],
-      ),
+      content: _isLoading
+          ? LoadingIndicator(height: 80)
+          : AppForm(
+              focusNode: _focusNode,
+              formKey: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(localization.codeWasSent),
+                  SizedBox(height: 8),
+                  DecoratedFormField(
+                    label: localization.code,
+                    keyboardType: TextInputType.number,
+                    autovalidate: _autoValidate,
+                    validator: (value) =>
+                        value.isEmpty ? localization.pleaseEnterACode : null,
+                  ),
+                ],
+              ),
+            ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
