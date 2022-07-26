@@ -126,7 +126,7 @@ class EditScaffold extends StatelessWidget {
                         InkWell(
                           child: IconMessage(
                             upgradeMessage,
-                            color: Colors.orange,
+                            color: Colors.orange.shade800,
                           ),
                           onTap: state.userCompany.isOwner
                               ? () async {

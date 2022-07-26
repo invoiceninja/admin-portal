@@ -378,7 +378,45 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     onTap: () => launch(kDebugModeUrl),
                                   ),
                                 ),
-                            if (state.company.isDisabled &&
+                            if (!state.account.accountSmsVerified)
+                              if (state.isMenuCollapsed)
+                                Tooltip(
+                                  message: localization.verifyPhoneHelp,
+                                  child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: IconButton(
+                                      onPressed: () =>
+                                          store.dispatch(ViewSettings(
+                                        section: kSettingsUserDetails,
+                                        company: company,
+                                        user: state.user,
+                                        tabIndex: 0,
+                                      )),
+                                      icon: Icon(Icons.warning,
+                                          color: Colors.orange),
+                                    ),
+                                  ),
+                                )
+                              else
+                                Material(
+                                  child: ListTile(
+                                    tileColor: Colors.orange.shade800,
+                                    subtitle: Text(
+                                      localization.verifyPhoneHelp,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      store.dispatch(ViewSettings(
+                                        section: kSettingsUserDetails,
+                                        company: company,
+                                        user: state.user,
+                                        tabIndex: 0,
+                                      ));
+                                    },
+                                  ),
+                                )
+                            else if (state.company.isDisabled &&
                                 state.userCompany.isAdmin)
                               if (state.isMenuCollapsed)
                                 Tooltip(

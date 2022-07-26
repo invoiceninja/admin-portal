@@ -133,6 +133,21 @@ class _UserDetailsState extends State<UserDetails>
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+    print('## onSavePressed: $isValid');
+
+    setState(() {
+      autoValidate = !isValid ?? false;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -264,19 +279,7 @@ class _UserDetailsState extends State<UserDetails>
 
     return EditScaffold(
       title: localization.userDetails,
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [
@@ -303,7 +306,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterAFirstName
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
@@ -313,7 +316,7 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterALastName
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
                 DecoratedFormField(
@@ -323,19 +326,28 @@ class _UserDetailsState extends State<UserDetails>
                       ? localization.pleaseEnterYourEmail
                       : null,
                   autovalidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 DecoratedFormField(
-                  label: localization.phone,
-                  controller: _phoneController,
-                  onSavePressed: viewModel.onSavePressed,
-                  keyboardType: TextInputType.phone,
-                ),
+                    label: localization.phone,
+                    controller: _phoneController,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.phone,
+                    hint: '+12125550000',
+                    validator: (value) {
+                      if (!value.startsWith('+')) {
+                        value = '+$value';
+                      }
+
+                      return RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(value)
+                          ? null
+                          : localization.invalidPhoneNumber;
+                    }),
                 PasswordFormField(
                   controller: _passwordController,
                   autoValidate: autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
               ]),
               Padding(

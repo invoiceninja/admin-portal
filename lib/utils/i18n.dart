@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'invalid_phone_number': 'Invalid phone number',
+      'verify_phone_help': 'Please verify your phone number to send emails',
       'merged_clients': 'Successfully merged clients',
       'merge_into': 'Merge Into',
       'merge': 'Merge',
@@ -85202,6 +85204,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get mergedClients =>
       _localizedValues[localeCode]['merged_clients'] ??
       _localizedValues['en']['merged_clients'];
+
+  String get verifyPhoneHelp =>
+      _localizedValues[localeCode]['verify_phone_help'] ??
+      _localizedValues['en']['verify_phone_help'];
+
+  String get invalidPhoneNumber =>
+      _localizedValues[localeCode]['invalid_phone_number'] ??
+      _localizedValues['en']['invalid_phone_number'];
+
+
 
 // STARTER: lang field - do not remove comment
 

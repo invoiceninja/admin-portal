@@ -71,6 +71,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'set_react_as_default_ap',
       serializers.serialize(object.setReactAsDefaultAP,
           specifiedType: const FullType(bool)),
+      'account_sms_verified',
+      serializers.serialize(object.accountSmsVerified,
+          specifiedType: const FullType(bool)),
       'trial_days_left',
       serializers.serialize(object.trialDaysLeft,
           specifiedType: const FullType(int)),
@@ -163,6 +166,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.setReactAsDefaultAP = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'account_sms_verified':
+          result.accountSmsVerified = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'trial_days_left':
           result.trialDaysLeft = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -212,6 +219,8 @@ class _$AccountEntity extends AccountEntity {
   @override
   final bool setReactAsDefaultAP;
   @override
+  final bool accountSmsVerified;
+  @override
   final int trialDaysLeft;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
@@ -236,6 +245,7 @@ class _$AccountEntity extends AccountEntity {
       this.hostedClientCount,
       this.hostedCompanyCount,
       this.setReactAsDefaultAP,
+      this.accountSmsVerified,
       this.trialDaysLeft})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
@@ -273,6 +283,8 @@ class _$AccountEntity extends AccountEntity {
     BuiltValueNullFieldError.checkNotNull(
         setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP');
     BuiltValueNullFieldError.checkNotNull(
+        accountSmsVerified, 'AccountEntity', 'accountSmsVerified');
+    BuiltValueNullFieldError.checkNotNull(
         trialDaysLeft, 'AccountEntity', 'trialDaysLeft');
   }
 
@@ -305,6 +317,7 @@ class _$AccountEntity extends AccountEntity {
         hostedClientCount == other.hostedClientCount &&
         hostedCompanyCount == other.hostedCompanyCount &&
         setReactAsDefaultAP == other.setReactAsDefaultAP &&
+        accountSmsVerified == other.accountSmsVerified &&
         trialDaysLeft == other.trialDaysLeft;
   }
 
@@ -329,31 +342,25 @@ class _$AccountEntity extends AccountEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                id
-                                                                                    .hashCode),
-                                                                            trialStarted
-                                                                                .hashCode),
-                                                                        defaultUrl
-                                                                            .hashCode),
-                                                                    reportErrors
-                                                                        .hashCode),
-                                                                plan.hashCode),
-                                                            planExpires
-                                                                .hashCode),
-                                                        latestVersion.hashCode),
-                                                    currentVersion.hashCode),
-                                                debugEnabled.hashCode),
-                                            isDocker.hashCode),
-                                        isMigrated.hashCode),
-                                    isHosted.hashCode),
-                                isSchedulerRunning.hashCode),
-                            disableAutoUpdate.hashCode),
-                        defaultCompanyId.hashCode),
-                    hostedClientCount.hashCode),
-                hostedCompanyCount.hashCode),
-            setReactAsDefaultAP.hashCode),
+                                                                            $jc($jc(0, id.hashCode),
+                                                                                trialStarted.hashCode),
+                                                                            defaultUrl.hashCode),
+                                                                        reportErrors.hashCode),
+                                                                    plan.hashCode),
+                                                                planExpires.hashCode),
+                                                            latestVersion.hashCode),
+                                                        currentVersion.hashCode),
+                                                    debugEnabled.hashCode),
+                                                isDocker.hashCode),
+                                            isMigrated.hashCode),
+                                        isHosted.hashCode),
+                                    isSchedulerRunning.hashCode),
+                                disableAutoUpdate.hashCode),
+                            defaultCompanyId.hashCode),
+                        hostedClientCount.hashCode),
+                    hostedCompanyCount.hashCode),
+                setReactAsDefaultAP.hashCode),
+            accountSmsVerified.hashCode),
         trialDaysLeft.hashCode));
   }
 
@@ -378,6 +385,7 @@ class _$AccountEntity extends AccountEntity {
           ..add('hostedClientCount', hostedClientCount)
           ..add('hostedCompanyCount', hostedCompanyCount)
           ..add('setReactAsDefaultAP', setReactAsDefaultAP)
+          ..add('accountSmsVerified', accountSmsVerified)
           ..add('trialDaysLeft', trialDaysLeft))
         .toString();
   }
@@ -467,6 +475,11 @@ class AccountEntityBuilder
   set setReactAsDefaultAP(bool setReactAsDefaultAP) =>
       _$this._setReactAsDefaultAP = setReactAsDefaultAP;
 
+  bool _accountSmsVerified;
+  bool get accountSmsVerified => _$this._accountSmsVerified;
+  set accountSmsVerified(bool accountSmsVerified) =>
+      _$this._accountSmsVerified = accountSmsVerified;
+
   int _trialDaysLeft;
   int get trialDaysLeft => _$this._trialDaysLeft;
   set trialDaysLeft(int trialDaysLeft) => _$this._trialDaysLeft = trialDaysLeft;
@@ -496,6 +509,7 @@ class AccountEntityBuilder
       _hostedClientCount = $v.hostedClientCount;
       _hostedCompanyCount = $v.hostedCompanyCount;
       _setReactAsDefaultAP = $v.setReactAsDefaultAP;
+      _accountSmsVerified = $v.accountSmsVerified;
       _trialDaysLeft = $v.trialDaysLeft;
       _$v = null;
     }
@@ -544,6 +558,7 @@ class AccountEntityBuilder
             hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, 'AccountEntity', 'hostedClientCount'),
             hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount'),
             setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP'),
+            accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, 'AccountEntity', 'accountSmsVerified'),
             trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, 'AccountEntity', 'trialDaysLeft'));
     replace(_$result);
     return _$result;
