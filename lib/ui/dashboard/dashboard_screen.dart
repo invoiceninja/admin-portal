@@ -232,7 +232,11 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
         actions: [
           if (!kReleaseMode ||
-              (kIsWeb && state.isSelfHosted && state.userCompany.isAdmin))
+              (kIsWeb &&
+                  state.isSelfHosted &&
+                  state.userCompany.isAdmin &&
+                  // TODO remove this
+                  !state.isDemo))
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
