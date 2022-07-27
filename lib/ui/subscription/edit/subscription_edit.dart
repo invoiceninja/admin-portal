@@ -261,6 +261,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         ..productIds = <String>[...parts, value.id]
                             .where((part) => part.isNotEmpty)
                             .join(',')));
+
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        FocusScope.of(context).unfocus();
+                      });
                     },
                   ),
                   SizedBox(
@@ -299,6 +303,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                         ..recurringProductIds = <String>[...parts, value.id]
                             .where((part) => part.isNotEmpty)
                             .join(',')));
+
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        FocusScope.of(context).unfocus();
+                      });
                     },
                   ),
                   SizedBox(
