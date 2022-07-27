@@ -101,6 +101,11 @@ flutter:
     - assets/images/google_logo.png
     - assets/images/payment_types/
 
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: google_fonts/Roboto-Regular.ttf
+
 msix_config:
   display_name: Invoice Ninja
   publisher_display_name: Invoice Ninja
