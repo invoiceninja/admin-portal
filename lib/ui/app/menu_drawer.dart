@@ -379,8 +379,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   ),
                                 ),
                             if (!state.account.accountSmsVerified &&
-                                state.isHosted &&
-                                state.company.displayName.isNotEmpty)
+                                state.isHosted)
                               if (state.isMenuCollapsed)
                                 Tooltip(
                                   message: localization.verifyPhoneNumberHelp,

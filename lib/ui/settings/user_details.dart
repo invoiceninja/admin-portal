@@ -161,10 +161,13 @@ class _UserDetailsState extends State<UserDetails>
 
     final googleButton = Expanded(
       child: OutlinedButton(
-        child: Text((state.user.isConnectedToGoogle
-                ? localization.disconnectGoogle
-                : localization.connectGoogle)
-            .toUpperCase()),
+        child: Text(
+          (state.user.isConnectedToGoogle
+                  ? localization.disconnectGoogle
+                  : localization.connectGoogle)
+              .toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
         onPressed: state.user.isConnectedToEmail
             ? null
             : () {
@@ -186,10 +189,13 @@ class _UserDetailsState extends State<UserDetails>
 
     final gmailButton = Expanded(
       child: OutlinedButton(
-        child: Text((user.isConnectedToEmail
-                ? localization.disconnectGmail
-                : localization.connectGmail)
-            .toUpperCase()),
+        child: Text(
+          (user.isConnectedToEmail
+                  ? localization.disconnectGmail
+                  : localization.connectGmail)
+              .toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
         onPressed: !state.user.isConnectedToGoogle
             ? null
             : () async {
@@ -211,10 +217,13 @@ class _UserDetailsState extends State<UserDetails>
 
     final microsoftButton = Expanded(
       child: OutlinedButton(
-        child: Text((state.user.isConnectedToMicrosoft
-                ? localization.disconnectMicrosoft
-                : localization.connectMicrosoft)
-            .toUpperCase()),
+        child: Text(
+          (state.user.isConnectedToMicrosoft
+                  ? localization.disconnectMicrosoft
+                  : localization.connectMicrosoft)
+              .toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
         onPressed: state.user.isConnectedToEmail
             ? null
             : () {
@@ -236,10 +245,13 @@ class _UserDetailsState extends State<UserDetails>
 
     final office365Button = Expanded(
       child: OutlinedButton(
-        child: Text((user.isConnectedToEmail
-                ? localization.disconnectEmail
-                : localization.connectEmail)
-            .toUpperCase()),
+        child: Text(
+          (user.isConnectedToEmail
+                  ? localization.disconnectEmail
+                  : localization.connectEmail)
+              .toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
         onPressed: !state.user.isConnectedToMicrosoft
             ? null
             : () async {
@@ -261,10 +273,13 @@ class _UserDetailsState extends State<UserDetails>
 
     final appleButton = Expanded(
       child: OutlinedButton(
-        child: Text((state.user.isConnectedToApple
-                ? localization.disconnectApple
-                : localization.connectApple)
-            .toUpperCase()),
+        child: Text(
+          (state.user.isConnectedToApple
+                  ? localization.disconnectApple
+                  : localization.connectApple)
+              .toUpperCase(),
+          textAlign: TextAlign.center,
+        ),
         onPressed: () {
           if (state.settingsUIState.isChanged) {
             showMessageDialog(
@@ -389,6 +404,7 @@ class _UserDetailsState extends State<UserDetails>
                         child: OutlinedButton(
                           child: Text(
                             localization.verifyPhoneNumber.toUpperCase(),
+                            textAlign: TextAlign.center,
                           ),
                           onPressed: () {
                             if (state.settingsUIState.isChanged) {
@@ -418,10 +434,13 @@ class _UserDetailsState extends State<UserDetails>
                     ],
                     Expanded(
                       child: OutlinedButton(
-                        child: Text((state.user.isTwoFactorEnabled
-                                ? localization.disableTwoFactor
-                                : localization.enableTwoFactor)
-                            .toUpperCase()),
+                        child: Text(
+                          (state.user.isTwoFactorEnabled
+                                  ? localization.disableTwoFactor
+                                  : localization.enableTwoFactor)
+                              .toUpperCase(),
+                          textAlign: TextAlign.center,
+                        ),
                         onPressed: () {
                           if (state.settingsUIState.isChanged) {
                             showMessageDialog(
