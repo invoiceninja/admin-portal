@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -745,6 +744,7 @@ class __SmsVerificationState extends State<_SmsVerification> {
     final state = widget.state;
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/verify';
+    final navigator = Navigator.of(context);
 
     setState(() {
       _isLoading = true;
@@ -754,9 +754,6 @@ class __SmsVerificationState extends State<_SmsVerification> {
         .post(url, credentials.token,
             data: json.encode({'phone': state.user.phone}))
         .then((dynamic data) {
-      print('## VERIFY Response: $data');
-      showMessageDialog(
-          context: navigatorKey.currentContext, message: 'Response: $data');
       setState(() {
         _isLoading = false;
       });
@@ -764,7 +761,9 @@ class __SmsVerificationState extends State<_SmsVerification> {
       setState(() {
         _isLoading = false;
       });
-      Navigator.of(context).pop();
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
       showErrorDialog(context: context, message: error);
     });
   }
@@ -780,8 +779,11 @@ class __SmsVerificationState extends State<_SmsVerification> {
       return;
     }
 
+    final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/verify/confirm';
+    final navigator = Navigator.of(context);
 
     setState(() {
       _isLoading = true;
@@ -790,12 +792,14 @@ class __SmsVerificationState extends State<_SmsVerification> {
     _webClient
         .post(url, credentials.token, data: json.encode({'code': _code}))
         .then((dynamic data) {
-      print('## CONFIRM Response: $data');
-      showMessageDialog(
-          context: navigatorKey.currentContext, message: 'Response: $data');
       setState(() {
         _isLoading = false;
       });
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+      showToast(localization.verifiedPhoneNumber);
+      store.dispatch(RefreshData());
     }).catchError((dynamic error) {
       setState(() {
         _isLoading = false;
@@ -831,6 +835,7 @@ class __SmsVerificationState extends State<_SmsVerification> {
                     label: localization.code,
                     keyboardType: TextInputType.number,
                     autovalidate: _autoValidate,
+                    onChanged: (value) => _code = value,
                     validator: (value) =>
                         value.isEmpty ? localization.pleaseEnterACode : null,
                   ),

@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'verified_phone_number': 'Successfully verified phone number',
       'code_was_sent': 'A code has been sent via SMS',
       'resend': 'Resend',
       'verify': 'Verify',
@@ -85245,6 +85246,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get bulkEmailPurchaseOrders =>
       _localizedValues[localeCode]['bulk_email_purchase_orders'] ??
       _localizedValues['en']['bulk_email_purchase_orders'];
+
+String get verifiedPhoneNumber =>
+      _localizedValues[localeCode]['verified_phone_number'] ??
+      _localizedValues['en']['verified_phone_number'];
 
 // STARTER: lang field - do not remove comment
 
