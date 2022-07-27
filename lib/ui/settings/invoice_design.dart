@@ -117,6 +117,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           if (_updateAllInvoiceDesigns) EntityType.invoice,
           if (_updateAllQuoteDesigns) EntityType.quote,
           if (_updateAllCreditDesigns) EntityType.credit,
+          if (_updateAllPurchaseOrderDesigns) EntityType.purchaseOrder,
         ]);
       },
       appBarBottom: TabBar(
