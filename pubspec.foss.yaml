@@ -104,7 +104,7 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: google_fonts/Roboto-Regular.ttf
+        - asset: assets/google_fonts/Roboto-Regular.ttf
 
 msix_config:
   display_name: Invoice Ninja
