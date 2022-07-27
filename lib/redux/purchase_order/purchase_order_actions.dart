@@ -704,7 +704,7 @@ void handlePurchaseOrderAction(BuildContext context,
       } else {
         confirmCallback(
             context: context,
-            message: localization.bulkEmailQuote,
+            message: localization.bulkEmailPurchaseOrders,
             callback: (_) {
               store.dispatch(BulkEmailPurchaseOrdersRequest(
                   snackBarCompleter<Null>(

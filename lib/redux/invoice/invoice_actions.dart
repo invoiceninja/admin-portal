@@ -600,7 +600,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       } else {
         confirmCallback(
             context: context,
-            message: localization.bulkEmailInvoice,
+            message: localization.bulkEmailInvoices,
             callback: (_) {
               store.dispatch(BulkEmailInvoicesRequest(
                   snackBarCompleter<Null>(

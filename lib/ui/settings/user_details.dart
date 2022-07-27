@@ -764,6 +764,7 @@ class __SmsVerificationState extends State<_SmsVerification> {
       setState(() {
         _isLoading = false;
       });
+      Navigator.of(context).pop();
       showErrorDialog(context: context, message: error);
     });
   }
