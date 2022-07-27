@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'verified_phone_number': 'Successfully verified phone number',
       'code_was_sent': 'A code has been sent via SMS',
       'resend': 'Resend',
       'verify': 'Verify',
@@ -82,7 +83,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_select_a_vendor': 'Please select a vendor',
       'purchase_order_total': 'Purchase Order Total',
       'email_purchase_order': 'Email Purchase Order',
-      'bulk_email_purchase_order': 'Email Purchase Order',
+      'bulk_email_purchase_orders': 'Email Purchase Orders',
       'disconnected_email': 'Successfully disconnected email',
       'connect_email': 'Connect Email',
       'disconnect_email': 'Disconnect Email',
@@ -300,9 +301,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'app': 'App',
       'for_best_performance': 'For the best performance download the :app app',
       'gross_line_total': 'Gross Line Total',
-      'bulk_email_invoice': 'Email Invoice',
-      'bulk_email_quote': 'Email Quote',
-      'bulk_email_credit': 'Email Credit',
+      'bulk_email_invoices': 'Email Invoices',
+      'bulk_email_quotes': 'Email Quotes',
+      'bulk_email_credits': 'Email Credits',
       'from_name': 'From Name',
       'clone_to_expense': 'Clone to Expense',
       'recurring_expense': 'Recurring Expense',
@@ -84283,17 +84284,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['from_name'] ??
       _localizedValues['en']['from_name'];
 
-  String get bulkEmailInvoice =>
-      _localizedValues[localeCode]['bulk_email_invoice'] ??
-      _localizedValues['en']['bulk_email_invoice'];
+  String get bulkEmailInvoices =>
+      _localizedValues[localeCode]['bulk_email_invoices'] ??
+      _localizedValues['en']['bulk_email_invoices'];
 
-  String get bulkEmailQuote =>
-      _localizedValues[localeCode]['bulk_email_quote'] ??
-      _localizedValues['en']['bulk_email_quote'];
+  String get bulkEmailQuotes =>
+      _localizedValues[localeCode]['bulk_email_quotes'] ??
+      _localizedValues['en']['bulk_email_quotes'];
 
-  String get bulkEmailCredit =>
-      _localizedValues[localeCode]['bulk_email_credit'] ??
-      _localizedValues['en']['bulk_email_credit'];
+  String get bulkEmailCredits =>
+      _localizedValues[localeCode]['bulk_email_credits'] ??
+      _localizedValues['en']['bulk_email_credits'];
 
   String get grossLineTotal =>
       _localizedValues[localeCode]['gross_line_total'] ??
@@ -85238,9 +85239,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['code_was_sent'] ??
       _localizedValues['en']['code_was_sent'];
 
-        String get pleaseEnterACode =>
-      _localizedValues[localeCode]['please_enter_a_code'] ?? _localizedValues['en']['please_enter_a_code'];
+  String get pleaseEnterACode =>
+      _localizedValues[localeCode]['please_enter_a_code'] ??
+      _localizedValues['en']['please_enter_a_code'];
 
+  String get bulkEmailPurchaseOrders =>
+      _localizedValues[localeCode]['bulk_email_purchase_orders'] ??
+      _localizedValues['en']['bulk_email_purchase_orders'];
+
+String get verifiedPhoneNumber =>
+      _localizedValues[localeCode]['verified_phone_number'] ??
+      _localizedValues['en']['verified_phone_number'];
 
 // STARTER: lang field - do not remove comment
 

@@ -553,7 +553,7 @@ Future handleQuoteAction(
       } else {
         confirmCallback(
             context: context,
-            message: localization.bulkEmailQuote,
+            message: localization.bulkEmailQuotes,
             callback: (_) {
               store.dispatch(BulkEmailQuotesRequest(
                   snackBarCompleter<Null>(

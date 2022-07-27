@@ -514,7 +514,7 @@ Future handleCreditAction(
       } else {
         confirmCallback(
             context: context,
-            message: localization.bulkEmailCredit,
+            message: localization.bulkEmailCredits,
             callback: (_) {
               store.dispatch(BulkEmailCreditsRequest(
                   snackBarCompleter<Null>(

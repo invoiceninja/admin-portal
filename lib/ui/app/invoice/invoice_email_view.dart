@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dar
 import 'package:invoiceninja_flutter/ui/quote/quote_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
@@ -289,8 +290,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final enableCustomEmail =
-        state.isSelfHosted || state.isProPlan || state.isTrial;
+    final enableCustomEmail = state.isSelfHosted ||
+        state.isProPlan ||
+        state.isTrial ||
+        !state.account.accountSmsVerified;
 
     return Column(
       children: [
@@ -391,6 +394,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
 
     if (isDesktop(context)) {
@@ -400,8 +404,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         onCancelPressed: (context) => viewEntity(entity: invoice),
         saveLabel: localization.send,
         onSavePressed: (context) {
-          viewModel.onSendPressed(context, selectedTemplate,
-              _subjectController.text, _bodyController.text);
+          if (state.account.accountSmsVerified || state.isSelfHosted) {
+            viewModel.onSendPressed(context, selectedTemplate,
+                _subjectController.text, _bodyController.text);
+          } else {
+            showMessageDialog(
+                context: context, message: localization.verifyPhoneNumberHelp);
+          }
         },
         body: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
