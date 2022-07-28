@@ -55,7 +55,7 @@ jobs:
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
           cd invoiceninja
 
-          git checkout v5-develop
+          git checkout v5-stable
           cp -r ../build/web/* ./public/
           rm ./public/index.html
           git add .
@@ -77,7 +77,7 @@ jobs:
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_profile
           cd invoiceninja_profile
 
-          git checkout v5-develop
+          git checkout v5-stable
           cp ../build/web/main.dart.js ./public/main.profile.dart.js
           git add .
           git commit -m 'Admin Portal - Profile'
@@ -95,7 +95,7 @@ jobs:
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git invoiceninja_foss
           cd invoiceninja_foss
-          git checkout v5-develop
+          git checkout v5-stable
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
           cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
           git add .
