@@ -29,6 +29,11 @@ class _ReviewAppState extends State<ReviewApp> {
       return SizedBox();
     }
 
+    // TODO remove this code
+    if (isWindows()) {
+      return SizedBox();
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: FormCard(
