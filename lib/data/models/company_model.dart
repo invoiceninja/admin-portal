@@ -89,6 +89,7 @@ abstract class CompanyEntity extends Object
       enableCustomSurchargeTaxes4: false,
       numberOfInvoiceTaxRates: 0,
       numberOfItemTaxRates: 0,
+      numberOfExpenseTaxRates: 0,
       invoiceExpenseDocuments: false,
       markExpensesInvoiceable: false,
       markExpensesPaid: false,
@@ -237,6 +238,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enabled_item_tax_rates')
   int get numberOfItemTaxRates;
+
+  @BuiltValueField(wireName: 'enabled_expense_tax_rates')
+  int get numberOfExpenseTaxRates;
 
   @BuiltValueField(wireName: 'expense_inclusive_taxes')
   bool get expenseInclusiveTaxes;
@@ -469,6 +473,12 @@ abstract class CompanyEntity extends Object
 
   bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
 
+  bool get enableFirstExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 1;
+
+  bool get enableSecondExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 2;
+
+  bool get enableThirdExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 3;
+
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 
   bool get hasItemTaxes => numberOfItemTaxRates > 0;
@@ -651,6 +661,7 @@ abstract class CompanyEntity extends Object
     ..reportIncludeDrafts = false
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false
+    ..numberOfExpenseTaxRates = 0
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())

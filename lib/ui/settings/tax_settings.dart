@@ -69,10 +69,16 @@ class _TaxSettingsState extends State<TaxSettings> {
                       .rebuild((b) => b..numberOfInvoiceTaxRates = value)),
                 ),
                 NumberOfRatesSelector(
-                  label: localization.itemTaxRates,
+                  label: localization.invoiceItemTaxRates,
                   numberOfRates: company.numberOfItemTaxRates,
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..numberOfItemTaxRates = value)),
+                ),
+                NumberOfRatesSelector(
+                  label: localization.expenseTaxRates,
+                  numberOfRates: company.numberOfExpenseTaxRates,
+                  onChanged: (value) => viewModel.onCompanyChanged(company
+                      .rebuild((b) => b..numberOfExpenseTaxRates = value)),
                 ),
                 SizedBox(height: 16),
                 BoolDropdownButton(
