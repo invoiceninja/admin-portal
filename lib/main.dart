@@ -152,10 +152,13 @@ void main({bool isTesting = false}) async {
   }
 
   if (isWindows()) {
+    final prefs = await SharedPreferences.getInstance();
+    final offsetX = prefs.getDouble(kSharedPrefOffsetX);
+    final offsetY = prefs.getDouble(kSharedPrefOffsetY);
     doWhenWindowReady(() {
       final win = appWindow;
       win.title = 'Invoice Ninja';
-      win.position = Offset(500, 500);
+      win.position = Offset(offsetX, offsetY);
       win.show();
     });
   }

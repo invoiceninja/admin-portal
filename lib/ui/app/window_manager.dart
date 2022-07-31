@@ -40,6 +40,14 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
   }
 
   @override
+  void onWindowMove() async {
+    final position = await windowManager.getPosition();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble(kSharedPrefOffsetX, position.dx);
+    prefs.setDouble(kSharedPrefOffsetY, position.dy);
+  }
+
+  @override
   void onWindowClose() async {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
