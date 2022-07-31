@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -70,6 +71,11 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
         !state.uiState.isEditing &&
         state.prefState.isModuleTable;
 
+    final availableCredits =
+        memoizedGetClientAvailableCredits(client.id, state.creditState.map);
+    final unappliedPayments =
+        memoizedGetClientUnappliedPayments(client.id, state.paymentState.map);
+
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
       return Row(
@@ -94,6 +100,16 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 8),
+                  if (availableCredits != 0)
+                    Text(localization.credit +
+                        ': ' +
+                        formatNumber(availableCredits, context,
+                            clientId: client.id)),
+                  if (unappliedPayments != 0)
+                    Text(localization.payments +
+                        ': ' +
+                        formatNumber(unappliedPayments, context,
+                            clientId: client.id)),
                   if (client.idNumber.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
