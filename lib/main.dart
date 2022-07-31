@@ -58,9 +58,23 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
+import 'package:window_manager/window_manager.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  windowManager.waitUntilReadyToShow(
+      WindowOptions(
+        size: Size(
+          prefs.getDouble(kSharedPrefWidth) ?? 800,
+          prefs.getDouble(kSharedPrefHeight) ?? 600,
+        ),
+      ), () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
 
   final store = Store<AppState>(appReducer,
       initialState: await _initialState(isTesting),

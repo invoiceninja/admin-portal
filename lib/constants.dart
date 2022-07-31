@@ -91,6 +91,8 @@ enum AppEnvironment {
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefToken = 'checksum';
+const String kSharedPrefWidth = 'width';
+const String kSharedPrefHeight = 'height';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
