@@ -292,6 +292,7 @@ class MainScreen extends StatelessWidget {
               store.dispatch(ViewSettings(
                 section: history.id,
                 company: state.company,
+                tabIndex: 0,
               ));
               break;
             default:

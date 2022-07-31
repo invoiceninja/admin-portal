@@ -217,6 +217,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
               store.dispatch(ViewSettings(
                 section: history.id,
                 company: state.company,
+                tabIndex: 0,
               ));
               break;
             default:
