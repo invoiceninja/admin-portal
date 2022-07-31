@@ -109,8 +109,7 @@ class EditScaffold extends StatelessWidget {
         .bodyText2
         .copyWith(color: state.headerTextColor);
 
-    final showOverflow =
-        isDesktop(context) && isFullscreen && onActionPressed != null;
+    final showOverflow = isDesktop(context);
 
     return WillPopScope(
       onWillPop: () async {
