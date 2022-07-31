@@ -187,8 +187,10 @@ class EditScaffold extends StatelessWidget {
                                   style: action == EntityAction.save
                                       ? ButtonStyle(
                                           backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.green))
+                                              MaterialStateProperty.all(state
+                                                  .prefState
+                                                  .colorThemeModel
+                                                  .colorSuccess))
                                       : null,
                                   child: ConstrainedBox(
                                     constraints: BoxConstraints(
