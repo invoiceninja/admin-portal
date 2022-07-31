@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -49,24 +48,15 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 
   @override
   void onWindowClose() async {
-    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
-    final state = store.state;
 
     if (await windowManager.isPreventClose()) {
-      if (state.hasChanges()) {
-        showDialog<void>(
-            context: context,
-            builder: (context) => MessageDialog(
-                  localization.errorUnsavedChanges,
-                  dismissLabel: localization.continueEditing,
-                  onDiscard: () async {
-                    await windowManager.destroy();
-                  },
-                ));
-      } else {
-        await windowManager.destroy();
-      }
+      checkForChanges(
+        store: store,
+        callback: () async {
+          await windowManager.destroy();
+        },
+      );
     }
   }
 
