@@ -62,20 +62,23 @@ import 'package:window_manager/window_manager.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await windowManager.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
-  windowManager.waitUntilReadyToShow(
-      WindowOptions(
-        center: true,
-        size: Size(
-          prefs.getDouble(kSharedPrefWidth) ?? 800,
-          prefs.getDouble(kSharedPrefHeight) ?? 600,
-        ),
-      ), () async {
-    await windowManager.show();
-    await windowManager.focus();
-  });
+  if (isDesktopOS()) {
+    await windowManager.ensureInitialized();
+
+    final prefs = await SharedPreferences.getInstance();
+    windowManager.waitUntilReadyToShow(
+        WindowOptions(
+          center: true,
+          size: Size(
+            prefs.getDouble(kSharedPrefWidth) ?? 800,
+            prefs.getDouble(kSharedPrefHeight) ?? 600,
+          ),
+        ), () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
 
   final store = Store<AppState>(appReducer,
       initialState: await _initialState(isTesting),
