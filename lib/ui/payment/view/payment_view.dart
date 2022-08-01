@@ -136,7 +136,7 @@ class _PaymentViewState extends State<PaymentView> {
                           title: Text(
                               '${localization.gateway}  ›  ${companyGateway.label}'),
                           onTap: companyGatewayLink != null
-                              ? () => launch(companyGatewayLink)
+                              ? () => launchUrl(Uri.parse(companyGatewayLink))
                               : null,
                           leading: IgnorePointer(
                             child: IconButton(

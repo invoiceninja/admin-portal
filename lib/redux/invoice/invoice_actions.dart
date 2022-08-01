@@ -517,10 +517,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       store.dispatch(ShowPdfInvoice(invoice: invoice, context: context));
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(invoice.invitationSilentLink)) {
-        await launch(invoice.invitationSilentLink,
-            forceSafariVC: false, forceWebView: false);
-      }
+      launchUrl(Uri.parse(invoice.invitationSilentLink));
       break;
     case EntityAction.markSent:
       store.dispatch(MarkInvoicesSentRequest(
@@ -672,7 +669,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       );
       break;
     case EntityAction.download:
-      launch(invoice.invitationDownloadLink);
+      launchUrl(Uri.parse(invoice.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadInvoicesRequest(

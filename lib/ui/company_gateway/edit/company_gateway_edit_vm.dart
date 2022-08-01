@@ -145,12 +145,12 @@ class CompanyGatewayEditVM {
             store.dispatch(StopSaving());
             switch (gatewayId) {
               case kGatewayStripeConnect:
-                launch(
-                    '${cleanApiUrl(credentials.url)}/stripe/signup/${response['hash']}');
+                launchUrl(Uri.parse(
+                    '${cleanApiUrl(credentials.url)}/stripe/signup/${response['hash']}'));
                 break;
               case kGatewayWePay:
-                launch(
-                    '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}');
+                launchUrl(Uri.parse(
+                    '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}'));
                 break;
             }
           }).catchError((dynamic error) {

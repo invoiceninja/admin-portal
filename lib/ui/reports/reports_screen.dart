@@ -415,8 +415,8 @@ class ReportsScreen extends StatelessWidget {
                     if (!isApple())
                       AppButton(
                         label: localization.upgrade.toUpperCase(),
-                        onPressed: () =>
-                            launch(state.userCompany.ninjaPortalUrl),
+                        onPressed: () => launchUrl(
+                            Uri.parse(state.userCompany.ninjaPortalUrl)),
                       )
                   ],
                 ),

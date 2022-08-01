@@ -361,7 +361,8 @@ class _ClientPortalState extends State<ClientPortal>
                                 text: localization.viewDocs.toUpperCase(),
                               ),
                             ),
-                            onPressed: () => launch(kDocsCustomDomainUrl),
+                            onPressed: () =>
+                                launchUrl(Uri.parse(kDocsCustomDomainUrl)),
                           )
                         else
                           SizedBox()

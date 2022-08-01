@@ -68,6 +68,6 @@ class LinkTextSpan extends TextSpan {
             text: text ?? url,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launch(url, forceSafariVC: false);
+                launchUrl(Uri.parse(url));
               });
 }

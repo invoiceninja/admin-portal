@@ -311,7 +311,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                      onPressed: () => launchUrl(
+                          Uri.parse(state.userCompany.ninjaPortalUrl)),
                     ),
             ),
           ),

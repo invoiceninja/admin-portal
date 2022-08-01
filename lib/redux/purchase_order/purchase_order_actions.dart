@@ -667,7 +667,7 @@ void handlePurchaseOrderAction(BuildContext context,
       }
       break;
     case EntityAction.clientPortal:
-      launch(purchaseOrder.invitationSilentLink);
+      launchUrl(Uri.parse(purchaseOrder.invitationSilentLink));
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
@@ -776,7 +776,7 @@ void handlePurchaseOrderAction(BuildContext context,
               .recreateInvitations(state));
       break;
     case EntityAction.download:
-      launch(purchaseOrder.invitationDownloadLink);
+      launchUrl(Uri.parse(purchaseOrder.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadPurchaseOrdersRequest(

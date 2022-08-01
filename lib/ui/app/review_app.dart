@@ -66,7 +66,7 @@ class _ReviewAppState extends State<ReviewApp> {
                       } else if (await AppReview.isAvailable()) {
                         AppReview.requestReview();
                       } else if (kIsWeb || isLinux()) {
-                        launch(getRateAppURL(context));
+                        launchUrl(Uri.parse(getRateAppURL(context)));
                       } else {
                         AppReview.openStoreListing();
                       }

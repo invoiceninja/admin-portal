@@ -299,6 +299,7 @@ class MainScreen extends StatelessWidget {
               viewEntityById(
                 entityId: history.id,
                 entityType: history.entityType,
+                showError: false,
               );
           }
 

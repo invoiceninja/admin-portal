@@ -160,7 +160,7 @@ class ClientOverview extends StatelessWidget {
                   .toList(),
             ),
             onTap: linkMap.containsKey(customerReference)
-                ? () => launch(linkMap[customerReference])
+                ? () => launchUrl(Uri.parse(linkMap[customerReference]))
                 : null,
             leading: IgnorePointer(
               child: IconButton(

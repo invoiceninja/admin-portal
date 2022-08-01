@@ -493,10 +493,7 @@ Future handleQuoteAction(
       store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(quote.invitationSilentLink)) {
-        await launch(quote.invitationSilentLink,
-            forceSafariVC: false, forceWebView: false);
-      }
+      launchUrl(Uri.parse(quote.invitationSilentLink));
       break;
     case EntityAction.convertToInvoice:
       store.dispatch(ConvertQuotes(
@@ -617,7 +614,7 @@ Future handleQuoteAction(
             ..designId = designId));
       break;
     case EntityAction.download:
-      launch(quote.invitationDownloadLink);
+      launchUrl(Uri.parse(quote.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(

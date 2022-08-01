@@ -129,7 +129,8 @@ class EditScaffold extends StatelessWidget {
                           ),
                           onTap: state.userCompany.isOwner
                               ? () async {
-                                  launch(state.userCompany.ninjaPortalUrl);
+                                  launchUrl(Uri.parse(
+                                      state.userCompany.ninjaPortalUrl));
                                 }
                               : null,
                         ),

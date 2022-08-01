@@ -209,7 +209,7 @@ class _UserDetailsState extends State<UserDetails>
                 if (state.user.isConnectedToEmail) {
                   viewModel.onDisconnectGmailPressed(context);
                 } else {
-                  launch('$kAppProductionUrl/auth/google');
+                  launchUrl(Uri.parse('$kAppProductionUrl/auth/google'));
                 }
               },
       ),
@@ -265,7 +265,8 @@ class _UserDetailsState extends State<UserDetails>
                 if (state.user.isConnectedToEmail) {
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
-                  launch('${state.account.defaultUrl}/auth/microsoft');
+                  launchUrl(
+                      Uri.parse('${state.account.defaultUrl}/auth/microsoft'));
                 }
               },
       ),
@@ -675,8 +676,8 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                           width: 100,
                           child: TextButton(
                             onPressed: () {
-                              launch(
-                                  'https://github.com/antonioribeiro/google2fa#google-authenticator-apps');
+                              launchUrl(Uri.parse(
+                                  'https://github.com/antonioribeiro/google2fa#google-authenticator-apps'));
                             },
                             child: Text(localzation.learnMore),
                           ),

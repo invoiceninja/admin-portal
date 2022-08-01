@@ -166,8 +166,12 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       SizedBox(width: 8),
                       IconButton(
                         onPressed: () {
-                          launch('http://maps.google.com/?daddr=' +
-                              Uri.encodeQueryComponent(billingAddress));
+                          launchUrl(Uri(
+                              scheme: 'https',
+                              host: 'maps.google.com',
+                              queryParameters: <String, dynamic>{
+                                'daddr': billingAddress
+                              }));
                         },
                         icon: Icon(Icons.map),
                         tooltip: state.prefState.enableTooltips

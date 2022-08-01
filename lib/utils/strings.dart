@@ -133,6 +133,15 @@ bool matchesString({String haystack, String needle}) {
       regExp += character + '.*?';
     });
     return RegExp(regExp).hasMatch(haystack.toLowerCase());
+  } else if (needle.contains(' ')) {
+    final parts = needle.toLowerCase().split(' ');
+    bool isMatch = true;
+    parts.forEach((needle) {
+      if (!haystack.toLowerCase().contains(needle)) {
+        isMatch = false;
+      }
+    });
+    return isMatch;
   } else {
     return haystack.toLowerCase().contains(needle.toLowerCase());
   }

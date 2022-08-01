@@ -184,7 +184,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: OutlinedButton(
-                            onPressed: () => launch(kDocsStripeConnectUrl),
+                            onPressed: () =>
+                                launchUrl(Uri.parse(kDocsStripeConnectUrl)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: IconText(
@@ -505,7 +506,7 @@ class GatewayConfigSettings extends StatelessWidget {
                   text: localization.learnMore.toUpperCase(),
                 ),
               ),
-              onPressed: () => launch(gateway.siteUrl),
+              onPressed: () => launchUrl(Uri.parse(gateway.siteUrl)),
             ),
           ),
         ...gateway.parsedFields.keys

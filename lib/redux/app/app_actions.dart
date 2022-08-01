@@ -487,12 +487,14 @@ void viewEntityById({
         }
 
         if (entityId != null &&
-            showError &&
             !store.state.getEntityMap(entityType).containsKey(entityId)) {
-          final localization = AppLocalization.of(navigatorKey.currentContext);
-          showErrorDialog(
-              context: navigatorKey.currentContext,
-              message: localization.failedToFindRecord);
+          if (showError) {
+            final localization =
+                AppLocalization.of(navigatorKey.currentContext);
+            showErrorDialog(
+                context: navigatorKey.currentContext,
+                message: localization.failedToFindRecord);
+          }
           return;
         }
 

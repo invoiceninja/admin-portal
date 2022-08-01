@@ -70,7 +70,8 @@ class ClientPresenter extends EntityPresenter {
         return CopyToClipboard(
           value: client.primaryContact.email,
           showBorder: true,
-          onLongPress: () => launch('mailto:${client.primaryContact.email}'),
+          onLongPress: () =>
+              launchUrl(Uri.parse('mailto:${client.primaryContact.email}')),
         );
       case ClientFields.contactPhone:
         return Text(client.primaryContact.phone);

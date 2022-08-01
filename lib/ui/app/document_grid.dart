@@ -200,14 +200,14 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                launch(state.account.defaultUrl +
+                                launchUrl(Uri.parse(state.account.defaultUrl +
                                     document.downloadUrl +
-                                    '?inline=true');
+                                    '?inline=true'));
                               } else if (value == localization.download) {
                                 if (kIsWeb ||
                                     (!Platform.isIOS && !Platform.isAndroid)) {
-                                  launch(state.account.defaultUrl +
-                                      document.downloadUrl);
+                                  launchUrl(Uri.parse(state.account.defaultUrl +
+                                      document.downloadUrl));
                                 } else {
                                   final directory =
                                       await getApplicationDocumentsDirectory();

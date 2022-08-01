@@ -248,7 +248,7 @@ class _HealthListTile extends StatelessWidget {
         color:
             isWarning ? Colors.orange : (isValid ? Colors.green : Colors.red),
       ),
-      onTap: url != null ? () => launch(url) : null,
+      onTap: url != null ? () => launchUrl(Uri.parse(url)) : null,
     );
   }
 }

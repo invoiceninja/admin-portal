@@ -149,7 +149,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return CopyToClipboard(
           value: contact.email,
           showBorder: true,
-          onLongPress: () => launch('mailto:${contact.email}'),
+          onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case PurchaseOrderFields.partial:
         return Text(formatNumber(purchaseOrder.partial, context));

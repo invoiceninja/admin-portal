@@ -364,7 +364,7 @@ void handleClientAction(
       final contact = client.contacts
           .firstWhere((contact) => contact.link.isNotEmpty, orElse: null);
       if (contact != null) {
-        launch(contact.silentLink);
+        launchUrl(Uri.parse(contact.silentLink));
       }
       break;
     case EntityAction.settings:

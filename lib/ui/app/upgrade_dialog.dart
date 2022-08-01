@@ -174,11 +174,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               child: Text(localization.restorePurchases)),
         TextButton(
           child: Text(localization.termsOfService),
-          onPressed: () => launch(kTermsOfServiceURL),
+          onPressed: () => launchUrl(Uri.parse(kTermsOfServiceURL)),
         ),
         TextButton(
           child: Text(localization.privacyPolicy),
-          onPressed: () => launch(kPrivacyPolicyURL),
+          onPressed: () => launchUrl(Uri.parse(kPrivacyPolicyURL)),
         ),
       ],
     );

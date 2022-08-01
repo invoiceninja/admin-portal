@@ -557,8 +557,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
               const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 8),
           child: OutlinedButton(
             child: Text(localization.viewDateFormats.toUpperCase()),
-            onPressed: () =>
-                launch('https://www.php.net/manual/en/datetime.format.php'),
+            onPressed: () => launchUrl(
+                Uri.parse('https://www.php.net/manual/en/datetime.format.php')),
           ),
         ),
         HelpPanel(
