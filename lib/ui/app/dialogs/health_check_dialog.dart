@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -58,6 +59,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
+      Navigator.of(context).pop();
       showErrorDialog(context: context, message: error);
     });
   }
