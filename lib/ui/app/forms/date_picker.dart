@@ -145,7 +145,10 @@ class _DatePickerState extends State<DatePicker> {
         } else {
           String date = '';
           final dateAsNumber = value.replaceAll('/', '').replaceAll('\\', '');
-          if (isAllDigits(dateAsNumber) || value.length <= 5) {
+          if (value.startsWith('+') || value.startsWith('-')) {
+            date = convertDateTimeToSqlDate(
+                DateTime.now().add(Duration(days: parseInt(value))));
+          } else if (isAllDigits(dateAsNumber) || value.length <= 5) {
             String firstPart = '01';
             String secondPart = '01';
             int year = DateTime.now().year;
