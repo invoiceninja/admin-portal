@@ -40,7 +40,7 @@ class PortalLinks extends StatelessWidget {
     }
     copyLinkWithHash += '&client_hash=${client.clientHash}';
 
-    final viewLinkPressed = () => launch(viewLinkWithHash);
+    final viewLinkPressed = () => launchUrl(Uri.parse(viewLinkWithHash));
     final copyLinkPressed = () {
       Clipboard.setData(ClipboardData(text: copyLinkWithHash));
       showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));

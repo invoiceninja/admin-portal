@@ -490,7 +490,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                 text: localization.viewDocs.toUpperCase(),
               ),
             ),
-            onPressed: () => launch(kDocsCustomFieldsUrl),
+            onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
           ),
         ),
         if (widget.draftMode)

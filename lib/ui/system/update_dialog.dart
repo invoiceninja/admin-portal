@@ -119,13 +119,13 @@ class _UpdateDialogState extends State<UpdateDialog> {
           if (account.isUpdateAvailable)
             TextButton(
               child: Text(localization.releaseNotes.toUpperCase()),
-              onPressed: () => launch(kReleaseNotesUrl),
+              onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
             )
           else
             TextButton(
               child: Text(localization.viewChanges.toUpperCase()),
-              onPressed: () => launch(kGitHubDiffUrl.replaceFirst(
-                  'VERSION', account.currentVersion)),
+              onPressed: () => launchUrl(Uri.parse(kGitHubDiffUrl.replaceFirst(
+                  'VERSION', account.currentVersion))),
             ),
           if (!account.isDocker)
             TextButton(

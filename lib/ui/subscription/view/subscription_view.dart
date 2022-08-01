@@ -66,7 +66,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               showToast(localization.copiedToClipboard
                   .replaceFirst(':value', subscription.purchasePage));
             },
-            onLongPress: () => launch(subscription.purchasePage),
+            onLongPress: () => launchUrl(Uri.parse(subscription.purchasePage)),
           ),
           ListDivider(),
           /*

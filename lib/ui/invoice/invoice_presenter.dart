@@ -174,7 +174,7 @@ class InvoicePresenter extends EntityPresenter {
         return CopyToClipboard(
           value: contact.email,
           showBorder: true,
-          onLongPress: () => launch('mailto:${contact.email}'),
+          onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case InvoiceFields.partial:
         return Text(formatNumber(invoice.partial, context));

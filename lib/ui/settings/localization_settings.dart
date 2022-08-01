@@ -310,7 +310,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                       TextButton(
                                         child: Text(
                                             localization.labels.toUpperCase()),
-                                        onPressed: () => launch(kGitHubLangUrl),
+                                        onPressed: () => launchUrl(
+                                            Uri.parse(kGitHubLangUrl)),
                                       )
                                     ]);
                               },

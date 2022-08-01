@@ -470,10 +470,7 @@ Future handleCreditAction(
       store.dispatch(ShowPdfCredit(credit: credit, context: context));
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(credit.invitationSilentLink)) {
-        await launch(credit.invitationSilentLink,
-            forceSafariVC: false, forceWebView: false);
-      }
+      launchUrl(Uri.parse(credit.invitationSilentLink));
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(
@@ -598,7 +595,7 @@ Future handleCreditAction(
       );
       break;
     case EntityAction.download:
-      launch(credit.invitationDownloadLink);
+      launchUrl(Uri.parse(credit.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadCreditsRequest(

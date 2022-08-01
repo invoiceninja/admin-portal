@@ -151,7 +151,7 @@ class CreditPresenter extends EntityPresenter {
         return CopyToClipboard(
           value: contact.email,
           showBorder: true,
-          onLongPress: () => launch('mailto:${contact.email}'),
+          onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case CreditFields.partial:
         return Text(formatNumber(credit.partial, context));

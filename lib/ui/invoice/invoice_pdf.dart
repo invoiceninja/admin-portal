@@ -237,7 +237,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                           ? null
                           : () async {
                               if (_response == null) {
-                                launch(invoice.invitationDownloadLink);
+                                launchUrl(
+                                    Uri.parse(invoice.invitationDownloadLink));
                               } else {
                                 final fileName = localization
                                         .lookup('${invoice.entityType}') +

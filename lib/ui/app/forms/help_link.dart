@@ -34,7 +34,7 @@ class HelpLink extends StatelessWidget {
               style: linkStyle,
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  launch(url, forceSafariVC: false);
+                  launchUrl(Uri.parse(url));
                 },
               text: localization.clickHereCapital + ' ',
             ),

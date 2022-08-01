@@ -356,7 +356,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   child: ListTile(
                                     contentPadding:
                                         const EdgeInsets.only(left: 20),
-                                    onTap: () => launch(kDebugModeUrl),
+                                    onTap: () =>
+                                        launchUrl(Uri.parse(kDebugModeUrl)),
                                     leading:
                                         Icon(Icons.warning, color: Colors.red),
                                   ),
@@ -377,7 +378,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       localization.debugModeIsEnabledHelp,
                                       style: TextStyle(color: Colors.white),
                                     ),
-                                    onTap: () => launch(kDebugModeUrl),
+                                    onTap: () =>
+                                        launchUrl(Uri.parse(kDebugModeUrl)),
                                   ),
                                 ),
                             if (!state.account.accountSmsVerified &&
@@ -941,8 +943,7 @@ class SidebarFooter extends StatelessWidget {
                         TextButton(
                           child: Text(localization.learnMore.toUpperCase()),
                           onPressed: () {
-                            launch(kCronsHelpUrl,
-                                forceSafariVC: false, forceWebView: false);
+                            launchUrl(Uri.parse(kCronsHelpUrl));
                           },
                         ),
                         TextButton(
@@ -1005,13 +1006,13 @@ class SidebarFooter extends StatelessWidget {
                         onPressed: () {
                           final platform = getNativePlatform();
                           final url = getNativeAppUrl(platform);
-                          launch(url);
+                          launchUrl(Uri.parse(url));
                           Navigator.of(context).pop();
                         },
                         child: Text(localization.download.toUpperCase()),
                       ),
                       TextButton(
-                        onPressed: () => launch(kDocsPerformance),
+                        onPressed: () => launchUrl(Uri.parse(kDocsPerformance)),
                         child: Text(localization.learnMore.toUpperCase()),
                       ),
                       TextButton(
@@ -1035,7 +1036,7 @@ class SidebarFooter extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.forum),
-              onPressed: () => launch(kForumUrl),
+              onPressed: () => launchUrl(Uri.parse(kForumUrl)),
               tooltip:
                   prefState.enableTooltips ? localization.supportForum : '',
             ),
@@ -1061,7 +1062,7 @@ class SidebarFooter extends StatelessWidget {
                   url += '/' + toSnakeCase(route).replaceAll('_', '-');
                 }
 
-                launch(url);
+                launchUrl(Uri.parse(url));
               },
               tooltip: prefState.enableTooltips ? localization.userGuide : '',
             ),
@@ -1353,8 +1354,9 @@ void _showAbout(BuildContext context) async {
                                                 AppButton(
                                                   label: 'Laravel/PHP',
                                                   iconData: MdiIcons.server,
-                                                  onPressed: () => launch(
-                                                      kSourceCodeBackend),
+                                                  onPressed: () => launchUrl(
+                                                      Uri.parse(
+                                                          kSourceCodeBackend)),
                                                 ),
                                                 Padding(
                                                   padding:
@@ -1366,14 +1368,16 @@ void _showAbout(BuildContext context) async {
                                                   label: 'Flutter/Dart',
                                                   iconData:
                                                       MdiIcons.desktopClassic,
-                                                  onPressed: () => launch(
-                                                      kSourceCodeFrontend),
+                                                  onPressed: () => launchUrl(
+                                                      Uri.parse(
+                                                          kSourceCodeFrontend)),
                                                 ),
                                                 AppButton(
                                                   label: 'Storefront SDK',
                                                   iconData: MdiIcons.tools,
-                                                  onPressed: () => launch(
-                                                      kSourceCodeFrontendSDK),
+                                                  onPressed: () => launchUrl(
+                                                      Uri.parse(
+                                                          kSourceCodeFrontendSDK)),
                                                 ),
                                               ],
                                             ),
@@ -1398,17 +1402,20 @@ void _showAbout(BuildContext context) async {
                                     AppButton(
                                       label: 'Windows',
                                       iconData: MdiIcons.microsoftWindows,
-                                      onPressed: () => launch(kWindowsUrl),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kWindowsUrl)),
                                     ),
                                     AppButton(
                                       label: 'macOS',
                                       iconData: MdiIcons.apple,
-                                      onPressed: () => launch(kMacOSUrl),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kMacOSUrl)),
                                     ),
                                     AppButton(
                                       label: 'Linux',
                                       iconData: MdiIcons.linux,
-                                      onPressed: () => launch(kLinuxUrl),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kLinuxUrl)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 30),
@@ -1417,17 +1424,20 @@ void _showAbout(BuildContext context) async {
                                     AppButton(
                                       label: 'iOS',
                                       iconData: MdiIcons.apple,
-                                      onPressed: () => launch(kAppleStoreUrl),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kAppleStoreUrl)),
                                     ),
                                     AppButton(
                                       label: 'Android',
                                       iconData: MdiIcons.android,
-                                      onPressed: () => launch(kGoogleStoreUrl),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kGoogleStoreUrl)),
                                     ),
                                     AppButton(
                                       label: 'F-Droid',
                                       iconData: MdiIcons.android,
-                                      onPressed: () => launch(kGoogleFDroidUrl),
+                                      onPressed: () => launchUrl(
+                                          Uri.parse(kGoogleFDroidUrl)),
                                     ),
                                   ],
                                 ),
@@ -1440,7 +1450,7 @@ void _showAbout(BuildContext context) async {
                     label: (localization.releaseNotes).toUpperCase(),
                     iconData: MdiIcons.note,
                     color: Colors.cyan,
-                    onPressed: () => launch(kReleaseNotesUrl),
+                    onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
                   ),
                   if (state.isSelfHosted || !kReleaseMode) ...[
                     AppButton(
@@ -1474,7 +1484,7 @@ void _showAbout(BuildContext context) async {
                       color: Colors.purple,
                       onPressed: () {
                         if (kIsWeb || isLinux()) {
-                          launch(getRateAppURL(context));
+                          launchUrl(Uri.parse(getRateAppURL(context)));
                         } else {
                           AppReview.openStoreListing();
                         }
@@ -1486,27 +1496,27 @@ void _showAbout(BuildContext context) async {
                     children: [
                       IconButton(
                         tooltip: 'Twitter',
-                        onPressed: () => launch(kTwitterUrl),
+                        onPressed: () => launchUrl(Uri.parse(kTwitterUrl)),
                         icon: Icon(MdiIcons.twitter),
                       ),
                       IconButton(
                         tooltip: 'Facebook',
-                        onPressed: () => launch(kFacebookUrl),
+                        onPressed: () => launchUrl(Uri.parse(kFacebookUrl)),
                         icon: Icon(MdiIcons.facebook),
                       ),
                       IconButton(
                         tooltip: 'GitHub',
-                        onPressed: () => launch(kGitHubUrl),
+                        onPressed: () => launchUrl(Uri.parse(kGitHubUrl)),
                         icon: Icon(MdiIcons.github),
                       ),
                       IconButton(
                         tooltip: 'YouTube',
-                        onPressed: () => launch(kYouTubeUrl),
+                        onPressed: () => launchUrl(Uri.parse(kYouTubeUrl)),
                         icon: Icon(MdiIcons.youtube),
                       ),
                       IconButton(
                         tooltip: 'Slack',
-                        onPressed: () => launch(kSlackUrl),
+                        onPressed: () => launchUrl(Uri.parse(kSlackUrl)),
                         icon: Icon(MdiIcons.slack),
                       ),
                     ],

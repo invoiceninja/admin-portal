@@ -475,10 +475,7 @@ void handleRecurringInvoiceAction(BuildContext context,
           ShowPdfRecurringInvoice(invoice: recurringInvoice, context: context));
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(recurringInvoice.invitationSilentLink)) {
-        await launch(recurringInvoice.invitationSilentLink,
-            forceSafariVC: false, forceWebView: false);
-      }
+      launchUrl(Uri.parse(recurringInvoice.invitationSilentLink));
       break;
     case EntityAction.cloneToPurchaseOrder:
       final designId = getDesignIdForVendorByEntity(

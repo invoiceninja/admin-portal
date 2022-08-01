@@ -338,8 +338,7 @@ class _LoginState extends State<LoginView> {
                 onTap: isApple()
                     ? null
                     : () {
-                        launch(kSiteUrl,
-                            forceSafariVC: false, forceWebView: false);
+                        launchUrl(Uri.parse(kSiteUrl));
                       },
                 onLongPress: () {
                   if (kReleaseMode) {
@@ -694,7 +693,7 @@ class _LoginState extends State<LoginView> {
                   if (!_recoverPassword && !_isSelfHosted)
                     InkWell(
                       onTap: () {
-                        launch(kStatusCheckUrl);
+                        launchUrl(Uri.parse(kStatusCheckUrl));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(14),
@@ -712,7 +711,8 @@ class _LoginState extends State<LoginView> {
                   if (!_recoverPassword)
                     if (kIsWeb)
                       InkWell(
-                        onTap: () => launch(getNativeAppUrl(platform)),
+                        onTap: () =>
+                            launchUrl(Uri.parse(getNativeAppUrl(platform))),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
@@ -728,7 +728,7 @@ class _LoginState extends State<LoginView> {
                       )
                     else
                       InkWell(
-                        onTap: () => launch(kDocsUrl),
+                        onTap: () => launchUrl(Uri.parse(kDocsUrl)),
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(

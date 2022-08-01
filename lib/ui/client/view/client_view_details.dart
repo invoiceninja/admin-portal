@@ -2,12 +2,14 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:direct_dialer/direct_dialer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -31,12 +33,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   Future<Null> _launched;
 
   Future<Null> _launchURL(BuildContext context, String url) async {
-    final localization = AppLocalization.of(context);
-    if (await canLaunch(url)) {
-      await launch(url, forceSafariVC: false, forceWebView: false);
-    } else {
-      throw '${localization.couldNotLaunch}';
-    }
+    await launchUrl(Uri.parse(url));
   }
 
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
@@ -70,7 +67,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
               : contact.fullName,
           subtitle: contact.email,
           copyValue: contact.email,
-          onTap: () => setState(() {
+          onLongPress: () => setState(() {
             if ((contact.email ?? '').isEmpty) {
               return;
             }
@@ -89,7 +86,19 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                 contact.phone,
             copyValue: contact.phone,
             subtitle: localization.phone,
-            onTap: () => setState(() {
+            trailing: isApple() || isAndroid()
+                ? IconButton(
+                    onPressed: () async {
+                      final dialer = await DirectDialer.instance;
+                      if (isAndroid()) {
+                        await dialer.dial(contact.phone);
+                      } else {
+                        await dialer.dialFaceTime(contact.phone, false);
+                      }
+                    },
+                    icon: Icon(MdiIcons.dialpad))
+                : null,
+            onLongPress: () => setState(() {
               _launched =
                   _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
               //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
@@ -103,7 +112,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           icon: Icons.link,
           title: client.website,
           subtitle: localization.website,
-          onTap: () => setState(() {
+          onLongPress: () => setState(() {
             _launched = _launchURL(context, formatURL(client.website));
           }),
         ));
@@ -114,7 +123,19 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           icon: Icons.phone,
           title: client.phone,
           subtitle: localization.phone,
-          onTap: () => setState(() {
+          trailing: isApple() || isAndroid()
+              ? IconButton(
+                  onPressed: () async {
+                    final dialer = await DirectDialer.instance;
+                    if (isAndroid()) {
+                      await dialer.dial(client.phone);
+                    } else {
+                      await dialer.dialFaceTime(client.phone, false);
+                    }
+                  },
+                  icon: Icon(MdiIcons.dialpad))
+              : null,
+          onLongPress: () => setState(() {
             _launched =
                 _launchURL(context, 'sms:' + cleanPhoneNumber(client.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
@@ -160,7 +181,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             icon: Icons.pin_drop,
             title: billingAddress,
             subtitle: localization.billingAddress,
-            onTap: () {
+            onLongPress: () {
               _launched = _launchURL(
                   context,
                   getMapURL(context) +
@@ -174,7 +195,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             icon: Icons.pin_drop,
             title: shippingAddress,
             subtitle: localization.shippingAddress,
-            onTap: () {
+            onLongPress: () {
               _launched = _launchURL(
                   context,
                   getMapURL(context) +

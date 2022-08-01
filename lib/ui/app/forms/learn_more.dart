@@ -36,7 +36,7 @@ class LearnMoreUrl extends StatelessWidget {
         ),
         TextButton(
           child: Text(label ?? localization.learnMore),
-          onPressed: () => launch(url),
+          onPressed: () => launchUrl(Uri.parse(url)),
         ),
       ],
     );

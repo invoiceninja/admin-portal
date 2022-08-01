@@ -4,6 +4,8 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   bitsdojo_window_windows
+  connectivity_plus_windows
+  permission_handler_windows
   printing
   screen_retriever
   sentry_flutter

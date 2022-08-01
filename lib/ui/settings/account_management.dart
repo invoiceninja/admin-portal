@@ -351,7 +351,8 @@ class _AccountOverview extends StatelessWidget {
                       .toUpperCase(),
                 ),
               ),
-              onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+              onPressed: () =>
+                  launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl)),
             ),
           ),
         FormCard(
@@ -408,9 +409,7 @@ class _AccountOverview extends StatelessWidget {
                     label: localization.purchaseLicense.toUpperCase(),
                     iconData: isMobile(context) ? null : Icons.cloud_download,
                     onPressed: () async {
-                      if (await canLaunch(kWhiteLabelUrl)) {
-                        launch(kWhiteLabelUrl);
-                      }
+                      launchUrl(Uri.parse(kWhiteLabelUrl));
                     },
                   ),
                 ),
@@ -506,7 +505,7 @@ class _AccountOverview extends StatelessWidget {
                 child: AppButton(
                   label: localization.apiDocs.toUpperCase(),
                   iconData: isMobile(context) ? null : MdiIcons.bookshelf,
-                  onPressed: () => launch(kApiDocsURL),
+                  onPressed: () => launchUrl(Uri.parse(kApiDocsURL)),
                 ),
               ),
               SizedBox(width: kGutterWidth),
@@ -514,7 +513,7 @@ class _AccountOverview extends StatelessWidget {
                 child: AppButton(
                   label: 'Zapier',
                   iconData: isMobile(context) ? null : MdiIcons.cloud,
-                  onPressed: () => launch(kZapierURL),
+                  onPressed: () => launchUrl(Uri.parse(kZapierURL)),
                 ),
               ),
             ])),

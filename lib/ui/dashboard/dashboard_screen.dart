@@ -278,7 +278,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                   tooltip: state.prefState.enableTooltips
                       ? localization.upgrade
                       : null,
-                  onPressed: () => launch(state.userCompany.ninjaPortalUrl),
+                  onPressed: () =>
+                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl)),
                   icon: Icon(Icons.arrow_circle_up)),
             ),
           if (isMobile(context) || !state.prefState.isHistoryVisible)
