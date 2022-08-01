@@ -287,7 +287,7 @@ class EditScaffold extends StatelessWidget {
             actions: showOverflow
                 ? []
                 : [
-                    if (state.isSaving)
+                    if (state.isSaving && isMobileOS())
                       Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Center(
