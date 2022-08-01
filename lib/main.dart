@@ -67,6 +67,7 @@ void main({bool isTesting = false}) async {
   final prefs = await SharedPreferences.getInstance();
   windowManager.waitUntilReadyToShow(
       WindowOptions(
+        center: true,
         size: Size(
           prefs.getDouble(kSharedPrefWidth) ?? 800,
           prefs.getDouble(kSharedPrefHeight) ?? 600,
@@ -152,13 +153,9 @@ void main({bool isTesting = false}) async {
   }
 
   if (isWindows()) {
-    final prefs = await SharedPreferences.getInstance();
-    final offsetX = prefs.getDouble(kSharedPrefOffsetX);
-    final offsetY = prefs.getDouble(kSharedPrefOffsetY);
     doWhenWindowReady(() {
       final win = appWindow;
       win.title = 'Invoice Ninja';
-      win.position = Offset(offsetX, offsetY);
       win.show();
     });
   }
