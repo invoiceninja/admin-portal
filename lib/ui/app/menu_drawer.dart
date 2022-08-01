@@ -134,6 +134,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 viewEntityById(
                                   entityId: history.id,
                                   entityType: history.entityType,
+                                  showError: false,
                                 );
                             }
                           },
