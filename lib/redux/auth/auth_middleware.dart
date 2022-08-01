@@ -441,13 +441,14 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as PurgeDataRequest;
     final state = store.state;
+    final company = state.company;
 
     repository
         .purgeData(
             credentials: state.credentials,
             password: action.password,
             idToken: action.idToken,
-            companyId: state.company.id)
+            companyId: company.id)
         .then((dynamic value) {
       store.dispatch(PurgeDataSuccess());
       store.dispatch(RefreshData(

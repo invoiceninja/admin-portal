@@ -435,6 +435,10 @@ CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
+  TypedReducer<BuiltList<HistoryRecord>, PurgeDataSuccess>(
+      (historyList, action) {
+    return BuiltList<HistoryRecord>();
+  }),
   TypedReducer<BuiltList<HistoryRecord>, PopLastHistory>(
     (historyList, action) {
       if (historyList.isEmpty) {
