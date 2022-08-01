@@ -304,7 +304,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   right: kMobileDialogPadding,
                 )
               : null,
-          children: company.numberOfItemTaxRates == 0
+          children: company.numberOfExpenseTaxRates == 0
               ? [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

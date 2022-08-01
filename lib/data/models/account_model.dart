@@ -23,7 +23,7 @@ abstract class AccountEntity
       debugEnabled: false,
       isDocker: false,
       isHosted: false,
-      accountSmsVerified: false,
+      accountSmsVerified: true,
       isSchedulerRunning: false,
       disableAutoUpdate: false,
       isMigrated: false,

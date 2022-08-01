@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'expense_tax_rates': 'Expense Tax Rates',
+      'invoice_item_tax_rates': 'Invoice Item Tax Rates',
       'verified_phone_number': 'Successfully verified phone number',
       'code_was_sent': 'A code has been sent via SMS',
       'resend': 'Resend',
@@ -334,7 +336,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -2470,7 +2472,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -4622,7 +4624,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -6766,7 +6768,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Ръководство за потребителя',
@@ -8926,7 +8928,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': '使用者指南',
@@ -11048,7 +11050,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -13196,7 +13198,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Vybrat platformu',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Zapnout Markdown',
       'enable_markdown_help': 'Konvertovat Markdown  do HTML na PDF',
       'user_guide': 'User Guide',
@@ -15341,7 +15343,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Brugerguide',
@@ -17492,7 +17494,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Gebruikershandleiding',
@@ -19662,7 +19664,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -23953,7 +23955,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -26101,7 +26103,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guide de l\'utilisateur',
@@ -28275,7 +28277,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guide de l\'utilisateur',
@@ -32726,7 +32728,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Οδηγός Χρήσης',
@@ -34917,7 +34919,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -37053,7 +37055,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guida Utente',
@@ -39224,7 +39226,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -41365,7 +41367,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -43510,7 +43512,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -45655,7 +45657,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Упатство за корисникот',
@@ -47804,7 +47806,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Brukerguide',
@@ -49947,7 +49949,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -52094,7 +52096,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Przewodnik użytkownika',
@@ -54239,7 +54241,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guia do Usuário',
@@ -56401,7 +56403,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guia do Utilizador',
@@ -58579,7 +58581,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -60726,7 +60728,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Руководство пользователя',
@@ -62871,7 +62873,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Uputstvo za upotrebu',
@@ -67183,7 +67185,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Navodila',
@@ -69330,7 +69332,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guía de Usuario',
@@ -71486,7 +71488,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Guía del usuario',
@@ -73676,7 +73678,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'Användarhjälp',
@@ -75831,7 +75833,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'คู่มือผู้ใช้',
@@ -77973,7 +77975,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'select_platform': 'Select Platform',
       'use_web_app_to_connect_gmail':
           'Please use the web app to connect to Gmail',
-      'expense_tax_help': 'Item tax rates are disabled',
+      'expense_tax_help': 'Expense tax rates are disabled',
       'enable_markdown': 'Enable Markdown',
       'enable_markdown_help': 'Convert markdown to HTML on the PDF',
       'user_guide': 'User Guide',
@@ -85247,9 +85249,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['bulk_email_purchase_orders'] ??
       _localizedValues['en']['bulk_email_purchase_orders'];
 
-String get verifiedPhoneNumber =>
+  String get verifiedPhoneNumber =>
       _localizedValues[localeCode]['verified_phone_number'] ??
       _localizedValues['en']['verified_phone_number'];
+
+  String get invoiceItemTaxRates =>
+      _localizedValues[localeCode]['invoice_item_tax_rates'] ??
+      _localizedValues['en']['invoice_item_tax_rates'];
+
+  String get expenseTaxRates =>
+      _localizedValues[localeCode]['expense_tax_rates'] ??
+      _localizedValues['en']['expense_tax_ratesk'];
 
 // STARTER: lang field - do not remove comment
 

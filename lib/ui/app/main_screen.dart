@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
@@ -291,6 +292,7 @@ class MainScreen extends StatelessWidget {
               store.dispatch(ViewSettings(
                 section: history.id,
                 company: state.company,
+                tabIndex: 0,
               ));
               break;
             default:
@@ -302,29 +304,31 @@ class MainScreen extends StatelessWidget {
 
           return false;
         },
-        child: DesktopSessionTimeout(
-          child: SafeArea(
-            child: FocusTraversalGroup(
-              policy: ReadingOrderTraversalPolicy(),
-              child: Column(
-                children: [
-                  if (isWindows()) AppTitleBar(),
-                  Expanded(
-                    child: ChangeLayoutBanner(
-                      appLayout: prefState.appLayout,
-                      suggestedLayout: AppLayout.desktop,
-                      child: Row(children: <Widget>[
-                        if (prefState.showMenu) MenuDrawerBuilder(),
-                        Expanded(
-                            child: AppBorder(
-                          child: screen,
-                          isLeft: prefState.showMenu &&
-                              (!state.isFullScreen || showFilterSidebar),
-                        )),
-                      ]),
+        child: WindowManager(
+          child: DesktopSessionTimeout(
+            child: SafeArea(
+              child: FocusTraversalGroup(
+                policy: ReadingOrderTraversalPolicy(),
+                child: Column(
+                  children: [
+                    if (isWindows()) AppTitleBar(),
+                    Expanded(
+                      child: ChangeLayoutBanner(
+                        appLayout: prefState.appLayout,
+                        suggestedLayout: AppLayout.desktop,
+                        child: Row(children: <Widget>[
+                          if (prefState.showMenu) MenuDrawerBuilder(),
+                          Expanded(
+                              child: AppBorder(
+                            child: screen,
+                            isLeft: prefState.showMenu &&
+                                (!state.isFullScreen || showFilterSidebar),
+                          )),
+                        ]),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

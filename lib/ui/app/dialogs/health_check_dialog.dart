@@ -58,6 +58,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
+      Navigator.of(context).pop();
       showErrorDialog(context: context, message: error);
     });
   }

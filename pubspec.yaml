@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.88+88
+version: 5.0.89+89
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -74,7 +74,8 @@ dependencies:
   image_cropper: ^2.0.2
   msal_js: ^2.14.0
   sign_in_with_apple: ^4.0.0
-  # bitsdojo_window: ^0.1.2
+  window_manager: ^0.2.5
+  bitsdojo_window: ^0.1.2
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 

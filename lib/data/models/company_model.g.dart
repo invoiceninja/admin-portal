@@ -117,6 +117,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enabled_item_tax_rates',
       serializers.serialize(object.numberOfItemTaxRates,
           specifiedType: const FullType(int)),
+      'enabled_expense_tax_rates',
+      serializers.serialize(object.numberOfExpenseTaxRates,
+          specifiedType: const FullType(int)),
       'expense_inclusive_taxes',
       serializers.serialize(object.expenseInclusiveTaxes,
           specifiedType: const FullType(bool)),
@@ -496,6 +499,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'enabled_item_tax_rates':
           result.numberOfItemTaxRates = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'enabled_expense_tax_rates':
+          result.numberOfExpenseTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'expense_inclusive_taxes':
@@ -1463,6 +1470,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int numberOfItemTaxRates;
   @override
+  final int numberOfExpenseTaxRates;
+  @override
   final bool expenseInclusiveTaxes;
   @override
   final int sessionTimeout;
@@ -1629,6 +1638,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.firstMonthOfYear,
       this.numberOfInvoiceTaxRates,
       this.numberOfItemTaxRates,
+      this.numberOfExpenseTaxRates,
       this.expenseInclusiveTaxes,
       this.sessionTimeout,
       this.passwordTimeout,
@@ -1751,6 +1761,8 @@ class _$CompanyEntity extends CompanyEntity {
         numberOfInvoiceTaxRates, 'CompanyEntity', 'numberOfInvoiceTaxRates');
     BuiltValueNullFieldError.checkNotNull(
         numberOfItemTaxRates, 'CompanyEntity', 'numberOfItemTaxRates');
+    BuiltValueNullFieldError.checkNotNull(
+        numberOfExpenseTaxRates, 'CompanyEntity', 'numberOfExpenseTaxRates');
     BuiltValueNullFieldError.checkNotNull(
         expenseInclusiveTaxes, 'CompanyEntity', 'expenseInclusiveTaxes');
     BuiltValueNullFieldError.checkNotNull(
@@ -1906,6 +1918,7 @@ class _$CompanyEntity extends CompanyEntity {
         firstMonthOfYear == other.firstMonthOfYear &&
         numberOfInvoiceTaxRates == other.numberOfInvoiceTaxRates &&
         numberOfItemTaxRates == other.numberOfItemTaxRates &&
+        numberOfExpenseTaxRates == other.numberOfExpenseTaxRates &&
         expenseInclusiveTaxes == other.expenseInclusiveTaxes &&
         sessionTimeout == other.sessionTimeout &&
         passwordTimeout == other.passwordTimeout &&
@@ -1996,7 +2009,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
                                                                                 invoiceTaskDocuments.hashCode),
                                                                             invoiceTaskTimelog.hashCode),
                                                                         invoiceTaskDatelog.hashCode),
@@ -2049,6 +2062,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('firstMonthOfYear', firstMonthOfYear)
           ..add('numberOfInvoiceTaxRates', numberOfInvoiceTaxRates)
           ..add('numberOfItemTaxRates', numberOfItemTaxRates)
+          ..add('numberOfExpenseTaxRates', numberOfExpenseTaxRates)
           ..add('expenseInclusiveTaxes', expenseInclusiveTaxes)
           ..add('sessionTimeout', sessionTimeout)
           ..add('passwordTimeout', passwordTimeout)
@@ -2254,6 +2268,11 @@ class CompanyEntityBuilder
   int get numberOfItemTaxRates => _$this._numberOfItemTaxRates;
   set numberOfItemTaxRates(int numberOfItemTaxRates) =>
       _$this._numberOfItemTaxRates = numberOfItemTaxRates;
+
+  int _numberOfExpenseTaxRates;
+  int get numberOfExpenseTaxRates => _$this._numberOfExpenseTaxRates;
+  set numberOfExpenseTaxRates(int numberOfExpenseTaxRates) =>
+      _$this._numberOfExpenseTaxRates = numberOfExpenseTaxRates;
 
   bool _expenseInclusiveTaxes;
   bool get expenseInclusiveTaxes => _$this._expenseInclusiveTaxes;
@@ -2641,6 +2660,7 @@ class CompanyEntityBuilder
       _firstMonthOfYear = $v.firstMonthOfYear;
       _numberOfInvoiceTaxRates = $v.numberOfInvoiceTaxRates;
       _numberOfItemTaxRates = $v.numberOfItemTaxRates;
+      _numberOfExpenseTaxRates = $v.numberOfExpenseTaxRates;
       _expenseInclusiveTaxes = $v.expenseInclusiveTaxes;
       _sessionTimeout = $v.sessionTimeout;
       _passwordTimeout = $v.passwordTimeout;
@@ -2772,6 +2792,7 @@ class CompanyEntityBuilder
               firstMonthOfYear: BuiltValueNullFieldError.checkNotNull(firstMonthOfYear, 'CompanyEntity', 'firstMonthOfYear'),
               numberOfInvoiceTaxRates: BuiltValueNullFieldError.checkNotNull(numberOfInvoiceTaxRates, 'CompanyEntity', 'numberOfInvoiceTaxRates'),
               numberOfItemTaxRates: BuiltValueNullFieldError.checkNotNull(numberOfItemTaxRates, 'CompanyEntity', 'numberOfItemTaxRates'),
+              numberOfExpenseTaxRates: BuiltValueNullFieldError.checkNotNull(numberOfExpenseTaxRates, 'CompanyEntity', 'numberOfExpenseTaxRates'),
               expenseInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(expenseInclusiveTaxes, 'CompanyEntity', 'expenseInclusiveTaxes'),
               sessionTimeout: BuiltValueNullFieldError.checkNotNull(sessionTimeout, 'CompanyEntity', 'sessionTimeout'),
               passwordTimeout: BuiltValueNullFieldError.checkNotNull(passwordTimeout, 'CompanyEntity', 'passwordTimeout'),

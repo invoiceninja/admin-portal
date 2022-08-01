@@ -11,8 +11,8 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:invoiceninja_flutter/utils/platforms.dart';
-//import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -58,9 +58,24 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
+import 'package:window_manager/window_manager.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  windowManager.waitUntilReadyToShow(
+      WindowOptions(
+        center: true,
+        size: Size(
+          prefs.getDouble(kSharedPrefWidth) ?? 800,
+          prefs.getDouble(kSharedPrefHeight) ?? 600,
+        ),
+      ), () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
 
   final store = Store<AppState>(appReducer,
       initialState: await _initialState(isTesting),
@@ -137,7 +152,6 @@ void main({bool isTesting = false}) async {
     );
   }
 
-  /*
   if (isWindows()) {
     doWhenWindowReady(() {
       final win = appWindow;
@@ -145,7 +159,6 @@ void main({bool isTesting = false}) async {
       win.show();
     });
   }
-  */
 }
 
 Future<AppState> _initialState(bool isTesting) async {

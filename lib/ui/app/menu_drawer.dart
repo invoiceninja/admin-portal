@@ -127,6 +127,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 store.dispatch(ViewSettings(
                                   section: history.id,
                                   company: state.company,
+                                  tabIndex: 0,
                                 ));
                                 break;
                               default:

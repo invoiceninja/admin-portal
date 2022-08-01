@@ -231,7 +231,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   expense.rebuild((b) => b..assignedUserId = userId)),
             ),
             if (!expense.usesInclusiveTaxes) amountField,
-            if (company.enableFirstItemTaxRate || expense.taxName1.isNotEmpty)
+            if (company.enableFirstExpenseTaxRate ||
+                expense.taxName1.isNotEmpty)
               if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount1,
@@ -251,7 +252,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxName: expense.taxName1,
                   initialTaxRate: expense.taxRate1,
                 ),
-            if (company.enableSecondItemTaxRate || expense.taxName2.isNotEmpty)
+            if (company.enableSecondExpenseTaxRate ||
+                expense.taxName2.isNotEmpty)
               if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount2,
@@ -271,7 +273,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxName: expense.taxName2,
                   initialTaxRate: expense.taxRate2,
                 ),
-            if (company.enableThirdItemTaxRate || expense.taxName3.isNotEmpty)
+            if (company.enableThirdExpenseTaxRate ||
+                expense.taxName3.isNotEmpty)
               if (expense.calculateTaxByAmount == true)
                 TaxRateField(
                   initialTaxAmount: expense.taxAmount3,
