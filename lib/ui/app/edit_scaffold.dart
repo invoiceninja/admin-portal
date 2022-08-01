@@ -109,7 +109,7 @@ class EditScaffold extends StatelessWidget {
         .bodyText2
         .copyWith(color: state.headerTextColor);
 
-    final showOverflow = isDesktop(context);
+    final showOverflow = isDesktop(context) && state.isFullScreen;
 
     return WillPopScope(
       onWillPop: () async {
@@ -296,6 +296,56 @@ class EditScaffold extends StatelessWidget {
                           height: 26,
                           child: CircularProgressIndicator(color: Colors.white),
                         )),
+                      )
+                    else if (isDesktopOS())
+                      Row(
+                        children: [
+                          OutlinedButton(
+                            onPressed: state.isSaving
+                                ? null
+                                : () {
+                                    if (onCancelPressed != null) {
+                                      onCancelPressed(context);
+                                    } else {
+                                      store.dispatch(ResetSettings());
+                                    }
+                                  },
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(minWidth: 60),
+                              child: IconText(
+                                icon: getEntityActionIcon(EntityAction.cancel),
+                                text: localization.cancel,
+                                style: state.isSaving ? null : textStyle,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          OutlinedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(state
+                                    .prefState.colorThemeModel.colorSuccess)),
+                            onPressed: state.isSaving
+                                ? null
+                                : () {
+                                    // Clear focus now to prevent un-focus after save from
+                                    // marking the form as changed and to hide the keyboard
+                                    FocusScope.of(context).unfocus(
+                                        disposition: UnfocusDisposition
+                                            .previouslyFocusedChild);
+
+                                    onSavePressed(context);
+                                  },
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(minWidth: 60),
+                              child: IconText(
+                                icon: getEntityActionIcon(EntityAction.save),
+                                text: localization.save,
+                                style: state.isSaving ? null : textStyle,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 16),
+                        ],
                       )
                     else
                       SaveCancelButtons(
