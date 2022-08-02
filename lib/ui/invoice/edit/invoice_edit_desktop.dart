@@ -801,9 +801,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             );
                           }),
                           DocumentGrid(
-                              documents: [],
-                              onUploadDocument: null,
-                              onDeleteDocument: null),
+                              documents: invoice.documents.toList(),
+                              onUploadDocument: (path) => widget.entityViewModel
+                                  .onUploadDocument(context, path),
+                              onDeleteDocument: (document, password, idToken) =>
+                                  widget.entityViewModel.onDeleteDocument(
+                                      context, document, password, idToken))
                         ],
                       ),
                     ),

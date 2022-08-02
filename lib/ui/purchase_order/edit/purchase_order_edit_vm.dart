@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -55,6 +58,8 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
+    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           company: company,
@@ -65,6 +70,8 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           onItemsAdded: onItemsAdded,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
         );
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
@@ -160,6 +167,35 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           createEntity(context: context, entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
+      },
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SavePurchaseOrderDocumentRequest(
+            multipartFile: multipartFile,
+            purchaseOrder: purchaseOrder,
+            completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>((value) => store
+            .dispatch(LoadPurchaseOrder(purchaseOrderId: purchaseOrder.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+          idToken: idToken,
+        ));
       },
     );
   }
