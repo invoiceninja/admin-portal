@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -51,6 +52,11 @@ class TaskScreen extends StatelessWidget {
         TaskStatusEntity().rebuild((b) => b
           ..id = kTaskStatusInvoiced
           ..name = localization.invoiced),
+      for (var statusId in memoizedSortedActiveTaskStatusIds(
+          state.taskStatusState.list, state.taskStatusState.map))
+        TaskStatusEntity().rebuild((b) => b
+          ..id = statusId
+          ..name = state.taskStatusState.map[statusId].name),
     ];
 
     return ListScaffold(

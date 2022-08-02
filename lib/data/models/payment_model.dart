@@ -7,6 +7,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -75,6 +76,8 @@ abstract class PaymentEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   factory PaymentEntity({String id, AppState state, ClientEntity client}) {
+    final settings = getClientSettings(state, client);
+
     return _$PaymentEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -109,7 +112,7 @@ abstract class PaymentEntity extends Object
       vendorId: '',
       projectId: '',
       number: '',
-      sendEmail: state?.company?.settings?.clientManualPaymentNotification,
+      sendEmail: settings.clientManualPaymentNotification ?? false,
       companyGatewayId: '',
       clientContactId: '',
       currencyId: '',

@@ -428,8 +428,8 @@ void handleClientAction(
     case EntityAction.newPayment:
       createEntity(
         context: context,
-        entity:
-            PaymentEntity(state: state).rebuild((b) => b.clientId = client.id),
+        entity: PaymentEntity(state: state, client: client)
+            .rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.newProject:

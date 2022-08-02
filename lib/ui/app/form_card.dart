@@ -18,7 +18,7 @@ class FormCard extends StatelessWidget {
     this.internalPadding,
     this.isLast = false,
     this.forceNarrow = false,
-    this.elevation = 4,
+    this.elevation = 5,
     this.constraints,
   }) : super(key: key);
 

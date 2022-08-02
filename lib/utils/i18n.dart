@@ -502,7 +502,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -2641,7 +2641,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -4793,7 +4793,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -6938,7 +6938,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -9096,7 +9096,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -11219,7 +11219,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -13367,7 +13367,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Aktivovat firmu',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again':
           'Vyskytla se chyba, zkuste to prosím později',
       'please_first_set_a_password': 'Nejprve nastavte heslo',
@@ -15512,7 +15512,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -19833,7 +19833,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -21979,7 +21979,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -24125,7 +24125,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Aktivoi yritys',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'Tapahtui virhe, yritä uudelleen',
       'please_first_set_a_password': 'Aseta ensin salasana',
       'changing_phone_disables_two_factor':
@@ -26272,7 +26272,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -32898,7 +32898,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -39394,7 +39394,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -41536,7 +41536,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -43681,7 +43681,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -45826,7 +45826,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -47975,7 +47975,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -50118,7 +50118,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -54410,7 +54410,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -58750,7 +58750,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -60897,7 +60897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -67354,7 +67354,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -69501,7 +69501,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -76002,7 +76002,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
@@ -78144,7 +78144,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'use_last_email': 'Use last email',
       'activate_company': 'Activate Company',
       'activate_company_help':
-          'Enable emails, recurring invoices and notifications',
+          'Enable emails, recurring invoices, webhooks and notifications',
       'an_error_occurred_try_again': 'An error occurred, please try again',
       'please_first_set_a_password': 'Please first set a password',
       'changing_phone_disables_two_factor':
