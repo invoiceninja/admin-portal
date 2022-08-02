@@ -780,11 +780,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     PurchaseOrderFields.dueDate,
                     PurchaseOrderFields.total,
                     PurchaseOrderFields.balanceDue,
-                    //PurchaseOrderFields.customValue1,
-                    //PurchaseOrderFields.customValue2,
-                    //PurchaseOrderFields.customValue3,
-                    //PurchaseOrderFields.customValue4,
-                  ].map((field) => '\$credit.$field'),
+                    PurchaseOrderFields.customValue1,
+                    PurchaseOrderFields.customValue2,
+                    PurchaseOrderFields.customValue3,
+                    PurchaseOrderFields.customValue4,
+                  ].map((field) => '\$purchase_order.$field'),
                   /*
                   ...[
                     ClientFields.balance,
