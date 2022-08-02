@@ -805,7 +805,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               ],
                             );
                           }),
-                          if (invoice.isNew)
+                          if (invoice.isNew || state.hasChanges())
                             HelpText(localization.saveToUploadDocuments)
                           else
                             DocumentGrid(
