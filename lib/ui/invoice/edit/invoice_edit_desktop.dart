@@ -626,7 +626,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         Tab(text: localization.publicNotes),
                         Tab(text: localization.privateNotes),
                         Tab(text: localization.settings),
-                        Tab(text: localization.documents),
+                        Tab(
+                            text: localization.documents +
+                                (invoice.documents.isNotEmpty
+                                    ? ' (${invoice.documents.length})'
+                                    : '')),
                       ],
                     ),
                     SizedBox(
