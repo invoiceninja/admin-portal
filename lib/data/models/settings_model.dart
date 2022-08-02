@@ -84,6 +84,10 @@ abstract class SettingsEntity
       defaultTaxName3: clientSettings?.defaultTaxName3 ??
           groupSettings?.defaultTaxName3 ??
           companySettings?.defaultTaxName3,
+      clientManualPaymentNotification:
+          clientSettings?.clientManualPaymentNotification ??
+              groupSettings?.clientManualPaymentNotification ??
+              companySettings?.clientManualPaymentNotification,
     );
   }
 

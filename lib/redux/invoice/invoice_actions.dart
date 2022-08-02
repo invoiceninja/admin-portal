@@ -660,12 +660,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.newPayment:
       createEntity(
         context: context,
-        entity: PaymentEntity(state: state).rebuild((b) => b
-          ..clientId = invoice.clientId
-          ..invoices.addAll(invoices
-              .where((invoice) => !(invoice as InvoiceEntity).isPaid)
-              .map((invoice) => PaymentableEntity.fromInvoice(invoice))
-              .toList())),
+        entity: PaymentEntity(
+                state: state, client: state.clientState.get(invoice.clientId))
+            .rebuild((b) => b
+              ..invoices.addAll(invoices
+                  .where((invoice) => !(invoice as InvoiceEntity).isPaid)
+                  .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+                  .toList())),
       );
       break;
     case EntityAction.download:

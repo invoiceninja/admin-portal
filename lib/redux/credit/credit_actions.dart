@@ -586,12 +586,13 @@ Future handleCreditAction(
     case EntityAction.applyCredit:
       createEntity(
         context: context,
-        entity: PaymentEntity(state: state).rebuild((b) => b
-          ..typeId = kPaymentTypeCredit
-          ..clientId = credit.clientId
-          ..credits.addAll(credits
-              .map((credit) => PaymentableEntity.fromCredit(credit))
-              .toList())),
+        entity: PaymentEntity(
+                state: state, client: state.clientState.get(credit.clientId))
+            .rebuild((b) => b
+              ..typeId = kPaymentTypeCredit
+              ..credits.addAll(credits
+                  .map((credit) => PaymentableEntity.fromCredit(credit))
+                  .toList())),
       );
       break;
     case EntityAction.download:
