@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:http/http.dart' as http;
 
@@ -109,7 +110,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
 
     _focusNode = FocusScopeNode();
-    _optionTabController = TabController(vsync: this, length: 5);
+    _optionTabController = TabController(vsync: this, length: 6);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
     _scrollController = ScrollController();
@@ -617,6 +618,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       left: kMobileDialogPadding),
                   children: <Widget>[
                     AppTabBar(
+                      isScrollable: true,
                       controller: _optionTabController,
                       tabs: [
                         Tab(text: localization.terms),
@@ -624,6 +626,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         Tab(text: localization.publicNotes),
                         Tab(text: localization.privateNotes),
                         Tab(text: localization.settings),
+                        Tab(text: localization.documents),
                       ],
                     ),
                     SizedBox(
@@ -797,6 +800,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               ],
                             );
                           }),
+                          DocumentGrid(
+                              documents: [],
+                              onUploadDocument: null,
+                              onDeleteDocument: null),
                         ],
                       ),
                     ),
