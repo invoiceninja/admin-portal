@@ -39,6 +39,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -804,13 +805,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               ],
                             );
                           }),
-                          DocumentGrid(
-                              documents: invoice.documents.toList(),
-                              onUploadDocument: (path) => widget.entityViewModel
-                                  .onUploadDocument(context, path),
-                              onDeleteDocument: (document, password, idToken) =>
-                                  widget.entityViewModel.onDeleteDocument(
-                                      context, document, password, idToken))
+                          if (invoice.isNew)
+                            HelpText(localization.saveToUploadDocuments)
+                          else
+                            DocumentGrid(
+                                documents: invoice.documents.toList(),
+                                onUploadDocument: (path) => widget
+                                    .entityViewModel
+                                    .onUploadDocument(context, path),
+                                onDeleteDocument: (document, password,
+                                        idToken) =>
+                                    widget.entityViewModel.onDeleteDocument(
+                                        context, document, password, idToken))
                         ],
                       ),
                     ),
