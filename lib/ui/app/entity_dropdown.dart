@@ -441,7 +441,7 @@ class EntityDropdownDialog extends StatefulWidget {
     @required this.overrideSuggestedLabel,
     @required this.overrideSuggestedAmount,
     this.onAddPressed,
-    this.excludeIds,
+    this.excludeIds = const [],
   });
 
   final BuiltMap<String, SelectableEntity> entityMap;
