@@ -95,6 +95,7 @@ Reducer<String> selectedIdReducer = combineReducers([
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
+  TypedReducer<InvoiceEntity, LoadQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, SaveQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, EditQuote>(_updateEditing),

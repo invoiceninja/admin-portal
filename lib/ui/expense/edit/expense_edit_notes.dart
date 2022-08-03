@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEditNotes extends StatefulWidget {
   const ExpenseEditNotes({
@@ -75,7 +78,9 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = widget.viewModel.state;
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final expense = viewModel.expense;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
 
     return ScrollableListView(
@@ -90,17 +95,31 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
               : null,
           children: <Widget>[
             DecoratedFormField(
-              maxLines: 10,
+              maxLines: 6,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.publicNotes,
             ),
             DecoratedFormField(
-              maxLines: 10,
+              maxLines: 6,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.privateNotes,
             ),
+            if (isDesktop(context))
+              if (expense.isNew || state.hasChanges())
+                SizedBox(
+                  child: HelpText(localization.saveToUploadDocuments),
+                  height: 200,
+                )
+              else
+                DocumentGrid(
+                    documents: expense.documents.toList(),
+                    onUploadDocument: (path) =>
+                        widget.viewModel.onUploadDocument(context, path),
+                    onDeleteDocument: (document, password, idToken) => widget
+                        .viewModel
+                        .onDeleteDocument(context, document, password, idToken))
           ],
         ),
       ],

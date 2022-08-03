@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -52,6 +55,8 @@ abstract class AbstractExpenseEditVM {
     @required this.onCancelPressed,
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
+    @required this.onUploadDocument,
+    @required this.onDeleteDocument,
   });
 
   final ExpenseEntity expense;
@@ -64,6 +69,8 @@ abstract class AbstractExpenseEditVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddVendorPressed;
+  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
 
 class ExpenseEditVM extends AbstractExpenseEditVM {
@@ -80,6 +87,8 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddVendorPressed,
+    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           expense: expense,
@@ -89,6 +98,8 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           origExpense: origExpense,
           onAddClientPressed: onAddClientPressed,
           onAddVendorPressed: onAddVendorPressed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
         );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
@@ -192,6 +203,35 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
             });
           }
         });
+      },
+      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveExpenseDocumentRequest(
+            multipartFile: multipartFile,
+            expense: expense,
+            completer: completer));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context).uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument: (BuildContext context, DocumentEntity document,
+          String password, String idToken) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>(
+            (value) => store.dispatch(LoadExpense(expenseId: expense.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+          idToken: idToken,
+        ));
       },
     );
   }

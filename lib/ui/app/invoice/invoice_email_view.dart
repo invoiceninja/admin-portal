@@ -238,6 +238,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     child: Text(localization.thirdReminder),
                     value: EmailTemplate.reminder3,
                   ),
+                  DropdownMenuItem<EmailTemplate>(
+                    child: Text(localization.endlessReminder),
+                    value: EmailTemplate.reminder_endless,
+                  ),
                 ],
                 if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
                   DropdownMenuItem<EmailTemplate>(

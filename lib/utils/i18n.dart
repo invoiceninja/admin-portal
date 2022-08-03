@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'save_to_upload_documents': 'Save the record to upload documents',
       'expense_tax_rates': 'Expense Tax Rates',
       'invoice_item_tax_rates': 'Invoice Item Tax Rates',
       'verified_phone_number': 'Successfully verified phone number',
@@ -85259,7 +85260,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get expenseTaxRates =>
       _localizedValues[localeCode]['expense_tax_rates'] ??
-      _localizedValues['en']['expense_tax_ratesk'];
+      _localizedValues['en']['expense_tax_rates'];
+
+  String get saveToUploadDocuments =>
+      _localizedValues[localeCode]['save_to_upload_documents'] ??
+      _localizedValues['en']['save_to_upload_documents'];
 
 // STARTER: lang field - do not remove comment
 

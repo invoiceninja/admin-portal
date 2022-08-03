@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,6 +39,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -109,7 +111,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
 
     _focusNode = FocusScopeNode();
-    _optionTabController = TabController(vsync: this, length: 5);
+    _optionTabController = TabController(vsync: this, length: 6);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
     _scrollController = ScrollController();
@@ -617,6 +619,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       left: kMobileDialogPadding),
                   children: <Widget>[
                     AppTabBar(
+                      isScrollable: true,
                       controller: _optionTabController,
                       tabs: [
                         Tab(text: localization.terms),
@@ -624,6 +627,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         Tab(text: localization.publicNotes),
                         Tab(text: localization.privateNotes),
                         Tab(text: localization.settings),
+                        Tab(
+                            text: localization.documents +
+                                (invoice.documents.isNotEmpty
+                                    ? ' (${invoice.documents.length})'
+                                    : '')),
                       ],
                     ),
                     SizedBox(
@@ -797,6 +805,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               ],
                             );
                           }),
+                          if (invoice.isNew || state.hasChanges())
+                            HelpText(localization.saveToUploadDocuments)
+                          else
+                            DocumentGrid(
+                                documents: invoice.documents.toList(),
+                                onUploadDocument: (path) => widget
+                                    .entityViewModel
+                                    .onUploadDocument(context, path),
+                                onDeleteDocument: (document, password,
+                                        idToken) =>
+                                    widget.entityViewModel.onDeleteDocument(
+                                        context, document, password, idToken))
                         ],
                       ),
                     ),
