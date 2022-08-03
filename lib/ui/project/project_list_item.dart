@@ -100,6 +100,7 @@ class ProjectListItem extends StatelessWidget {
                                 entityActions: project.getActions(
                                   userCompany: state.userCompany,
                                   client: client,
+                                  includeEdit: true,
                                 ),
                                 isSaving: false,
                                 entity: project,

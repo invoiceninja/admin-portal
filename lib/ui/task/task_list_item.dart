@@ -136,7 +136,9 @@ class TaskListItem extends StatelessWidget {
                               )
                             : ActionMenuButton(
                                 entityActions: task.getActions(
-                                    userCompany: state.userCompany),
+                                  userCompany: state.userCompany,
+                                  includeEdit: true,
+                                ),
                                 isSaving: false,
                                 entity: task,
                                 onSelected: (context, action) =>

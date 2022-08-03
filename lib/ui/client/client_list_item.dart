@@ -94,7 +94,9 @@ class ClientListItem extends StatelessWidget {
                               )
                             : ActionMenuButton(
                                 entityActions: client.getActions(
-                                    userCompany: state.userCompany),
+                                  userCompany: state.userCompany,
+                                  includeEdit: true,
+                                ),
                                 isSaving: false,
                                 entity: client,
                                 onSelected: (context, action) =>

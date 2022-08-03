@@ -95,7 +95,9 @@ class VendorListItem extends StatelessWidget {
                               )
                             : ActionMenuButton(
                                 entityActions: vendor.getActions(
-                                    userCompany: state.userCompany),
+                                  userCompany: state.userCompany,
+                                  includeEdit: true,
+                                ),
                                 isSaving: false,
                                 entity: vendor,
                                 onSelected: (context, action) =>
