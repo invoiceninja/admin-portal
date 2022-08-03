@@ -10,6 +10,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -120,9 +121,18 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onChanged() {
-    var phone = _phoneController.text.trim();
-    if (phone.isNotEmpty && !phone.startsWith('+')) {
-      phone = '+$phone';
+    final origPhone = _phoneController.text.trim();
+    final cleanPhone = getOnlyDigits(origPhone);
+    String phone = '';
+
+    if (cleanPhone.isNotEmpty) {
+      phone = '+';
+
+      if (!origPhone.startsWith('+')) {
+        phone += '1';
+      }
+
+      phone += cleanPhone;
     }
 
     final user = widget.viewModel.user.rebuild((b) => b
@@ -350,24 +360,12 @@ class _UserDetailsState extends State<UserDetails>
                   keyboardType: TextInputType.emailAddress,
                 ),
                 DecoratedFormField(
-                    label: localization.phone,
-                    controller: _phoneController,
-                    onSavePressed: _onSavePressed,
-                    keyboardType: TextInputType.phone,
-                    hint: '+12125550000',
-                    validator: (value) {
-                      if (value.isEmpty || state.isSelfHosted) {
-                        return null;
-                      }
-
-                      if (!value.startsWith('+')) {
-                        value = '+$value';
-                      }
-
-                      return RegExp(r'^\+[1-9]\d{1,14}$').hasMatch(value)
-                          ? null
-                          : localization.invalidPhoneNumber;
-                    }),
+                  label: localization.phone,
+                  controller: _phoneController,
+                  onSavePressed: _onSavePressed,
+                  keyboardType: TextInputType.phone,
+                  hint: '+12125550000',
+                ),
                 PasswordFormField(
                   controller: _passwordController,
                   autoValidate: autoValidate,
