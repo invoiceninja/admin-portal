@@ -62,6 +62,7 @@ Reducer<String> selectedIdReducer = combineReducers([
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity>([
+  TypedReducer<ExpenseEntity, LoadExpenseSuccess>(_updateEditing),
   TypedReducer<ExpenseEntity, SaveExpenseSuccess>(_updateEditing),
   TypedReducer<ExpenseEntity, AddExpenseSuccess>(_updateEditing),
   TypedReducer<ExpenseEntity, RestoreExpenseSuccess>((expenses, action) {
