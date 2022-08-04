@@ -12,6 +12,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -382,8 +383,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         launchUrl(Uri.parse(kDebugModeUrl)),
                                   ),
                                 ),
-                            if (!state.account.accountSmsVerified &&
-                                state.isHosted)
+                            if (!kReleaseMode ||
+                                (!state.account.accountSmsVerified &&
+                                    state.isHosted))
                               if (state.isMenuCollapsed)
                                 Tooltip(
                                   message: localization.verifyPhoneNumberHelp,
@@ -391,13 +393,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     contentPadding:
                                         const EdgeInsets.only(left: 12),
                                     leading: IconButton(
-                                      onPressed: () =>
-                                          store.dispatch(ViewSettings(
-                                        section: kSettingsUserDetails,
-                                        company: company,
-                                        user: state.user,
-                                        tabIndex: 0,
-                                      )),
+                                      onPressed: () {
+                                        showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              SmsVerification(),
+                                        );
+                                      },
                                       icon: Icon(Icons.warning,
                                           color: Colors.orange),
                                     ),
@@ -412,12 +414,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onTap: () {
-                                      store.dispatch(ViewSettings(
-                                        section: kSettingsUserDetails,
-                                        company: company,
-                                        user: state.user,
-                                        tabIndex: 0,
-                                      ));
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            SmsVerification(),
+                                      );
                                     },
                                   ),
                                 )
