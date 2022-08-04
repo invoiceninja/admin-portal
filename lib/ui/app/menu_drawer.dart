@@ -383,9 +383,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         launchUrl(Uri.parse(kDebugModeUrl)),
                                   ),
                                 ),
-                            if (!kReleaseMode ||
-                                (!state.account.accountSmsVerified &&
-                                    state.isHosted))
+                            if (!state.account.accountSmsVerified &&
+                                state.isHosted)
                               if (state.isMenuCollapsed)
                                 Tooltip(
                                   message: localization.verifyPhoneNumberHelp,

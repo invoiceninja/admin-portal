@@ -10,10 +10,10 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:pinput/pinput.dart';
 
 class SmsVerification extends StatefulWidget {
   const SmsVerification();
@@ -27,7 +27,6 @@ class _SmsVerificationState extends State<SmsVerification> {
   bool _isLoading = false;
   String _code = '';
   String _phone = '';
-  bool _autoValidate = false;
   final _webClient = WebClient();
 
   static final GlobalKey<FormState> _formKey =
@@ -36,10 +35,6 @@ class _SmsVerificationState extends State<SmsVerification> {
 
   void _sendCode() {
     final bool isValid = _formKey.currentState.validate();
-
-    setState(() {
-      _autoValidate = !isValid ?? false;
-    });
 
     if (!isValid) {
       return;
@@ -74,10 +69,6 @@ class _SmsVerificationState extends State<SmsVerification> {
 
   void _verifyCode() {
     final bool isValid = _formKey.currentState.validate();
-
-    setState(() {
-      _autoValidate = !isValid ?? false;
-    });
 
     if (!isValid) {
       return;
@@ -142,17 +133,20 @@ class _SmsVerificationState extends State<SmsVerification> {
                 children: [
                   if (_showCode) ...[
                     Text(localization.codeWasSent),
-                    SizedBox(height: 8),
-                    DecoratedFormField(
-                      label: localization.code,
-                      keyboardType: TextInputType.number,
-                      autovalidate: _autoValidate,
-                      onChanged: (value) => _code = value,
+                    SizedBox(height: 20),
+                    Pinput(
+                      onCompleted: (code) => _code = code,
+                      autofocus: true,
+                      length: 6,
+                      showCursor: true,
+                      androidSmsAutofillMethod:
+                          AndroidSmsAutofillMethod.smsUserConsentApi,
                       validator: (value) =>
                           value.isEmpty ? localization.pleaseEnterACode : null,
                     ),
                   ] else
                     IntlPhoneField(
+                      autofocus: true,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
                           RegExp(r'[0-9]'),
