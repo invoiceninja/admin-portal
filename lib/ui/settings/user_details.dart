@@ -349,7 +349,6 @@ class _UserDetailsState extends State<UserDetails>
                   controller: _phoneController,
                   onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.phone,
-                  hint: '+12125550000',
                 ),
                 PasswordFormField(
                   controller: _passwordController,
