@@ -666,7 +666,7 @@ void handlePurchaseOrderAction(BuildContext context,
         }
       }
       break;
-    case EntityAction.clientPortal:
+    case EntityAction.vendorPortal:
       launchUrl(Uri.parse(purchaseOrder.invitationSilentLink));
       break;
     case EntityAction.sendEmail:

@@ -23,6 +23,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.documents:
       return Icons.download;
     case EntityAction.clientPortal:
+    case EntityAction.vendorPortal:
       return Icons.cloud_circle;
     case EntityAction.clone:
     case EntityAction.cloneToOther:

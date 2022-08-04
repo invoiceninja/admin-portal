@@ -1061,7 +1061,11 @@ abstract class InvoiceEntity extends Object
       }
 
       if (!multiselect) {
-        actions.add(EntityAction.clientPortal);
+        if (isPurchaseOrder) {
+          actions.add(EntityAction.vendorPortal);
+        } else {
+          actions.add(EntityAction.clientPortal);
+        }
       }
     }
 
