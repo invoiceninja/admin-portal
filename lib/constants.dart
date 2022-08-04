@@ -528,6 +528,7 @@ const String kReportQuoteItem = 'quote_item';
 const String kReportRecurringExpense = 'recurring_expense';
 const String kReportRecurringInvoice = 'recurring_invoice';
 const String kReportPurchaseOrder = 'purchase_order';
+const String kReportVendor = 'vendor';
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';

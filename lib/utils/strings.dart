@@ -2,9 +2,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-bool isAllDigits(String value) {
-  return value.replaceAll(RegExp('[^\\d]'), '') == value;
-}
+String getOnlyDigits(String value) => value.replaceAll(RegExp('[^\\d]'), '');
+
+bool isAllDigits(String value) => getOnlyDigits(value) == value;
 
 String toSnakeCase(String value) {
   if ((value ?? '').isEmpty) {

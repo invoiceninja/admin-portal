@@ -102,8 +102,10 @@ class PurchaseOrderListItem extends StatelessWidget {
                                 )
                               : ActionMenuButton(
                                   entityActions: purchaseOrder.getActions(
-                                      userCompany: state.userCompany,
-                                      client: client),
+                                    userCompany: state.userCompany,
+                                    client: client,
+                                    includeEdit: true,
+                                  ),
                                   isSaving: false,
                                   entity: purchaseOrder,
                                   onSelected: (context, action) =>

@@ -127,7 +127,9 @@ class ExpenseListItem extends StatelessWidget {
                               )
                             : ActionMenuButton(
                                 entityActions: expense.getActions(
-                                    userCompany: state.userCompany),
+                                  userCompany: state.userCompany,
+                                  includeEdit: true,
+                                ),
                                 isSaving: false,
                                 entity: expense,
                                 onSelected: (context, action) =>

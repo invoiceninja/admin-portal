@@ -76,7 +76,8 @@ dependencies:
   sign_in_with_apple: ^4.0.0
   window_manager: ^0.2.5
   bitsdojo_window: ^0.1.2  
-  direct_dialer: ^1.2.0
+  intl_phone_field: ^3.1.0
+  pinput: ^2.2.11
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 

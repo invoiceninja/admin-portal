@@ -2,11 +2,9 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:direct_dialer/direct_dialer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
@@ -72,6 +70,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
             title: contact.fullName + '\n' + contact.phone,
             copyValue: contact.phone,
             subtitle: localization.phone,
+            /*
             trailing: isApple() || isAndroid()
                 ? IconButton(
                     onPressed: () async {
@@ -84,6 +83,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
                     },
                     icon: Icon(MdiIcons.dialpad))
                 : null,
+                */
             onLongPress: () => setState(() {
               _launched =
                   _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
@@ -109,6 +109,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           icon: Icons.phone,
           title: vendor.phone,
           subtitle: localization.phone,
+          /*
           trailing: isApple() || isAndroid()
               ? IconButton(
                   onPressed: () async {
@@ -121,6 +122,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
                   },
                   icon: Icon(MdiIcons.dialpad))
               : null,
+              */
           onLongPress: () => setState(() {
             _launched =
                 _launchURL(context, 'sms:' + cleanPhoneNumber(vendor.phone));
