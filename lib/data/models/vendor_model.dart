@@ -498,6 +498,10 @@ abstract class VendorContactEntity extends Object
       createdUserId: '',
       createdAt: 0,
       assignedUserId: '',
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
     );
   }
 
@@ -524,6 +528,18 @@ abstract class VendorContactEntity extends Object
   bool get isPrimary;
 
   String get phone;
+
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();
@@ -588,6 +604,12 @@ abstract class VendorContactEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  static void _initializeBuilder(VendorContactEntityBuilder builder) => builder
+    ..customValue1 = ''
+    ..customValue2 = ''
+    ..customValue3 = ''
+    ..customValue4 = '';
 
   static Serializer<VendorContactEntity> get serializer =>
       _$vendorContactEntitySerializer;

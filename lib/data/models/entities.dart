@@ -556,6 +556,12 @@ class CustomFieldType {
   static const String contact3 = 'contact3';
   static const String contact4 = 'contact4';
 
+  static const String vendorContact = 'vendor_contact';
+  static const String vendorContact1 = 'vendor_contact1';
+  static const String vendorContact2 = 'vendor_contact2';
+  static const String vendorContact3 = 'vendor_contact3';
+  static const String vendorContact4 = 'vendor_contact4';
+
   static const String task = 'task';
   static const String task1 = 'task1';
   static const String task2 = 'task2';

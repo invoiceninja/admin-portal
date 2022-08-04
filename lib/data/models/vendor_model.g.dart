@@ -397,6 +397,18 @@ class _$VendorContactEntitySerializer
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -471,6 +483,22 @@ class _$VendorContactEntitySerializer
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -1223,6 +1251,14 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1249,6 +1285,10 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.email,
       this.isPrimary,
       this.phone,
+      this.customValue1,
+      this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1268,6 +1308,14 @@ class _$VendorContactEntity extends VendorContactEntity {
         isPrimary, 'VendorContactEntity', 'isPrimary');
     BuiltValueNullFieldError.checkNotNull(
         phone, 'VendorContactEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, 'VendorContactEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, 'VendorContactEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, 'VendorContactEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, 'VendorContactEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'VendorContactEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -1295,6 +1343,10 @@ class _$VendorContactEntity extends VendorContactEntity {
         email == other.email &&
         isPrimary == other.isPrimary &&
         phone == other.phone &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1319,11 +1371,24 @@ class _$VendorContactEntity extends VendorContactEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, firstName.hashCode),
-                                                    lastName.hashCode),
-                                                email.hashCode),
-                                            isPrimary.hashCode),
-                                        phone.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        firstName
+                                                                            .hashCode),
+                                                                    lastName
+                                                                        .hashCode),
+                                                                email.hashCode),
+                                                            isPrimary.hashCode),
+                                                        phone.hashCode),
+                                                    customValue1.hashCode),
+                                                customValue2.hashCode),
+                                            customValue3.hashCode),
+                                        customValue4.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1342,6 +1407,10 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('email', email)
           ..add('isPrimary', isPrimary)
           ..add('phone', phone)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1378,6 +1447,22 @@ class VendorContactEntityBuilder
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
 
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1412,7 +1497,9 @@ class VendorContactEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  VendorContactEntityBuilder();
+  VendorContactEntityBuilder() {
+    VendorContactEntity._initializeBuilder(this);
+  }
 
   VendorContactEntityBuilder get _$this {
     final $v = _$v;
@@ -1422,6 +1509,10 @@ class VendorContactEntityBuilder
       _email = $v.email;
       _isPrimary = $v.isPrimary;
       _phone = $v.phone;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1460,18 +1551,22 @@ class VendorContactEntityBuilder
                 isPrimary, 'VendorContactEntity', 'isPrimary'),
             phone: BuiltValueNullFieldError.checkNotNull(
                 phone, 'VendorContactEntity', 'phone'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, 'VendorContactEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, 'VendorContactEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, 'VendorContactEntity', 'customValue3'),
+            customValue4:
+                BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorContactEntity', 'customValue4'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'VendorContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'VendorContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, 'VendorContactEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'VendorContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'VendorContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, 'VendorContactEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, 'VendorContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }
