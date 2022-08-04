@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -480,7 +479,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         const EdgeInsets.only(left: 12),
                                     tileColor: Colors.green,
                                     leading: IconButton(
-                                      onPressed: () => null,
+                                      onPressed: () => store.dispatch(
+                                          ViewSettings(
+                                              clearFilter: true,
+                                              company: company,
+                                              user: state.user,
+                                              section:
+                                                  kSettingsAccountManagement)),
                                       icon: Icon(
                                         Icons.arrow_circle_up,
                                         color: Colors.white,
@@ -499,18 +504,18 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                 ),
                                           ),
                                     onTap: () {
+                                      /*
                                       showDialog<void>(
                                           context: context,
                                           builder: (BuildContext context) =>
                                               UpgradeDialog());
+                                      */
 
-                                      /*
                                       store.dispatch(ViewSettings(
                                           clearFilter: true,
                                           company: company,
                                           user: state.user,
                                           section: kSettingsAccountManagement));
-                                       */
                                     },
                                   ),
                                 ),

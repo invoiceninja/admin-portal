@@ -14,6 +14,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
@@ -320,6 +321,16 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.clientState.map,
+          state.userState.map,
+          state.groupState.map,
+          state.staticState,
+        );
+        break;
+      case kReportVendor:
+        reportResult = memoizedVendorReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.vendorState.map,
           state.userState.map,
           state.groupState.map,
           state.staticState,
