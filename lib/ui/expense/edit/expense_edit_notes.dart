@@ -82,6 +82,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     final state = viewModel.state;
     final expense = viewModel.expense;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
+    final showDocuments = isDesktop(context) && state.isEnterprisePlan;
 
     return ScrollableListView(
       children: <Widget>[
@@ -95,18 +96,18 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
               : null,
           children: <Widget>[
             DecoratedFormField(
-              maxLines: 6,
+              maxLines: showDocuments ? 6 : 10,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.publicNotes,
             ),
             DecoratedFormField(
-              maxLines: 6,
+              maxLines: showDocuments ? 6 : 10,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
               label: localization.privateNotes,
             ),
-            if (isDesktop(context))
+            if (showDocuments)
               if (expense.isNew || state.hasChanges())
                 SizedBox(
                   child: HelpText(localization.saveToUploadDocuments),
