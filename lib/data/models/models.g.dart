@@ -52,6 +52,7 @@ const EntityAction _$newVendor = const EntityAction._('newVendor');
 const EntityAction _$newPurchaseOrder =
     const EntityAction._('newPurchaseOrder');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
+const EntityAction _$vendorPortal = const EntityAction._('vendorPortal');
 const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
 const EntityAction _$refundPayment = const EntityAction._('refundPayment');
@@ -164,6 +165,8 @@ EntityAction _$valueOf(String name) {
       return _$newPurchaseOrder;
     case 'clientPortal':
       return _$clientPortal;
+    case 'vendorPortal':
+      return _$vendorPortal;
     case 'newPayment':
       return _$newPayment;
     case 'settings':
@@ -268,6 +271,7 @@ final BuiltSet<EntityAction> _$values =
   _$newVendor,
   _$newPurchaseOrder,
   _$clientPortal,
+  _$vendorPortal,
   _$newPayment,
   _$settings,
   _$refundPayment,

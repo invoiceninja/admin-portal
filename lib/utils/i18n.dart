@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'vendor_portal': 'Vendor Portal',
       'send_code': 'Send Code',
       'save_to_upload_documents': 'Save the record to upload documents',
       'expense_tax_rates': 'Expense Tax Rates',
@@ -85270,6 +85271,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sendCode =>
       _localizedValues[localeCode]['send_code'] ??
       _localizedValues['en']['send_code'];
+
+  String get vendorPortal =>
+      _localizedValues[localeCode]['vendor_portal'] ??
+      _localizedValues['en']['vendor_portal'];
 
 // STARTER: lang field - do not remove comment
 
