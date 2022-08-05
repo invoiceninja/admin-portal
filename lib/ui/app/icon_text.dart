@@ -17,23 +17,23 @@ class IconText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CopyToClipboard(
-      value: text,
-      child: Row(
-        mainAxisAlignment: alignment ?? MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Icon(icon, color: style?.color),
-          SizedBox(width: 10),
-          Flexible(
+    return Row(
+      mainAxisAlignment: alignment ?? MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Icon(icon, color: style?.color),
+        SizedBox(width: 10),
+        Flexible(
+          child: CopyToClipboard(
+            value: text,
             child: Text(
               text ?? '',
               style: style,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
