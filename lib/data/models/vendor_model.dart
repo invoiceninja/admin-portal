@@ -210,6 +210,8 @@ abstract class VendorEntity extends Object
         actions.add(EntityAction.edit);
       }
 
+      actions.add(EntityAction.vendorPortal);
+
       if (userCompany.canCreate(EntityType.purchaseOrder)) {
         actions.add(EntityAction.newPurchaseOrder);
       }
@@ -502,6 +504,7 @@ abstract class VendorContactEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      link: '',
     );
   }
 
@@ -540,6 +543,10 @@ abstract class VendorContactEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  String get link;
+
+  String get silentLink => '$link?silent=true';
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();
@@ -606,6 +613,7 @@ abstract class VendorContactEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static void _initializeBuilder(VendorContactEntityBuilder builder) => builder
+    ..link = ''
     ..customValue1 = ''
     ..customValue2 = ''
     ..customValue3 = ''

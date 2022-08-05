@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewVendorList implements PersistUI {
   ViewVendorList({this.force = false});
@@ -287,6 +288,14 @@ void handleVendorAction(
   switch (action) {
     case EntityAction.edit:
       editEntity(entity: vendor);
+      break;
+    case EntityAction.vendorPortal:
+      final contact = vendor.contacts.firstWhere((contact) {
+        return (contact.link ?? '').isNotEmpty;
+      }, orElse: null);
+      if (contact != null) {
+        launchUrl(Uri.parse(contact.silentLink));
+      }
       break;
     case EntityAction.newPurchaseOrder:
       createEntity(

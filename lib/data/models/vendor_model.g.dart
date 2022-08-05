@@ -409,6 +409,8 @@ class _$VendorContactEntitySerializer
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'link',
+      serializers.serialize(object.link, specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -499,6 +501,10 @@ class _$VendorContactEntitySerializer
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'link':
+          result.link = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -1259,6 +1265,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String customValue4;
   @override
+  final String link;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1289,6 +1297,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.link,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1316,6 +1325,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         customValue3, 'VendorContactEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
         customValue4, 'VendorContactEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(link, 'VendorContactEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'VendorContactEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -1347,6 +1357,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        link == other.link &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1377,18 +1388,22 @@ class _$VendorContactEntity extends VendorContactEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        firstName
+                                                                        $jc(
+                                                                            0,
+                                                                            firstName
+                                                                                .hashCode),
+                                                                        lastName
                                                                             .hashCode),
-                                                                    lastName
+                                                                    email
                                                                         .hashCode),
-                                                                email.hashCode),
-                                                            isPrimary.hashCode),
-                                                        phone.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            customValue3.hashCode),
-                                        customValue4.hashCode),
+                                                                isPrimary
+                                                                    .hashCode),
+                                                            phone.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        link.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1411,6 +1426,7 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('link', link)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1463,6 +1479,10 @@ class VendorContactEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  String _link;
+  String get link => _$this._link;
+  set link(String link) => _$this._link = link;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1513,6 +1533,7 @@ class VendorContactEntityBuilder
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
+      _link = $v.link;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1559,6 +1580,7 @@ class VendorContactEntityBuilder
                 customValue3, 'VendorContactEntity', 'customValue3'),
             customValue4:
                 BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorContactEntity', 'customValue4'),
+            link: BuiltValueNullFieldError.checkNotNull(link, 'VendorContactEntity', 'link'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorContactEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'VendorContactEntity', 'updatedAt'),
