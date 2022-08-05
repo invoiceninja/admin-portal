@@ -251,7 +251,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   ),
                   SizedBox(height: 8),
                 ],
-                if (client.publicNotes.isNotEmpty) Text(client.publicNotes),
+                if (client.publicNotes.isNotEmpty)
+                  CopyToClipboard(value: client.publicNotes),
               ],
             ),
           )),
@@ -375,6 +376,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     IconText(
                                       text: client.privateNotes,
                                       icon: Icons.lock,
+                                      copyToClipboard: true,
                                     )
                                 ],
                               ),

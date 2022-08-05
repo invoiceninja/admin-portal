@@ -184,10 +184,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     url:
                         'https://invoiceninja.github.io/docs/self-host-installation/#final-setup-steps',
                   ),
-                if (_response.phantomEnabled)
+                if (_response.pdfEngine != 'snappdf')
                   _HealthListTile(
                     title: 'SnapPDF not enabled',
-                    subtitle: 'Use SnapPDF for faster PDF generation',
+                    subtitle: 'Use SnapPDF to generate PDF files locally',
                     isWarning: true,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
