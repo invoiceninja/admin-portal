@@ -376,6 +376,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     IconText(
                                       text: client.privateNotes,
                                       icon: Icons.lock,
+                                      copyToClipboard: true,
                                     )
                                 ],
                               ),

@@ -293,6 +293,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                     IconText(
                                       text: vendor.privateNotes,
                                       icon: Icons.lock,
+                                      copyToClipboard: true,
                                     )
                                 ],
                               ),
