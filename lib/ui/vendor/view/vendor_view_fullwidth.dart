@@ -182,7 +182,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   ),
                   SizedBox(height: 8),
                 ],
-                if (vendor.publicNotes.isNotEmpty) Text(vendor.publicNotes),
+                if (vendor.publicNotes.isNotEmpty)
+                  CopyToClipboard(value: vendor.publicNotes),
               ],
             ),
           )),
