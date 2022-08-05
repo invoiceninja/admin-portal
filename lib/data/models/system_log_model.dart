@@ -142,6 +142,8 @@ abstract class SystemLogEntity
         return 'Mollie';
       case 313:
         return 'eWay';
+      case 314:
+        return 'Forte';
       case 320:
         return 'Square';
       case 400:
