@@ -53,6 +53,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final url = '${credentials.url}/health_check';
 
     webClient.get(url, credentials.token).then((dynamic response) {
+      //print('## response: $response');
       setState(() {
         _response = serializers.deserializeWith(
             HealthCheckResponse.serializer, response);
@@ -97,6 +98,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
         _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
     final cliPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPCLIVersion ?? '');
+    final phpMemoryLimit = _response?.phpVersion?.memoryLimit ?? '';
 
     return AlertDialog(
       content: _response == null
@@ -125,11 +127,12 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   isValid: _response.dbCheck,
                 ),
                 _HealthListTile(
-                  title: 'PHP Version',
+                  title: 'PHP Info',
                   isValid: _response.phpVersion.isOkay,
-                  subtitle: webPhpVersion == cliPhpVersion
-                      ? 'v$webPhpVersion'
-                      : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion',
+                  subtitle: 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion' +
+                      (phpMemoryLimit.isNotEmpty
+                          ? '\nMemory Limit: $phpMemoryLimit'
+                          : ''),
                 ),
                 /*
                 if (!_response.execEnabled)

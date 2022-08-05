@@ -90,6 +90,12 @@ abstract class HealthCheckPHPResponse
   @BuiltValueField(wireName: 'is_okay')
   bool get isOkay;
 
+  @BuiltValueField(wireName: 'memory_limit')
+  String get memoryLimit;
+
+  static void _initializeBuilder(HealthCheckPHPResponseBuilder builder) =>
+      builder..memoryLimit = '';
+
   static Serializer<HealthCheckPHPResponse> get serializer =>
       _$healthCheckPHPResponseSerializer;
 }

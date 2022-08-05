@@ -175,6 +175,9 @@ class _$HealthCheckPHPResponseSerializer
           specifiedType: const FullType(String)),
       'is_okay',
       serializers.serialize(object.isOkay, specifiedType: const FullType(bool)),
+      'memory_limit',
+      serializers.serialize(object.memoryLimit,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -207,6 +210,10 @@ class _$HealthCheckPHPResponseSerializer
         case 'is_okay':
           result.isOkay = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'memory_limit':
+          result.memoryLimit = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -535,6 +542,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   final String currentPHPCLIVersion;
   @override
   final bool isOkay;
+  @override
+  final String memoryLimit;
 
   factory _$HealthCheckPHPResponse(
           [void Function(HealthCheckPHPResponseBuilder) updates]) =>
@@ -544,7 +553,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
       {this.minimumPHPVersion,
       this.currentPHPVersion,
       this.currentPHPCLIVersion,
-      this.isOkay})
+      this.isOkay,
+      this.memoryLimit})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         minimumPHPVersion, 'HealthCheckPHPResponse', 'minimumPHPVersion');
@@ -554,6 +564,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
         currentPHPCLIVersion, 'HealthCheckPHPResponse', 'currentPHPCLIVersion');
     BuiltValueNullFieldError.checkNotNull(
         isOkay, 'HealthCheckPHPResponse', 'isOkay');
+    BuiltValueNullFieldError.checkNotNull(
+        memoryLimit, 'HealthCheckPHPResponse', 'memoryLimit');
   }
 
   @override
@@ -572,16 +584,21 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
         minimumPHPVersion == other.minimumPHPVersion &&
         currentPHPVersion == other.currentPHPVersion &&
         currentPHPCLIVersion == other.currentPHPCLIVersion &&
-        isOkay == other.isOkay;
+        isOkay == other.isOkay &&
+        memoryLimit == other.memoryLimit;
   }
 
   int __hashCode;
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, minimumPHPVersion.hashCode), currentPHPVersion.hashCode),
-            currentPHPCLIVersion.hashCode),
-        isOkay.hashCode));
+        $jc(
+            $jc(
+                $jc($jc(0, minimumPHPVersion.hashCode),
+                    currentPHPVersion.hashCode),
+                currentPHPCLIVersion.hashCode),
+            isOkay.hashCode),
+        memoryLimit.hashCode));
   }
 
   @override
@@ -590,7 +607,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
           ..add('minimumPHPVersion', minimumPHPVersion)
           ..add('currentPHPVersion', currentPHPVersion)
           ..add('currentPHPCLIVersion', currentPHPCLIVersion)
-          ..add('isOkay', isOkay))
+          ..add('isOkay', isOkay)
+          ..add('memoryLimit', memoryLimit))
         .toString();
   }
 }
@@ -618,7 +636,13 @@ class HealthCheckPHPResponseBuilder
   bool get isOkay => _$this._isOkay;
   set isOkay(bool isOkay) => _$this._isOkay = isOkay;
 
-  HealthCheckPHPResponseBuilder();
+  String _memoryLimit;
+  String get memoryLimit => _$this._memoryLimit;
+  set memoryLimit(String memoryLimit) => _$this._memoryLimit = memoryLimit;
+
+  HealthCheckPHPResponseBuilder() {
+    HealthCheckPHPResponse._initializeBuilder(this);
+  }
 
   HealthCheckPHPResponseBuilder get _$this {
     final $v = _$v;
@@ -627,6 +651,7 @@ class HealthCheckPHPResponseBuilder
       _currentPHPVersion = $v.currentPHPVersion;
       _currentPHPCLIVersion = $v.currentPHPCLIVersion;
       _isOkay = $v.isOkay;
+      _memoryLimit = $v.memoryLimit;
       _$v = null;
     }
     return this;
@@ -660,7 +685,9 @@ class HealthCheckPHPResponseBuilder
                 'HealthCheckPHPResponse',
                 'currentPHPCLIVersion'),
             isOkay: BuiltValueNullFieldError.checkNotNull(
-                isOkay, 'HealthCheckPHPResponse', 'isOkay'));
+                isOkay, 'HealthCheckPHPResponse', 'isOkay'),
+            memoryLimit: BuiltValueNullFieldError.checkNotNull(
+                memoryLimit, 'HealthCheckPHPResponse', 'memoryLimit'));
     replace(_$result);
     return _$result;
   }
