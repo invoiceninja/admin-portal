@@ -201,6 +201,10 @@ class _CustomFieldsState extends State<CustomFields>
                 viewModel: viewModel,
                 fieldType: CustomFieldType.vendor,
               ),
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.vendorContact,
+              ),
             ]),
           if (company.isModuleEnabled(EntityType.expense))
             ScrollableListView(children: <Widget>[
@@ -236,11 +240,15 @@ class CustomFieldsSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final company = viewModel.company;
+    var labelKey = '${fieldType}_field';
+    if (labelKey == 'vendor_contact_field') {
+      labelKey = 'contact_field';
+    }
 
     return FormCard(
       children: <Widget>[
         CustomFormField(
-          label: localization.lookup('${fieldType}_field'),
+          label: localization.lookup(labelKey),
           value: company.customFields['${fieldType}1'],
           onChanged: (value) => viewModel.onCompanyChanged(
               company.rebuild((b) => b..customFields['${fieldType}1'] = value)),
@@ -250,7 +258,7 @@ class CustomFieldsSettings extends StatelessWidget {
               company.rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
         ),
         CustomFormField(
-          label: localization.lookup('${fieldType}_field'),
+          label: localization.lookup(labelKey),
           value: company.customFields['${fieldType}2'],
           onChanged: (value) => viewModel.onCompanyChanged(
               company.rebuild((b) => b..customFields['${fieldType}2'] = value)),
@@ -260,7 +268,7 @@ class CustomFieldsSettings extends StatelessWidget {
               company.rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
         ),
         CustomFormField(
-          label: localization.lookup('${fieldType}_field'),
+          label: localization.lookup(labelKey),
           value: company.customFields['${fieldType}3'],
           onChanged: (value) => viewModel.onCompanyChanged(
               company.rebuild((b) => b..customFields['${fieldType}3'] = value)),
@@ -270,7 +278,7 @@ class CustomFieldsSettings extends StatelessWidget {
               company.rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
         ),
         CustomFormField(
-          label: localization.lookup('${fieldType}_field'),
+          label: localization.lookup(labelKey),
           value: company.customFields['${fieldType}4'],
           onChanged: (value) => viewModel.onCompanyChanged(
               company.rebuild((b) => b..customFields['${fieldType}4'] = value)),
