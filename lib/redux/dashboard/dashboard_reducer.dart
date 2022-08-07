@@ -63,6 +63,8 @@ DashboardUISettings dashboardSettingsReducer(
       return state.rebuild((b) => b..offset += action.offset);
     } else if (action.currencyId != null) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
+    } else if (action.groupBy != null) {
+      return state.rebuild((b) => b..groupBy = action.groupBy);
     }
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);

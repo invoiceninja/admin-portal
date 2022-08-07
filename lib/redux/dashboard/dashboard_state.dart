@@ -55,6 +55,7 @@ abstract class DashboardUISettings
       offset: 0,
       currencyId: kCurrencyAll,
       includeTaxes: true,
+      groupBy: kReportGroupDay,
     );
   }
 
@@ -84,8 +85,7 @@ abstract class DashboardUISettings
 
   bool get includeTaxes;
 
-  static Serializer<DashboardUISettings> get serializer =>
-      _$dashboardUISettingsSerializer;
+  String get groupBy;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||
@@ -116,4 +116,11 @@ abstract class DashboardUISettings
       dateRange: dateRange,
     );
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(DashboardUISettingsBuilder builder) =>
+      builder..groupBy = kReportGroupDay;
+
+  static Serializer<DashboardUISettings> get serializer =>
+      _$dashboardUISettingsSerializer;
 }

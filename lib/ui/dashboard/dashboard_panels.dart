@@ -74,6 +74,32 @@ class DashboardPanels extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints constraints) {
       final isWide = constraints.maxWidth > 500;
 
+      final groupBy = Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            items: [
+              DropdownMenuItem(
+                child: Text(localization.day),
+                value: kReportGroupDay,
+              ),
+              DropdownMenuItem(
+                child: Text(localization.month),
+                value: kReportGroupMonth,
+              ),
+              DropdownMenuItem(
+                child: Text(localization.year),
+                value: kReportGroupYear,
+              ),
+            ],
+            onChanged: (value) {
+              viewModel.onGroupByChanged(value);
+            },
+            value: settings.groupBy,
+          ),
+        ),
+      );
+
       final taxSettings = Padding(
         padding: const EdgeInsets.only(left: 16),
         child: DropdownButtonHideUnderline(
@@ -90,9 +116,6 @@ class DashboardPanels extends StatelessWidget {
             ],
             onChanged: (value) {
               viewModel.onTaxesChanged(value);
-              if (!isWide && Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
             },
             value: settings.includeTaxes,
           ),
@@ -157,9 +180,6 @@ class DashboardPanels extends StatelessWidget {
                   .toList(),
               onChanged: (currencyId) {
                 viewModel.onCurrencyChanged(currencyId);
-                if (!isWide && Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
               },
               value: settings.currencyId,
             ),
@@ -186,12 +206,7 @@ class DashboardPanels extends StatelessWidget {
                 visualDensity: VisualDensity.compact,
               ),
               SizedBox(width: 4),
-              if (isDesktop(context)) ...[
-                dateRange,
-                Spacer(),
-              ] else ...[
-                Expanded(child: dateRange),
-              ],
+              Expanded(child: dateRange),
               if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
                 IconButton(
                   icon: Icon(MdiIcons.tuneVariant),
@@ -236,6 +251,7 @@ class DashboardPanels extends StatelessWidget {
                   },
                 )
               else ...[
+                groupBy,
                 if (company.hasTaxes) taxSettings,
                 if (hasMultipleCurrencies) currencySettings,
               ],

@@ -67,6 +67,7 @@ class DashboardVM {
     @required this.onOffsetChanged,
     @required this.onCurrencyChanged,
     @required this.onTaxesChanged,
+    @required this.onGroupByChanged,
     @required this.onShowSidebar,
   });
 
@@ -103,6 +104,8 @@ class DashboardVM {
           store.dispatch(UpdateDashboardSettings(settings: settings)),
       onTaxesChanged: (value) =>
           store.dispatch(UpdateDashboardSettings(includeTaxes: value)),
+      onGroupByChanged: (value) =>
+          store.dispatch(UpdateDashboardSettings(groupBy: value)),
       onSelectionChanged: (entityType, entityIds) {
         store.dispatch(UpdateDashboardSelection(
           entityType: entityType,
@@ -133,5 +136,6 @@ class DashboardVM {
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
   final Function(bool) onTaxesChanged;
+  final Function(String) onGroupByChanged;
   final Function onShowSidebar;
 }
