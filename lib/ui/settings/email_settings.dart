@@ -120,8 +120,10 @@ class _EmailSettingsState extends State<EmailSettings> {
         memoizedMicrosoftUserList(viewModel.state.userState.map);
 
     final gmailSendingUserId = settings.gmailSendingUserId ?? '';
-    final disableSave = settings.emailSendingMethod !=
-            SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT &&
+    final disableSave = [
+          SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
+          SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT
+        ].contains(settings.emailSendingMethod) &&
         (gmailSendingUserId.isEmpty || gmailSendingUserId == '0');
 
     return EditScaffold(

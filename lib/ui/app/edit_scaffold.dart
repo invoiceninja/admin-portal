@@ -325,7 +325,7 @@ class EditScaffold extends StatelessWidget {
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(state
                                     .prefState.colorThemeModel.colorSuccess)),
-                            onPressed: state.isSaving
+                            onPressed: state.isSaving || onSavePressed == null
                                 ? null
                                 : () {
                                     // Clear focus now to prevent un-focus after save from
@@ -355,15 +355,17 @@ class EditScaffold extends StatelessWidget {
                         isCancelEnabled: isCancelEnabled,
                         saveLabel: saveLabel,
                         cancelLabel: localization.cancel,
-                        onSavePressed: (context) {
-                          // Clear focus now to prevent un-focus after save from
-                          // marking the form as changed and to hide the keyboard
-                          FocusScope.of(context).unfocus(
-                              disposition:
-                                  UnfocusDisposition.previouslyFocusedChild);
+                        onSavePressed: onSavePressed == null
+                            ? null
+                            : (context) {
+                                // Clear focus now to prevent un-focus after save from
+                                // marking the form as changed and to hide the keyboard
+                                FocusScope.of(context).unfocus(
+                                    disposition: UnfocusDisposition
+                                        .previouslyFocusedChild);
 
-                          onSavePressed(context);
-                        },
+                                onSavePressed(context);
+                              },
                         onCancelPressed: isMobile(context)
                             ? null
                             : (context) {

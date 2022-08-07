@@ -776,6 +776,7 @@ const kPageSizes = [
 const String kDrawerKey = 'drawer_key';
 const String kSelectCompanyDropdownKey = 'select_company_dropdown_key';
 
+// https://github.com/invoiceninja/invoiceninja/blob/v5-develop/app/Models/Activity.php
 const String kActivityCreateClient = '1';
 const String kActivityArchiveClient = '2';
 const String kActivityDeleteClient = '3';
@@ -859,3 +860,11 @@ const String kActivityUpdateRecurringExpense = '121';
 const String kActivityArchiveRecurringExpense = '122';
 const String kActivityDeleteRecurringExpense = '123';
 const String kActivityRestoreRecurringExpense = '124';
+const String kActivityCreatePurchaseOrder = '130';
+const String kActivityUpdatePurchaseOrder = '131';
+const String kActivityArchivePurchaseOrder = '132';
+const String kActivityDeletePurchaseOrder = '133';
+const String kActivityRestorePurchaseOrder = '134';
+const String kActivityEmailPurchaseOrder = '135';
+const String kActivityViewPurchaseOrder = '136';
+const String kActivityAcceptPurchaseOrder = '137';
