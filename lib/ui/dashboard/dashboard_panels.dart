@@ -94,6 +94,9 @@ class DashboardPanels extends StatelessWidget {
             ],
             onChanged: (value) {
               viewModel.onGroupByChanged(value);
+              if (!isWide && Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
             },
             value: settings.groupBy,
           ),
@@ -116,6 +119,9 @@ class DashboardPanels extends StatelessWidget {
             ],
             onChanged: (value) {
               viewModel.onTaxesChanged(value);
+              if (!isWide && Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
             },
             value: settings.includeTaxes,
           ),
@@ -180,6 +186,9 @@ class DashboardPanels extends StatelessWidget {
                   .toList(),
               onChanged: (currencyId) {
                 viewModel.onCurrencyChanged(currencyId);
+                if (!isWide && Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
               },
               value: settings.currencyId,
             ),
@@ -207,7 +216,7 @@ class DashboardPanels extends StatelessWidget {
               ),
               SizedBox(width: 4),
               Expanded(child: dateRange),
-              if (!isWide && (company.hasTaxes || hasMultipleCurrencies))
+              if (!isWide)
                 IconButton(
                   icon: Icon(MdiIcons.tuneVariant),
                   visualDensity: VisualDensity.compact,
@@ -228,6 +237,13 @@ class DashboardPanels extends StatelessWidget {
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                Row(
+                                  children: [
+                                    Text(localization.groupBy),
+                                    Spacer(),
+                                    groupBy,
+                                  ],
+                                ),
                                 if (hasMultipleCurrencies)
                                   Row(
                                     children: [
