@@ -813,6 +813,17 @@ abstract class ActivityEntity
       kActivityRestoreRecurringExpense,
     ].contains(activityTypeId)) {
       return EntityType.recurringExpense;
+    } else if ([
+      kActivityCreatePurchaseOrder,
+      kActivityUpdatePurchaseOrder,
+      kActivityArchivePurchaseOrder,
+      kActivityDeletePurchaseOrder,
+      kActivityRestorePurchaseOrder,
+      kActivityEmailPurchaseOrder,
+      kActivityViewPurchaseOrder,
+      kActivityAcceptPurchaseOrder,
+    ].contains(activityTypeId)) {
+      return EntityType.purchaseOrder;
     } else {
       print(
           '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');

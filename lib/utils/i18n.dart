@@ -16,6 +16,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'activity_130': ':user created purchase order',
+      'activity_131': ':user updated purchase order',
+      'activity_132': ':user archived purchase order',
+      'activity_133': ':user deleted purchase order',
+      'activity_134': ':user restored purchase order',
+      'activity_135': ':user emailed purchase order',
+      'activity_136': ':contact viewed purchase order',
+      'activity_137': ':contact accepted purchase order',
       'vendor_portal': 'Vendor Portal',
       'send_code': 'Send Code',
       'save_to_upload_documents': 'Save the record to upload documents',
