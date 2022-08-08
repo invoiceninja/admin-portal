@@ -86,10 +86,21 @@ List<ChartDataGroup> _chartInvoices({
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
+    // Fix for mock data
+    var date = invoice.date.split('T')[0];
+    if (date.isNotEmpty) {
+      if (settings.groupBy == kReportGroupYear) {
+        date = date.substring(0, 4) + '-01-01';
+      } else if (settings.groupBy == kReportGroupMonth) {
+        date = date.substring(0, 7) + '-01';
+      }
+    }
+
     if (!invoice.isSent ||
         invoice.isDeleted ||
         invoice.isCancelledOrReversed ||
-        client.isDeleted) {
+        client.isDeleted ||
+        date.isEmpty) {
       // skip it
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -97,9 +108,6 @@ List<ChartDataGroup> _chartInvoices({
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      // Fix for mock data
-      final date = invoice.date.split('T')[0];
-
       if (totals[STATUS_ACTIVE][date] == null) {
         totals[STATUS_ACTIVE][date] = 0.0;
         totals[STATUS_OUTSTANDING][date] = 0.0;
@@ -154,7 +162,14 @@ List<ChartDataGroup> _chartInvoices({
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
-    date = date.add(Duration(days: 1));
+
+    if (settings.groupBy == kReportGroupDay) {
+      date = date.add(Duration(days: 1));
+    } else if (settings.groupBy == kReportGroupMonth) {
+      date = DateTime(date.year, date.month + 1);
+    } else if (settings.groupBy == kReportGroupYear) {
+      date = DateTime(date.year + 1);
+    }
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
@@ -232,9 +247,16 @@ List<ChartDataGroup> chartQuotes({
   quoteMap.forEach((int, quote) {
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
-    final date = quote.date;
+    var date = quote.date;
+    if (date.isNotEmpty) {
+      if (settings.groupBy == kReportGroupYear) {
+        date = date.substring(0, 4) + '-01-01';
+      } else if (settings.groupBy == kReportGroupMonth) {
+        date = date.substring(0, 7) + '-01';
+      }
+    }
 
-    if (!quote.isSent || quote.isDeleted || client.isDeleted) {
+    if (!quote.isSent || quote.isDeleted || client.isDeleted || date.isEmpty) {
       // skip it
     } else if (!quote.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -265,16 +287,16 @@ List<ChartDataGroup> chartQuotes({
         amount *= exchangeRate;
       }
 
-      totals[STATUS_ACTIVE][quote.date] += amount;
+      totals[STATUS_ACTIVE][date] += amount;
       counts[STATUS_ACTIVE]++;
       activeData.entityMap[date].add(quote.id);
 
       if (quote.isApproved) {
-        totals[STATUS_APPROVED][quote.date] += amount;
+        totals[STATUS_APPROVED][date] += amount;
         counts[STATUS_APPROVED]++;
         approvedData.entityMap[date].add(quote.id);
       } else {
-        totals[STATUS_UNAPPROVED][quote.date] += amount;
+        totals[STATUS_UNAPPROVED][date] += amount;
         counts[STATUS_UNAPPROVED]++;
         unapprovedData.entityMap[date].add(quote.id);
       }
@@ -301,7 +323,14 @@ List<ChartDataGroup> chartQuotes({
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
       unapprovedData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
-    date = date.add(Duration(days: 1));
+
+    if (settings.groupBy == kReportGroupDay) {
+      date = date.add(Duration(days: 1));
+    } else if (settings.groupBy == kReportGroupMonth) {
+      date = DateTime(date.year, date.month + 1);
+    } else if (settings.groupBy == kReportGroupYear) {
+      date = DateTime(date.year + 1);
+    }
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
@@ -384,11 +413,19 @@ List<ChartDataGroup> chartPayments(
   paymentMap.forEach((int, payment) {
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
-    final date = payment.date;
+    var date = payment.date;
+    if (date.isNotEmpty) {
+      if (settings.groupBy == kReportGroupYear) {
+        date = date.substring(0, 4) + '-01-01';
+      } else if (settings.groupBy == kReportGroupMonth) {
+        date = date.substring(0, 7) + '-01';
+      }
+    }
 
     if (payment.isDeleted ||
         !payment.isCompletedOrPartiallyRefunded ||
-        client.isDeleted) {
+        client.isDeleted ||
+        date.isEmpty) {
       // skip it
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -419,8 +456,8 @@ List<ChartDataGroup> chartPayments(
         refunded *= exchangeRate;
       }
 
-      totals[STATUS_ACTIVE][payment.date] += completedAmount;
-      totals[STATUS_REFUNDED][payment.date] += refunded ?? 0;
+      totals[STATUS_ACTIVE][date] += completedAmount;
+      totals[STATUS_REFUNDED][date] += refunded ?? 0;
 
       counts[STATUS_ACTIVE]++;
       activeData.entityMap[date].add(payment.id);
@@ -448,7 +485,14 @@ List<ChartDataGroup> chartPayments(
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
-    date = date.add(Duration(days: 1));
+
+    if (settings.groupBy == kReportGroupDay) {
+      date = date.add(Duration(days: 1));
+    } else if (settings.groupBy == kReportGroupMonth) {
+      date = DateTime(date.year, date.month + 1);
+    } else if (settings.groupBy == kReportGroupYear) {
+      date = DateTime(date.year + 1);
+    }
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
@@ -556,6 +600,12 @@ List<ChartDataGroup> chartTasks(
     } else {
       task.getTaskTimes().forEach((taskTime) {
         taskTime.getParts().forEach((date, duration) {
+          if (settings.groupBy == kReportGroupYear) {
+            date = date.substring(0, 4) + '-01-01';
+          } else if (settings.groupBy == kReportGroupMonth) {
+            date = date.substring(0, 7) + '-01';
+          }
+
           if (totals[STATUS_LOGGED][date] == null) {
             totals[STATUS_LOGGED][date] = 0.0;
             totals[STATUS_INVOICED][date] = 0.0;
@@ -634,7 +684,14 @@ List<ChartDataGroup> chartTasks(
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
       paidData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
-    date = date.add(Duration(days: 1));
+
+    if (settings.groupBy == kReportGroupDay) {
+      date = date.add(Duration(days: 1));
+    } else if (settings.groupBy == kReportGroupMonth) {
+      date = DateTime(date.year, date.month + 1);
+    } else if (settings.groupBy == kReportGroupYear) {
+      date = DateTime(date.year + 1);
+    }
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
@@ -688,12 +745,19 @@ List<ChartDataGroup> chartExpenses(
 
   expenseMap.forEach((int, expense) {
     final currencyId = expense.currencyId;
-    final date = expense.date;
+    var date = expense.date;
+    if (date.isNotEmpty) {
+      if (settings.groupBy == kReportGroupYear) {
+        date = date.substring(0, 4) + '-01-01';
+      } else if (settings.groupBy == kReportGroupMonth) {
+        date = date.substring(0, 7) + '-01';
+      }
+    }
 
     double amount =
         settings.includeTaxes ? expense.grossAmount : expense.netAmount;
 
-    if (expense.isDeleted) {
+    if (expense.isDeleted || date.isEmpty) {
       // skip it
     } else if (!expense.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -769,7 +833,14 @@ List<ChartDataGroup> chartExpenses(
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
       paidData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
-    date = date.add(Duration(days: 1));
+
+    if (settings.groupBy == kReportGroupDay) {
+      date = date.add(Duration(days: 1));
+    } else if (settings.groupBy == kReportGroupMonth) {
+      date = DateTime(date.year, date.month + 1);
+    } else if (settings.groupBy == kReportGroupYear) {
+      date = DateTime(date.year + 1);
+    }
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
