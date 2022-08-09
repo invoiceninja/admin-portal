@@ -34,6 +34,16 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
+enum DashboardSections {
+  messages,
+  runningTasks,
+  invoices,
+  payments,
+  quotes,
+  tasks,
+  expenses,
+}
+
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
     Key key,
@@ -498,15 +508,18 @@ class DashboardPanels extends StatelessWidget {
       );
     }
 
-    final entityTypes = [
-      EntityType.dashboard,
+    final sections = [
+      DashboardSections.messages,
       if (company.isModuleEnabled(EntityType.task) && runningTasks.isNotEmpty)
-        EntityType.taskStatus,
-      if (company.isModuleEnabled(EntityType.invoice)) EntityType.invoice,
-      if (company.isModuleEnabled(EntityType.invoice)) EntityType.payment,
-      if (company.isModuleEnabled(EntityType.quote)) EntityType.quote,
-      if (company.isModuleEnabled(EntityType.task)) EntityType.task,
-      if (company.isModuleEnabled(EntityType.expense)) EntityType.expense,
+        DashboardSections.runningTasks,
+      if (company.isModuleEnabled(EntityType.invoice))
+        DashboardSections.invoices,
+      if (company.isModuleEnabled(EntityType.invoice))
+        DashboardSections.payments,
+      if (company.isModuleEnabled(EntityType.quote)) DashboardSections.quotes,
+      if (company.isModuleEnabled(EntityType.task)) DashboardSections.tasks,
+      if (company.isModuleEnabled(EntityType.expense))
+        DashboardSections.expenses,
     ];
 
     return Stack(
@@ -515,16 +528,16 @@ class DashboardPanels extends StatelessWidget {
           padding: const EdgeInsets.only(top: kTopBottomBarHeight),
           child: ScrollableListViewBuilder(
             scrollController: scrollController,
-            itemCount: entityTypes.length + 1,
+            itemCount: sections.length + 1,
             itemBuilder: (context, index) {
-              if (index == entityTypes.length) {
+              if (index == sections.length) {
                 return SizedBox(
                   height: 500,
                 );
               }
 
-              switch (entityTypes[index]) {
-                case EntityType.dashboard:
+              switch (sections[index]) {
+                case DashboardSections.messages:
                   return Column(
                     children: [
                       if (!state.prefState.hideReviewApp &&
@@ -576,33 +589,33 @@ class DashboardPanels extends StatelessWidget {
                         )
                     ],
                   );
-                case EntityType.invoice:
+                case DashboardSections.invoices:
                   return _InvoiceChart(
                       viewModel: viewModel,
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.invoice, entityIds));
-                case EntityType.payment:
+                case DashboardSections.payments:
                   return _paymentChart(
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.payment, entityIds));
-                case EntityType.quote:
+                case DashboardSections.quotes:
                   return _quoteChart(
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.quote, entityIds));
-                case EntityType.task:
+                case DashboardSections.tasks:
                   return _taskChart(
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.task, entityIds));
-                case EntityType.expense:
+                case DashboardSections.expenses:
                   return _expenseChart(
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.expense, entityIds));
-                case EntityType.taskStatus:
+                case DashboardSections.runningTasks:
                   return _runningTasks();
               }
 
