@@ -37,6 +37,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 enum DashboardSections {
   messages,
   runningTasks,
+  overview,
   invoices,
   payments,
   quotes,
@@ -512,6 +513,7 @@ class DashboardPanels extends StatelessWidget {
       DashboardSections.messages,
       if (company.isModuleEnabled(EntityType.task) && runningTasks.isNotEmpty)
         DashboardSections.runningTasks,
+      DashboardSections.overview,
       if (company.isModuleEnabled(EntityType.invoice))
         DashboardSections.invoices,
       if (company.isModuleEnabled(EntityType.invoice))
@@ -589,6 +591,8 @@ class DashboardPanels extends StatelessWidget {
                         )
                     ],
                   );
+                case DashboardSections.overview:
+                  return Placeholder();
                 case DashboardSections.invoices:
                   return _InvoiceChart(
                       viewModel: viewModel,
