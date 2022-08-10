@@ -592,6 +592,7 @@ class DashboardPanels extends StatelessWidget {
                   final state = viewModel.state;
                   final isLoaded =
                       state.isLoaded || state.invoiceState.list.isNotEmpty;
+
                   final invoiceData = memoizedChartInvoices(
                     state.staticState.currencyMap,
                     state.company,
@@ -600,11 +601,27 @@ class DashboardPanels extends StatelessWidget {
                     state.clientState.map,
                   );
 
+                  final paymentData = memoizedChartPayments(
+                      state.staticState.currencyMap,
+                      state.company,
+                      settings,
+                      state.invoiceState.map,
+                      state.clientState.map,
+                      state.paymentState.map);
+
+                  final expenseData = memoizedChartExpenses(
+                      state.staticState.currencyMap,
+                      state.company,
+                      settings,
+                      state.invoiceState.map,
+                      state.expenseState.map);
+
                   return _OverviewPanel(
                       viewModel: viewModel,
                       title: localization.overview,
                       invoiceData: invoiceData,
-                      paymentData: null,
+                      paymentData: paymentData,
+                      expenseData: expenseData,
                       isLoaded: isLoaded,
                       onDateSelected: null);
                 case DashboardSections.invoices:
@@ -759,6 +776,7 @@ class _OverviewPanel extends StatefulWidget {
     @required this.title,
     @required this.invoiceData,
     @required this.paymentData,
+    @required this.expenseData,
     @required this.isLoaded,
     @required this.onDateSelected,
   });
@@ -767,6 +785,7 @@ class _OverviewPanel extends StatefulWidget {
   final String title;
   final List<ChartDataGroup> invoiceData;
   final List<ChartDataGroup> paymentData;
+  final List<ChartDataGroup> expenseData;
   final bool isLoaded;
   final Function(int, String) onDateSelected;
 
@@ -802,7 +821,6 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     paymentData = widget.paymentData;
 
     widget.invoiceData.forEach((dataGroup) {
-      final index = widget.invoiceData.indexOf(dataGroup);
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
       dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
@@ -813,6 +831,21 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         strokeWidthPxFn: (_a, _b) => 2.5,
         id: DashboardChart.PERIOD_CURRENT,
         displayName: localization.invoices,
+        data: dataGroup.rawSeries,
+      ));
+    });
+
+    widget.paymentData.forEach((dataGroup) {
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
+
+      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData chartData, _) => chartData.date,
+        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+        colorFn: (ChartMoneyData chartData, _) =>
+            charts.ColorUtil.fromDartColor(Colors.green),
+        strokeWidthPxFn: (_a, _b) => 2.5,
+        id: DashboardChart.PERIOD_CURRENT,
+        displayName: localization.payments,
         data: dataGroup.rawSeries,
       ));
     });
