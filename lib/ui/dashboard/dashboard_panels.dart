@@ -814,7 +814,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     if (chart != null &&
         invoiceData == widget.invoiceData &&
         paymentData == widget.paymentData) {
-      return chart;
+      //return chart;
     }
 
     invoiceData = widget.invoiceData;
@@ -833,10 +833,20 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         displayName: localization.invoices,
         data: dataGroup.rawSeries,
       ));
-    });
 
-    widget.paymentData.forEach((dataGroup) {
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
+      final index = widget.invoiceData.indexOf(dataGroup);
+      final List<ChartMoneyData> previous = [];
+      final currentSeries = dataGroup.rawSeries;
+      final previousSeries = widget.paymentData[index].rawSeries;
+
+      dataGroup.previousTotal = widget.paymentData[index].total;
+
+      for (int i = 0;
+          i < min(currentSeries.length, previousSeries.length);
+          i++) {
+        previous.add(
+            ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
+      }
 
       dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
         domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -844,9 +854,9 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         colorFn: (ChartMoneyData chartData, _) =>
             charts.ColorUtil.fromDartColor(Colors.green),
         strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_CURRENT,
+        id: DashboardChart.PERIOD_PREVIOUS,
         displayName: localization.payments,
-        data: dataGroup.rawSeries,
+        data: previous,
       ));
     });
 
