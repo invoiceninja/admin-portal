@@ -835,17 +835,17 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       ));
 
       final index = widget.invoiceData.indexOf(dataGroup);
-      final List<ChartMoneyData> previous = [];
-      final currentSeries = dataGroup.rawSeries;
-      final previousSeries = widget.paymentData[index].rawSeries;
+      final List<ChartMoneyData> payments = [];
+      final invoiceSeries = dataGroup.rawSeries;
+      final paymentSeries = widget.paymentData[index].rawSeries;
 
       dataGroup.previousTotal = widget.paymentData[index].total;
 
       for (int i = 0;
-          i < min(currentSeries.length, previousSeries.length);
+          i < min(invoiceSeries.length, paymentSeries.length);
           i++) {
-        previous.add(
-            ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
+        payments.add(
+            ChartMoneyData(invoiceSeries[i].date, paymentSeries[i].amount));
       }
 
       dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
@@ -856,7 +856,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         strokeWidthPxFn: (_a, _b) => 2.5,
         id: DashboardChart.PERIOD_PREVIOUS,
         displayName: localization.payments,
-        data: previous,
+        data: payments,
       ));
     });
 
