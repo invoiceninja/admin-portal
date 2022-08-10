@@ -105,6 +105,10 @@ abstract class AccountEntity
       return false;
     }
 
+    if (currentVersion.isEmpty || latestVersion.isEmpty) {
+      return false;
+    }
+
     return Version.parse(currentVersion) < Version.parse(latestVersion);
   }
 
