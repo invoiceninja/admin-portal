@@ -319,7 +319,6 @@ class DashboardPanels extends StatelessWidget {
 
     return _DashboardPanel(
       viewModel: viewModel,
-      context: context,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -357,7 +356,6 @@ class DashboardPanels extends StatelessWidget {
 
     return _DashboardPanel(
       viewModel: viewModel,
-      context: context,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -401,7 +399,6 @@ class DashboardPanels extends StatelessWidget {
 
     return _DashboardPanel(
       viewModel: viewModel,
-      context: context,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -437,7 +434,6 @@ class DashboardPanels extends StatelessWidget {
 
     return _DashboardPanel(
       viewModel: viewModel,
-      context: context,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -592,7 +588,25 @@ class DashboardPanels extends StatelessWidget {
                     ],
                   );
                 case DashboardSections.overview:
-                  return Placeholder();
+                  final settings = viewModel.dashboardUIState.settings;
+                  final state = viewModel.state;
+                  final isLoaded =
+                      state.isLoaded || state.invoiceState.list.isNotEmpty;
+                  final invoiceData = memoizedChartInvoices(
+                    state.staticState.currencyMap,
+                    state.company,
+                    settings,
+                    state.invoiceState.map,
+                    state.clientState.map,
+                  );
+
+                  return _OverviewPanel(
+                      viewModel: viewModel,
+                      title: localization.overview,
+                      invoiceData: invoiceData,
+                      paymentData: null,
+                      isLoaded: isLoaded,
+                      onDateSelected: null);
                 case DashboardSections.invoices:
                   return _InvoiceChart(
                       viewModel: viewModel,
@@ -637,7 +651,6 @@ class DashboardPanels extends StatelessWidget {
 class _DashboardPanel extends StatefulWidget {
   const _DashboardPanel({
     @required this.viewModel,
-    @required this.context,
     @required this.title,
     @required this.currentData,
     @required this.previousData,
@@ -646,7 +659,6 @@ class _DashboardPanel extends StatefulWidget {
   });
 
   final DashboardVM viewModel;
-  final BuildContext context;
   final String title;
   final List<ChartDataGroup> currentData;
   final List<ChartDataGroup> previousData;
@@ -741,6 +753,83 @@ class __DashboardPanelState extends State<_DashboardPanel> {
   }
 }
 
+class _OverviewPanel extends StatefulWidget {
+  const _OverviewPanel({
+    @required this.viewModel,
+    @required this.title,
+    @required this.invoiceData,
+    @required this.paymentData,
+    @required this.isLoaded,
+    @required this.onDateSelected,
+  });
+
+  final DashboardVM viewModel;
+  final String title;
+  final List<ChartDataGroup> invoiceData;
+  final List<ChartDataGroup> paymentData;
+  final bool isLoaded;
+  final Function(int, String) onDateSelected;
+
+  @override
+  __OverviewPanelState createState() => __OverviewPanelState();
+}
+
+class __OverviewPanelState extends State<_OverviewPanel> {
+  List<ChartDataGroup> invoiceData;
+  List<ChartDataGroup> paymentData;
+  List<ChartDataGroup> expenseData;
+  Widget chart;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final settings = widget.viewModel.dashboardUIState.settings;
+    final state = widget.viewModel.state;
+
+    if (!widget.isLoaded) {
+      return LoadingIndicator(useCard: true);
+    }
+
+    // Cache chart to retain user's selection
+    // https://github.com/google/charts/issues/286
+    if (chart != null &&
+        invoiceData == widget.invoiceData &&
+        paymentData == widget.paymentData) {
+      return chart;
+    }
+
+    invoiceData = widget.invoiceData;
+    paymentData = widget.paymentData;
+
+    widget.invoiceData.forEach((dataGroup) {
+      final index = widget.invoiceData.indexOf(dataGroup);
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
+
+      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData chartData, _) => chartData.date,
+        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+        colorFn: (ChartMoneyData chartData, _) =>
+            charts.ColorUtil.fromDartColor(state.accentColor),
+        strokeWidthPxFn: (_a, _b) => 2.5,
+        id: DashboardChart.PERIOD_CURRENT,
+        displayName: localization.invoices,
+        data: dataGroup.rawSeries,
+      ));
+    });
+
+    chart = DashboardChart(
+      data: widget.invoiceData,
+      title: widget.title,
+      onDateSelected: widget.onDateSelected,
+      currencyId: (settings.currencyId ?? '').isNotEmpty
+          ? settings.currencyId
+          : state.company.currencyId,
+    );
+
+    return chart;
+  }
+}
+
 class _InvoiceChart extends StatelessWidget {
   const _InvoiceChart({
     @required this.viewModel,
@@ -778,7 +867,6 @@ class _InvoiceChart extends StatelessWidget {
 
     return _DashboardPanel(
       viewModel: viewModel,
-      context: context,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
