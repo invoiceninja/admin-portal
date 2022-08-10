@@ -45,6 +45,20 @@ var memoizedChartInvoices = memo5((
         invoiceMap: invoiceMap,
         clientMap: clientMap));
 
+var memoizedChartOverviewInvoices = memo5((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    _chartInvoices(
+        currencyMap: currencyMap,
+        company: company,
+        settings: settings,
+        invoiceMap: invoiceMap,
+        clientMap: clientMap));
+
 var memoizedPreviousChartInvoices = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,

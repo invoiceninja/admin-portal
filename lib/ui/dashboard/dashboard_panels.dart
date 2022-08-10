@@ -593,7 +593,7 @@ class DashboardPanels extends StatelessWidget {
                   final isLoaded =
                       state.isLoaded || state.invoiceState.list.isNotEmpty;
 
-                  final invoiceData = memoizedChartInvoices(
+                  final invoiceData = memoizedChartOverviewInvoices(
                     state.staticState.currencyMap,
                     state.company,
                     settings,
@@ -814,7 +814,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     if (chart != null &&
         invoiceData == widget.invoiceData &&
         paymentData == widget.paymentData) {
-      //return chart;
+      return chart;
     }
 
     invoiceData = widget.invoiceData;
