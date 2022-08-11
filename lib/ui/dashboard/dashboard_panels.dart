@@ -990,6 +990,15 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
         for (var field in settings.totalFields)
           ListTile(
             title: Text(localization.lookup(field)),
+            trailing: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                store.dispatch(UpdateDashboardSettings(
+                    totalFields:
+                        settings.totalFields.rebuild((b) => b..remove(field))));
+                setState(() {});
+              },
+            ),
           ),
         CheckboxListTile(
           value: settings.showCurrentPeriod,

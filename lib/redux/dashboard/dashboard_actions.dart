@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -23,6 +24,7 @@ class UpdateDashboardSettings implements PersistUI {
     this.showCurrentPeriod,
     this.showPreviousPeriod,
     this.showTotal,
+    this.totalFields,
   });
 
   DashboardSettings settings;
@@ -33,6 +35,7 @@ class UpdateDashboardSettings implements PersistUI {
   bool showCurrentPeriod;
   bool showPreviousPeriod;
   bool showTotal;
+  BuiltList<String> totalFields;
 }
 
 class UpdateDashboardSelection implements PersistUI {
