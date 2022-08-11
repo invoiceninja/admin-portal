@@ -660,14 +660,27 @@ class DashboardPanels extends StatelessWidget {
                       state.invoiceState.map,
                       state.expenseState.map);
 
-                  return _OverviewPanel(
-                      viewModel: viewModel,
-                      title: localization.overview,
-                      invoiceData: invoiceData,
-                      paymentData: paymentData,
-                      expenseData: expenseData,
-                      isLoaded: isLoaded,
-                      onDateSelected: null);
+                  final textTheme = Theme.of(context).textTheme;
+
+                  return Column(
+                    children: [
+                      FormCard(
+                        children: [
+                          Text('test', style: textTheme.headline6),
+                          Text(formatNumber(0, context),
+                              style: textTheme.headline5),
+                        ],
+                      ),
+                      _OverviewPanel(
+                          viewModel: viewModel,
+                          title: localization.overview,
+                          invoiceData: invoiceData,
+                          paymentData: paymentData,
+                          expenseData: expenseData,
+                          isLoaded: isLoaded,
+                          onDateSelected: null),
+                    ],
+                  );
                 case DashboardSections.invoices:
                   return _invoiceChart(
                       context: context,
