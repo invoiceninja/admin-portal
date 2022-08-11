@@ -1006,7 +1006,12 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               isExpanded: true,
-              onChanged: (value) => null,
+              onChanged: (value) {
+                store.dispatch(UpdateDashboardSettings(
+                    totalFields:
+                        settings.totalFields.rebuild((b) => b..add(value))));
+                setState(() {});
+              },
               hint: Text(localization.addField),
               items: [
                 DropdownMenuItem(
