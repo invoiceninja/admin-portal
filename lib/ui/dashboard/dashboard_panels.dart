@@ -224,27 +224,32 @@ class DashboardPanels extends StatelessWidget {
               ),
               SizedBox(width: 4),
               Expanded(child: dateRange),
-              if (!isWide)
-                IconButton(
-                  icon: Icon(MdiIcons.tuneVariant),
-                  visualDensity: VisualDensity.compact,
-                  onPressed: () {
-                    showDialog<AlertDialog>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(localization.settings),
-                            key: ValueKey(
-                                '__${settings.includeTaxes}_${settings.currencyId}__'),
-                            actions: [
-                              TextButton(
-                                child: Text(localization.close.toUpperCase()),
-                                onPressed: () => Navigator.of(context).pop(),
-                              )
-                            ],
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
+              if (isWide) ...[
+                groupBy,
+                if (company.hasTaxes) taxSettings,
+                if (hasMultipleCurrencies) currencySettings,
+                SizedBox(width: 4),
+              ],
+              IconButton(
+                icon: Icon(MdiIcons.tuneVariant),
+                onPressed: () {
+                  showDialog<AlertDialog>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(localization.settings),
+                          key: ValueKey(
+                              '__${settings.includeTaxes}_${settings.currencyId}__'),
+                          actions: [
+                            TextButton(
+                              child: Text(localization.close.toUpperCase()),
+                              onPressed: () => Navigator.of(context).pop(),
+                            )
+                          ],
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (!isWide) ...[
                                 Row(
                                   children: [
                                     Text(localization.groupBy),
@@ -269,21 +274,20 @@ class DashboardPanels extends StatelessWidget {
                                     ],
                                   ),
                               ],
-                            ),
-                          );
-                        });
-                  },
-                )
-              else ...[
-                groupBy,
-                if (company.hasTaxes) taxSettings,
-                if (hasMultipleCurrencies) currencySettings,
-              ],
-              if (isDesktop(context) && !state.dashboardUIState.showSidebar)
+                            ],
+                          ),
+                        );
+                      });
+                },
+              ),
+              if (isDesktop(context) &&
+                  !state.dashboardUIState.showSidebar) ...[
+                SizedBox(width: 4),
                 IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.view_sidebar),
                     onPressed: () => viewModel.onShowSidebar()),
+              ]
             ],
           ),
         ),
