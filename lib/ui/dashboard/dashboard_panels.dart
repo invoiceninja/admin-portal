@@ -988,6 +988,10 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
 
     return Column(
       children: [
+        for (var field in settings.totalFields)
+          ListTile(
+            title: Text(localization.lookup(field)),
+          ),
         CheckboxListTile(
           value: settings.showCurrentPeriod,
           onChanged: (value) {
