@@ -844,7 +844,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
           colorFn: (ChartMoneyData chartData, _) =>
               charts.ColorUtil.fromDartColor(Colors.grey),
           strokeWidthPxFn: (_a, _b) => 2.5,
-          id: DashboardChart.PERIOD_PREVIOUS,
+          id: DashboardChart.PERIOD_EXPENSES,
           displayName: localization.expenses,
           data: expenses,
         ));
@@ -867,7 +867,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         colorFn: (ChartMoneyData chartData, _) =>
             charts.ColorUtil.fromDartColor(Colors.green),
         strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_PREVIOUS,
+        id: DashboardChart.PERIOD_PAYMENTS,
         displayName: localization.payments,
         data: payments,
       ));
@@ -878,7 +878,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         colorFn: (ChartMoneyData chartData, _) =>
             charts.ColorUtil.fromDartColor(state.accentColor),
         strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_CURRENT,
+        id: DashboardChart.PERIOD_INVOICES,
         displayName: localization.invoices,
         data: dataGroup.rawSeries,
       ));

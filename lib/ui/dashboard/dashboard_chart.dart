@@ -28,6 +28,10 @@ class DashboardChart extends StatefulWidget {
   static const PERIOD_CURRENT = 'current';
   static const PERIOD_PREVIOUS = 'previous';
 
+  static const PERIOD_INVOICES = 'invoices';
+  static const PERIOD_EXPENSES = 'expenses';
+  static const PERIOD_PAYMENTS = 'payments';
+
   @override
   _DashboardChartState createState() => _DashboardChartState();
 }
