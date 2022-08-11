@@ -16,6 +16,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'active_invoices': 'Active Invoices',
+      'outstanding_invoices': 'Outstanding Invoices',
+      'completed_payments': 'Completed Payments',
+      'refunded_payments': 'Refunded Payments',
+      'active_quotes': 'Active Quotes',
+      'unapproved_quotes': 'Unapproved Quotes',
+      'logged_tasks': 'Logged Tasks',
+      'invoiced_tasks': 'Invoiced Tasks',
+      'paid_tasks': 'Paid Tasks',
+      'logged_expenses': 'Logged Expenses',
+      'pending_expenses': 'Pending Expenses',
+      'invoiced_expenses': 'Invoiced Expenses',
+      'invoice_paid_expenses': 'Invoice Paid Expenses',
       'activity_130': ':user created purchase order',
       'activity_131': ':user updated purchase order',
       'activity_132': ':user archived purchase order',
@@ -85284,6 +85297,57 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['vendor_portal'] ??
       _localizedValues['en']['vendor_portal'];
 
+  String get activeInvoices =>
+      _localizedValues[localeCode]['active_invoices'] ??
+      _localizedValues['en']['active_invoices'];
+
+  String get outstandingInvoices =>
+      _localizedValues[localeCode]['outstanding_invoices'] ??
+      _localizedValues['en']['outstanding_invoices'];
+
+  String get completedPayments =>
+      _localizedValues[localeCode]['completed_payments'] ??
+      _localizedValues['en']['completed_payments'];
+
+  String get refundedPayments =>
+      _localizedValues[localeCode]['refunded_payments'] ??
+      _localizedValues['en']['refunded_payments'];
+
+  String get activeQuotes =>
+      _localizedValues[localeCode]['active_quotes'] ??
+      _localizedValues['en']['active_quotes'];
+
+  String get unapprovedQuotes =>
+      _localizedValues[localeCode]['unapproved_quotes'] ??
+      _localizedValues['en']['unapproved_quotes'];
+
+  String get loggedTasks =>
+      _localizedValues[localeCode]['logged_tasks'] ??
+      _localizedValues['en']['logged_tasks'];
+
+  String get invoicedTasks =>
+      _localizedValues[localeCode]['invoiced_tasks'] ??
+      _localizedValues['en']['invoiced_tasks'];
+
+  String get paidTasks =>
+      _localizedValues[localeCode]['paid_tasks'] ??
+      _localizedValues['en']['paid_tasks'];
+
+  String get loggedExpenses =>
+      _localizedValues[localeCode]['logged_expenses'] ??
+      _localizedValues['en']['logged_expenses'];
+
+  String get pendingExpenses =>
+      _localizedValues[localeCode]['pending_expenses'] ??
+      _localizedValues['en']['pending_expenses'];
+
+  String get invoicedExpenses =>
+      _localizedValues[localeCode]['invoiced_expenses'] ??
+      _localizedValues['en']['invoiced_expenses'];
+
+  String get invoicePaidExpenses =>
+      _localizedValues[localeCode]['invoice_paid_expenses'] ??
+      _localizedValues['en']['invoice_paid_expenses'];
 
 // STARTER: lang field - do not remove comment
 

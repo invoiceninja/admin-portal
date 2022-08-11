@@ -11,7 +11,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
