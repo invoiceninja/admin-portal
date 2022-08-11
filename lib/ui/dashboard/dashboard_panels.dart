@@ -328,6 +328,43 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
+  Widget _invoiceChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
+    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
+    final currentData = memoizedChartInvoices(
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.invoiceState.map,
+      state.clientState.map,
+    );
+
+    List<ChartDataGroup> previousData;
+    if (settings.enableComparison) {
+      previousData = memoizedPreviousChartInvoices(
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.invoiceState.map,
+        state.clientState.map,
+      );
+    }
+
+    return _DashboardPanel(
+      viewModel: viewModel,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).invoice,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
+  }
+
   Widget _quoteChart({
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
@@ -625,8 +662,7 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded: isLoaded,
                       onDateSelected: null);
                 case DashboardSections.invoices:
-                  return _InvoiceChart(
-                      viewModel: viewModel,
+                  return _invoiceChart(
                       context: context,
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.invoice, entityIds));
@@ -897,52 +933,5 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     );
 
     return chart;
-  }
-}
-
-class _InvoiceChart extends StatelessWidget {
-  const _InvoiceChart({
-    @required this.viewModel,
-    @required this.context,
-    @required this.onDateSelected,
-  });
-
-  final DashboardVM viewModel;
-  final BuildContext context;
-  final Function(List<String>) onDateSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
-    final currentData = memoizedChartInvoices(
-      state.staticState.currencyMap,
-      state.company,
-      settings,
-      state.invoiceState.map,
-      state.clientState.map,
-    );
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset += 1),
-        state.invoiceState.map,
-        state.clientState.map,
-      );
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).invoices,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
   }
 }
