@@ -11,6 +11,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -1000,6 +1001,23 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
               },
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 24),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              onChanged: (value) => null,
+              hint: Text(localization.addField),
+              items: [
+                DropdownMenuItem(
+                  child: Text(localization
+                      .lookup(DashboardUISettings.FIELD_ACTIVE_INVOICES)),
+                  value: DashboardUISettings.FIELD_ACTIVE_INVOICES,
+                ),
+              ].toList(),
+            ),
+          ),
+        ),
         CheckboxListTile(
           value: settings.showCurrentPeriod,
           onChanged: (value) {
