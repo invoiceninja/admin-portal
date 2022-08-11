@@ -20,6 +20,9 @@ class UpdateDashboardSettings implements PersistUI {
     this.currencyId,
     this.includeTaxes,
     this.groupBy,
+    this.showCurrentPeriod,
+    this.showPreviousPeriod,
+    this.showTotal,
   });
 
   DashboardSettings settings;
@@ -27,6 +30,9 @@ class UpdateDashboardSettings implements PersistUI {
   String currencyId;
   bool includeTaxes;
   String groupBy;
+  bool showCurrentPeriod;
+  bool showPreviousPeriod;
+  bool showTotal;
 }
 
 class UpdateDashboardSelection implements PersistUI {

@@ -65,6 +65,14 @@ DashboardUISettings dashboardSettingsReducer(
       return state.rebuild((b) => b..currencyId = action.currencyId);
     } else if (action.groupBy != null) {
       return state.rebuild((b) => b..groupBy = action.groupBy);
+    } else if (action.showCurrentPeriod != null) {
+      return state
+          .rebuild((b) => b..showCurrentPeriod = action.showCurrentPeriod);
+    } else if (action.showPreviousPeriod != null) {
+      return state
+          .rebuild((b) => b..showPreviousPeriod = action.showPreviousPeriod);
+    } else if (action.showTotal != null) {
+      return state.rebuild((b) => b..showTotal = action.showTotal);
     }
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);

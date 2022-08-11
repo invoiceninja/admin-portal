@@ -10,6 +10,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -275,7 +277,9 @@ class DashboardPanels extends StatelessWidget {
                                       ],
                                     ),
                                 ],
-                                _DashboardTotalsSettings(),
+                                _DashboardTotalsSettings(
+                                  viewModel: viewModel,
+                                ),
                               ],
                             ),
                           ),
@@ -963,31 +967,52 @@ class __OverviewPanelState extends State<_OverviewPanel> {
   }
 }
 
-class _DashboardTotalsSettings extends StatelessWidget {
-  const _DashboardTotalsSettings({Key key}) : super(key: key);
+class _DashboardTotalsSettings extends StatefulWidget {
+  const _DashboardTotalsSettings({Key key, @required this.viewModel})
+      : super(key: key);
 
+  final DashboardVM viewModel;
+
+  @override
+  State<_DashboardTotalsSettings> createState() =>
+      _DashboardTotalsSettingsState();
+}
+
+class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final settings = state.dashboardUIState.settings;
 
     return Column(
       children: [
         CheckboxListTile(
-          value: false,
-          onChanged: (value) => null,
+          value: settings.showCurrentPeriod,
+          onChanged: (value) {
+            store.dispatch(UpdateDashboardSettings(showCurrentPeriod: value));
+            setState(() {});
+          },
           title: Text(localization.currentPeriod),
           controlAffinity: ListTileControlAffinity.leading,
         ),
         CheckboxListTile(
-          value: false,
-          onChanged: (value) => null,
+          value: settings.showPreviousPeriod,
+          onChanged: (value) {
+            store.dispatch(UpdateDashboardSettings(showPreviousPeriod: value));
+            setState(() {});
+          },
           title: Text(localization.previousPeriod),
           controlAffinity: ListTileControlAffinity.leading,
         ),
         CheckboxListTile(
-          value: false,
-          onChanged: (value) => null,
-          title: Text(localization.allTimeTotal),
+          value: settings.showTotal,
+          onChanged: (value) {
+            store.dispatch(UpdateDashboardSettings(showTotal: value));
+            setState(() {});
+          },
+          title: Text(localization.total),
           controlAffinity: ListTileControlAffinity.leading,
         ),
       ],

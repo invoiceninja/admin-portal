@@ -517,6 +517,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(BuiltList, const [const FullType(String)])
           ]),

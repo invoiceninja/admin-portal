@@ -56,10 +56,32 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
+      showCurrentPeriod: true,
+      showPreviousPeriod: false,
+      showTotal: true,
+      totalFields: BuiltList<String>(<String>[
+        FIELD_COMPLETED_PAYMENTS,
+        FIELD_OUTSTANDING_INVOICES,
+      ]),
     );
   }
 
   DashboardUISettings._();
+
+  static const String FIELD_ACTIVE_INVOICES = 'active_invoices';
+  static const String FIELD_OUTSTANDING_INVOICES = 'outstanding_invoices';
+  static const String FIELD_COMPLETED_PAYMENTS = 'completed_payments';
+  static const String FIELD_REFUNDED_PAYMENTS = 'refunded_payments';
+  static const String FIELD_ACTIVE_QUOTES = 'active_quotes';
+  static const String FIELD_APPROVED_QUOTES = 'approved_quotes';
+  static const String FIELD_UNAPPROVED_QUOTES = 'unapproved_quotes';
+  static const String FIELD_LOGGED_TASKS = 'logged_tasks';
+  static const String FIELD_INVOICED_TASKS = 'invoiced_tasks';
+  static const String FIELD_PAID_TASKS = 'paid_tasks';
+  static const String FIELD_LOGGED_EXPENSES = 'logged_expenses';
+  static const String FIELD_PENDING_EXPENSES = 'pending_expenses';
+  static const String FIELD_INVOICED_EXPENSES = 'invoiced_expenses';
+  static const String FIELD_INVOICE_PAID_EXPENSES = 'invoice_paid_expenses';
 
   @override
   @memoized
@@ -86,6 +108,14 @@ abstract class DashboardUISettings
   bool get includeTaxes;
 
   String get groupBy;
+
+  bool get showCurrentPeriod;
+
+  bool get showPreviousPeriod;
+
+  bool get showTotal;
+
+  BuiltList<String> get totalFields;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||
@@ -118,8 +148,12 @@ abstract class DashboardUISettings
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(DashboardUISettingsBuilder builder) =>
-      builder..groupBy = kReportGroupDay;
+  static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
+    ..groupBy = kReportGroupDay
+    ..showTotal = true
+    ..showPreviousPeriod = false
+    ..showCurrentPeriod = true
+    ..totalFields.replace(BuiltList<String>());
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;
