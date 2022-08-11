@@ -823,22 +823,35 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     widget.invoiceData.forEach((dataGroup) {
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
-      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor),
-        strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_CURRENT,
-        displayName: localization.invoices,
-        data: dataGroup.rawSeries,
-      ));
-
       final index = widget.invoiceData.indexOf(dataGroup);
-      final List<ChartMoneyData> payments = [];
       final invoiceSeries = dataGroup.rawSeries;
-      final paymentSeries = widget.paymentData[index].rawSeries;
 
+      if (state.company.isModuleEnabled(EntityType.expense)) {
+        final List<ChartMoneyData> expenses = [];
+        final expenseSeries = widget.expenseData[index].rawSeries;
+        dataGroup.previousTotal = widget.expenseData[index].total;
+
+        for (int i = 0;
+            i < min(invoiceSeries.length, expenseSeries.length);
+            i++) {
+          expenses.add(
+              ChartMoneyData(invoiceSeries[i].date, expenseSeries[i].amount));
+        }
+
+        dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.ColorUtil.fromDartColor(Colors.grey),
+          strokeWidthPxFn: (_a, _b) => 2.5,
+          id: DashboardChart.PERIOD_PREVIOUS,
+          displayName: localization.expenses,
+          data: expenses,
+        ));
+      }
+
+      final List<ChartMoneyData> payments = [];
+      final paymentSeries = widget.paymentData[index].rawSeries;
       dataGroup.previousTotal = widget.paymentData[index].total;
 
       for (int i = 0;
@@ -857,6 +870,17 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         id: DashboardChart.PERIOD_PREVIOUS,
         displayName: localization.payments,
         data: payments,
+      ));
+
+      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+        domainFn: (ChartMoneyData chartData, _) => chartData.date,
+        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+        colorFn: (ChartMoneyData chartData, _) =>
+            charts.ColorUtil.fromDartColor(state.accentColor),
+        strokeWidthPxFn: (_a, _b) => 2.5,
+        id: DashboardChart.PERIOD_CURRENT,
+        displayName: localization.invoices,
+        data: dataGroup.rawSeries,
       ));
     });
 
