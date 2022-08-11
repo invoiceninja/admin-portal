@@ -246,36 +246,38 @@ class DashboardPanels extends StatelessWidget {
                               onPressed: () => Navigator.of(context).pop(),
                             )
                           ],
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (!isWide) ...[
-                                Row(
-                                  children: [
-                                    Text(localization.groupBy),
-                                    Spacer(),
-                                    groupBy,
-                                  ],
-                                ),
-                                if (hasMultipleCurrencies)
+                          content: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (!isWide) ...[
                                   Row(
                                     children: [
-                                      Text(localization.currency),
+                                      Text(localization.groupBy),
                                       Spacer(),
-                                      currencySettings,
+                                      groupBy,
                                     ],
                                   ),
-                                if (company.hasTaxes)
-                                  Row(
-                                    children: [
-                                      Text(localization.taxes),
-                                      Spacer(),
-                                      taxSettings,
-                                    ],
-                                  ),
+                                  if (hasMultipleCurrencies)
+                                    Row(
+                                      children: [
+                                        Text(localization.currency),
+                                        Spacer(),
+                                        currencySettings,
+                                      ],
+                                    ),
+                                  if (company.hasTaxes)
+                                    Row(
+                                      children: [
+                                        Text(localization.taxes),
+                                        Spacer(),
+                                        taxSettings,
+                                      ],
+                                    ),
+                                ],
+                                _DashboardTotalsSettings(),
                               ],
-                              _DashboardTotalsSettings(),
-                            ],
+                            ),
                           ),
                         );
                       });
@@ -966,14 +968,28 @@ class _DashboardTotalsSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
     return Column(
       children: [
         CheckboxListTile(
           value: false,
           onChanged: (value) => null,
-          title: Text('test'),
+          title: Text(localization.currentPeriod),
           controlAffinity: ListTileControlAffinity.leading,
-        )
+        ),
+        CheckboxListTile(
+          value: false,
+          onChanged: (value) => null,
+          title: Text(localization.previousPeriod),
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
+        CheckboxListTile(
+          value: false,
+          onChanged: (value) => null,
+          title: Text(localization.allTimeTotal),
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
       ],
     );
   }

@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'all_time_total': 'All-Time Total',
       'activity_130': ':user created purchase order',
       'activity_131': ':user updated purchase order',
       'activity_132': ':user archived purchase order',
@@ -85283,6 +85284,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get vendorPortal =>
       _localizedValues[localeCode]['vendor_portal'] ??
       _localizedValues['en']['vendor_portal'];
+
+String get allTimeTotal =>
+      _localizedValues[localeCode]['all_time_total'] ??
+      _localizedValues['en']['all_time_total'];
+
 
 // STARTER: lang field - do not remove comment
 
