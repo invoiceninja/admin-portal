@@ -55,7 +55,7 @@ abstract class DashboardUISettings
       offset: 0,
       currencyId: kCurrencyAll,
       includeTaxes: true,
-      groupBy: kReportGroupDay,
+      groupBy: kReportGroupMonth,
     );
   }
 
