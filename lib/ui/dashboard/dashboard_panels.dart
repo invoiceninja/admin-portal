@@ -480,71 +480,78 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
+  Widget _runningTasks(BuildContext context) {
+    final state = viewModel.state;
+
+    final runningTasks =
+        memoizedRunningTasks(state.taskState.map, state.user.id);
+
+    if (runningTasks.isEmpty) {
+      return null;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 12),
+      child: Wrap(
+          spacing: 8,
+          children: runningTasks.map((task) {
+            final client = state.clientState.map[task.clientId];
+            return Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(kBorderRadius),
+              ),
+              child: AppBorder(
+                hideBorder: !isDarkMode(context),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 180),
+                  child: Tooltip(
+                    message: task.description,
+                    child: ListTile(
+                      dense: true,
+                      title: LiveText(() {
+                        return formatDuration(task.calculateDuration());
+                      }),
+                      subtitle: Text(
+                        client != null ? client.displayName : task.number,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      onTap: () =>
+                          viewEntity(entity: task, filterEntity: client),
+                      onLongPress: () => editEntity(entity: task),
+                      leading: ActionMenuButton(
+                        entity: task,
+                        entityActions: task.getActions(
+                          includeEdit: true,
+                          userCompany: state.userCompany,
+                        ),
+                        onSelected: (context, action) =>
+                            handleTaskAction(context, [task], action),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }).toList()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final company = state.company;
     final localization = AppLocalization.of(context);
+    final runningTasks = _runningTasks(context);
 
     if (!state.staticState.isLoaded) {
       return LoadingIndicator();
     }
 
-    final runningTasks =
-        memoizedRunningTasks(state.taskState.map, state.user.id);
-
-    Widget _runningTasks() {
-      return Padding(
-        padding: const EdgeInsets.only(top: 20, left: 12),
-        child: Wrap(
-            spacing: 8,
-            children: runningTasks.map((task) {
-              final client = state.clientState.map[task.clientId];
-              return Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kBorderRadius),
-                ),
-                child: AppBorder(
-                  hideBorder: !isDarkMode(context),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 180),
-                    child: Tooltip(
-                      message: task.description,
-                      child: ListTile(
-                        dense: true,
-                        title: LiveText(() {
-                          return formatDuration(task.calculateDuration());
-                        }),
-                        subtitle: Text(
-                          client != null ? client.displayName : task.number,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        onTap: () =>
-                            viewEntity(entity: task, filterEntity: client),
-                        onLongPress: () => editEntity(entity: task),
-                        leading: ActionMenuButton(
-                          entity: task,
-                          entityActions: task.getActions(
-                            includeEdit: true,
-                            userCompany: state.userCompany,
-                          ),
-                          onSelected: (context, action) =>
-                              handleTaskAction(context, [task], action),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList()),
-      );
-    }
-
     final sections = [
       DashboardSections.messages,
-      if (company.isModuleEnabled(EntityType.task) && runningTasks.isNotEmpty)
+      if (company.isModuleEnabled(EntityType.task) && runningTasks != null)
         DashboardSections.runningTasks,
       DashboardSections.overview,
       if (company.isModuleEnabled(EntityType.invoice))
@@ -687,7 +694,7 @@ class DashboardPanels extends StatelessWidget {
                       onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.expense, entityIds));
                 case DashboardSections.runningTasks:
-                  return _runningTasks();
+                  return runningTasks;
               }
 
               return SizedBox();
