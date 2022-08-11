@@ -813,12 +813,14 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     // https://github.com/google/charts/issues/286
     if (chart != null &&
         invoiceData == widget.invoiceData &&
-        paymentData == widget.paymentData) {
+        paymentData == widget.paymentData &&
+        expenseData == widget.expenseData) {
       return chart;
     }
 
     invoiceData = widget.invoiceData;
     paymentData = widget.paymentData;
+    expenseData = widget.expenseData;
 
     widget.invoiceData.forEach((dataGroup) {
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
@@ -891,6 +893,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
+      isOverview: true,
     );
 
     return chart;
