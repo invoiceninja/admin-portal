@@ -274,6 +274,7 @@ class DashboardPanels extends StatelessWidget {
                                     ],
                                   ),
                               ],
+                              _DashboardTotalsSettings(),
                             ],
                           ),
                         );
@@ -957,5 +958,23 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     );
 
     return chart;
+  }
+}
+
+class _DashboardTotalsSettings extends StatelessWidget {
+  const _DashboardTotalsSettings({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CheckboxListTile(
+          value: false,
+          onChanged: (value) => null,
+          title: Text('test'),
+          controlAffinity: ListTileControlAffinity.leading,
+        )
+      ],
+    );
   }
 }
