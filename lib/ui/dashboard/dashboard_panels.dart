@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_common/common.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -675,12 +676,25 @@ class DashboardPanels extends StatelessWidget {
 
                   return Column(
                     children: [
-                      FormCard(
-                        children: [
-                          Text('test', style: textTheme.headline6),
-                          Text(formatNumber(0, context),
-                              style: textTheme.headline5),
-                        ],
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: StaggeredGrid.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 12,
+                          children: settings.totalFields.map<Widget>((field) {
+                            return FormCard(
+                              padding: const EdgeInsets.all(0),
+                              children: [
+                                Text(localization.lookup(field),
+                                    style: textTheme.headline6),
+                                Text(formatNumber(0, context),
+                                    style: textTheme.headline5),
+                              ],
+                            );
+                          }).toList(),
+                        ),
                       ),
                       _OverviewPanel(
                           viewModel: viewModel,
