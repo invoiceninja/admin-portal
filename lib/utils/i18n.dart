@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'field': 'Field',
+      'period': 'Period',
       'fields_per_row': 'Fields Per Row',
       'total_active_invoices': 'Active Invoices',
       'total_outstanding_invoices': 'Outstanding Invoices',
@@ -85358,6 +85360,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get fieldsPerRow =>
       _localizedValues[localeCode]['fields_per_row'] ??
       _localizedValues['en']['fields_per_row'];
+
+  String get field =>
+      _localizedValues[localeCode]['field'] ??
+      _localizedValues['en']['field'];
+
+  String get period =>
+      _localizedValues[localeCode]['period'] ??
+      _localizedValues['en']['period'];
 
 // STARTER: lang field - do not remove comment
 

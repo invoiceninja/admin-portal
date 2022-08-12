@@ -1181,9 +1181,29 @@ class _DashboardField extends StatelessWidget {
       title: Text(localization.addField),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
         AppDropdownButton(
+          labelText: localization.field,
           value: null,
           onChanged: (dynamic value) {},
           items: items,
+        ),
+        AppDropdownButton(
+          labelText: localization.period,
+          value: null,
+          onChanged: (dynamic value) {},
+          items: [
+            DropdownMenuItem<String>(
+              child: Text(localization.currentPeriod),
+              value: DashboardUISettings.PERIOD_CURRENT,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.previousPeriod),
+              value: DashboardUISettings.PERIOD_PREVIOUS,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.total),
+              value: DashboardUISettings.PERIOD_TOTAL,
+            ),
+          ],
         ),
       ]),
       actions: [
