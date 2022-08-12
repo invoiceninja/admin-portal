@@ -771,7 +771,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
         final currentSeries = dataGroup.rawSeries;
         final previousSeries = widget.previousData[index].rawSeries;
 
-        dataGroup.previousTotal = widget.previousData[index].total;
+        dataGroup.previousTotal = widget.previousData[index].preriodTotal;
 
         for (int i = 0;
             i < min(currentSeries.length, previousSeries.length);
@@ -882,7 +882,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       if (state.company.isModuleEnabled(EntityType.expense)) {
         final List<ChartMoneyData> expenses = [];
         final expenseSeries = expenseData[index].rawSeries;
-        dataGroup.previousTotal = expenseData[index].total;
+        dataGroup.previousTotal = expenseData[index].preriodTotal;
 
         for (int i = 0;
             i < min(invoiceSeries.length, expenseSeries.length);
@@ -905,7 +905,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
 
       final List<ChartMoneyData> payments = [];
       final paymentSeries = paymentData[index].rawSeries;
-      dataGroup.previousTotal = paymentData[index].total;
+      dataGroup.previousTotal = paymentData[index].preriodTotal;
 
       for (int i = 0;
           i < min(invoiceSeries.length, paymentSeries.length);

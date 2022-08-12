@@ -19,7 +19,7 @@ class ChartDataGroup {
   final List<ChartMoneyData> rawSeries = [];
   Map<String, List<String>> entityMap = {};
   List<Series<dynamic, DateTime>> chartSeries;
-  double total = 0.0;
+  double preriodTotal = 0.0;
   double average = 0.0;
   double previousTotal = 0.0;
 }
@@ -168,10 +168,10 @@ List<ChartDataGroup> _chartInvoices({
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.total += totals[STATUS_ACTIVE][key];
+      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       outstandingData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING][key]));
-      outstandingData.total += totals[STATUS_OUTSTANDING][key];
+      outstandingData.preriodTotal += totals[STATUS_OUTSTANDING][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -187,10 +187,10 @@ List<ChartDataGroup> _chartInvoices({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
       : 0;
   outstandingData.average = (counts[STATUS_OUTSTANDING] ?? 0) > 0
-      ? round(outstandingData.total / counts[STATUS_OUTSTANDING], 2)
+      ? round(outstandingData.preriodTotal / counts[STATUS_OUTSTANDING], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -325,13 +325,13 @@ List<ChartDataGroup> chartQuotes({
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.total += totals[STATUS_ACTIVE][key];
+      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       approvedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_APPROVED][key]));
-      approvedData.total += totals[STATUS_APPROVED][key];
+      approvedData.preriodTotal += totals[STATUS_APPROVED][key];
       unapprovedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED][key]));
-      unapprovedData.total += totals[STATUS_UNAPPROVED][key];
+      unapprovedData.preriodTotal += totals[STATUS_UNAPPROVED][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -348,13 +348,13 @@ List<ChartDataGroup> chartQuotes({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
       : 0;
   approvedData.average = (counts[STATUS_APPROVED] ?? 0) > 0
-      ? round(approvedData.total / counts[STATUS_APPROVED], 2)
+      ? round(approvedData.preriodTotal / counts[STATUS_APPROVED], 2)
       : 0;
   unapprovedData.average = (counts[STATUS_UNAPPROVED] ?? 0) > 0
-      ? round(unapprovedData.total / counts[STATUS_UNAPPROVED], 2)
+      ? round(unapprovedData.preriodTotal / counts[STATUS_UNAPPROVED], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -491,10 +491,10 @@ List<ChartDataGroup> chartPayments(
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.total += totals[STATUS_ACTIVE][key];
+      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       refundedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_REFUNDED][key]));
-      refundedData.total += totals[STATUS_REFUNDED][key];
+      refundedData.preriodTotal += totals[STATUS_REFUNDED][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -510,10 +510,10 @@ List<ChartDataGroup> chartPayments(
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
       : 0;
   refundedData.average = (counts[STATUS_REFUNDED] ?? 0) > 0
-      ? round(refundedData.total / counts[STATUS_REFUNDED], 2)
+      ? round(refundedData.preriodTotal / counts[STATUS_REFUNDED], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -687,12 +687,12 @@ List<ChartDataGroup> chartTasks(
     if (totals[STATUS_LOGGED].containsKey(key)) {
       loggedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
-      loggedData.total += totals[STATUS_LOGGED][key];
+      loggedData.preriodTotal += totals[STATUS_LOGGED][key];
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      invoicedData.total += totals[STATUS_INVOICED][key];
+      invoicedData.preriodTotal += totals[STATUS_INVOICED][key];
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
-      paidData.total += totals[STATUS_PAID][key];
+      paidData.preriodTotal += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -709,13 +709,13 @@ List<ChartDataGroup> chartTasks(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.total / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.preriodTotal / counts[STATUS_LOGGED], 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.total / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.preriodTotal / counts[STATUS_INVOICED], 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.total / counts[STATUS_PAID], 2)
+      ? round(paidData.preriodTotal / counts[STATUS_PAID], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -832,15 +832,15 @@ List<ChartDataGroup> chartExpenses(
     if (totals[STATUS_LOGGED].containsKey(key)) {
       loggedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
-      loggedData.total += totals[STATUS_LOGGED][key];
+      loggedData.preriodTotal += totals[STATUS_LOGGED][key];
       pendingData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_PENDING][key]));
-      pendingData.total += totals[STATUS_PENDING][key];
+      pendingData.preriodTotal += totals[STATUS_PENDING][key];
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      invoicedData.total += totals[STATUS_INVOICED][key];
+      invoicedData.preriodTotal += totals[STATUS_INVOICED][key];
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
-      paidData.total += totals[STATUS_PAID][key];
+      paidData.preriodTotal += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       pendingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -858,16 +858,16 @@ List<ChartDataGroup> chartExpenses(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.total / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.preriodTotal / counts[STATUS_LOGGED], 2)
       : 0;
   pendingData.average = (counts[STATUS_PENDING] ?? 0) > 0
-      ? round(pendingData.total / counts[STATUS_PENDING], 2)
+      ? round(pendingData.preriodTotal / counts[STATUS_PENDING], 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.total / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.preriodTotal / counts[STATUS_INVOICED], 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.total / counts[STATUS_PAID], 2)
+      ? round(paidData.preriodTotal / counts[STATUS_PAID], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
