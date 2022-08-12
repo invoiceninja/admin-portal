@@ -68,20 +68,21 @@ abstract class DashboardUISettings
 
   DashboardUISettings._();
 
-  static const String FIELD_ACTIVE_INVOICES = 'active_invoices';
-  static const String FIELD_OUTSTANDING_INVOICES = 'outstanding_invoices';
-  static const String FIELD_COMPLETED_PAYMENTS = 'completed_payments';
-  static const String FIELD_REFUNDED_PAYMENTS = 'refunded_payments';
-  static const String FIELD_ACTIVE_QUOTES = 'active_quotes';
-  static const String FIELD_APPROVED_QUOTES = 'approved_quotes';
-  static const String FIELD_UNAPPROVED_QUOTES = 'unapproved_quotes';
-  static const String FIELD_LOGGED_TASKS = 'logged_tasks';
-  static const String FIELD_INVOICED_TASKS = 'invoiced_tasks';
-  static const String FIELD_PAID_TASKS = 'paid_tasks';
-  static const String FIELD_LOGGED_EXPENSES = 'logged_expenses';
-  static const String FIELD_PENDING_EXPENSES = 'pending_expenses';
-  static const String FIELD_INVOICED_EXPENSES = 'invoiced_expenses';
-  static const String FIELD_INVOICE_PAID_EXPENSES = 'invoice_paid_expenses';
+  static const String FIELD_ACTIVE_INVOICES = 'total_active_invoices';
+  static const String FIELD_OUTSTANDING_INVOICES = 'total_outstanding_invoices';
+  static const String FIELD_COMPLETED_PAYMENTS = 'total_completed_payments';
+  static const String FIELD_REFUNDED_PAYMENTS = 'total_refunded_payments';
+  static const String FIELD_ACTIVE_QUOTES = 'total_active_quotes';
+  static const String FIELD_APPROVED_QUOTES = 'total_approved_quotes';
+  static const String FIELD_UNAPPROVED_QUOTES = 'total_unapproved_quotes';
+  static const String FIELD_LOGGED_TASKS = 'total_logged_tasks';
+  static const String FIELD_INVOICED_TASKS = 'total_invoiced_tasks';
+  static const String FIELD_PAID_TASKS = 'total_paid_tasks';
+  static const String FIELD_LOGGED_EXPENSES = 'total_logged_expenses';
+  static const String FIELD_PENDING_EXPENSES = 'total_pending_expenses';
+  static const String FIELD_INVOICED_EXPENSES = 'total_invoiced_expenses';
+  static const String FIELD_INVOICE_PAID_EXPENSES =
+      'total_invoice_paid_expenses';
 
   @override
   @memoized

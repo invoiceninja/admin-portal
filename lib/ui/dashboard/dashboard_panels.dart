@@ -1010,7 +1010,23 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
       EntityType.payment: [
         DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
         DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
-      ]
+      ],
+      EntityType.quote: [
+        DashboardUISettings.FIELD_ACTIVE_QUOTES,
+        DashboardUISettings.FIELD_APPROVED_QUOTES,
+        DashboardUISettings.FIELD_UNAPPROVED_QUOTES,
+      ],
+      EntityType.task: [
+        DashboardUISettings.FIELD_LOGGED_TASKS,
+        DashboardUISettings.FIELD_INVOICED_TASKS,
+        DashboardUISettings.FIELD_PAID_TASKS,
+      ],
+      EntityType.expense: [
+        DashboardUISettings.FIELD_LOGGED_EXPENSES,
+        DashboardUISettings.FIELD_PENDING_EXPENSES,
+        DashboardUISettings.FIELD_INVOICED_EXPENSES,
+        DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES,
+      ],
     };
 
     fieldMap.forEach((entityType, fields) {
