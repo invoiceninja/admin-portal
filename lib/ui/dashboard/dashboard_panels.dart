@@ -1128,8 +1128,16 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
   }
 }
 
-class _DashboardField extends StatelessWidget {
+class _DashboardField extends StatefulWidget {
   const _DashboardField({Key key}) : super(key: key);
+
+  @override
+  State<_DashboardField> createState() => _DashboardFieldState();
+}
+
+class _DashboardFieldState extends State<_DashboardField> {
+  String _field = '';
+  String _period = '';
 
   @override
   Widget build(BuildContext context) {
@@ -1182,14 +1190,18 @@ class _DashboardField extends StatelessWidget {
       content: Column(mainAxisSize: MainAxisSize.min, children: [
         AppDropdownButton(
           labelText: localization.field,
-          value: null,
-          onChanged: (dynamic value) {},
+          value: _field,
+          onChanged: (dynamic value) {
+            _field = value;
+          },
           items: items,
         ),
         AppDropdownButton(
           labelText: localization.period,
-          value: null,
-          onChanged: (dynamic value) {},
+          value: _period,
+          onChanged: (dynamic value) {
+            _period = value;
+          },
           items: [
             DropdownMenuItem<String>(
               child: Text(localization.currentPeriod),
@@ -1211,13 +1223,13 @@ class _DashboardField extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(localization.cancel),
+          child: Text(localization.cancel.toUpperCase()),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(localization.cancel),
+          child: Text(localization.add.toUpperCase()),
         ),
       ],
     );
