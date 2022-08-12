@@ -689,9 +689,12 @@ class DashboardPanels extends StatelessWidget {
                               padding: const EdgeInsets.all(0),
                               children: [
                                 Text(localization.lookup(field),
-                                    style: textTheme.headline6),
+                                    style: textTheme.subtitle1,
+                                    textAlign: TextAlign.center),
+                                SizedBox(height: 4),
                                 Text(formatNumber(0, context),
-                                    style: textTheme.headline5),
+                                    style: textTheme.headline5,
+                                    textAlign: TextAlign.center),
                               ],
                             );
                           }).toList(),
