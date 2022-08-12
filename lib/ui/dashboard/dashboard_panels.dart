@@ -998,7 +998,32 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final settings = state.dashboardUIState.settings;
+
+    final List<DropdownMenuItem<String>> items = [];
+    final fieldMap = {
+      EntityType.invoice: [
+        DashboardUISettings.FIELD_ACTIVE_INVOICES,
+        DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+      ],
+      EntityType.payment: [
+        DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+        DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
+      ]
+    };
+
+    fieldMap.forEach((entityType, fields) {
+      fields.forEach((field) {
+        if (company.isModuleEnabled(entityType) &&
+            !settings.totalFields.contains(field)) {
+          items.add(DropdownMenuItem<String>(
+            child: Text(localization.lookup(field)),
+            value: field,
+          ));
+        }
+      });
+    });
 
     return Column(
       children: [
@@ -1027,13 +1052,7 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
                 setState(() {});
               },
               hint: Text(localization.addField),
-              items: [
-                DropdownMenuItem(
-                  child: Text(localization
-                      .lookup(DashboardUISettings.FIELD_ACTIVE_INVOICES)),
-                  value: DashboardUISettings.FIELD_ACTIVE_INVOICES,
-                ),
-              ].toList(),
+              items: items,
             ),
           ),
         ),
