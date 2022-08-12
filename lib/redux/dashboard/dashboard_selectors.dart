@@ -117,20 +117,9 @@ List<ChartDataGroup> _chartInvoices({
         client.isDeleted ||
         date.isEmpty) {
       // skip it
-    } else if (!invoice.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][date] == null) {
-        totals[STATUS_ACTIVE][date] = 0.0;
-        totals[STATUS_OUTSTANDING][date] = 0.0;
-
-        activeData.entityMap[date] = [];
-        outstandingData.entityMap[date] = [];
-      }
-
       double amount =
           settings.includeTaxes ? invoice.amount : invoice.netAmount;
       double balance =
@@ -148,15 +137,32 @@ List<ChartDataGroup> _chartInvoices({
         balance *= exchangeRate;
       }
 
-      totals[STATUS_ACTIVE][date] += amount;
-      totals[STATUS_OUTSTANDING][date] += balance;
+      activeData.total += amount;
+      outstandingData.total += balance;
 
-      counts[STATUS_ACTIVE]++;
-      activeData.entityMap[date].add(invoice.id);
+      if (invoice.isBetween(
+          settings.startDate(company), settings.endDate(company))) {
+        if (totals[STATUS_ACTIVE][date] == null) {
+          totals[STATUS_ACTIVE][date] = 0.0;
+          totals[STATUS_OUTSTANDING][date] = 0.0;
 
-      if (invoice.balance > 0) {
-        counts[STATUS_OUTSTANDING]++;
-        outstandingData.entityMap[date].add(invoice.id);
+          activeData.entityMap[date] = [];
+          outstandingData.entityMap[date] = [];
+        }
+
+        totals[STATUS_ACTIVE][date] += amount;
+        totals[STATUS_OUTSTANDING][date] += balance;
+
+        activeData.preriodTotal += amount;
+        outstandingData.preriodTotal += balance;
+
+        counts[STATUS_ACTIVE]++;
+        activeData.entityMap[date].add(invoice.id);
+
+        if (invoice.balance > 0) {
+          counts[STATUS_OUTSTANDING]++;
+          outstandingData.entityMap[date].add(invoice.id);
+        }
       }
     }
   });
@@ -169,10 +175,8 @@ List<ChartDataGroup> _chartInvoices({
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       outstandingData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING][key]));
-      outstandingData.preriodTotal += totals[STATUS_OUTSTANDING][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -273,22 +277,9 @@ List<ChartDataGroup> chartQuotes({
 
     if (!quote.isSent || quote.isDeleted || client.isDeleted || date.isEmpty) {
       // skip it
-    } else if (!quote.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][date] == null) {
-        totals[STATUS_ACTIVE][date] = 0.0;
-        totals[STATUS_APPROVED][date] = 0.0;
-        totals[STATUS_UNAPPROVED][date] = 0.0;
-
-        activeData.entityMap[date] = [];
-        approvedData.entityMap[date] = [];
-        unapprovedData.entityMap[date] = [];
-      }
-
       double amount = settings.includeTaxes ? quote.amount : quote.netAmount;
 
       // Handle "All"
@@ -302,18 +293,40 @@ List<ChartDataGroup> chartQuotes({
         amount *= exchangeRate;
       }
 
-      totals[STATUS_ACTIVE][date] += amount;
-      counts[STATUS_ACTIVE]++;
-      activeData.entityMap[date].add(quote.id);
-
+      activeData.total += amount;
       if (quote.isApproved) {
-        totals[STATUS_APPROVED][date] += amount;
-        counts[STATUS_APPROVED]++;
-        approvedData.entityMap[date].add(quote.id);
+        approvedData.total += amount;
       } else {
-        totals[STATUS_UNAPPROVED][date] += amount;
-        counts[STATUS_UNAPPROVED]++;
-        unapprovedData.entityMap[date].add(quote.id);
+        unapprovedData.total += amount;
+      }
+
+      if (quote.isBetween(
+          settings.startDate(company), settings.endDate(company))) {
+        if (totals[STATUS_ACTIVE][date] == null) {
+          totals[STATUS_ACTIVE][date] = 0.0;
+          totals[STATUS_APPROVED][date] = 0.0;
+          totals[STATUS_UNAPPROVED][date] = 0.0;
+
+          activeData.entityMap[date] = [];
+          approvedData.entityMap[date] = [];
+          unapprovedData.entityMap[date] = [];
+        }
+
+        totals[STATUS_ACTIVE][date] += amount;
+        counts[STATUS_ACTIVE]++;
+        activeData.entityMap[date].add(quote.id);
+
+        if (quote.isApproved) {
+          totals[STATUS_APPROVED][date] += amount;
+          counts[STATUS_APPROVED]++;
+          approvedData.entityMap[date].add(quote.id);
+          approvedData.preriodTotal += amount;
+        } else {
+          totals[STATUS_UNAPPROVED][date] += amount;
+          counts[STATUS_UNAPPROVED]++;
+          unapprovedData.entityMap[date].add(quote.id);
+          unapprovedData.preriodTotal += amount;
+        }
       }
     }
   });
@@ -326,13 +339,10 @@ List<ChartDataGroup> chartQuotes({
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       approvedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_APPROVED][key]));
-      approvedData.preriodTotal += totals[STATUS_APPROVED][key];
       unapprovedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED][key]));
-      unapprovedData.preriodTotal += totals[STATUS_UNAPPROVED][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -442,20 +452,9 @@ List<ChartDataGroup> chartPayments(
         client.isDeleted ||
         date.isEmpty) {
       // skip it
-    } else if (!payment.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][date] == null) {
-        totals[STATUS_ACTIVE][date] = 0.0;
-        totals[STATUS_REFUNDED][date] = 0.0;
-
-        activeData.entityMap[date] = [];
-        refundedData.entityMap[date] = [];
-      }
-
       double completedAmount = payment.completedAmount;
       double refunded = payment.refunded;
 
@@ -471,15 +470,33 @@ List<ChartDataGroup> chartPayments(
         refunded *= exchangeRate;
       }
 
-      totals[STATUS_ACTIVE][date] += completedAmount;
-      totals[STATUS_REFUNDED][date] += refunded ?? 0;
-
-      counts[STATUS_ACTIVE]++;
-      activeData.entityMap[date].add(payment.id);
-
+      activeData.total += completedAmount;
       if ((payment.refunded ?? 0) > 0) {
-        counts[STATUS_REFUNDED]++;
-        refundedData.entityMap[date].add(payment.id);
+        refundedData.total += refunded ?? 0;
+      }
+
+      if (payment.isBetween(
+          settings.startDate(company), settings.endDate(company))) {
+        if (totals[STATUS_ACTIVE][date] == null) {
+          totals[STATUS_ACTIVE][date] = 0.0;
+          totals[STATUS_REFUNDED][date] = 0.0;
+
+          activeData.entityMap[date] = [];
+          refundedData.entityMap[date] = [];
+        }
+
+        totals[STATUS_ACTIVE][date] += completedAmount;
+        totals[STATUS_REFUNDED][date] += refunded ?? 0;
+
+        counts[STATUS_ACTIVE]++;
+        activeData.entityMap[date].add(payment.id);
+        activeData.preriodTotal += completedAmount;
+
+        if ((payment.refunded ?? 0) > 0) {
+          counts[STATUS_REFUNDED]++;
+          refundedData.entityMap[date].add(payment.id);
+          refundedData.preriodTotal += refunded ?? 0;
+        }
       }
     }
   });
@@ -492,10 +509,8 @@ List<ChartDataGroup> chartPayments(
     if (totals[STATUS_ACTIVE].containsKey(key)) {
       activeData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
-      activeData.preriodTotal += totals[STATUS_ACTIVE][key];
       refundedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_REFUNDED][key]));
-      refundedData.preriodTotal += totals[STATUS_REFUNDED][key];
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -607,9 +622,6 @@ List<ChartDataGroup> chartTasks(
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
-    } else if (!task.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
@@ -619,16 +631,6 @@ List<ChartDataGroup> chartTasks(
             date = date.substring(0, 4) + '-01-01';
           } else if (settings.groupBy == kReportGroupMonth) {
             date = date.substring(0, 7) + '-01';
-          }
-
-          if (totals[STATUS_LOGGED][date] == null) {
-            totals[STATUS_LOGGED][date] = 0.0;
-            totals[STATUS_INVOICED][date] = 0.0;
-            totals[STATUS_PAID][date] = 0.0;
-
-            loggedData.entityMap[date] = [];
-            invoicedData.entityMap[date] = [];
-            paidData.entityMap[date] = [];
           }
 
           final taskRate = taskRateSelector(
@@ -654,15 +656,42 @@ List<ChartDataGroup> chartTasks(
           if (task.isInvoiced) {
             if (invoiceMap.containsKey(task.invoiceId) &&
                 invoiceMap[task.invoiceId].isPaid) {
-              totals[STATUS_PAID][date] += amount;
-              paidData.entityMap[date].add(task.id);
+              paidData.total += amount;
             } else {
-              totals[STATUS_INVOICED][date] += amount;
-              invoicedData.entityMap[date].add(task.id);
+              invoicedData.total += amount;
             }
           } else {
-            totals[STATUS_LOGGED][date] += amount;
-            loggedData.entityMap[date].add(task.id);
+            loggedData.total += amount;
+          }
+
+          if (task.isBetween(
+              settings.startDate(company), settings.endDate(company))) {
+            if (totals[STATUS_LOGGED][date] == null) {
+              totals[STATUS_LOGGED][date] = 0.0;
+              totals[STATUS_INVOICED][date] = 0.0;
+              totals[STATUS_PAID][date] = 0.0;
+
+              loggedData.entityMap[date] = [];
+              invoicedData.entityMap[date] = [];
+              paidData.entityMap[date] = [];
+            }
+
+            if (task.isInvoiced) {
+              if (invoiceMap.containsKey(task.invoiceId) &&
+                  invoiceMap[task.invoiceId].isPaid) {
+                totals[STATUS_PAID][date] += amount;
+                paidData.entityMap[date].add(task.id);
+                paidData.preriodTotal += amount;
+              } else {
+                totals[STATUS_INVOICED][date] += amount;
+                invoicedData.entityMap[date].add(task.id);
+                invoicedData.preriodTotal += amount;
+              }
+            } else {
+              totals[STATUS_LOGGED][date] += amount;
+              loggedData.entityMap[date].add(task.id);
+              loggedData.preriodTotal += amount;
+            }
           }
         });
       });
@@ -688,12 +717,9 @@ List<ChartDataGroup> chartTasks(
     if (totals[STATUS_LOGGED].containsKey(key)) {
       loggedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
-      loggedData.preriodTotal += totals[STATUS_LOGGED][key];
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      invoicedData.preriodTotal += totals[STATUS_INVOICED][key];
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
-      paidData.preriodTotal += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -774,24 +800,9 @@ List<ChartDataGroup> chartExpenses(
 
     if (expense.isDeleted || date.isEmpty) {
       // skip it
-    } else if (!expense.isBetween(
-        settings.startDate(company), settings.endDate(company))) {
-      // skip it
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_LOGGED][date] == null) {
-        totals[STATUS_LOGGED][date] = 0.0;
-        totals[STATUS_PENDING][date] = 0.0;
-        totals[STATUS_INVOICED][date] = 0.0;
-        totals[STATUS_PAID][date] = 0.0;
-
-        loggedData.entityMap[date] = [];
-        pendingData.entityMap[date] = [];
-        invoicedData.entityMap[date] = [];
-        paidData.entityMap[date] = [];
-      }
-
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
@@ -805,22 +816,54 @@ List<ChartDataGroup> chartExpenses(
       if (expense.isInvoiced) {
         final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
         if (invoice.isPaid) {
-          totals[STATUS_PAID][date] += amount;
-          counts[STATUS_PAID]++;
-          paidData.entityMap[date].add(expense.id);
+          paidData.total += amount;
         } else {
-          totals[STATUS_INVOICED][date] += amount;
-          counts[STATUS_INVOICED]++;
-          invoicedData.entityMap[date].add(expense.id);
+          invoicedData.total += amount;
         }
       } else if (expense.isPending) {
-        totals[STATUS_PENDING][date] += amount;
-        counts[STATUS_PENDING]++;
-        pendingData.entityMap[date].add(expense.id);
+        pendingData.total += amount;
       } else {
-        totals[STATUS_LOGGED][date] += amount;
-        counts[STATUS_LOGGED]++;
-        loggedData.entityMap[date].add(expense.id);
+        loggedData.total += amount;
+      }
+
+      if (expense.isBetween(
+          settings.startDate(company), settings.endDate(company))) {
+        if (totals[STATUS_LOGGED][date] == null) {
+          totals[STATUS_LOGGED][date] = 0.0;
+          totals[STATUS_PENDING][date] = 0.0;
+          totals[STATUS_INVOICED][date] = 0.0;
+          totals[STATUS_PAID][date] = 0.0;
+
+          loggedData.entityMap[date] = [];
+          pendingData.entityMap[date] = [];
+          invoicedData.entityMap[date] = [];
+          paidData.entityMap[date] = [];
+        }
+
+        if (expense.isInvoiced) {
+          final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
+          if (invoice.isPaid) {
+            totals[STATUS_PAID][date] += amount;
+            counts[STATUS_PAID]++;
+            paidData.entityMap[date].add(expense.id);
+            paidData.preriodTotal += amount;
+          } else {
+            totals[STATUS_INVOICED][date] += amount;
+            counts[STATUS_INVOICED]++;
+            invoicedData.entityMap[date].add(expense.id);
+            invoicedData.preriodTotal += amount;
+          }
+        } else if (expense.isPending) {
+          totals[STATUS_PENDING][date] += amount;
+          counts[STATUS_PENDING]++;
+          pendingData.entityMap[date].add(expense.id);
+          pendingData.preriodTotal += amount;
+        } else {
+          totals[STATUS_LOGGED][date] += amount;
+          counts[STATUS_LOGGED]++;
+          loggedData.entityMap[date].add(expense.id);
+          loggedData.preriodTotal += amount;
+        }
       }
     }
   });
@@ -833,15 +876,11 @@ List<ChartDataGroup> chartExpenses(
     if (totals[STATUS_LOGGED].containsKey(key)) {
       loggedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
-      loggedData.preriodTotal += totals[STATUS_LOGGED][key];
       pendingData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_PENDING][key]));
-      pendingData.preriodTotal += totals[STATUS_PENDING][key];
       invoicedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      invoicedData.preriodTotal += totals[STATUS_INVOICED][key];
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
-      paidData.preriodTotal += totals[STATUS_PAID][key];
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       pendingData.rawSeries.add(ChartMoneyData(date, 0.0));
