@@ -319,16 +319,6 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                         ),
                       ),
                       CheckboxListTile(
-                        value: settings.showCurrentPeriod,
-                        onChanged: (value) {
-                          store.dispatch(UpdateDashboardSettings(
-                              showCurrentPeriod: value));
-                          setState(() {});
-                        },
-                        title: Text(localization.currentPeriod),
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                      CheckboxListTile(
                         value: settings.showPreviousPeriod,
                         onChanged: (value) {
                           store.dispatch(UpdateDashboardSettings(

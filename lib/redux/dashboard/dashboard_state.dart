@@ -56,7 +56,6 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
-      showCurrentPeriod: true,
       showPreviousPeriod: false,
       showTotal: true,
       numberFieldsPerRow: 2,
@@ -111,8 +110,6 @@ abstract class DashboardUISettings
 
   String get groupBy;
 
-  bool get showCurrentPeriod;
-
   bool get showPreviousPeriod;
 
   bool get showTotal;
@@ -156,7 +153,6 @@ abstract class DashboardUISettings
     ..groupBy = kReportGroupDay
     ..showTotal = true
     ..showPreviousPeriod = false
-    ..showCurrentPeriod = true
     ..numberFieldsPerRow = 2
     ..totalFields.replace(BuiltList<String>());
 

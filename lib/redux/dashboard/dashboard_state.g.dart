@@ -128,9 +128,6 @@ class _$DashboardUISettingsSerializer
       'groupBy',
       serializers.serialize(object.groupBy,
           specifiedType: const FullType(String)),
-      'showCurrentPeriod',
-      serializers.serialize(object.showCurrentPeriod,
-          specifiedType: const FullType(bool)),
       'showPreviousPeriod',
       serializers.serialize(object.showPreviousPeriod,
           specifiedType: const FullType(bool)),
@@ -205,10 +202,6 @@ class _$DashboardUISettingsSerializer
         case 'groupBy':
           result.groupBy = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'showCurrentPeriod':
-          result.showCurrentPeriod = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'showPreviousPeriod':
           result.showPreviousPeriod = serializers.deserialize(value,
@@ -410,8 +403,6 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final String groupBy;
   @override
-  final bool showCurrentPeriod;
-  @override
   final bool showPreviousPeriod;
   @override
   final bool showTotal;
@@ -436,7 +427,6 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.currencyId,
       this.includeTaxes,
       this.groupBy,
-      this.showCurrentPeriod,
       this.showPreviousPeriod,
       this.showTotal,
       this.numberFieldsPerRow,
@@ -464,8 +454,6 @@ class _$DashboardUISettings extends DashboardUISettings {
         includeTaxes, 'DashboardUISettings', 'includeTaxes');
     BuiltValueNullFieldError.checkNotNull(
         groupBy, 'DashboardUISettings', 'groupBy');
-    BuiltValueNullFieldError.checkNotNull(
-        showCurrentPeriod, 'DashboardUISettings', 'showCurrentPeriod');
     BuiltValueNullFieldError.checkNotNull(
         showPreviousPeriod, 'DashboardUISettings', 'showPreviousPeriod');
     BuiltValueNullFieldError.checkNotNull(
@@ -500,7 +488,6 @@ class _$DashboardUISettings extends DashboardUISettings {
         currencyId == other.currencyId &&
         includeTaxes == other.includeTaxes &&
         groupBy == other.groupBy &&
-        showCurrentPeriod == other.showCurrentPeriod &&
         showPreviousPeriod == other.showPreviousPeriod &&
         showTotal == other.showTotal &&
         numberFieldsPerRow == other.numberFieldsPerRow &&
@@ -525,25 +512,20 @@ class _$DashboardUISettings extends DashboardUISettings {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(
-                                                                    0,
-                                                                    dateRange
-                                                                        .hashCode),
-                                                                customStartDate
+                                                                0,
+                                                                dateRange
                                                                     .hashCode),
-                                                            customEndDate
+                                                            customStartDate
                                                                 .hashCode),
-                                                        enableComparison
-                                                            .hashCode),
-                                                    compareDateRange.hashCode),
-                                                compareCustomStartDate
-                                                    .hashCode),
-                                            compareCustomEndDate.hashCode),
-                                        offset.hashCode),
-                                    currencyId.hashCode),
-                                includeTaxes.hashCode),
-                            groupBy.hashCode),
-                        showCurrentPeriod.hashCode),
+                                                        customEndDate.hashCode),
+                                                    enableComparison.hashCode),
+                                                compareDateRange.hashCode),
+                                            compareCustomStartDate.hashCode),
+                                        compareCustomEndDate.hashCode),
+                                    offset.hashCode),
+                                currencyId.hashCode),
+                            includeTaxes.hashCode),
+                        groupBy.hashCode),
                     showPreviousPeriod.hashCode),
                 showTotal.hashCode),
             numberFieldsPerRow.hashCode),
@@ -564,7 +546,6 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('currencyId', currencyId)
           ..add('includeTaxes', includeTaxes)
           ..add('groupBy', groupBy)
-          ..add('showCurrentPeriod', showCurrentPeriod)
           ..add('showPreviousPeriod', showPreviousPeriod)
           ..add('showTotal', showTotal)
           ..add('numberFieldsPerRow', numberFieldsPerRow)
@@ -627,11 +608,6 @@ class DashboardUISettingsBuilder
   String get groupBy => _$this._groupBy;
   set groupBy(String groupBy) => _$this._groupBy = groupBy;
 
-  bool _showCurrentPeriod;
-  bool get showCurrentPeriod => _$this._showCurrentPeriod;
-  set showCurrentPeriod(bool showCurrentPeriod) =>
-      _$this._showCurrentPeriod = showCurrentPeriod;
-
   bool _showPreviousPeriod;
   bool get showPreviousPeriod => _$this._showPreviousPeriod;
   set showPreviousPeriod(bool showPreviousPeriod) =>
@@ -670,7 +646,6 @@ class DashboardUISettingsBuilder
       _currencyId = $v.currencyId;
       _includeTaxes = $v.includeTaxes;
       _groupBy = $v.groupBy;
-      _showCurrentPeriod = $v.showCurrentPeriod;
       _showPreviousPeriod = $v.showPreviousPeriod;
       _showTotal = $v.showTotal;
       _numberFieldsPerRow = $v.numberFieldsPerRow;
@@ -715,7 +690,6 @@ class DashboardUISettingsBuilder
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'DashboardUISettings', 'currencyId'),
               includeTaxes: BuiltValueNullFieldError.checkNotNull(includeTaxes, 'DashboardUISettings', 'includeTaxes'),
               groupBy: BuiltValueNullFieldError.checkNotNull(groupBy, 'DashboardUISettings', 'groupBy'),
-              showCurrentPeriod: BuiltValueNullFieldError.checkNotNull(showCurrentPeriod, 'DashboardUISettings', 'showCurrentPeriod'),
               showPreviousPeriod: BuiltValueNullFieldError.checkNotNull(showPreviousPeriod, 'DashboardUISettings', 'showPreviousPeriod'),
               showTotal: BuiltValueNullFieldError.checkNotNull(showTotal, 'DashboardUISettings', 'showTotal'),
               numberFieldsPerRow: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow'),

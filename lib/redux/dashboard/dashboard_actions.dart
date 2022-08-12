@@ -21,7 +21,6 @@ class UpdateDashboardSettings implements PersistUI {
     this.currencyId,
     this.includeTaxes,
     this.groupBy,
-    this.showCurrentPeriod,
     this.showPreviousPeriod,
     this.showTotal,
     this.totalFields,
@@ -33,7 +32,6 @@ class UpdateDashboardSettings implements PersistUI {
   String currencyId;
   bool includeTaxes;
   String groupBy;
-  bool showCurrentPeriod;
   bool showPreviousPeriod;
   bool showTotal;
   BuiltList<String> totalFields;

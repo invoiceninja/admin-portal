@@ -65,9 +65,6 @@ DashboardUISettings dashboardSettingsReducer(
       return state.rebuild((b) => b..currencyId = action.currencyId);
     } else if (action.groupBy != null) {
       return state.rebuild((b) => b..groupBy = action.groupBy);
-    } else if (action.showCurrentPeriod != null) {
-      return state
-          .rebuild((b) => b..showCurrentPeriod = action.showCurrentPeriod);
     } else if (action.showPreviousPeriod != null) {
       return state
           .rebuild((b) => b..showPreviousPeriod = action.showPreviousPeriod);
