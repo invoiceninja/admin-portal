@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -1058,6 +1059,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (!widget.isWide) ...[
             Row(
@@ -1098,6 +1100,14 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                 },
               ),
             ),
+          AppButton(
+            label: localization.addField,
+            onPressed: () {
+              showDialog<void>(
+                  context: context, builder: (context) => _DashboardField());
+            },
+          ),
+          SizedBox(height: 16),
           AppDropdownButton<int>(
               labelText: localization.fieldsPerRow,
               value: settings.numberFieldsPerRow,
@@ -1169,7 +1179,7 @@ class _DashboardField extends StatelessWidget {
 
     return AlertDialog(
       title: Text(localization.addField),
-      content: Column(children: [
+      content: Column(mainAxisSize: MainAxisSize.min, children: [
         AppDropdownButton(
           value: null,
           onChanged: (dynamic value) {},
