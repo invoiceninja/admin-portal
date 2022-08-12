@@ -1105,6 +1105,23 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                 },
                 children: [
                   for (var dashboardField in settings.totalFields)
+                    ListTile(
+                      key: ValueKey(
+                          '__${dashboardField.field}_${dashboardField.period}_'),
+                      title: Text(localization.lookup(dashboardField.field)),
+                      subtitle:
+                          Text(localization.lookup(dashboardField.period)),
+                      leading: IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          store.dispatch(UpdateDashboardSettings(
+                              totalFields: settings.totalFields
+                                  .rebuild((b) => b..remove(dashboardField))));
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  /*
                     Padding(
                       key: ValueKey(
                           '__${dashboardField.field}_${dashboardField.period}_'),
@@ -1124,7 +1141,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                           SizedBox(width: 20),
                           Expanded(
                             child: Text(
-                              'test',
+                              localization.lookup(dashboardField.field),
                               textAlign: TextAlign.left,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
@@ -1132,22 +1149,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                         ],
                       ),
                     ),
-                  /*
-                  ListTile(
-                    key: ValueKey(
-                        '__${dashboardField.field}_${dashboardField.period}_'),
-                    title: Text(localization.lookup(dashboardField.field)),
-                    trailing: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        store.dispatch(UpdateDashboardSettings(
-                            totalFields: settings.totalFields
-                                .rebuild((b) => b..remove(dashboardField))));
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                  */
+                    */
                 ],
               ),
             ),
