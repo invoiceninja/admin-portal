@@ -1102,9 +1102,10 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             ),
           AppButton(
             label: localization.addField,
-            onPressed: () {
-              showDialog<void>(
+            onPressed: () async {
+              await showDialog<void>(
                   context: context, builder: (context) => _DashboardField());
+              setState(() {});
             },
           ),
           SizedBox(height: 16),
