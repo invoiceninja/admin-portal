@@ -25,6 +25,7 @@ class UpdateDashboardSettings implements PersistUI {
     this.showPreviousPeriod,
     this.showTotal,
     this.totalFields,
+    this.numberFieldsPerRow,
   });
 
   DashboardSettings settings;
@@ -36,6 +37,7 @@ class UpdateDashboardSettings implements PersistUI {
   bool showPreviousPeriod;
   bool showTotal;
   BuiltList<String> totalFields;
+  final int numberFieldsPerRow;
 }
 
 class UpdateDashboardSelection implements PersistUI {

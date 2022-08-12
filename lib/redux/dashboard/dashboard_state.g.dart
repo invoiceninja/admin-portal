@@ -137,6 +137,9 @@ class _$DashboardUISettingsSerializer
       'showTotal',
       serializers.serialize(object.showTotal,
           specifiedType: const FullType(bool)),
+      'numberFieldsPerRow',
+      serializers.serialize(object.numberFieldsPerRow,
+          specifiedType: const FullType(int)),
       'totalFields',
       serializers.serialize(object.totalFields,
           specifiedType:
@@ -214,6 +217,10 @@ class _$DashboardUISettingsSerializer
         case 'showTotal':
           result.showTotal = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'numberFieldsPerRow':
+          result.numberFieldsPerRow = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'totalFields':
           result.totalFields.replace(serializers.deserialize(value,
@@ -409,6 +416,8 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final bool showTotal;
   @override
+  final int numberFieldsPerRow;
+  @override
   final BuiltList<String> totalFields;
 
   factory _$DashboardUISettings(
@@ -430,6 +439,7 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.showCurrentPeriod,
       this.showPreviousPeriod,
       this.showTotal,
+      this.numberFieldsPerRow,
       this.totalFields})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -461,6 +471,8 @@ class _$DashboardUISettings extends DashboardUISettings {
     BuiltValueNullFieldError.checkNotNull(
         showTotal, 'DashboardUISettings', 'showTotal');
     BuiltValueNullFieldError.checkNotNull(
+        numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow');
+    BuiltValueNullFieldError.checkNotNull(
         totalFields, 'DashboardUISettings', 'totalFields');
   }
 
@@ -491,6 +503,7 @@ class _$DashboardUISettings extends DashboardUISettings {
         showCurrentPeriod == other.showCurrentPeriod &&
         showPreviousPeriod == other.showPreviousPeriod &&
         showTotal == other.showTotal &&
+        numberFieldsPerRow == other.numberFieldsPerRow &&
         totalFields == other.totalFields;
   }
 
@@ -512,23 +525,28 @@ class _$DashboardUISettings extends DashboardUISettings {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                dateRange
+                                                                $jc(
+                                                                    0,
+                                                                    dateRange
+                                                                        .hashCode),
+                                                                customStartDate
                                                                     .hashCode),
-                                                            customStartDate
+                                                            customEndDate
                                                                 .hashCode),
-                                                        customEndDate.hashCode),
-                                                    enableComparison.hashCode),
-                                                compareDateRange.hashCode),
-                                            compareCustomStartDate.hashCode),
-                                        compareCustomEndDate.hashCode),
-                                    offset.hashCode),
-                                currencyId.hashCode),
-                            includeTaxes.hashCode),
-                        groupBy.hashCode),
-                    showCurrentPeriod.hashCode),
-                showPreviousPeriod.hashCode),
-            showTotal.hashCode),
+                                                        enableComparison
+                                                            .hashCode),
+                                                    compareDateRange.hashCode),
+                                                compareCustomStartDate
+                                                    .hashCode),
+                                            compareCustomEndDate.hashCode),
+                                        offset.hashCode),
+                                    currencyId.hashCode),
+                                includeTaxes.hashCode),
+                            groupBy.hashCode),
+                        showCurrentPeriod.hashCode),
+                    showPreviousPeriod.hashCode),
+                showTotal.hashCode),
+            numberFieldsPerRow.hashCode),
         totalFields.hashCode));
   }
 
@@ -549,6 +567,7 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('showCurrentPeriod', showCurrentPeriod)
           ..add('showPreviousPeriod', showPreviousPeriod)
           ..add('showTotal', showTotal)
+          ..add('numberFieldsPerRow', numberFieldsPerRow)
           ..add('totalFields', totalFields))
         .toString();
   }
@@ -622,6 +641,11 @@ class DashboardUISettingsBuilder
   bool get showTotal => _$this._showTotal;
   set showTotal(bool showTotal) => _$this._showTotal = showTotal;
 
+  int _numberFieldsPerRow;
+  int get numberFieldsPerRow => _$this._numberFieldsPerRow;
+  set numberFieldsPerRow(int numberFieldsPerRow) =>
+      _$this._numberFieldsPerRow = numberFieldsPerRow;
+
   ListBuilder<String> _totalFields;
   ListBuilder<String> get totalFields =>
       _$this._totalFields ??= new ListBuilder<String>();
@@ -649,6 +673,7 @@ class DashboardUISettingsBuilder
       _showCurrentPeriod = $v.showCurrentPeriod;
       _showPreviousPeriod = $v.showPreviousPeriod;
       _showTotal = $v.showTotal;
+      _numberFieldsPerRow = $v.numberFieldsPerRow;
       _totalFields = $v.totalFields.toBuilder();
       _$v = null;
     }
@@ -693,6 +718,7 @@ class DashboardUISettingsBuilder
               showCurrentPeriod: BuiltValueNullFieldError.checkNotNull(showCurrentPeriod, 'DashboardUISettings', 'showCurrentPeriod'),
               showPreviousPeriod: BuiltValueNullFieldError.checkNotNull(showPreviousPeriod, 'DashboardUISettings', 'showPreviousPeriod'),
               showTotal: BuiltValueNullFieldError.checkNotNull(showTotal, 'DashboardUISettings', 'showTotal'),
+              numberFieldsPerRow: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow'),
               totalFields: totalFields.build());
     } catch (_) {
       String _$failedField;

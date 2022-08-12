@@ -59,6 +59,7 @@ abstract class DashboardUISettings
       showCurrentPeriod: true,
       showPreviousPeriod: false,
       showTotal: true,
+      numberFieldsPerRow: 2,
       totalFields: BuiltList<String>(<String>[
         FIELD_COMPLETED_PAYMENTS,
         FIELD_OUTSTANDING_INVOICES,
@@ -116,6 +117,8 @@ abstract class DashboardUISettings
 
   bool get showTotal;
 
+  int get numberFieldsPerRow;
+
   BuiltList<String> get totalFields;
 
   bool matchesCurrency(String match) {
@@ -154,6 +157,7 @@ abstract class DashboardUISettings
     ..showTotal = true
     ..showPreviousPeriod = false
     ..showCurrentPeriod = true
+    ..numberFieldsPerRow = 2
     ..totalFields.replace(BuiltList<String>());
 
   static Serializer<DashboardUISettings> get serializer =>

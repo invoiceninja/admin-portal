@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/review_app.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -680,7 +681,7 @@ class DashboardPanels extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
-                          crossAxisCount: 2,
+                          crossAxisCount: settings.numberFieldsPerRow,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: settings.totalFields.map<Widget>((field) {
@@ -1099,6 +1100,23 @@ class _DashboardTotalsSettingsState extends State<_DashboardTotalsSettings> {
           title: Text(localization.total),
           controlAffinity: ListTileControlAffinity.leading,
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 24),
+          child: AppDropdownButton<int>(
+              labelText: localization.fieldsPerRow,
+              value: settings.numberFieldsPerRow,
+              onChanged: (dynamic value) {
+                store.dispatch(
+                    UpdateDashboardSettings(numberFieldsPerRow: value));
+                setState(() {});
+              },
+              items: List<int>.generate(8, (i) => i + 1)
+                  .map((value) => DropdownMenuItem<int>(
+                        child: Text('$value'),
+                        value: value,
+                      ))
+                  .toList()),
+        )
       ],
     );
   }

@@ -382,9 +382,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             child: Text(localization.usePaymentTerms),
                             value: 'terms',
                           ),
-                            DropdownMenuItem(
-                                child: Text(localization.dueOnReceipt),
-                                value: 'on_receipt',
+                          DropdownMenuItem(
+                            child: Text(localization.dueOnReceipt),
+                            value: 'on_receipt',
                           ),
                           ...List<int>.generate(31, (i) => i + 1)
                               .map((value) => DropdownMenuItem(

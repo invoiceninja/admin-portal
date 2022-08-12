@@ -75,6 +75,9 @@ DashboardUISettings dashboardSettingsReducer(
       return state.rebuild((b) => b..showTotal = action.showTotal);
     } else if (action.totalFields != null) {
       return state.rebuild((b) => b..totalFields.replace(action.totalFields));
+    } else if (action.numberFieldsPerRow != null) {
+      return state
+          .rebuild((b) => b..numberFieldsPerRow = action.numberFieldsPerRow);
     }
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);
