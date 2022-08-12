@@ -1146,6 +1146,7 @@ class _DashboardFieldState extends State<_DashboardField> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
+    final settings = state.dashboardUIState.settings;
 
     final fieldMap = {
       EntityType.invoice: [
@@ -1192,7 +1193,9 @@ class _DashboardFieldState extends State<_DashboardField> {
           labelText: localization.field,
           value: _field,
           onChanged: (dynamic value) {
-            _field = value;
+            setState(() {
+              _field = value;
+            });
           },
           items: items,
         ),
@@ -1200,7 +1203,9 @@ class _DashboardFieldState extends State<_DashboardField> {
           labelText: localization.period,
           value: _period,
           onChanged: (dynamic value) {
-            _period = value;
+            setState(() {
+              _period = value;
+            });
           },
           items: [
             DropdownMenuItem<String>(
@@ -1227,6 +1232,19 @@ class _DashboardFieldState extends State<_DashboardField> {
         ),
         TextButton(
           onPressed: () {
+            if (_field.isEmpty || _period.isEmpty) {
+              return;
+            }
+            store.dispatch(UpdateDashboardSettings(
+                totalFields: settings.totalFields.rebuild(
+              (b) => b
+                ..add(
+                  DashboardField(
+                    field: _field,
+                    period: _period,
+                  ),
+                ),
+            )));
             Navigator.of(context).pop();
           },
           child: Text(localization.add.toUpperCase()),
