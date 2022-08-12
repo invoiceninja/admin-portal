@@ -659,6 +659,16 @@ class DashboardPanels extends StatelessWidget {
                                 Text(formatNumber(0, context),
                                     style: textTheme.headline5,
                                     textAlign: TextAlign.center),
+                                if (settings.showTotal) ...[
+                                  SizedBox(height: 20),
+                                  Text(localization.total,
+                                      style: textTheme.subtitle1,
+                                      textAlign: TextAlign.center),
+                                  SizedBox(height: 4),
+                                  Text(formatNumber(0, context),
+                                      style: textTheme.headline5,
+                                      textAlign: TextAlign.center),
+                                ]
                               ],
                             );
                           }).toList(),

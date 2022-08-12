@@ -20,8 +20,9 @@ class ChartDataGroup {
   Map<String, List<String>> entityMap = {};
   List<Series<dynamic, DateTime>> chartSeries;
   double preriodTotal = 0.0;
-  double average = 0.0;
   double previousTotal = 0.0;
+  double total = 0.0;
+  double average = 0.0;
 }
 
 class ChartMoneyData {
