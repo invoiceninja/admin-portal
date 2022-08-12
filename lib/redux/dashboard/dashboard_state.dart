@@ -56,12 +56,16 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
-      showPreviousPeriod: false,
-      showTotal: true,
       numberFieldsPerRow: 2,
-      totalFields: BuiltList<String>(<String>[
-        FIELD_COMPLETED_PAYMENTS,
-        FIELD_OUTSTANDING_INVOICES,
+      totalFields: BuiltList<DashboardField>(<DashboardField>[
+        DashboardField(
+          field: FIELD_ACTIVE_INVOICES,
+          period: PERIOD_CURRENT,
+        ),
+        DashboardField(
+          field: FIELD_COMPLETED_PAYMENTS,
+          period: PERIOD_CURRENT,
+        ),
       ]),
     );
   }
@@ -83,6 +87,10 @@ abstract class DashboardUISettings
   static const String FIELD_INVOICED_EXPENSES = 'total_invoiced_expenses';
   static const String FIELD_INVOICE_PAID_EXPENSES =
       'total_invoice_paid_expenses';
+
+  static const String PERIOD_CURRENT = 'current_period';
+  static const String PERIOD_PREVIOUS = 'previous_period';
+  static const String PERIOD_TOTAL = 'total';
 
   @override
   @memoized
@@ -110,13 +118,9 @@ abstract class DashboardUISettings
 
   String get groupBy;
 
-  bool get showPreviousPeriod;
-
-  bool get showTotal;
-
   int get numberFieldsPerRow;
 
-  BuiltList<String> get totalFields;
+  BuiltList<DashboardField> get totalFields;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||
@@ -151,11 +155,35 @@ abstract class DashboardUISettings
   // ignore: unused_element
   static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
     ..groupBy = kReportGroupDay
-    ..showTotal = true
-    ..showPreviousPeriod = false
     ..numberFieldsPerRow = 2
-    ..totalFields.replace(BuiltList<String>());
+    ..totalFields.replace(BuiltList<DashboardField>());
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;
+}
+
+abstract class DashboardField
+    implements Built<DashboardField, DashboardFieldBuilder> {
+  factory DashboardField({
+    String field,
+    String period,
+  }) {
+    return _$DashboardField._(
+      field: field ?? '',
+      period: period ?? '',
+    );
+  }
+
+  DashboardField._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get field;
+
+  String get period;
+
+  static Serializer<DashboardField> get serializer =>
+      _$dashboardFieldSerializer;
 }

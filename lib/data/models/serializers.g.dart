@@ -37,6 +37,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CurrencyEntity.serializer)
       ..add(CurrencyItemResponse.serializer)
       ..add(CurrencyListResponse.serializer)
+      ..add(DashboardField.serializer)
       ..add(DashboardUISettings.serializer)
       ..add(DashboardUIState.serializer)
       ..add(DateFormatEntity.serializer)
@@ -283,6 +284,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(String), const FullType(TemplateEntity)]),
           () => new MapBuilder<String, TemplateEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DashboardField)]),
+          () => new ListBuilder<DashboardField>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
           () => new ListBuilder<DateFormatEntity>())
       ..addBuilderFactory(
@@ -507,9 +511,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SizeEntity)]),
           () => new ListBuilder<SizeEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(String)]),
-          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

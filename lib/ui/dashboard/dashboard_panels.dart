@@ -648,27 +648,18 @@ class DashboardPanels extends StatelessWidget {
                           crossAxisCount: settings.numberFieldsPerRow,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
-                          children: settings.totalFields.map<Widget>((field) {
+                          children: settings.totalFields
+                              .map<Widget>((dashboardField) {
                             return FormCard(
                               padding: const EdgeInsets.all(0),
                               children: [
-                                Text(localization.lookup(field),
+                                Text(localization.lookup(dashboardField.field),
                                     style: textTheme.subtitle1,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 4),
                                 Text(formatNumber(0, context),
                                     style: textTheme.headline5,
                                     textAlign: TextAlign.center),
-                                if (settings.showTotal) ...[
-                                  SizedBox(height: 20),
-                                  Text(localization.total,
-                                      style: textTheme.subtitle1,
-                                      textAlign: TextAlign.center),
-                                  SizedBox(height: 4),
-                                  Text(formatNumber(0, context),
-                                      style: textTheme.headline5,
-                                      textAlign: TextAlign.center),
-                                ]
                               ],
                             );
                           }).toList(),
@@ -979,7 +970,6 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final List<DropdownMenuItem<String>> items = [];
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final state = store.state;
@@ -1065,45 +1055,6 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
       );
     }
 
-    final fieldMap = {
-      EntityType.invoice: [
-        DashboardUISettings.FIELD_ACTIVE_INVOICES,
-        DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
-      ],
-      EntityType.payment: [
-        DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
-        DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
-      ],
-      EntityType.quote: [
-        DashboardUISettings.FIELD_ACTIVE_QUOTES,
-        DashboardUISettings.FIELD_APPROVED_QUOTES,
-        DashboardUISettings.FIELD_UNAPPROVED_QUOTES,
-      ],
-      EntityType.task: [
-        DashboardUISettings.FIELD_LOGGED_TASKS,
-        DashboardUISettings.FIELD_INVOICED_TASKS,
-        DashboardUISettings.FIELD_PAID_TASKS,
-      ],
-      EntityType.expense: [
-        DashboardUISettings.FIELD_LOGGED_EXPENSES,
-        DashboardUISettings.FIELD_PENDING_EXPENSES,
-        DashboardUISettings.FIELD_INVOICED_EXPENSES,
-        DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES,
-      ],
-    };
-
-    fieldMap.forEach((entityType, fields) {
-      fields.forEach((field) {
-        if (company.isModuleEnabled(entityType) &&
-            !settings.totalFields.contains(field)) {
-          items.add(DropdownMenuItem<String>(
-            child: Text(localization.lookup(field)),
-            value: field,
-          ));
-        }
-      });
-    });
-
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1134,52 +1085,19 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
               ),
             SizedBox(height: 10),
           ],
-          for (var field in settings.totalFields)
+          for (var dashboardField in settings.totalFields)
             ListTile(
-              title: Text(localization.lookup(field)),
+              title: Text(localization.lookup(dashboardField.field)),
               trailing: IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
                   store.dispatch(UpdateDashboardSettings(
                       totalFields: settings.totalFields
-                          .rebuild((b) => b..remove(field))));
+                          .rebuild((b) => b..remove(dashboardField))));
                   setState(() {});
                 },
               ),
             ),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              isExpanded: true,
-              onChanged: (value) {
-                store.dispatch(UpdateDashboardSettings(
-                    totalFields:
-                        settings.totalFields.rebuild((b) => b..add(value))));
-                setState(() {});
-              },
-              hint: Text(localization.addField),
-              items: items,
-            ),
-          ),
-          if (settings.enableComparison)
-            CheckboxListTile(
-              value: settings.showPreviousPeriod,
-              onChanged: (value) {
-                store.dispatch(
-                    UpdateDashboardSettings(showPreviousPeriod: value));
-                setState(() {});
-              },
-              title: Text(localization.previousPeriod),
-              controlAffinity: ListTileControlAffinity.leading,
-            ),
-          CheckboxListTile(
-            value: settings.showTotal,
-            onChanged: (value) {
-              store.dispatch(UpdateDashboardSettings(showTotal: value));
-              setState(() {});
-            },
-            title: Text(localization.total),
-            controlAffinity: ListTileControlAffinity.leading,
-          ),
           AppDropdownButton<int>(
               labelText: localization.fieldsPerRow,
               value: settings.numberFieldsPerRow,
@@ -1196,6 +1114,82 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   .toList())
         ],
       ),
+    );
+  }
+}
+
+class _DashboardField extends StatelessWidget {
+  const _DashboardField({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final List<DropdownMenuItem<String>> items = [];
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final company = state.company;
+
+    final fieldMap = {
+      EntityType.invoice: [
+        DashboardUISettings.FIELD_ACTIVE_INVOICES,
+        DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+      ],
+      EntityType.payment: [
+        DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+        DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
+      ],
+      EntityType.quote: [
+        DashboardUISettings.FIELD_ACTIVE_QUOTES,
+        DashboardUISettings.FIELD_APPROVED_QUOTES,
+        DashboardUISettings.FIELD_UNAPPROVED_QUOTES,
+      ],
+      EntityType.task: [
+        DashboardUISettings.FIELD_LOGGED_TASKS,
+        DashboardUISettings.FIELD_INVOICED_TASKS,
+        DashboardUISettings.FIELD_PAID_TASKS,
+      ],
+      EntityType.expense: [
+        DashboardUISettings.FIELD_LOGGED_EXPENSES,
+        DashboardUISettings.FIELD_PENDING_EXPENSES,
+        DashboardUISettings.FIELD_INVOICED_EXPENSES,
+        DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES,
+      ],
+    };
+
+    fieldMap.forEach((entityType, fields) {
+      fields.forEach((field) {
+        if (company.isModuleEnabled(entityType)) {
+          items.add(DropdownMenuItem<String>(
+            child: Text(localization.lookup(field)),
+            value: field,
+          ));
+        }
+      });
+    });
+
+    return AlertDialog(
+      title: Text(localization.addField),
+      content: Column(children: [
+        AppDropdownButton(
+          value: null,
+          onChanged: (dynamic value) {},
+          items: items,
+        ),
+      ]),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.cancel),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.cancel),
+        ),
+      ],
     );
   }
 }

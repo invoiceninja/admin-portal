@@ -10,6 +10,8 @@ Serializer<DashboardUIState> _$dashboardUIStateSerializer =
     new _$DashboardUIStateSerializer();
 Serializer<DashboardUISettings> _$dashboardUISettingsSerializer =
     new _$DashboardUISettingsSerializer();
+Serializer<DashboardField> _$dashboardFieldSerializer =
+    new _$DashboardFieldSerializer();
 
 class _$DashboardUIStateSerializer
     implements StructuredSerializer<DashboardUIState> {
@@ -128,19 +130,13 @@ class _$DashboardUISettingsSerializer
       'groupBy',
       serializers.serialize(object.groupBy,
           specifiedType: const FullType(String)),
-      'showPreviousPeriod',
-      serializers.serialize(object.showPreviousPeriod,
-          specifiedType: const FullType(bool)),
-      'showTotal',
-      serializers.serialize(object.showTotal,
-          specifiedType: const FullType(bool)),
       'numberFieldsPerRow',
       serializers.serialize(object.numberFieldsPerRow,
           specifiedType: const FullType(int)),
       'totalFields',
       serializers.serialize(object.totalFields,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DashboardField)])),
     ];
 
     return result;
@@ -203,23 +199,64 @@ class _$DashboardUISettingsSerializer
           result.groupBy = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'showPreviousPeriod':
-          result.showPreviousPeriod = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'showTotal':
-          result.showTotal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'numberFieldsPerRow':
           result.numberFieldsPerRow = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'totalFields':
           result.totalFields.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DashboardField)]))
               as BuiltList<Object>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$DashboardFieldSerializer
+    implements StructuredSerializer<DashboardField> {
+  @override
+  final Iterable<Type> types = const [DashboardField, _$DashboardField];
+  @override
+  final String wireName = 'DashboardField';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, DashboardField object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'field',
+      serializers.serialize(object.field,
+          specifiedType: const FullType(String)),
+      'period',
+      serializers.serialize(object.period,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  DashboardField deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DashboardFieldBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'field':
+          result.field = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'period':
+          result.period = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -403,13 +440,9 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final String groupBy;
   @override
-  final bool showPreviousPeriod;
-  @override
-  final bool showTotal;
-  @override
   final int numberFieldsPerRow;
   @override
-  final BuiltList<String> totalFields;
+  final BuiltList<DashboardField> totalFields;
 
   factory _$DashboardUISettings(
           [void Function(DashboardUISettingsBuilder) updates]) =>
@@ -427,8 +460,6 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.currencyId,
       this.includeTaxes,
       this.groupBy,
-      this.showPreviousPeriod,
-      this.showTotal,
       this.numberFieldsPerRow,
       this.totalFields})
       : super._() {
@@ -454,10 +485,6 @@ class _$DashboardUISettings extends DashboardUISettings {
         includeTaxes, 'DashboardUISettings', 'includeTaxes');
     BuiltValueNullFieldError.checkNotNull(
         groupBy, 'DashboardUISettings', 'groupBy');
-    BuiltValueNullFieldError.checkNotNull(
-        showPreviousPeriod, 'DashboardUISettings', 'showPreviousPeriod');
-    BuiltValueNullFieldError.checkNotNull(
-        showTotal, 'DashboardUISettings', 'showTotal');
     BuiltValueNullFieldError.checkNotNull(
         numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow');
     BuiltValueNullFieldError.checkNotNull(
@@ -488,8 +515,6 @@ class _$DashboardUISettings extends DashboardUISettings {
         currencyId == other.currencyId &&
         includeTaxes == other.includeTaxes &&
         groupBy == other.groupBy &&
-        showPreviousPeriod == other.showPreviousPeriod &&
-        showTotal == other.showTotal &&
         numberFieldsPerRow == other.numberFieldsPerRow &&
         totalFields == other.totalFields;
   }
@@ -508,26 +533,17 @@ class _$DashboardUISettings extends DashboardUISettings {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                0,
-                                                                dateRange
-                                                                    .hashCode),
-                                                            customStartDate
-                                                                .hashCode),
-                                                        customEndDate.hashCode),
-                                                    enableComparison.hashCode),
-                                                compareDateRange.hashCode),
-                                            compareCustomStartDate.hashCode),
-                                        compareCustomEndDate.hashCode),
-                                    offset.hashCode),
-                                currencyId.hashCode),
-                            includeTaxes.hashCode),
-                        groupBy.hashCode),
-                    showPreviousPeriod.hashCode),
-                showTotal.hashCode),
+                                                $jc($jc(0, dateRange.hashCode),
+                                                    customStartDate.hashCode),
+                                                customEndDate.hashCode),
+                                            enableComparison.hashCode),
+                                        compareDateRange.hashCode),
+                                    compareCustomStartDate.hashCode),
+                                compareCustomEndDate.hashCode),
+                            offset.hashCode),
+                        currencyId.hashCode),
+                    includeTaxes.hashCode),
+                groupBy.hashCode),
             numberFieldsPerRow.hashCode),
         totalFields.hashCode));
   }
@@ -546,8 +562,6 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('currencyId', currencyId)
           ..add('includeTaxes', includeTaxes)
           ..add('groupBy', groupBy)
-          ..add('showPreviousPeriod', showPreviousPeriod)
-          ..add('showTotal', showTotal)
           ..add('numberFieldsPerRow', numberFieldsPerRow)
           ..add('totalFields', totalFields))
         .toString();
@@ -608,24 +622,15 @@ class DashboardUISettingsBuilder
   String get groupBy => _$this._groupBy;
   set groupBy(String groupBy) => _$this._groupBy = groupBy;
 
-  bool _showPreviousPeriod;
-  bool get showPreviousPeriod => _$this._showPreviousPeriod;
-  set showPreviousPeriod(bool showPreviousPeriod) =>
-      _$this._showPreviousPeriod = showPreviousPeriod;
-
-  bool _showTotal;
-  bool get showTotal => _$this._showTotal;
-  set showTotal(bool showTotal) => _$this._showTotal = showTotal;
-
   int _numberFieldsPerRow;
   int get numberFieldsPerRow => _$this._numberFieldsPerRow;
   set numberFieldsPerRow(int numberFieldsPerRow) =>
       _$this._numberFieldsPerRow = numberFieldsPerRow;
 
-  ListBuilder<String> _totalFields;
-  ListBuilder<String> get totalFields =>
-      _$this._totalFields ??= new ListBuilder<String>();
-  set totalFields(ListBuilder<String> totalFields) =>
+  ListBuilder<DashboardField> _totalFields;
+  ListBuilder<DashboardField> get totalFields =>
+      _$this._totalFields ??= new ListBuilder<DashboardField>();
+  set totalFields(ListBuilder<DashboardField> totalFields) =>
       _$this._totalFields = totalFields;
 
   DashboardUISettingsBuilder() {
@@ -646,8 +651,6 @@ class DashboardUISettingsBuilder
       _currencyId = $v.currencyId;
       _includeTaxes = $v.includeTaxes;
       _groupBy = $v.groupBy;
-      _showPreviousPeriod = $v.showPreviousPeriod;
-      _showTotal = $v.showTotal;
       _numberFieldsPerRow = $v.numberFieldsPerRow;
       _totalFields = $v.totalFields.toBuilder();
       _$v = null;
@@ -690,8 +693,6 @@ class DashboardUISettingsBuilder
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'DashboardUISettings', 'currencyId'),
               includeTaxes: BuiltValueNullFieldError.checkNotNull(includeTaxes, 'DashboardUISettings', 'includeTaxes'),
               groupBy: BuiltValueNullFieldError.checkNotNull(groupBy, 'DashboardUISettings', 'groupBy'),
-              showPreviousPeriod: BuiltValueNullFieldError.checkNotNull(showPreviousPeriod, 'DashboardUISettings', 'showPreviousPeriod'),
-              showTotal: BuiltValueNullFieldError.checkNotNull(showTotal, 'DashboardUISettings', 'showTotal'),
               numberFieldsPerRow: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow'),
               totalFields: totalFields.build());
     } catch (_) {
@@ -705,6 +706,99 @@ class DashboardUISettingsBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DashboardField extends DashboardField {
+  @override
+  final String field;
+  @override
+  final String period;
+
+  factory _$DashboardField([void Function(DashboardFieldBuilder) updates]) =>
+      (new DashboardFieldBuilder()..update(updates)).build();
+
+  _$DashboardField._({this.field, this.period}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(field, 'DashboardField', 'field');
+    BuiltValueNullFieldError.checkNotNull(period, 'DashboardField', 'period');
+  }
+
+  @override
+  DashboardField rebuild(void Function(DashboardFieldBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DashboardFieldBuilder toBuilder() =>
+      new DashboardFieldBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DashboardField &&
+        field == other.field &&
+        period == other.period;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, field.hashCode), period.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('DashboardField')
+          ..add('field', field)
+          ..add('period', period))
+        .toString();
+  }
+}
+
+class DashboardFieldBuilder
+    implements Builder<DashboardField, DashboardFieldBuilder> {
+  _$DashboardField _$v;
+
+  String _field;
+  String get field => _$this._field;
+  set field(String field) => _$this._field = field;
+
+  String _period;
+  String get period => _$this._period;
+  set period(String period) => _$this._period = period;
+
+  DashboardFieldBuilder();
+
+  DashboardFieldBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _field = $v.field;
+      _period = $v.period;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DashboardField other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$DashboardField;
+  }
+
+  @override
+  void update(void Function(DashboardFieldBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$DashboardField build() {
+    final _$result = _$v ??
+        new _$DashboardField._(
+            field: BuiltValueNullFieldError.checkNotNull(
+                field, 'DashboardField', 'field'),
+            period: BuiltValueNullFieldError.checkNotNull(
+                period, 'DashboardField', 'period'));
     replace(_$result);
     return _$result;
   }
