@@ -49,7 +49,7 @@ enum DashboardSections {
   expenses,
 }
 
-class DashboardPanels extends StatefulWidget {
+class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
     Key key,
     @required this.viewModel,
@@ -59,24 +59,18 @@ class DashboardPanels extends StatefulWidget {
   final DashboardVM viewModel;
   final ScrollController scrollController;
 
-  @override
-  State<DashboardPanels> createState() => _DashboardPanelsState();
-}
-
-class _DashboardPanelsState extends State<DashboardPanels> {
   void _showDateOptions(BuildContext context) {
     showDialog<DashboardDateRangePicker>(
         context: context,
         builder: (BuildContext context) {
           return DashboardDateRangePicker(
-              state: widget.viewModel.dashboardUIState,
-              onSettingsChanged: widget.viewModel.onSettingsChanged);
+              state: viewModel.dashboardUIState,
+              onSettingsChanged: viewModel.onSettingsChanged);
         });
   }
 
   Widget _header(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final state = widget.viewModel.state;
+    final state = viewModel.state;
     final company = state.company;
     final clientMap = state.clientState.map;
     final groupMap = state.groupState.map;
@@ -114,8 +108,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
               ),
             ],
             onChanged: (value) {
-              widget.viewModel.onGroupByChanged(value);
-              setState(() {});
+              viewModel.onGroupByChanged(value);
             },
             value: settings.groupBy,
           ),
@@ -137,8 +130,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
               ),
             ],
             onChanged: (value) {
-              widget.viewModel.onTaxesChanged(value);
-              setState(() {});
+              viewModel.onTaxesChanged(value);
             },
             value: settings.includeTaxes,
           ),
@@ -179,7 +171,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
             });
           } else {
             settings.dateRange = dateRange;
-            widget.viewModel.onSettingsChanged(settings);
+            viewModel.onSettingsChanged(settings);
           }
         },
       );
@@ -194,13 +186,12 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                   .map((currencyId) => DropdownMenuItem<String>(
                         child: Text(currencyId == kCurrencyAll
                             ? localization.all
-                            : widget.viewModel.currencyMap[currencyId]?.code),
+                            : viewModel.currencyMap[currencyId]?.code),
                         value: currencyId,
                       ))
                   .toList(),
               onChanged: (currencyId) {
-                widget.viewModel.onCurrencyChanged(currencyId);
-                setState(() {});
+                viewModel.onCurrencyChanged(currencyId);
               },
               value: settings.currencyId,
             ),
@@ -209,46 +200,6 @@ class _DashboardPanelsState extends State<DashboardPanels> {
       }
 
       void _showSettings() {
-        final List<DropdownMenuItem<String>> items = [];
-        final fieldMap = {
-          EntityType.invoice: [
-            DashboardUISettings.FIELD_ACTIVE_INVOICES,
-            DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
-          ],
-          EntityType.payment: [
-            DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
-            DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
-          ],
-          EntityType.quote: [
-            DashboardUISettings.FIELD_ACTIVE_QUOTES,
-            DashboardUISettings.FIELD_APPROVED_QUOTES,
-            DashboardUISettings.FIELD_UNAPPROVED_QUOTES,
-          ],
-          EntityType.task: [
-            DashboardUISettings.FIELD_LOGGED_TASKS,
-            DashboardUISettings.FIELD_INVOICED_TASKS,
-            DashboardUISettings.FIELD_PAID_TASKS,
-          ],
-          EntityType.expense: [
-            DashboardUISettings.FIELD_LOGGED_EXPENSES,
-            DashboardUISettings.FIELD_PENDING_EXPENSES,
-            DashboardUISettings.FIELD_INVOICED_EXPENSES,
-            DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES,
-          ],
-        };
-
-        fieldMap.forEach((entityType, fields) {
-          fields.forEach((field) {
-            if (company.isModuleEnabled(entityType) &&
-                !settings.totalFields.contains(field)) {
-              items.add(DropdownMenuItem<String>(
-                child: Text(localization.lookup(field)),
-                value: field,
-              ));
-            }
-          });
-        });
-
         showDialog<AlertDialog>(
             context: context,
             builder: (BuildContext context) {
@@ -262,98 +213,9 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                     onPressed: () => Navigator.of(context).pop(),
                   )
                 ],
-                content: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (!isWide) ...[
-                        Row(
-                          children: [
-                            Text(localization.groupBy),
-                            Spacer(),
-                            groupBy,
-                          ],
-                        ),
-                        if (hasMultipleCurrencies)
-                          Row(
-                            children: [
-                              Text(localization.currency),
-                              Spacer(),
-                              currencySettings,
-                            ],
-                          ),
-                        if (company.hasTaxes)
-                          Row(
-                            children: [
-                              Text(localization.taxes),
-                              Spacer(),
-                              taxSettings,
-                            ],
-                          ),
-                        SizedBox(height: 10),
-                      ],
-                      for (var field in settings.totalFields)
-                        ListTile(
-                          title: Text(localization.lookup(field)),
-                          trailing: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              store.dispatch(UpdateDashboardSettings(
-                                  totalFields: settings.totalFields
-                                      .rebuild((b) => b..remove(field))));
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          onChanged: (value) {
-                            store.dispatch(UpdateDashboardSettings(
-                                totalFields: settings.totalFields
-                                    .rebuild((b) => b..add(value))));
-                            setState(() {});
-                          },
-                          hint: Text(localization.addField),
-                          items: items,
-                        ),
-                      ),
-                      CheckboxListTile(
-                        value: settings.showPreviousPeriod,
-                        onChanged: (value) {
-                          store.dispatch(UpdateDashboardSettings(
-                              showPreviousPeriod: value));
-                          setState(() {});
-                        },
-                        title: Text(localization.previousPeriod),
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                      CheckboxListTile(
-                        value: settings.showTotal,
-                        onChanged: (value) {
-                          store.dispatch(
-                              UpdateDashboardSettings(showTotal: value));
-                          setState(() {});
-                        },
-                        title: Text(localization.total),
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                      AppDropdownButton<int>(
-                          labelText: localization.fieldsPerRow,
-                          value: settings.numberFieldsPerRow,
-                          onChanged: (dynamic value) {
-                            store.dispatch(UpdateDashboardSettings(
-                                numberFieldsPerRow: value));
-                            setState(() {});
-                          },
-                          items: List<int>.generate(8, (i) => i + 1)
-                              .map((value) => DropdownMenuItem<int>(
-                                    child: Text('$value'),
-                                    value: value,
-                                  ))
-                              .toList())
-                    ],
-                  ),
+                content: _DashboardSettings(
+                  isWide: isWide,
+                  viewModel: viewModel,
                 ),
               );
             });
@@ -369,12 +231,12 @@ class _DashboardPanelsState extends State<DashboardPanels> {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.navigate_before),
-                onPressed: () => widget.viewModel.onOffsetChanged(1),
+                onPressed: () => viewModel.onOffsetChanged(1),
                 visualDensity: VisualDensity.compact,
               ),
               IconButton(
                 icon: Icon(Icons.navigate_next),
-                onPressed: () => widget.viewModel.onOffsetChanged(-1),
+                onPressed: () => viewModel.onOffsetChanged(-1),
                 visualDensity: VisualDensity.compact,
               ),
               SizedBox(width: 4),
@@ -397,7 +259,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                 IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.view_sidebar),
-                    onPressed: () => widget.viewModel.onShowSidebar()),
+                    onPressed: () => viewModel.onShowSidebar()),
               ]
             ],
           ),
@@ -410,8 +272,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
     final isLoaded = state.isLoaded || state.paymentState.list.isNotEmpty;
     final currentData = memoizedChartPayments(
         state.staticState.currencyMap,
@@ -433,7 +295,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     }
 
     return _DashboardPanel(
-      viewModel: widget.viewModel,
+      viewModel: viewModel,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -447,8 +309,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
     final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
     final currentData = memoizedChartInvoices(
       state.staticState.currencyMap,
@@ -470,7 +332,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     }
 
     return _DashboardPanel(
-      viewModel: widget.viewModel,
+      viewModel: viewModel,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -484,8 +346,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
     final isLoaded = state.isLoaded || state.quoteState.list.isNotEmpty;
     final currentData = memoizedChartQuotes(
       state.staticState.currencyMap,
@@ -507,7 +369,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     }
 
     return _DashboardPanel(
-      viewModel: widget.viewModel,
+      viewModel: viewModel,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -521,8 +383,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
     final isLoaded = state.isLoaded || state.taskState.list.isNotEmpty;
     final currentData = memoizedChartTasks(
       state.staticState.currencyMap,
@@ -550,7 +412,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     }
 
     return _DashboardPanel(
-      viewModel: widget.viewModel,
+      viewModel: viewModel,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -564,8 +426,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
     final isLoaded = state.isLoaded || state.expenseState.list.isNotEmpty;
     final currentData = memoizedChartExpenses(
         state.staticState.currencyMap,
@@ -585,7 +447,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
     }
 
     return _DashboardPanel(
-      viewModel: widget.viewModel,
+      viewModel: viewModel,
       currentData: currentData,
       previousData: previousData,
       isLoaded: isLoaded,
@@ -596,7 +458,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
   }
 
   Widget _runningTasks(BuildContext context) {
-    final state = widget.viewModel.state;
+    final state = viewModel.state;
 
     final runningTasks =
         memoizedRunningTasks(state.taskState.map, state.user.id);
@@ -655,7 +517,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
 
   @override
   Widget build(BuildContext context) {
-    final state = widget.viewModel.state;
+    final state = viewModel.state;
     final company = state.company;
     final localization = AppLocalization.of(context);
     final runningTasks = _runningTasks(context);
@@ -684,7 +546,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
         Padding(
           padding: const EdgeInsets.only(top: kTopBottomBarHeight),
           child: ScrollableListViewBuilder(
-            scrollController: widget.scrollController,
+            scrollController: scrollController,
             itemCount: sections.length + 1,
             itemBuilder: (context, index) {
               if (index == sections.length) {
@@ -747,8 +609,8 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                     ],
                   );
                 case DashboardSections.overview:
-                  final settings = widget.viewModel.dashboardUIState.settings;
-                  final state = widget.viewModel.state;
+                  final settings = viewModel.dashboardUIState.settings;
+                  final state = viewModel.state;
                   final isLoaded =
                       state.isLoaded || state.invoiceState.list.isNotEmpty;
 
@@ -803,7 +665,7 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                         ),
                       ),
                       _OverviewPanel(
-                          viewModel: widget.viewModel,
+                          viewModel: viewModel,
                           title: localization.overview,
                           invoiceData: invoiceData,
                           paymentData: paymentData,
@@ -815,27 +677,27 @@ class _DashboardPanelsState extends State<DashboardPanels> {
                 case DashboardSections.invoices:
                   return _invoiceChart(
                       context: context,
-                      onDateSelected: (entityIds) => widget.viewModel
+                      onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.invoice, entityIds));
                 case DashboardSections.payments:
                   return _paymentChart(
                       context: context,
-                      onDateSelected: (entityIds) => widget.viewModel
+                      onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.payment, entityIds));
                 case DashboardSections.quotes:
                   return _quoteChart(
                       context: context,
-                      onDateSelected: (entityIds) => widget.viewModel
+                      onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.quote, entityIds));
                 case DashboardSections.tasks:
                   return _taskChart(
                       context: context,
-                      onDateSelected: (entityIds) => widget.viewModel
+                      onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.task, entityIds));
                 case DashboardSections.expenses:
                   return _expenseChart(
                       context: context,
-                      onDateSelected: (entityIds) => widget.viewModel
+                      onDateSelected: (entityIds) => viewModel
                           .onSelectionChanged(EntityType.expense, entityIds));
                 case DashboardSections.runningTasks:
                   return runningTasks;
@@ -881,8 +743,9 @@ class __DashboardPanelState extends State<_DashboardPanel> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
 
     if (!widget.isLoaded) {
       return LoadingIndicator(useCard: true);
@@ -989,8 +852,9 @@ class __OverviewPanelState extends State<_OverviewPanel> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final settings = widget.viewModel.dashboardUIState.settings;
-    final state = widget.viewModel.state;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.dashboardUIState.settings;
+    final state = viewModel.state;
 
     if (!widget.isLoaded) {
       return LoadingIndicator(useCard: true);
@@ -999,9 +863,9 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     // Cache chart to retain user's selection
     // https://github.com/google/charts/issues/286
     if (chart != null &&
-        invoiceData == widget.invoiceData &&
-        paymentData == widget.paymentData &&
-        expenseData == widget.expenseData) {
+        widget.invoiceData == invoiceData &&
+        widget.paymentData == paymentData &&
+        widget.expenseData == expenseData) {
       return chart;
     }
 
@@ -1012,13 +876,13 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     widget.invoiceData.forEach((dataGroup) {
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
-      final index = widget.invoiceData.indexOf(dataGroup);
+      final index = invoiceData.indexOf(dataGroup);
       final invoiceSeries = dataGroup.rawSeries;
 
       if (state.company.isModuleEnabled(EntityType.expense)) {
         final List<ChartMoneyData> expenses = [];
-        final expenseSeries = widget.expenseData[index].rawSeries;
-        dataGroup.previousTotal = widget.expenseData[index].total;
+        final expenseSeries = expenseData[index].rawSeries;
+        dataGroup.previousTotal = expenseData[index].total;
 
         for (int i = 0;
             i < min(invoiceSeries.length, expenseSeries.length);
@@ -1040,8 +904,8 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       }
 
       final List<ChartMoneyData> payments = [];
-      final paymentSeries = widget.paymentData[index].rawSeries;
-      dataGroup.previousTotal = widget.paymentData[index].total;
+      final paymentSeries = paymentData[index].rawSeries;
+      dataGroup.previousTotal = paymentData[index].total;
 
       for (int i = 0;
           i < min(invoiceSeries.length, paymentSeries.length);
@@ -1074,7 +938,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     });
 
     chart = DashboardChart(
-      data: widget.invoiceData,
+      data: invoiceData,
       title: widget.title,
       onDateSelected: widget.onDateSelected,
       currencyId: (settings.currencyId ?? '').isNotEmpty
@@ -1084,5 +948,244 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     );
 
     return chart;
+  }
+}
+
+class _DashboardSettings extends StatefulWidget {
+  const _DashboardSettings({
+    Key key,
+    @required this.viewModel,
+    @required this.isWide,
+  }) : super(key: key);
+
+  final bool isWide;
+  final DashboardVM viewModel;
+
+  @override
+  State<_DashboardSettings> createState() => __DashboardSettingsState();
+}
+
+class __DashboardSettingsState extends State<_DashboardSettings> {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final List<DropdownMenuItem<String>> items = [];
+    final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
+    final state = store.state;
+    final clientMap = state.clientState.map;
+    final groupMap = state.groupState.map;
+    final company = state.company;
+    final settings = state.dashboardUIState.settings;
+
+    final hasMultipleCurrencies =
+        memoizedHasMultipleCurrencies(company, clientMap, groupMap);
+
+    final groupBy = Padding(
+      padding: const EdgeInsets.only(left: 16),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          items: [
+            DropdownMenuItem(
+              child: Text(localization.day),
+              value: kReportGroupDay,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.month),
+              value: kReportGroupMonth,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.year),
+              value: kReportGroupYear,
+            ),
+          ],
+          onChanged: (value) {
+            viewModel.onGroupByChanged(value);
+            setState(() {});
+          },
+          value: settings.groupBy,
+        ),
+      ),
+    );
+
+    final taxSettings = Padding(
+      padding: const EdgeInsets.only(left: 16),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<bool>(
+          items: [
+            DropdownMenuItem(
+              child: Text(localization.gross),
+              value: true,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.net),
+              value: false,
+            ),
+          ],
+          onChanged: (value) {
+            viewModel.onTaxesChanged(value);
+            setState(() {});
+          },
+          value: settings.includeTaxes,
+        ),
+      ),
+    );
+
+    Widget currencySettings = SizedBox();
+    if (hasMultipleCurrencies) {
+      currencySettings = Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                .map((currencyId) => DropdownMenuItem<String>(
+                      child: Text(currencyId == kCurrencyAll
+                          ? localization.all
+                          : viewModel.currencyMap[currencyId]?.code),
+                      value: currencyId,
+                    ))
+                .toList(),
+            onChanged: (currencyId) {
+              viewModel.onCurrencyChanged(currencyId);
+              setState(() {});
+            },
+            value: settings.currencyId,
+          ),
+        ),
+      );
+    }
+
+    final fieldMap = {
+      EntityType.invoice: [
+        DashboardUISettings.FIELD_ACTIVE_INVOICES,
+        DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+      ],
+      EntityType.payment: [
+        DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+        DashboardUISettings.FIELD_REFUNDED_PAYMENTS,
+      ],
+      EntityType.quote: [
+        DashboardUISettings.FIELD_ACTIVE_QUOTES,
+        DashboardUISettings.FIELD_APPROVED_QUOTES,
+        DashboardUISettings.FIELD_UNAPPROVED_QUOTES,
+      ],
+      EntityType.task: [
+        DashboardUISettings.FIELD_LOGGED_TASKS,
+        DashboardUISettings.FIELD_INVOICED_TASKS,
+        DashboardUISettings.FIELD_PAID_TASKS,
+      ],
+      EntityType.expense: [
+        DashboardUISettings.FIELD_LOGGED_EXPENSES,
+        DashboardUISettings.FIELD_PENDING_EXPENSES,
+        DashboardUISettings.FIELD_INVOICED_EXPENSES,
+        DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES,
+      ],
+    };
+
+    fieldMap.forEach((entityType, fields) {
+      fields.forEach((field) {
+        if (company.isModuleEnabled(entityType) &&
+            !settings.totalFields.contains(field)) {
+          items.add(DropdownMenuItem<String>(
+            child: Text(localization.lookup(field)),
+            value: field,
+          ));
+        }
+      });
+    });
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!widget.isWide) ...[
+            Row(
+              children: [
+                Text(localization.groupBy),
+                Spacer(),
+                groupBy,
+              ],
+            ),
+            if (hasMultipleCurrencies)
+              Row(
+                children: [
+                  Text(localization.currency),
+                  Spacer(),
+                  currencySettings,
+                ],
+              ),
+            if (company.hasTaxes)
+              Row(
+                children: [
+                  Text(localization.taxes),
+                  Spacer(),
+                  taxSettings,
+                ],
+              ),
+            SizedBox(height: 10),
+          ],
+          for (var field in settings.totalFields)
+            ListTile(
+              title: Text(localization.lookup(field)),
+              trailing: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  store.dispatch(UpdateDashboardSettings(
+                      totalFields: settings.totalFields
+                          .rebuild((b) => b..remove(field))));
+                  setState(() {});
+                },
+              ),
+            ),
+          DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              isExpanded: true,
+              onChanged: (value) {
+                store.dispatch(UpdateDashboardSettings(
+                    totalFields:
+                        settings.totalFields.rebuild((b) => b..add(value))));
+                setState(() {});
+              },
+              hint: Text(localization.addField),
+              items: items,
+            ),
+          ),
+          if (settings.enableComparison)
+            CheckboxListTile(
+              value: settings.showPreviousPeriod,
+              onChanged: (value) {
+                store.dispatch(
+                    UpdateDashboardSettings(showPreviousPeriod: value));
+                setState(() {});
+              },
+              title: Text(localization.previousPeriod),
+              controlAffinity: ListTileControlAffinity.leading,
+            ),
+          CheckboxListTile(
+            value: settings.showTotal,
+            onChanged: (value) {
+              store.dispatch(UpdateDashboardSettings(showTotal: value));
+              setState(() {});
+            },
+            title: Text(localization.total),
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          AppDropdownButton<int>(
+              labelText: localization.fieldsPerRow,
+              value: settings.numberFieldsPerRow,
+              onChanged: (dynamic value) {
+                store.dispatch(
+                    UpdateDashboardSettings(numberFieldsPerRow: value));
+                setState(() {});
+              },
+              items: List<int>.generate(8, (i) => i + 1)
+                  .map((value) => DropdownMenuItem<int>(
+                        child: Text('$value'),
+                        value: value,
+                      ))
+                  .toList())
+        ],
+      ),
+    );
   }
 }
