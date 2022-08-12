@@ -1092,16 +1092,24 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             Expanded(
               child: ReorderableListView(
                 onReorder: (oldIndex, newIndex) {
+                  final fields = settings.totalFields;
+
                   // https://stackoverflow.com/a/54164333/497368
                   // These two lines are workarounds for ReorderableListView problems
-                  if (newIndex > settings.totalFields.length) {
-                    newIndex = settings.totalFields.length;
+                  if (newIndex > fields.length) {
+                    newIndex = fields.length;
                   }
                   if (oldIndex < newIndex) {
                     newIndex--;
                   }
 
-                  //
+                  final field = fields[oldIndex];
+
+                  store.dispatch(UpdateDashboardSettings(
+                      totalFields: fields.rebuild((b) => b
+                        ..removeAt(oldIndex)
+                        ..insert(newIndex, field))));
+                  setState(() {});
                 },
                 children: [
                   for (var dashboardField in settings.totalFields)
@@ -1121,35 +1129,6 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                         },
                       ),
                     ),
-                  /*
-                    Padding(
-                      key: ValueKey(
-                          '__${dashboardField.field}_${dashboardField.period}_'),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 3, horizontal: 10),
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              store.dispatch(UpdateDashboardSettings(
-                                  totalFields: settings.totalFields.rebuild(
-                                      (b) => b..remove(dashboardField))));
-                              setState(() {});
-                            },
-                          ),
-                          SizedBox(width: 20),
-                          Expanded(
-                            child: Text(
-                              localization.lookup(dashboardField.field),
-                              textAlign: TextAlign.left,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    */
                 ],
               ),
             ),
