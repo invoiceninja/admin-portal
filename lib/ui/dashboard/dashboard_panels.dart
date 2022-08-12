@@ -1104,7 +1104,6 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   }
 
                   final field = fields[oldIndex];
-
                   store.dispatch(UpdateDashboardSettings(
                       totalFields: fields.rebuild((b) => b
                         ..removeAt(oldIndex)
