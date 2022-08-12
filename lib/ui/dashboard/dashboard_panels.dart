@@ -204,20 +204,9 @@ class DashboardPanels extends StatelessWidget {
         showDialog<AlertDialog>(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(localization.settings),
-                key: ValueKey(
-                    '__${settings.includeTaxes}_${settings.currencyId}__'),
-                actions: [
-                  TextButton(
-                    child: Text(localization.close.toUpperCase()),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-                ],
-                content: _DashboardSettings(
-                  isWide: isWide,
-                  viewModel: viewModel,
-                ),
+              return _DashboardSettings(
+                isWide: isWide,
+                viewModel: viewModel,
               );
             });
       }
@@ -1060,74 +1049,133 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
       );
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (!widget.isWide) ...[
-            Row(
-              children: [
-                Text(localization.groupBy),
-                Spacer(),
-                groupBy,
-              ],
-            ),
-            if (hasMultipleCurrencies)
+    return AlertDialog(
+      title: Text(localization.settings),
+      actions: [
+        TextButton(
+          child: Text(localization.close.toUpperCase()),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+      ],
+      content: Container(
+        width: 300,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (!widget.isWide) ...[
               Row(
                 children: [
-                  Text(localization.currency),
+                  Text(localization.groupBy),
                   Spacer(),
-                  currencySettings,
+                  groupBy,
                 ],
               ),
-            if (company.hasTaxes)
-              Row(
-                children: [
-                  Text(localization.taxes),
-                  Spacer(),
-                  taxSettings,
-                ],
-              ),
-            SizedBox(height: 10),
-          ],
-          for (var dashboardField in settings.totalFields)
-            ListTile(
-              title: Text(localization.lookup(dashboardField.field)),
-              trailing: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  store.dispatch(UpdateDashboardSettings(
-                      totalFields: settings.totalFields
-                          .rebuild((b) => b..remove(dashboardField))));
-                  setState(() {});
+              if (hasMultipleCurrencies)
+                Row(
+                  children: [
+                    Text(localization.currency),
+                    Spacer(),
+                    currencySettings,
+                  ],
+                ),
+              if (company.hasTaxes)
+                Row(
+                  children: [
+                    Text(localization.taxes),
+                    Spacer(),
+                    taxSettings,
+                  ],
+                ),
+              SizedBox(height: 10),
+            ],
+            Expanded(
+              child: ReorderableListView(
+                onReorder: (oldIndex, newIndex) {
+                  // https://stackoverflow.com/a/54164333/497368
+                  // These two lines are workarounds for ReorderableListView problems
+                  if (newIndex > settings.totalFields.length) {
+                    newIndex = settings.totalFields.length;
+                  }
+                  if (oldIndex < newIndex) {
+                    newIndex--;
+                  }
+
+                  //
                 },
+                children: [
+                  for (var dashboardField in settings.totalFields)
+                    Padding(
+                      key: ValueKey(
+                          '__${dashboardField.field}_${dashboardField.period}_'),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 3, horizontal: 10),
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              store.dispatch(UpdateDashboardSettings(
+                                  totalFields: settings.totalFields.rebuild(
+                                      (b) => b..remove(dashboardField))));
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: Text(
+                              'test',
+                              textAlign: TextAlign.left,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  /*
+                  ListTile(
+                    key: ValueKey(
+                        '__${dashboardField.field}_${dashboardField.period}_'),
+                    title: Text(localization.lookup(dashboardField.field)),
+                    trailing: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        store.dispatch(UpdateDashboardSettings(
+                            totalFields: settings.totalFields
+                                .rebuild((b) => b..remove(dashboardField))));
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  */
+                ],
               ),
             ),
-          AppButton(
-            label: localization.addField,
-            onPressed: () async {
-              await showDialog<void>(
-                  context: context, builder: (context) => _DashboardField());
-              setState(() {});
-            },
-          ),
-          SizedBox(height: 16),
-          AppDropdownButton<int>(
-              labelText: localization.fieldsPerRow,
-              value: settings.numberFieldsPerRow,
-              onChanged: (dynamic value) {
-                store.dispatch(
-                    UpdateDashboardSettings(numberFieldsPerRow: value));
+            AppButton(
+              label: localization.addField,
+              onPressed: () async {
+                await showDialog<void>(
+                    context: context, builder: (context) => _DashboardField());
                 setState(() {});
               },
-              items: List<int>.generate(8, (i) => i + 1)
-                  .map((value) => DropdownMenuItem<int>(
-                        child: Text('$value'),
-                        value: value,
-                      ))
-                  .toList())
-        ],
+            ),
+            SizedBox(height: 16),
+            AppDropdownButton<int>(
+                labelText: localization.fieldsPerRow,
+                value: settings.numberFieldsPerRow,
+                onChanged: (dynamic value) {
+                  store.dispatch(
+                      UpdateDashboardSettings(numberFieldsPerRow: value));
+                  setState(() {});
+                },
+                items: List<int>.generate(8, (i) => i + 1)
+                    .map((value) => DropdownMenuItem<int>(
+                          child: Text('$value'),
+                          value: value,
+                        ))
+                    .toList())
+          ],
+        ),
       ),
     );
   }
