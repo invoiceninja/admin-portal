@@ -560,7 +560,9 @@ class DashboardPanels extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
-                          crossAxisCount: settings.numberFieldsPerRow,
+                          crossAxisCount: isDesktop(context)
+                              ? settings.numberFieldsPerRowDesktop
+                              : settings.numberFieldsPerRowMobile,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: settings.totalFields
@@ -1109,10 +1111,17 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             SizedBox(height: 16),
             AppDropdownButton<int>(
                 labelText: localization.fieldsPerRow,
-                value: settings.numberFieldsPerRow,
+                value: isDesktop(context)
+                    ? settings.numberFieldsPerRowDesktop
+                    : settings.numberFieldsPerRowMobile,
                 onChanged: (dynamic value) {
-                  store.dispatch(
-                      UpdateDashboardSettings(numberFieldsPerRow: value));
+                  if (isDesktop(context)) {
+                    store.dispatch(UpdateDashboardSettings(
+                        numberFieldsPerRowDesktop: value));
+                  } else {
+                    store.dispatch(UpdateDashboardSettings(
+                        numberFieldsPerRowMobile: value));
+                  }
                   setState(() {});
                 },
                 items: List<int>.generate(8, (i) => i + 1)
@@ -1236,12 +1245,10 @@ class _DashboardFieldState extends State<_DashboardField> {
               return;
             }
 
-            print('## CHECK FIELD $_field $_period');
             if (settings.totalFields
                 .where(
                     (field) => field.field == _field && field.period == _period)
                 .isNotEmpty) {
-              print('## HAS FIELD');
               Navigator.of(context).pop();
               return;
             }
