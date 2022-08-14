@@ -1099,7 +1099,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
               ),
             ),
             AppButton(
-              label: localization.addField,
+              label: localization.addField.toUpperCase(),
               onPressed: () async {
                 await showDialog<void>(
                     context: context, builder: (context) => _DashboardField());
@@ -1235,6 +1235,17 @@ class _DashboardFieldState extends State<_DashboardField> {
             if (_field.isEmpty || _period.isEmpty) {
               return;
             }
+
+            print('## CHECK FIELD $_field $_period');
+            if (settings.totalFields
+                .where(
+                    (field) => field.field == _field && field.period == _period)
+                .isNotEmpty) {
+              print('## HAS FIELD');
+              Navigator.of(context).pop();
+              return;
+            }
+
             store.dispatch(UpdateDashboardSettings(
                 totalFields: settings.totalFields.rebuild(
               (b) => b
@@ -1245,6 +1256,7 @@ class _DashboardFieldState extends State<_DashboardField> {
                   ),
                 ),
             )));
+
             Navigator.of(context).pop();
           },
           child: Text(localization.add.toUpperCase()),

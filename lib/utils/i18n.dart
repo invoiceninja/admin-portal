@@ -24,7 +24,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'total_completed_payments': 'Completed Payments',
       'total_refunded_payments': 'Refunded Payments',
       'total_active_quotes': 'Active Quotes',
-      'total_approved_quotes': 'Unapproved Quotes',
+      'total_approved_quotes': 'Approved Quotes',
       'total_unapproved_quotes': 'Unapproved Quotes',
       'total_logged_tasks': 'Logged Tasks',
       'total_invoiced_tasks': 'Invoiced Tasks',
@@ -85362,8 +85362,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['fields_per_row'];
 
   String get field =>
-      _localizedValues[localeCode]['field'] ??
-      _localizedValues['en']['field'];
+      _localizedValues[localeCode]['field'] ?? _localizedValues['en']['field'];
 
   String get period =>
       _localizedValues[localeCode]['period'] ??
