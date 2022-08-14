@@ -258,195 +258,6 @@ class DashboardPanels extends StatelessWidget {
     });
   }
 
-  Widget _paymentChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.paymentState.list.isNotEmpty;
-    final currentData = memoizedChartPayments(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.clientState.map,
-        state.paymentState.map);
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartPayments(
-          state.staticState.currencyMap,
-          state.company,
-          settings.rebuild((b) => b..offset += 1),
-          state.invoiceState.map,
-          state.clientState.map,
-          state.paymentState.map);
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).payments,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
-  Widget _invoiceChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
-    final currentData = memoizedChartInvoices(
-      state.staticState.currencyMap,
-      state.company,
-      settings,
-      state.invoiceState.map,
-      state.clientState.map,
-    );
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset += 1),
-        state.invoiceState.map,
-        state.clientState.map,
-      );
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).invoice,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
-  Widget _quoteChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.quoteState.list.isNotEmpty;
-    final currentData = memoizedChartQuotes(
-      state.staticState.currencyMap,
-      state.company,
-      settings,
-      state.quoteState.map,
-      state.clientState.map,
-    );
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartQuotes(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset += 1),
-        state.quoteState.map,
-        state.clientState.map,
-      );
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).quotes,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
-  Widget _taskChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.taskState.list.isNotEmpty;
-    final currentData = memoizedChartTasks(
-      state.staticState.currencyMap,
-      state.company,
-      settings,
-      state.taskState.map,
-      state.invoiceState.map,
-      state.projectState.map,
-      state.clientState.map,
-      state.groupState.map,
-    );
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartTasks(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset += 1),
-        state.taskState.map,
-        state.invoiceState.map,
-        state.projectState.map,
-        state.clientState.map,
-        state.groupState.map,
-      );
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).tasks,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
-  Widget _expenseChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState.settings;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.expenseState.list.isNotEmpty;
-    final currentData = memoizedChartExpenses(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.expenseState.map);
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedPreviousChartExpenses(
-          state.staticState.currencyMap,
-          state.company,
-          settings.rebuild((b) => b..offset += 1),
-          state.invoiceState.map,
-          state.expenseState.map);
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).expenses,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
   Widget _runningTasks(BuildContext context) {
     final state = viewModel.state;
 
@@ -510,11 +321,96 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final company = state.company;
     final localization = AppLocalization.of(context);
+    final settings = viewModel.dashboardUIState.settings;
     final runningTasks = _runningTasks(context);
 
     if (!state.staticState.isLoaded) {
       return LoadingIndicator();
     }
+
+    final currentInvoiceData = memoizedChartInvoices(
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.invoiceState.map,
+      state.clientState.map,
+    );
+
+    final previousInvoiceData = memoizedPreviousChartInvoices(
+      state.staticState.currencyMap,
+      state.company,
+      settings.rebuild((b) => b..offset += 1),
+      state.invoiceState.map,
+      state.clientState.map,
+    );
+
+    final currentPaymentData = memoizedChartPayments(
+        state.staticState.currencyMap,
+        state.company,
+        settings,
+        state.invoiceState.map,
+        state.clientState.map,
+        state.paymentState.map);
+
+    final previousPaymentData = memoizedPreviousChartPayments(
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.invoiceState.map,
+        state.clientState.map,
+        state.paymentState.map);
+
+    final currentQuoteData = memoizedChartQuotes(
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.quoteState.map,
+      state.clientState.map,
+    );
+
+    final previousQuoteData = memoizedPreviousChartQuotes(
+      state.staticState.currencyMap,
+      state.company,
+      settings.rebuild((b) => b..offset += 1),
+      state.quoteState.map,
+      state.clientState.map,
+    );
+
+    final currentTaskData = memoizedChartTasks(
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.taskState.map,
+      state.invoiceState.map,
+      state.projectState.map,
+      state.clientState.map,
+      state.groupState.map,
+    );
+
+    final previousTaskData = memoizedPreviousChartTasks(
+      state.staticState.currencyMap,
+      state.company,
+      settings.rebuild((b) => b..offset += 1),
+      state.taskState.map,
+      state.invoiceState.map,
+      state.projectState.map,
+      state.clientState.map,
+      state.groupState.map,
+    );
+
+    final currentExpenseData = memoizedChartExpenses(
+        state.staticState.currencyMap,
+        state.company,
+        settings,
+        state.invoiceState.map,
+        state.expenseState.map);
+
+    final previousExpenseData = memoizedPreviousChartExpenses(
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.invoiceState.map,
+        state.expenseState.map);
 
     final sections = [
       DashboardSections.messages,
@@ -670,30 +566,60 @@ class DashboardPanels extends StatelessWidget {
                     ],
                   );
                 case DashboardSections.invoices:
-                  return _invoiceChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.invoice, entityIds));
+                  return _DashboardPanel(
+                      viewModel: viewModel,
+                      currentData: currentInvoiceData,
+                      previousData: previousInvoiceData,
+                      isLoaded:
+                          state.isLoaded || state.invoiceState.list.isNotEmpty,
+                      title: AppLocalization.of(context).invoices,
+                      onDateSelected: (index, date) =>
+                          viewModel.onSelectionChanged(EntityType.invoice,
+                              currentInvoiceData[index].entityMap[date]));
                 case DashboardSections.payments:
-                  return _paymentChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.payment, entityIds));
+                  return _DashboardPanel(
+                      viewModel: viewModel,
+                      currentData: currentPaymentData,
+                      previousData: previousPaymentData,
+                      isLoaded:
+                          state.isLoaded || state.paymentState.list.isNotEmpty,
+                      title: AppLocalization.of(context).payments,
+                      onDateSelected: (index, date) =>
+                          viewModel.onSelectionChanged(EntityType.payment,
+                              currentPaymentData[index].entityMap[date]));
                 case DashboardSections.quotes:
-                  return _quoteChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.quote, entityIds));
+                  return _DashboardPanel(
+                      viewModel: viewModel,
+                      currentData: currentQuoteData,
+                      previousData: previousQuoteData,
+                      isLoaded:
+                          state.isLoaded || state.quoteState.list.isNotEmpty,
+                      title: AppLocalization.of(context).quotes,
+                      onDateSelected: (index, date) =>
+                          viewModel.onSelectionChanged(EntityType.quote,
+                              currentQuoteData[index].entityMap[date]));
                 case DashboardSections.tasks:
-                  return _taskChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.task, entityIds));
+                  return _DashboardPanel(
+                      viewModel: viewModel,
+                      currentData: currentTaskData,
+                      previousData: previousTaskData,
+                      isLoaded:
+                          state.isLoaded || state.taskState.list.isNotEmpty,
+                      title: AppLocalization.of(context).tasks,
+                      onDateSelected: (index, date) =>
+                          viewModel.onSelectionChanged(EntityType.task,
+                              currentTaskData[index].entityMap[date]));
                 case DashboardSections.expenses:
-                  return _expenseChart(
-                      context: context,
-                      onDateSelected: (entityIds) => viewModel
-                          .onSelectionChanged(EntityType.expense, entityIds));
+                  return _DashboardPanel(
+                      viewModel: viewModel,
+                      currentData: currentExpenseData,
+                      previousData: previousExpenseData,
+                      isLoaded:
+                          state.isLoaded || state.expenseState.list.isNotEmpty,
+                      title: AppLocalization.of(context).expenses,
+                      onDateSelected: (index, date) =>
+                          viewModel.onSelectionChanged(EntityType.expense,
+                              currentTaskData[index].entityMap[date]));
                 case DashboardSections.runningTasks:
                   return runningTasks;
               }
