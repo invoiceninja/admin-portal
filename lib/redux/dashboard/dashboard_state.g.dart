@@ -130,11 +130,8 @@ class _$DashboardUISettingsSerializer
       'groupBy',
       serializers.serialize(object.groupBy,
           specifiedType: const FullType(String)),
-      'numberFieldsPerRowMobile',
-      serializers.serialize(object.numberFieldsPerRowMobile,
-          specifiedType: const FullType(int)),
-      'numberFieldsPerRowDesktop',
-      serializers.serialize(object.numberFieldsPerRowDesktop,
+      'numberFieldsPerRow',
+      serializers.serialize(object.numberFieldsPerRow,
           specifiedType: const FullType(int)),
       'dashboardFields',
       serializers.serialize(object.dashboardFields,
@@ -202,12 +199,8 @@ class _$DashboardUISettingsSerializer
           result.groupBy = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'numberFieldsPerRowMobile':
-          result.numberFieldsPerRowMobile = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'numberFieldsPerRowDesktop':
-          result.numberFieldsPerRowDesktop = serializers.deserialize(value,
+        case 'numberFieldsPerRow':
+          result.numberFieldsPerRow = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'dashboardFields':
@@ -447,9 +440,7 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final String groupBy;
   @override
-  final int numberFieldsPerRowMobile;
-  @override
-  final int numberFieldsPerRowDesktop;
+  final int numberFieldsPerRow;
   @override
   final BuiltList<DashboardField> dashboardFields;
 
@@ -469,8 +460,7 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.currencyId,
       this.includeTaxes,
       this.groupBy,
-      this.numberFieldsPerRowMobile,
-      this.numberFieldsPerRowDesktop,
+      this.numberFieldsPerRow,
       this.dashboardFields})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -495,10 +485,8 @@ class _$DashboardUISettings extends DashboardUISettings {
         includeTaxes, 'DashboardUISettings', 'includeTaxes');
     BuiltValueNullFieldError.checkNotNull(
         groupBy, 'DashboardUISettings', 'groupBy');
-    BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowMobile,
-        'DashboardUISettings', 'numberFieldsPerRowMobile');
-    BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowDesktop,
-        'DashboardUISettings', 'numberFieldsPerRowDesktop');
+    BuiltValueNullFieldError.checkNotNull(
+        numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow');
     BuiltValueNullFieldError.checkNotNull(
         dashboardFields, 'DashboardUISettings', 'dashboardFields');
   }
@@ -527,8 +515,7 @@ class _$DashboardUISettings extends DashboardUISettings {
         currencyId == other.currencyId &&
         includeTaxes == other.includeTaxes &&
         groupBy == other.groupBy &&
-        numberFieldsPerRowMobile == other.numberFieldsPerRowMobile &&
-        numberFieldsPerRowDesktop == other.numberFieldsPerRowDesktop &&
+        numberFieldsPerRow == other.numberFieldsPerRow &&
         dashboardFields == other.dashboardFields;
   }
 
@@ -546,23 +533,18 @@ class _$DashboardUISettings extends DashboardUISettings {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(0,
-                                                            dateRange.hashCode),
-                                                        customStartDate
-                                                            .hashCode),
-                                                    customEndDate.hashCode),
-                                                enableComparison.hashCode),
-                                            compareDateRange.hashCode),
-                                        compareCustomStartDate.hashCode),
-                                    compareCustomEndDate.hashCode),
-                                offset.hashCode),
-                            currencyId.hashCode),
-                        includeTaxes.hashCode),
-                    groupBy.hashCode),
-                numberFieldsPerRowMobile.hashCode),
-            numberFieldsPerRowDesktop.hashCode),
+                                                $jc($jc(0, dateRange.hashCode),
+                                                    customStartDate.hashCode),
+                                                customEndDate.hashCode),
+                                            enableComparison.hashCode),
+                                        compareDateRange.hashCode),
+                                    compareCustomStartDate.hashCode),
+                                compareCustomEndDate.hashCode),
+                            offset.hashCode),
+                        currencyId.hashCode),
+                    includeTaxes.hashCode),
+                groupBy.hashCode),
+            numberFieldsPerRow.hashCode),
         dashboardFields.hashCode));
   }
 
@@ -580,8 +562,7 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('currencyId', currencyId)
           ..add('includeTaxes', includeTaxes)
           ..add('groupBy', groupBy)
-          ..add('numberFieldsPerRowMobile', numberFieldsPerRowMobile)
-          ..add('numberFieldsPerRowDesktop', numberFieldsPerRowDesktop)
+          ..add('numberFieldsPerRow', numberFieldsPerRow)
           ..add('dashboardFields', dashboardFields))
         .toString();
   }
@@ -641,15 +622,10 @@ class DashboardUISettingsBuilder
   String get groupBy => _$this._groupBy;
   set groupBy(String groupBy) => _$this._groupBy = groupBy;
 
-  int _numberFieldsPerRowMobile;
-  int get numberFieldsPerRowMobile => _$this._numberFieldsPerRowMobile;
-  set numberFieldsPerRowMobile(int numberFieldsPerRowMobile) =>
-      _$this._numberFieldsPerRowMobile = numberFieldsPerRowMobile;
-
-  int _numberFieldsPerRowDesktop;
-  int get numberFieldsPerRowDesktop => _$this._numberFieldsPerRowDesktop;
-  set numberFieldsPerRowDesktop(int numberFieldsPerRowDesktop) =>
-      _$this._numberFieldsPerRowDesktop = numberFieldsPerRowDesktop;
+  int _numberFieldsPerRow;
+  int get numberFieldsPerRow => _$this._numberFieldsPerRow;
+  set numberFieldsPerRow(int numberFieldsPerRow) =>
+      _$this._numberFieldsPerRow = numberFieldsPerRow;
 
   ListBuilder<DashboardField> _dashboardFields;
   ListBuilder<DashboardField> get dashboardFields =>
@@ -675,8 +651,7 @@ class DashboardUISettingsBuilder
       _currencyId = $v.currencyId;
       _includeTaxes = $v.includeTaxes;
       _groupBy = $v.groupBy;
-      _numberFieldsPerRowMobile = $v.numberFieldsPerRowMobile;
-      _numberFieldsPerRowDesktop = $v.numberFieldsPerRowDesktop;
+      _numberFieldsPerRow = $v.numberFieldsPerRow;
       _dashboardFields = $v.dashboardFields.toBuilder();
       _$v = null;
     }
@@ -718,8 +693,7 @@ class DashboardUISettingsBuilder
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'DashboardUISettings', 'currencyId'),
               includeTaxes: BuiltValueNullFieldError.checkNotNull(includeTaxes, 'DashboardUISettings', 'includeTaxes'),
               groupBy: BuiltValueNullFieldError.checkNotNull(groupBy, 'DashboardUISettings', 'groupBy'),
-              numberFieldsPerRowMobile: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowMobile, 'DashboardUISettings', 'numberFieldsPerRowMobile'),
-              numberFieldsPerRowDesktop: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowDesktop, 'DashboardUISettings', 'numberFieldsPerRowDesktop'),
+              numberFieldsPerRow: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRow, 'DashboardUISettings', 'numberFieldsPerRow'),
               dashboardFields: dashboardFields.build());
     } catch (_) {
       String _$failedField;

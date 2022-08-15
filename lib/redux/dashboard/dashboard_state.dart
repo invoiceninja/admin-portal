@@ -56,8 +56,7 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
-      numberFieldsPerRowMobile: 1,
-      numberFieldsPerRowDesktop: 2,
+      numberFieldsPerRow: 2,
       dashboardFields: BuiltList<DashboardField>(<DashboardField>[
         DashboardField(
           field: FIELD_ACTIVE_INVOICES,
@@ -119,9 +118,7 @@ abstract class DashboardUISettings
 
   String get groupBy;
 
-  int get numberFieldsPerRowMobile;
-
-  int get numberFieldsPerRowDesktop;
+  int get numberFieldsPerRow;
 
   BuiltList<DashboardField> get dashboardFields;
 
@@ -158,8 +155,7 @@ abstract class DashboardUISettings
   // ignore: unused_element
   static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
     ..groupBy = kReportGroupDay
-    ..numberFieldsPerRowMobile = 1
-    ..numberFieldsPerRowDesktop = 2
+    ..numberFieldsPerRow = 2
     ..dashboardFields.replace(BuiltList<DashboardField>());
 
   static Serializer<DashboardUISettings> get serializer =>

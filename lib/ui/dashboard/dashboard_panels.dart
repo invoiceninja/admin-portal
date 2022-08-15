@@ -561,9 +561,7 @@ class DashboardPanels extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
-                          crossAxisCount: isDesktop(context)
-                              ? settings.numberFieldsPerRowDesktop
-                              : settings.numberFieldsPerRowMobile,
+                          crossAxisCount: settings.numberFieldsPerRow,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: settings.dashboardFields
@@ -1112,17 +1110,10 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             SizedBox(height: 16),
             AppDropdownButton<int>(
                 labelText: localization.fieldsPerRow,
-                value: isDesktop(context)
-                    ? settings.numberFieldsPerRowDesktop
-                    : settings.numberFieldsPerRowMobile,
+                value: settings.numberFieldsPerRow,
                 onChanged: (dynamic value) {
-                  if (isDesktop(context)) {
-                    store.dispatch(UpdateDashboardSettings(
-                        numberFieldsPerRowDesktop: value));
-                  } else {
-                    store.dispatch(UpdateDashboardSettings(
-                        numberFieldsPerRowMobile: value));
-                  }
+                  store.dispatch(
+                      UpdateDashboardSettings(numberFieldsPerRow: value));
                   setState(() {});
                 },
                 items: List<int>.generate(8, (i) => i + 1)

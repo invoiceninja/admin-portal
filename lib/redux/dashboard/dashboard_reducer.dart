@@ -68,12 +68,9 @@ DashboardUISettings dashboardSettingsReducer(
     } else if (action.dashboardFields != null) {
       return state
           .rebuild((b) => b..dashboardFields.replace(action.dashboardFields));
-    } else if (action.numberFieldsPerRowDesktop != null) {
-      return state.rebuild((b) =>
-          b..numberFieldsPerRowDesktop = action.numberFieldsPerRowDesktop);
-    } else if (action.numberFieldsPerRowMobile != null) {
-      return state.rebuild(
-          (b) => b..numberFieldsPerRowMobile = action.numberFieldsPerRowMobile);
+    } else if (action.numberFieldsPerRow != null) {
+      return state
+          .rebuild((b) => b..numberFieldsPerRow = action.numberFieldsPerRow);
     }
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);

@@ -23,8 +23,7 @@ class UpdateDashboardSettings implements PersistUI {
     this.includeTaxes,
     this.groupBy,
     this.dashboardFields,
-    this.numberFieldsPerRowDesktop,
-    this.numberFieldsPerRowMobile,
+    this.numberFieldsPerRow,
   });
 
   DashboardSettings settings;
@@ -33,8 +32,7 @@ class UpdateDashboardSettings implements PersistUI {
   bool includeTaxes;
   String groupBy;
   BuiltList<DashboardField> dashboardFields;
-  final int numberFieldsPerRowDesktop;
-  final int numberFieldsPerRowMobile;
+  final int numberFieldsPerRow;
 }
 
 class UpdateDashboardSelection implements PersistUI {
