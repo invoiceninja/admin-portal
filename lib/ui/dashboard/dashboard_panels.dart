@@ -56,10 +56,12 @@ class DashboardPanels extends StatelessWidget {
     Key key,
     @required this.viewModel,
     @required this.scrollController,
+    @required this.tabController,
   }) : super(key: key);
 
   final DashboardVM viewModel;
   final ScrollController scrollController;
+  final TabController tabController;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DashboardDateRangePicker>(
@@ -429,6 +431,14 @@ class DashboardPanels extends StatelessWidget {
         DashboardSections.expenses,
     ];
 
+    final sidebarTabs = [
+      if (company.isModuleEnabled(EntityType.invoice)) EntityType.invoice,
+      if (company.isModuleEnabled(EntityType.payment)) EntityType.payment,
+      if (company.isModuleEnabled(EntityType.quote)) EntityType.quote,
+      if (company.isModuleEnabled(EntityType.task)) EntityType.task,
+      if (company.isModuleEnabled(EntityType.expense)) EntityType.expense,
+    ];
+
     return Stack(
       children: <Widget>[
         Padding(
@@ -616,9 +626,14 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded:
                           state.isLoaded || state.invoiceState.list.isNotEmpty,
                       title: AppLocalization.of(context).invoices,
-                      onDateSelected: (index, date) =>
-                          viewModel.onSelectionChanged(EntityType.invoice,
-                              currentInvoiceData[index].entityMap[date]));
+                      onSelected: () => tabController
+                          .animateTo(sidebarTabs.indexOf(EntityType.invoice)),
+                      onDateSelected: (index, date) {
+                        tabController
+                            .animateTo(sidebarTabs.indexOf(EntityType.invoice));
+                        viewModel.onSelectionChanged(EntityType.invoice,
+                            currentInvoiceData[index].entityMap[date]);
+                      });
                 case DashboardSections.payments:
                   return _DashboardPanel(
                       viewModel: viewModel,
@@ -627,9 +642,15 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded:
                           state.isLoaded || state.paymentState.list.isNotEmpty,
                       title: AppLocalization.of(context).payments,
-                      onDateSelected: (index, date) =>
-                          viewModel.onSelectionChanged(EntityType.payment,
-                              currentPaymentData[index].entityMap[date]));
+                      onSelected: () => tabController
+                          .animateTo(sidebarTabs.indexOf(EntityType.payment)),
+                      onDateSelected: (index, date) {
+                        tabController
+                            .animateTo(sidebarTabs.indexOf(EntityType.payment));
+
+                        viewModel.onSelectionChanged(EntityType.payment,
+                            currentPaymentData[index].entityMap[date]);
+                      });
                 case DashboardSections.quotes:
                   return _DashboardPanel(
                       viewModel: viewModel,
@@ -638,9 +659,15 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded:
                           state.isLoaded || state.quoteState.list.isNotEmpty,
                       title: AppLocalization.of(context).quotes,
-                      onDateSelected: (index, date) =>
-                          viewModel.onSelectionChanged(EntityType.quote,
-                              currentQuoteData[index].entityMap[date]));
+                      onSelected: () => tabController
+                          .animateTo(sidebarTabs.indexOf(EntityType.quote)),
+                      onDateSelected: (index, date) {
+                        tabController
+                            .animateTo(sidebarTabs.indexOf(EntityType.quote));
+
+                        viewModel.onSelectionChanged(EntityType.quote,
+                            currentQuoteData[index].entityMap[date]);
+                      });
                 case DashboardSections.tasks:
                   return _DashboardPanel(
                       viewModel: viewModel,
@@ -649,9 +676,15 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded:
                           state.isLoaded || state.taskState.list.isNotEmpty,
                       title: AppLocalization.of(context).tasks,
-                      onDateSelected: (index, date) =>
-                          viewModel.onSelectionChanged(EntityType.task,
-                              currentTaskData[index].entityMap[date]));
+                      onSelected: () => tabController
+                          .animateTo(sidebarTabs.indexOf(EntityType.task)),
+                      onDateSelected: (index, date) {
+                        tabController
+                            .animateTo(sidebarTabs.indexOf(EntityType.task));
+
+                        viewModel.onSelectionChanged(EntityType.task,
+                            currentTaskData[index].entityMap[date]);
+                      });
                 case DashboardSections.expenses:
                   return _DashboardPanel(
                       viewModel: viewModel,
@@ -660,9 +693,14 @@ class DashboardPanels extends StatelessWidget {
                       isLoaded:
                           state.isLoaded || state.expenseState.list.isNotEmpty,
                       title: AppLocalization.of(context).expenses,
-                      onDateSelected: (index, date) =>
-                          viewModel.onSelectionChanged(EntityType.expense,
-                              currentExpenseData[index].entityMap[date]));
+                      onSelected: () => tabController
+                          .animateTo(sidebarTabs.indexOf(EntityType.expense)),
+                      onDateSelected: (index, date) {
+                        tabController
+                            .animateTo(sidebarTabs.indexOf(EntityType.expense));
+                        viewModel.onSelectionChanged(EntityType.expense,
+                            currentExpenseData[index].entityMap[date]);
+                      });
                 case DashboardSections.runningTasks:
                   return runningTasks;
               }
@@ -686,6 +724,7 @@ class _DashboardPanel extends StatefulWidget {
     @required this.previousData,
     @required this.isLoaded,
     @required this.onDateSelected,
+    @required this.onSelected,
   });
 
   final DashboardVM viewModel;
@@ -694,6 +733,7 @@ class _DashboardPanel extends StatefulWidget {
   final List<ChartDataGroup> previousData;
   final bool isLoaded;
   final Function(int, String) onDateSelected;
+  final Function onSelected;
 
   @override
   __DashboardPanelState createState() => __DashboardPanelState();
@@ -775,6 +815,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
       data: widget.currentData,
       title: widget.title,
       onDateSelected: widget.onDateSelected,
+      onSelected: widget.onSelected,
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
@@ -904,6 +945,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     chart = DashboardChart(
       data: invoiceData,
       title: widget.title,
+      onSelected: () => null,
       onDateSelected: widget.onDateSelected,
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId

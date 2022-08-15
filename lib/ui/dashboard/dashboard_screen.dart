@@ -354,7 +354,8 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
       body: _CustomTabBarView(
         viewModel: widget.viewModel,
-        tabController: _mainTabController,
+        mainTabController: _mainTabController,
+        sideTabController: _sideTabController,
         scrollController: _scrollController,
       ),
     );
@@ -388,12 +389,14 @@ class _DashboardScreenState extends State<DashboardScreen>
 class _CustomTabBarView extends StatelessWidget {
   const _CustomTabBarView({
     @required this.viewModel,
-    @required this.tabController,
+    @required this.mainTabController,
+    @required this.sideTabController,
     @required this.scrollController,
   });
 
   final DashboardVM viewModel;
-  final TabController tabController;
+  final TabController mainTabController;
+  final TabController sideTabController;
   final ScrollController scrollController;
 
   @override
@@ -421,13 +424,14 @@ class _CustomTabBarView extends StatelessWidget {
     }
 
     return TabBarView(
-      controller: tabController,
+      controller: mainTabController,
       children: <Widget>[
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardPanels(
             viewModel: viewModel,
             scrollController: scrollController,
+            tabController: sideTabController,
           ),
         ),
         RefreshIndicator(

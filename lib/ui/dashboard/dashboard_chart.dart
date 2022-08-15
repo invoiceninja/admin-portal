@@ -18,6 +18,7 @@ class DashboardChart extends StatefulWidget {
     @required this.title,
     @required this.currencyId,
     @required this.onDateSelected,
+    @required this.onSelected,
     this.isOverview = false,
   });
 
@@ -25,6 +26,7 @@ class DashboardChart extends StatefulWidget {
   final String title;
   final String currencyId;
   final Function(int, String) onDateSelected;
+  final Function() onSelected;
   final bool isOverview;
 
   static const PERIOD_CURRENT = 'current';
@@ -117,14 +119,17 @@ class _DashboardChartState extends State<DashboardChart> {
     );
 
     return FormCard(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         if (!widget.isOverview) ...[
-          Padding(
-            padding: EdgeInsets.only(bottom: 24, top: 8),
-            child: Text(
-              widget.title,
-              style: theme.textTheme.headline5,
+          InkWell(
+            onTap: widget.onSelected,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 24, top: 8),
+              child: Text(
+                widget.title,
+                style: theme.textTheme.headline5,
+              ),
             ),
           ),
           Divider(height: 1.0),
