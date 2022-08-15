@@ -672,7 +672,7 @@ class DashboardPanels extends StatelessWidget {
           ),
         ),
         _header(context),
-        if (state.isLoading) LinearProgressIndicator(),
+        if (state.isLoading || state.isSaving) LinearProgressIndicator(),
       ],
     );
   }
