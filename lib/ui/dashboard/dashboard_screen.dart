@@ -88,8 +88,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         TabController(vsync: this, length: _tabs.length, initialIndex: index)
           ..addListener(onTabListener);
     _scrollController = ScrollController(
-        initialScrollOffset:
-            index * (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+        initialScrollOffset: (index > 0 ? index + 1 : 0) *
+            (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
       ..addListener(onScrollListener);
 
     if (!state.isDemo &&
@@ -114,9 +114,13 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
 
     final offset = _scrollController.position.pixels;
-    final offsetIndex = ((offset + 120) /
+    int offsetIndex = ((offset + 120) /
             (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
         .floor();
+
+    if (offsetIndex > 0) {
+      offsetIndex--;
+    }
 
     if (_sideTabController.index != offsetIndex && offsetIndex < _tabs.length) {
       _sideTabController.removeListener(onTabListener);
@@ -128,6 +132,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   void onTabListener() {
+    /*
     if (isMobile(context) || _mainTabController.index != 0) {
       return;
     }
@@ -144,6 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           1);
       widget.viewModel.onEntityTypeChanged(_tabs[index]);
     }
+    */
   }
 
   @override
