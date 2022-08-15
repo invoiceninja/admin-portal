@@ -57,16 +57,6 @@ abstract class DashboardUISettings
       includeTaxes: true,
       groupBy: kReportGroupDay,
       numberFieldsPerRow: 2,
-      dashboardFields: BuiltList<DashboardField>(<DashboardField>[
-        DashboardField(
-          field: FIELD_ACTIVE_INVOICES,
-          period: PERIOD_CURRENT,
-        ),
-        DashboardField(
-          field: FIELD_COMPLETED_PAYMENTS,
-          period: PERIOD_CURRENT,
-        ),
-      ]),
     );
   }
 
@@ -120,8 +110,6 @@ abstract class DashboardUISettings
 
   int get numberFieldsPerRow;
 
-  BuiltList<DashboardField> get dashboardFields;
-
   bool matchesCurrency(String match) {
     if (currencyId == null ||
         currencyId.isEmpty ||
@@ -155,35 +143,8 @@ abstract class DashboardUISettings
   // ignore: unused_element
   static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
     ..groupBy = kReportGroupDay
-    ..numberFieldsPerRow = 2
-    ..dashboardFields.replace(BuiltList<DashboardField>());
+    ..numberFieldsPerRow = 2;
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;
-}
-
-abstract class DashboardField
-    implements Built<DashboardField, DashboardFieldBuilder> {
-  factory DashboardField({
-    String field,
-    String period,
-  }) {
-    return _$DashboardField._(
-      field: field ?? '',
-      period: period ?? '',
-    );
-  }
-
-  DashboardField._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  String get field;
-
-  String get period;
-
-  static Serializer<DashboardField> get serializer =>
-      _$dashboardFieldSerializer;
 }

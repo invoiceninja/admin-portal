@@ -22,6 +22,8 @@ Serializer<CompanyItemResponse> _$companyItemResponseSerializer =
     new _$CompanyItemResponseSerializer();
 Serializer<RegistrationFieldEntity> _$registrationFieldEntitySerializer =
     new _$RegistrationFieldEntitySerializer();
+Serializer<DashboardField> _$dashboardFieldSerializer =
+    new _$DashboardFieldSerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -1180,6 +1182,10 @@ class _$UserSettingsEntitySerializer
       'include_deleted_clients',
       serializers.serialize(object.includeDeletedClients,
           specifiedType: const FullType(bool)),
+      'dashboard_fields',
+      serializers.serialize(object.dashboardFields,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DashboardField)])),
     ];
     Object value;
     value = object.accentColor;
@@ -1229,6 +1235,12 @@ class _$UserSettingsEntitySerializer
         case 'include_deleted_clients':
           result.includeDeletedClients = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'dashboard_fields':
+          result.dashboardFields.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DashboardField)]))
+              as BuiltList<Object>);
           break;
       }
     }
@@ -1404,6 +1416,55 @@ class _$RegistrationFieldEntitySerializer
         case 'required':
           result.required = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$DashboardFieldSerializer
+    implements StructuredSerializer<DashboardField> {
+  @override
+  final Iterable<Type> types = const [DashboardField, _$DashboardField];
+  @override
+  final String wireName = 'DashboardField';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, DashboardField object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'field',
+      serializers.serialize(object.field,
+          specifiedType: const FullType(String)),
+      'period',
+      serializers.serialize(object.period,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  DashboardField deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DashboardFieldBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'field':
+          result.field = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'period':
+          result.period = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -3560,6 +3621,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   final int numberYearsActive;
   @override
   final bool includeDeletedClients;
+  @override
+  final BuiltList<DashboardField> dashboardFields;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
@@ -3570,7 +3633,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
       this.tableColumns,
       this.reportSettings,
       this.numberYearsActive,
-      this.includeDeletedClients})
+      this.includeDeletedClients,
+      this.dashboardFields})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         tableColumns, 'UserSettingsEntity', 'tableColumns');
@@ -3580,6 +3644,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         numberYearsActive, 'UserSettingsEntity', 'numberYearsActive');
     BuiltValueNullFieldError.checkNotNull(
         includeDeletedClients, 'UserSettingsEntity', 'includeDeletedClients');
+    BuiltValueNullFieldError.checkNotNull(
+        dashboardFields, 'UserSettingsEntity', 'dashboardFields');
   }
 
   @override
@@ -3599,7 +3665,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         tableColumns == other.tableColumns &&
         reportSettings == other.reportSettings &&
         numberYearsActive == other.numberYearsActive &&
-        includeDeletedClients == other.includeDeletedClients;
+        includeDeletedClients == other.includeDeletedClients &&
+        dashboardFields == other.dashboardFields;
   }
 
   int __hashCode;
@@ -3607,10 +3674,12 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
-                reportSettings.hashCode),
-            numberYearsActive.hashCode),
-        includeDeletedClients.hashCode));
+            $jc(
+                $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+                    reportSettings.hashCode),
+                numberYearsActive.hashCode),
+            includeDeletedClients.hashCode),
+        dashboardFields.hashCode));
   }
 
   @override
@@ -3620,7 +3689,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
           ..add('tableColumns', tableColumns)
           ..add('reportSettings', reportSettings)
           ..add('numberYearsActive', numberYearsActive)
-          ..add('includeDeletedClients', includeDeletedClients))
+          ..add('includeDeletedClients', includeDeletedClients)
+          ..add('dashboardFields', dashboardFields))
         .toString();
   }
 }
@@ -3655,6 +3725,12 @@ class UserSettingsEntityBuilder
   set includeDeletedClients(bool includeDeletedClients) =>
       _$this._includeDeletedClients = includeDeletedClients;
 
+  ListBuilder<DashboardField> _dashboardFields;
+  ListBuilder<DashboardField> get dashboardFields =>
+      _$this._dashboardFields ??= new ListBuilder<DashboardField>();
+  set dashboardFields(ListBuilder<DashboardField> dashboardFields) =>
+      _$this._dashboardFields = dashboardFields;
+
   UserSettingsEntityBuilder() {
     UserSettingsEntity._initializeBuilder(this);
   }
@@ -3667,6 +3743,7 @@ class UserSettingsEntityBuilder
       _reportSettings = $v.reportSettings.toBuilder();
       _numberYearsActive = $v.numberYearsActive;
       _includeDeletedClients = $v.includeDeletedClients;
+      _dashboardFields = $v.dashboardFields.toBuilder();
       _$v = null;
     }
     return this;
@@ -3697,7 +3774,8 @@ class UserSettingsEntityBuilder
               includeDeletedClients: BuiltValueNullFieldError.checkNotNull(
                   includeDeletedClients,
                   'UserSettingsEntity',
-                  'includeDeletedClients'));
+                  'includeDeletedClients'),
+              dashboardFields: dashboardFields.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -3705,6 +3783,9 @@ class UserSettingsEntityBuilder
         tableColumns.build();
         _$failedField = 'reportSettings';
         reportSettings.build();
+
+        _$failedField = 'dashboardFields';
+        dashboardFields.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserSettingsEntity', _$failedField, e.toString());
@@ -4068,6 +4149,99 @@ class RegistrationFieldEntityBuilder
                 key, 'RegistrationFieldEntity', 'key'),
             required: BuiltValueNullFieldError.checkNotNull(
                 required, 'RegistrationFieldEntity', 'required'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DashboardField extends DashboardField {
+  @override
+  final String field;
+  @override
+  final String period;
+
+  factory _$DashboardField([void Function(DashboardFieldBuilder) updates]) =>
+      (new DashboardFieldBuilder()..update(updates)).build();
+
+  _$DashboardField._({this.field, this.period}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(field, 'DashboardField', 'field');
+    BuiltValueNullFieldError.checkNotNull(period, 'DashboardField', 'period');
+  }
+
+  @override
+  DashboardField rebuild(void Function(DashboardFieldBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DashboardFieldBuilder toBuilder() =>
+      new DashboardFieldBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DashboardField &&
+        field == other.field &&
+        period == other.period;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, field.hashCode), period.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('DashboardField')
+          ..add('field', field)
+          ..add('period', period))
+        .toString();
+  }
+}
+
+class DashboardFieldBuilder
+    implements Builder<DashboardField, DashboardFieldBuilder> {
+  _$DashboardField _$v;
+
+  String _field;
+  String get field => _$this._field;
+  set field(String field) => _$this._field = field;
+
+  String _period;
+  String get period => _$this._period;
+  set period(String period) => _$this._period = period;
+
+  DashboardFieldBuilder();
+
+  DashboardFieldBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _field = $v.field;
+      _period = $v.period;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DashboardField other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$DashboardField;
+  }
+
+  @override
+  void update(void Function(DashboardFieldBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$DashboardField build() {
+    final _$result = _$v ??
+        new _$DashboardField._(
+            field: BuiltValueNullFieldError.checkNotNull(
+                field, 'DashboardField', 'field'),
+            period: BuiltValueNullFieldError.checkNotNull(
+                period, 'DashboardField', 'period'));
     replace(_$result);
     return _$result;
   }

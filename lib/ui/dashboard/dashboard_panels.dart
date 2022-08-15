@@ -26,7 +26,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
@@ -564,7 +563,7 @@ class DashboardPanels extends StatelessWidget {
                           crossAxisCount: settings.numberFieldsPerRow,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
-                          children: settings.dashboardFields
+                          children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
                             final data = fieldMap[dashboardField.field];
                             double value = 0;
@@ -939,6 +938,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
     final groupMap = state.groupState.map;
     final company = state.company;
     final settings = state.dashboardUIState.settings;
+    final dashboardFields = state.userCompany.settings.dashboardFields;
 
     final hasMultipleCurrencies =
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
@@ -1060,7 +1060,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             Expanded(
               child: ReorderableListView(
                 onReorder: (oldIndex, newIndex) {
-                  final fields = settings.dashboardFields;
+                  final fields =
+                      store.state.userCompany.settings.dashboardFields;
 
                   // https://stackoverflow.com/a/54164333/497368
                   // These two lines are workarounds for ReorderableListView problems
@@ -1072,14 +1073,14 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   }
 
                   final field = fields[oldIndex];
-                  store.dispatch(UpdateDashboardSettings(
+                  store.dispatch(UpdateDashboardFields(
                       dashboardFields: fields.rebuild((b) => b
                         ..removeAt(oldIndex)
                         ..insert(newIndex, field))));
                   setState(() {});
                 },
                 children: [
-                  for (var dashboardField in settings.dashboardFields)
+                  for (var dashboardField in dashboardFields)
                     ListTile(
                       key: ValueKey(
                           '__${dashboardField.field}_${dashboardField.period}_'),
@@ -1089,8 +1090,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                       leading: IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
-                          store.dispatch(UpdateDashboardSettings(
-                              dashboardFields: settings.dashboardFields
+                          store.dispatch(UpdateDashboardFields(
+                              dashboardFields: dashboardFields
                                   .rebuild((b) => b..remove(dashboardField))));
                           setState(() {});
                         },
@@ -1147,7 +1148,7 @@ class _DashboardFieldState extends State<_DashboardField> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final settings = state.dashboardUIState.settings;
+    final dashboardFields = state.userCompany.settings.dashboardFields;
 
     final fieldMap = {
       EntityType.invoice: [
@@ -1237,7 +1238,7 @@ class _DashboardFieldState extends State<_DashboardField> {
               return;
             }
 
-            if (settings.dashboardFields
+            if (dashboardFields
                 .where(
                     (field) => field.field == _field && field.period == _period)
                 .isNotEmpty) {
@@ -1245,8 +1246,8 @@ class _DashboardFieldState extends State<_DashboardField> {
               return;
             }
 
-            store.dispatch(UpdateDashboardSettings(
-                dashboardFields: settings.dashboardFields.rebuild(
+            store.dispatch(UpdateDashboardFields(
+                dashboardFields: dashboardFields.rebuild(
               (b) => b
                 ..add(
                   DashboardField(

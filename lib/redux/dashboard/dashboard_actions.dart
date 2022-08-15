@@ -1,9 +1,9 @@
 // Project imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
 class ViewDashboard implements PersistUI {
   ViewDashboard({
@@ -22,7 +22,6 @@ class UpdateDashboardSettings implements PersistUI {
     this.currencyId,
     this.includeTaxes,
     this.groupBy,
-    this.dashboardFields,
     this.numberFieldsPerRow,
   });
 
@@ -31,8 +30,15 @@ class UpdateDashboardSettings implements PersistUI {
   String currencyId;
   bool includeTaxes;
   String groupBy;
-  BuiltList<DashboardField> dashboardFields;
   final int numberFieldsPerRow;
+}
+
+class UpdateDashboardFields implements PersistUI {
+  UpdateDashboardFields({
+    this.dashboardFields,
+  });
+
+  BuiltList<DashboardField> dashboardFields;
 }
 
 class UpdateDashboardSelection implements PersistUI {

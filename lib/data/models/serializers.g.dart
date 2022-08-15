@@ -284,9 +284,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(String), const FullType(TemplateEntity)]),
           () => new MapBuilder<String, TemplateEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(DashboardField)]),
-          () => new ListBuilder<DashboardField>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
           () => new ListBuilder<DateFormatEntity>())
       ..addBuilderFactory(
@@ -614,6 +611,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(ReportSettingsEntity)
           ]),
           () => new MapBuilder<String, ReportSettingsEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DashboardField)]),
+          () => new ListBuilder<DashboardField>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(ClientEntity)]),
