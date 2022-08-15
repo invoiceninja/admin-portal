@@ -120,7 +120,7 @@ abstract class AccountEntity
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..debugEnabled = false
     ..isDocker = false
-    ..isSchedulerRunning = false
+    ..isSchedulerRunning = true
     ..disableAutoUpdate = false
     ..isMigrated = false
     ..isHosted = false
