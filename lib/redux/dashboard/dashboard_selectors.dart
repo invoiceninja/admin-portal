@@ -419,7 +419,7 @@ List<ChartDataGroup> chartPayments(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
 ) {
-  const STATUS_ACTIVE = 'active';
+  const STATUS_ACTIVE = 'completed';
   const STATUS_REFUNDED = 'refunded';
 
   final Map<String, int> counts = {
