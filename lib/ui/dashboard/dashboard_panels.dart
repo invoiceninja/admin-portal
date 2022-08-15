@@ -662,7 +662,7 @@ class DashboardPanels extends StatelessWidget {
                       title: AppLocalization.of(context).expenses,
                       onDateSelected: (index, date) =>
                           viewModel.onSelectionChanged(EntityType.expense,
-                              currentTaskData[index].entityMap[date]));
+                              currentExpenseData[index].entityMap[date]));
                 case DashboardSections.runningTasks:
                   return runningTasks;
               }
