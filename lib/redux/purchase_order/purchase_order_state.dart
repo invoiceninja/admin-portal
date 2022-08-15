@@ -56,8 +56,10 @@ abstract class PurchaseOrderUIState extends Object
     implements Built<PurchaseOrderUIState, PurchaseOrderUIStateBuilder> {
   factory PurchaseOrderUIState(PrefStateSortField sortField) {
     return _$PurchaseOrderUIState._(
-      listUIState: ListUIState(sortField?.field ?? PurchaseOrderFields.number,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? PurchaseOrderFields.number,
+        sortAscending: sortField?.ascending,
+      ),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,
