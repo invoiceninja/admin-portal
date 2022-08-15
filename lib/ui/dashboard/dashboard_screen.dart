@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -88,8 +87,9 @@ class _DashboardScreenState extends State<DashboardScreen>
         TabController(vsync: this, length: _tabs.length, initialIndex: index)
           ..addListener(onTabListener);
     _scrollController = ScrollController(
-        initialScrollOffset: (index > 0 ? index + 1 : 0) *
-            (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+        // initialScrollOffset: (index > 0 ? index + 1 : 0) *
+        // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
+        )
       ..addListener(onScrollListener);
 
     if (!state.isDemo &&
@@ -113,6 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       return;
     }
 
+    /*
     final offset = _scrollController.position.pixels;
     int offsetIndex = ((offset + 120) /
             (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
@@ -129,6 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
       widget.viewModel.onEntityTypeChanged(_tabs[offsetIndex]);
     }
+    */
   }
 
   void onTabListener() {
