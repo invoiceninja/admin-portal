@@ -58,7 +58,7 @@ abstract class DashboardUISettings
       groupBy: kReportGroupDay,
       numberFieldsPerRowMobile: 1,
       numberFieldsPerRowDesktop: 2,
-      totalFields: BuiltList<DashboardField>(<DashboardField>[
+      dashboardFields: BuiltList<DashboardField>(<DashboardField>[
         DashboardField(
           field: FIELD_ACTIVE_INVOICES,
           period: PERIOD_CURRENT,
@@ -123,7 +123,7 @@ abstract class DashboardUISettings
 
   int get numberFieldsPerRowDesktop;
 
-  BuiltList<DashboardField> get totalFields;
+  BuiltList<DashboardField> get dashboardFields;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||
@@ -160,7 +160,7 @@ abstract class DashboardUISettings
     ..groupBy = kReportGroupDay
     ..numberFieldsPerRowMobile = 1
     ..numberFieldsPerRowDesktop = 2
-    ..totalFields.replace(BuiltList<DashboardField>());
+    ..dashboardFields.replace(BuiltList<DashboardField>());
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;

@@ -566,7 +566,7 @@ class DashboardPanels extends StatelessWidget {
                               : settings.numberFieldsPerRowMobile,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
-                          children: settings.totalFields
+                          children: settings.dashboardFields
                               .map<Widget>((dashboardField) {
                             final data = fieldMap[dashboardField.field];
                             double value = 0;
@@ -1062,7 +1062,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             Expanded(
               child: ReorderableListView(
                 onReorder: (oldIndex, newIndex) {
-                  final fields = settings.totalFields;
+                  final fields = settings.dashboardFields;
 
                   // https://stackoverflow.com/a/54164333/497368
                   // These two lines are workarounds for ReorderableListView problems
@@ -1075,13 +1075,13 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
 
                   final field = fields[oldIndex];
                   store.dispatch(UpdateDashboardSettings(
-                      totalFields: fields.rebuild((b) => b
+                      dashboardFields: fields.rebuild((b) => b
                         ..removeAt(oldIndex)
                         ..insert(newIndex, field))));
                   setState(() {});
                 },
                 children: [
-                  for (var dashboardField in settings.totalFields)
+                  for (var dashboardField in settings.dashboardFields)
                     ListTile(
                       key: ValueKey(
                           '__${dashboardField.field}_${dashboardField.period}_'),
@@ -1092,7 +1092,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                         icon: Icon(Icons.close),
                         onPressed: () {
                           store.dispatch(UpdateDashboardSettings(
-                              totalFields: settings.totalFields
+                              dashboardFields: settings.dashboardFields
                                   .rebuild((b) => b..remove(dashboardField))));
                           setState(() {});
                         },
@@ -1246,7 +1246,7 @@ class _DashboardFieldState extends State<_DashboardField> {
               return;
             }
 
-            if (settings.totalFields
+            if (settings.dashboardFields
                 .where(
                     (field) => field.field == _field && field.period == _period)
                 .isNotEmpty) {
@@ -1255,7 +1255,7 @@ class _DashboardFieldState extends State<_DashboardField> {
             }
 
             store.dispatch(UpdateDashboardSettings(
-                totalFields: settings.totalFields.rebuild(
+                dashboardFields: settings.dashboardFields.rebuild(
               (b) => b
                 ..add(
                   DashboardField(

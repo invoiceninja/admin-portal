@@ -136,8 +136,8 @@ class _$DashboardUISettingsSerializer
       'numberFieldsPerRowDesktop',
       serializers.serialize(object.numberFieldsPerRowDesktop,
           specifiedType: const FullType(int)),
-      'totalFields',
-      serializers.serialize(object.totalFields,
+      'dashboardFields',
+      serializers.serialize(object.dashboardFields,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DashboardField)])),
     ];
@@ -210,8 +210,8 @@ class _$DashboardUISettingsSerializer
           result.numberFieldsPerRowDesktop = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'totalFields':
-          result.totalFields.replace(serializers.deserialize(value,
+        case 'dashboardFields':
+          result.dashboardFields.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DashboardField)]))
               as BuiltList<Object>);
@@ -451,7 +451,7 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final int numberFieldsPerRowDesktop;
   @override
-  final BuiltList<DashboardField> totalFields;
+  final BuiltList<DashboardField> dashboardFields;
 
   factory _$DashboardUISettings(
           [void Function(DashboardUISettingsBuilder) updates]) =>
@@ -471,7 +471,7 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.groupBy,
       this.numberFieldsPerRowMobile,
       this.numberFieldsPerRowDesktop,
-      this.totalFields})
+      this.dashboardFields})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         dateRange, 'DashboardUISettings', 'dateRange');
@@ -500,7 +500,7 @@ class _$DashboardUISettings extends DashboardUISettings {
     BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowDesktop,
         'DashboardUISettings', 'numberFieldsPerRowDesktop');
     BuiltValueNullFieldError.checkNotNull(
-        totalFields, 'DashboardUISettings', 'totalFields');
+        dashboardFields, 'DashboardUISettings', 'dashboardFields');
   }
 
   @override
@@ -529,7 +529,7 @@ class _$DashboardUISettings extends DashboardUISettings {
         groupBy == other.groupBy &&
         numberFieldsPerRowMobile == other.numberFieldsPerRowMobile &&
         numberFieldsPerRowDesktop == other.numberFieldsPerRowDesktop &&
-        totalFields == other.totalFields;
+        dashboardFields == other.dashboardFields;
   }
 
   int __hashCode;
@@ -563,7 +563,7 @@ class _$DashboardUISettings extends DashboardUISettings {
                     groupBy.hashCode),
                 numberFieldsPerRowMobile.hashCode),
             numberFieldsPerRowDesktop.hashCode),
-        totalFields.hashCode));
+        dashboardFields.hashCode));
   }
 
   @override
@@ -582,7 +582,7 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('groupBy', groupBy)
           ..add('numberFieldsPerRowMobile', numberFieldsPerRowMobile)
           ..add('numberFieldsPerRowDesktop', numberFieldsPerRowDesktop)
-          ..add('totalFields', totalFields))
+          ..add('dashboardFields', dashboardFields))
         .toString();
   }
 }
@@ -651,11 +651,11 @@ class DashboardUISettingsBuilder
   set numberFieldsPerRowDesktop(int numberFieldsPerRowDesktop) =>
       _$this._numberFieldsPerRowDesktop = numberFieldsPerRowDesktop;
 
-  ListBuilder<DashboardField> _totalFields;
-  ListBuilder<DashboardField> get totalFields =>
-      _$this._totalFields ??= new ListBuilder<DashboardField>();
-  set totalFields(ListBuilder<DashboardField> totalFields) =>
-      _$this._totalFields = totalFields;
+  ListBuilder<DashboardField> _dashboardFields;
+  ListBuilder<DashboardField> get dashboardFields =>
+      _$this._dashboardFields ??= new ListBuilder<DashboardField>();
+  set dashboardFields(ListBuilder<DashboardField> dashboardFields) =>
+      _$this._dashboardFields = dashboardFields;
 
   DashboardUISettingsBuilder() {
     DashboardUISettings._initializeBuilder(this);
@@ -677,7 +677,7 @@ class DashboardUISettingsBuilder
       _groupBy = $v.groupBy;
       _numberFieldsPerRowMobile = $v.numberFieldsPerRowMobile;
       _numberFieldsPerRowDesktop = $v.numberFieldsPerRowDesktop;
-      _totalFields = $v.totalFields.toBuilder();
+      _dashboardFields = $v.dashboardFields.toBuilder();
       _$v = null;
     }
     return this;
@@ -720,12 +720,12 @@ class DashboardUISettingsBuilder
               groupBy: BuiltValueNullFieldError.checkNotNull(groupBy, 'DashboardUISettings', 'groupBy'),
               numberFieldsPerRowMobile: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowMobile, 'DashboardUISettings', 'numberFieldsPerRowMobile'),
               numberFieldsPerRowDesktop: BuiltValueNullFieldError.checkNotNull(numberFieldsPerRowDesktop, 'DashboardUISettings', 'numberFieldsPerRowDesktop'),
-              totalFields: totalFields.build());
+              dashboardFields: dashboardFields.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'totalFields';
-        totalFields.build();
+        _$failedField = 'dashboardFields';
+        dashboardFields.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'DashboardUISettings', _$failedField, e.toString());
