@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -137,6 +138,10 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
   TypedReducer<UserCompanyEntity, UpdateCompanyLanguage>(
     (userCompany, action) => userCompany
         .rebuild((b) => b..company.settings.languageId = action.languageId),
+  ),
+  TypedReducer<UserCompanyEntity, UpdateDashboardFields>(
+    (userCompany, action) => userCompany.rebuild(
+        (b) => b..settings.dashboardFields.replace(action.dashboardFields)),
   ),
 ]);
 

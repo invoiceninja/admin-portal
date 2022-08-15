@@ -65,6 +65,9 @@ DashboardUISettings dashboardSettingsReducer(
       return state.rebuild((b) => b..currencyId = action.currencyId);
     } else if (action.groupBy != null) {
       return state.rebuild((b) => b..groupBy = action.groupBy);
+    } else if (action.numberFieldsPerRow != null) {
+      return state
+          .rebuild((b) => b..numberFieldsPerRow = action.numberFieldsPerRow);
     }
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);

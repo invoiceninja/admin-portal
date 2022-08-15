@@ -202,7 +202,10 @@ class EditScaffold extends StatelessWidget {
                                             text: label,
                                             style: state.isSaving
                                                 ? null
-                                                : textStyle,
+                                                : action == EntityAction.save
+                                                    ? textStyle.copyWith(
+                                                        color: Colors.white)
+                                                    : textStyle,
                                           )
                                         : Text(label,
                                             style: state.isSaving
@@ -341,7 +344,9 @@ class EditScaffold extends StatelessWidget {
                               child: IconText(
                                 icon: getEntityActionIcon(EntityAction.save),
                                 text: localization.save,
-                                style: state.isSaving ? null : textStyle,
+                                style: state.isSaving
+                                    ? null
+                                    : textStyle.copyWith(color: Colors.white),
                               ),
                             ),
                           ),

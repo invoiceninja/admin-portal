@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -62,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final state = widget.viewModel.state;
     final company = state.company;
-    final entityType = state.dashboardUIState.selectedEntityType;
+    //final entityType = state.dashboardUIState.selectedEntityType;
 
     [
       EntityType.invoice,
@@ -76,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       }
     });
 
-    final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
+    //final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
     int mainTabCount = 3;
 
     if (state.prefState.isMobile) {
@@ -85,11 +84,12 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     _mainTabController = TabController(vsync: this, length: mainTabCount);
     _sideTabController =
-        TabController(vsync: this, length: _tabs.length, initialIndex: index)
+        TabController(vsync: this, length: _tabs.length, initialIndex: 0)
           ..addListener(onTabListener);
     _scrollController = ScrollController(
-        initialScrollOffset:
-            index * (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
+        // initialScrollOffset: (index > 0 ? index + 1 : 0) *
+        // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
+        )
       ..addListener(onScrollListener);
 
     if (!state.isDemo &&
@@ -113,10 +113,15 @@ class _DashboardScreenState extends State<DashboardScreen>
       return;
     }
 
+    /*
     final offset = _scrollController.position.pixels;
-    final offsetIndex = ((offset + 120) /
+    int offsetIndex = ((offset + 120) /
             (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight))
         .floor();
+
+    if (offsetIndex > 0) {
+      offsetIndex--;
+    }
 
     if (_sideTabController.index != offsetIndex && offsetIndex < _tabs.length) {
       _sideTabController.removeListener(onTabListener);
@@ -125,9 +130,11 @@ class _DashboardScreenState extends State<DashboardScreen>
 
       widget.viewModel.onEntityTypeChanged(_tabs[offsetIndex]);
     }
+    */
   }
 
   void onTabListener() {
+    /*
     if (isMobile(context) || _mainTabController.index != 0) {
       return;
     }
@@ -144,6 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           1);
       widget.viewModel.onEntityTypeChanged(_tabs[index]);
     }
+    */
   }
 
   @override
@@ -285,7 +293,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           if (isMobile(context) || !state.prefState.isHistoryVisible)
             Builder(
               builder: (context) => IconButton(
-                padding: const EdgeInsets.only(left: 4, right: 20),
+                padding: const EdgeInsets.only(left: 4, right: 24),
                 tooltip: state.prefState.enableTooltips
                     ? localization.history
                     : null,
@@ -346,7 +354,8 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
       body: _CustomTabBarView(
         viewModel: widget.viewModel,
-        tabController: _mainTabController,
+        mainTabController: _mainTabController,
+        sideTabController: _sideTabController,
         scrollController: _scrollController,
       ),
     );
@@ -380,12 +389,14 @@ class _DashboardScreenState extends State<DashboardScreen>
 class _CustomTabBarView extends StatelessWidget {
   const _CustomTabBarView({
     @required this.viewModel,
-    @required this.tabController,
+    @required this.mainTabController,
+    @required this.sideTabController,
     @required this.scrollController,
   });
 
   final DashboardVM viewModel;
-  final TabController tabController;
+  final TabController mainTabController;
+  final TabController sideTabController;
   final ScrollController scrollController;
 
   @override
@@ -413,13 +424,14 @@ class _CustomTabBarView extends StatelessWidget {
     }
 
     return TabBarView(
-      controller: tabController,
+      controller: mainTabController,
       children: <Widget>[
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardPanels(
             viewModel: viewModel,
             scrollController: scrollController,
+            tabController: sideTabController,
           ),
         ),
         RefreshIndicator(

@@ -18,15 +18,23 @@ class DashboardChart extends StatefulWidget {
     @required this.title,
     @required this.currencyId,
     @required this.onDateSelected,
+    @required this.onSelected,
+    this.isOverview = false,
   });
 
   final List<ChartDataGroup> data;
   final String title;
   final String currencyId;
   final Function(int, String) onDateSelected;
+  final Function() onSelected;
+  final bool isOverview;
 
   static const PERIOD_CURRENT = 'current';
   static const PERIOD_PREVIOUS = 'previous';
+
+  static const PERIOD_INVOICES = 'invoices';
+  static const PERIOD_EXPENSES = 'expenses';
+  static const PERIOD_PAYMENTS = 'payments';
 
   @override
   _DashboardChartState createState() => _DashboardChartState();
@@ -111,91 +119,102 @@ class _DashboardChartState extends State<DashboardChart> {
     );
 
     return FormCard(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: 24, top: 8),
-          child: Text(
-            widget.title,
-            style: theme.textTheme.headline5,
+        if (!widget.isOverview) ...[
+          InkWell(
+            onTap: widget.onSelected,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 24, top: 8),
+              child: Text(
+                widget.title,
+                style: theme.textTheme.headline5,
+              ),
+            ),
           ),
-        ),
-        Divider(height: 1.0),
-        LimitedBox(
-          maxHeight: settings.enableComparison ? 122 : 102,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: widget.data.map((dataGroup) {
-              final int index = widget.data.indexOf(dataGroup);
-              final bool isSelected = index == _selectedIndex;
-              final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
-              final String changeAmount = (isIncrease ? '+' : '') +
-                  formatNumber(
-                      dataGroup.total - dataGroup.previousTotal, context,
-                      currencyId: widget.currencyId);
-              final changePercent = (isIncrease ? '+' : '') +
-                  formatNumber(
-                      dataGroup.total != 0 && dataGroup.previousTotal != 0
-                          ? round(
-                              (dataGroup.total - dataGroup.previousTotal) /
-                                  dataGroup.previousTotal *
-                                  100,
-                              2)
-                          : 0.0,
-                      context,
-                      formatNumberType: FormatNumberType.percent,
-                      currencyId: widget.currencyId);
-              final String changeString = dataGroup.total == 0 ||
-                      dataGroup.previousTotal == 0 ||
-                      dataGroup.total == dataGroup.previousTotal
-                  ? (settings.enableComparison ? ' ' : '')
-                  : '$changeAmount ($changePercent)';
+          Divider(height: 1.0),
+          LimitedBox(
+            maxHeight: settings.enableComparison ? 122 : 102,
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: widget.data.map((dataGroup) {
+                final int index = widget.data.indexOf(dataGroup);
+                final bool isSelected = index == _selectedIndex;
+                final bool isIncrease =
+                    dataGroup.preriodTotal > dataGroup.previousTotal;
+                final String changeAmount = (isIncrease ? '+' : '') +
+                    formatNumber(
+                        dataGroup.preriodTotal - dataGroup.previousTotal,
+                        context,
+                        currencyId: widget.currencyId);
+                final changePercent = (isIncrease ? '+' : '') +
+                    formatNumber(
+                        dataGroup.preriodTotal != 0 &&
+                                dataGroup.previousTotal != 0
+                            ? round(
+                                (dataGroup.preriodTotal -
+                                        dataGroup.previousTotal) /
+                                    dataGroup.previousTotal *
+                                    100,
+                                2)
+                            : 0.0,
+                        context,
+                        formatNumberType: FormatNumberType.percent,
+                        currencyId: widget.currencyId);
+                final String changeString = dataGroup.preriodTotal == 0 ||
+                        dataGroup.previousTotal == 0 ||
+                        dataGroup.preriodTotal == dataGroup.previousTotal
+                    ? (settings.enableComparison ? ' ' : '')
+                    : '$changeAmount ($changePercent)';
 
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                    _selected = null;
-                  });
-                },
-                child: Container(
-                  color: isSelected ? state.accentColor : theme.cardColor,
-                  padding:
-                      EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(localization.lookup(dataGroup.name),
-                          style: theme.textTheme.headline6.copyWith(
-                            color: isSelected ? Colors.white : null,
-                          )),
-                      SizedBox(height: 4),
-                      Text(
-                          formatNumber(dataGroup.total, context,
-                              currencyId: widget.currencyId),
-                          style: theme.textTheme.headline5.copyWith(
-                              color: isSelected ? Colors.white : null)),
-                      SizedBox(height: 4),
-                      changeString.isNotEmpty
-                          ? Text(
-                              changeString,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: isSelected
-                                    ? Colors.white
-                                    : (isIncrease ? Colors.green : Colors.red),
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = index;
+                      _selected = null;
+                    });
+                  },
+                  child: Container(
+                    color: isSelected ? state.accentColor : theme.cardColor,
+                    padding: EdgeInsets.only(
+                        left: 16, top: 16, right: 32, bottom: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(localization.lookup(dataGroup.name),
+                            style: theme.textTheme.headline6.copyWith(
+                              color: isSelected ? Colors.white : null,
+                            )),
+                        SizedBox(height: 4),
+                        Text(
+                            formatNumber(dataGroup.preriodTotal, context,
+                                currencyId: widget.currencyId),
+                            style: theme.textTheme.headline5.copyWith(
+                                color: isSelected ? Colors.white : null)),
+                        SizedBox(height: 4),
+                        changeString.isNotEmpty
+                            ? Text(
+                                changeString,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : (isIncrease
+                                          ? Colors.green
+                                          : Colors.red),
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
-        ),
-        Divider(height: 1.0),
+          Divider(height: 1.0),
+        ],
         SizedBox(
           height: 240.0,
           child: Padding(
@@ -205,30 +224,32 @@ class _DashboardChartState extends State<DashboardChart> {
             ),
           ),
         ),
-        Divider(height: 1.0),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  localization.average +
-                      ': ' +
-                      formatNumber(series.average, context,
-                          currencyId: widget.currencyId),
-                  style: theme.textTheme.headline6,
+        if (!widget.isOverview) ...[
+          Divider(height: 1.0),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    localization.average +
+                        ': ' +
+                        formatNumber(series.average, context,
+                            currencyId: widget.currencyId),
+                    style: theme.textTheme.headline6,
+                  ),
                 ),
-              ),
-              _selected != null
-                  ? Text(
-                      _selected,
-                      style: theme.textTheme.headline6,
-                    )
-                  : SizedBox(),
-            ],
+                _selected != null
+                    ? Text(
+                        _selected,
+                        style: theme.textTheme.headline6,
+                      )
+                    : SizedBox(),
+              ],
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -1000,6 +1001,16 @@ abstract class UserSettingsEntity
       tableColumns: BuiltMap<String, BuiltList<String>>(),
       reportSettings: BuiltMap<String, ReportSettingsEntity>(),
       includeDeletedClients: false,
+      dashboardFields: BuiltList<DashboardField>(<DashboardField>[
+        DashboardField(
+          field: DashboardUISettings.FIELD_ACTIVE_INVOICES,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+        DashboardField(
+          field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+      ]),
     );
   }
 
@@ -1025,6 +1036,9 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'include_deleted_clients')
   bool get includeDeletedClients;
 
+  @BuiltValueField(wireName: 'dashboard_fields')
+  BuiltList<DashboardField> get dashboardFields;
+
   List<String> getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
       return tableColumns['$entityType'].toList();
@@ -1039,6 +1053,16 @@ abstract class UserSettingsEntity
     ..numberYearsActive = 3
     ..tableColumns.replace(BuiltMap<String, BuiltList<String>>())
     ..reportSettings.replace(BuiltMap<String, ReportSettingsEntity>())
+    ..dashboardFields.replace(BuiltList<DashboardField>(<DashboardField>[
+      DashboardField(
+        field: DashboardUISettings.FIELD_ACTIVE_INVOICES,
+        period: DashboardUISettings.PERIOD_CURRENT,
+      ),
+      DashboardField(
+        field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+        period: DashboardUISettings.PERIOD_CURRENT,
+      ),
+    ]))
     ..includeDeletedClients = false;
 
   static Serializer<UserSettingsEntity> get serializer =>
@@ -1132,4 +1156,30 @@ abstract class RegistrationFieldEntity
 
   static Serializer<RegistrationFieldEntity> get serializer =>
       _$registrationFieldEntitySerializer;
+}
+
+abstract class DashboardField
+    implements Built<DashboardField, DashboardFieldBuilder> {
+  factory DashboardField({
+    String field,
+    String period,
+  }) {
+    return _$DashboardField._(
+      field: field ?? '',
+      period: period ?? '',
+    );
+  }
+
+  DashboardField._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get field;
+
+  String get period;
+
+  static Serializer<DashboardField> get serializer =>
+      _$dashboardFieldSerializer;
 }

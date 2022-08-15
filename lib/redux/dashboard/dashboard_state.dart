@@ -56,10 +56,31 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
+      numberFieldsPerRow: 2,
     );
   }
 
   DashboardUISettings._();
+
+  static const String FIELD_ACTIVE_INVOICES = 'total_active_invoices';
+  static const String FIELD_OUTSTANDING_INVOICES = 'total_outstanding_invoices';
+  static const String FIELD_COMPLETED_PAYMENTS = 'total_completed_payments';
+  static const String FIELD_REFUNDED_PAYMENTS = 'total_refunded_payments';
+  static const String FIELD_ACTIVE_QUOTES = 'total_active_quotes';
+  static const String FIELD_APPROVED_QUOTES = 'total_approved_quotes';
+  static const String FIELD_UNAPPROVED_QUOTES = 'total_unapproved_quotes';
+  static const String FIELD_LOGGED_TASKS = 'total_logged_tasks';
+  static const String FIELD_INVOICED_TASKS = 'total_invoiced_tasks';
+  static const String FIELD_PAID_TASKS = 'total_paid_tasks';
+  static const String FIELD_LOGGED_EXPENSES = 'total_logged_expenses';
+  static const String FIELD_PENDING_EXPENSES = 'total_pending_expenses';
+  static const String FIELD_INVOICED_EXPENSES = 'total_invoiced_expenses';
+  static const String FIELD_INVOICE_PAID_EXPENSES =
+      'total_invoice_paid_expenses';
+
+  static const String PERIOD_CURRENT = 'current_period';
+  static const String PERIOD_PREVIOUS = 'previous_period';
+  static const String PERIOD_TOTAL = 'total';
 
   @override
   @memoized
@@ -86,6 +107,8 @@ abstract class DashboardUISettings
   bool get includeTaxes;
 
   String get groupBy;
+
+  int get numberFieldsPerRow;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||
@@ -118,8 +141,9 @@ abstract class DashboardUISettings
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(DashboardUISettingsBuilder builder) =>
-      builder..groupBy = kReportGroupDay;
+  static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
+    ..groupBy = kReportGroupDay
+    ..numberFieldsPerRow = 2;
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;
