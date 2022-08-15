@@ -1014,10 +1014,6 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
 
-  @nullable
-  @BuiltValueField(wireName: 'dashboard_settings')
-  DashboardUISettings get dashboardSettings;
-
   @BuiltValueField(wireName: 'table_columns')
   BuiltMap<String, BuiltList<String>> get tableColumns;
 
