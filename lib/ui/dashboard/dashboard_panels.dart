@@ -203,6 +203,7 @@ class DashboardPanels extends StatelessWidget {
       void _showSettings() {
         showDialog<AlertDialog>(
             context: context,
+            barrierDismissible: false,
             builder: (BuildContext context) {
               return _DashboardSettings(
                 isWide: isWide,

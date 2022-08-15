@@ -1189,6 +1189,13 @@ class _$UserSettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.dashboardSettings;
+    if (value != null) {
+      result
+        ..add('dashboard_settings')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DashboardUISettings)));
+    }
     return result;
   }
 
@@ -1207,6 +1214,11 @@ class _$UserSettingsEntitySerializer
         case 'accent_color':
           result.accentColor = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'dashboard_settings':
+          result.dashboardSettings.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DashboardUISettings))
+              as DashboardUISettings);
           break;
         case 'table_columns':
           result.tableColumns.replace(serializers.deserialize(value,
@@ -3553,6 +3565,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   final String accentColor;
   @override
+  final DashboardUISettings dashboardSettings;
+  @override
   final BuiltMap<String, BuiltList<String>> tableColumns;
   @override
   final BuiltMap<String, ReportSettingsEntity> reportSettings;
@@ -3567,6 +3581,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
 
   _$UserSettingsEntity._(
       {this.accentColor,
+      this.dashboardSettings,
       this.tableColumns,
       this.reportSettings,
       this.numberYearsActive,
@@ -3596,6 +3611,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     if (identical(other, this)) return true;
     return other is UserSettingsEntity &&
         accentColor == other.accentColor &&
+        dashboardSettings == other.dashboardSettings &&
         tableColumns == other.tableColumns &&
         reportSettings == other.reportSettings &&
         numberYearsActive == other.numberYearsActive &&
@@ -3607,7 +3623,11 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+            $jc(
+                $jc(
+                    $jc($jc(0, accentColor.hashCode),
+                        dashboardSettings.hashCode),
+                    tableColumns.hashCode),
                 reportSettings.hashCode),
             numberYearsActive.hashCode),
         includeDeletedClients.hashCode));
@@ -3617,6 +3637,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   String toString() {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
           ..add('accentColor', accentColor)
+          ..add('dashboardSettings', dashboardSettings)
           ..add('tableColumns', tableColumns)
           ..add('reportSettings', reportSettings)
           ..add('numberYearsActive', numberYearsActive)
@@ -3632,6 +3653,12 @@ class UserSettingsEntityBuilder
   String _accentColor;
   String get accentColor => _$this._accentColor;
   set accentColor(String accentColor) => _$this._accentColor = accentColor;
+
+  DashboardUISettingsBuilder _dashboardSettings;
+  DashboardUISettingsBuilder get dashboardSettings =>
+      _$this._dashboardSettings ??= new DashboardUISettingsBuilder();
+  set dashboardSettings(DashboardUISettingsBuilder dashboardSettings) =>
+      _$this._dashboardSettings = dashboardSettings;
 
   MapBuilder<String, BuiltList<String>> _tableColumns;
   MapBuilder<String, BuiltList<String>> get tableColumns =>
@@ -3663,6 +3690,7 @@ class UserSettingsEntityBuilder
     final $v = _$v;
     if ($v != null) {
       _accentColor = $v.accentColor;
+      _dashboardSettings = $v.dashboardSettings?.toBuilder();
       _tableColumns = $v.tableColumns.toBuilder();
       _reportSettings = $v.reportSettings.toBuilder();
       _numberYearsActive = $v.numberYearsActive;
@@ -3690,6 +3718,7 @@ class UserSettingsEntityBuilder
       _$result = _$v ??
           new _$UserSettingsEntity._(
               accentColor: accentColor,
+              dashboardSettings: _dashboardSettings?.build(),
               tableColumns: tableColumns.build(),
               reportSettings: reportSettings.build(),
               numberYearsActive: BuiltValueNullFieldError.checkNotNull(
@@ -3701,6 +3730,8 @@ class UserSettingsEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'dashboardSettings';
+        _dashboardSettings?.build();
         _$failedField = 'tableColumns';
         tableColumns.build();
         _$failedField = 'reportSettings';
