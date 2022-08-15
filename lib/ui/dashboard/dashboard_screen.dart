@@ -61,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final state = widget.viewModel.state;
     final company = state.company;
-    final entityType = state.dashboardUIState.selectedEntityType;
+    //final entityType = state.dashboardUIState.selectedEntityType;
 
     [
       EntityType.invoice,
@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       }
     });
 
-    final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
+    //final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
     int mainTabCount = 3;
 
     if (state.prefState.isMobile) {
@@ -84,7 +84,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     _mainTabController = TabController(vsync: this, length: mainTabCount);
     _sideTabController =
-        TabController(vsync: this, length: _tabs.length, initialIndex: index)
+        TabController(vsync: this, length: _tabs.length, initialIndex: 0)
           ..addListener(onTabListener);
     _scrollController = ScrollController(
         // initialScrollOffset: (index > 0 ? index + 1 : 0) *
