@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -21,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/review_app.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -1023,7 +1025,23 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
         TextButton(
           child: Text(localization.close.toUpperCase()),
           onPressed: () => Navigator.of(context).pop(),
-        )
+        ),
+        TextButton(
+            child: Text(localization.save.toUpperCase()),
+            onPressed: () {
+              final completer = snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).savedSettings);
+              final user = state.user
+                  .rebuild((b) => b..userCompany.replace(state.userCompany));
+              store.dispatch(
+                SaveUserSettingsRequest(
+                  completer: completer,
+                  user: user,
+                ),
+              );
+
+              Navigator.of(context).pop();
+            }),
       ],
       content: Container(
         width: 300,
