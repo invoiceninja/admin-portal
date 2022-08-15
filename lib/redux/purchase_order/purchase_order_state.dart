@@ -58,7 +58,7 @@ abstract class PurchaseOrderUIState extends Object
     return _$PurchaseOrderUIState._(
       listUIState: ListUIState(
         sortField?.field ?? PurchaseOrderFields.number,
-        sortAscending: sortField?.ascending,
+        sortAscending: sortField?.ascending ?? false,
       ),
       editing: InvoiceEntity(),
       selectedId: '',
