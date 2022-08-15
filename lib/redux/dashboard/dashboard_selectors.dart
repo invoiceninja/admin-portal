@@ -419,20 +419,20 @@ List<ChartDataGroup> chartPayments(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
 ) {
-  const STATUS_ACTIVE = 'completed';
+  const STATUS_COMPLETED = 'completed';
   const STATUS_REFUNDED = 'refunded';
 
   final Map<String, int> counts = {
-    STATUS_ACTIVE: 0,
+    STATUS_COMPLETED: 0,
     STATUS_REFUNDED: 0,
   };
 
   final Map<String, Map<String, double>> totals = {
-    STATUS_ACTIVE: {},
+    STATUS_COMPLETED: {},
     STATUS_REFUNDED: {},
   };
 
-  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_COMPLETED);
   final ChartDataGroup refundedData = ChartDataGroup(STATUS_REFUNDED);
 
   paymentMap.forEach((int, payment) {
@@ -477,18 +477,18 @@ List<ChartDataGroup> chartPayments(
 
       if (payment.isBetween(
           settings.startDate(company), settings.endDate(company))) {
-        if (totals[STATUS_ACTIVE][date] == null) {
-          totals[STATUS_ACTIVE][date] = 0.0;
+        if (totals[STATUS_COMPLETED][date] == null) {
+          totals[STATUS_COMPLETED][date] = 0.0;
           totals[STATUS_REFUNDED][date] = 0.0;
 
           activeData.entityMap[date] = [];
           refundedData.entityMap[date] = [];
         }
 
-        totals[STATUS_ACTIVE][date] += completedAmount;
+        totals[STATUS_COMPLETED][date] += completedAmount;
         totals[STATUS_REFUNDED][date] += refunded ?? 0;
 
-        counts[STATUS_ACTIVE]++;
+        counts[STATUS_COMPLETED]++;
         activeData.entityMap[date].add(payment.id);
         activeData.preriodTotal += completedAmount;
 
@@ -506,9 +506,9 @@ List<ChartDataGroup> chartPayments(
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_ACTIVE].containsKey(key)) {
+    if (totals[STATUS_COMPLETED].containsKey(key)) {
       activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
+          .add(ChartMoneyData(date, totals[STATUS_COMPLETED][key]));
       refundedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_REFUNDED][key]));
     } else {
@@ -525,8 +525,8 @@ List<ChartDataGroup> chartPayments(
     }
   }
 
-  activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
+  activeData.average = (counts[STATUS_COMPLETED] ?? 0) > 0
+      ? round(activeData.preriodTotal / counts[STATUS_COMPLETED], 2)
       : 0;
   refundedData.average = (counts[STATUS_REFUNDED] ?? 0) > 0
       ? round(refundedData.preriodTotal / counts[STATUS_REFUNDED], 2)
