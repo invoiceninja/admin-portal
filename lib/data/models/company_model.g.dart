@@ -1186,6 +1186,12 @@ class _$UserSettingsEntitySerializer
       serializers.serialize(object.dashboardFields,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DashboardField)])),
+      'dashboard_fields_per_row_mobile',
+      serializers.serialize(object.dashboardFieldsPerRowMobile,
+          specifiedType: const FullType(int)),
+      'dashboard_fields_per_row_desktop',
+      serializers.serialize(object.dashboardFieldsPerRowDesktop,
+          specifiedType: const FullType(int)),
     ];
     Object value;
     value = object.accentColor;
@@ -1241,6 +1247,14 @@ class _$UserSettingsEntitySerializer
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DashboardField)]))
               as BuiltList<Object>);
+          break;
+        case 'dashboard_fields_per_row_mobile':
+          result.dashboardFieldsPerRowMobile = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'dashboard_fields_per_row_desktop':
+          result.dashboardFieldsPerRowDesktop = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -3623,6 +3637,10 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   final bool includeDeletedClients;
   @override
   final BuiltList<DashboardField> dashboardFields;
+  @override
+  final int dashboardFieldsPerRowMobile;
+  @override
+  final int dashboardFieldsPerRowDesktop;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
@@ -3634,7 +3652,9 @@ class _$UserSettingsEntity extends UserSettingsEntity {
       this.reportSettings,
       this.numberYearsActive,
       this.includeDeletedClients,
-      this.dashboardFields})
+      this.dashboardFields,
+      this.dashboardFieldsPerRowMobile,
+      this.dashboardFieldsPerRowDesktop})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         tableColumns, 'UserSettingsEntity', 'tableColumns');
@@ -3646,6 +3666,10 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         includeDeletedClients, 'UserSettingsEntity', 'includeDeletedClients');
     BuiltValueNullFieldError.checkNotNull(
         dashboardFields, 'UserSettingsEntity', 'dashboardFields');
+    BuiltValueNullFieldError.checkNotNull(dashboardFieldsPerRowMobile,
+        'UserSettingsEntity', 'dashboardFieldsPerRowMobile');
+    BuiltValueNullFieldError.checkNotNull(dashboardFieldsPerRowDesktop,
+        'UserSettingsEntity', 'dashboardFieldsPerRowDesktop');
   }
 
   @override
@@ -3666,7 +3690,9 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         reportSettings == other.reportSettings &&
         numberYearsActive == other.numberYearsActive &&
         includeDeletedClients == other.includeDeletedClients &&
-        dashboardFields == other.dashboardFields;
+        dashboardFields == other.dashboardFields &&
+        dashboardFieldsPerRowMobile == other.dashboardFieldsPerRowMobile &&
+        dashboardFieldsPerRowDesktop == other.dashboardFieldsPerRowDesktop;
   }
 
   int __hashCode;
@@ -3675,11 +3701,17 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
-                    reportSettings.hashCode),
-                numberYearsActive.hashCode),
-            includeDeletedClients.hashCode),
-        dashboardFields.hashCode));
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc(0, accentColor.hashCode),
+                                tableColumns.hashCode),
+                            reportSettings.hashCode),
+                        numberYearsActive.hashCode),
+                    includeDeletedClients.hashCode),
+                dashboardFields.hashCode),
+            dashboardFieldsPerRowMobile.hashCode),
+        dashboardFieldsPerRowDesktop.hashCode));
   }
 
   @override
@@ -3690,7 +3722,9 @@ class _$UserSettingsEntity extends UserSettingsEntity {
           ..add('reportSettings', reportSettings)
           ..add('numberYearsActive', numberYearsActive)
           ..add('includeDeletedClients', includeDeletedClients)
-          ..add('dashboardFields', dashboardFields))
+          ..add('dashboardFields', dashboardFields)
+          ..add('dashboardFieldsPerRowMobile', dashboardFieldsPerRowMobile)
+          ..add('dashboardFieldsPerRowDesktop', dashboardFieldsPerRowDesktop))
         .toString();
   }
 }
@@ -3731,6 +3765,16 @@ class UserSettingsEntityBuilder
   set dashboardFields(ListBuilder<DashboardField> dashboardFields) =>
       _$this._dashboardFields = dashboardFields;
 
+  int _dashboardFieldsPerRowMobile;
+  int get dashboardFieldsPerRowMobile => _$this._dashboardFieldsPerRowMobile;
+  set dashboardFieldsPerRowMobile(int dashboardFieldsPerRowMobile) =>
+      _$this._dashboardFieldsPerRowMobile = dashboardFieldsPerRowMobile;
+
+  int _dashboardFieldsPerRowDesktop;
+  int get dashboardFieldsPerRowDesktop => _$this._dashboardFieldsPerRowDesktop;
+  set dashboardFieldsPerRowDesktop(int dashboardFieldsPerRowDesktop) =>
+      _$this._dashboardFieldsPerRowDesktop = dashboardFieldsPerRowDesktop;
+
   UserSettingsEntityBuilder() {
     UserSettingsEntity._initializeBuilder(this);
   }
@@ -3744,6 +3788,8 @@ class UserSettingsEntityBuilder
       _numberYearsActive = $v.numberYearsActive;
       _includeDeletedClients = $v.includeDeletedClients;
       _dashboardFields = $v.dashboardFields.toBuilder();
+      _dashboardFieldsPerRowMobile = $v.dashboardFieldsPerRowMobile;
+      _dashboardFieldsPerRowDesktop = $v.dashboardFieldsPerRowDesktop;
       _$v = null;
     }
     return this;
@@ -3775,7 +3821,17 @@ class UserSettingsEntityBuilder
                   includeDeletedClients,
                   'UserSettingsEntity',
                   'includeDeletedClients'),
-              dashboardFields: dashboardFields.build());
+              dashboardFields: dashboardFields.build(),
+              dashboardFieldsPerRowMobile:
+                  BuiltValueNullFieldError.checkNotNull(
+                      dashboardFieldsPerRowMobile,
+                      'UserSettingsEntity',
+                      'dashboardFieldsPerRowMobile'),
+              dashboardFieldsPerRowDesktop:
+                  BuiltValueNullFieldError.checkNotNull(
+                      dashboardFieldsPerRowDesktop,
+                      'UserSettingsEntity',
+                      'dashboardFieldsPerRowDesktop'));
     } catch (_) {
       String _$failedField;
       try {

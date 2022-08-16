@@ -326,6 +326,7 @@ class DashboardPanels extends StatelessWidget {
     final company = state.company;
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState.settings;
+    final userCompanySettings = state.userCompany.settings;
     final runningTasks = _runningTasks(context);
 
     if (!state.staticState.isLoaded) {
@@ -572,7 +573,10 @@ class DashboardPanels extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
-                          crossAxisCount: settings.numberFieldsPerRow,
+                          crossAxisCount: isMobile(context)
+                              ? userCompanySettings.dashboardFieldsPerRowMobile
+                              : userCompanySettings
+                                  .dashboardFieldsPerRowDesktop,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: state.userCompany.settings.dashboardFields
@@ -982,7 +986,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
     final groupMap = state.groupState.map;
     final company = state.company;
     final settings = state.dashboardUIState.settings;
-    final dashboardFields = state.userCompany.settings.dashboardFields;
+    final userCompanySettings = state.userCompany.settings;
 
     final hasMultipleCurrencies =
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
@@ -1140,7 +1144,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   setState(() {});
                 },
                 children: [
-                  for (var dashboardField in dashboardFields)
+                  for (var dashboardField
+                      in userCompanySettings.dashboardFields)
                     ListTile(
                       key: ValueKey(
                           '__${dashboardField.field}_${dashboardField.period}_'),
@@ -1151,7 +1156,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                         icon: Icon(Icons.close),
                         onPressed: () {
                           store.dispatch(UpdateDashboardFields(
-                              dashboardFields: dashboardFields
+                              dashboardFields: userCompanySettings
+                                  .dashboardFields
                                   .rebuild((b) => b..remove(dashboardField))));
                           setState(() {});
                         },
@@ -1171,10 +1177,17 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             SizedBox(height: 16),
             AppDropdownButton<int>(
                 labelText: localization.fieldsPerRow,
-                value: settings.numberFieldsPerRow,
+                value: isMobile(context)
+                    ? userCompanySettings.dashboardFieldsPerRowMobile
+                    : userCompanySettings.dashboardFieldsPerRowDesktop,
                 onChanged: (dynamic value) {
-                  store.dispatch(
-                      UpdateDashboardSettings(numberFieldsPerRow: value));
+                  if (isMobile(context)) {
+                    store.dispatch(UpdateDashboardFieldSettingss(
+                        numberFieldsPerRowMobile: value));
+                  } else {
+                    store.dispatch(UpdateDashboardFieldSettingss(
+                        numberFieldsPerRowDesktop: value));
+                  }
                   setState(() {});
                 },
                 items: List<int>.generate(8, (i) => i + 1)

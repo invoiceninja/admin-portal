@@ -143,6 +143,21 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
     (userCompany, action) => userCompany.rebuild(
         (b) => b..settings.dashboardFields.replace(action.dashboardFields)),
   ),
+  TypedReducer<UserCompanyEntity, UpdateDashboardFieldSettingss>(
+    (userCompany, action) {
+      if (action.numberFieldsPerRowDesktop != null) {
+        return userCompany.rebuild((b) => b
+          ..settings.dashboardFieldsPerRowDesktop =
+              action.numberFieldsPerRowDesktop);
+      } else if (action.numberFieldsPerRowDesktop != null) {
+        return userCompany.rebuild((b) => b
+          ..settings.dashboardFieldsPerRowMobile =
+              action.numberFieldsPerRowMobile);
+      }
+
+      return userCompany;
+    },
+  ),
 ]);
 
 UserCompanyEntity loadCompanySuccessReducer(

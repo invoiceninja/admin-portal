@@ -1011,6 +1011,8 @@ abstract class UserSettingsEntity
           period: DashboardUISettings.PERIOD_CURRENT,
         ),
       ]),
+      dashboardFieldsPerRowMobile: 1,
+      dashboardFieldsPerRowDesktop: 2,
     );
   }
 
@@ -1039,6 +1041,12 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'dashboard_fields')
   BuiltList<DashboardField> get dashboardFields;
 
+  @BuiltValueField(wireName: 'dashboard_fields_per_row_mobile')
+  int get dashboardFieldsPerRowMobile;
+
+  @BuiltValueField(wireName: 'dashboard_fields_per_row_desktop')
+  int get dashboardFieldsPerRowDesktop;
+
   List<String> getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
       return tableColumns['$entityType'].toList();
@@ -1063,6 +1071,8 @@ abstract class UserSettingsEntity
         period: DashboardUISettings.PERIOD_CURRENT,
       ),
     ]))
+    ..dashboardFieldsPerRowMobile = 1
+    ..dashboardFieldsPerRowDesktop = 2
     ..includeDeletedClients = false;
 
   static Serializer<UserSettingsEntity> get serializer =>

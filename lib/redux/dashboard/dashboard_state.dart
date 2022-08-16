@@ -56,7 +56,6 @@ abstract class DashboardUISettings
       currencyId: kCurrencyAll,
       includeTaxes: true,
       groupBy: kReportGroupDay,
-      numberFieldsPerRow: 2,
     );
   }
 
@@ -108,8 +107,6 @@ abstract class DashboardUISettings
 
   String get groupBy;
 
-  int get numberFieldsPerRow;
-
   bool matchesCurrency(String match) {
     if (currencyId == null ||
         currencyId.isEmpty ||
@@ -141,9 +138,8 @@ abstract class DashboardUISettings
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(DashboardUISettingsBuilder builder) => builder
-    ..groupBy = kReportGroupDay
-    ..numberFieldsPerRow = 2;
+  static void _initializeBuilder(DashboardUISettingsBuilder builder) =>
+      builder..groupBy = kReportGroupDay;
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;
