@@ -585,7 +585,7 @@ class DashboardPanels extends StatelessWidget {
                             double value = 0;
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
-                              value = data.preriodTotal;
+                              value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
                               value = data.previousTotal;
@@ -779,7 +779,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
         final currentSeries = dataGroup.rawSeries;
         final previousSeries = widget.previousData[index].rawSeries;
 
-        dataGroup.previousTotal = widget.previousData[index].preriodTotal;
+        dataGroup.previousTotal = widget.previousData[index].periodTotal;
 
         for (int i = 0;
             i < min(currentSeries.length, previousSeries.length);
@@ -891,7 +891,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       if (state.company.isModuleEnabled(EntityType.expense)) {
         final List<ChartMoneyData> expenses = [];
         final expenseSeries = expenseData[index].rawSeries;
-        dataGroup.previousTotal = expenseData[index].preriodTotal;
+        dataGroup.previousTotal = expenseData[index].periodTotal;
 
         for (int i = 0;
             i < min(invoiceSeries.length, expenseSeries.length);
@@ -914,7 +914,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
 
       final List<ChartMoneyData> payments = [];
       final paymentSeries = paymentData[index].rawSeries;
-      dataGroup.previousTotal = paymentData[index].preriodTotal;
+      dataGroup.previousTotal = paymentData[index].periodTotal;
 
       for (int i = 0;
           i < min(invoiceSeries.length, paymentSeries.length);

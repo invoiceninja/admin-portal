@@ -19,7 +19,7 @@ class ChartDataGroup {
   final List<ChartMoneyData> rawSeries = [];
   Map<String, List<String>> entityMap = {};
   List<Series<dynamic, DateTime>> chartSeries;
-  double preriodTotal = 0.0;
+  double periodTotal = 0.0;
   double previousTotal = 0.0;
   double total = 0.0;
   double average = 0.0;
@@ -153,8 +153,8 @@ List<ChartDataGroup> _chartInvoices({
         totals[STATUS_ACTIVE][date] += amount;
         totals[STATUS_OUTSTANDING][date] += balance;
 
-        activeData.preriodTotal += amount;
-        outstandingData.preriodTotal += balance;
+        activeData.periodTotal += amount;
+        outstandingData.periodTotal += balance;
 
         counts[STATUS_ACTIVE]++;
         activeData.entityMap[date].add(invoice.id);
@@ -192,10 +192,10 @@ List<ChartDataGroup> _chartInvoices({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.periodTotal / counts[STATUS_ACTIVE], 2)
       : 0;
   outstandingData.average = (counts[STATUS_OUTSTANDING] ?? 0) > 0
-      ? round(outstandingData.preriodTotal / counts[STATUS_OUTSTANDING], 2)
+      ? round(outstandingData.periodTotal / counts[STATUS_OUTSTANDING], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -320,12 +320,12 @@ List<ChartDataGroup> chartQuotes({
           totals[STATUS_APPROVED][date] += amount;
           counts[STATUS_APPROVED]++;
           approvedData.entityMap[date].add(quote.id);
-          approvedData.preriodTotal += amount;
+          approvedData.periodTotal += amount;
         } else {
           totals[STATUS_UNAPPROVED][date] += amount;
           counts[STATUS_UNAPPROVED]++;
           unapprovedData.entityMap[date].add(quote.id);
-          unapprovedData.preriodTotal += amount;
+          unapprovedData.periodTotal += amount;
         }
       }
     }
@@ -359,13 +359,13 @@ List<ChartDataGroup> chartQuotes({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.preriodTotal / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.periodTotal / counts[STATUS_ACTIVE], 2)
       : 0;
   approvedData.average = (counts[STATUS_APPROVED] ?? 0) > 0
-      ? round(approvedData.preriodTotal / counts[STATUS_APPROVED], 2)
+      ? round(approvedData.periodTotal / counts[STATUS_APPROVED], 2)
       : 0;
   unapprovedData.average = (counts[STATUS_UNAPPROVED] ?? 0) > 0
-      ? round(unapprovedData.preriodTotal / counts[STATUS_UNAPPROVED], 2)
+      ? round(unapprovedData.periodTotal / counts[STATUS_UNAPPROVED], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -490,12 +490,12 @@ List<ChartDataGroup> chartPayments(
 
         counts[STATUS_COMPLETED]++;
         activeData.entityMap[date].add(payment.id);
-        activeData.preriodTotal += completedAmount;
+        activeData.periodTotal += completedAmount;
 
         if ((payment.refunded ?? 0) > 0) {
           counts[STATUS_REFUNDED]++;
           refundedData.entityMap[date].add(payment.id);
-          refundedData.preriodTotal += refunded ?? 0;
+          refundedData.periodTotal += refunded ?? 0;
         }
       }
     }
@@ -526,10 +526,10 @@ List<ChartDataGroup> chartPayments(
   }
 
   activeData.average = (counts[STATUS_COMPLETED] ?? 0) > 0
-      ? round(activeData.preriodTotal / counts[STATUS_COMPLETED], 2)
+      ? round(activeData.periodTotal / counts[STATUS_COMPLETED], 2)
       : 0;
   refundedData.average = (counts[STATUS_REFUNDED] ?? 0) > 0
-      ? round(refundedData.preriodTotal / counts[STATUS_REFUNDED], 2)
+      ? round(refundedData.periodTotal / counts[STATUS_REFUNDED], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -681,16 +681,16 @@ List<ChartDataGroup> chartTasks(
                   invoiceMap[task.invoiceId].isPaid) {
                 totals[STATUS_PAID][date] += amount;
                 paidData.entityMap[date].add(task.id);
-                paidData.preriodTotal += amount;
+                paidData.periodTotal += amount;
               } else {
                 totals[STATUS_INVOICED][date] += amount;
                 invoicedData.entityMap[date].add(task.id);
-                invoicedData.preriodTotal += amount;
+                invoicedData.periodTotal += amount;
               }
             } else {
               totals[STATUS_LOGGED][date] += amount;
               loggedData.entityMap[date].add(task.id);
-              loggedData.preriodTotal += amount;
+              loggedData.periodTotal += amount;
             }
           }
         });
@@ -736,13 +736,13 @@ List<ChartDataGroup> chartTasks(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.preriodTotal / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.periodTotal / counts[STATUS_LOGGED], 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.preriodTotal / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED], 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.preriodTotal / counts[STATUS_PAID], 2)
+      ? round(paidData.periodTotal / counts[STATUS_PAID], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -846,23 +846,23 @@ List<ChartDataGroup> chartExpenses(
             totals[STATUS_PAID][date] += amount;
             counts[STATUS_PAID]++;
             paidData.entityMap[date].add(expense.id);
-            paidData.preriodTotal += amount;
+            paidData.periodTotal += amount;
           } else {
             totals[STATUS_INVOICED][date] += amount;
             counts[STATUS_INVOICED]++;
             invoicedData.entityMap[date].add(expense.id);
-            invoicedData.preriodTotal += amount;
+            invoicedData.periodTotal += amount;
           }
         } else if (expense.isPending) {
           totals[STATUS_PENDING][date] += amount;
           counts[STATUS_PENDING]++;
           pendingData.entityMap[date].add(expense.id);
-          pendingData.preriodTotal += amount;
+          pendingData.periodTotal += amount;
         } else {
           totals[STATUS_LOGGED][date] += amount;
           counts[STATUS_LOGGED]++;
           loggedData.entityMap[date].add(expense.id);
-          loggedData.preriodTotal += amount;
+          loggedData.periodTotal += amount;
         }
       }
     }
@@ -898,16 +898,16 @@ List<ChartDataGroup> chartExpenses(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.preriodTotal / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.periodTotal / counts[STATUS_LOGGED], 2)
       : 0;
   pendingData.average = (counts[STATUS_PENDING] ?? 0) > 0
-      ? round(pendingData.preriodTotal / counts[STATUS_PENDING], 2)
+      ? round(pendingData.periodTotal / counts[STATUS_PENDING], 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.preriodTotal / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED], 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.preriodTotal / counts[STATUS_PAID], 2)
+      ? round(paidData.periodTotal / counts[STATUS_PAID], 2)
       : 0;
 
   final List<ChartDataGroup> data = [
