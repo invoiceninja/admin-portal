@@ -1173,14 +1173,20 @@ abstract class DashboardField
   factory DashboardField({
     String field,
     String period,
+    String type,
   }) {
     return _$DashboardField._(
       field: field ?? '',
       period: period ?? '',
+      type: type ?? TYPE_SUM,
     );
   }
 
   DashboardField._();
+
+  static const TYPE_SUM = 'sum';
+  static const TYPE_COUNT = 'count';
+  static const TYPE_AVERAGE = 'average';
 
   @override
   @memoized
@@ -1189,6 +1195,12 @@ abstract class DashboardField
   String get field;
 
   String get period;
+
+  String get type;
+
+  // ignore: unused_element
+  static void _initializeBuilder(DashboardFieldBuilder builder) =>
+      builder..type = TYPE_SUM;
 
   static Serializer<DashboardField> get serializer =>
       _$dashboardFieldSerializer;
