@@ -142,18 +142,18 @@ class _DashboardChartState extends State<DashboardChart> {
                 final int index = widget.data.indexOf(dataGroup);
                 final bool isSelected = index == _selectedIndex;
                 final bool isIncrease =
-                    dataGroup.preriodTotal > dataGroup.previousTotal;
+                    dataGroup.periodTotal > dataGroup.previousTotal;
                 final String changeAmount = (isIncrease ? '+' : '') +
                     formatNumber(
-                        dataGroup.preriodTotal - dataGroup.previousTotal,
+                        dataGroup.periodTotal - dataGroup.previousTotal,
                         context,
                         currencyId: widget.currencyId);
                 final changePercent = (isIncrease ? '+' : '') +
                     formatNumber(
-                        dataGroup.preriodTotal != 0 &&
+                        dataGroup.periodTotal != 0 &&
                                 dataGroup.previousTotal != 0
                             ? round(
-                                (dataGroup.preriodTotal -
+                                (dataGroup.periodTotal -
                                         dataGroup.previousTotal) /
                                     dataGroup.previousTotal *
                                     100,
@@ -162,9 +162,9 @@ class _DashboardChartState extends State<DashboardChart> {
                         context,
                         formatNumberType: FormatNumberType.percent,
                         currencyId: widget.currencyId);
-                final String changeString = dataGroup.preriodTotal == 0 ||
+                final String changeString = dataGroup.periodTotal == 0 ||
                         dataGroup.previousTotal == 0 ||
-                        dataGroup.preriodTotal == dataGroup.previousTotal
+                        dataGroup.periodTotal == dataGroup.previousTotal
                     ? (settings.enableComparison ? ' ' : '')
                     : '$changeAmount ($changePercent)';
 
@@ -188,7 +188,7 @@ class _DashboardChartState extends State<DashboardChart> {
                             )),
                         SizedBox(height: 4),
                         Text(
-                            formatNumber(dataGroup.preriodTotal, context,
+                            formatNumber(dataGroup.periodTotal, context,
                                 currencyId: widget.currencyId),
                             style: theme.textTheme.headline5.copyWith(
                                 color: isSelected ? Colors.white : null)),

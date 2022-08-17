@@ -1455,6 +1455,8 @@ class _$DashboardFieldSerializer
       'period',
       serializers.serialize(object.period,
           specifiedType: const FullType(String)),
+      'type',
+      serializers.serialize(object.type, specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -1478,6 +1480,10 @@ class _$DashboardFieldSerializer
           break;
         case 'period':
           result.period = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'type':
+          result.type = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -4215,13 +4221,16 @@ class _$DashboardField extends DashboardField {
   final String field;
   @override
   final String period;
+  @override
+  final String type;
 
   factory _$DashboardField([void Function(DashboardFieldBuilder) updates]) =>
       (new DashboardFieldBuilder()..update(updates)).build();
 
-  _$DashboardField._({this.field, this.period}) : super._() {
+  _$DashboardField._({this.field, this.period, this.type}) : super._() {
     BuiltValueNullFieldError.checkNotNull(field, 'DashboardField', 'field');
     BuiltValueNullFieldError.checkNotNull(period, 'DashboardField', 'period');
+    BuiltValueNullFieldError.checkNotNull(type, 'DashboardField', 'type');
   }
 
   @override
@@ -4237,20 +4246,23 @@ class _$DashboardField extends DashboardField {
     if (identical(other, this)) return true;
     return other is DashboardField &&
         field == other.field &&
-        period == other.period;
+        period == other.period &&
+        type == other.type;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, field.hashCode), period.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc($jc(0, field.hashCode), period.hashCode), type.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DashboardField')
           ..add('field', field)
-          ..add('period', period))
+          ..add('period', period)
+          ..add('type', type))
         .toString();
   }
 }
@@ -4267,13 +4279,20 @@ class DashboardFieldBuilder
   String get period => _$this._period;
   set period(String period) => _$this._period = period;
 
-  DashboardFieldBuilder();
+  String _type;
+  String get type => _$this._type;
+  set type(String type) => _$this._type = type;
+
+  DashboardFieldBuilder() {
+    DashboardField._initializeBuilder(this);
+  }
 
   DashboardFieldBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _field = $v.field;
       _period = $v.period;
+      _type = $v.type;
       _$v = null;
     }
     return this;
@@ -4297,7 +4316,9 @@ class DashboardFieldBuilder
             field: BuiltValueNullFieldError.checkNotNull(
                 field, 'DashboardField', 'field'),
             period: BuiltValueNullFieldError.checkNotNull(
-                period, 'DashboardField', 'period'));
+                period, 'DashboardField', 'period'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, 'DashboardField', 'type'));
     replace(_$result);
     return _$result;
   }
