@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
@@ -239,6 +240,20 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
         actions: [
+          if (state.userCompany.isOwner &&
+              state.isSelfHosted &&
+              !state.isDemo &&
+              !isPaidAccount(context) &&
+              !isApple())
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                  tooltip: state.prefState.enableTooltips
+                      ? localization.upgrade
+                      : null,
+                  onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
+                  icon: Icon(Icons.arrow_circle_up)),
+            ),
           if (!kReleaseMode ||
               (kIsWeb &&
                   state.isSelfHosted &&
@@ -274,21 +289,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 },
                 icon: Icon(MdiIcons.react),
               ),
-            ),
-          if (state.userCompany.isOwner &&
-              state.isSelfHosted &&
-              !state.isDemo &&
-              !isPaidAccount(context) &&
-              !isApple())
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: IconButton(
-                  tooltip: state.prefState.enableTooltips
-                      ? localization.upgrade
-                      : null,
-                  onPressed: () =>
-                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl)),
-                  icon: Icon(Icons.arrow_circle_up)),
             ),
           if (isMobile(context) || !state.prefState.isHistoryVisible)
             Builder(
