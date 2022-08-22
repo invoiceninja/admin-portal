@@ -154,6 +154,14 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.invoiceTaskProject),
+                  value: company.invoiceTaskProject,
+                  subtitle: Text(localization.invoiceTaskProjectHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskProject = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.addDocumentsToInvoice),
                   value: company.invoiceTaskDocuments ?? false,
                   subtitle: Text(localization.addDocumentsToInvoiceHelp),

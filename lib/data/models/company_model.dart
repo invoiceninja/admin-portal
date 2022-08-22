@@ -80,6 +80,7 @@ abstract class CompanyEntity extends Object
       autoStartTasks: false,
       invoiceTaskTimelog: true,
       invoiceTaskDatelog: true,
+      invoiceTaskProject: false,
       isLarge: false,
       enableShopApi: false,
       convertProductExchangeRate: false,
@@ -378,6 +379,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'invoice_task_datelog')
   bool get invoiceTaskDatelog;
 
+  @BuiltValueField(wireName: 'invoice_task_project')
+  bool get invoiceTaskProject;
+
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
 
@@ -663,6 +667,7 @@ abstract class CompanyEntity extends Object
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false
     ..numberOfExpenseTaxRates = 0
+    ..invoiceTaskProject = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
