@@ -422,15 +422,10 @@ void handleTaskAction(
       });
 
       String projectId = '';
-      bool hasMultipleProjects = false;
       for (var each in tasks) {
         final task = each as TaskEntity;
-        if (task.projectId.isNotEmpty) {
-          if (projectId.isEmpty) {
-            projectId = task.projectId;
-          } else if (task.projectId != projectId) {
-            hasMultipleProjects = true;
-          }
+        if (task.projectId.isNotEmpty && projectId.isEmpty) {
+          projectId = task.projectId;
         }
       }
 
@@ -445,7 +440,7 @@ void handleTaskAction(
         items.add(convertTaskToInvoiceItem(
             task: task,
             context: context,
-            includeProjectHeader: hasMultipleProjects &&
+            includeProjectHeader: company.invoiceTaskProject &&
                 !company.hasCustomProductField(localization.project) &&
                 (task as TaskEntity).projectId != lastTask?.projectId));
         lastTask = task;

@@ -307,6 +307,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_task_datelog',
       serializers.serialize(object.invoiceTaskDatelog,
           specifiedType: const FullType(bool)),
+      'invoice_task_project',
+      serializers.serialize(object.invoiceTaskProject,
+          specifiedType: const FullType(bool)),
       'auto_start_tasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
@@ -769,6 +772,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_task_datelog':
           result.invoiceTaskDatelog = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_project':
+          result.invoiceTaskProject = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'auto_start_tasks':
@@ -1655,6 +1662,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceTaskDatelog;
   @override
+  final bool invoiceTaskProject;
+  @override
   final bool autoStartTasks;
   @override
   final bool showTasksTable;
@@ -1771,6 +1780,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.invoiceTaskDocuments,
       this.invoiceTaskTimelog,
       this.invoiceTaskDatelog,
+      this.invoiceTaskProject,
       this.autoStartTasks,
       this.showTasksTable,
       this.showTaskEndDate,
@@ -1938,6 +1948,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(
         invoiceTaskDatelog, 'CompanyEntity', 'invoiceTaskDatelog');
     BuiltValueNullFieldError.checkNotNull(
+        invoiceTaskProject, 'CompanyEntity', 'invoiceTaskProject');
+    BuiltValueNullFieldError.checkNotNull(
         autoStartTasks, 'CompanyEntity', 'autoStartTasks');
     BuiltValueNullFieldError.checkNotNull(
         showTasksTable, 'CompanyEntity', 'showTasksTable');
@@ -2051,6 +2063,7 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskDocuments == other.invoiceTaskDocuments &&
         invoiceTaskTimelog == other.invoiceTaskTimelog &&
         invoiceTaskDatelog == other.invoiceTaskDatelog &&
+        invoiceTaskProject == other.invoiceTaskProject &&
         autoStartTasks == other.autoStartTasks &&
         showTasksTable == other.showTasksTable &&
         showTaskEndDate == other.showTaskEndDate &&
@@ -2090,10 +2103,10 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode),
-                                                                                invoiceTaskDocuments.hashCode),
-                                                                            invoiceTaskTimelog.hashCode),
-                                                                        invoiceTaskDatelog.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
+                                                                                invoiceTaskTimelog.hashCode),
+                                                                            invoiceTaskDatelog.hashCode),
+                                                                        invoiceTaskProject.hashCode),
                                                                     autoStartTasks.hashCode),
                                                                 showTasksTable.hashCode),
                                                             showTaskEndDate.hashCode),
@@ -2195,6 +2208,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('invoiceTaskDocuments', invoiceTaskDocuments)
           ..add('invoiceTaskTimelog', invoiceTaskTimelog)
           ..add('invoiceTaskDatelog', invoiceTaskDatelog)
+          ..add('invoiceTaskProject', invoiceTaskProject)
           ..add('autoStartTasks', autoStartTasks)
           ..add('showTasksTable', showTasksTable)
           ..add('showTaskEndDate', showTaskEndDate)
@@ -2633,6 +2647,11 @@ class CompanyEntityBuilder
   set invoiceTaskDatelog(bool invoiceTaskDatelog) =>
       _$this._invoiceTaskDatelog = invoiceTaskDatelog;
 
+  bool _invoiceTaskProject;
+  bool get invoiceTaskProject => _$this._invoiceTaskProject;
+  set invoiceTaskProject(bool invoiceTaskProject) =>
+      _$this._invoiceTaskProject = invoiceTaskProject;
+
   bool _autoStartTasks;
   bool get autoStartTasks => _$this._autoStartTasks;
   set autoStartTasks(bool autoStartTasks) =>
@@ -2793,6 +2812,7 @@ class CompanyEntityBuilder
       _invoiceTaskDocuments = $v.invoiceTaskDocuments;
       _invoiceTaskTimelog = $v.invoiceTaskTimelog;
       _invoiceTaskDatelog = $v.invoiceTaskDatelog;
+      _invoiceTaskProject = $v.invoiceTaskProject;
       _autoStartTasks = $v.autoStartTasks;
       _showTasksTable = $v.showTasksTable;
       _showTaskEndDate = $v.showTaskEndDate;
@@ -2925,6 +2945,7 @@ class CompanyEntityBuilder
               invoiceTaskDocuments: BuiltValueNullFieldError.checkNotNull(invoiceTaskDocuments, 'CompanyEntity', 'invoiceTaskDocuments'),
               invoiceTaskTimelog: BuiltValueNullFieldError.checkNotNull(invoiceTaskTimelog, 'CompanyEntity', 'invoiceTaskTimelog'),
               invoiceTaskDatelog: BuiltValueNullFieldError.checkNotNull(invoiceTaskDatelog, 'CompanyEntity', 'invoiceTaskDatelog'),
+              invoiceTaskProject: BuiltValueNullFieldError.checkNotNull(invoiceTaskProject, 'CompanyEntity', 'invoiceTaskProject'),
               autoStartTasks: BuiltValueNullFieldError.checkNotNull(autoStartTasks, 'CompanyEntity', 'autoStartTasks'),
               showTasksTable: BuiltValueNullFieldError.checkNotNull(showTasksTable, 'CompanyEntity', 'showTasksTable'),
               showTaskEndDate: BuiltValueNullFieldError.checkNotNull(showTaskEndDate, 'CompanyEntity', 'showTaskEndDate'),
