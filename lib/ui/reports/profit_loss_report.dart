@@ -245,16 +245,16 @@ ReportResult profitAndLossReport(
           value = staticState.countryMap[vendor?.countryId];
           break;
         case ProfitAndLossReportFields.amount:
-          value = -expense.amount;
+          value = -expense.grossAmount;
           break;
         case ProfitAndLossReportFields.payment:
           value = 0.0;
           break;
         case ProfitAndLossReportFields.expense:
-          value = expense.amount;
+          value = expense.grossAmount;
           break;
         case ProfitAndLossReportFields.profit:
-          value = -expense.amount;
+          value = -expense.grossAmount;
           break;
         case ProfitAndLossReportFields.date:
           value = expense.date;
