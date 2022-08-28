@@ -319,6 +319,7 @@ class ReportsScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: false,
           automaticallyImplyLeading: false,
+          leadingWidth: isMobile(context) ? 40 : 0,
           leading: leading,
           title: Row(
             mainAxisSize: MainAxisSize.min,
