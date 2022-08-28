@@ -291,7 +291,7 @@ class EditScaffold extends StatelessWidget {
             actions: showOverflow
                 ? []
                 : [
-                    if (state.isSaving && isMobileOS())
+                    if (state.isSaving && isMobile(context))
                       Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Center(
@@ -301,7 +301,7 @@ class EditScaffold extends StatelessWidget {
                           child: CircularProgressIndicator(color: Colors.white),
                         )),
                       )
-                    else if (isDesktopOS())
+                    else if (isDesktop(context))
                       Row(
                         children: [
                           OutlinedButton(
