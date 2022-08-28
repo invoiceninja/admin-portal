@@ -100,10 +100,10 @@ class ListScaffold extends StatelessWidget {
 
     double leadingWidth = 0;
     if (entityType == EntityType.settings) {
-      leadingWidth = isDesktop(context) ? 0 : 40;
+      leadingWidth = isDesktop(context) ? 0 : kMinInteractiveDimension;
     } else {
-      leadingWidth = (isDesktop(context) ? 90 : 10) +
-          kMinInteractiveDimension *
+      leadingWidth = (isDesktop(context) ? 100 : 10) +
+          (kMinInteractiveDimension - 4) *
               (appBarLeadingActions.length +
                   (onCheckboxPressed == null || isMobile(context) ? 1 : 2));
     }
@@ -120,6 +120,7 @@ class ListScaffold extends StatelessWidget {
                 ? null
                 : () => onCheckboxPressed(),
           ),
+        if (appBarLeadingActions.isNotEmpty) SizedBox(width: 4),
         ...appBarLeadingActions,
       ],
     );
