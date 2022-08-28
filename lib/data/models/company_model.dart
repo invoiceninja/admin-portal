@@ -1012,12 +1012,16 @@ abstract class UserSettingsEntity
           period: DashboardUISettings.PERIOD_CURRENT,
         ),
         DashboardField(
+          field: DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+        DashboardField(
           field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
           period: DashboardUISettings.PERIOD_CURRENT,
         ),
       ]),
       dashboardFieldsPerRowMobile: 1,
-      dashboardFieldsPerRowDesktop: 2,
+      dashboardFieldsPerRowDesktop: 3,
     );
   }
 
@@ -1072,12 +1076,16 @@ abstract class UserSettingsEntity
         period: DashboardUISettings.PERIOD_CURRENT,
       ),
       DashboardField(
+        field: DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+        period: DashboardUISettings.PERIOD_CURRENT,
+      ),
+      DashboardField(
         field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
         period: DashboardUISettings.PERIOD_CURRENT,
       ),
     ]))
     ..dashboardFieldsPerRowMobile = 1
-    ..dashboardFieldsPerRowDesktop = 2
+    ..dashboardFieldsPerRowDesktop = 3
     ..includeDeletedClients = false;
 
   static Serializer<UserSettingsEntity> get serializer =>
