@@ -521,6 +521,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 ),
               VariablesHelp(
                 showInvoiceAsQuote: template == EmailTemplate.quote,
+                showInvoiceAsInvoices: [
+                  EmailTemplate.payment,
+                  EmailTemplate.payment_partial,
+                ].contains(template),
               ),
               SizedBox(height: 16),
             ],
