@@ -650,6 +650,10 @@ abstract class ActivityEntity
   String get recurringExpenseId;
 
   @nullable
+  @BuiltValueField(wireName: 'purchase_order_id')
+  String get purchaseOrderId;
+
+  @nullable
   @BuiltValueField(wireName: 'quote_id')
   String get quoteId;
 
@@ -845,6 +849,7 @@ abstract class ActivityEntity
     VendorEntity vendor,
     InvoiceEntity recurringInvoice,
     ExpenseEntity recurringExpense,
+    InvoiceEntity purchaseOrder,
   }) {
     ClientContactEntity contact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
@@ -868,6 +873,8 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(':task', task?.number ?? '');
     activity = activity.replaceFirst(':expense', expense?.number ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
+    activity =
+        activity.replaceFirst(':purchase_order', purchaseOrder?.number ?? '');
     activity = activity.replaceFirst(
         ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');

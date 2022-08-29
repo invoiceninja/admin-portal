@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'convert_to_project': 'Convert to Project',
+      'client_email': 'Client Email',
       'invoice_task_project': 'Invoice Task Project',
       'invoice_task_project_help': 'Add the project to the invoice line items',
       'field': 'Field',
@@ -35,14 +37,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'total_pending_expenses': 'Pending Expenses',
       'total_invoiced_expenses': 'Invoiced Expenses',
       'total_invoice_paid_expenses': 'Invoice Paid Expenses',
-      'activity_130': ':user created purchase order',
-      'activity_131': ':user updated purchase order',
-      'activity_132': ':user archived purchase order',
-      'activity_133': ':user deleted purchase order',
-      'activity_134': ':user restored purchase order',
-      'activity_135': ':user emailed purchase order',
-      'activity_136': ':contact viewed purchase order',
-      'activity_137': ':contact accepted purchase order',
+      'activity_130': ':user created purchase order :purchase_order',
+      'activity_131': ':user updated purchase order :purchase_order',
+      'activity_132': ':user archived purchase order :purchase_order',
+      'activity_133': ':user deleted purchase order :purchase_order',
+      'activity_134': ':user restored purchase order :purchase_order',
+      'activity_135': ':user emailed purchase order :purchase_order',
+      'activity_136': ':contact viewed purchase order :purchase_order',
+      'activity_137': ':contact accepted purchase order :purchase_order',
       'vendor_portal': 'Vendor Portal',
       'send_code': 'Send Code',
       'save_to_upload_documents': 'Save the record to upload documents',
@@ -75951,11 +75953,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']['period'];
 
   String get invoiceTaskProject =>
-      _localizedValues[localeCode]['invoice_task_project'] ?? '';
+      _localizedValues[localeCode]['invoice_task_project'] ??
+      _localizedValues['en']['invoice_task_project'];
 
   String get invoiceTaskProjectHelp =>
-      _localizedValues[localeCode]['invoice_task_project_help'] ?? '';
+      _localizedValues[localeCode]['invoice_task_project_help'] ??
+      _localizedValues['en']['invoice_task_project_help'];
 
+  String get clientEmail =>
+      _localizedValues[localeCode]['client_email'] ??
+      _localizedValues['en']['client_email'];
+
+  String get convertToProject =>
+      _localizedValues[localeCode]['convert_to_project'] ??
+      _localizedValues['en']['convert_to_project'];
 
 // STARTER: lang field - do not remove comment
 

@@ -1045,6 +1045,10 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isQuote) {
+          if ((projectId ?? '').isEmpty) {
+            actions.add(EntityAction.convertToProject);
+          }
+
           if ((invoiceId ?? '').isEmpty) {
             if (!isApproved) {
               actions.add(EntityAction.approve);

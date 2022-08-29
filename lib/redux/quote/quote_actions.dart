@@ -415,21 +415,40 @@ class FilterQuotesByCustom4 implements PersistUI {
   final String value;
 }
 
-class ConvertQuotes implements StartSaving {
-  ConvertQuotes(this.completer, this.quoteIds);
+class ConvertQuotesToInvoices implements StartSaving {
+  ConvertQuotesToInvoices(this.completer, this.quoteIds);
 
   final List<String> quoteIds;
   final Completer completer;
 }
 
-class ConvertQuoteSuccess implements StopSaving {
-  ConvertQuoteSuccess({this.quotes});
+class ConvertQuotesToInvoicesSuccess implements StopSaving {
+  ConvertQuotesToInvoicesSuccess({this.quotes});
 
   final List<InvoiceEntity> quotes;
 }
 
-class ConvertQuoteFailure implements StopSaving {
-  ConvertQuoteFailure(this.error);
+class ConvertQuotesToInvoicesFailure implements StopSaving {
+  ConvertQuotesToInvoicesFailure(this.error);
+
+  final dynamic error;
+}
+
+class ConvertQuotesToProjects implements StartSaving {
+  ConvertQuotesToProjects(this.completer, this.quoteIds);
+
+  final List<String> quoteIds;
+  final Completer completer;
+}
+
+class ConvertQuotesToProjectsSuccess implements StopSaving {
+  ConvertQuotesToProjectsSuccess({this.quotes});
+
+  final List<InvoiceEntity> quotes;
+}
+
+class ConvertQuotesToProjectsFailure implements StopSaving {
+  ConvertQuotesToProjectsFailure(this.error);
 
   final dynamic error;
 }
@@ -496,7 +515,12 @@ Future handleQuoteAction(
       launchUrl(Uri.parse(quote.invitationSilentLink));
       break;
     case EntityAction.convertToInvoice:
-      store.dispatch(ConvertQuotes(
+      store.dispatch(ConvertQuotesToInvoices(
+          snackBarCompleter<Null>(context, localization.convertedQuote),
+          quoteIds));
+      break;
+    case EntityAction.convertToProject:
+      store.dispatch(ConvertQuotesToProjects(
           snackBarCompleter<Null>(context, localization.convertedQuote),
           quoteIds));
       break;

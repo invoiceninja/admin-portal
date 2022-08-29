@@ -17,9 +17,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class VariablesHelp extends StatefulWidget {
   const VariablesHelp({
     this.showInvoiceAsQuote = false,
+    this.showInvoiceAsInvoices = false,
   });
 
   final bool showInvoiceAsQuote;
+  final bool showInvoiceAsInvoices;
 
   @override
   _VariablesHelpState createState() => _VariablesHelpState();
@@ -57,7 +59,9 @@ class _VariablesHelpState extends State<VariablesHelp>
             Tab(
                 child: Text(widget.showInvoiceAsQuote
                     ? localization.quote
-                    : localization.invoice)),
+                    : widget.showInvoiceAsInvoices
+                        ? localization.invoices
+                        : localization.invoice)),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.company)),
@@ -78,7 +82,11 @@ class _VariablesHelpState extends State<VariablesHelp>
                   'assigned_to_user',
                   'invoices',
                   'payments',
-                  if (widget.showInvoiceAsQuote) ...[
+                  if (widget.showInvoiceAsInvoices) ...[
+                    'invoice_references',
+                    'invoice.po_number',
+                    'payment.status',
+                  ] else if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
                     QuoteFields.discount,
                     QuoteFields.date,
