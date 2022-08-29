@@ -45,7 +45,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
-    TypedMiddleware<AppState, ConvertQuotes>(convertQuote),
+    TypedMiddleware<AppState, ConvertQuotesToInvoices>(convertQuote),
     TypedMiddleware<AppState, ApproveQuotes>(approveQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, ShowPdfQuote>(showPdfQuote),
@@ -225,17 +225,17 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
 
 Middleware<AppState> _convertQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ConvertQuotes;
+    final action = dynamicAction as ConvertQuotesToInvoices;
     repository
         .bulkAction(store.state.credentials, action.quoteIds,
             EntityAction.convertToInvoice)
         .then((quotes) {
-      store.dispatch(ConvertQuoteSuccess(quotes: quotes));
+      store.dispatch(ConvertQuotesToInvoicesSuccess(quotes: quotes));
       store.dispatch(RefreshData());
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ConvertQuoteFailure(error));
+      store.dispatch(ConvertQuotesToInvoicesFailure(error));
       action.completer.completeError(error);
     });
 

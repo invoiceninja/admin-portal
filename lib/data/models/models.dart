@@ -62,6 +62,7 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToRecurring = _$cloneToRecurring;
   static const EntityAction cloneToPurchaseOrder = _$cloneToPurchaseOrder;
   static const EntityAction convertToInvoice = _$convertToInvoice;
+  static const EntityAction convertToProject = _$convertToProject;
   static const EntityAction approve = _$approve;
   static const EntityAction applyCredit = _$applyCredit;
   static const EntityAction applyPayment = _$applyPayment;
