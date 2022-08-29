@@ -75,7 +75,7 @@ dependencies:
   msal_js: ^2.14.0
   sign_in_with_apple: ^4.0.0
   window_manager: ^0.2.5
-  bitsdojo_window: ^0.1.2
+  # bitsdojo_window: ^0.1.2
   intl_phone_field: ^3.1.0
   pinput: ^2.2.11
   flutter_staggered_grid_view: ^0.6.2

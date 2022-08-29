@@ -138,7 +138,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 );
                             }
                           },
-                    icon: Icon(Icons.arrow_left_outlined))
+                    icon: Icon(Icons.chevron_left))
                 : Padding(
                     padding: const EdgeInsets.only(right: 2),
                     child: _companyLogo(company),

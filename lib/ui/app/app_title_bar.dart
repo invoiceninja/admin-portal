@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 
+/*
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+*/
 
 class AppTitleBar extends StatelessWidget {
   const AppTitleBar({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return SizedBox();
+
+    /*
     if (!isWindows()) {
       return SizedBox();
     }
@@ -74,5 +79,6 @@ class AppTitleBar extends StatelessWidget {
         ),
       ),
     );
+    */
   }
 }
