@@ -42,6 +42,8 @@ class ActivityListTile extends StatelessWidget {
     final expense = state.expenseState.map[activity.expenseId];
     final recurringExpense =
         state.recurringExpenseState.map[activity.recurringExpenseId];
+    final purchaseOrder =
+        state.purchaseOrderState.map[activity.purchaseOrderId];
 
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
@@ -58,6 +60,7 @@ class ActivityListTile extends StatelessWidget {
       recurringInvoice: recurringInvoice,
       recurringExpense: recurringExpense,
       vendor: vendor,
+      purchaseOrder: purchaseOrder,
     );
 
     return ListTile(
@@ -112,6 +115,13 @@ class ActivityListTile extends StatelessWidget {
                     entityId: activity.expenseId,
                     entityType: EntityType.expense,
                     filterEntity: client,
+                  );
+                  break;
+                case EntityType.purchaseOrder:
+                  viewEntityById(
+                    entityId: activity.purchaseOrderId,
+                    entityType: EntityType.purchaseOrder,
+                    filterEntity: vendor,
                   );
                   break;
                 default:
