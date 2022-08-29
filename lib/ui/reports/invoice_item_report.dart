@@ -29,6 +29,7 @@ enum InvoiceItemReportFields {
   invoiceNumber,
   invoiceDate,
   client,
+  clientEmail,
   dueDate,
   hasTaxes,
   taxRates,
@@ -159,6 +160,9 @@ ReportResult lineItemReport(
             break;
           case InvoiceItemReportFields.client:
             value = client.displayName;
+            break;
+          case InvoiceItemReportFields.clientEmail:
+            value = client.primaryContact.email;
             break;
           case InvoiceItemReportFields.dueDate:
             value = invoice.dueDate;

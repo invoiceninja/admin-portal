@@ -29,6 +29,7 @@ enum QuoteItemReportFields {
   quoteNumber,
   quoteDate,
   client,
+  clientEmail,
   validUntil,
   hasTaxes,
   taxRates,
@@ -155,6 +156,9 @@ ReportResult lineItemReport(
             break;
           case QuoteItemReportFields.client:
             value = client.displayName;
+            break;
+          case QuoteItemReportFields.clientEmail:
+            value = client.primaryContact.email;
             break;
           case QuoteItemReportFields.validUntil:
             value = invoice.dueDate;
