@@ -43,7 +43,7 @@ dependencies:
     git:
       url: https://github.com/theyakka/qr.flutter.git
   local_auth: ^1.1.6
-  sentry_flutter: ^6.5.1
+  sentry_flutter: ^6.9.1
   image_picker: ^0.8.3+1
   flutter_colorpicker: ^1.0.3
   flutter_json_viewer: ^1.0.1
@@ -62,13 +62,13 @@ dependencies:
   contacts_service: ^0.6.1
   diacritic: ^0.1.3
   states_rebuilder: ^5.2.0
-  #super_editor: ^0.2.0
+  #super_editor: ^0.2.2
   markdown: ^5.0.0 # REMOVE THIS
   super_editor:
     git:
       url: https://github.com/superlistapp/super_editor.git
       path: super_editor
-      ref: typing-fade-prototype
+      ref: 9174392ffdb2547925f66fee4caaa03aa119ab48
   html2md: ^1.2.5
   printing: ^5.8.0
   image_cropper: ^2.0.2

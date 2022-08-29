@@ -388,7 +388,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   BoolDropdownButton(
                     label: localization.pageNumbering,
                     value: settings.pageNumbering ?? false,
-                    iconData: Icons.numbers,
+                    iconData: Icons.format_list_numbered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..pageNumbering = value),
                     ),
