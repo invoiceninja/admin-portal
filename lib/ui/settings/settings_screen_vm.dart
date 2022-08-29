@@ -9,7 +9,6 @@ import 'package:redux/redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
-import 'settings_screen.dart';
 
 class SettingsScreenBuilder extends StatelessWidget {
   const SettingsScreenBuilder({Key key}) : super(key: key);
