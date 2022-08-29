@@ -434,6 +434,25 @@ class ConvertQuotesToInvoicesFailure implements StopSaving {
   final dynamic error;
 }
 
+class ConvertQuotesToProjects implements StartSaving {
+  ConvertQuotesToProjects(this.completer, this.quoteIds);
+
+  final List<String> quoteIds;
+  final Completer completer;
+}
+
+class ConvertQuotesToProjectsSuccess implements StopSaving {
+  ConvertQuotesToProjectsSuccess({this.quotes});
+
+  final List<InvoiceEntity> quotes;
+}
+
+class ConvertQuotesToProjectsFailure implements StopSaving {
+  ConvertQuotesToProjectsFailure(this.error);
+
+  final dynamic error;
+}
+
 class ApproveQuotes implements StartSaving {
   ApproveQuotes(this.completer, this.quoteIds);
 
@@ -497,6 +516,11 @@ Future handleQuoteAction(
       break;
     case EntityAction.convertToInvoice:
       store.dispatch(ConvertQuotesToInvoices(
+          snackBarCompleter<Null>(context, localization.convertedQuote),
+          quoteIds));
+      break;
+    case EntityAction.convertToProject:
+      store.dispatch(ConvertQuotesToProjects(
           snackBarCompleter<Null>(context, localization.convertedQuote),
           quoteIds));
       break;

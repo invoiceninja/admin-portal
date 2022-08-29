@@ -307,7 +307,9 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, DeleteQuotesSuccess>(_deleteQuoteSuccess),
   TypedReducer<QuoteState, RestoreQuotesSuccess>(_restoreQuoteSuccess),
   TypedReducer<QuoteState, ConvertQuotesToInvoicesSuccess>(
-      _convertQuoteSuccess),
+      _convertQuotesToInvoicesSuccess),
+  TypedReducer<QuoteState, ConvertQuotesToProjectsSuccess>(
+      _convertQuotesToProjectsSuccess),
 ]);
 
 QuoteState _markSentQuoteSuccess(
@@ -351,8 +353,18 @@ QuoteState _emailQuoteSuccess(QuoteState quoteState, EmailQuoteSuccess action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
-QuoteState _convertQuoteSuccess(
+QuoteState _convertQuotesToInvoicesSuccess(
     QuoteState quoteState, ConvertQuotesToInvoicesSuccess action) {
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
+    action.quotes,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return quoteState.rebuild((b) => b..map.addAll(quoteMap));
+}
+
+QuoteState _convertQuotesToProjectsSuccess(
+    QuoteState quoteState, ConvertQuotesToProjectsSuccess action) {
   final quoteMap = Map<String, InvoiceEntity>.fromIterable(
     action.quotes,
     key: (dynamic item) => item.id,

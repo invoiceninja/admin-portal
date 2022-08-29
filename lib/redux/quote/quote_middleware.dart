@@ -27,7 +27,8 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final editQuote = _editQuote();
   final showEmailQuote = _showEmailQuote();
   final showPdfQuote = _showPdfQuote();
-  final convertQuote = _convertQuote(repository);
+  final convertQuotesToInvoices = _convertQuotesToInvoices(repository);
+  final convertQuotesToProjects = _convertQuotesToProjects(repository);
   final approveQuote = _approveQuote(repository);
   final loadQuotes = _loadQuotes(repository);
   final loadQuote = _loadQuote(repository);
@@ -45,7 +46,8 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
-    TypedMiddleware<AppState, ConvertQuotesToInvoices>(convertQuote),
+    TypedMiddleware<AppState, ConvertQuotesToInvoices>(convertQuotesToInvoices),
+    TypedMiddleware<AppState, ConvertQuotesToProjects>(convertQuotesToProjects),
     TypedMiddleware<AppState, ApproveQuotes>(approveQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, ShowPdfQuote>(showPdfQuote),
@@ -223,7 +225,7 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
   };
 }
 
-Middleware<AppState> _convertQuote(QuoteRepository repository) {
+Middleware<AppState> _convertQuotesToInvoices(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ConvertQuotesToInvoices;
     repository
@@ -236,6 +238,26 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuotesToInvoicesFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _convertQuotesToProjects(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConvertQuotesToProjects;
+    repository
+        .bulkAction(store.state.credentials, action.quoteIds,
+            EntityAction.convertToProject)
+        .then((quotes) {
+      store.dispatch(ConvertQuotesToProjectsSuccess(quotes: quotes));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertQuotesToProjectsFailure(error));
       action.completer.completeError(error);
     });
 
