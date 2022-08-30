@@ -155,7 +155,7 @@ class EditScaffold extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (showOverflow) Text(title) else Flexible(child: Text(title)),
-                SizedBox(width: 8),
+                SizedBox(width: 16),
                 if (isDesktop(context) &&
                     isFullscreen &&
                     entity != null &&
