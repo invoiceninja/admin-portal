@@ -23,6 +23,7 @@ dependencies:
   # google_sign_in: ^5.0.7
   # in_app_review: ^2.0.4
   # in_app_purchase: ^3.0.6
+  # pinput: ^2.2.11
   flutter_redux: ^0.8.2
   redux_logging: ^0.5.0
   http: ^0.13.3
@@ -77,7 +78,6 @@ dependencies:
   window_manager: ^0.2.7
   # bitsdojo_window: ^0.1.2  
   intl_phone_field: ^3.1.0
-  pinput: ^2.2.11
   flutter_staggered_grid_view: ^0.6.2
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
