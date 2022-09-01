@@ -68,9 +68,9 @@ The architecture is based off these two projects:
 - [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
-### Package Structure
+### File Structure
 
-A High-level overview of the folder structure:
+A High-level overview of the project structure:
 ```
 
 lib/                     # Root Package
