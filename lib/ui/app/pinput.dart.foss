@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+class AppPinput extends StatelessWidget {
+  const AppPinput({Key key, this.onCompleted}) : super(key: key);
+
+  final ValueChanged<String> onCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return DecoratedFormField(
+      label: localization.code,
+      keyboardType: TextInputType.number,
+      onChanged: onCompleted,
+      autofocus: true,
+      validator: (value) =>
+          value.isEmpty ? localization.pleaseEnterACode : null,
+    );
+  }
+}

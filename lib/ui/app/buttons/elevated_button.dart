@@ -24,7 +24,7 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final button = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: color ?? Theme.of(context).colorScheme.secondary,
+        foregroundColor: color ?? Theme.of(context).colorScheme.secondary,
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kBorderRadius)),

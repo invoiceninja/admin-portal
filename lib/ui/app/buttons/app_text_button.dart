@@ -39,7 +39,7 @@ class AppTextButton extends StatelessWidget {
     }
 
     final ButtonStyle flatButtonStyle =
-        TextButton.styleFrom(primary: primaryColor);
+        TextButton.styleFrom(foregroundColor: primaryColor);
 
     return TextButton(
       style: flatButtonStyle,

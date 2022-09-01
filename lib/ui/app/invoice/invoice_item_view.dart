@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class InvoiceItemListTile extends StatelessWidget {
   const InvoiceItemListTile({
@@ -95,7 +96,7 @@ class InvoiceItemListTile extends StatelessWidget {
           value: invoiceItem.customValue4));
     }
     if (invoiceItem.notes.isNotEmpty) {
-      parts.add(invoiceItem.notes);
+      parts.add(removeAllHtmlTags(invoiceItem.notes).trim());
     }
     if (parts.isNotEmpty) {
       subtitle += '\n' + parts.join(' • ');

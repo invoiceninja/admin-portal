@@ -308,7 +308,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           );
 
           final outlinedButtonTheme = OutlinedButton.styleFrom(
-            primary:
+            foregroundColor:
                 state.prefState.enableDarkMode ? Colors.white : Colors.black87,
           );
 

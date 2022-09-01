@@ -85,23 +85,24 @@ class DismissibleEntity extends StatelessWidget {
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
         children: [
-          entity.isActive
-              ? SlidableAction(
-                  label: localization.archive,
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  icon: Icons.archive,
-                  onPressed: (context) =>
-                      handleEntityAction(entity, EntityAction.archive),
-                )
-              : SlidableAction(
-                  label: localization.restore,
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  icon: Icons.restore,
-                  onPressed: (context) =>
-                      handleEntityAction(entity, EntityAction.restore),
-                ),
+          if (entity.isActive)
+            SlidableAction(
+              label: localization.archive,
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+              icon: Icons.archive,
+              onPressed: (context) =>
+                  handleEntityAction(entity, EntityAction.archive),
+            )
+          else if (entity.isRestorable)
+            SlidableAction(
+              label: localization.restore,
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              icon: Icons.restore,
+              onPressed: (context) =>
+                  handleEntityAction(entity, EntityAction.restore),
+            ),
           if (!entity.isDeleted)
             SlidableAction(
               label: localization.delete,

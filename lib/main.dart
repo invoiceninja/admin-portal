@@ -12,7 +12,7 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
+// import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/.env.dart';
@@ -155,6 +155,7 @@ void main({bool isTesting = false}) async {
     );
   }
 
+  /*
   if (isWindows()) {
     doWhenWindowReady(() {
       final win = appWindow;
@@ -162,6 +163,7 @@ void main({bool isTesting = false}) async {
       win.show();
     });
   }
+  */
 }
 
 Future<AppState> _initialState(bool isTesting) async {

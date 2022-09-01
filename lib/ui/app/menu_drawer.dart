@@ -138,7 +138,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 );
                             }
                           },
-                    icon: Icon(Icons.arrow_circle_left_outlined))
+                    icon: Icon(Icons.chevron_left))
                 : Padding(
                     padding: const EdgeInsets.only(right: 2),
                     child: _companyLogo(company),
@@ -873,7 +873,7 @@ class _DrawerTileState extends State<DrawerTile> {
                       ),
                     )
                   : FocusTraversalGroup(
-                      descendantsAreTraversable: false,
+                      descendantsAreFocusable: false,
                       child: IconButton(
                         icon: Icon(widget.icon),
                         color: textColor,

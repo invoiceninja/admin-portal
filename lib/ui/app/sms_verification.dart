@@ -11,9 +11,9 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/pinput.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:pinput/pinput.dart';
 
 class SmsVerification extends StatefulWidget {
   const SmsVerification();
@@ -134,15 +134,8 @@ class _SmsVerificationState extends State<SmsVerification> {
                   if (_showCode) ...[
                     Text(localization.codeWasSent),
                     SizedBox(height: 20),
-                    Pinput(
+                    AppPinput(
                       onCompleted: (code) => _code = code,
-                      autofocus: true,
-                      length: 6,
-                      showCursor: true,
-                      androidSmsAutofillMethod:
-                          AndroidSmsAutofillMethod.smsUserConsentApi,
-                      validator: (value) =>
-                          value.isEmpty ? localization.pleaseEnterACode : null,
                     ),
                   ] else
                     IntlPhoneField(

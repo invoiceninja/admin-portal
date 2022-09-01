@@ -155,7 +155,7 @@ class EditScaffold extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (showOverflow) Text(title) else Flexible(child: Text(title)),
-                SizedBox(width: 8),
+                SizedBox(width: 16),
                 if (isDesktop(context) &&
                     isFullscreen &&
                     entity != null &&
@@ -381,7 +381,9 @@ class EditScaffold extends StatelessWidget {
                                 }
                               },
                       ),
-                    if (actions != null && onActionPressed != null)
+                    if (actions != null &&
+                        actions.isNotEmpty &&
+                        onActionPressed != null)
                       PopupMenuButton<EntityAction>(
                         icon: Icon(
                           Icons.more_vert,

@@ -472,6 +472,9 @@ abstract class PaymentEntity extends Object
       ].contains(statusId);
 
   @override
+  bool get isRestorable => false;
+
+  @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {

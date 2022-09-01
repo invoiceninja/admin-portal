@@ -64,6 +64,17 @@ String toTitleCase(String text) {
   return capitalized.join(' ');
 }
 
+// https://stackoverflow.com/a/57541846/497368
+String removeAllHtmlTags(String htmlText) {
+  final exp = RegExp(
+    r'<[^>]*>',
+    multiLine: true,
+    caseSensitive: true,
+  );
+
+  return htmlText.replaceAll(exp, '');
+}
+
 String getFirstName(String value) {
   final parts = value.split(' ');
   if (parts.length > 1) {
