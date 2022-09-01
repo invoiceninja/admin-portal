@@ -1550,8 +1550,6 @@ void checkForChanges({
   final context = navigatorKey.currentContext;
 
   if (force) {
-    store.dispatch(DiscardChanges());
-    store.dispatch(ResetSettings());
     callback();
   } else if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
