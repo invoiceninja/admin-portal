@@ -54,18 +54,11 @@ class ListScaffold extends StatelessWidget {
     final isSettings = entityType.isSetting;
 
     Widget leading = SizedBox();
-    if (isSettings) {
-      leading = isMobile(context)
-          ? IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
-            )
-          : IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                createEntityByType(entityType: entityType, context: context);
-              },
-            );
+    if (isSettings && isMobile(context)) {
+      leading = IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
+      );
     } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => InkWell(
