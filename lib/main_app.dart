@@ -365,6 +365,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           secondary: accentColor,
                           primary: accentColor,
                         ),
+                        tooltipTheme: TooltipThemeData(
+                          waitDuration: Duration(milliseconds: 500),
+                        ),
                         pageTransitionsTheme: pageTransitionsTheme,
                         indicatorColor: accentColor,
                         textSelectionTheme: TextSelectionThemeData(
@@ -382,8 +385,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             OutlinedButtonThemeData(style: outlinedButtonTheme),
                       )
                     : ThemeData(
-                        colorScheme: ColorScheme.fromSwatch()
-                            .copyWith(secondary: accentColor),
+                        colorScheme: ColorScheme.fromSwatch().copyWith(
+                          secondary: accentColor,
+                        ),
+                        tooltipTheme: TooltipThemeData(
+                          waitDuration: Duration(milliseconds: 500),
+                        ),
                         pageTransitionsTheme: pageTransitionsTheme,
                         primaryColor: accentColor,
                         indicatorColor: accentColor,
