@@ -127,6 +127,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
       final entity = _entityMap[widget.entityId];
       if (widget.overrideSuggestedLabel != null) {
         _textController.text = widget.overrideSuggestedLabel(entity);
+      } else if (entity == null) {
+        // do nothing
       } else {
         _textController.text = _getEntityLabel(entity);
       }
