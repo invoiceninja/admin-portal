@@ -48,6 +48,7 @@ class BankAccountsVM {
     @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onConnectAccounts,
+    @required this.onRefreshAccounts,
   });
 
   static BankAccountsVM fromStore(Store<AppState> store) {
@@ -58,6 +59,22 @@ class BankAccountsVM {
         company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
+        onRefreshAccounts: () {
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url = '${credentials.url}/bank_integrations/refresh_accounts';
+
+          store.dispatch(StartSaving());
+
+          webClient.post(url, credentials.token).then((dynamic response) {
+            store.dispatch(StopSaving());
+            print('## RESPONSE: $response');
+          }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(
+                context: navigatorKey.currentContext, message: '$error');
+          });
+        },
         onConnectAccounts: () {
           final webClient = WebClient();
           final credentials = state.credentials;
@@ -96,4 +113,5 @@ class BankAccountsVM {
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
   final Function onConnectAccounts;
+  final Function onRefreshAccounts;
 }

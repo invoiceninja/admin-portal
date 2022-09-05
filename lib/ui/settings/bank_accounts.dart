@@ -112,7 +112,7 @@ class _BankAccountsState extends State<BankAccounts> {
                 Expanded(
                   child: AppButton(
                     label: localization.refresh.toUpperCase(),
-                    onPressed: () => viewModel.onConnectAccounts(),
+                    onPressed: () => viewModel.onRefreshAccounts(),
                     iconData: Icons.refresh,
                   ),
                 ),
