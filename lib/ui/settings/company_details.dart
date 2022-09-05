@@ -627,6 +627,15 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     BoolDropdownButton(
+                      value: settings.clientOnlinePaymentNotification,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                              b..clientOnlinePaymentNotification = value)),
+                      label: localization.onlinePaymentEmail,
+                      helpLabel: localization.emailReceipt,
+                      iconData: Icons.email,
+                    ),
+                    BoolDropdownButton(
                       value: settings.clientManualPaymentNotification,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) =>
@@ -636,11 +645,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       iconData: Icons.email,
                     ),
                     BoolDropdownButton(
-                      value: settings.clientOnlinePaymentNotification,
+                      value: settings.clientMarkPaidPaymentNotification,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) =>
-                              b..clientOnlinePaymentNotification = value)),
-                      label: localization.onlinePaymentEmail,
+                              b..clientMarkPaidPaymentNotification = value)),
+                      label: localization.markPaidPaymentEmail,
                       helpLabel: localization.emailReceipt,
                       iconData: Icons.email,
                     ),

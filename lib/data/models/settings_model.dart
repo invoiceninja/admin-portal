@@ -786,6 +786,10 @@ abstract class SettingsEntity
   bool get clientManualPaymentNotification;
 
   @nullable
+  @BuiltValueField(wireName: 'send_email_on_mark_paid')
+  bool get clientMarkPaidPaymentNotification;
+
+  @nullable
   @BuiltValueField(wireName: 'counter_number_applied')
   String get counterNumberApplied;
 
