@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -509,21 +510,18 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             PurchaseOrderViewScreen(),
                         PurchaseOrderEditScreen.route: (context) =>
                             PurchaseOrderEditScreen(),
-
                         RecurringExpenseScreen.route: (context) =>
                             RecurringExpenseScreenBuilder(),
                         RecurringExpenseViewScreen.route: (context) =>
                             RecurringExpenseViewScreen(),
                         RecurringExpenseEditScreen.route: (context) =>
                             RecurringExpenseEditScreen(),
-
                         SubscriptionScreen.route: (context) =>
                             SubscriptionScreenBuilder(),
                         SubscriptionViewScreen.route: (context) =>
                             SubscriptionViewScreen(),
                         SubscriptionEditScreen.route: (context) =>
                             SubscriptionEditScreen(),
-
                         TaskStatusScreen.route: (context) =>
                             TaskStatusScreenBuilder(),
                         TaskStatusViewScreen.route: (context) =>
@@ -631,6 +629,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             CreditCardsAndBanksScreen(),
                         DataVisualizationsScreen.route: (context) =>
                             DataVisualizationsScreen(),
+                        BankAccountsScreen.route: (context) =>
+                            BankAccountsScreen(),
                       }
                     : {},
               ),

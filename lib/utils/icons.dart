@@ -246,6 +246,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.task);
     case kSettingsSubscriptions:
       return getEntityIcon(EntityType.subscription);
+    case kSettingsBankAccounts:
+      return MdiIcons.bank;
     default:
       return null;
   }

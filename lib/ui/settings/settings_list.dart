@@ -206,6 +206,11 @@ class _SettingsListState extends State<SettingsList> {
             ),
             if (showAll)
               SettingsListTile(
+                section: kSettingsBankAccounts,
+                viewModel: widget.viewModel,
+              ),
+            if (showAll)
+              SettingsListTile(
                 section: kSettingsGroupSettings,
                 viewModel: widget.viewModel,
               ),
