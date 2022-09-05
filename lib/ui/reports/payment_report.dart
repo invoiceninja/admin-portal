@@ -283,7 +283,7 @@ ReportResult paymentReport(
             value: value, currencyId: payment.exchangeCurrencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
-            value: value, currencyId: payment.currencyId));
+            value: value, currencyId: client.currencyId));
       } else {
         row.add(payment.getReportString(value: value));
       }

@@ -373,6 +373,12 @@ class EntityTopFilterHeader extends StatelessWidget {
                         final label = localization.lookup('$action');
 
                         return OutlinedButton(
+                          style: action == EntityAction.edit
+                              ? ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      state.prefState.colorThemeModel
+                                          .colorSuccess))
+                              : null,
                           child: IconText(
                             icon: getEntityActionIcon(action),
                             text: label,

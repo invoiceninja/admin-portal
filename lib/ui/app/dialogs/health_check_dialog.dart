@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -176,6 +177,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       ),
                 ],
                 */
+                if (parseDouble(_response.phpVersion.memoryLimit) < 512)
+                  _HealthListTile(
+                    title: 'PHP memory limit is too low',
+                    subtitle:
+                        'Increase the limit to at least 512M to support the in-app update',
+                    isWarning: true,
+                  ),
                 if (_response.queue == 'sync')
                   _HealthListTile(
                     title: 'Queue not enabled',
