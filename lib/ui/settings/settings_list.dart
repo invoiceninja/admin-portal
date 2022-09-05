@@ -573,6 +573,11 @@ class SettingsSearch extends StatelessWidget {
           'late_fees',
         ]
       ],
+      kSettingsBankAccounts: [
+        [
+          'bank_accounts',
+        ],
+      ],
       kSettingsGroupSettings: [
         [
           'groups',
