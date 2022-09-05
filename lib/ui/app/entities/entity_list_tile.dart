@@ -181,10 +181,12 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final entity = widget.entity;
+
     if (uiState.filterEntityId != entity.id ||
         uiState.filterEntityType != entity.entityType) {
       store.dispatch(FilterByEntity(entity: entity));
     }
+
     handleEntityAction(entity, EntityAction.newEntityType(widget.entityType));
   }
 

@@ -272,6 +272,12 @@ void handleProjectAction(
             ..projectId = project.id
             ..clientId = project.clientId));
       break;
+    case EntityAction.newInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state, client: client)
+              .rebuild((b) => b..projectId = project.id));
+      break;
     case EntityAction.invoiceProject:
       String lastClientId = '';
       bool hasMultipleClients = false;
@@ -373,6 +379,8 @@ void handleProjectAction(
         ),
       );
       break;
+    default:
+      print('## Error: action $action not handled in project_actions');
   }
 }
 
