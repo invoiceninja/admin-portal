@@ -1,13 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class BankAccounts extends StatefulWidget {
   const BankAccounts({
@@ -92,8 +96,29 @@ class _BankAccountsState extends State<BankAccounts> {
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
-        children: <Widget>[
-          //
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    label: localization.connect.toUpperCase(),
+                    onPressed: () => viewModel.onConnectAccounts(),
+                    iconData: Icons.link,
+                  ),
+                ),
+                SizedBox(width: kGutterWidth),
+                Expanded(
+                  child: AppButton(
+                    label: localization.refresh.toUpperCase(),
+                    onPressed: () => viewModel.onConnectAccounts(),
+                    iconData: Icons.refresh,
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

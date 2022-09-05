@@ -1,10 +1,17 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/bank_accounts.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -14,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BankAccountsScreen extends StatelessWidget {
   const BankAccountsScreen({Key key}) : super(key: key);
@@ -39,6 +47,7 @@ class BankAccountsVM {
     @required this.company,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
+    @required this.onConnectAccounts,
   });
 
   static BankAccountsVM fromStore(Store<AppState> store) {
@@ -49,6 +58,28 @@ class BankAccountsVM {
         company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
+        onConnectAccounts: () {
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url = '${credentials.url}/one_time_token';
+
+          store.dispatch(StartSaving());
+
+          webClient
+              .post(url, credentials.token,
+                  data: jsonEncode({
+                    'context': {'return_url': ''}
+                  }))
+              .then((dynamic response) {
+            store.dispatch(StopSaving());
+            launchUrl(Uri.parse(
+                '${cleanApiUrl(credentials.url)}/yodlee/onboard/${response['hash']}'));
+          }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(
+                context: navigatorKey.currentContext, message: '$error');
+          });
+        },
         onSavePressed: (context) {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
@@ -64,4 +95,5 @@ class BankAccountsVM {
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
+  final Function onConnectAccounts;
 }
