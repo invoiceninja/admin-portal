@@ -5,13 +5,11 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class BankAccounts extends StatefulWidget {
   const BankAccounts({
