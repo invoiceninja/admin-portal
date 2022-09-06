@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -84,6 +85,11 @@ class MultiSelectListState extends State<MultiSelectList> {
 
     final localization = AppLocalization.of(context);
     final parts = value.split('.');
+
+    // Workaround to sync up the variable with the PDF label
+    if (value == InvoiceTotalFields.outstanding) {
+      return localization.balanceDue;
+    }
 
     if (parts.length == 1 || parts[0] == widget.prefix) {
       return localization.lookup(parts.last);
