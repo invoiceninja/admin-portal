@@ -12,6 +12,21 @@ Client app for [Invoice Ninja](https://github.com/invoiceninja/invoiceninja).
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/4.png" alt="New Invoice" width="200"/>
 </p>
 
+# Table of Contents
+
+- [Setting up the app](#setting-up-the-app)
+- [Steps to remove non-FOSS code](#steps-to-remove-non-foss-code)
+- [Application Architecture](#application-architecture)
+    - [Package Structure](#package-structure)
+    - [Blog Posts](#blog-posts)
+- [Code generation](#code-generation)
+- [Tests](#tests)
+- [Code signing](#code-signing)
+- [Credits](#credits)
+- [Contributions](#contributions)
+
+---
+
 ## Setting up the app
 
 - Initialize the config file
@@ -53,6 +68,42 @@ The architecture is based off these two projects:
 
 - [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
+
+### File Structure
+
+A High-level overview of the project structure:
+```
+
+lib/                     # Root Package
+|
+├─ data/                 # For data handling
+│  ├─ mock/              # sample used for testing
+│  ├─ models/            # Objects representing data
+│  ├─ repositories/      # Source of data
+|
+├─ redux/                # manages app state
+│  ├─ component/         # app building block
+│     ├─ actions         # methods to update app state
+|     ├─ middleware      # run in response to actions, execute before reducer
+|     ├─ reducer         # intercepts actions, responsible for updating the state
+|     ├─ selectors       # read data from the state, queries against your 'state database'
+|     ├─ state           # immutable object that lives at the top of the widget hierarchy
+|
+├─ ui/                   # app views
+│  ├─ component/         # views for different components
+│    ├─ view/            # generel view for component
+│    ├─ edit/            # change values on the views fields
+|
+├─ utils/                # Utility classes
+
+```
+
+The ui and redux folders contain components that are paired together.
+Put simply you will find an 'auth' folder in both the ui and redux folders.
+
+For additional information on [Redux architecture](https://blog.logrocket.com/flutter-redux-complete-tutorial-with-examples/)
+
+
 
 ### Blog Posts
 - [Intro to Google Flutter](https://hillel.dev/2018/05/18/flutter-is-darts-killer-app/)
