@@ -192,7 +192,8 @@ class _InvoiceViewState extends State<InvoiceView>
                           onRefresh: () => viewModel.onRefreshed(context),
                           child: InvoiceViewHistory(
                               viewModel: viewModel,
-                              key: ValueKey(viewModel.invoice.id)),
+                              key: ValueKey(
+                                  '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
                         ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
