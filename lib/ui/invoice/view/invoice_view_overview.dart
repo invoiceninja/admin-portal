@@ -192,11 +192,11 @@ class InvoiceOverview extends StatelessWidget {
             : invoice.dueDateDays == 'on_receipt'
                 ? localization.dueOnReceipt
                 : invoice.dueDateDays == '1'
-            ? localization.firstDayOfTheMonth
-            : invoice.dueDateDays == '31'
-                ? localization.lastDayOfTheMonth
-                : localization.dayCount
-                    .replaceFirst(':count', '${invoice.dueDateDays}'),
+                    ? localization.firstDayOfTheMonth
+                    : invoice.dueDateDays == '31'
+                        ? localization.lastDayOfTheMonth
+                        : localization.dayCount
+                            .replaceFirst(':count', '${invoice.dueDateDays}'),
       }
     };
 

@@ -13,6 +13,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppSidebarMode.serializer)
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
+      ..add(BankAccountEntity.serializer)
+      ..add(BankAccountItemResponse.serializer)
+      ..add(BankAccountListResponse.serializer)
+      ..add(BankAccountState.serializer)
+      ..add(BankAccountUIState.serializer)
       ..add(ClientContactEntity.serializer)
       ..add(ClientEntity.serializer)
       ..add(ClientItemResponse.serializer)
@@ -213,6 +218,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(WebhookState.serializer)
       ..add(WebhookUIState.serializer)
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(BankAccountEntity)]),
+          () => new ListBuilder<BankAccountEntity>())
+      ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(ClientContactEntity)]),
           () => new ListBuilder<ClientContactEntity>())
@@ -410,6 +418,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(InvoiceEntity)]),
           () => new ListBuilder<InvoiceEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(BankAccountEntity)]),
+          () => new ListBuilder<BankAccountEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(
@@ -593,6 +604,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(CompanyPrefState)]),
           () => new MapBuilder<String, CompanyPrefState>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BankAccountEntity)
+          ]),
+          () => new MapBuilder<String, BankAccountEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),

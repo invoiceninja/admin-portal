@@ -16,8 +16,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'connect': 'Connect',
+      'bank_account': 'Bank Account',
       'bank_accounts': 'Bank Accounts',
+      'archived_bank_account': 'Successfully archived bank account',
+      'deleted_bank_account': 'Successfully deleted bank account',
+      'removed_bank_account': 'Successfully removed bank account',
+      'restored_bank_account': 'Successfully restored bank account',
+      'search_bank_account': 'Search BankAccount',
+      'connect': 'Connect',
       'mark_paid_payment_email': 'Mark Paid Payment Email',
       'convert_to_project': 'Convert to Project',
       'client_email': 'Client Email',
@@ -87203,6 +87209,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get connect =>
       _localizedValues[localeCode]['connect'] ??
       _localizedValues['en']['connect'];
+
+  String get bankAccount =>
+      _localizedValues[localeCode]['bank_account'] ??
+      _localizedValues['en']['bank_account'];
+
+  String get archivedBankAccount =>
+      _localizedValues[localeCode]['archived_bank_account'] ??
+      _localizedValues['en']['archived_bank_account'];
+
+  String get deletedBankAccount =>
+      _localizedValues[localeCode]['deleted_bank_account'] ??
+      _localizedValues['en']['deleted_bank_account'];
+
+  String get restoredBankAccount =>
+      _localizedValues[localeCode]['restored_bank_account'] ??
+      _localizedValues['en']['restored_bank_account'];
+
+  String get searchBankAccount =>
+      _localizedValues[localeCode]['search_bank_account'] ??
+      _localizedValues['en']['search_bank_account'];
 
 // STARTER: lang field - do not remove comment
 

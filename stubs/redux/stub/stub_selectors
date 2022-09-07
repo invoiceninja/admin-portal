@@ -37,21 +37,17 @@ List<String> dropdownStubsSelector(BuiltMap<String, StubEntity> stubMap,
   return list;
 }
 
-var memoizedFilteredStubList = memo6((
+var memoizedFilteredStubList = memo4((
         SelectionState selectionState,
         BuiltMap<String, StubEntity> stubMap,
         BuiltList<String> stubList,
-        StaticState staticState,
-        BuiltMap<String, UserEntity> userMap, 
         ListUIState stubListState) =>
-    filteredStubsSelector(selectionState, stubMap, stubList, staticState, userMap, stubListState));
+    filteredStubsSelector(selectionState, stubMap, stubList, stubListState));
 
 List<String> filteredStubsSelector(
     SelectionState selectionState,
     BuiltMap<String, StubEntity> stubMap,
     BuiltList<String> stubList, 
-    StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
     ListUIState stubListState) {
 
   final filterEntityId = selectionState.filterEntityId;
@@ -88,8 +84,8 @@ List<String> filteredStubsSelector(
   list.sort((stubAId, stubBId) {
     final stubA = stubMap[stubAId];
     final stubB = stubMap[stubBId];
-    return clientA.compareTo(stubB, stubListState.sortField,
-        stubListState.sortAscending, userMap, staticState);
+    return stubAA.compareTo(stubB, stubListState.sortField,
+        stubListState.sortAscending);
   });
 
 

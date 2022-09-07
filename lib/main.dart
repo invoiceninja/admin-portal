@@ -57,6 +57,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_middleware.dart';
+
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -98,6 +100,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreBankAccountsMiddleware())
         ..addAll(createStorePurchaseOrdersMiddleware())
         ..addAll(createStoreRecurringExpensesMiddleware())
         ..addAll(createStoreSubscriptionsMiddleware())

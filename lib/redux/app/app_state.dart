@@ -87,8 +87,8 @@ import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
@@ -293,6 +293,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.bankAccount:
+        return bankAccountState.map;
+
       case EntityType.purchaseOrder:
         return purchaseOrderState.map;
 
@@ -376,6 +379,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.bankAccount:
+        return bankAccountState.list;
+
       case EntityType.purchaseOrder:
         return purchaseOrderState.list;
 
@@ -448,6 +454,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.bankAccount:
+        return bankAccountUIState;
+
       case EntityType.purchaseOrder:
         return purchaseOrderUIState;
 
@@ -521,6 +530,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  BankAccountState get bankAccountState => userCompanyState.bankAccountState;
+  ListUIState get bankAccountListState =>
+      uiState.bankAccountUIState.listUIState;
+  BankAccountUIState get bankAccountUIState => uiState.bankAccountUIState;
+
   PurchaseOrderState get purchaseOrderState =>
       userCompanyState.purchaseOrderState;
   ListUIState get purchaseOrderListState =>

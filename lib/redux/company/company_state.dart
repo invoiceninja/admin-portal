@@ -32,6 +32,8 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
+
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 
 part 'company_state.g.dart';
@@ -53,6 +55,8 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+      bankAccountState: BankAccountState(),
+
       purchaseOrderState: PurchaseOrderState(),
 
       recurringExpenseState: RecurringExpenseState(),
@@ -104,6 +108,8 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+  BankAccountState get bankAccountState;
+
   PurchaseOrderState get purchaseOrderState;
 
   RecurringExpenseState get recurringExpenseState;

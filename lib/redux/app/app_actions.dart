@@ -64,6 +64,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 class PersistUI {}
@@ -385,6 +387,10 @@ void viewEntitiesByType({
             action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.bankAccount:
+            action = ViewBankAccountList();
+            break;
+
           case EntityType.purchaseOrder:
             action = ViewPurchaseOrderList();
             break;
@@ -599,6 +605,13 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.bankAccount:
+            store.dispatch(ViewBankAccount(
+              bankAccountId: entityId,
+              force: force,
+            ));
+            break;
+
           case EntityType.purchaseOrder:
             store.dispatch(ViewPurchaseOrder(
               purchaseOrderId: entityId,
@@ -1411,6 +1424,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.bankAccount:
+      handleBankAccountAction(context, entities, action);
+      break;
+
     case EntityType.purchaseOrder:
       handlePurchaseOrderAction(context, entities, action);
       break;

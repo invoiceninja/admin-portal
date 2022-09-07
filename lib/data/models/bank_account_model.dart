@@ -5,50 +5,54 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-part 'stub_model.g.dart';
+part 'bank_account_model.g.dart';
 
-abstract class StubListResponse
-    implements Built<StubListResponse, StubListResponseBuilder> {
-  factory StubListResponse([void updates(StubListResponseBuilder b)]) =
-      _$StubListResponse;
+abstract class BankAccountListResponse
+    implements Built<BankAccountListResponse, BankAccountListResponseBuilder> {
+  factory BankAccountListResponse(
+          [void updates(BankAccountListResponseBuilder b)]) =
+      _$BankAccountListResponse;
 
-  StubListResponse._();
-
-  @override
-@memoized
-  int get hashCode;
-
-  BuiltList<StubEntity> get data;
-
-  static Serializer<StubListResponse> get serializer =>
-      _$stubListResponseSerializer;
-}
-
-abstract class StubItemResponse
-    implements Built<StubItemResponse, StubItemResponseBuilder> {
-  factory StubItemResponse([void updates(StubItemResponseBuilder b)]) =
-      _$StubItemResponse;
-
-  StubItemResponse._();
+  BankAccountListResponse._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
-  StubEntity get data;
+  BuiltList<BankAccountEntity> get data;
 
-  static Serializer<StubItemResponse> get serializer =>
-      _$stubItemResponseSerializer;
+  static Serializer<BankAccountListResponse> get serializer =>
+      _$bankAccountListResponseSerializer;
 }
 
-class StubFields {
+abstract class BankAccountItemResponse
+    implements Built<BankAccountItemResponse, BankAccountItemResponseBuilder> {
+  factory BankAccountItemResponse(
+          [void updates(BankAccountItemResponseBuilder b)]) =
+      _$BankAccountItemResponse;
+
+  BankAccountItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  BankAccountEntity get data;
+
+  static Serializer<BankAccountItemResponse> get serializer =>
+      _$bankAccountItemResponseSerializer;
+}
+
+class BankAccountFields {
   // STARTER: fields - do not remove comment
+  static const String name = 'name';
 }
 
-abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
-
-  factory StubEntity({String id, AppState state}) {
-    return _$StubEntity._(
+abstract class BankAccountEntity extends Object
+    with BaseEntity
+    implements Built<BankAccountEntity, BankAccountEntityBuilder> {
+  factory BankAccountEntity({String id, AppState state}) {
+    return _$BankAccountEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       isDeleted: false,
@@ -58,25 +62,28 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       assignedUserId: '',
       archivedAt: 0,
       // STARTER: constructor - do not remove comment
+      name: '',
     );
   }
 
-  StubEntity._();
+  BankAccountEntity._();
 
   @override
-@memoized
+  @memoized
   int get hashCode;
 
   // STARTER: properties - do not remove comment
+  String get name;
 
   @override
-  EntityType get entityType => EntityType.stub;
+  EntityType get entityType => EntityType.bankAccount;
 
   String get displayName {
     // STARTER: display name - do not remove comment
+    return name;
   }
 
-
+  /*
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
@@ -85,32 +92,30 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect && includeEdit && userCompany.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
-    }
-
-    if (actions.isNotEmpty && actions.last != null) {
-      actions.add(null);
-    }
-
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
+  */
 
-  int compareTo(StubEntity stub, String sortField, bool sortAscending) {
+  int compareTo(
+      BankAccountEntity bankAccount, String sortField, bool sortAscending) {
     int response = 0;
-    final stubA = sortAscending ? this : stub;
-    final stubB = sortAscending ? stub: this;
+    final bankAccountA = sortAscending ? this : bankAccount;
+    final bankAccountB = sortAscending ? bankAccount : this;
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
-            default:
-              print('## ERROR: sort by stub.$sortField is not implemented');
-              break;
+      case BankAccountFields.name:
+        response = bankAccountA.name.compareTo(bankAccountB.name);
+        break;
 
+      default:
+        print('## ERROR: sort by bankAccount.$sortField is not implemented');
+        break;
     }
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
+      return bankAccountA.name.compareTo(bankAccountB.name);
     } else {
       return response;
     }
@@ -147,5 +152,6 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   @override
   FormatNumberType get listDisplayAmountType => null;
 
-  static Serializer<StubEntity> get serializer => _$stubEntitySerializer;
+  static Serializer<BankAccountEntity> get serializer =>
+      _$bankAccountEntitySerializer;
 }

@@ -94,7 +94,7 @@ if [ ${action} = "init" ]; then
         './lib/ui/app/app_search_button.dart'
         './lib/ui/app/dismissible_entity.dart'
         './lib/ui/home/home_screen.dart'
-        #'./stubs/data/models/stub_model'
+        './stubs/data/models/stub_model'
         './stubs/data/repositories/stub_repository'
         './stubs/redux/stub/stub_actions'
         './stubs/redux/stub/stub_reducer'
@@ -156,7 +156,7 @@ else
 
     # Create new module files
     declare -a files=(
-       #'./stubs/data/models/stub_model'
+       './stubs/data/models/stub_model'
        './stubs/data/repositories/stub_repository'
        './stubs/redux/stub/stub_actions'
        './stubs/redux/stub/stub_reducer'
@@ -227,26 +227,26 @@ else
 
         comment="STARTER: fields - do not remove comment"
         code="static const String ${element} = '${element}';${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: properties - do not remove comment"
         code="String get ${element};${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: sort switch - do not remove comment"
         code="case ${Module}Fields.${element}:${lineBreak}"
         code="${code}response = ${module_snake}A.${element}.compareTo(${module_snake}B.${element});${lineBreak}break;${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: filter - do not remove comment"
         code="if (${element}.toLowerCase().contains(filter)){${lineBreak}"
         code="${code}return true;${lineBreak}"
         code="${code}}${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: constructor - do not remove comment"
         code="${element}: '',${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         echo "${module_snake}_edit"
         comment="STARTER: controllers - do not remove comment"
@@ -294,11 +294,11 @@ else
         if [ "$idx" -eq 0 ]; then
             comment="STARTER: sort default - do not remove comment"
             code="return ${module_camel}A.${element}.compareTo(${module_camel}B.${element});${lineBreak}"
-            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
             comment="STARTER: display name - do not remove comment"
             code="return ${element};${lineBreak}"
-            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
+            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
         fi
 
         if [ "$idx" -eq 1 ]; then
@@ -331,10 +331,14 @@ else
     code="${code}${Module}EditScreen.route: (context) => ${Module}EditScreen(),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main_app.dart
 
+    comment="STARTER: export - do not remove comment"
+    code="export 'package:invoiceninja_flutter\/data\/models\/${module_snake}_model.dart';"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/models.dart
+
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/data\/models\/${module_snake}_model.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
-    #sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
     code="${Module}Entity,${lineBreak}${Module}ListResponse,${lineBreak}${Module}ItemResponse,${lineBreak}"
