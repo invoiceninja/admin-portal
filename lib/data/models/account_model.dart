@@ -112,6 +112,8 @@ abstract class AccountEntity
     return Version.parse(currentVersion) < Version.parse(latestVersion);
   }
 
+  bool get isOld => id.isNotEmpty;
+
   bool get isTrial => trialDaysLeft > 0;
 
   bool get isEligibleForTrial => trialStarted.isEmpty && plan == kPlanFree;
