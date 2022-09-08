@@ -47,8 +47,6 @@ class StubFields {
 
 abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
 
-  // STARTER: properties - do not remove comment
-
   factory StubEntity({String id, AppState state}) {
     return _$StubEntity._(
       id: id ?? BaseEntity.nextId,
@@ -69,6 +67,8 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
 @memoized
   int get hashCode;
 
+  // STARTER: properties - do not remove comment
+
   @override
   EntityType get entityType => EntityType.stub;
 
@@ -85,15 +85,8 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includePreview) {
-        actions.add(EntityAction.preview);
-      }
-
-
-      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
-      }
+    if (!isDeleted && !multiselect && includeEdit && userCompany.canEditEntity(this)) {
+      actions.add(EntityAction.edit);
     }
 
     if (actions.isNotEmpty && actions.last != null) {

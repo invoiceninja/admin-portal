@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
@@ -933,6 +934,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsExpenseCategoryEdit:
         screen = ExpenseCategoryEditScreen();
+        break;
+      case kSettingsBankAccounts:
+        screen = BankAccountScreenBuilder();
         break;
     }
 

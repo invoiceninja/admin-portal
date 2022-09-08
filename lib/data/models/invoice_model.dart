@@ -635,7 +635,9 @@ abstract class InvoiceEntity extends Object
 
   List<InvoiceHistoryEntity> get history => activities
       .where((activity) =>
-          activity.history != null && (activity.history.id ?? '').isNotEmpty)
+          activity.history != null &&
+          (activity.history.id ?? '').isNotEmpty &&
+          activity.history.createdAt > 0)
       .map((activity) => activity.history)
       .toList();
 

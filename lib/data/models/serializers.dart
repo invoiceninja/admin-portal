@@ -50,6 +50,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
 
 part 'serializers.g.dart';
 
@@ -114,9 +115,11 @@ part 'serializers.g.dart';
   TaxRateItemResponse,
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
+  BankAccountEntity,
+  BankAccountListResponse,
+  BankAccountItemResponse,
   InvoiceListResponse,
   InvoiceItemResponse,
-
   SubscriptionEntity,
   SubscriptionListResponse,
   SubscriptionItemResponse,

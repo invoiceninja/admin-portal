@@ -25,6 +25,7 @@ class TaxRateViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
+
   final bool isFilter;
   static const String route = '/$kSettings/$kSettingsTaxRatesView';
 

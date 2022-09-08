@@ -148,7 +148,6 @@ class _ProjectOverviewState extends State<ProjectOverview> {
             subtitle: memoizedInvoiceStatsForProject(
                     project.id, state.invoiceState.map)
                 .present(localization.active, localization.archived),
-            hideNew: true,
           ),
       ];
 

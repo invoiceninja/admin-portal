@@ -39,6 +39,8 @@ export 'package:invoiceninja_flutter/data/models/task_model.dart';
 export 'package:invoiceninja_flutter/data/models/task_status_model.dart';
 export 'package:invoiceninja_flutter/data/models/user_model.dart';
 export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+export 'package:invoiceninja_flutter/data/models/bank_account_model.dart';
+// STARTER: export - do not remove comment
 
 part 'models.g.dart';
 

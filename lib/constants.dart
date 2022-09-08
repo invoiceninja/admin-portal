@@ -496,6 +496,8 @@ const String kSettingsExpenseCategoryEdit = 'expense_category/edit';
 const String kSettingsTaskStatuses = 'task_status';
 const String kSettingsTaskStatusView = 'task_status/view';
 const String kSettingsTaskStatusEdit = 'task_status/edit';
+const String kSettingsBankAccounts = 'bank_accounts';
+const String kSettingsBankAccountsView = 'bank_accounts/view';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,
@@ -604,7 +606,8 @@ const int kModuleExpenses = 16;
 const int kModuleProjects = 32;
 const int kModuleVendors = 64;
 const int kModuleTickets = 128;
-const int kModuleProposals = 256;
+//const int kModuleProposals = 256;
+const int kModuleTransactions = 256;
 const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;

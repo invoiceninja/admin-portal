@@ -94,6 +94,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
@@ -503,27 +506,28 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                         QuotePdfScreen.route: (context) => QuotePdfScreen(),
                         // STARTER: routes - do not remove comment
+                        BankAccountScreen.route: (context) =>
+                            BankAccountScreenBuilder(),
+                        BankAccountViewScreen.route: (context) =>
+                            BankAccountViewScreen(),
                         PurchaseOrderScreen.route: (context) =>
                             PurchaseOrderScreenBuilder(),
                         PurchaseOrderViewScreen.route: (context) =>
                             PurchaseOrderViewScreen(),
                         PurchaseOrderEditScreen.route: (context) =>
                             PurchaseOrderEditScreen(),
-
                         RecurringExpenseScreen.route: (context) =>
                             RecurringExpenseScreenBuilder(),
                         RecurringExpenseViewScreen.route: (context) =>
                             RecurringExpenseViewScreen(),
                         RecurringExpenseEditScreen.route: (context) =>
                             RecurringExpenseEditScreen(),
-
                         SubscriptionScreen.route: (context) =>
                             SubscriptionScreenBuilder(),
                         SubscriptionViewScreen.route: (context) =>
                             SubscriptionViewScreen(),
                         SubscriptionEditScreen.route: (context) =>
                             SubscriptionEditScreen(),
-
                         TaskStatusScreen.route: (context) =>
                             TaskStatusScreenBuilder(),
                         TaskStatusViewScreen.route: (context) =>
