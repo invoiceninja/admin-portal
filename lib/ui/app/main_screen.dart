@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -936,7 +936,7 @@ class SettingsScreens extends StatelessWidget {
         screen = ExpenseCategoryEditScreen();
         break;
       case kSettingsBankAccounts:
-        screen = BankAccountsScreen();
+        screen = BankAccountScreenBuilder();
         break;
     }
 

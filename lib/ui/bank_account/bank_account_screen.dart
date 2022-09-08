@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
@@ -18,7 +19,7 @@ class BankAccountScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/bank_account';
+  static const String route = '/$kSettings/$kSettingsBankAccounts';
 
   final BankAccountScreenVM viewModel;
 
