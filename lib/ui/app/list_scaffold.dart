@@ -31,6 +31,8 @@ class ListScaffold extends StatelessWidget {
     this.onHamburgerLongPress,
     this.onCancelSettingsSection,
     this.onCancelSettingsIndex = 0,
+    this.createLabel,
+    this.onCreatePressed,
   });
 
   final EntityType entityType;
@@ -40,10 +42,12 @@ class ListScaffold extends StatelessWidget {
   final Widget appBarTitle;
   final List<Widget> appBarActions;
   final List<Widget> appBarLeadingActions;
-  final Function() onHamburgerLongPress;
+  final Function onHamburgerLongPress;
   final String onCancelSettingsSection;
   final int onCancelSettingsIndex;
   final Function onCheckboxPressed;
+  final String createLabel;
+  final Function onCreatePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +84,14 @@ class ListScaffold extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(
                   state.prefState.colorThemeModel.colorSuccess)),
           onPressed: () {
-            createEntityByType(entityType: entityType, context: context);
+            if (onCreatePressed != null) {
+              onCreatePressed();
+            } else {
+              createEntityByType(entityType: entityType, context: context);
+            }
           },
           child: IconText(
-            text: localization.create,
+            text: createLabel ?? localization.create,
             icon: Icons.add_circle_outline,
             style: TextStyle(color: Colors.white),
           ),
