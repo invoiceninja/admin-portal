@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -204,7 +205,7 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsTemplatesAndReminders,
               viewModel: widget.viewModel,
             ),
-            if (showAll)
+            if (showAll && !kReleaseMode)
               SettingsListTile(
                 section: kSettingsBankAccounts,
                 viewModel: widget.viewModel,
@@ -573,11 +574,12 @@ class SettingsSearch extends StatelessWidget {
           'late_fees',
         ]
       ],
-      kSettingsBankAccounts: [
-        [
-          'bank_accounts',
+      if (!kReleaseMode)
+        kSettingsBankAccounts: [
+          [
+            'bank_accounts',
+          ],
         ],
-      ],
       kSettingsGroupSettings: [
         [
           'groups',

@@ -23,7 +23,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_bank_account': 'Successfully removed bank account',
       'restored_bank_account': 'Successfully restored bank account',
       'search_bank_account': 'Search Bank Account',
-      'search_bank_accounts': 'Search Bank Accounts',
+      'search_bank_accounts': 'Search :count Bank Accounts',
       'connect': 'Connect',
       'mark_paid_payment_email': 'Mark Paid Payment Email',
       'convert_to_project': 'Convert to Project',
