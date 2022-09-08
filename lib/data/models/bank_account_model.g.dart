@@ -120,8 +120,16 @@ class _$BankAccountEntitySerializer
   Iterable<Object> serialize(Serializers serializers, BankAccountEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'name',
+      'bank_account_name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'bank_account_status',
+      serializers.serialize(object.status,
+          specifiedType: const FullType(String)),
+      'bank_account_type',
+      serializers.serialize(object.type, specifiedType: const FullType(String)),
+      'provider_name',
+      serializers.serialize(object.provider,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -178,8 +186,20 @@ class _$BankAccountEntitySerializer
       iterator.moveNext();
       final Object value = iterator.current;
       switch (key) {
-        case 'name':
+        case 'bank_account_name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'bank_account_status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'bank_account_type':
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'provider_name':
+          result.provider = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -415,6 +435,12 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final String name;
   @override
+  final String status;
+  @override
+  final String type;
+  @override
+  final String provider;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -437,6 +463,9 @@ class _$BankAccountEntity extends BankAccountEntity {
 
   _$BankAccountEntity._(
       {this.name,
+      this.status,
+      this.type,
+      this.provider,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -447,6 +476,11 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'BankAccountEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        status, 'BankAccountEntity', 'status');
+    BuiltValueNullFieldError.checkNotNull(type, 'BankAccountEntity', 'type');
+    BuiltValueNullFieldError.checkNotNull(
+        provider, 'BankAccountEntity', 'provider');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'BankAccountEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -469,6 +503,9 @@ class _$BankAccountEntity extends BankAccountEntity {
     if (identical(other, this)) return true;
     return other is BankAccountEntity &&
         name == other.name &&
+        status == other.status &&
+        type == other.type &&
+        provider == other.provider &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -488,7 +525,15 @@ class _$BankAccountEntity extends BankAccountEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, name.hashCode), isChanged.hashCode),
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, name.hashCode),
+                                                status.hashCode),
+                                            type.hashCode),
+                                        provider.hashCode),
+                                    isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
                         archivedAt.hashCode),
@@ -502,6 +547,9 @@ class _$BankAccountEntity extends BankAccountEntity {
   String toString() {
     return (newBuiltValueToStringHelper('BankAccountEntity')
           ..add('name', name)
+          ..add('status', status)
+          ..add('type', type)
+          ..add('provider', provider)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -521,6 +569,18 @@ class BankAccountEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _status;
+  String get status => _$this._status;
+  set status(String status) => _$this._status = status;
+
+  String _type;
+  String get type => _$this._type;
+  set type(String type) => _$this._type = type;
+
+  String _provider;
+  String get provider => _$this._provider;
+  set provider(String provider) => _$this._provider = provider;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -562,6 +622,9 @@ class BankAccountEntityBuilder
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
+      _status = $v.status;
+      _type = $v.type;
+      _provider = $v.provider;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -592,6 +655,12 @@ class BankAccountEntityBuilder
         new _$BankAccountEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
                 name, 'BankAccountEntity', 'name'),
+            status: BuiltValueNullFieldError.checkNotNull(
+                status, 'BankAccountEntity', 'status'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, 'BankAccountEntity', 'type'),
+            provider: BuiltValueNullFieldError.checkNotNull(
+                provider, 'BankAccountEntity', 'provider'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, 'BankAccountEntity', 'createdAt'),

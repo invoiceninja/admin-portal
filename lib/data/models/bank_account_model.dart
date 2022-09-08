@@ -63,6 +63,9 @@ abstract class BankAccountEntity extends Object
       archivedAt: 0,
       // STARTER: constructor - do not remove comment
       name: '',
+      status: '',
+      type: '',
+      provider: '',
     );
   }
 
@@ -72,8 +75,17 @@ abstract class BankAccountEntity extends Object
   @memoized
   int get hashCode;
 
-  // STARTER: properties - do not remove comment
+  @BuiltValueField(wireName: 'bank_account_name')
   String get name;
+
+  @BuiltValueField(wireName: 'bank_account_status')
+  String get status;
+
+  @BuiltValueField(wireName: 'bank_account_type')
+  String get type;
+
+  @BuiltValueField(wireName: 'provider_name')
+  String get provider;
 
   @override
   EntityType get entityType => EntityType.bankAccount;
