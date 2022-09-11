@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -9,7 +14,10 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_presenter.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'bank_account_screen_vm.dart';
 
@@ -23,6 +31,30 @@ class BankAccountScreen extends StatelessWidget {
 
   final BankAccountScreenVM viewModel;
 
+  void connectAccounts(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final webClient = WebClient();
+    final credentials = state.credentials;
+    final url = '${credentials.url}/one_time_token';
+
+    store.dispatch(StartSaving());
+
+    webClient
+        .post(url, credentials.token,
+            data: jsonEncode({
+              'context': {'return_url': ''}
+            }))
+        .then((dynamic response) {
+      store.dispatch(StopSaving());
+      launchUrl(Uri.parse(
+          '${cleanApiUrl(credentials.url)}/yodlee/onboard/${response['hash']}'));
+    }).catchError((dynamic error) {
+      store.dispatch(StopSaving());
+      showErrorDialog(context: navigatorKey.currentContext, message: '$error');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -33,6 +65,8 @@ class BankAccountScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.bankAccount,
       onHamburgerLongPress: () => store.dispatch(StartBankAccountMultiselect()),
+      createLabel: localization.connect,
+      onCreatePressed: () => connectAccounts(context),
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.bankAccountListState.filterClearedAt}__'),
@@ -88,9 +122,7 @@ class BankAccountScreen extends StatelessWidget {
           ? FloatingActionButton(
               heroTag: 'bank_account_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                //createEntityByType(context: context, entityType: EntityType.bankAccount);
-              },
+              onPressed: () => connectAccounts(context),
               child: Icon(
                 Icons.link,
                 color: Colors.white,

@@ -399,6 +399,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_test_robots:
+    dependency: transitive
+    description:
+      name: flutter_test_robots
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.17"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1283,8 +1290,8 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: "9174392ffdb2547925f66fee4caaa03aa119ab48"
-      resolved-ref: "9174392ffdb2547925f66fee4caaa03aa119ab48"
+      ref: HEAD
+      resolved-ref: "1601fdce95ebfa34bddf80cab3e58e700b0edec3"
       url: "https://github.com/superlistapp/super_editor.git"
     source: git
     version: "0.2.2"

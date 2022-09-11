@@ -130,6 +130,12 @@ class _$BankAccountEntitySerializer
       'provider_name',
       serializers.serialize(object.provider,
           specifiedType: const FullType(String)),
+      'balance',
+      serializers.serialize(object.balance,
+          specifiedType: const FullType(double)),
+      'currency',
+      serializers.serialize(object.currency,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -200,6 +206,14 @@ class _$BankAccountEntitySerializer
           break;
         case 'provider_name':
           result.provider = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'balance':
+          result.balance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'currency':
+          result.currency = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -441,6 +455,10 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final String provider;
   @override
+  final double balance;
+  @override
+  final String currency;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -466,6 +484,8 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.status,
       this.type,
       this.provider,
+      this.balance,
+      this.currency,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -481,6 +501,10 @@ class _$BankAccountEntity extends BankAccountEntity {
     BuiltValueNullFieldError.checkNotNull(type, 'BankAccountEntity', 'type');
     BuiltValueNullFieldError.checkNotNull(
         provider, 'BankAccountEntity', 'provider');
+    BuiltValueNullFieldError.checkNotNull(
+        balance, 'BankAccountEntity', 'balance');
+    BuiltValueNullFieldError.checkNotNull(
+        currency, 'BankAccountEntity', 'currency');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'BankAccountEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -506,6 +530,8 @@ class _$BankAccountEntity extends BankAccountEntity {
         status == other.status &&
         type == other.type &&
         provider == other.provider &&
+        balance == other.balance &&
+        currency == other.currency &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -529,10 +555,14 @@ class _$BankAccountEntity extends BankAccountEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, name.hashCode),
-                                                status.hashCode),
-                                            type.hashCode),
-                                        provider.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, name.hashCode),
+                                                        status.hashCode),
+                                                    type.hashCode),
+                                                provider.hashCode),
+                                            balance.hashCode),
+                                        currency.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -550,6 +580,8 @@ class _$BankAccountEntity extends BankAccountEntity {
           ..add('status', status)
           ..add('type', type)
           ..add('provider', provider)
+          ..add('balance', balance)
+          ..add('currency', currency)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -581,6 +613,14 @@ class BankAccountEntityBuilder
   String _provider;
   String get provider => _$this._provider;
   set provider(String provider) => _$this._provider = provider;
+
+  double _balance;
+  double get balance => _$this._balance;
+  set balance(double balance) => _$this._balance = balance;
+
+  String _currency;
+  String get currency => _$this._currency;
+  set currency(String currency) => _$this._currency = currency;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -625,6 +665,8 @@ class BankAccountEntityBuilder
       _status = $v.status;
       _type = $v.type;
       _provider = $v.provider;
+      _balance = $v.balance;
+      _currency = $v.currency;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -661,6 +703,10 @@ class BankAccountEntityBuilder
                 type, 'BankAccountEntity', 'type'),
             provider: BuiltValueNullFieldError.checkNotNull(
                 provider, 'BankAccountEntity', 'provider'),
+            balance: BuiltValueNullFieldError.checkNotNull(
+                balance, 'BankAccountEntity', 'balance'),
+            currency: BuiltValueNullFieldError.checkNotNull(
+                currency, 'BankAccountEntity', 'currency'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, 'BankAccountEntity', 'createdAt'),
@@ -671,8 +717,7 @@ class BankAccountEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, 'BankAccountEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, 'BankAccountEntity', 'id'));
     replace(_$result);
     return _$result;
   }

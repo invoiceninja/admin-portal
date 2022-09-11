@@ -66,6 +66,8 @@ abstract class BankAccountEntity extends Object
       status: '',
       type: '',
       provider: '',
+      balance: 0,
+      currency: '',
     );
   }
 
@@ -86,6 +88,10 @@ abstract class BankAccountEntity extends Object
 
   @BuiltValueField(wireName: 'provider_name')
   String get provider;
+
+  double get balance;
+
+  String get currency;
 
   @override
   EntityType get entityType => EntityType.bankAccount;

@@ -75,10 +75,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final state = widget.viewModel.state;
     final company = state.company;
     final settingsUIState = state.settingsUIState;
-    final length = company.markdownEmailEnabled &&
-            widget.viewModel.state.prefState.isDesktop
-        ? 3
-        : 2;
+    final length = company.markdownEmailEnabled ? 3 : 2;
 
     _focusNode = FocusScopeNode();
     _controller = TabController(
@@ -143,7 +140,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     if (viewModel.state.company.markdownEmailEnabled &&
-        widget.viewModel.state.prefState.isDesktop &&
         _bodyController.text.trim().startsWith('<')) {
       _bodyController.text = html2md.convert(_bodyController.text);
     }
@@ -160,7 +156,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _emailPreview = '';
 
       if (state.company.markdownEmailEnabled &&
-          widget.viewModel.state.prefState.isDesktop &&
           _defaultBody.trim().startsWith('<')) {
         _defaultBody = html2md.convert(_defaultBody);
       }
@@ -332,8 +327,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           Tab(
             text: localization.settings,
           ),
-          if (company.markdownEmailEnabled &&
-              widget.viewModel.state.prefState.isDesktop)
+          if (company.markdownEmailEnabled)
             Tab(
               text: localization.design,
             ),
@@ -529,8 +523,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               SizedBox(height: 16),
             ],
           ),
-          if (company.markdownEmailEnabled &&
-              widget.viewModel.state.prefState.isDesktop)
+          if (company.markdownEmailEnabled)
             ColoredBox(
               color: Colors.white,
               child: ExampleEditor(

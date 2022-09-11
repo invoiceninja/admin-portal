@@ -933,7 +933,7 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!Config.DEMO_MODE && !state.isDemo)
+            if (!Config.DEMO_MODE && !state.isDemo && account.isOld)
               if (state.isSelfHosted && !account.isSchedulerRunning)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization.error : '',
