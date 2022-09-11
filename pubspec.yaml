@@ -24,6 +24,10 @@ dependencies:
   in_app_review: ^2.0.4
   in_app_purchase: ^3.0.6
   pinput: ^2.2.11
+  #pinput:
+  # git:
+  #  url: https://github.com/Tkko/Flutter_Pinput
+  #  ref: dev
   flutter_redux: ^0.8.2
   redux_logging: ^0.5.0
   http: ^0.13.3
