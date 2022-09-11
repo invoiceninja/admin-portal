@@ -69,7 +69,6 @@ dependencies:
     git:
       url: https://github.com/superlistapp/super_editor.git
       path: super_editor
-      ref: 9174392ffdb2547925f66fee4caaa03aa119ab48
   html2md: ^1.2.5
   printing: ^5.8.0
   image_cropper: ^2.0.2
