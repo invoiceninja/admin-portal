@@ -84,13 +84,7 @@ class BankAccountListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Text(toTitleCase(bankAccount.type)),
+            Text(toTitleCase(bankAccount.type)),
             EntityStateLabel(bankAccount),
           ],
         ),
