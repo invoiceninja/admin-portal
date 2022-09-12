@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class BankAccountListItem extends StatelessWidget {
   const BankAccountListItem({
@@ -75,7 +76,7 @@ class BankAccountListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              Text(formatNumber(bankAccount.listDisplayAmount, context),
+              Text(formatNumber(bankAccount.balance, context),
                   style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
@@ -89,7 +90,7 @@ class BankAccountListItem extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   )
-                : Container(),
+                : Text(toTitleCase(bankAccount.type)),
             EntityStateLabel(bankAccount),
           ],
         ),
