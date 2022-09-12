@@ -23,9 +23,9 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OldBankAccountsScreen extends StatelessWidget {
-  const OldBankAccountsScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsBankAccounts';
+class BankAccountSettingsScreen extends StatelessWidget {
+  const BankAccountSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsBankAccountSettings';
 
   @override
   Widget build(BuildContext context) {

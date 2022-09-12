@@ -173,13 +173,13 @@ abstract class BankAccountEntity extends Object
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => balance;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<BankAccountEntity> get serializer =>
       _$bankAccountEntitySerializer;
