@@ -7,7 +7,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:redux/redux.dart';
-
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'bank_account_screen.dart';
 
 class BankAccountScreenBuilder extends StatelessWidget {
@@ -33,6 +36,7 @@ class BankAccountScreenVM {
     @required this.userCompany,
     @required this.onEntityAction,
     @required this.bankAccountMap,
+    @required this.onRefreshAccounts,
   });
 
   final bool isInMultiselect;
@@ -40,6 +44,7 @@ class BankAccountScreenVM {
   final List<String> bankAccountList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, BankAccountEntity> bankAccountMap;
+  final Function onRefreshAccounts;
 
   static BankAccountScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -57,6 +62,22 @@ class BankAccountScreenVM {
       onEntityAction: (BuildContext context, List<BaseEntity> bankAccounts,
               EntityAction action) =>
           handleBankAccountAction(context, bankAccounts, action),
+      onRefreshAccounts: () {
+        final webClient = WebClient();
+        final credentials = state.credentials;
+        final url = '${credentials.url}/bank_integrations/refresh_accounts';
+
+        store.dispatch(StartSaving());
+
+        webClient.post(url, credentials.token).then((dynamic response) {
+          store.dispatch(StopSaving());
+          store.dispatch(RefreshData());
+        }).catchError((dynamic error) {
+          store.dispatch(StopSaving());
+          showErrorDialog(
+              context: navigatorKey.currentContext, message: '$error');
+        });
+      },
     );
   }
 }

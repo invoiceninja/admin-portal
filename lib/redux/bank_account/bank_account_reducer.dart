@@ -256,6 +256,5 @@ BankAccountState _setLoadedBankAccounts(
 BankAccountState _setLoadedCompany(
     BankAccountState bankAccountState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  print('## setLoadedCompany: ${company.bankAccounts}');
   return bankAccountState.loadBankAccounts(company.bankAccounts);
 }

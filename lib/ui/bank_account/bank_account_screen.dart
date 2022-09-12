@@ -117,6 +117,7 @@ class BankAccountScreen extends StatelessWidget {
             store.dispatch(FilterBankAccountsByCustom3(value)),
         onSelectedCustom4: (value) =>
             store.dispatch(FilterBankAccountsByCustom4(value)),
+        onRefreshPressed: viewModel.onRefreshAccounts,
       ),
       floatingActionButton: state.prefState.isMenuFloated
           ? FloatingActionButton(
