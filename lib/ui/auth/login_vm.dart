@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -293,9 +292,7 @@ class LoginVM {
             ],
             webAuthenticationOptions: WebAuthenticationOptions(
               clientId: 'com.invoiceninja.client',
-              redirectUri: kIsWeb
-                  ? Uri.parse(WebUtils.browserUrl)
-                  : Uri.parse('https://invoicing.co/auth/apple'),
+              redirectUri: Uri.parse('https://invoicing.co/auth/apple'),
             ),
           );
 
@@ -326,9 +323,7 @@ class LoginVM {
             ],
             webAuthenticationOptions: WebAuthenticationOptions(
               clientId: 'com.invoiceninja.client',
-              redirectUri: kIsWeb
-                  ? Uri.parse(WebUtils.apiUrl)
-                  : Uri.parse('https://invoicing.co/auth/apple'),
+              redirectUri: Uri.parse('https://invoicing.co/auth/apple'),
             ),
           );
 
