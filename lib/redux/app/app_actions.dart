@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -1371,6 +1372,9 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
           break;
         case EntityType.subscription:
           store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
+          break;
+        case EntityType.bankAccount:
+          store.dispatch(UpdateCurrentRoute(BankAccountScreen.route));
           break;
         default:
           print(
