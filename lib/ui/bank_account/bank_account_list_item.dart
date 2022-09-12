@@ -37,11 +37,6 @@ class BankAccountListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? bankAccount.matchesFilterValue(filter)
-        : null;
-    final subtitle = filterMatch;
-
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: bankAccount,
