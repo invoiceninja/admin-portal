@@ -45,8 +45,9 @@ abstract class BankAccountItemResponse
 }
 
 class BankAccountFields {
-  // STARTER: fields - do not remove comment
   static const String name = 'name';
+  static const String type = 'type';
+  static const String balance = 'balance';
 }
 
 abstract class BankAccountEntity extends Object
@@ -124,9 +125,18 @@ abstract class BankAccountEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case BankAccountFields.name:
-        response = bankAccountA.name.compareTo(bankAccountB.name);
+        response = bankAccountA.name
+            .toLowerCase()
+            .compareTo(bankAccountB.name.toLowerCase());
         break;
-
+      case BankAccountFields.balance:
+        response = bankAccountA.balance.compareTo(bankAccountB.balance);
+        break;
+      case BankAccountFields.type:
+        response = bankAccountA.type
+            .toLowerCase()
+            .compareTo(bankAccountB.type.toLowerCase());
+        break;
       default:
         print('## ERROR: sort by bankAccount.$sortField is not implemented');
         break;

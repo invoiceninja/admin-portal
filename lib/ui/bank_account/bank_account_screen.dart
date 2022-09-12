@@ -98,6 +98,8 @@ class BankAccountScreen extends StatelessWidget {
         },
         sortFields: [
           BankAccountFields.name,
+          BankAccountFields.type,
+          BankAccountFields.balance,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterBankAccountsByState(state));
