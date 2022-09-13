@@ -131,7 +131,7 @@ abstract class AccountEntity
     ..trialDaysLeft = 0
     ..hostedClientCount = 0
     ..hostedCompanyCount = 1
-    ..accountSmsVerified = false
+    ..accountSmsVerified = true
     ..setReactAsDefaultAP = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;

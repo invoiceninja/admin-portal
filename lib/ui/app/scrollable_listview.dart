@@ -7,11 +7,13 @@ class ScrollableListView extends StatefulWidget {
     @required this.children,
     this.scrollController,
     this.padding,
+    this.primary,
   }) : super(key: key);
 
   final List<Widget> children;
   final ScrollController scrollController;
   final EdgeInsetsGeometry padding;
+  final bool primary;
 
   @override
   _ScrollableListViewState createState() => _ScrollableListViewState();
@@ -37,8 +39,11 @@ class _ScrollableListViewState extends State<ScrollableListView> {
     return ListView(
       padding: widget.padding,
       children: widget.children,
-      controller: widget.scrollController ?? _scrollController,
+      controller: widget.primary == true
+          ? null
+          : widget.scrollController ?? _scrollController,
       shrinkWrap: true,
+      primary: widget.primary,
     );
   }
 }
