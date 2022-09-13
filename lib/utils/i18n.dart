@@ -27,7 +27,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_transaction': 'Successfully removed transaction',
       'restored_transaction': 'Successfully restored transaction',
       'search_transaction': 'Search Transaction',
-      'search_transactions': 'Search :count Transaction',
+      'search_transactions': 'Search :count Transactions',
       'bank_account': 'Bank Account',
       'bank_accounts': 'Bank Accounts',
       'archived_bank_account': 'Successfully archived bank account',
