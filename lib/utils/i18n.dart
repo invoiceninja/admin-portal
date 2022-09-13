@@ -27,6 +27,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_transaction': 'Successfully removed transaction',
       'restored_transaction': 'Successfully restored transaction',
       'search_transaction': 'Search Transaction',
+      'search_transactions': 'Search :count Transaction',
       'bank_account': 'Bank Account',
       'bank_accounts': 'Bank Accounts',
       'archived_bank_account': 'Successfully archived bank account',
@@ -87281,6 +87282,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchTransaction =>
       _localizedValues[localeCode]['search_transaction'] ??
       _localizedValues['en']['search_transaction'];
+
+  String get searchTransactions =>
+      _localizedValues[localeCode]['search_transactions'] ??
+      _localizedValues['en']['search_transactions'];
 
 // STARTER: lang field - do not remove comment
 

@@ -15,6 +15,8 @@ import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen_vm.
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
@@ -206,6 +208,12 @@ class MainScreen extends StatelessWidget {
         case ExpenseScreen.route:
           screen = EntityScreens(
             entityType: EntityType.expense,
+            editingFilterEntity: editingFilterEntity,
+          );
+          break;
+        case TransactionScreen.route:
+          screen = EntityScreens(
+            entityType: EntityType.transaction,
             editingFilterEntity: editingFilterEntity,
           );
           break;
@@ -705,6 +713,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.recurringExpense:
           listWidget = RecurringExpenseScreenBuilder();
+          break;
+        case EntityType.transaction:
+          listWidget = TransactionScreenBuilder();
           break;
         default:
           print('## ERROR: list widget not implemented for $entityType');
