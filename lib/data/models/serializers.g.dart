@@ -193,6 +193,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TokenListResponse.serializer)
       ..add(TokenState.serializer)
       ..add(TokenUIState.serializer)
+      ..add(TransactionEntity.serializer)
+      ..add(TransactionItemResponse.serializer)
+      ..add(TransactionListResponse.serializer)
+      ..add(TransactionState.serializer)
+      ..add(TransactionUIState.serializer)
       ..add(UIState.serializer)
       ..add(UserCompanyEntity.serializer)
       ..add(UserCompanyItemResponse.serializer)
@@ -421,6 +426,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(BankAccountEntity)]),
           () => new ListBuilder<BankAccountEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TransactionEntity)]),
+          () => new ListBuilder<TransactionEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(
@@ -551,6 +559,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TokenEntity)]),
           () => new ListBuilder<TokenEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TransactionEntity)]),
+          () => new ListBuilder<TransactionEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserCompanyEntity)]),
           () => new ListBuilder<UserCompanyEntity>())
@@ -888,6 +899,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(TokenEntity)]),
           () => new MapBuilder<String, TokenEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TransactionEntity)
+          ]),
+          () => new MapBuilder<String, TransactionEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

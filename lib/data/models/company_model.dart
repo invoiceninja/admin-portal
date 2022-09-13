@@ -145,6 +145,7 @@ abstract class CompanyEntity extends Object
       clientRegistrationFields: BuiltList<RegistrationFieldEntity>(),
       purchaseOrders: BuiltList<InvoiceEntity>(),
       bankAccounts: BuiltList<BankAccountEntity>(),
+      transactions: BuiltList<TransactionEntity>(),
     );
   }
 
@@ -327,6 +328,8 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'bank_integrations')
   BuiltList<BankAccountEntity> get bankAccounts;
+
+  BuiltList<TransactionEntity> get transactions;
 
   BuiltList<TaskEntity> get tasks;
 
@@ -596,6 +599,7 @@ abstract class CompanyEntity extends Object
           ..quotes.clear()
           ..purchaseOrders.clear()
           ..bankAccounts.clear()
+          ..transactions.clear()
           ..credits.clear()
           ..tasks.clear()
           ..projects.clear()
@@ -678,7 +682,8 @@ abstract class CompanyEntity extends Object
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
     ..clientRegistrationFields.replace(BuiltList<RegistrationFieldEntity>())
     ..purchaseOrders.replace(BuiltList<InvoiceEntity>())
-    ..bankAccounts.replace(BuiltList<BankAccountEntity>());
+    ..bankAccounts.replace(BuiltList<BankAccountEntity>())
+    ..transactions.replace(BuiltList<BankAccountEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }

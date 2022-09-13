@@ -95,6 +95,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
@@ -507,6 +512,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                         QuotePdfScreen.route: (context) => QuotePdfScreen(),
                         // STARTER: routes - do not remove comment
+                        TransactionScreen.route: (context) =>
+                            TransactionScreenBuilder(),
+                        TransactionViewScreen.route: (context) =>
+                            TransactionViewScreen(),
+                        TransactionEditScreen.route: (context) =>
+                            TransactionEditScreen(),
+
                         BankAccountScreen.route: (context) =>
                             BankAccountScreenBuilder(),
                         BankAccountViewScreen.route: (context) =>

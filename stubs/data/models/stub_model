@@ -73,10 +73,6 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   @override
   EntityType get entityType => EntityType.stub;
 
-  String get displayName {
-    // STARTER: display name - do not remove comment
-  }
-
 
   @override
   List<EntityAction> getActions(
@@ -121,8 +117,7 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
-        name,
-        type,
+        //
       ],
       needle: filter,
     );
@@ -132,8 +127,7 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        name,
-        type,
+        //
       ],
       needle: filter,
     );

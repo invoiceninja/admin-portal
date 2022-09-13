@@ -65,6 +65,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
@@ -388,6 +390,10 @@ void viewEntitiesByType({
             action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.transaction:
+            action = ViewTransactionList();
+            break;
+
           case EntityType.bankAccount:
             action = ViewBankAccountList();
             break;
@@ -606,6 +612,13 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.transaction:
+            store.dispatch(ViewTransaction(
+              transactionId: entityId,
+              force: force,
+            ));
+            break;
+
           case EntityType.bankAccount:
             store.dispatch(ViewBankAccount(
               bankAccountId: entityId,
@@ -845,6 +858,13 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.transaction:
+            store.dispatch(EditTransaction(
+              force: force,
+              transaction: TransactionEntity(state: state),
+            ));
+            break;
+
           case EntityType.purchaseOrder:
             store.dispatch(EditPurchaseOrder(
               force: force,
@@ -1060,6 +1080,14 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.transaction:
+            store.dispatch(EditTransaction(
+              transaction: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.purchaseOrder:
             store.dispatch(EditPurchaseOrder(
               purchaseOrder: entity,
@@ -1253,6 +1281,11 @@ void editEntity({
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.transaction:
+            store.dispatch(
+                EditTransaction(transaction: entity, completer: completer));
+            break;
+
           case EntityType.purchaseOrder:
             store.dispatch(
                 EditPurchaseOrder(purchaseOrder: entity, completer: completer));
@@ -1428,6 +1461,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.transaction:
+      handleTransactionAction(context, entities, action);
+      break;
+
     case EntityType.bankAccount:
       handleBankAccountAction(context, entities, action);
       break;

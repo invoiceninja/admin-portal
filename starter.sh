@@ -188,7 +188,7 @@ else
     echo "app_state: import"
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_selectors.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/app/app_state.dart
 
     echo "app_state: list"
     comment="STARTER: states switch list - do not remove comment"
@@ -295,10 +295,6 @@ else
             comment="STARTER: sort default - do not remove comment"
             code="return ${module_camel}A.${element}.compareTo(${module_camel}B.${element});${lineBreak}"
             sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
-
-            comment="STARTER: display name - do not remove comment"
-            code="return ${element};${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
         fi
 
         if [ "$idx" -eq 1 ]; then
@@ -312,7 +308,7 @@ else
     echo "main: import"
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
+    sed -i -e "s/$code/$code${lineBreak}$comment/g" ./lib/main.dart
 
     comment="STARTER: middleware - do not remove comment"
     code="..addAll(createStore${Modules}Middleware())${lineBreak}"
@@ -323,7 +319,7 @@ else
     code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen_vm.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main_app.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/main_app.dart
 
     comment="STARTER: routes - do not remove comment"
     code="${Module}Screen.route: (context) => ${Module}ScreenBuilder(),${lineBreak}"
@@ -336,9 +332,8 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/models.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/data\/models\/${module_snake}_model.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
     code="${Module}Entity,${lineBreak}${Module}ListResponse,${lineBreak}${Module}ItemResponse,${lineBreak}"
@@ -346,7 +341,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: fields - do not remove comment"
     code="${Module}State get ${module_camel}State;${lineBreak}"
@@ -358,7 +353,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_reducer.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/company/company_reducer.dart
 
     comment="STARTER: reducer - do not remove comment"
     code="..${module_camel}State.replace(${modules_camel}Reducer(state.${module_camel}State, action))${lineBreak}"
@@ -375,7 +370,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: properties - do not remove comment"
     code="${Module}UIState get ${module_camel}UIState;${lineBreak}"
@@ -387,7 +382,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_reducer.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/ui/ui_reducer.dart
 
     comment="STARTER: reducer - do not remove comment"
     code="..${module_camel}UIState.replace(${module_camel}UIReducer(state.${module_camel}UIState, action))${lineBreak}"
@@ -395,7 +390,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/app/app_reducer.dart
 
     comment="STARTER: errors - do not remove comment"
     code="TypedReducer<String, Load${Modules}Failure>((state, action) { return '\${action.error}'; }),${lineBreak}"
@@ -407,11 +402,11 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/ui/pref_reducer.dart
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+    sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: view list - do not remove comment"
     code="case EntityType.${module_camel}: action = View${Module}List(); break;${lineBreak}"
