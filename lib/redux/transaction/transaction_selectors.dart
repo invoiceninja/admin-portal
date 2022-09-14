@@ -5,20 +5,33 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownTransactionList = memo5(
+var memoizedDropdownTransactionList = memo8(
     (BuiltMap<String, TransactionEntity> transactionMap,
             BuiltList<String> transactionList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltMap<String, ExpenseEntity> expenseMap,
+            BuiltMap<String, BankAccountEntity> bankAccountMap,
             String clientId) =>
         dropdownTransactionsSelector(
-            transactionMap, transactionList, staticState, userMap, clientId));
+            transactionMap,
+            transactionList,
+            staticState,
+            userMap,
+            invoiceMap,
+            expenseMap,
+            bankAccountMap,
+            clientId));
 
 List<String> dropdownTransactionsSelector(
     BuiltMap<String, TransactionEntity> transactionMap,
     BuiltList<String> transactionList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
     String clientId) {
   final list = transactionList.where((transactionId) {
     final transaction = transactionMap[transactionId];
@@ -33,23 +46,36 @@ List<String> dropdownTransactionsSelector(
   list.sort((transactionAId, transactionBId) {
     final transactionA = transactionMap[transactionAId];
     final transactionB = transactionMap[transactionBId];
-    return transactionA.compareTo(transactionB, TransactionFields.date, true);
+    return transactionA.compareTo(transactionB, TransactionFields.date, true,
+        invoiceMap, expenseMap, bankAccountMap);
   });
 
   return list;
 }
 
-var memoizedFilteredTransactionList = memo4((SelectionState selectionState,
+var memoizedFilteredTransactionList = memo7((SelectionState selectionState,
         BuiltMap<String, TransactionEntity> transactionMap,
         BuiltList<String> transactionList,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ExpenseEntity> expenseMap,
+        BuiltMap<String, BankAccountEntity> bankAccountMap,
         ListUIState transactionListState) =>
     filteredTransactionsSelector(
-        selectionState, transactionMap, transactionList, transactionListState));
+        selectionState,
+        transactionMap,
+        transactionList,
+        invoiceMap,
+        expenseMap,
+        bankAccountMap,
+        transactionListState));
 
 List<String> filteredTransactionsSelector(
     SelectionState selectionState,
     BuiltMap<String, TransactionEntity> transactionMap,
     BuiltList<String> transactionList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
     ListUIState transactionListState) {
   final filterEntityId = selectionState.filterEntityId;
   //final filterEntityType = selectionState.filterEntityType;
@@ -70,8 +96,13 @@ List<String> filteredTransactionsSelector(
   list.sort((transactionAId, transactionBId) {
     final transactionA = transactionMap[transactionAId];
     final transactionB = transactionMap[transactionBId];
-    return transactionA.compareTo(transactionB, transactionListState.sortField,
-        transactionListState.sortAscending);
+    return transactionA.compareTo(
+        transactionB,
+        transactionListState.sortField,
+        transactionListState.sortAscending,
+        invoiceMap,
+        expenseMap,
+        bankAccountMap);
   });
 
   return list;
