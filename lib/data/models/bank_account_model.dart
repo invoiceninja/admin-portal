@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'bank_account_model.g.dart';
 
@@ -44,8 +45,9 @@ abstract class BankAccountItemResponse
 }
 
 class BankAccountFields {
-  // STARTER: fields - do not remove comment
   static const String name = 'name';
+  static const String type = 'type';
+  static const String balance = 'balance';
 }
 
 abstract class BankAccountEntity extends Object
@@ -123,9 +125,18 @@ abstract class BankAccountEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case BankAccountFields.name:
-        response = bankAccountA.name.compareTo(bankAccountB.name);
+        response = bankAccountA.name
+            .toLowerCase()
+            .compareTo(bankAccountB.name.toLowerCase());
         break;
-
+      case BankAccountFields.balance:
+        response = bankAccountA.balance.compareTo(bankAccountB.balance);
+        break;
+      case BankAccountFields.type:
+        response = bankAccountA.type
+            .toLowerCase()
+            .compareTo(bankAccountB.type.toLowerCase());
+        break;
       default:
         print('## ERROR: sort by bankAccount.$sortField is not implemented');
         break;
@@ -141,34 +152,34 @@ abstract class BankAccountEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        name,
+        type,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        name,
+        type,
+      ],
+      needle: filter,
+    );
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => balance;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<BankAccountEntity> get serializer =>
       _$bankAccountEntitySerializer;

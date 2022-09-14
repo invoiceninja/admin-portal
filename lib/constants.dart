@@ -496,6 +496,7 @@ const String kSettingsExpenseCategoryEdit = 'expense_category/edit';
 const String kSettingsTaskStatuses = 'task_status';
 const String kSettingsTaskStatusView = 'task_status/view';
 const String kSettingsTaskStatusEdit = 'task_status/edit';
+const String kSettingsBankAccountSettings = 'bank_account_settings';
 const String kSettingsBankAccounts = 'bank_accounts';
 const String kSettingsBankAccountsView = 'bank_accounts/view';
 

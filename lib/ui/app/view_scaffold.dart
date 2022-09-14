@@ -26,6 +26,7 @@ class ViewScaffold extends StatelessWidget {
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
+    this.showEdit = true,
   });
 
   final bool isFilter;
@@ -34,6 +35,7 @@ class ViewScaffold extends StatelessWidget {
   final Function onBackPressed;
   final Widget floatingActionButton;
   final Widget appBarBottom;
+  final bool showEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,7 @@ class ViewScaffold extends StatelessWidget {
                             localization.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
-                    if (userCompany.canEditEntity(entity))
+                    if (userCompany.canEditEntity(entity) && showEdit)
                       Builder(builder: (context) {
                         final isDisabled = state.uiState.isEditing &&
                             state.uiState.mainRoute ==

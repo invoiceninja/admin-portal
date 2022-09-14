@@ -99,7 +99,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   final _termsController = TextEditingController();
   final _footerController = TextEditingController();
 
-  ScrollController _scrollController;
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
 
@@ -114,7 +113,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _optionTabController = TabController(vsync: this, length: 6);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
-    _scrollController = ScrollController();
   }
 
   @override
@@ -180,7 +178,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _scrollController.dispose();
 
     super.dispose();
   }
@@ -243,7 +240,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     }
 
     return SingleChildScrollView(
-      controller: _scrollController,
+      primary: true,
       child: Column(
         key: ValueKey('__invoice_${invoice.id}__'),
         children: <Widget>[

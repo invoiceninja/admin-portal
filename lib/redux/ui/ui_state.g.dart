@@ -53,6 +53,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'transactionUIState',
+      serializers.serialize(object.transactionUIState,
+          specifiedType: const FullType(TransactionUIState)),
       'bankAccountUIState',
       serializers.serialize(object.bankAccountUIState,
           specifiedType: const FullType(BankAccountUIState)),
@@ -215,6 +218,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'transactionUIState':
+          result.transactionUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(TransactionUIState))
+              as TransactionUIState);
+          break;
         case 'bankAccountUIState':
           result.bankAccountUIState.replace(serializers.deserialize(value,
                   specifiedType: const FullType(BankAccountUIState))
@@ -361,6 +369,8 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
+  final TransactionUIState transactionUIState;
+  @override
   final BankAccountUIState bankAccountUIState;
   @override
   final PurchaseOrderUIState purchaseOrderUIState;
@@ -428,6 +438,7 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.transactionUIState,
       this.bankAccountUIState,
       this.purchaseOrderUIState,
       this.recurringExpenseUIState,
@@ -476,6 +487,8 @@ class _$UIState extends UIState {
         clientUIState, 'UIState', 'clientUIState');
     BuiltValueNullFieldError.checkNotNull(
         invoiceUIState, 'UIState', 'invoiceUIState');
+    BuiltValueNullFieldError.checkNotNull(
+        transactionUIState, 'UIState', 'transactionUIState');
     BuiltValueNullFieldError.checkNotNull(
         bankAccountUIState, 'UIState', 'bankAccountUIState');
     BuiltValueNullFieldError.checkNotNull(
@@ -552,6 +565,7 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        transactionUIState == other.transactionUIState &&
         bankAccountUIState == other.bankAccountUIState &&
         purchaseOrderUIState == other.purchaseOrderUIState &&
         recurringExpenseUIState == other.recurringExpenseUIState &&
@@ -600,7 +614,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), loadingEntityType.hashCode), previewStack.hashCode), filterStack.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), bankAccountUIState.hashCode), purchaseOrderUIState.hashCode), recurringExpenseUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), loadingEntityType.hashCode), previewStack.hashCode), filterStack.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), transactionUIState.hashCode), bankAccountUIState.hashCode), purchaseOrderUIState.hashCode), recurringExpenseUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
                                                                                 recurringInvoiceUIState.hashCode),
                                                                             webhookUIState.hashCode),
                                                                         tokenUIState.hashCode),
@@ -638,6 +652,7 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('transactionUIState', transactionUIState)
           ..add('bankAccountUIState', bankAccountUIState)
           ..add('purchaseOrderUIState', purchaseOrderUIState)
           ..add('recurringExpenseUIState', recurringExpenseUIState)
@@ -738,6 +753,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
+
+  TransactionUIStateBuilder _transactionUIState;
+  TransactionUIStateBuilder get transactionUIState =>
+      _$this._transactionUIState ??= new TransactionUIStateBuilder();
+  set transactionUIState(TransactionUIStateBuilder transactionUIState) =>
+      _$this._transactionUIState = transactionUIState;
 
   BankAccountUIStateBuilder _bankAccountUIState;
   BankAccountUIStateBuilder get bankAccountUIState =>
@@ -913,6 +934,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = $v.productUIState.toBuilder();
       _clientUIState = $v.clientUIState.toBuilder();
       _invoiceUIState = $v.invoiceUIState.toBuilder();
+      _transactionUIState = $v.transactionUIState.toBuilder();
       _bankAccountUIState = $v.bankAccountUIState.toBuilder();
       _purchaseOrderUIState = $v.purchaseOrderUIState.toBuilder();
       _recurringExpenseUIState = $v.recurringExpenseUIState.toBuilder();
@@ -978,6 +1000,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              transactionUIState: transactionUIState.build(),
               bankAccountUIState: bankAccountUIState.build(),
               purchaseOrderUIState: purchaseOrderUIState.build(),
               recurringExpenseUIState: recurringExpenseUIState.build(),
@@ -1019,6 +1042,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'transactionUIState';
+        transactionUIState.build();
         _$failedField = 'bankAccountUIState';
         bankAccountUIState.build();
         _$failedField = 'purchaseOrderUIState';

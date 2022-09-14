@@ -16,6 +16,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'transaction': 'Transaction',
+      'transactions': 'Transactions',
+      'new_transaction': 'New Transaction',
+      'edit_transaction': 'Edit Transaction',
+      'created_transaction': 'Successfully created transaction',
+      'updated_transaction': 'Successfully updated transaction',
+      'archived_transaction': 'Successfully archived transaction',
+      'deleted_transaction': 'Successfully deleted transaction',
+      'removed_transaction': 'Successfully removed transaction',
+      'restored_transaction': 'Successfully restored transaction',
+      'search_transaction': 'Search Transaction',
+      'search_transactions': 'Search :count Transactions',
       'bank_account': 'Bank Account',
       'bank_accounts': 'Bank Accounts',
       'archived_bank_account': 'Successfully archived bank account',
@@ -87230,6 +87242,50 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchBankAccount =>
       _localizedValues[localeCode]['search_bank_account'] ??
       _localizedValues['en']['search_bank_account'];
+
+  String get transaction =>
+      _localizedValues[localeCode]['transaction'] ??
+      _localizedValues['en']['transaction'];
+
+  String get transactions =>
+      _localizedValues[localeCode]['transactions'] ??
+      _localizedValues['en']['transactions'];
+
+  String get newTransaction =>
+      _localizedValues[localeCode]['new_transaction'] ??
+      _localizedValues['en']['new_transaction'];
+
+  String get createdTransaction =>
+      _localizedValues[localeCode]['created_transaction'] ??
+      _localizedValues['en']['created_transaction'];
+
+  String get updatedTransaction =>
+      _localizedValues[localeCode]['updated_transaction'] ??
+      _localizedValues['en']['updated_transaction'];
+
+  String get archivedTransaction =>
+      _localizedValues[localeCode]['archived_transaction'] ??
+      _localizedValues['en']['archived_transaction'];
+
+  String get deletedTransaction =>
+      _localizedValues[localeCode]['deleted_transaction'] ??
+      _localizedValues['en']['deleted_transaction'];
+
+  String get restoredTransaction =>
+      _localizedValues[localeCode]['restored_transaction'] ??
+      _localizedValues['en']['restored_transaction'];
+
+  String get editTransaction =>
+      _localizedValues[localeCode]['edit_transaction'] ??
+      _localizedValues['en']['edit_transaction'];
+
+  String get searchTransaction =>
+      _localizedValues[localeCode]['search_transaction'] ??
+      _localizedValues['en']['search_transaction'];
+
+  String get searchTransactions =>
+      _localizedValues[localeCode]['search_transactions'] ??
+      _localizedValues['en']['search_transactions'];
 
 // STARTER: lang field - do not remove comment
 

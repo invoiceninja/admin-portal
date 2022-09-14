@@ -56,6 +56,10 @@ String toTitleCase(String text) {
       return 'URL';
     }
 
+    if (word.length <= 1) {
+      return word;
+    }
+
     final first = word.substring(0, 1).toUpperCase();
     final rest = word.substring(1);
     return '$first$rest';

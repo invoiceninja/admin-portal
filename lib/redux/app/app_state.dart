@@ -88,6 +88,10 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/transaction/transaction_state.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_selectors.dart';
+
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
@@ -293,6 +297,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.transaction:
+        return transactionState.map;
+
       case EntityType.bankAccount:
         return bankAccountState.map;
 
@@ -379,6 +386,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.transaction:
+        return transactionState.list;
+
       case EntityType.bankAccount:
         return bankAccountState.list;
 
@@ -454,6 +464,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.transaction:
+        return transactionUIState;
+
       case EntityType.bankAccount:
         return bankAccountUIState;
 
@@ -530,6 +543,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  TransactionState get transactionState => userCompanyState.transactionState;
+  ListUIState get transactionListState =>
+      uiState.transactionUIState.listUIState;
+  TransactionUIState get transactionUIState => uiState.transactionUIState;
+
   BankAccountState get bankAccountState => userCompanyState.bankAccountState;
   ListUIState get bankAccountListState =>
       uiState.bankAccountUIState.listUIState;
@@ -711,6 +729,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case TransactionEditScreen.route:
+        return hasTransactionChanges(
+            transactionUIState.editing, transactionState.map);
+
       case PurchaseOrderEditScreen.route:
         return hasPurchaseOrderChanges(
             purchaseOrderUIState.editing, purchaseOrderState.map);

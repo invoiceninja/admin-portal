@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -94,6 +95,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
@@ -506,10 +512,19 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                         QuotePdfScreen.route: (context) => QuotePdfScreen(),
                         // STARTER: routes - do not remove comment
+                        TransactionScreen.route: (context) =>
+                            TransactionScreenBuilder(),
+                        TransactionViewScreen.route: (context) =>
+                            TransactionViewScreen(),
+                        TransactionEditScreen.route: (context) =>
+                            TransactionEditScreen(),
+
                         BankAccountScreen.route: (context) =>
                             BankAccountScreenBuilder(),
                         BankAccountViewScreen.route: (context) =>
                             BankAccountViewScreen(),
+                        BankAccountSettingsScreen.route: (context) =>
+                            BankAccountSettingsScreen(),
                         PurchaseOrderScreen.route: (context) =>
                             PurchaseOrderScreenBuilder(),
                         PurchaseOrderViewScreen.route: (context) =>

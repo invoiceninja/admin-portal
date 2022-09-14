@@ -182,7 +182,7 @@ ReportResult profitAndLossReport(
         row.add(payment.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
-            value: value, currencyId: payment.currencyId));
+            value: value, currencyId: client.currencyId));
       } else {
         row.add(payment.getReportString(value: value));
       }

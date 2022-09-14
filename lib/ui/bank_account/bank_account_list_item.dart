@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class BankAccountListItem extends StatelessWidget {
   const BankAccountListItem({
@@ -35,11 +36,6 @@ class BankAccountListItem extends StatelessWidget {
     final listUIState = bankAccountUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? bankAccount.matchesFilterValue(filter)
-        : null;
-    final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
@@ -75,7 +71,7 @@ class BankAccountListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              Text(formatNumber(bankAccount.listDisplayAmount, context),
+              Text(formatNumber(bankAccount.balance, context),
                   style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
@@ -83,13 +79,7 @@ class BankAccountListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
+            Text(toTitleCase(bankAccount.type)),
             EntityStateLabel(bankAccount),
           ],
         ),

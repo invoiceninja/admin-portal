@@ -1,13 +1,10 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_presenter.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:built_collection/built_collection.dart';
@@ -88,8 +85,10 @@ class StubListVM {
         state: state,
         userCompany: state.userCompany,
         listState: state.stubListState,
-        stubList: memoizedFilteredStubList(state.stubState.map,
-            state.stubState.list, state.stubListState),
+        stubList: memoizedFilteredStubList(state.getUISelection(EntityType.stub), 
+            state.stubState.map,
+            state.stubState.list, 
+            state.stubListState),
         stubMap: state.stubState.map,
         isLoading: state.isLoading,
         filter: state.stubUIState.listUIState.filter,

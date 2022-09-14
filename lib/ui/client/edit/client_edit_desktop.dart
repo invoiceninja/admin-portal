@@ -23,6 +23,7 @@ class ClientEditDesktop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScrollableListView(
+      primary: true,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,0 +1,322 @@
+import 'dart:async';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+
+class ViewTransactionList implements PersistUI {
+  ViewTransactionList({this.force = false});
+
+  final bool force;
+}
+
+class ViewTransaction implements PersistUI, PersistPrefs {
+  ViewTransaction({
+    @required this.transactionId,
+    this.force = false,
+  });
+
+  final String transactionId;
+  final bool force;
+}
+
+class EditTransaction implements PersistUI, PersistPrefs {
+  EditTransaction(
+      {@required this.transaction,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false});
+
+  final TransactionEntity transaction;
+  final Completer completer;
+  final Completer cancelCompleter;
+  final bool force;
+}
+
+class UpdateTransaction implements PersistUI {
+  UpdateTransaction(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class LoadTransaction {
+  LoadTransaction({this.completer, this.transactionId});
+
+  final Completer completer;
+  final String transactionId;
+}
+
+class LoadTransactionActivity {
+  LoadTransactionActivity({this.completer, this.transactionId});
+
+  final Completer completer;
+  final String transactionId;
+}
+
+class LoadTransactions {
+  LoadTransactions({this.completer});
+
+  final Completer completer;
+}
+
+class LoadTransactionRequest implements StartLoading {}
+
+class LoadTransactionFailure implements StopLoading {
+  LoadTransactionFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadTransactionFailure{error: $error}';
+  }
+}
+
+class LoadTransactionSuccess implements StopLoading, PersistData {
+  LoadTransactionSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+
+  @override
+  String toString() {
+    return 'LoadTransactionSuccess{transaction: $transaction}';
+  }
+}
+
+class LoadTransactionsRequest implements StartLoading {}
+
+class LoadTransactionsFailure implements StopLoading {
+  LoadTransactionsFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadTransactionsFailure{error: $error}';
+  }
+}
+
+class LoadTransactionsSuccess implements StopLoading {
+  LoadTransactionsSuccess(this.transactions);
+
+  final BuiltList<TransactionEntity> transactions;
+
+  @override
+  String toString() {
+    return 'LoadTransactionsSuccess{transactions: $transactions}';
+  }
+}
+
+class SaveTransactionRequest implements StartSaving {
+  SaveTransactionRequest({this.completer, this.transaction});
+
+  final Completer completer;
+  final TransactionEntity transaction;
+}
+
+class SaveTransactionSuccess implements StopSaving, PersistData, PersistUI {
+  SaveTransactionSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class AddTransactionSuccess implements StopSaving, PersistData, PersistUI {
+  AddTransactionSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class SaveTransactionFailure implements StopSaving {
+  SaveTransactionFailure(this.error);
+
+  final Object error;
+}
+
+class ArchiveTransactionsRequest implements StartSaving {
+  ArchiveTransactionsRequest(this.completer, this.transactionIds);
+
+  final Completer completer;
+  final List<String> transactionIds;
+}
+
+class ArchiveTransactionsSuccess implements StopSaving, PersistData {
+  ArchiveTransactionsSuccess(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class ArchiveTransactionsFailure implements StopSaving {
+  ArchiveTransactionsFailure(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class DeleteTransactionsRequest implements StartSaving {
+  DeleteTransactionsRequest(this.completer, this.transactionIds);
+
+  final Completer completer;
+  final List<String> transactionIds;
+}
+
+class DeleteTransactionsSuccess implements StopSaving, PersistData {
+  DeleteTransactionsSuccess(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class DeleteTransactionsFailure implements StopSaving {
+  DeleteTransactionsFailure(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class RestoreTransactionsRequest implements StartSaving {
+  RestoreTransactionsRequest(this.completer, this.transactionIds);
+
+  final Completer completer;
+  final List<String> transactionIds;
+}
+
+class RestoreTransactionsSuccess implements StopSaving, PersistData {
+  RestoreTransactionsSuccess(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class RestoreTransactionsFailure implements StopSaving {
+  RestoreTransactionsFailure(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class FilterTransactions implements PersistUI {
+  FilterTransactions(this.filter);
+
+  final String filter;
+}
+
+class SortTransactions implements PersistUI, PersistPrefs {
+  SortTransactions(this.field);
+
+  final String field;
+}
+
+class FilterTransactionsByState implements PersistUI {
+  FilterTransactionsByState(this.state);
+
+  final EntityState state;
+}
+
+class FilterTransactionsByCustom1 implements PersistUI {
+  FilterTransactionsByCustom1(this.value);
+
+  final String value;
+}
+
+class FilterTransactionsByCustom2 implements PersistUI {
+  FilterTransactionsByCustom2(this.value);
+
+  final String value;
+}
+
+class FilterTransactionsByCustom3 implements PersistUI {
+  FilterTransactionsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterTransactionsByCustom4 implements PersistUI {
+  FilterTransactionsByCustom4(this.value);
+
+  final String value;
+}
+
+class StartTransactionMultiselect {
+  StartTransactionMultiselect();
+}
+
+class AddToTransactionMultiselect {
+  AddToTransactionMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromTransactionMultiselect {
+  RemoveFromTransactionMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearTransactionMultiselect {
+  ClearTransactionMultiselect();
+}
+
+class UpdateTransactionTab implements PersistUI {
+  UpdateTransactionTab({this.tabIndex});
+
+  final int tabIndex;
+}
+
+void handleTransactionAction(
+    BuildContext context, List<BaseEntity> transactions, EntityAction action) {
+  if (transactions.isEmpty) {
+    return;
+  }
+
+  final store = StoreProvider.of<AppState>(context);
+  final localization = AppLocalization.of(context);
+  final transaction = transactions.first as TransactionEntity;
+  final transactionIds =
+      transactions.map((transaction) => transaction.id).toList();
+
+  switch (action) {
+    case EntityAction.edit:
+      editEntity(entity: transaction);
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreTransactionsRequest(
+          snackBarCompleter<Null>(context, localization.restoredTransaction),
+          transactionIds));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveTransactionsRequest(
+          snackBarCompleter<Null>(context, localization.archivedTransaction),
+          transactionIds));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteTransactionsRequest(
+          snackBarCompleter<Null>(context, localization.deletedTransaction),
+          transactionIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.transactionListState.isInMultiselect()) {
+        store.dispatch(StartTransactionMultiselect());
+      }
+
+      if (transactions.isEmpty) {
+        break;
+      }
+
+      for (final transaction in transactions) {
+        if (!store.state.transactionListState.isSelected(transaction.id)) {
+          store.dispatch(AddToTransactionMultiselect(entity: transaction));
+        } else {
+          store.dispatch(RemoveFromTransactionMultiselect(entity: transaction));
+        }
+      }
+      break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [transaction],
+      );
+      break;
+    default:
+      print('## ERROR: unhandled action $action in transaction_actions');
+      break;
+  }
+}

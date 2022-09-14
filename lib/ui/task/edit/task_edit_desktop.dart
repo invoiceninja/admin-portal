@@ -154,6 +154,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
         '';
 
     return ScrollableListView(
+      primary: true,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
