@@ -45,9 +45,14 @@ abstract class TransactionItemResponse
 }
 
 class TransactionFields {
-  // STARTER: fields - do not remove comment
   static const String description = 'description';
   static const String date = 'date';
+  static const String amount = 'amount';
+  static const String currencyId = 'currency_id';
+  static const String category = 'category';
+  static const String bankAccountId = 'bank_account_id';
+  static const String invoiceId = 'invoice_id';
+  static const String expenseId = 'expense_id';
 }
 
 abstract class TransactionEntity extends Object
@@ -136,13 +141,22 @@ abstract class TransactionEntity extends Object
     final transactionB = sortAscending ? transaction : this;
 
     switch (sortField) {
-      // STARTER: sort switch - do not remove comment
       case TransactionFields.description:
         response = transactionA.description
             .toLowerCase()
             .compareTo(transactionB.description.toLowerCase());
         break;
-
+      case TransactionFields.amount:
+        response = transactionA.amount.compareTo(transactionB.amount);
+        break;
+      case TransactionFields.category:
+        response = transactionA.category
+            .toLowerCase()
+            .compareTo(transactionB.category.toLowerCase());
+        break;
+      case TransactionFields.date:
+        response = transactionA.date.compareTo(transactionB.date);
+        break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');
         break;
