@@ -71,7 +71,7 @@ class TransactionListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  transaction.reference,
+                  transaction.description,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),

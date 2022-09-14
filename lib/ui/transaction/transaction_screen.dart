@@ -64,7 +64,7 @@ class TransactionScreen extends StatelessWidget {
         },
         sortFields: [
           TransactionFields.date,
-          TransactionFields.reference,
+          TransactionFields.description,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTransactionsByState(state));

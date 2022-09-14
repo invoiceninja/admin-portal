@@ -33,8 +33,7 @@ List<String> dropdownTransactionsSelector(
   list.sort((transactionAId, transactionBId) {
     final transactionA = transactionMap[transactionAId];
     final transactionB = transactionMap[transactionBId];
-    return transactionA.compareTo(
-        transactionB, TransactionFields.reference, true);
+    return transactionA.compareTo(transactionB, TransactionFields.date, true);
   });
 
   return list;

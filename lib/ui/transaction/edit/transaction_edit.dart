@@ -24,7 +24,7 @@ class _TransactionEditState extends State<TransactionEdit> {
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
-  final _referenceController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -32,14 +32,14 @@ class _TransactionEditState extends State<TransactionEdit> {
   void didChangeDependencies() {
     _controllers = [
       // STARTER: array - do not remove comment
-      _referenceController,
+      _descriptionController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transaction = widget.viewModel.transaction;
     // STARTER: read value - do not remove comment
-    _referenceController.text = transaction.reference;
+    _descriptionController.text = transaction.description;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -60,7 +60,7 @@ class _TransactionEditState extends State<TransactionEdit> {
     _debouncer.run(() {
       final transaction = widget.viewModel.transaction.rebuild((b) => b
         // STARTER: set value - do not remove comment
-        ..reference = _referenceController.text.trim());
+        ..description = _descriptionController.text.trim());
       if (transaction != widget.viewModel.transaction) {
         widget.viewModel.onChanged(transaction);
       }
@@ -102,7 +102,7 @@ class _TransactionEditState extends State<TransactionEdit> {
                   children: <Widget>[
                     // STARTER: widgets - do not remove comment
                     TextFormField(
-                      controller: _referenceController,
+                      controller: _descriptionController,
                       autocorrect: false,
                       decoration: InputDecoration(
                         labelText: 'Transactions',

@@ -329,6 +329,7 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'bank_integrations')
   BuiltList<BankAccountEntity> get bankAccounts;
 
+  @BuiltValueField(wireName: 'bank_transactions')
   BuiltList<TransactionEntity> get transactions;
 
   BuiltList<TaskEntity> get tasks;

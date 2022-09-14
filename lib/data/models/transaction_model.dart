@@ -46,7 +46,7 @@ abstract class TransactionItemResponse
 
 class TransactionFields {
   // STARTER: fields - do not remove comment
-  static const String reference = 'reference';
+  static const String description = 'description';
   static const String date = 'date';
 }
 
@@ -63,7 +63,6 @@ abstract class TransactionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      reference: '',
     );
   }
 
@@ -73,7 +72,29 @@ abstract class TransactionEntity extends Object
   @memoized
   int get hashCode;
 
-  String get reference;
+  double get amount;
+
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
+
+  @BuiltValueField(wireName: 'category_type')
+  String get category;
+
+  String get date;
+
+  @BuiltValueField(wireName: 'bank_integration_id')
+  String get bankAccountId;
+
+  String get description;
+
+  @BuiltValueField(wireName: 'invoice_id')
+  String get invoiceId;
+
+  @BuiltValueField(wireName: 'expense_id')
+  String get expenseId;
+
+  //@BuiltValueField(wireName: 'is_matched')
+  //bool get isMached;
 
   @override
   EntityType get entityType => EntityType.transaction;
@@ -108,10 +129,10 @@ abstract class TransactionEntity extends Object
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
-      case TransactionFields.reference:
-        response = transactionA.reference
+      case TransactionFields.description:
+        response = transactionA.description
             .toLowerCase()
-            .compareTo(transactionB.reference.toLowerCase());
+            .compareTo(transactionB.description.toLowerCase());
         break;
 
       default:
@@ -121,9 +142,9 @@ abstract class TransactionEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return transactionA.reference
+      return transactionA.description
           .toLowerCase()
-          .compareTo(transactionB.reference.toLowerCase());
+          .compareTo(transactionB.description.toLowerCase());
     } else {
       return response;
     }
