@@ -629,7 +629,8 @@ GroupTotals calculateReportTotals({
         }
 
         if (cell is ReportNumberValue && cell.currencyId != null) {
-          totals[group]['${column}_currency_id'] = parseDouble(cell.currencyId);
+          totals[group]['${column}_currency_id'] = parseDouble(
+              shouldConverCurrencies ? company.currencyId : cell.currencyId);
         }
 
         if (cell is ReportNumberValue &&
@@ -644,7 +645,7 @@ GroupTotals calculateReportTotals({
                 toCurrencyId: company.currencyId);
           }
           final toCurrency = currencyMap[company.currencyId];
-          cellValue = round(cellValue * 1 / rate, toCurrency.precision);
+          cellValue = round(cellValue * rate, toCurrency.precision);
           totals[group][column] += cellValue;
         } else {
           totals[group][column] += cell.doubleValue;
