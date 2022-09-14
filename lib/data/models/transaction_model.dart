@@ -63,6 +63,14 @@ abstract class TransactionEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
+      amount: 0,
+      bankAccountId: '',
+      category: '',
+      currencyId: '',
+      date: '',
+      description: '',
+      expenseId: '',
+      invoiceId: '',
     );
   }
 
@@ -154,7 +162,8 @@ abstract class TransactionEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
-        //
+        category,
+        description,
       ],
       needle: filter,
     );
@@ -164,7 +173,8 @@ abstract class TransactionEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        //
+        category,
+        description,
       ],
       needle: filter,
     );
@@ -178,6 +188,11 @@ abstract class TransactionEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TransactionEntityBuilder builder) => builder
+    ..bankAccountId = ''
+    ..currencyId = '';
 
   static Serializer<TransactionEntity> get serializer =>
       _$transactionEntitySerializer;

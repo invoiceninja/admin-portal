@@ -704,7 +704,9 @@ class TransactionEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TransactionEntityBuilder();
+  TransactionEntityBuilder() {
+    TransactionEntity._initializeBuilder(this);
+  }
 
   TransactionEntityBuilder get _$this {
     final $v = _$v;
