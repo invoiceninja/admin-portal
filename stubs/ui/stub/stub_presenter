@@ -20,7 +20,7 @@ class StubPresenter extends EntityPresenter {
   @override
   Widget getField({String field, BuildContext context}) {
     //final state = StoreProvider.of<AppState>(context).state;
-    //final stub = entity as InvoiceEntity;
+    //final stub = entity as StubEntity;
 
     switch (field) {
     }

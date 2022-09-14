@@ -49,10 +49,14 @@ class TransactionFields {
   static const String date = 'date';
   static const String amount = 'amount';
   static const String currencyId = 'currency_id';
+  static const String currency = 'currency';
   static const String category = 'category';
   static const String bankAccountId = 'bank_account_id';
+  static const String bankAccount = 'bank_account';
   static const String invoiceId = 'invoice_id';
+  static const String invoice = 'invoice';
   static const String expenseId = 'expense_id';
+  static const String expense = 'expense';
 }
 
 abstract class TransactionEntity extends Object
@@ -195,13 +199,13 @@ abstract class TransactionEntity extends Object
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => description;
 
   @override
-  double get listDisplayAmount => null;
+  double get listDisplayAmount => amount;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   // ignore: unused_element
   static void _initializeBuilder(TransactionEntityBuilder builder) => builder
