@@ -207,7 +207,10 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               controller: _scrollController3,
               children: [
                 Text(
-                  localization.contacts,
+                  localization.contacts +
+                      (vendor.contacts.length > 1
+                          ? ' (${vendor.contacts.length})'
+                          : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 8),

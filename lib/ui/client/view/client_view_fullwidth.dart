@@ -280,7 +280,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               controller: _scrollController3,
               children: [
                 Text(
-                  localization.contacts,
+                  localization.contacts +
+                      (client.contacts.length > 1
+                          ? ' (${client.contacts.length})'
+                          : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 8),
