@@ -153,6 +153,10 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.billingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(

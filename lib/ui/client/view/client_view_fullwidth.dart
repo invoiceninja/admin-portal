@@ -194,6 +194,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.billingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -226,6 +230,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   SizedBox(height: 8),
                 ],
                 if (shippingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.shippingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(
