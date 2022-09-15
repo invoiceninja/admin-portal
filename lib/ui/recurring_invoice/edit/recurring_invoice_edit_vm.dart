@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -100,8 +99,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (recurringInvoice.isOld &&
-              !hasRecurringInvoiceChanges(
-                  recurringInvoice, state.recurringInvoiceState.map) &&
+              recurringInvoice.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(recurringInvoice, action);

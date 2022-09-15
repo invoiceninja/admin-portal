@@ -139,7 +139,13 @@ abstract class TransactionEntity extends Object
   }
 
   int compareTo(
-      TransactionEntity transaction, String sortField, bool sortAscending) {
+    TransactionEntity transaction,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
+  ) {
     int response = 0;
     final transactionA = sortAscending ? this : transaction;
     final transactionB = sortAscending ? transaction : this;
@@ -160,6 +166,29 @@ abstract class TransactionEntity extends Object
         break;
       case TransactionFields.date:
         response = transactionA.date.compareTo(transactionB.date);
+        break;
+      case TransactionFields.invoice:
+        final invoiceA = invoiceMap[transactionA.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[transactionB.invoiceId] ?? InvoiceEntity();
+        response = invoiceA.listDisplayName
+            .toLowerCase()
+            .compareTo(invoiceB.listDisplayName.toLowerCase());
+        break;
+      case TransactionFields.expense:
+        final expenseA = expenseMap[transactionA.expenseId] ?? ExpenseEntity();
+        final expenseB = expenseMap[transactionB.expenseId] ?? ExpenseEntity();
+        response = expenseA.listDisplayName
+            .toLowerCase()
+            .compareTo(expenseB.listDisplayName.toLowerCase());
+        break;
+      case TransactionFields.bankAccount:
+        final bankAccountA =
+            bankAccountMap[transactionA.bankAccountId] ?? BankAccountEntity();
+        final bankAccountB =
+            bankAccountMap[transactionB.bankAccountId] ?? BankAccountEntity();
+        response = bankAccountA.listDisplayName
+            .toLowerCase()
+            .compareTo(bankAccountB.listDisplayName.toLowerCase());
         break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');

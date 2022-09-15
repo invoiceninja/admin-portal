@@ -89,7 +89,3 @@ EntityStats clientStatsForGroup(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasGroupChanges(
-        GroupEntity group, BuiltMap<String, GroupEntity> groupMap) =>
-    group.isNew ? group.isChanged : group != groupMap[group.id];

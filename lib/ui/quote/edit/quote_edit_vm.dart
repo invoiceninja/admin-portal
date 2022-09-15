@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -99,7 +98,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (quote.isOld &&
-              !hasQuoteChanges(quote, state.quoteState.map) &&
+              quote.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(quote, action);

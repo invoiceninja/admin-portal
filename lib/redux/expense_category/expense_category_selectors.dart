@@ -124,8 +124,3 @@ EntityStats expenseStatsForExpenseCategory(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-bool hasExpenseCategoryChanges(ExpenseCategoryEntity expenseCategory,
-        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap) =>
-    expenseCategory.isNew
-        ? expenseCategory.isChanged
-        : expenseCategory != expenseCategoryMap[expenseCategory.id];

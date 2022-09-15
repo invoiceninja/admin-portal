@@ -17,58 +17,36 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
-import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
-import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
-import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
-import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
-import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
-import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
-import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
@@ -87,15 +65,12 @@ import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-// STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/transaction/transaction_state.dart';
 import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/transaction/transaction_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
+// STARTER: import - do not remove comment
 
 part 'app_state.g.dart';
 
@@ -702,64 +677,54 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool hasChanges() {
     switch (uiState.currentRoute) {
       case ClientEditScreen.route:
-        return hasClientChanges(clientUIState.editing, clientState.map);
+        return clientUIState.editing.isChanged == true;
       case ProductEditScreen.route:
-        return hasProductChanges(productUIState.editing, productState.map);
+        return productUIState.editing.isChanged == true;
       case InvoiceEditScreen.route:
-        return hasInvoiceChanges(invoiceUIState.editing, invoiceState.map);
+        return invoiceUIState.editing.isChanged == true;
       case PaymentEditScreen.route:
-        return hasPaymentChanges(paymentUIState.editing, paymentState.map);
+        return paymentUIState.editing.isChanged == true;
       case QuoteEditScreen.route:
-        return hasQuoteChanges(quoteUIState.editing, quoteState.map);
+        return quoteUIState.editing.isChanged == true;
       case ProjectEditScreen.route:
-        return hasProjectChanges(projectUIState.editing, projectState.map);
+        return projectUIState.editing.isChanged == true;
       case TaskEditScreen.route:
-        return hasTaskChanges(taskUIState.editing, taskState.map);
+        return taskUIState.editing.isChanged == true;
       case VendorEditScreen.route:
-        return hasVendorChanges(vendorUIState.editing, vendorState.map);
+        return vendorUIState.editing.isChanged == true;
       case ExpenseEditScreen.route:
-        return hasExpenseChanges(expenseUIState.editing, expenseState.map);
+        return expenseUIState.editing.isChanged == true;
       case GroupEditScreen.route:
-        return hasGroupChanges(groupUIState.editing, groupState.map);
+        return groupUIState.editing.isChanged == true;
       case TaxRateEditScreen.route:
-        return hasTaxRateChanges(taxRateUIState.editing, taxRateState.map);
+        return taxRateUIState.editing.isChanged == true;
       case CompanyGatewayEditScreen.route:
-        return hasCompanyGatewayChanges(
-            companyGatewayUIState.editing, companyGatewayState.map);
+        return companyGatewayUIState.editing.isChanged == true;
       case CreditEditScreen.route:
-        return hasCreditChanges(creditUIState.editing, creditState.map);
+        return creditUIState.editing.isChanged == true;
       // STARTER: has changes - do not remove comment
       case TransactionEditScreen.route:
-        return hasTransactionChanges(
-            transactionUIState.editing, transactionState.map);
-
+        return transactionUIState.editing.isChanged == true;
       case PurchaseOrderEditScreen.route:
-        return hasPurchaseOrderChanges(
-            purchaseOrderUIState.editing, purchaseOrderState.map);
+        return purchaseOrderUIState.editing.isChanged == true;
       case RecurringExpenseEditScreen.route:
-        return hasRecurringExpenseChanges(
-            recurringExpenseUIState.editing, recurringExpenseState.map);
+        return recurringExpenseUIState.editing.isChanged == true;
       case SubscriptionEditScreen.route:
-        return hasSubscriptionChanges(
-            subscriptionUIState.editing, subscriptionState.map);
+        return subscriptionUIState.editing.isChanged == true;
       case TaskStatusEditScreen.route:
-        return hasTaskStatusChanges(
-            taskStatusUIState.editing, taskStatusState.map);
+        return taskStatusUIState.editing.isChanged == true;
       case ExpenseCategoryEditScreen.route:
-        return hasExpenseCategoryChanges(
-            expenseCategoryUIState.editing, expenseCategoryState.map);
+        return expenseCategoryUIState.editing.isChanged == true;
       case RecurringInvoiceEditScreen.route:
-        return hasRecurringInvoiceChanges(
-            recurringInvoiceUIState.editing, recurringInvoiceState.map);
+        return recurringInvoiceUIState.editing.isChanged == true;
       case WebhookEditScreen.route:
-        return hasWebhookChanges(webhookUIState.editing, webhookState.map);
+        return webhookUIState.editing.isChanged == true;
       case TokenEditScreen.route:
-        return hasTokenChanges(tokenUIState.editing, tokenState.map);
+        return tokenUIState.editing.isChanged == true;
       case PaymentTermEditScreen.route:
-        return hasPaymentTermChanges(
-            paymentTermUIState.editing, paymentTermState.map);
+        return paymentTermUIState.editing.isChanged == true;
       case DesignEditScreen.route:
-        return hasDesignChanges(designUIState.editing, designState.map);
+        return designUIState.editing.isChanged == true;
     }
 
     if (uiState.isInSettings) {

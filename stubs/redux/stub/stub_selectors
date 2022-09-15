@@ -90,7 +90,3 @@ List<String> filteredStubsSelector(
 
   return list;
 }
-
-bool hasStubChanges(
-        StubEntity stub, BuiltMap<String, StubEntity> stubMap) =>
-    stub.isNew ? stub.isChanged : stub != stubMap[stub.id];

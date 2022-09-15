@@ -68,9 +68,3 @@ List<String> filteredPaymentTermsSelector(
 
   return list;
 }
-
-bool hasPaymentTermChanges(PaymentTermEntity paymentTerm,
-        BuiltMap<String, PaymentTermEntity> paymentTermMap) =>
-    paymentTerm.isNew
-        ? paymentTerm.isChanged
-        : paymentTerm != paymentTermMap[paymentTerm.id];

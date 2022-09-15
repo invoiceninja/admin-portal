@@ -76,7 +76,3 @@ List<String> filteredTokensSelector(
 
   return list;
 }
-
-bool hasTokenChanges(
-        TokenEntity token, BuiltMap<String, TokenEntity> tokenMap) =>
-    token.isNew ? token.isChanged : token != tokenMap[token.id];

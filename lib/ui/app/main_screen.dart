@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
@@ -570,6 +571,9 @@ class EntityScreens extends StatelessWidget {
             break;
           case EntityType.recurringExpense:
             child = RecurringExpenseViewScreen();
+            break;
+          case EntityType.transaction:
+            child = TransactionViewScreen();
             break;
           default:
             print('## View screen not defined for $previewEntityType');

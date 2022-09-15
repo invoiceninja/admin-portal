@@ -135,11 +135,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   if (client.website.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: client.website,
+                      child: InkWell(
+                        onTap: () => launchUrl(Uri.parse(client.website)),
                         child: IconText(
-                            icon: MdiIcons.earth,
-                            text: trimUrl(client.website)),
+                          icon: MdiIcons.earth,
+                          text: trimUrl(client.website),
+                        ),
                       ),
                     ),
                   SizedBox(height: 4),
@@ -192,6 +193,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.billingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -224,6 +229,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   SizedBox(height: 8),
                 ],
                 if (shippingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.shippingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -270,7 +279,10 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               controller: _scrollController3,
               children: [
                 Text(
-                  localization.contacts,
+                  localization.contacts +
+                      (client.contacts.length > 1
+                          ? ' (${client.contacts.length})'
+                          : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 8),

@@ -19,7 +19,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
@@ -153,7 +152,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           }
 
           if (invoice.isOld &&
-              !hasInvoiceChanges(invoice, state.invoiceState.map) &&
+              invoice.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(invoice, action);

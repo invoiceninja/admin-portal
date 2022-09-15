@@ -10,7 +10,6 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -99,8 +98,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (purchaseOrder.isOld &&
-              !hasPurchaseOrderChanges(
-                  purchaseOrder, state.purchaseOrderState.map) &&
+              purchaseOrder.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(purchaseOrder, action);

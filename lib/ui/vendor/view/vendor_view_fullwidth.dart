@@ -112,10 +112,12 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 if (vendor.website.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: CopyToClipboard(
-                      value: vendor.website,
+                    child: InkWell(
+                      onTap: () => launchUrl(Uri.parse(vendor.website)),
                       child: IconText(
-                          icon: MdiIcons.earth, text: trimUrl(vendor.website)),
+                        icon: MdiIcons.earth,
+                        text: trimUrl(vendor.website),
+                      ),
                     ),
                   ),
                 SizedBox(height: 4),
@@ -151,6 +153,10 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
+                  Text(
+                    localization.billingAddress,
+                    style: TextStyle(color: Colors.grey),
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -201,7 +207,10 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               controller: _scrollController3,
               children: [
                 Text(
-                  localization.contacts,
+                  localization.contacts +
+                      (vendor.contacts.length > 1
+                          ? ' (${vendor.contacts.length})'
+                          : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 8),

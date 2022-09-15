@@ -153,12 +153,6 @@ EntityStats taskStatsForTaskStatus(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-bool hasTaskStatusChanges(TaskStatusEntity taskStatus,
-        BuiltMap<String, TaskStatusEntity> taskStatusMap) =>
-    taskStatus.isNew
-        ? taskStatus.isChanged
-        : taskStatus != taskStatusMap[taskStatus.id];
-
 String defaultTaskStatusId(BuiltMap<String, TaskStatusEntity> taskStatusMap) {
   final statusIds = taskStatusMap.keys.where((statusId) {
     final status = taskStatusMap[statusId];

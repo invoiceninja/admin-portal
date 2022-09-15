@@ -87,9 +87,3 @@ List<String> filteredSubscriptionsSelector(
 
   return list;
 }
-
-bool hasSubscriptionChanges(SubscriptionEntity subscription,
-        BuiltMap<String, SubscriptionEntity> subscriptionMap) =>
-    subscription.isNew
-        ? subscription.isChanged
-        : subscription != subscriptionMap[subscription.id];

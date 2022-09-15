@@ -187,7 +187,7 @@ else
     # Link in new module
     echo "app_state: import"
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_selectors.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
     sed -i -e "s/$comment/$code${lineBreak}$comment/g" ./lib/redux/app/app_state.dart
 
     echo "app_state: list"
@@ -214,7 +214,7 @@ else
 
     echo "app_state: has changes"
     comment="STARTER: has changes - do not remove comment"
-    code="case ${Module}EditScreen.route: return has${Module}Changes(${module_camel}UIState.editing, ${module_camel}State.map);${lineBreak}"
+    code="case ${Module}EditScreen.route: return has${module_camel}UIState.editing.isChanged == true;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do

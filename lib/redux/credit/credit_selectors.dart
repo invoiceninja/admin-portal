@@ -238,7 +238,3 @@ EntityStats creditStatsForUser(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasCreditChanges(
-        InvoiceEntity credit, BuiltMap<String, InvoiceEntity> creditMap) =>
-    credit.isNew ? credit.isChanged : credit != creditMap[credit.id];
