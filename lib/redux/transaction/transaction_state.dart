@@ -55,8 +55,10 @@ abstract class TransactionUIState extends Object
     implements Built<TransactionUIState, TransactionUIStateBuilder> {
   factory TransactionUIState(PrefStateSortField sortField) {
     return _$TransactionUIState._(
-      listUIState: ListUIState(sortField?.field ?? TransactionFields.date,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? TransactionFields.date,
+        sortAscending: sortField?.ascending,
+      ),
       editing: TransactionEntity(),
       selectedId: '',
       tabIndex: 0,
