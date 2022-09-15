@@ -112,10 +112,12 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 if (vendor.website.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: CopyToClipboard(
-                      value: vendor.website,
+                    child: InkWell(
+                      onTap: () => launchUrl(Uri.parse(vendor.website)),
                       child: IconText(
-                          icon: MdiIcons.earth, text: trimUrl(vendor.website)),
+                        icon: MdiIcons.earth,
+                        text: trimUrl(vendor.website),
+                      ),
                     ),
                   ),
                 SizedBox(height: 4),

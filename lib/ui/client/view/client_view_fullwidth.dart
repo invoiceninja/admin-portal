@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ClientViewFullwidth extends StatefulWidget {
   const ClientViewFullwidth({
@@ -135,11 +136,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   if (client.website.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: CopyToClipboard(
-                        value: client.website,
+                      child: InkWell(
+                        onTap: () => launchUrl(Uri.parse(client.website)),
                         child: IconText(
-                            icon: MdiIcons.earth,
-                            text: trimUrl(client.website)),
+                          icon: MdiIcons.earth,
+                          text: trimUrl(client.website),
+                        ),
                       ),
                     ),
                   SizedBox(height: 4),
