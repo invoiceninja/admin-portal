@@ -157,7 +157,7 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
         return userCompany.rebuild((b) => b
           ..settings.dashboardFieldsPerRowDesktop =
               action.numberFieldsPerRowDesktop);
-      } else if (action.numberFieldsPerRowDesktop != null) {
+      } else if (action.numberFieldsPerRowMobile != null) {
         return userCompany.rebuild((b) => b
           ..settings.dashboardFieldsPerRowMobile =
               action.numberFieldsPerRowMobile);
