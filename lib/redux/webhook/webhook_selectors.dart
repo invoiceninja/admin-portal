@@ -77,7 +77,3 @@ List<String> filteredWebhooksSelector(
 
   return list;
 }
-
-bool hasWebhookChanges(
-        WebhookEntity webhook, BuiltMap<String, WebhookEntity> webhookMap) =>
-    webhook.isNew ? webhook.isChanged : webhook != webhookMap[webhook.id];

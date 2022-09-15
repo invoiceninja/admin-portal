@@ -211,7 +211,3 @@ EntityStats paymentStatsForUser(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasPaymentChanges(
-        PaymentEntity payment, BuiltMap<String, PaymentEntity> paymentMap) =>
-    payment.isNew ? payment.isChanged : payment != paymentMap[payment.id];

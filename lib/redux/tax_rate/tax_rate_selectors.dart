@@ -69,7 +69,3 @@ List<String> filteredTaxRatesSelector(
 
   return list;
 }
-
-bool hasTaxRateChanges(
-        TaxRateEntity taxRate, BuiltMap<String, TaxRateEntity> taxRateMap) =>
-    taxRate.isNew ? taxRate.isChanged : taxRate != taxRateMap[taxRate.id];

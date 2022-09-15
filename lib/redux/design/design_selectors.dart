@@ -64,10 +64,6 @@ List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
   return list;
 }
 
-bool hasDesignChanges(
-        DesignEntity design, BuiltMap<String, DesignEntity> designMap) =>
-    design.isNew ? design.isChanged : design != designMap[design.id];
-
 String getDesignIdForClientByEntity(
     {AppState state, String clientId, EntityType entityType}) {
   final client = state.clientState.get(clientId);

@@ -271,9 +271,3 @@ EntityStats recurringExpenseStatsForExpense(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasRecurringExpenseChanges(ExpenseEntity recurringExpense,
-        BuiltMap<String, ExpenseEntity> recurringExpenseMap) =>
-    recurringExpense.isNew
-        ? recurringExpense.isChanged
-        : recurringExpense != recurringExpenseMap[recurringExpense.id];

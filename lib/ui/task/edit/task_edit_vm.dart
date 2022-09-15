@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -98,7 +97,7 @@ class TaskEditVM {
           }
 
           if (task.isOld &&
-              !hasTaskChanges(task, state.taskState.map) &&
+              task.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(task, action);

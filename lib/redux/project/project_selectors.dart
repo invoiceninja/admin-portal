@@ -273,7 +273,3 @@ EntityStats projectStatsForUser(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasProjectChanges(
-        ProjectEntity project, BuiltMap<String, ProjectEntity> projectMap) =>
-    project.isNew ? project.isChanged : project != projectMap[project.id];

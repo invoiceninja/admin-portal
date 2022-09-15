@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit.dart';
@@ -100,7 +99,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           }
 
           if (credit.isOld &&
-              !hasCreditChanges(credit, state.creditState.map) &&
+              credit.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(credit, action);

@@ -9,7 +9,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -154,7 +153,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           final navigator = navigatorKey.currentState;
 
           if (expense.isOld &&
-              !hasExpenseChanges(expense, state.expenseState.map) &&
+              expense.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(expense, action);

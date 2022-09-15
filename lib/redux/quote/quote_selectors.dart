@@ -180,7 +180,3 @@ EntityStats quoteStatsForUser(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasQuoteChanges(
-        InvoiceEntity quote, BuiltMap<String, InvoiceEntity> quoteMap) =>
-    quote.isNew ? quote.isChanged : quote != quoteMap[quote.id];

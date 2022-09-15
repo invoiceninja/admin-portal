@@ -350,7 +350,3 @@ int precisionForInvoice(AppState state, InvoiceEntity invoice) {
   final currency = state.staticState.currencyMap[client.currencyId];
   return currency?.precision ?? 2;
 }
-
-bool hasInvoiceChanges(
-        InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    invoice.isNew ? invoice.isChanged : invoice != invoiceMap[invoice.id];

@@ -381,7 +381,3 @@ EntityStats expenseStatsForUser(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-bool hasExpenseChanges(
-        ExpenseEntity expense, BuiltMap<String, ExpenseEntity> expenseMap) =>
-    expense.isNew ? expense.isChanged : expense != expenseMap[expense.id];

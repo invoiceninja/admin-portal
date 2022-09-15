@@ -198,8 +198,3 @@ EntityStats purchaseOrderStatsForVendor(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-bool hasPurchaseOrderChanges(InvoiceEntity purchaseOrder,
-        BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
-    purchaseOrder.isNew
-        ? purchaseOrder.isChanged
-        : purchaseOrder != purchaseOrderMap[purchaseOrder.id];

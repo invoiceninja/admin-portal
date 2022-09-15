@@ -86,12 +86,6 @@ List<String> filteredCompanyGatewaysSelector(
   return gatewaysIds;
 }
 
-bool hasCompanyGatewayChanges(CompanyGatewayEntity companyGateway,
-        BuiltMap<String, CompanyGatewayEntity> companyGatewayMap) =>
-    companyGateway.isNew
-        ? companyGateway.isChanged
-        : companyGateway != companyGatewayMap[companyGateway.id];
-
 var memoizedCalculateCompanyGatewayProcessed = memo2(
     (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
         calculateCompanyGatewayProcessed(

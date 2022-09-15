@@ -107,9 +107,3 @@ List<String> filteredTransactionsSelector(
 
   return list;
 }
-
-bool hasTransactionChanges(TransactionEntity transaction,
-        BuiltMap<String, TransactionEntity> transactionMap) =>
-    transaction.isNew
-        ? transaction.isChanged
-        : transaction != transactionMap[transaction.id];

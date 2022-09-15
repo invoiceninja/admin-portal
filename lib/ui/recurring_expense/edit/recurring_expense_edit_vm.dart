@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit.dart';
@@ -133,8 +132,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           final recurringExpense = store.state.recurringExpenseUIState.editing;
           final localization = AppLocalization.of(context);
           if (recurringExpense.isOld &&
-              !hasRecurringExpenseChanges(
-                  recurringExpense, state.recurringExpenseState.map) &&
+              recurringExpense.isChanged == false &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(recurringExpense, action);
