@@ -99,6 +99,9 @@ abstract class WebhookEntity extends Object
   static const EVENT_REMIND_INVOICE = '24';
   static const EVENT_CREATE_PROJECT = '25';
   static const EVENT_UPDATE_PROJECT = '26';
+  static const EVENT_CREATE_CREDIT = '27';
+  static const EVENT_UPDATE_CREDIT = '28';
+  static const EVENT_DELETE_CREDIT = '29';
 
   static const EVENT_MAP = {
     EVENT_CREATE_CLIENT: 'create_client',
@@ -106,11 +109,17 @@ abstract class WebhookEntity extends Object
     EVENT_DELETE_CLIENT: 'delete_client',
     EVENT_CREATE_INVOICE: 'create_invoice',
     EVENT_UPDATE_INVOICE: 'update_invoice',
+    EVENT_LATE_INVOICE: 'late_invoice',
+    EVENT_REMIND_INVOICE: 'remind_invoice',
     EVENT_DELETE_INVOICE: 'delete_invoice',
     EVENT_CREATE_QUOTE: 'create_quote',
-    EVENT_APPROVE_QUOTE: 'approve_quote',
     EVENT_UPDATE_QUOTE: 'update_quote',
+    EVENT_APPROVE_QUOTE: 'approve_quote',
+    EVENT_EXPIRED_QUOTE: 'expired_quote',
     EVENT_DELETE_QUOTE: 'delete_quote',
+    EVENT_CREATE_CREDIT: 'create_credit',
+    EVENT_UPDATE_CREDIT: 'update_credit',
+    EVENT_DELETE_CREDIT: 'delete_credit',
     EVENT_CREATE_PAYMENT: 'create_payment',
     EVENT_DELETE_PAYMENT: 'delete_payment',
     EVENT_CREATE_VENDOR: 'create_vendor',
@@ -122,41 +131,9 @@ abstract class WebhookEntity extends Object
     EVENT_CREATE_TASK: 'create_task',
     EVENT_UPDATE_TASK: 'update_task',
     EVENT_DELETE_TASK: 'delete_task',
-    EVENT_LATE_INVOICE: 'late_invoice',
-    EVENT_EXPIRED_QUOTE: 'expired_quote',
-    EVENT_REMIND_INVOICE: 'remind_invoice',
     EVENT_CREATE_PROJECT: 'create_project',
     EVENT_UPDATE_PROJECT: 'update_project',
   };
-
-  static const EVENTS = [
-    EVENT_CREATE_CLIENT,
-    EVENT_UPDATE_CLIENT,
-    EVENT_DELETE_CLIENT,
-    EVENT_CREATE_INVOICE,
-    EVENT_UPDATE_INVOICE,
-    EVENT_LATE_INVOICE,
-    EVENT_REMIND_INVOICE,
-    EVENT_DELETE_INVOICE,
-    EVENT_CREATE_QUOTE,
-    EVENT_UPDATE_QUOTE,
-    EVENT_APPROVE_QUOTE,
-    EVENT_EXPIRED_QUOTE,
-    EVENT_DELETE_QUOTE,
-    EVENT_CREATE_PAYMENT,
-    EVENT_DELETE_PAYMENT,
-    EVENT_CREATE_VENDOR,
-    EVENT_UPDATE_VENDOR,
-    EVENT_DELETE_VENDOR,
-    EVENT_CREATE_EXPENSE,
-    EVENT_UPDATE_EXPENSE,
-    EVENT_DELETE_EXPENSE,
-    EVENT_CREATE_TASK,
-    EVENT_UPDATE_TASK,
-    EVENT_DELETE_TASK,
-    EVENT_CREATE_PROJECT,
-    EVENT_UPDATE_PROJECT,
-  ];
 
   @override
   @memoized
