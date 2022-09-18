@@ -64,6 +64,10 @@ class TransactionScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTransactionsByState(state));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterTransactionsByStatus(status));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.transactionListState.isInMultiselect()) {

@@ -212,6 +212,12 @@ class FilterTransactionsByState implements PersistUI {
   final EntityState state;
 }
 
+class FilterTransactionsByStatus implements PersistUI {
+  FilterTransactionsByStatus(this.status);
+
+  final TransactionStatusEntity status;
+}
+
 class FilterTransactionsByCustom1 implements PersistUI {
   FilterTransactionsByCustom1(this.value);
 

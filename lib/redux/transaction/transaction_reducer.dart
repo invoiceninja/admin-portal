@@ -101,6 +101,8 @@ final transactionListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortTransactions>(_sortTransactions),
   TypedReducer<ListUIState, FilterTransactionsByState>(
       _filterTransactionsByState),
+  TypedReducer<ListUIState, FilterTransactionsByStatus>(
+      _filterTransactionsByStatus),
   TypedReducer<ListUIState, FilterTransactions>(_filterTransactions),
   TypedReducer<ListUIState, FilterTransactionsByCustom1>(
       _filterTransactionsByCustom1),
@@ -152,6 +154,17 @@ ListUIState _filterTransactionsByState(
   } else {
     return transactionListState
         .rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterTransactionsByStatus(
+    ListUIState transactionListState, FilterTransactionsByStatus action) {
+  if (transactionListState.statusFilters.contains(action.status)) {
+    return transactionListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return transactionListState
+        .rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 

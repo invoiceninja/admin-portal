@@ -211,6 +211,21 @@ abstract class TransactionEntity extends Object
   }
 
   @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == calculatedStatusId || status.id == calculatedStatusId) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @override
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
