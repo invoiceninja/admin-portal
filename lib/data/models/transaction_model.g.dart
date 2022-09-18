@@ -12,6 +12,8 @@ Serializer<TransactionItemResponse> _$transactionItemResponseSerializer =
     new _$TransactionItemResponseSerializer();
 Serializer<TransactionEntity> _$transactionEntitySerializer =
     new _$TransactionEntitySerializer();
+Serializer<TransactionStatusEntity> _$transactionStatusEntitySerializer =
+    new _$TransactionStatusEntitySerializer();
 
 class _$TransactionListResponseSerializer
     implements StructuredSerializer<TransactionListResponse> {
@@ -261,6 +263,57 @@ class _$TransactionEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TransactionStatusEntitySerializer
+    implements StructuredSerializer<TransactionStatusEntity> {
+  @override
+  final Iterable<Type> types = const [
+    TransactionStatusEntity,
+    _$TransactionStatusEntity
+  ];
+  @override
+  final String wireName = 'TransactionStatusEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, TransactionStatusEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  TransactionStatusEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TransactionStatusEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -772,6 +825,103 @@ class TransactionEntityBuilder
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionEntity', 'id'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TransactionStatusEntity extends TransactionStatusEntity {
+  @override
+  final String id;
+  @override
+  final String name;
+
+  factory _$TransactionStatusEntity(
+          [void Function(TransactionStatusEntityBuilder) updates]) =>
+      (new TransactionStatusEntityBuilder()..update(updates)).build();
+
+  _$TransactionStatusEntity._({this.id, this.name}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(id, 'TransactionStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        name, 'TransactionStatusEntity', 'name');
+  }
+
+  @override
+  TransactionStatusEntity rebuild(
+          void Function(TransactionStatusEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TransactionStatusEntityBuilder toBuilder() =>
+      new TransactionStatusEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TransactionStatusEntity &&
+        id == other.id &&
+        name == other.name;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TransactionStatusEntity')
+          ..add('id', id)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class TransactionStatusEntityBuilder
+    implements
+        Builder<TransactionStatusEntity, TransactionStatusEntityBuilder> {
+  _$TransactionStatusEntity _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  TransactionStatusEntityBuilder();
+
+  TransactionStatusEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _name = $v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TransactionStatusEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$TransactionStatusEntity;
+  }
+
+  @override
+  void update(void Function(TransactionStatusEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TransactionStatusEntity build() {
+    final _$result = _$v ??
+        new _$TransactionStatusEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'TransactionStatusEntity', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'TransactionStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }

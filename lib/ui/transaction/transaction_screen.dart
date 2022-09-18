@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -29,6 +30,24 @@ class TransactionScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+
+    final statuses = [
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusUnmatched
+          ..name = localization.unmatched,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusMatched
+          ..name = localization.matched,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusConverted
+          ..name = localization.converted,
+      ),
+    ];
 
     return ListScaffold(
       entityType: EntityType.transaction,
@@ -85,6 +104,7 @@ class TransactionScreen extends StatelessWidget {
             store.dispatch(FilterTransactionsByCustom3(value)),
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTransactionsByCustom4(value)),
+        statuses: statuses,
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transaction)

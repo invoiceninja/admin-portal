@@ -249,3 +249,23 @@ abstract class TransactionEntity extends Object
   static Serializer<TransactionEntity> get serializer =>
       _$transactionEntitySerializer;
 }
+
+abstract class TransactionStatusEntity extends Object
+    with EntityStatus, SelectableEntity
+    implements Built<TransactionStatusEntity, TransactionStatusEntityBuilder> {
+  factory TransactionStatusEntity() {
+    return _$TransactionStatusEntity._(
+      id: '',
+      name: '',
+    );
+  }
+
+  TransactionStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  static Serializer<TransactionStatusEntity> get serializer =>
+      _$transactionStatusEntitySerializer;
+}
