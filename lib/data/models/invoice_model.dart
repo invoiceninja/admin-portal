@@ -1285,8 +1285,6 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      print('## Is Viewed: $isViewed, Is Unpaid: $isUnpaid, Status: $statusId');
-
       if (isViewed &&
           isUnpaid &&
           !isPartial &&

@@ -54,8 +54,7 @@ class PurchaseOrderListBuilder extends StatelessWidget {
                   user: state.user,
                   filter: viewModel.filter,
                   purchaseOrder: invoice,
-                  client:
-                      viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
+                  vendor: state.vendorState.get(invoice.vendorId),
                   isChecked:
                       isInMultiselect && listUIState.isSelected(invoice.id),
                 );

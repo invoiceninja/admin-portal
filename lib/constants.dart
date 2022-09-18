@@ -420,6 +420,12 @@ const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';
 
+const kTaskStatuses = {
+  kTaskStatusLogged: 'logged',
+  kTaskStatusRunning: 'running',
+  kTaskStatusInvoiced: 'invoiced',
+};
+
 const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';

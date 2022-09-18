@@ -244,20 +244,13 @@ class TaskListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      task.isRunning
-                          ? localization.running
-                          : task.isInvoiced
-                              ? localization.invoiced
-                              : task.statusId.isNotEmpty
-                                  ? state.taskStatusState
-                                      .get(task.statusId)
-                                      .name
-                                  : localization.logged,
+                      localization
+                          .lookup(kTaskStatuses[task.calculateStatusId]),
                       style: TextStyle(
                           color: task.isInvoiced
                               ? state.prefState.colorThemeModel.colorSuccess
                               : convertHexStringToColor(state.taskStatusState
-                                  .get(task.statusId)
+                                  .get(task.calculateStatusId)
                                   .color)),
                     ),
                   ],

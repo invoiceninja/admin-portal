@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/colors.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -11,8 +12,10 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TransactionListItem extends StatelessWidget {
@@ -43,6 +46,7 @@ class TransactionListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? transaction.matchesFilterValue(filter)
         : null;
+    final localization = AppLocalization.of(context);
     final listUIState = transactionUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
@@ -143,6 +147,8 @@ class TransactionListItem extends StatelessWidget {
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
+                      SizedBox(width: 25),
+                      EntityStatusChip(entity: transaction),
                     ],
                   ),
                 ),
@@ -185,13 +191,26 @@ class TransactionListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    filterMatch != null
-                        ? Text(
-                            filterMatch,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Text(transaction.category),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: filterMatch == null
+                              ? Text(transaction.category)
+                              : Text(
+                                  filterMatch,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                        ),
+                        Text(
+                            localization.lookup(kPurchaseOrderStatuses[
+                                transaction.calculatedStatusId]),
+                            style: TextStyle(
+                                color: TransactionStatusColors(
+                                        state.prefState.colorThemeModel)
+                                    .colors[transaction.calculatedStatusId])),
+                      ],
+                    ),
                     EntityStateLabel(transaction),
                   ],
                 ),
