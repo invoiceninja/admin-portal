@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 class TransactionPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      TransactionFields.status,
       TransactionFields.date,
       TransactionFields.amount,
       TransactionFields.category,
@@ -34,6 +36,8 @@ class TransactionPresenter extends EntityPresenter {
     final transaction = entity as TransactionEntity;
 
     switch (field) {
+      case TransactionFields.status:
+        return EntityStatusChip(entity: transaction, showState: true);
       case TransactionFields.date:
         return Text(formatDate(transaction.date, context));
       case TransactionFields.amount:

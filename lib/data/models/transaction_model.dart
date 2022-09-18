@@ -57,6 +57,7 @@ class TransactionFields {
   static const String invoice = 'invoice';
   static const String expenseId = 'expense_id';
   static const String expense = 'expense';
+  static const String status = 'status';
 }
 
 abstract class TransactionEntity extends Object
@@ -203,6 +204,10 @@ abstract class TransactionEntity extends Object
     } else {
       return response;
     }
+  }
+
+  String get calculatedStatusId {
+    return null;
   }
 
   @override

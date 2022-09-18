@@ -71,6 +71,20 @@ class PurchaseOrderStatusColors {
   }
 }
 
+class TransactionStatusColors {
+  TransactionStatusColors(this._colorTheme);
+
+  final ColorTheme _colorTheme;
+
+  Map<String, Color> get colors {
+    return {
+      kTransactionStatusUnmatched: _colorTheme.colorGray,
+      kTransactionStatusMatched: _colorTheme.colorInfo,
+      kTransactionStatusConverted: _colorTheme.colorSuccess,
+    };
+  }
+}
+
 class QuoteStatusColors {
   QuoteStatusColors(this._colorTheme);
 
