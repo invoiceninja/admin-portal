@@ -605,13 +605,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               icon: getEntityIcon(EntityType.purchaseOrder),
                               title: localization.purchaseOrders,
                             ),
-                            if (supportsBankAccounts())
-                              DrawerTile(
-                                company: company,
-                                entityType: EntityType.transaction,
-                                icon: getEntityIcon(EntityType.transaction),
-                                title: localization.transactions,
-                              ),
                             DrawerTile(
                               company: company,
                               entityType: EntityType.expense,
@@ -626,6 +619,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               icon: getEntityIcon(EntityType.recurringExpense),
                               title: localization.recurringExpenses,
                             ),
+                            if (supportsBankAccounts())
+                              DrawerTile(
+                                company: company,
+                                entityType: EntityType.transaction,
+                                icon: getEntityIcon(EntityType.transaction),
+                                title: localization.transactions,
+                              ),
                             if (!isApple() || state.isProPlan)
                               DrawerTile(
                                 company: company,
