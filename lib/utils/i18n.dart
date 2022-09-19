@@ -18,6 +18,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       // STARTER: lang key - do not remove comment
       'deposit': 'Deposit',
       'withdrawal': 'Withdrawal',
+      'deposits': 'Deposits',
+      'withdrawals': 'Withdrawals',
       'matched': 'Matched',
       'unmatched': 'Unmatched',
       'create_credit': 'Create Credit',
@@ -87321,6 +87323,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get withdrawal =>
       _localizedValues[localeCode]['withdrawal'] ??
       _localizedValues['en']['withdrawal'];
+
+  String get deposits =>
+      _localizedValues[localeCode]['deposits'] ??
+      _localizedValues['en']['deposits'];
+
+  String get withdrawals =>
+      _localizedValues[localeCode]['withdrawals'] ??
+      _localizedValues['en']['withdrawals'];
 
 // STARTER: lang field - do not remove comment
 

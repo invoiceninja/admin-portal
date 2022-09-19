@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -235,6 +236,12 @@ abstract class TransactionEntity extends Object
     }
 
     for (final status in statuses) {
+      if (status.id == kTransactionStatusWithdrawal && isWithdrawal) {
+        return true;
+      } else if (status.id == kTransactionStatusDeposit && isDeposit) {
+        return true;
+      }
+
       if (status.id == calculatedStatusId || status.id == calculatedStatusId) {
         return true;
       }

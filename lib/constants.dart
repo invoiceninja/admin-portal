@@ -597,11 +597,15 @@ const kExpenseStatuses = {
 const String kTransactionStatusUnmatched = '-1';
 const String kTransactionStatusMatched = '-2';
 const String kTransactionStatusConverted = '-3';
+const String kTransactionStatusDeposit = '-4';
+const String kTransactionStatusWithdrawal = '-5';
 
 const kTransactionStatuses = {
   kTransactionStatusUnmatched: 'unmatched',
   kTransactionStatusMatched: 'matched',
   kTransactionStatusConverted: 'converted',
+  kTransactionStatusDeposit: 'deposit',
+  kTransactionStatusWithdrawal: 'withdrawal',
 };
 
 const String kDefaultCurrencyId = '1';

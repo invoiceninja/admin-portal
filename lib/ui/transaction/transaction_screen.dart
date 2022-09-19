@@ -34,6 +34,16 @@ class TransactionScreen extends StatelessWidget {
     final statuses = [
       TransactionStatusEntity().rebuild(
         (b) => b
+          ..id = kTransactionStatusDeposit
+          ..name = localization.deposits,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusWithdrawal
+          ..name = localization.withdrawals,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
           ..id = kTransactionStatusUnmatched
           ..name = localization.unmatched,
       ),
