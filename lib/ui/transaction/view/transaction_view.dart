@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:local_auth/error_codes.dart';
 
 class TransactionView extends StatefulWidget {
   const TransactionView({
@@ -31,7 +33,8 @@ class _TransactionViewState extends State<TransactionView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: transaction,
-      body: ScrollableListView(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           EntityHeader(
             entity: transaction,
@@ -52,8 +55,60 @@ class _TransactionViewState extends State<TransactionView> {
             ),
           ),
           ListDivider(),
+          Expanded(child: _MatchInvoices()),
         ],
       ),
+    );
+  }
+}
+
+class _MatchInvoices extends StatefulWidget {
+  const _MatchInvoices({Key key}) : super(key: key);
+
+  @override
+  State<_MatchInvoices> createState() => __MatchInvoicesState();
+}
+
+class __MatchInvoicesState extends State<_MatchInvoices> {
+  TextEditingController _filterController;
+  FocusNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _filterController = TextEditingController();
+    _focusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: SearchText(
+                filterController: _filterController,
+                focusNode: _focusNode,
+                onChanged: (value) {},
+                onCleared: () => null,
+                placeholder: localization.search,
+              ),
+            )
+          ],
+        ),
+        Expanded(child: Placeholder()),
+      ],
     );
   }
 }

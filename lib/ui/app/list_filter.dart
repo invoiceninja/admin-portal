@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
+import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -62,10 +61,6 @@ class _ListFilterState extends State<ListFilter> {
   }
 
   String get _getPlaceholder {
-    if (_focusNode.hasFocus) {
-      return '';
-    }
-
     final localization = AppLocalization.of(context);
     final count = widget.entityIds.length;
 
@@ -109,23 +104,11 @@ class _ListFilterState extends State<ListFilter> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
-    final isFilterSet = (widget.filter ?? '').isNotEmpty;
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final enableDarkMode = state.prefState.enableDarkMode;
 
     final isDashboardOrSettings =
         [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
-
-    Color color;
-    if (enableDarkMode) {
-      color = convertHexStringToColor(
-          isFilterSet ? kDefaultDarkBorderColor : kDefaultDarkBorderColor);
-    } else {
-      color = convertHexStringToColor(
-          isFilterSet ? kDefaultLightBorderColor : kDefaultLightBorderColor);
-    }
 
     return Row(
       children: [
@@ -133,50 +116,16 @@ class _ListFilterState extends State<ListFilter> {
           flex: 2,
           child: Padding(
             padding: const EdgeInsets.only(top: 2),
-            child: Container(
-              padding: const EdgeInsets.only(left: 8.0),
-              height: 40,
-              margin: EdgeInsets.only(bottom: 2.0),
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
-              ),
-              child: TextField(
-                focusNode: _focusNode,
-                textAlign:
-                    _filterController.text.isNotEmpty || _focusNode.hasFocus
-                        ? TextAlign.start
-                        : TextAlign.center,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
-                  suffixIcon: _filterController.text.isNotEmpty ||
-                          _focusNode.hasFocus
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: textColor,
-                          ),
-                          onPressed: () {
-                            _filterController.text = '';
-                            _focusNode.unfocus(
-                                disposition:
-                                    UnfocusDisposition.previouslyFocusedChild);
-                            widget.onFilterChanged(null);
-                          },
-                        )
-                      : Icon(Icons.search, color: textColor),
-                  border: InputBorder.none,
-                  hintText: _getPlaceholder,
-                ),
-                autocorrect: false,
-                onChanged: (value) {
-                  _debouncer.run(() {
-                    widget.onFilterChanged(value);
-                  });
-                },
-                controller: _filterController,
-              ),
+            child: SearchText(
+              filterController: _filterController,
+              focusNode: _focusNode,
+              onCleared: () => widget.onFilterChanged(null),
+              onChanged: (value) {
+                _debouncer.run(() {
+                  widget.onFilterChanged(value);
+                });
+              },
+              placeholder: _getPlaceholder,
             ),
           ),
         ),
