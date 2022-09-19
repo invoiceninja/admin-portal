@@ -28,6 +28,7 @@ class TransactionPresenter extends EntityPresenter {
       ...EntityPresenter.getBaseFields(),
       TransactionFields.bankAccount,
       TransactionFields.currency,
+      TransactionFields.amount,
     ];
   }
 
@@ -41,6 +42,12 @@ class TransactionPresenter extends EntityPresenter {
         return EntityStatusChip(entity: transaction, showState: true);
       case TransactionFields.date:
         return Text(formatDate(transaction.date, context));
+      case TransactionFields.amount:
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(transaction.amount, context,
+              currencyId: transaction.currencyId)),
+        );
       case TransactionFields.deposit:
         if (!transaction.isDeposit) {
           return SizedBox();
