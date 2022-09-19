@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'deposit': 'Deposit',
+      'withdrawal': 'Withdrawal',
       'matched': 'Matched',
       'unmatched': 'Unmatched',
       'create_credit': 'Create Credit',
@@ -87311,6 +87313,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get unmatched =>
       _localizedValues[localeCode]['unmatched'] ??
       _localizedValues['en']['unmatched'];
+
+  String get deposit =>
+      _localizedValues[localeCode]['deposit'] ??
+      _localizedValues['en']['deposit'];
+
+  String get withdrawal =>
+      _localizedValues[localeCode]['withdrawal'] ??
+      _localizedValues['en']['withdrawal'];
 
 // STARTER: lang field - do not remove comment
 

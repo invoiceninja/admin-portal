@@ -13,9 +13,10 @@ class TransactionPresenter extends EntityPresenter {
     return [
       TransactionFields.status,
       TransactionFields.date,
-      TransactionFields.amount,
-      TransactionFields.category,
+      TransactionFields.deposit,
+      TransactionFields.withdrawal,
       TransactionFields.description,
+      TransactionFields.category,
       TransactionFields.bankAccount,
       TransactionFields.invoice,
       TransactionFields.expense,
@@ -40,7 +41,19 @@ class TransactionPresenter extends EntityPresenter {
         return EntityStatusChip(entity: transaction, showState: true);
       case TransactionFields.date:
         return Text(formatDate(transaction.date, context));
-      case TransactionFields.amount:
+      case TransactionFields.deposit:
+        if (!transaction.isDeposit) {
+          return SizedBox();
+        }
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(transaction.amount, context,
+              currencyId: transaction.currencyId)),
+        );
+      case TransactionFields.withdrawal:
+        if (!transaction.isWithdrawal) {
+          return SizedBox();
+        }
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(transaction.amount, context,

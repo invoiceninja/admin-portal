@@ -48,7 +48,8 @@ class TransactionFields {
   static const String description = 'description';
   static const String date = 'date';
   static const String amount = 'amount';
-  static const String currencyId = 'currency_id';
+  static const String deposit = 'deposit';
+  static const String withdrawal = 'withdrawal';
   static const String currency = 'currency';
   static const String category = 'category';
   static const String bankAccountId = 'bank_account_id';
@@ -86,6 +87,9 @@ abstract class TransactionEntity extends Object
 
   TransactionEntity._();
 
+  static const TYPE_DEPOSIT = 'deposit';
+  static const TYPE_WITHDRAWL = 'withdrawal';
+
   @override
   @memoized
   int get hashCode;
@@ -97,6 +101,9 @@ abstract class TransactionEntity extends Object
 
   @BuiltValueField(wireName: 'category_type')
   String get category;
+
+  @BuiltValueField(wireName: 'baseType')
+  String get baseType;
 
   String get date;
 
@@ -116,6 +123,14 @@ abstract class TransactionEntity extends Object
 
   @override
   EntityType get entityType => EntityType.transaction;
+
+  bool get isDeposit => baseType == TYPE_DEPOSIT;
+
+  bool get isWithdrawal => baseType == TYPE_WITHDRAWL;
+
+  double get withdrawal => isWithdrawal ? amount : 0;
+
+  double get deposit => isDeposit ? amount : 0;
 
   @override
   List<EntityAction> getActions(
@@ -157,6 +172,8 @@ abstract class TransactionEntity extends Object
             .toLowerCase()
             .compareTo(transactionB.description.toLowerCase());
         break;
+      case TransactionFields.deposit:
+      case TransactionFields.withdrawal:
       case TransactionFields.amount:
         response = transactionA.amount.compareTo(transactionB.amount);
         break;
@@ -258,6 +275,7 @@ abstract class TransactionEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(TransactionEntityBuilder builder) => builder
+    ..baseType = ''
     ..bankAccountId = ''
     ..currencyId = '';
 
