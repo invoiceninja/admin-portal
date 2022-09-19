@@ -82,6 +82,7 @@ abstract class TransactionEntity extends Object
       description: '',
       expenseId: '',
       invoiceId: '',
+      baseType: '',
     );
   }
 
