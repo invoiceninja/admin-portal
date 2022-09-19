@@ -17,7 +17,6 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.date,
       TransactionFields.description,
       TransactionFields.category,
-      TransactionFields.bankAccount,
       TransactionFields.invoice,
       TransactionFields.expense,
     ];
@@ -27,6 +26,7 @@ class TransactionPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      TransactionFields.bankAccount,
       TransactionFields.currency,
     ];
   }

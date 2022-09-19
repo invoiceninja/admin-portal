@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -33,10 +34,24 @@ class _TransactionViewState extends State<TransactionView> {
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
-              entity: transaction,
-              label: localization.amount,
-              value: formatNumber(transaction.amount, context,
-                  currencyId: transaction.currencyId)),
+            entity: transaction,
+            label: transaction.isDeposit
+                ? localization.deposit
+                : localization.withdrawal,
+            value: formatNumber(transaction.amount, context,
+                currencyId: transaction.currencyId),
+            secondLabel: localization.date,
+            secondValue: formatDate(transaction.date, context),
+          ),
+          ListDivider(),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              transaction.description,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          ListDivider(),
         ],
       ),
     );
