@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
@@ -104,12 +106,23 @@ class _TransactionEditState extends State<TransactionEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.amount,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      controller: _amountController,
-                    ),
+                    AppDropdownButton<String>(
+                        labelText: localization.type,
+                        value: transaction.baseType,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              transaction.rebuild((b) => b..baseType = value));
+                        },
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.deposit),
+                            value: TransactionEntity.TYPE_DEPOSIT,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.withdrawal),
+                            value: TransactionEntity.TYPE_WITHDRAWL,
+                          ),
+                        ]),
                     DatePicker(
                         labelText: localization.date,
                         onSelected: (date, _) {
@@ -117,6 +130,13 @@ class _TransactionEditState extends State<TransactionEdit> {
                               transaction.rebuild((b) => b..date = date));
                         },
                         selectedDate: transaction.date),
+                    DecoratedFormField(
+                      autofocus: transaction.isNew,
+                      label: localization.amount,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      controller: _amountController,
+                    ),
                     DecoratedFormField(
                       label: localization.description,
                       keyboardType: TextInputType.multiline,

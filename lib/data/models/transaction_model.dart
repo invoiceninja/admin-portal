@@ -78,11 +78,11 @@ abstract class TransactionEntity extends Object
       bankAccountId: '',
       category: '',
       currencyId: '',
-      date: '',
+      date: convertDateTimeToSqlDate(),
       description: '',
       expenseId: '',
       invoiceId: '',
-      baseType: '',
+      baseType: TYPE_DEPOSIT,
     );
   }
 
