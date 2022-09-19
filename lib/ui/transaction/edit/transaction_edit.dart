@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -24,18 +27,22 @@ class _TransactionEditState extends State<TransactionEdit> {
   final _debouncer = Debouncer();
 
   final _descriptionController = TextEditingController();
+  final _amountController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
     _controllers = [
+      _amountController,
       _descriptionController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transaction = widget.viewModel.transaction;
+    _amountController.text = formatNumber(transaction.amount, context,
+        formatNumberType: FormatNumberType.inputMoney);
     _descriptionController.text = transaction.description;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -56,7 +63,7 @@ class _TransactionEditState extends State<TransactionEdit> {
   void _onChanged() {
     _debouncer.run(() {
       final transaction = widget.viewModel.transaction.rebuild((b) => b
-        // STARTER: set value - do not remove comment
+        ..amount = parseDouble(_amountController.text.trim())
         ..description = _descriptionController.text.trim());
       if (transaction != widget.viewModel.transaction) {
         widget.viewModel.onChanged(transaction);
@@ -97,13 +104,24 @@ class _TransactionEditState extends State<TransactionEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                    TextFormField(
+                    DecoratedFormField(
+                      label: localization.amount,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      controller: _amountController,
+                    ),
+                    DatePicker(
+                        labelText: localization.date,
+                        onSelected: (date, _) {
+                          viewModel.onChanged(
+                              transaction.rebuild((b) => b..date = date));
+                        },
+                        selectedDate: transaction.date),
+                    DecoratedFormField(
+                      label: localization.description,
+                      keyboardType: TextInputType.multiline,
                       controller: _descriptionController,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Transactions',
-                      ),
+                      maxLines: 4,
                     ),
                   ],
                 ),

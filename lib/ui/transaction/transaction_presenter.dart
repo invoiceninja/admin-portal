@@ -12,9 +12,9 @@ class TransactionPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       TransactionFields.status,
-      TransactionFields.date,
       TransactionFields.deposit,
       TransactionFields.withdrawal,
+      TransactionFields.date,
       TransactionFields.description,
       TransactionFields.category,
       TransactionFields.bankAccount,
