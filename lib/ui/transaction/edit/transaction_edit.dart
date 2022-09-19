@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -78,6 +80,7 @@ class _TransactionEditState extends State<TransactionEdit> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final transaction = viewModel.transaction;
+    final state = viewModel.state;
 
     return EditScaffold(
       title: transaction.isNew
@@ -136,12 +139,23 @@ class _TransactionEditState extends State<TransactionEdit> {
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: _amountController,
+                      onSavePressed: viewModel.onSavePressed,
+                    ),
+                    EntityDropdown(
+                      entityType: EntityType.currency,
+                      entityList:
+                          memoizedCurrencyList(state.staticState.currencyMap),
+                      labelText: localization.currency,
+                      entityId: transaction.currencyId,
+                      onSelected: (SelectableEntity currency) =>
+                          viewModel.onChanged(viewModel.transaction.rebuild(
+                              (b) => b..currencyId = currency?.id ?? '')),
                     ),
                     DecoratedFormField(
                       label: localization.description,
                       keyboardType: TextInputType.multiline,
                       controller: _descriptionController,
-                      maxLines: 4,
+                      maxLines: 6,
                     ),
                   ],
                 ),
