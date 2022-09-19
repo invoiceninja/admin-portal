@@ -23,7 +23,6 @@ class _TransactionEditState extends State<TransactionEdit> {
       GlobalKey<FormState>(debugLabel: '_transactionEdit');
   final _debouncer = Debouncer();
 
-  // STARTER: controllers - do not remove comment
   final _descriptionController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -31,14 +30,12 @@ class _TransactionEditState extends State<TransactionEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
       _descriptionController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transaction = widget.viewModel.transaction;
-    // STARTER: read value - do not remove comment
     _descriptionController.text = transaction.description;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
