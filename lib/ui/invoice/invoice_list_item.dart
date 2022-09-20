@@ -23,11 +23,15 @@ class InvoiceListItem extends StatelessWidget {
     @required this.invoice,
     this.filter,
     this.showCheckbox = true,
+    this.forceCheckbox = false,
+    this.forceChecked = false,
   });
 
   final InvoiceEntity invoice;
   final String filter;
   final bool showCheckbox;
+  final bool forceCheckbox;
+  final bool forceChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +41,11 @@ class InvoiceListItem extends StatelessWidget {
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final listUIState = state.getUIState(invoice.entityType).listUIState;
-    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
-    final isChecked = isInMultiselect && listUIState.isSelected(invoice.id);
+    final isInMultiselect =
+        forceCheckbox || (showCheckbox && listUIState.isInMultiselect());
+    final isChecked = forceCheckbox
+        ? forceChecked
+        : isInMultiselect && listUIState.isSelected(invoice.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
@@ -69,11 +76,13 @@ class InvoiceListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-        isSelected: isDesktop(context) &&
-            invoice.id ==
-                (uiState.isEditing
-                    ? invoiceUIState.editing.id
-                    : invoiceUIState.selectedId),
+        isSelected: forceCheckbox
+            ? forceChecked
+            : isDesktop(context) &&
+                invoice.id ==
+                    (uiState.isEditing
+                        ? invoiceUIState.editing.id
+                        : invoiceUIState.selectedId),
         showCheckbox: showCheckbox,
         userCompany: state.userCompany,
         entity: invoice,

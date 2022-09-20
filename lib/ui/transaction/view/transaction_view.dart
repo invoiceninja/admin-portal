@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -53,7 +55,10 @@ class _TransactionViewState extends State<TransactionView> {
             ),
           ),
           ListDivider(),
-          Expanded(child: _MatchInvoices()),
+          Expanded(
+              child: _MatchInvoices(
+            viewModel: viewModel,
+          )),
         ],
       ),
     );
@@ -61,7 +66,12 @@ class _TransactionViewState extends State<TransactionView> {
 }
 
 class _MatchInvoices extends StatefulWidget {
-  const _MatchInvoices({Key key}) : super(key: key);
+  const _MatchInvoices({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final TransactionViewVM viewModel;
 
   @override
   State<_MatchInvoices> createState() => __MatchInvoicesState();
@@ -70,12 +80,23 @@ class _MatchInvoices extends StatefulWidget {
 class __MatchInvoicesState extends State<_MatchInvoices> {
   TextEditingController _filterController;
   FocusNode _focusNode;
+  List<InvoiceEntity> _invoices;
+  String _filter;
 
   @override
   void initState() {
     super.initState();
     _filterController = TextEditingController();
     _focusNode = FocusNode();
+
+    updateInvoiceList();
+  }
+
+  void updateInvoiceList() {
+    final invoiceState = widget.viewModel.state.invoiceState;
+    _invoices = invoiceState.map.values.toList();
+    _invoices
+        .sort((invoiceA, invoiceB) => invoiceB.date.compareTo(invoiceA.date));
   }
 
   @override
@@ -111,9 +132,15 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         ),
         ListDivider(),
         Expanded(
-            child: ListView.builder(
-          itemCount: 1,
-          itemBuilder: (BuildContext context, int index) => SizedBox(),
+            child: ListView.separated(
+          separatorBuilder: (context, index) => ListDivider(),
+          itemCount: _invoices.length,
+          itemBuilder: (BuildContext context, int index) {
+            return InvoiceListItem(
+              invoice: _invoices[index],
+              forceCheckbox: true,
+            );
+          },
         )),
       ],
     );
