@@ -46,7 +46,7 @@ class _TransactionViewState extends State<TransactionView> {
           ),
           ListDivider(),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(
               transaction.description,
               style: TextStyle(fontSize: 16),
@@ -95,17 +95,26 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         Row(
           children: [
             Expanded(
-              child: SearchText(
-                filterController: _filterController,
-                focusNode: _focusNode,
-                onChanged: (value) {},
-                onCleared: () => null,
-                placeholder: localization.search,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                child: SearchText(
+                  filterController: _filterController,
+                  focusNode: _focusNode,
+                  onChanged: (value) {},
+                  onCleared: () => null,
+                  placeholder: localization.search,
+                ),
               ),
             )
           ],
         ),
-        Expanded(child: Placeholder()),
+        ListDivider(),
+        Expanded(
+            child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (BuildContext context, int index) => SizedBox(),
+        )),
       ],
     );
   }
