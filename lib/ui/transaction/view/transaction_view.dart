@@ -81,6 +81,7 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
   TextEditingController _filterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
+  List<InvoiceEntity> _selectedInvoices;
   String _filter;
 
   @override
@@ -88,13 +89,22 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
     super.initState();
     _filterController = TextEditingController();
     _focusNode = FocusNode();
+    _selectedInvoices = [];
 
     updateInvoiceList();
   }
 
   void updateInvoiceList() {
     final invoiceState = widget.viewModel.state.invoiceState;
-    _invoices = invoiceState.map.values.toList();
+    _invoices = invoiceState.map.values.where((invoice) {
+      if (_selectedInvoices.isNotEmpty) {
+        if (invoice.clientId != _selectedInvoices.first.clientId) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
     _invoices
         .sort((invoiceA, invoiceB) => invoiceB.date.compareTo(invoiceA.date));
   }
@@ -136,10 +146,19 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
           separatorBuilder: (context, index) => ListDivider(),
           itemCount: _invoices.length,
           itemBuilder: (BuildContext context, int index) {
+            final invoice = _invoices[index];
             return InvoiceListItem(
-              invoice: _invoices[index],
+              invoice: invoice,
               showCheck: true,
-              onTap: () => null,
+              isChecked: _selectedInvoices.contains(invoice),
+              onTap: () => setState(() {
+                if (_selectedInvoices.contains(invoice)) {
+                  _selectedInvoices.remove(invoice);
+                } else {
+                  _selectedInvoices.add(invoice);
+                }
+                updateInvoiceList();
+              }),
             );
           },
         )),
