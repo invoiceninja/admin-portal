@@ -47,14 +47,6 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(
-              transaction.description,
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          ListDivider(),
           Expanded(
               child: _MatchInvoices(
             viewModel: viewModel,
@@ -128,7 +120,7 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
             Expanded(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                 child: SearchText(
                   filterController: _filterController,
                   focusNode: _focusNode,
