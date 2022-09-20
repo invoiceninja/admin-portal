@@ -1,8 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 
 class AppButton extends StatelessWidget {
@@ -22,9 +24,12 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
     final button = ElevatedButton(
       style: ElevatedButton.styleFrom(
-        foregroundColor: color ?? Theme.of(context).colorScheme.secondary,
+        backgroundColor: color ?? state.accentColor,
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kBorderRadius)),

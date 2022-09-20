@@ -194,9 +194,8 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         Padding(
           padding: const EdgeInsets.only(
             left: 20,
-            bottom: 20,
+            bottom: 16,
             right: 20,
-            top: 4,
           ),
           child: AppButton(
             label: localization.convertToPayment,
