@@ -85,6 +85,8 @@ const EntityAction _$accept = const EntityAction._('accept');
 const EntityAction _$addToInventory = const EntityAction._('addToInventory');
 const EntityAction _$convertToExpense =
     const EntityAction._('convertToExpense');
+const EntityAction _$convertToPayment =
+    const EntityAction._('convertToPayment');
 const EntityAction _$merge = const EntityAction._('merge');
 
 EntityAction _$valueOf(String name) {
@@ -227,6 +229,8 @@ EntityAction _$valueOf(String name) {
       return _$addToInventory;
     case 'convertToExpense':
       return _$convertToExpense;
+    case 'convertToPayment':
+      return _$convertToPayment;
     case 'merge':
       return _$merge;
     default:
@@ -305,6 +309,7 @@ final BuiltSet<EntityAction> _$values =
   _$accept,
   _$addToInventory,
   _$convertToExpense,
+  _$convertToPayment,
   _$merge,
 ]);
 

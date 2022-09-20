@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
@@ -7,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionView extends StatefulWidget {
@@ -136,6 +139,7 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
 
     return Column(
       mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
@@ -165,26 +169,45 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         ),
         ListDivider(),
         Expanded(
-            child: ListView.separated(
-          separatorBuilder: (context, index) => ListDivider(),
-          itemCount: _invoices.length,
-          itemBuilder: (BuildContext context, int index) {
-            final invoice = _invoices[index];
-            return InvoiceListItem(
-              invoice: invoice,
-              showCheck: true,
-              isChecked: _selectedInvoices.contains(invoice),
-              onTap: () => setState(() {
-                if (_selectedInvoices.contains(invoice)) {
-                  _selectedInvoices.remove(invoice);
-                } else {
-                  _selectedInvoices.add(invoice);
-                }
-                updateInvoiceList();
-              }),
-            );
-          },
-        )),
+          child: ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: _invoices.length,
+            itemBuilder: (BuildContext context, int index) {
+              final invoice = _invoices[index];
+              return InvoiceListItem(
+                invoice: invoice,
+                showCheck: true,
+                isChecked: _selectedInvoices.contains(invoice),
+                onTap: () => setState(() {
+                  if (_selectedInvoices.contains(invoice)) {
+                    _selectedInvoices.remove(invoice);
+                  } else {
+                    _selectedInvoices.add(invoice);
+                  }
+                  updateInvoiceList();
+                }),
+              );
+            },
+          ),
+        ),
+        ListDivider(),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            bottom: 20,
+            right: 20,
+            top: 4,
+          ),
+          child: AppButton(
+            label: localization.convertToPayment,
+            onPressed: _selectedInvoices.length == 0
+                ? null
+                : () {
+//
+                  },
+            iconData: getEntityActionIcon(EntityAction.convertToExpense),
+          ),
+        )
       ],
     );
   }
