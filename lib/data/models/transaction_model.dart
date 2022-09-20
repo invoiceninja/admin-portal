@@ -179,6 +179,10 @@ abstract class TransactionEntity extends Object
       case TransactionFields.amount:
         response = transactionA.amount.compareTo(transactionB.amount);
         break;
+      case TransactionFields.status:
+        response = transactionA.calculatedStatusId
+            .compareTo(transactionB.calculatedStatusId);
+        break;
       case TransactionFields.category:
         response = transactionA.category
             .toLowerCase()
@@ -226,7 +230,7 @@ abstract class TransactionEntity extends Object
   }
 
   String get calculatedStatusId {
-    return null;
+    return '';
   }
 
   @override
