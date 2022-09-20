@@ -74,7 +74,6 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
-  String _filter = '';
 
   @override
   void initState() {
@@ -101,10 +100,12 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         return false;
       }
 
-      if (_filter.isNotEmpty) {
+      final filter = _filterController.text;
+
+      if (filter.isNotEmpty) {
         final client = state.clientState.get(invoice.clientId);
-        if (!invoice.matchesFilter(_filter) &&
-            !client.matchesNameOrEmail(_filter)) {
+        if (!invoice.matchesFilter(filter) &&
+            !client.matchesNameOrEmail(filter)) {
           return false;
         }
       }
@@ -147,13 +148,12 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
                   focusNode: _focusNode,
                   onChanged: (value) {
                     setState(() {
-                      _filter = value;
                       updateInvoiceList();
                     });
                   },
                   onCleared: () {
                     setState(() {
-                      _filter = '';
+                      _filterController.text = '';
                       updateInvoiceList();
                     });
                   },
