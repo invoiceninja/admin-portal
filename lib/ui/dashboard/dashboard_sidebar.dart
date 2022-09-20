@@ -120,7 +120,6 @@ class InvoiceSidebar extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
                   invoice: upcomingInvoices[index],
-                  showCheckbox: false,
                 );
               },
               separatorBuilder: (context, index) => ListDivider(),
@@ -134,7 +133,6 @@ class InvoiceSidebar extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
                   invoice: pastDueInvoices[index],
-                  showCheckbox: false,
                 );
               },
               separatorBuilder: (context, index) => ListDivider(),
@@ -152,7 +150,6 @@ class InvoiceSidebar extends StatelessWidget {
                     ? SizedBox()
                     : InvoiceListItem(
                         invoice: invoice,
-                        showCheckbox: false,
                       );
               },
               separatorBuilder: (context, index) => ListDivider(),

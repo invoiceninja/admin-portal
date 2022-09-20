@@ -138,7 +138,8 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
           itemBuilder: (BuildContext context, int index) {
             return InvoiceListItem(
               invoice: _invoices[index],
-              forceCheckbox: true,
+              showCheck: true,
+              onTap: () => null,
             );
           },
         )),
