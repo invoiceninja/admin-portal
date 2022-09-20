@@ -51,6 +51,7 @@ class CreditStatusColors {
       kCreditStatusSent: _colorTheme.colorInfo,
       kCreditStatusPartial: _colorTheme.colorPrimary,
       kCreditStatusApplied: _colorTheme.colorSuccess,
+      kCreditStatusViewed: _colorTheme.colorWarning,
     };
   }
 }
@@ -67,6 +68,7 @@ class PurchaseOrderStatusColors {
       kPurchaseOrderStatusAccepted: _colorTheme.colorPrimary,
       kPurchaseOrderStatusReceived: _colorTheme.colorSuccess,
       kPurchaseOrderStatusCancelled: _colorTheme.colorDanger,
+      kPurchaseOrderStatusViewed: _colorTheme.colorWarning,
     };
   }
 }
