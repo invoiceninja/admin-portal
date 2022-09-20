@@ -74,7 +74,7 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
-  String _filter;
+  String _filter = '';
 
   @override
   void initState() {
@@ -87,7 +87,9 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
   }
 
   void updateInvoiceList() {
-    final invoiceState = widget.viewModel.state.invoiceState;
+    final state = widget.viewModel.state;
+    final invoiceState = state.invoiceState;
+
     _invoices = invoiceState.map.values.where((invoice) {
       if (_selectedInvoices.isNotEmpty) {
         if (invoice.clientId != _selectedInvoices.first.clientId) {
@@ -95,10 +97,29 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
         }
       }
 
+      if (invoice.isPaid || invoice.isDeleted) {
+        return false;
+      }
+
+      if (_filter.isNotEmpty) {
+        final client = state.clientState.get(invoice.clientId);
+        if (!invoice.matchesFilter(_filter) &&
+            !client.matchesNameOrEmail(_filter)) {
+          return false;
+        }
+      }
+
       return true;
     }).toList();
-    _invoices
-        .sort((invoiceA, invoiceB) => invoiceB.date.compareTo(invoiceA.date));
+    _invoices.sort((invoiceA, invoiceB) {
+      if (_selectedInvoices.contains(invoiceA)) {
+        return -1;
+      } else if (_selectedInvoices.contains(invoiceB)) {
+        return 1;
+      }
+
+      return invoiceB.date.compareTo(invoiceA.date);
+    });
   }
 
   @override
@@ -124,8 +145,18 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
                 child: SearchText(
                   filterController: _filterController,
                   focusNode: _focusNode,
-                  onChanged: (value) {},
-                  onCleared: () => null,
+                  onChanged: (value) {
+                    setState(() {
+                      _filter = value;
+                      updateInvoiceList();
+                    });
+                  },
+                  onCleared: () {
+                    setState(() {
+                      _filter = '';
+                      updateInvoiceList();
+                    });
+                  },
                   placeholder: localization.search,
                 ),
               ),
