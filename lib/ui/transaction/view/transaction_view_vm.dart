@@ -45,6 +45,7 @@ class TransactionViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onConvertToPayment,
+    @required this.onConvertToExpense,
   });
 
   factory TransactionViewVM.fromStore(Store<AppState> store) {
@@ -72,11 +73,22 @@ class TransactionViewVM {
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([transaction], action, autoPop: true),
       onConvertToPayment: (context, transactionId, invoiceIds) {
-        store.dispatch(ConvertTransactionToPaymentRequest(
-            snackBarCompleter<Null>(
-                context, AppLocalization.of(context).convertedTransaction),
-            transactionId,
-            invoiceIds));
+        store.dispatch(
+          ConvertTransactionToPaymentRequest(
+              snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).convertedTransaction),
+              transactionId,
+              invoiceIds),
+        );
+      },
+      onConvertToExpense: (context, transactionId, vendorId) {
+        store.dispatch(
+          ConvertTransactionToExpenseRequest(
+              snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).convertedTransaction),
+              transactionId,
+              vendorId),
+        );
       },
     );
   }
@@ -87,6 +99,7 @@ class TransactionViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String, List<String>) onConvertToPayment;
+  final Function(BuildContext, String, String) onConvertToExpense;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
