@@ -52,6 +52,46 @@ class TransactionRepository {
     return transactionResponse.data.toList();
   }
 
+  Future<TransactionEntity> convertToPayment(Credentials credentials,
+      String transactionId, List<String> invoiceIds) async {
+    final url = credentials.url + '/bank_transactions/match';
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode(
+        {
+          'id': transactionId,
+          'invoice_ids': invoiceIds.join(','),
+        },
+      ),
+    );
+
+    final TransactionItemResponse transactionResponse = serializers
+        .deserializeWith(TransactionItemResponse.serializer, response);
+
+    return transactionResponse.data;
+  }
+
+  Future<TransactionEntity> convertToExpense(
+      Credentials credentials, String transactionId, String vendorId) async {
+    final url = credentials.url + '/bank_transactions/match';
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode(
+        {
+          'id': transactionId,
+          'vendor_id': vendorId,
+        },
+      ),
+    );
+
+    final TransactionItemResponse transactionResponse = serializers
+        .deserializeWith(TransactionItemResponse.serializer, response);
+
+    return transactionResponse.data;
+  }
+
   Future<TransactionEntity> saveData(
       Credentials credentials, TransactionEntity transaction) async {
     final data =

@@ -213,9 +213,9 @@ class ConvertTransactionToPaymentSuccess implements StopSaving, PersistData {
 }
 
 class ConvertTransactionToPaymentFailure implements StopSaving {
-  ConvertTransactionToPaymentFailure(this.transaction);
+  ConvertTransactionToPaymentFailure(this.error);
 
-  final TransactionEntity transaction;
+  final dynamic error;
 }
 
 class ConvertTransactionToExpenseRequest implements StartSaving {
@@ -237,9 +237,9 @@ class ConvertTransactionToExpenseSuccess implements StopSaving, PersistData {
 }
 
 class ConvertTransactionToExpenseFailure implements StopSaving {
-  ConvertTransactionToExpenseFailure(this.transaction);
+  ConvertTransactionToExpenseFailure(this.error);
 
-  final TransactionEntity transaction;
+  final dynamic error;
 }
 
 class ConvertTransactionsRequest implements StartSaving {
@@ -256,9 +256,9 @@ class ConvertTransactionsSuccess implements StopSaving, PersistData {
 }
 
 class ConvertTransactionsFailure implements StopSaving {
-  ConvertTransactionsFailure(this.transactions);
+  ConvertTransactionsFailure(this.error);
 
-  final List<TransactionEntity> transactions;
+  final dynamic error;
 }
 
 class FilterTransactions implements PersistUI {
