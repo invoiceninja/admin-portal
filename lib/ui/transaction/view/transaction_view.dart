@@ -50,7 +50,7 @@ class _TransactionViewState extends State<TransactionView> {
           ),
           ListDivider(),
           Expanded(
-              child: _MatchInvoices(
+              child: _MatchDeposits(
             viewModel: viewModel,
           )),
         ],
@@ -59,8 +59,8 @@ class _TransactionViewState extends State<TransactionView> {
   }
 }
 
-class _MatchInvoices extends StatefulWidget {
-  const _MatchInvoices({
+class _MatchDeposits extends StatefulWidget {
+  const _MatchDeposits({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -68,10 +68,10 @@ class _MatchInvoices extends StatefulWidget {
   final TransactionViewVM viewModel;
 
   @override
-  State<_MatchInvoices> createState() => __MatchInvoicesState();
+  State<_MatchDeposits> createState() => _MatchDepositsState();
 }
 
-class __MatchInvoicesState extends State<_MatchInvoices> {
+class _MatchDepositsState extends State<_MatchDeposits> {
   TextEditingController _filterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
