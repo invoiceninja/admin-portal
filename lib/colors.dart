@@ -80,8 +80,8 @@ class TransactionStatusColors {
 
   Map<String, Color> get colors {
     return {
-      kTransactionStatusUnmatched: _colorTheme.colorGray,
-      kTransactionStatusMatched: _colorTheme.colorInfo,
+      kTransactionStatusUnmatched: _colorTheme.colorInfo,
+      kTransactionStatusMatched: _colorTheme.colorPrimary,
       kTransactionStatusConverted: _colorTheme.colorSuccess,
     };
   }
