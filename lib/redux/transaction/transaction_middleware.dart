@@ -180,6 +180,7 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
             EntityAction.convert)
         .then((List<TransactionEntity> transactions) {
       store.dispatch(ConvertTransactionsSuccess(transactions));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -206,6 +207,7 @@ Middleware<AppState> _convertToPayment(TransactionRepository repository) {
     )
         .then((TransactionEntity transactions) {
       store.dispatch(ConvertTransactionToPaymentSuccess(transactions));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -232,6 +234,7 @@ Middleware<AppState> _convertToExpense(TransactionRepository repository) {
     )
         .then((TransactionEntity transactions) {
       store.dispatch(ConvertTransactionToExpenseSuccess(transactions));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }

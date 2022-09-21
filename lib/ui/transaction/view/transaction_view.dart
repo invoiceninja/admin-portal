@@ -135,6 +135,19 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final transaction = viewModel.transaction;
+    final state = viewModel.state;
+
+    String currencyId;
+    if (_selectedInvoices.isNotEmpty) {
+      currencyId =
+          state.clientState.get(_selectedInvoices.first.clientId).currencyId;
+    }
+
+    double totalSelected = 0;
+    _selectedInvoices
+        .forEach((invoice) => totalSelected += invoice.balanceOrAmount);
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -189,6 +202,14 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             },
           ),
         ),
+        if (_selectedInvoices.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              '${_selectedInvoices.length} ${localization.selected} | ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+              textAlign: TextAlign.center,
+            ),
+          ),
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
@@ -204,7 +225,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToPayment(
                       context,
-                      viewModel.transaction.id,
+                      transaction.id,
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
                     );
                   },

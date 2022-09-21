@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'selected': 'Selected',
       'converted_transaction': 'Successfully converted transaction',
       'convert_to_payment': 'Convert to Payment',
       'deposit': 'Deposit',
@@ -87341,6 +87342,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get convertedTransaction =>
       _localizedValues[localeCode]['converted_transaction'] ??
       _localizedValues['en']['converted_transaction'];
+
+  String get selected =>
+      _localizedValues[localeCode]['selected'] ??
+      _localizedValues['en']['selected'];
 
 // STARTER: lang field - do not remove comment
 
