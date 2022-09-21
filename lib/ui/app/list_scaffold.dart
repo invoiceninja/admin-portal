@@ -92,7 +92,7 @@ class ListScaffold extends StatelessWidget {
           },
           child: IconText(
             text: createLabel ?? localization.create,
-            icon: Icons.add_circle_outline,
+            icon: Icons.add,
             style: TextStyle(color: Colors.white),
           ),
         ),

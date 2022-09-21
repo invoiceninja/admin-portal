@@ -215,7 +215,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         Padding(
           padding: const EdgeInsets.only(
             left: 20,
-            bottom: 16,
+            bottom: 18,
             right: 20,
           ),
           child: AppButton(
