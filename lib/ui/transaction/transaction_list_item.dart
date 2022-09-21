@@ -203,12 +203,12 @@ class TransactionListItem extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                            localization.lookup(kPurchaseOrderStatuses[
-                                transaction.calculatedStatusId]),
+                            localization.lookup(
+                                kPurchaseOrderStatuses[transaction.statusId]),
                             style: TextStyle(
                                 color: TransactionStatusColors(
                                         state.prefState.colorThemeModel)
-                                    .colors[transaction.calculatedStatusId])),
+                                    .colors[transaction.statusId])),
                       ],
                     ),
                     EntityStateLabel(transaction),

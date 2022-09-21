@@ -142,6 +142,9 @@ class _$TransactionEntitySerializer
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
+      'status_id',
+      serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
       'invoice_id',
       serializers.serialize(object.invoiceId,
           specifiedType: const FullType(String)),
@@ -230,6 +233,10 @@ class _$TransactionEntitySerializer
           break;
         case 'description':
           result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'status_id':
+          result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
@@ -536,6 +543,8 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String description;
   @override
+  final String statusId;
+  @override
   final String invoiceId;
   @override
   final String expenseId;
@@ -568,6 +577,7 @@ class _$TransactionEntity extends TransactionEntity {
       this.date,
       this.bankAccountId,
       this.description,
+      this.statusId,
       this.invoiceId,
       this.expenseId,
       this.isChanged,
@@ -592,6 +602,8 @@ class _$TransactionEntity extends TransactionEntity {
         bankAccountId, 'TransactionEntity', 'bankAccountId');
     BuiltValueNullFieldError.checkNotNull(
         description, 'TransactionEntity', 'description');
+    BuiltValueNullFieldError.checkNotNull(
+        statusId, 'TransactionEntity', 'statusId');
     BuiltValueNullFieldError.checkNotNull(
         invoiceId, 'TransactionEntity', 'invoiceId');
     BuiltValueNullFieldError.checkNotNull(
@@ -624,6 +636,7 @@ class _$TransactionEntity extends TransactionEntity {
         date == other.date &&
         bankAccountId == other.bankAccountId &&
         description == other.description &&
+        statusId == other.statusId &&
         invoiceId == other.invoiceId &&
         expenseId == other.expenseId &&
         isChanged == other.isChanged &&
@@ -656,17 +669,20 @@ class _$TransactionEntity extends TransactionEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        amount
+                                                                        $jc(
+                                                                            0,
+                                                                            amount
+                                                                                .hashCode),
+                                                                        currencyId
                                                                             .hashCode),
-                                                                    currencyId
+                                                                    category
                                                                         .hashCode),
-                                                                category
+                                                                baseType
                                                                     .hashCode),
-                                                            baseType.hashCode),
-                                                        date.hashCode),
-                                                    bankAccountId.hashCode),
-                                                description.hashCode),
+                                                            date.hashCode),
+                                                        bankAccountId.hashCode),
+                                                    description.hashCode),
+                                                statusId.hashCode),
                                             invoiceId.hashCode),
                                         expenseId.hashCode),
                                     isChanged.hashCode),
@@ -689,6 +705,7 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('date', date)
           ..add('bankAccountId', bankAccountId)
           ..add('description', description)
+          ..add('statusId', statusId)
           ..add('invoiceId', invoiceId)
           ..add('expenseId', expenseId)
           ..add('isChanged', isChanged)
@@ -735,6 +752,10 @@ class TransactionEntityBuilder
   String _description;
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
+
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -792,6 +813,7 @@ class TransactionEntityBuilder
       _date = $v.date;
       _bankAccountId = $v.bankAccountId;
       _description = $v.description;
+      _statusId = $v.statusId;
       _invoiceId = $v.invoiceId;
       _expenseId = $v.expenseId;
       _isChanged = $v.isChanged;
@@ -836,10 +858,11 @@ class TransactionEntityBuilder
                 bankAccountId, 'TransactionEntity', 'bankAccountId'),
             description: BuiltValueNullFieldError.checkNotNull(
                 description, 'TransactionEntity', 'description'),
+            statusId: BuiltValueNullFieldError.checkNotNull(
+                statusId, 'TransactionEntity', 'statusId'),
             invoiceId: BuiltValueNullFieldError.checkNotNull(
                 invoiceId, 'TransactionEntity', 'invoiceId'),
-            expenseId: BuiltValueNullFieldError.checkNotNull(
-                expenseId, 'TransactionEntity', 'expenseId'),
+            expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TransactionEntity', 'updatedAt'),

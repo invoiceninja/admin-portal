@@ -83,6 +83,7 @@ abstract class TransactionEntity extends Object
       description: '',
       expenseId: '',
       invoiceId: '',
+      statusId: '',
       baseType: TYPE_DEPOSIT,
     );
   }
@@ -113,6 +114,9 @@ abstract class TransactionEntity extends Object
   String get bankAccountId;
 
   String get description;
+
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
 
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
@@ -180,8 +184,7 @@ abstract class TransactionEntity extends Object
         response = transactionA.amount.compareTo(transactionB.amount);
         break;
       case TransactionFields.status:
-        response = transactionA.calculatedStatusId
-            .compareTo(transactionB.calculatedStatusId);
+        response = transactionA.statusId.compareTo(transactionB.statusId);
         break;
       case TransactionFields.category:
         response = transactionA.category
@@ -229,10 +232,6 @@ abstract class TransactionEntity extends Object
     }
   }
 
-  String get calculatedStatusId {
-    return '';
-  }
-
   @override
   bool matchesStatuses(BuiltList<EntityStatus> statuses) {
     if (statuses.isEmpty) {
@@ -246,7 +245,7 @@ abstract class TransactionEntity extends Object
         return true;
       }
 
-      if (status.id == calculatedStatusId || status.id == calculatedStatusId) {
+      if (status.id == statusId || status.id == statusId) {
         return true;
       }
     }

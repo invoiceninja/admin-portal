@@ -84,9 +84,9 @@ class EntityStatusChip extends StatelessWidget {
           break;
         case EntityType.transaction:
           final transaction = entity as TransactionEntity;
-          label = kTransactionStatuses[transaction.calculatedStatusId];
+          label = kTransactionStatuses[transaction.statusId];
           color = TransactionStatusColors(state.prefState.colorThemeModel)
-              .colors[transaction.calculatedStatusId];
+              .colors[transaction.statusId];
           break;
         case EntityType.expense:
           final expense = entity as ExpenseEntity;

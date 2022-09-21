@@ -198,7 +198,7 @@ class __MatchInvoicesState extends State<_MatchInvoices> {
           ),
           child: AppButton(
             label: localization.convertToPayment,
-            onPressed: _selectedInvoices.length == 0
+            onPressed: _selectedInvoices.isEmpty
                 ? null
                 : () {
 //
