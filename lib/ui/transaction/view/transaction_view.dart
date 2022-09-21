@@ -201,7 +201,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             onPressed: _selectedInvoices.isEmpty
                 ? null
                 : () {
-//
+                    final viewModel = widget.viewModel;
+                    viewModel.onConvertToPayment(
+                      context,
+                      viewModel.transaction.id,
+                      _selectedInvoices.map((invoice) => invoice.id).toList(),
+                    );
                   },
             iconData: getEntityActionIcon(EntityAction.convertToExpense),
           ),
