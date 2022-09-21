@@ -204,10 +204,11 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ),
         if (_selectedInvoices.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Text(
-              '${_selectedInvoices.length} ${localization.selected} | ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+              '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
               textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
             ),
           ),
         ListDivider(),

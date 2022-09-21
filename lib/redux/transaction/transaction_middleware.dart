@@ -264,6 +264,7 @@ Middleware<AppState> _saveTransaction(TransactionRepository repository) {
 
       action.completer.complete(transaction);
     }).catchError((Object error) {
+      //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
       print(error);
       store.dispatch(SaveTransactionFailure(error));
       action.completer.completeError(error);
