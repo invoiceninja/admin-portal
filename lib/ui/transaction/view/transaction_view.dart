@@ -228,7 +228,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ),
         ListDivider(),
         AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 200),
           height: _showFilter ? 138 : 0,
           child: Column(
             children: [
