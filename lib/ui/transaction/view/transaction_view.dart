@@ -53,10 +53,18 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
+          /*
           Expanded(
               child: _MatchDeposits(
             viewModel: viewModel,
-          )),
+          ),
+          ),
+          */
+          Expanded(
+            child: _MatchWithdrawals(
+              viewModel: viewModel,
+            ),
+          ),
         ],
       ),
     );
@@ -325,7 +333,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               final invoice = _invoices[index];
               return InvoiceListItem(
                 invoice: invoice,
-                filter: _filterController.text,
                 showCheck: true,
                 isChecked: _selectedInvoices.contains(invoice),
                 onTap: () => setState(() {
@@ -411,7 +418,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendors = vendorState.map.values.where((vendor) {
       if (_selectedVendor != null) {
-        if (vendor.id != _selectedVendor.id) {
+        if (vendor.id != _selectedVendor?.id) {
           return false;
         }
       }
@@ -496,11 +503,14 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               final vendor = _vendors[index];
               return VendorListItem(
                 vendor: vendor,
-                filter: _filterController.text,
                 showCheck: true,
-                isChecked: _selectedVendor.id == vendor.id,
+                isChecked: _selectedVendor?.id == vendor.id,
                 onTap: () => setState(() {
-                  _selectedVendor = vendor;
+                  if (_selectedVendor?.id == vendor.id) {
+                    _selectedVendor = null;
+                  } else {
+                    _selectedVendor = vendor;
+                  }
                   updateVendorList();
                 }),
               );

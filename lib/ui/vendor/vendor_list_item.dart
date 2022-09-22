@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
     @required this.vendor,
-    @required this.filter,
+    this.filter = '',
     this.onTap,
     this.onLongPress,
     this.showCheck = false,
