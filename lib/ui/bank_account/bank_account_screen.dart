@@ -67,7 +67,6 @@ class BankAccountScreen extends StatelessWidget {
       entityType: EntityType.bankAccount,
       onHamburgerLongPress: () => store.dispatch(StartBankAccountMultiselect()),
       createLabel: localization.connect,
-      onCreatePressed: () => connectAccounts(context),
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.bankAccountListState.filterClearedAt}__'),
@@ -154,12 +153,13 @@ class BankAccountScreen extends StatelessWidget {
           ? FloatingActionButton(
               heroTag: 'bank_account_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () => connectAccounts(context),
+              onPressed: () => createEntityByType(
+                  context: context, entityType: EntityType.bankAccount),
               child: Icon(
                 Icons.link,
                 color: Colors.white,
               ),
-              tooltip: localization.connect,
+              tooltip: localization.newBankAccount,
             )
           : null,
     );

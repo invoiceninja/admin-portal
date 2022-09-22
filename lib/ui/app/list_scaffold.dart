@@ -32,7 +32,6 @@ class ListScaffold extends StatelessWidget {
     this.onCancelSettingsSection,
     this.onCancelSettingsIndex = 0,
     this.createLabel,
-    this.onCreatePressed,
   });
 
   final EntityType entityType;
@@ -47,7 +46,6 @@ class ListScaffold extends StatelessWidget {
   final int onCancelSettingsIndex;
   final Function onCheckboxPressed;
   final String createLabel;
-  final Function onCreatePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +82,7 @@ class ListScaffold extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(
                   state.prefState.colorThemeModel.colorSuccess)),
           onPressed: () {
-            if (onCreatePressed != null) {
-              onCreatePressed();
-            } else {
-              createEntityByType(entityType: entityType, context: context);
-            }
+            createEntityByType(entityType: entityType, context: context);
           },
           child: IconText(
             text: createLabel ?? localization.create,
