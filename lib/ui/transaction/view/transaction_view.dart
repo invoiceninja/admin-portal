@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -162,6 +163,18 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     });
   }
 
+  bool get isFiltered {
+    if (_minAmount.isNotEmpty || _maxAmount.isNotEmpty) {
+      return true;
+    }
+
+    if (_startDate.isNotEmpty || _endDate.isNotEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
   @override
   void dispose() {
     _filterController.dispose();
@@ -218,7 +231,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               onPressed: () {
                 setState(() => _showFilter = !_showFilter);
               },
-              color: _showFilter ? state.accentColor : null,
+              color: _showFilter || isFiltered ? state.accentColor : null,
               icon: Icon(Icons.filter_alt),
               tooltip:
                   state.prefState.enableTooltips ? localization.filter : '',
@@ -312,6 +325,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               final invoice = _invoices[index];
               return InvoiceListItem(
                 invoice: invoice,
+                filter: _filterController.text,
                 showCheck: true,
                 isChecked: _selectedInvoices.contains(invoice),
                 onTap: () => setState(() {
@@ -352,6 +366,164 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       context,
                       transaction.id,
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
+                    );
+                  },
+            iconData: getEntityActionIcon(EntityAction.convertToExpense),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _MatchWithdrawals extends StatefulWidget {
+  const _MatchWithdrawals({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final TransactionViewVM viewModel;
+
+  @override
+  State<_MatchWithdrawals> createState() => _MatchWithdrawalsState();
+}
+
+class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
+  TextEditingController _filterController;
+  FocusNode _focusNode;
+  List<VendorEntity> _vendors;
+  List<ExpenseCategoryEntity> _categories;
+  VendorEntity _selectedVendor;
+  ExpenseCategoryEntity _selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    _filterController = TextEditingController();
+    _focusNode = FocusNode();
+
+    updateVendorList();
+  }
+
+  void updateVendorList() {
+    final state = widget.viewModel.state;
+    final vendorState = state.vendorState;
+
+    _vendors = vendorState.map.values.where((vendor) {
+      if (_selectedVendor != null) {
+        if (vendor.id != _selectedVendor.id) {
+          return false;
+        }
+      }
+
+      if (vendor.isDeleted) {
+        return false;
+      }
+
+      final filter = _filterController.text;
+
+      if (filter.isNotEmpty) {
+        if (!vendor.matchesFilter(filter)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
+    _vendors.sort((vendorA, vendorB) {
+      /*
+      if (_selectedInvoices.contains(invoiceA)) {
+        return -1;
+      } else if (_selectedInvoices.contains(invoiceB)) {
+        return 1;
+      }
+      */
+
+      return vendorB.name.toLowerCase().compareTo(vendorA.name.toLowerCase());
+    });
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final transaction = viewModel.transaction;
+    final state = viewModel.state;
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 12, right: 10, bottom: 12),
+                child: SearchText(
+                  filterController: _filterController,
+                  focusNode: _focusNode,
+                  onChanged: (value) {
+                    setState(() {
+                      updateVendorList();
+                    });
+                  },
+                  onCleared: () {
+                    setState(() {
+                      _filterController.text = '';
+                      updateVendorList();
+                    });
+                  },
+                  placeholder: localization.search,
+                ),
+              ),
+            ),
+          ],
+        ),
+        ListDivider(),
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: _vendors.length,
+            itemBuilder: (BuildContext context, int index) {
+              final vendor = _vendors[index];
+              return VendorListItem(
+                vendor: vendor,
+                filter: _filterController.text,
+                showCheck: true,
+                isChecked: _selectedVendor.id == vendor.id,
+                onTap: () => setState(() {
+                  _selectedVendor = vendor;
+                  updateVendorList();
+                }),
+              );
+            },
+          ),
+        ),
+        ListDivider(),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            bottom: 18,
+            right: 20,
+          ),
+          child: AppButton(
+            label: localization.convertToPayment,
+            onPressed: _selectedVendor == null
+                ? null
+                : () {
+                    final viewModel = widget.viewModel;
+                    viewModel.onConvertToExpense(
+                      context,
+                      transaction.id,
+                      _selectedVendor.id,
                     );
                   },
             iconData: getEntityActionIcon(EntityAction.convertToExpense),

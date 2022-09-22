@@ -45,13 +45,12 @@ class VendorListBuilder extends StatelessWidget {
             final vendor = viewModel.vendorMap[vendorId];
             final state = viewModel.state;
             final listUIState = state.getListState(EntityType.vendor);
-            final isInMultiselect = listUIState.isInMultiselect();
 
             return VendorListItem(
-              user: viewModel.state.user,
               filter: viewModel.filter,
               vendor: vendor,
-              isChecked: isInMultiselect && listUIState.isSelected(vendor.id),
+              isChecked: listUIState.isSelected(vendor.id),
+              showCheck: listUIState.isInMultiselect(),
             );
           },
         );
