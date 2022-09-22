@@ -81,8 +81,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   List<InvoiceEntity> _selectedInvoices;
 
   bool _showFilter = false;
-  String _minLimit = '';
-  String _maxLimit = '';
+  String _minAmount = '';
+  String _maxAmount = '';
   String _startDate = '';
   String _endDate = '';
 
@@ -122,14 +122,14 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (_showFilter) {
-        if (_minLimit.isNotEmpty) {
-          if (invoice.balanceOrAmount < parseDouble(_minLimit)) {
+        if (_minAmount.isNotEmpty) {
+          if (invoice.balanceOrAmount < parseDouble(_minAmount)) {
             return false;
           }
         }
 
-        if (_maxLimit.isNotEmpty) {
-          if (invoice.balanceOrAmount > parseDouble(_maxLimit)) {
+        if (_maxAmount.isNotEmpty) {
+          if (invoice.balanceOrAmount > parseDouble(_maxAmount)) {
             return false;
           }
         }
@@ -242,10 +242,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                         children: [
                           Expanded(
                               child: DecoratedFormField(
-                            label: localization.minLimit,
+                            label: localization.minAmount,
                             onChanged: (value) {
                               setState(() {
-                                _minLimit = value;
+                                _minAmount = value;
                                 updateInvoiceList();
                               });
                             },
@@ -257,10 +257,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           ),
                           Expanded(
                               child: DecoratedFormField(
-                            label: localization.maxLimit,
+                            label: localization.maxAmount,
                             onChanged: (value) {
                               setState(() {
-                                _maxLimit = value;
+                                _maxAmount = value;
                                 updateInvoiceList();
                               });
                             },
