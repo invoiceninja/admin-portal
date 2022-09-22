@@ -194,6 +194,73 @@ class RestoreTransactionsFailure implements StopSaving {
   final List<TransactionEntity> transactions;
 }
 
+class ConvertTransactionToPaymentRequest implements StartSaving {
+  ConvertTransactionToPaymentRequest(
+    this.completer,
+    this.transactionId,
+    this.invoiceIds,
+  );
+
+  final Completer completer;
+  final String transactionId;
+  final List<String> invoiceIds;
+}
+
+class ConvertTransactionToPaymentSuccess implements StopSaving, PersistData {
+  ConvertTransactionToPaymentSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class ConvertTransactionToPaymentFailure implements StopSaving {
+  ConvertTransactionToPaymentFailure(this.error);
+
+  final dynamic error;
+}
+
+class ConvertTransactionToExpenseRequest implements StartSaving {
+  ConvertTransactionToExpenseRequest(
+    this.completer,
+    this.transactionId,
+    this.vendorId,
+  );
+
+  final Completer completer;
+  final String transactionId;
+  final String vendorId;
+}
+
+class ConvertTransactionToExpenseSuccess implements StopSaving, PersistData {
+  ConvertTransactionToExpenseSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class ConvertTransactionToExpenseFailure implements StopSaving {
+  ConvertTransactionToExpenseFailure(this.error);
+
+  final dynamic error;
+}
+
+class ConvertTransactionsRequest implements StartSaving {
+  ConvertTransactionsRequest(this.completer, this.transactionIds);
+
+  final Completer completer;
+  final List<String> transactionIds;
+}
+
+class ConvertTransactionsSuccess implements StopSaving, PersistData {
+  ConvertTransactionsSuccess(this.transactions);
+
+  final List<TransactionEntity> transactions;
+}
+
+class ConvertTransactionsFailure implements StopSaving {
+  ConvertTransactionsFailure(this.error);
+
+  final dynamic error;
+}
+
 class FilterTransactions implements PersistUI {
   FilterTransactions(this.filter);
 
@@ -210,6 +277,12 @@ class FilterTransactionsByState implements PersistUI {
   FilterTransactionsByState(this.state);
 
   final EntityState state;
+}
+
+class FilterTransactionsByStatus implements PersistUI {
+  FilterTransactionsByStatus(this.status);
+
+  final TransactionStatusEntity status;
 }
 
 class FilterTransactionsByCustom1 implements PersistUI {

@@ -72,15 +72,21 @@ class EntityStatusChip extends StatelessWidget {
           break;
         case EntityType.credit:
           final credit = entity as InvoiceEntity;
-          label = kCreditStatuses[credit.statusId];
+          label = kCreditStatuses[credit.calculatedStatusId];
           color = CreditStatusColors(state.prefState.colorThemeModel)
-              .colors[credit.statusId];
+              .colors[credit.calculatedStatusId];
           break;
         case EntityType.purchaseOrder:
           final purchaseOrder = entity as InvoiceEntity;
-          label = kPurchaseOrderStatuses[purchaseOrder.statusId];
+          label = kPurchaseOrderStatuses[purchaseOrder.calculatedStatusId];
           color = PurchaseOrderStatusColors(state.prefState.colorThemeModel)
-              .colors[purchaseOrder.statusId];
+              .colors[purchaseOrder.calculatedStatusId];
+          break;
+        case EntityType.transaction:
+          final transaction = entity as TransactionEntity;
+          label = kTransactionStatuses[transaction.statusId];
+          color = TransactionStatusColors(state.prefState.colorThemeModel)
+              .colors[transaction.statusId];
           break;
         case EntityType.expense:
           final expense = entity as ExpenseEntity;
@@ -100,7 +106,7 @@ class EntityStatusChip extends StatelessWidget {
           break;
         case EntityType.task:
           final task = entity as TaskEntity;
-          final status = state.taskStatusState.get(task.statusId);
+          final status = state.taskStatusState.get(task.calculateStatusId);
           label = task.isInvoiced
               ? localization.invoiced
               : task.isRunning

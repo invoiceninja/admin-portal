@@ -21,7 +21,7 @@ class PurchaseOrderListItem extends StatelessWidget {
   const PurchaseOrderListItem({
     @required this.user,
     @required this.purchaseOrder,
-    @required this.client,
+    @required this.vendor,
     @required this.filter,
     this.onTap,
     this.onLongPress,
@@ -33,7 +33,7 @@ class PurchaseOrderListItem extends StatelessWidget {
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final InvoiceEntity purchaseOrder;
-  final ClientEntity client;
+  final VendorEntity vendor;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
@@ -50,7 +50,7 @@ class PurchaseOrderListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (purchaseOrder.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+            vendor.matchesFilterValue(filter))
         : null;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
@@ -103,7 +103,6 @@ class PurchaseOrderListItem extends StatelessWidget {
                               : ActionMenuButton(
                                   entityActions: purchaseOrder.getActions(
                                     userCompany: state.userCompany,
-                                    client: client,
                                     includeEdit: true,
                                   ),
                                   isSaving: false,
@@ -134,7 +133,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                client.displayName +
+                                vendor.name +
                                     (purchaseOrder.documents.isNotEmpty
                                         ? '  📎'
                                         : ''),
@@ -156,8 +155,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        formatNumber(purchaseOrder.amount, context,
-                            clientId: client.id),
+                        formatNumber(purchaseOrder.amount, context),
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -192,7 +190,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          client.displayName,
+                          vendor.name,
                           style: Theme.of(context).textTheme.subtitle1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -200,11 +198,11 @@ class PurchaseOrderListItem extends StatelessWidget {
                       SizedBox(width: 4),
                       Text(
                           formatNumber(
-                              purchaseOrder.balance > 0
-                                  ? purchaseOrder.balance
-                                  : purchaseOrder.amount,
-                              context,
-                              clientId: purchaseOrder.clientId),
+                            purchaseOrder.balance > 0
+                                ? purchaseOrder.balance
+                                : purchaseOrder.amount,
+                            context,
+                          ),
                           style: Theme.of(context).textTheme.subtitle1),
                     ],
                   ),
@@ -231,14 +229,14 @@ class PurchaseOrderListItem extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                            localization.lookup(
-                                kPurchaseOrderStatuses[purchaseOrder.statusId]),
+                            localization.lookup(kPurchaseOrderStatuses[
+                                purchaseOrder.calculatedStatusId]),
                             style: TextStyle(
                               color: !purchaseOrder.isSent
                                   ? textColor
                                   : PurchaseOrderStatusColors(
                                           state.prefState.colorThemeModel)
-                                      .colors[purchaseOrder.statusId],
+                                      .colors[purchaseOrder.calculatedStatusId],
                             )),
                       ],
                     ),

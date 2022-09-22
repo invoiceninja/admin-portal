@@ -125,7 +125,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                       value: webhook.eventId,
                       onChanged: (dynamic value) => viewModel.onChanged(
                           webhook.rebuild((b) => b..eventId = value)),
-                      items: WebhookEntity.EVENTS
+                      items: WebhookEntity.EVENT_MAP.keys
                           .map((eventId) => DropdownMenuItem(
                                 child: Text(localization
                                     .lookup(WebhookEntity.EVENT_MAP[eventId])),

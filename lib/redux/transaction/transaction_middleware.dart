@@ -24,6 +24,9 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
   final archiveTransaction = _archiveTransaction(repository);
   final deleteTransaction = _deleteTransaction(repository);
   final restoreTransaction = _restoreTransaction(repository);
+  final convertTransactions = _convertTransactions(repository);
+  final convertToPayment = _convertToPayment(repository);
+  final convertToExpense = _convertToExpense(repository);
 
   return [
     TypedMiddleware<AppState, ViewTransactionList>(viewTransactionList),
@@ -35,6 +38,11 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
     TypedMiddleware<AppState, ArchiveTransactionsRequest>(archiveTransaction),
     TypedMiddleware<AppState, DeleteTransactionsRequest>(deleteTransaction),
     TypedMiddleware<AppState, RestoreTransactionsRequest>(restoreTransaction),
+    TypedMiddleware<AppState, ConvertTransactionsRequest>(convertTransactions),
+    TypedMiddleware<AppState, ConvertTransactionToPaymentRequest>(
+        convertToPayment),
+    TypedMiddleware<AppState, ConvertTransactionToExpenseRequest>(
+        convertToExpense),
   ];
 }
 
@@ -164,6 +172,84 @@ Middleware<AppState> _restoreTransaction(TransactionRepository repository) {
   };
 }
 
+Middleware<AppState> _convertTransactions(TransactionRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConvertTransactionsRequest;
+    repository
+        .bulkAction(store.state.credentials, action.transactionIds,
+            EntityAction.convert)
+        .then((List<TransactionEntity> transactions) {
+      store.dispatch(ConvertTransactionsSuccess(transactions));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertTransactionsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _convertToPayment(TransactionRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConvertTransactionToPaymentRequest;
+    repository
+        .convertToPayment(
+      store.state.credentials,
+      action.transactionId,
+      action.invoiceIds,
+    )
+        .then((TransactionEntity transactions) {
+      store.dispatch(ConvertTransactionToPaymentSuccess(transactions));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertTransactionToPaymentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _convertToExpense(TransactionRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConvertTransactionToExpenseRequest;
+    repository
+        .convertToExpense(
+      store.state.credentials,
+      action.transactionId,
+      action.vendorId,
+    )
+        .then((TransactionEntity transactions) {
+      store.dispatch(ConvertTransactionToExpenseSuccess(transactions));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertTransactionToExpenseFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
 Middleware<AppState> _saveTransaction(TransactionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTransactionRequest;
@@ -178,6 +264,7 @@ Middleware<AppState> _saveTransaction(TransactionRepository repository) {
 
       action.completer.complete(transaction);
     }).catchError((Object error) {
+      //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
       print(error);
       store.dispatch(SaveTransactionFailure(error));
       action.completer.completeError(error);

@@ -1278,14 +1278,27 @@ abstract class InvoiceEntity extends Object
       }
     } else {
       if (isPastDue && !isCancelledOrReversed) {
-        return kInvoiceStatusPastDue;
+        if (isInvoice) {
+          return kInvoiceStatusPastDue;
+        } else if (isQuote) {
+          return kQuoteStatusExpired;
+        }
       }
+
       if (isViewed &&
           isUnpaid &&
           !isPartial &&
           !isCancelledOrReversed &&
           !isApproved) {
-        return isInvoice ? kInvoiceStatusViewed : kQuoteStatusViewed;
+        if (isInvoice) {
+          return kInvoiceStatusViewed;
+        } else if (isQuote) {
+          return kQuoteStatusViewed;
+        } else if (isCredit) {
+          return kCreditStatusViewed;
+        } else if (isPurchaseOrder) {
+          return kPurchaseOrderStatusViewed;
+        }
       }
     }
 

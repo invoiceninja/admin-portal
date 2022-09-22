@@ -12,6 +12,8 @@ Serializer<TransactionItemResponse> _$transactionItemResponseSerializer =
     new _$TransactionItemResponseSerializer();
 Serializer<TransactionEntity> _$transactionEntitySerializer =
     new _$TransactionEntitySerializer();
+Serializer<TransactionStatusEntity> _$transactionStatusEntitySerializer =
+    new _$TransactionStatusEntitySerializer();
 
 class _$TransactionListResponseSerializer
     implements StructuredSerializer<TransactionListResponse> {
@@ -129,6 +131,9 @@ class _$TransactionEntitySerializer
       'category_type',
       serializers.serialize(object.category,
           specifiedType: const FullType(String)),
+      'baseType',
+      serializers.serialize(object.baseType,
+          specifiedType: const FullType(String)),
       'date',
       serializers.serialize(object.date, specifiedType: const FullType(String)),
       'bank_integration_id',
@@ -137,8 +142,11 @@ class _$TransactionEntitySerializer
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
+      'status_id',
+      serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
+      'invoice_ids',
+      serializers.serialize(object.invoiceIds,
           specifiedType: const FullType(String)),
       'expense_id',
       serializers.serialize(object.expenseId,
@@ -211,6 +219,10 @@ class _$TransactionEntitySerializer
           result.category = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'baseType':
+          result.baseType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'date':
           result.date = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -223,8 +235,12 @@ class _$TransactionEntitySerializer
           result.description = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_id':
-          result.invoiceId = serializers.deserialize(value,
+        case 'status_id':
+          result.statusId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invoice_ids':
+          result.invoiceIds = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'expense_id':
@@ -261,6 +277,57 @@ class _$TransactionEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TransactionStatusEntitySerializer
+    implements StructuredSerializer<TransactionStatusEntity> {
+  @override
+  final Iterable<Type> types = const [
+    TransactionStatusEntity,
+    _$TransactionStatusEntity
+  ];
+  @override
+  final String wireName = 'TransactionStatusEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, TransactionStatusEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  TransactionStatusEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TransactionStatusEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -468,13 +535,17 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String category;
   @override
+  final String baseType;
+  @override
   final String date;
   @override
   final String bankAccountId;
   @override
   final String description;
   @override
-  final String invoiceId;
+  final String statusId;
+  @override
+  final String invoiceIds;
   @override
   final String expenseId;
   @override
@@ -502,10 +573,12 @@ class _$TransactionEntity extends TransactionEntity {
       {this.amount,
       this.currencyId,
       this.category,
+      this.baseType,
       this.date,
       this.bankAccountId,
       this.description,
-      this.invoiceId,
+      this.statusId,
+      this.invoiceIds,
       this.expenseId,
       this.isChanged,
       this.createdAt,
@@ -522,13 +595,17 @@ class _$TransactionEntity extends TransactionEntity {
         currencyId, 'TransactionEntity', 'currencyId');
     BuiltValueNullFieldError.checkNotNull(
         category, 'TransactionEntity', 'category');
+    BuiltValueNullFieldError.checkNotNull(
+        baseType, 'TransactionEntity', 'baseType');
     BuiltValueNullFieldError.checkNotNull(date, 'TransactionEntity', 'date');
     BuiltValueNullFieldError.checkNotNull(
         bankAccountId, 'TransactionEntity', 'bankAccountId');
     BuiltValueNullFieldError.checkNotNull(
         description, 'TransactionEntity', 'description');
     BuiltValueNullFieldError.checkNotNull(
-        invoiceId, 'TransactionEntity', 'invoiceId');
+        statusId, 'TransactionEntity', 'statusId');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceIds, 'TransactionEntity', 'invoiceIds');
     BuiltValueNullFieldError.checkNotNull(
         expenseId, 'TransactionEntity', 'expenseId');
     BuiltValueNullFieldError.checkNotNull(
@@ -555,10 +632,12 @@ class _$TransactionEntity extends TransactionEntity {
         amount == other.amount &&
         currencyId == other.currencyId &&
         category == other.category &&
+        baseType == other.baseType &&
         date == other.date &&
         bankAccountId == other.bankAccountId &&
         description == other.description &&
-        invoiceId == other.invoiceId &&
+        statusId == other.statusId &&
+        invoiceIds == other.invoiceIds &&
         expenseId == other.expenseId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -589,16 +668,22 @@ class _$TransactionEntity extends TransactionEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    amount
+                                                                    $jc(
+                                                                        $jc(
+                                                                            0,
+                                                                            amount
+                                                                                .hashCode),
+                                                                        currencyId
+                                                                            .hashCode),
+                                                                    category
                                                                         .hashCode),
-                                                                currencyId
+                                                                baseType
                                                                     .hashCode),
-                                                            category.hashCode),
-                                                        date.hashCode),
-                                                    bankAccountId.hashCode),
-                                                description.hashCode),
-                                            invoiceId.hashCode),
+                                                            date.hashCode),
+                                                        bankAccountId.hashCode),
+                                                    description.hashCode),
+                                                statusId.hashCode),
+                                            invoiceIds.hashCode),
                                         expenseId.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -616,10 +701,12 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('amount', amount)
           ..add('currencyId', currencyId)
           ..add('category', category)
+          ..add('baseType', baseType)
           ..add('date', date)
           ..add('bankAccountId', bankAccountId)
           ..add('description', description)
-          ..add('invoiceId', invoiceId)
+          ..add('statusId', statusId)
+          ..add('invoiceIds', invoiceIds)
           ..add('expenseId', expenseId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -649,6 +736,10 @@ class TransactionEntityBuilder
   String get category => _$this._category;
   set category(String category) => _$this._category = category;
 
+  String _baseType;
+  String get baseType => _$this._baseType;
+  set baseType(String baseType) => _$this._baseType = baseType;
+
   String _date;
   String get date => _$this._date;
   set date(String date) => _$this._date = date;
@@ -662,9 +753,13 @@ class TransactionEntityBuilder
   String get description => _$this._description;
   set description(String description) => _$this._description = description;
 
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
+
+  String _invoiceIds;
+  String get invoiceIds => _$this._invoiceIds;
+  set invoiceIds(String invoiceIds) => _$this._invoiceIds = invoiceIds;
 
   String _expenseId;
   String get expenseId => _$this._expenseId;
@@ -714,10 +809,12 @@ class TransactionEntityBuilder
       _amount = $v.amount;
       _currencyId = $v.currencyId;
       _category = $v.category;
+      _baseType = $v.baseType;
       _date = $v.date;
       _bankAccountId = $v.bankAccountId;
       _description = $v.description;
-      _invoiceId = $v.invoiceId;
+      _statusId = $v.statusId;
+      _invoiceIds = $v.invoiceIds;
       _expenseId = $v.expenseId;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -753,25 +850,124 @@ class TransactionEntityBuilder
                 currencyId, 'TransactionEntity', 'currencyId'),
             category: BuiltValueNullFieldError.checkNotNull(
                 category, 'TransactionEntity', 'category'),
+            baseType: BuiltValueNullFieldError.checkNotNull(
+                baseType, 'TransactionEntity', 'baseType'),
             date: BuiltValueNullFieldError.checkNotNull(
                 date, 'TransactionEntity', 'date'),
             bankAccountId: BuiltValueNullFieldError.checkNotNull(
                 bankAccountId, 'TransactionEntity', 'bankAccountId'),
             description: BuiltValueNullFieldError.checkNotNull(
                 description, 'TransactionEntity', 'description'),
-            invoiceId: BuiltValueNullFieldError.checkNotNull(
-                invoiceId, 'TransactionEntity', 'invoiceId'),
-            expenseId: BuiltValueNullFieldError.checkNotNull(
-                expenseId, 'TransactionEntity', 'expenseId'),
+            statusId: BuiltValueNullFieldError.checkNotNull(
+                statusId, 'TransactionEntity', 'statusId'),
+            invoiceIds: BuiltValueNullFieldError.checkNotNull(
+                invoiceIds, 'TransactionEntity', 'invoiceIds'),
+            expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
             isChanged: isChanged,
-            createdAt:
-                BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TransactionEntity', 'updatedAt'),
             archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TransactionEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionEntity', 'id'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TransactionStatusEntity extends TransactionStatusEntity {
+  @override
+  final String id;
+  @override
+  final String name;
+
+  factory _$TransactionStatusEntity(
+          [void Function(TransactionStatusEntityBuilder) updates]) =>
+      (new TransactionStatusEntityBuilder()..update(updates)).build();
+
+  _$TransactionStatusEntity._({this.id, this.name}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(id, 'TransactionStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        name, 'TransactionStatusEntity', 'name');
+  }
+
+  @override
+  TransactionStatusEntity rebuild(
+          void Function(TransactionStatusEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TransactionStatusEntityBuilder toBuilder() =>
+      new TransactionStatusEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TransactionStatusEntity &&
+        id == other.id &&
+        name == other.name;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TransactionStatusEntity')
+          ..add('id', id)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class TransactionStatusEntityBuilder
+    implements
+        Builder<TransactionStatusEntity, TransactionStatusEntityBuilder> {
+  _$TransactionStatusEntity _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  TransactionStatusEntityBuilder();
+
+  TransactionStatusEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _name = $v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TransactionStatusEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$TransactionStatusEntity;
+  }
+
+  @override
+  void update(void Function(TransactionStatusEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TransactionStatusEntity build() {
+    final _$result = _$v ??
+        new _$TransactionStatusEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'TransactionStatusEntity', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'TransactionStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }

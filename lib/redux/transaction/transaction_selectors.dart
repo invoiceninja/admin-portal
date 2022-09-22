@@ -84,9 +84,15 @@ List<String> filteredTransactionsSelector(
     final transaction = transactionMap[transactionId];
     if (filterEntityId != null && transaction.id != filterEntityId) {
       return false;
-    } else {}
+    } else {
+      //
+    }
 
     if (!transaction.matchesStates(transactionListState.stateFilters)) {
+      return false;
+    }
+
+    if (!transaction.matchesStatuses(transactionListState.statusFilters)) {
       return false;
     }
 

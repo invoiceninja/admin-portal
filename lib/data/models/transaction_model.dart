@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -48,15 +49,17 @@ class TransactionFields {
   static const String description = 'description';
   static const String date = 'date';
   static const String amount = 'amount';
-  static const String currencyId = 'currency_id';
+  static const String deposit = 'deposit';
+  static const String withdrawal = 'withdrawal';
   static const String currency = 'currency';
   static const String category = 'category';
   static const String bankAccountId = 'bank_account_id';
   static const String bankAccount = 'bank_account';
-  static const String invoiceId = 'invoice_id';
-  static const String invoice = 'invoice';
+  static const String invoiceIds = 'invoice_ids';
+  static const String invoices = 'invoices';
   static const String expenseId = 'expense_id';
   static const String expense = 'expense';
+  static const String status = 'status';
 }
 
 abstract class TransactionEntity extends Object
@@ -75,15 +78,20 @@ abstract class TransactionEntity extends Object
       amount: 0,
       bankAccountId: '',
       category: '',
-      currencyId: '',
-      date: '',
+      currencyId: state?.company?.currencyId ?? kDefaultCurrencyId,
+      date: convertDateTimeToSqlDate(),
       description: '',
       expenseId: '',
-      invoiceId: '',
+      invoiceIds: '',
+      statusId: '',
+      baseType: TYPE_DEPOSIT,
     );
   }
 
   TransactionEntity._();
+
+  static const TYPE_DEPOSIT = 'deposit';
+  static const TYPE_WITHDRAWL = 'withdrawal';
 
   @override
   @memoized
@@ -97,6 +105,9 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'category_type')
   String get category;
 
+  @BuiltValueField(wireName: 'baseType')
+  String get baseType;
+
   String get date;
 
   @BuiltValueField(wireName: 'bank_integration_id')
@@ -104,8 +115,11 @@ abstract class TransactionEntity extends Object
 
   String get description;
 
-  @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
+
+  @BuiltValueField(wireName: 'invoice_ids')
+  String get invoiceIds;
 
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
@@ -115,6 +129,14 @@ abstract class TransactionEntity extends Object
 
   @override
   EntityType get entityType => EntityType.transaction;
+
+  bool get isDeposit => baseType == TYPE_DEPOSIT;
+
+  bool get isWithdrawal => baseType == TYPE_WITHDRAWL;
+
+  double get withdrawal => isWithdrawal ? amount : 0;
+
+  double get deposit => isDeposit ? amount : 0;
 
   @override
   List<EntityAction> getActions(
@@ -156,8 +178,13 @@ abstract class TransactionEntity extends Object
             .toLowerCase()
             .compareTo(transactionB.description.toLowerCase());
         break;
+      case TransactionFields.deposit:
+      case TransactionFields.withdrawal:
       case TransactionFields.amount:
         response = transactionA.amount.compareTo(transactionB.amount);
+        break;
+      case TransactionFields.status:
+        response = transactionA.statusId.compareTo(transactionB.statusId);
         break;
       case TransactionFields.category:
         response = transactionA.category
@@ -167,9 +194,11 @@ abstract class TransactionEntity extends Object
       case TransactionFields.date:
         response = transactionA.date.compareTo(transactionB.date);
         break;
-      case TransactionFields.invoice:
-        final invoiceA = invoiceMap[transactionA.invoiceId] ?? InvoiceEntity();
-        final invoiceB = invoiceMap[transactionB.invoiceId] ?? InvoiceEntity();
+      case TransactionFields.invoices:
+        final invoiceA =
+            invoiceMap[transactionA.firstInvoiceId] ?? InvoiceEntity();
+        final invoiceB =
+            invoiceMap[transactionB.firstInvoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName
             .toLowerCase()
             .compareTo(invoiceB.listDisplayName.toLowerCase());
@@ -206,6 +235,27 @@ abstract class TransactionEntity extends Object
   }
 
   @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == kTransactionStatusWithdrawal && isWithdrawal) {
+        return true;
+      } else if (status.id == kTransactionStatusDeposit && isDeposit) {
+        return true;
+      }
+
+      if (status.id == statusId || status.id == statusId) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @override
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
@@ -227,6 +277,14 @@ abstract class TransactionEntity extends Object
     );
   }
 
+  String get firstInvoiceId {
+    if (invoiceIds.isEmpty) {
+      return null;
+    }
+
+    return invoiceIds.split(',').first;
+  }
+
   @override
   String get listDisplayName => description;
 
@@ -238,9 +296,30 @@ abstract class TransactionEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(TransactionEntityBuilder builder) => builder
+    ..baseType = ''
     ..bankAccountId = ''
     ..currencyId = '';
 
   static Serializer<TransactionEntity> get serializer =>
       _$transactionEntitySerializer;
+}
+
+abstract class TransactionStatusEntity extends Object
+    with EntityStatus, SelectableEntity
+    implements Built<TransactionStatusEntity, TransactionStatusEntityBuilder> {
+  factory TransactionStatusEntity() {
+    return _$TransactionStatusEntity._(
+      id: '',
+      name: '',
+    );
+  }
+
+  TransactionStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  static Serializer<TransactionStatusEntity> get serializer =>
+      _$transactionStatusEntitySerializer;
 }

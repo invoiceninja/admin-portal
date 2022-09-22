@@ -16,6 +16,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'selected': 'Selected',
+      'converted_transaction': 'Successfully converted transaction',
+      'convert_to_payment': 'Convert to Payment',
+      'deposit': 'Deposit',
+      'withdrawal': 'Withdrawal',
+      'deposits': 'Deposits',
+      'withdrawals': 'Withdrawals',
+      'matched': 'Matched',
+      'unmatched': 'Unmatched',
+      'create_credit': 'Create Credit',
+      'update_credit': 'Update Credit',
+      'delete_credit': 'Delete Credit',
       'transaction': 'Transaction',
       'transactions': 'Transactions',
       'new_transaction': 'New Transaction',
@@ -87286,6 +87298,54 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchTransactions =>
       _localizedValues[localeCode]['search_transactions'] ??
       _localizedValues['en']['search_transactions'];
+
+  String get createCredit =>
+      _localizedValues[localeCode]['create_credit'] ??
+      _localizedValues['en']['create_credit'];
+
+  String get updateCredit =>
+      _localizedValues[localeCode]['update_credit'] ??
+      _localizedValues['en']['update_credit'];
+
+  String get deleteCredit =>
+      _localizedValues[localeCode]['delete_credit'] ??
+      _localizedValues['en']['delete_credit'];
+
+  String get matched =>
+      _localizedValues[localeCode]['matched'] ??
+      _localizedValues['en']['matched'];
+
+  String get unmatched =>
+      _localizedValues[localeCode]['unmatched'] ??
+      _localizedValues['en']['unmatched'];
+
+  String get deposit =>
+      _localizedValues[localeCode]['deposit'] ??
+      _localizedValues['en']['deposit'];
+
+  String get withdrawal =>
+      _localizedValues[localeCode]['withdrawal'] ??
+      _localizedValues['en']['withdrawal'];
+
+  String get deposits =>
+      _localizedValues[localeCode]['deposits'] ??
+      _localizedValues['en']['deposits'];
+
+  String get withdrawals =>
+      _localizedValues[localeCode]['withdrawals'] ??
+      _localizedValues['en']['withdrawals'];
+
+  String get convertToPayment =>
+      _localizedValues[localeCode]['convert_to_payment'] ??
+      _localizedValues['en']['convert_to_payment'];
+
+  String get convertedTransaction =>
+      _localizedValues[localeCode]['converted_transaction'] ??
+      _localizedValues['en']['converted_transaction'];
+
+  String get selected =>
+      _localizedValues[localeCode]['selected'] ??
+      _localizedValues['en']['selected'];
 
 // STARTER: lang field - do not remove comment
 

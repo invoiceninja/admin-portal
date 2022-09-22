@@ -49,7 +49,7 @@ class InvoiceStatusFields {
 }
 
 abstract class InvoiceStatusEntity extends Object
-    with EntityStatus
+    with EntityStatus, SelectableEntity
     implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
   factory InvoiceStatusEntity() {
     return _$InvoiceStatusEntity._(

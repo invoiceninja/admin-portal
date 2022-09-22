@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -30,6 +31,34 @@ class TransactionScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusDeposit
+          ..name = localization.deposits,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusWithdrawal
+          ..name = localization.withdrawals,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusUnmatched
+          ..name = localization.unmatched,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusMatched
+          ..name = localization.matched,
+      ),
+      TransactionStatusEntity().rebuild(
+        (b) => b
+          ..id = kTransactionStatusConverted
+          ..name = localization.converted,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.transaction,
       onHamburgerLongPress: () => store.dispatch(StartTransactionMultiselect()),
@@ -45,6 +74,10 @@ class TransactionScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTransactionsByState(state));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterTransactionsByStatus(status));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.transactionListState.isInMultiselect()) {
@@ -65,6 +98,7 @@ class TransactionScreen extends StatelessWidget {
         sortFields: [
           TransactionFields.date,
           TransactionFields.description,
+          TransactionFields.amount,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTransactionsByState(state));
@@ -84,6 +118,7 @@ class TransactionScreen extends StatelessWidget {
             store.dispatch(FilterTransactionsByCustom3(value)),
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTransactionsByCustom4(value)),
+        statuses: statuses,
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transaction)

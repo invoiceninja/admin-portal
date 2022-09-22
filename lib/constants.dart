@@ -254,6 +254,7 @@ const kQuoteStatuses = {
   kQuoteStatusViewed: 'viewed',
 };
 
+const String kCreditStatusViewed = '-1';
 const String kCreditStatusDraft = '1';
 const String kCreditStatusSent = '2';
 const String kCreditStatusPartial = '3';
@@ -264,8 +265,10 @@ const kCreditStatuses = {
   kCreditStatusSent: 'sent',
   kCreditStatusPartial: 'partial',
   kCreditStatusApplied: 'applied',
+  kCreditStatusViewed: 'viewed',
 };
 
+const String kPurchaseOrderStatusViewed = '-1';
 const String kPurchaseOrderStatusDraft = '1';
 const String kPurchaseOrderStatusSent = '2';
 const String kPurchaseOrderStatusAccepted = '3';
@@ -278,6 +281,7 @@ const kPurchaseOrderStatuses = {
   kPurchaseOrderStatusAccepted: 'accepted',
   kPurchaseOrderStatusReceived: 'received',
   kPurchaseOrderStatusCancelled: 'cancelled',
+  kPurchaseOrderStatusViewed: 'viewed',
 };
 
 const String kGatewayTypeCreditCard = '1';
@@ -415,6 +419,12 @@ const String kSwitchValueNo = 'no';
 const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';
+
+const kTaskStatuses = {
+  kTaskStatusLogged: 'logged',
+  kTaskStatusRunning: 'running',
+  kTaskStatusInvoiced: 'invoiced',
+};
 
 const String kMain = 'main';
 const String kSettings = 'settings';
@@ -582,6 +592,20 @@ const kExpenseStatuses = {
   kExpenseStatusInvoiced: 'invoiced',
   kExpenseStatusUnpaid: 'unpaid',
   kExpenseStatusPaid: 'paid',
+};
+
+const String kTransactionStatusUnmatched = '1';
+const String kTransactionStatusMatched = '2';
+const String kTransactionStatusConverted = '3';
+const String kTransactionStatusDeposit = '-1';
+const String kTransactionStatusWithdrawal = '-2';
+
+const kTransactionStatuses = {
+  kTransactionStatusUnmatched: 'unmatched',
+  kTransactionStatusMatched: 'matched',
+  kTransactionStatusConverted: 'converted',
+  kTransactionStatusDeposit: 'deposit',
+  kTransactionStatusWithdrawal: 'withdrawal',
 };
 
 const String kDefaultCurrencyId = '1';

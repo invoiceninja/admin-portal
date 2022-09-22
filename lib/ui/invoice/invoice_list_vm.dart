@@ -44,10 +44,13 @@ class InvoiceListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
               final invoice = viewModel.invoiceMap[invoiceId];
+              final invoiceListState = viewModel.state.invoiceListState;
 
               return InvoiceListItem(
                 filter: viewModel.filter,
                 invoice: invoice,
+                showCheck: invoiceListState.isInMultiselect(),
+                isChecked: invoiceListState.isSelected(invoice.id),
               );
             });
       },

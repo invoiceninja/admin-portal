@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen_vm.
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
@@ -500,6 +501,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.recurringExpense:
           child = RecurringExpenseEditScreen();
+          break;
+        case EntityType.transaction:
+          child = TransactionEditScreen();
           break;
       }
     } else {
