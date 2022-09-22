@@ -399,9 +399,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   TextEditingController _filterController;
   FocusNode _focusNode;
   List<VendorEntity> _vendors;
-  List<ExpenseCategoryEntity> _categories;
+  //List<ExpenseCategoryEntity> _categories;
   VendorEntity _selectedVendor;
-  ExpenseCategoryEntity _selectedCategory;
+  //ExpenseCategoryEntity _selectedCategory;
 
   @override
   void initState() {
@@ -462,7 +462,6 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final transaction = viewModel.transaction;
-    final state = viewModel.state;
 
     return Column(
       mainAxisSize: MainAxisSize.max,
