@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -396,20 +397,59 @@ class _MatchWithdrawals extends StatefulWidget {
 }
 
 class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
-  TextEditingController _filterController;
-  FocusNode _focusNode;
+  TextEditingController _vendorFilterController;
+  TextEditingController _categoryFilterController;
+  FocusNode _vendorFocusNode;
+  FocusNode _categoryFocusNode;
   List<VendorEntity> _vendors;
-  //List<ExpenseCategoryEntity> _categories;
+  List<ExpenseCategoryEntity> _categories;
   VendorEntity _selectedVendor;
-  //ExpenseCategoryEntity _selectedCategory;
+  ExpenseCategoryEntity _selectedCategory;
 
   @override
   void initState() {
     super.initState();
-    _filterController = TextEditingController();
-    _focusNode = FocusNode();
+
+    _vendorFilterController = TextEditingController();
+    _categoryFilterController = TextEditingController();
+
+    _vendorFocusNode = FocusNode();
+    _categoryFocusNode = FocusNode();
 
     updateVendorList();
+    updateCategoryList();
+  }
+
+  void updateCategoryList() {
+    final state = widget.viewModel.state;
+    final categoryState = state.expenseCategoryState;
+
+    _categories = categoryState.map.values.where((category) {
+      if (_selectedCategory != null) {
+        if (category.id != _selectedCategory?.id) {
+          return false;
+        }
+      }
+
+      if (category.isDeleted) {
+        return false;
+      }
+
+      final filter = _vendorFilterController.text;
+
+      if (filter.isNotEmpty) {
+        if (!category.matchesFilter(filter)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
+    _categories.sort((categoryA, categoryB) {
+      return categoryB.name
+          .toLowerCase()
+          .compareTo(categoryA.name.toLowerCase());
+    });
   }
 
   void updateVendorList() {
@@ -427,7 +467,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         return false;
       }
 
-      final filter = _filterController.text;
+      final filter = _vendorFilterController.text;
 
       if (filter.isNotEmpty) {
         if (!vendor.matchesFilter(filter)) {
@@ -438,22 +478,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _vendors.sort((vendorA, vendorB) {
-      /*
-      if (_selectedInvoices.contains(invoiceA)) {
-        return -1;
-      } else if (_selectedInvoices.contains(invoiceB)) {
-        return 1;
-      }
-      */
-
       return vendorB.name.toLowerCase().compareTo(vendorA.name.toLowerCase());
     });
   }
 
   @override
   void dispose() {
-    _filterController.dispose();
-    _focusNode.dispose();
+    _vendorFilterController.dispose();
+    _categoryFilterController.dispose();
+    _vendorFocusNode.dispose();
+    _categoryFocusNode.dispose();
     super.dispose();
   }
 
@@ -474,8 +508,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 padding: const EdgeInsets.only(
                     left: 18, top: 12, right: 10, bottom: 12),
                 child: SearchText(
-                  filterController: _filterController,
-                  focusNode: _focusNode,
+                  filterController: _vendorFilterController,
+                  focusNode: _vendorFocusNode,
                   onChanged: (value) {
                     setState(() {
                       updateVendorList();
@@ -483,7 +517,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   },
                   onCleared: () {
                     setState(() {
-                      _filterController.text = '';
+                      _vendorFilterController.text = '';
                       updateVendorList();
                     });
                   },
@@ -511,6 +545,56 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     _selectedVendor = vendor;
                   }
                   updateVendorList();
+                }),
+              );
+            },
+          ),
+        ),
+        ListDivider(),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 12, right: 10, bottom: 12),
+                child: SearchText(
+                  filterController: _categoryFilterController,
+                  focusNode: _categoryFocusNode,
+                  onChanged: (value) {
+                    setState(() {
+                      updateCategoryList();
+                    });
+                  },
+                  onCleared: () {
+                    setState(() {
+                      _categoryFilterController.text = '';
+                      updateCategoryList();
+                    });
+                  },
+                  placeholder: localization.search,
+                ),
+              ),
+            ),
+          ],
+        ),
+        ListDivider(),
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: _categories.length,
+            itemBuilder: (BuildContext context, int index) {
+              final category = _categories[index];
+              return ExpenseCategoryListItem(
+                expenseCategory: category,
+                showCheck: true,
+                isChecked: _selectedVendor?.id == category.id,
+                onTap: () => setState(() {
+                  if (_selectedVendor?.id == category.id) {
+                    _selectedCategory = null;
+                  } else {
+                    _selectedCategory = category;
+                  }
+                  updateCategoryList();
                 }),
               );
             },

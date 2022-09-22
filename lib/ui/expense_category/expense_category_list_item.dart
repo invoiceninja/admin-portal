@@ -14,22 +14,20 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ExpenseCategoryListItem extends StatelessWidget {
   const ExpenseCategoryListItem({
-    @required this.user,
     @required this.expenseCategory,
-    @required this.filter,
+    this.filter = '',
     this.onTap,
     this.onLongPress,
-    this.onCheckboxChanged,
     this.isChecked = false,
+    this.showCheck = false,
   });
 
-  final UserEntity user;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final ExpenseCategoryEntity expenseCategory;
   final String filter;
-  final Function(bool) onCheckboxChanged;
   final bool isChecked;
+  final bool showCheck;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,6 @@ class ExpenseCategoryListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final expenseCategoryUIState = uiState.expenseCategoryUIState;
-    final listUIState = expenseCategoryUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? expenseCategory.matchesFilterValue(filter)
@@ -49,24 +44,25 @@ class ExpenseCategoryListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: expenseCategory,
-      isSelected: expenseCategory.id ==
-          (uiState.isEditing
-              ? expenseCategoryUIState.editing.id
-              : expenseCategoryUIState.selectedId),
+      isSelected: !showCheck &&
+          expenseCategory.id ==
+              (uiState.isEditing
+                  ? expenseCategoryUIState.editing.id
+                  : expenseCategoryUIState.selectedId),
+      showCheckbox: showCheck,
       child: ListTile(
         onTap: () =>
             onTap != null ? onTap() : selectEntity(entity: expenseCategory),
         onLongPress: () => onLongPress != null
             ? onLongPress()
             : selectEntity(entity: expenseCategory, longPress: true),
-        leading: showCheckbox
+        leading: showCheck
             ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
+                  onChanged: (_) => null,
                 ),
               )
             : null,

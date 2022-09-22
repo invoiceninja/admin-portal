@@ -49,7 +49,6 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return ExpenseCategoryListItem(
-                user: viewModel.state.user,
                 filter: viewModel.filter,
                 expenseCategory: expenseCategory,
                 isChecked:
