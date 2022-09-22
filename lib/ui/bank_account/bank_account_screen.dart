@@ -66,7 +66,6 @@ class BankAccountScreen extends StatelessWidget {
     return ListScaffold(
       entityType: EntityType.bankAccount,
       onHamburgerLongPress: () => store.dispatch(StartBankAccountMultiselect()),
-      createLabel: localization.connect,
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.bankAccountListState.filterClearedAt}__'),
@@ -90,7 +89,7 @@ class BankAccountScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
                 Expanded(

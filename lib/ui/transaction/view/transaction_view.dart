@@ -259,7 +259,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               Expanded(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: Column(
                     children: [
                       Row(
@@ -352,7 +352,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ),
         if (_selectedInvoices.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
               '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
               textAlign: TextAlign.center,
@@ -362,9 +362,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 20,
+            left: 16,
             bottom: 18,
-            right: 20,
+            right: 16,
           ),
           child: AppButton(
             label: localization.convertToPayment,
@@ -605,9 +605,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 20,
+            left: 16,
             bottom: 16,
-            right: 20,
+            right: 16,
           ),
           child: AppButton(
             label: localization.convertToExpense,
