@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
@@ -76,6 +79,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
+  bool _showFilter = false;
 
   @override
   void initState() {
@@ -159,8 +163,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           children: [
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                padding: const EdgeInsets.only(
+                    left: 18, top: 12, right: 10, bottom: 12),
                 child: SearchText(
                   filterController: _filterController,
                   focusNode: _focusNode,
@@ -179,9 +183,78 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 ),
               ),
             ),
+            IconButton(
+              onPressed: () {
+                setState(() => _showFilter = !_showFilter);
+              },
+              color: _showFilter ? state.accentColor : null,
+              icon: Icon(Icons.filter_alt),
+              tooltip:
+                  state.prefState.enableTooltips ? localization.filter : '',
+            ),
+            SizedBox(width: 8),
           ],
         ),
         ListDivider(),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          height: _showFilter ? 138 : 0,
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: DecoratedFormField(
+                            label: localization.minLimit,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                          )),
+                          SizedBox(
+                            width: kTableColumnGap,
+                          ),
+                          Expanded(
+                              child: DecoratedFormField(
+                            label: localization.maxLimit,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                          )),
+                        ],
+                      ),
+                      Row(children: [
+                        Expanded(
+                          child: DatePicker(
+                            labelText: localization.startDate,
+                            onSelected: (date, _) {
+                              //
+                            },
+                            selectedDate: '',
+                          ),
+                        ),
+                        SizedBox(width: kTableColumnGap),
+                        Expanded(
+                          child: DatePicker(
+                            labelText: localization.endDate,
+                            onSelected: (date, _) {
+                              //
+                            },
+                            selectedDate: '',
+                          ),
+                        ),
+                      ]),
+                    ],
+                  ),
+                ),
+              ),
+              ListDivider(),
+            ],
+          ),
+        ),
         Expanded(
           child: ListView.separated(
             separatorBuilder: (context, index) => ListDivider(),
