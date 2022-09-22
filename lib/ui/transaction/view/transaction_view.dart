@@ -604,7 +604,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         Padding(
           padding: const EdgeInsets.only(
             left: 20,
-            bottom: 18,
+            bottom: 16,
             right: 20,
           ),
           child: AppButton(
