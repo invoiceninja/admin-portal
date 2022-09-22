@@ -79,7 +79,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
+
   bool _showFilter = false;
+  String _minLimit = '';
+  String _maxLimit = '';
+  String _startDate = '';
+  String _endDate = '';
 
   @override
   void initState() {
@@ -113,6 +118,32 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         if (!invoice.matchesFilter(filter) &&
             !client.matchesNameOrEmail(filter)) {
           return false;
+        }
+      }
+
+      if (_showFilter) {
+        if (_minLimit.isNotEmpty) {
+          if (invoice.balanceOrAmount < parseDouble(_minLimit)) {
+            return false;
+          }
+        }
+
+        if (_maxLimit.isNotEmpty) {
+          if (invoice.balanceOrAmount > parseDouble(_maxLimit)) {
+            return false;
+          }
+        }
+
+        if (_startDate.isNotEmpty) {
+          if (invoice.date.compareTo(_startDate) == -1) {
+            return false;
+          }
+        }
+
+        if (_endDate.isNotEmpty) {
+          if (invoice.date.compareTo(_endDate) == 1) {
+            return false;
+          }
         }
       }
 
@@ -212,6 +243,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           Expanded(
                               child: DecoratedFormField(
                             label: localization.minLimit,
+                            onChanged: (value) {
+                              setState(() {
+                                _minLimit = value;
+                                updateInvoiceList();
+                              });
+                            },
                             keyboardType:
                                 TextInputType.numberWithOptions(decimal: true),
                           )),
@@ -221,6 +258,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           Expanded(
                               child: DecoratedFormField(
                             label: localization.maxLimit,
+                            onChanged: (value) {
+                              setState(() {
+                                _maxLimit = value;
+                                updateInvoiceList();
+                              });
+                            },
                             keyboardType:
                                 TextInputType.numberWithOptions(decimal: true),
                           )),
@@ -231,9 +274,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           child: DatePicker(
                             labelText: localization.startDate,
                             onSelected: (date, _) {
-                              //
+                              setState(() {
+                                _startDate = date;
+                                updateInvoiceList();
+                              });
                             },
-                            selectedDate: '',
+                            selectedDate: _startDate,
                           ),
                         ),
                         SizedBox(width: kTableColumnGap),
@@ -241,9 +287,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           child: DatePicker(
                             labelText: localization.endDate,
                             onSelected: (date, _) {
-                              //
+                              setState(() {
+                                _endDate = date;
+                                updateInvoiceList();
+                              });
                             },
-                            selectedDate: '',
+                            selectedDate: _endDate,
                           ),
                         ),
                       ]),
