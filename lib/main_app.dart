@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
-import 'package:invoiceninja_flutter/ui/settings/bank_accounts_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -518,13 +517,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             TransactionViewScreen(),
                         TransactionEditScreen.route: (context) =>
                             TransactionEditScreen(),
-
                         BankAccountScreen.route: (context) =>
                             BankAccountScreenBuilder(),
                         BankAccountViewScreen.route: (context) =>
                             BankAccountViewScreen(),
-                        BankAccountSettingsScreen.route: (context) =>
-                            BankAccountSettingsScreen(),
                         PurchaseOrderScreen.route: (context) =>
                             PurchaseOrderScreenBuilder(),
                         PurchaseOrderViewScreen.route: (context) =>

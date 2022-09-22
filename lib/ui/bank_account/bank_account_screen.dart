@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_list_vm.dart';
@@ -87,7 +88,35 @@ class BankAccountScreen extends StatelessWidget {
           store.dispatch(StartBankAccountMultiselect());
         }
       },
-      body: BankAccountListBuilder(),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    label: localization.connectAccounts.toUpperCase(),
+                    onPressed: () => connectAccounts(context),
+                    iconData: Icons.link,
+                  ),
+                ),
+                /*
+                SizedBox(width: kGutterWidth),
+                Expanded(
+                  child: AppButton(
+                    label: localization.manageRules.toUpperCase(),
+                    onPressed: () => null,
+                    iconData: Icons.refresh,
+                  ),
+                ),
+                */
+              ],
+            ),
+          ),
+          Expanded(child: BankAccountListBuilder()),
+        ],
+      ),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.bankAccount,
         tableColumns: BankAccountPresenter.getAllTableFields(userCompany),
