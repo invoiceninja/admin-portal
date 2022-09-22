@@ -78,7 +78,7 @@ class ListScaffold extends StatelessWidget {
       );
     } else if (entityType != null && entityType != EntityType.settings) {
       leading = Padding(
-        padding: const EdgeInsets.only(left: 20, right: 12),
+        padding: const EdgeInsets.only(left: 16, right: 12),
         child: OutlinedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(

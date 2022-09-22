@@ -55,8 +55,8 @@ class TransactionFields {
   static const String category = 'category';
   static const String bankAccountId = 'bank_account_id';
   static const String bankAccount = 'bank_account';
-  static const String invoiceId = 'invoice_id';
-  static const String invoice = 'invoice';
+  static const String invoiceIds = 'invoice_ids';
+  static const String invoices = 'invoices';
   static const String expenseId = 'expense_id';
   static const String expense = 'expense';
   static const String status = 'status';
@@ -82,7 +82,7 @@ abstract class TransactionEntity extends Object
       date: convertDateTimeToSqlDate(),
       description: '',
       expenseId: '',
-      invoiceId: '',
+      invoiceIds: '',
       statusId: '',
       baseType: TYPE_DEPOSIT,
     );
@@ -118,8 +118,8 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
-  @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  @BuiltValueField(wireName: 'invoice_ids')
+  String get invoiceIds;
 
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
@@ -194,9 +194,11 @@ abstract class TransactionEntity extends Object
       case TransactionFields.date:
         response = transactionA.date.compareTo(transactionB.date);
         break;
-      case TransactionFields.invoice:
-        final invoiceA = invoiceMap[transactionA.invoiceId] ?? InvoiceEntity();
-        final invoiceB = invoiceMap[transactionB.invoiceId] ?? InvoiceEntity();
+      case TransactionFields.invoices:
+        final invoiceA =
+            invoiceMap[transactionA.firstInvoiceId] ?? InvoiceEntity();
+        final invoiceB =
+            invoiceMap[transactionB.firstInvoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName
             .toLowerCase()
             .compareTo(invoiceB.listDisplayName.toLowerCase());
@@ -273,6 +275,14 @@ abstract class TransactionEntity extends Object
       ],
       needle: filter,
     );
+  }
+
+  String get firstInvoiceId {
+    if (invoiceIds.isEmpty) {
+      return null;
+    }
+
+    return invoiceIds.split(',').first;
   }
 
   @override

@@ -594,11 +594,11 @@ const kExpenseStatuses = {
   kExpenseStatusPaid: 'paid',
 };
 
-const String kTransactionStatusUnmatched = '-1';
-const String kTransactionStatusMatched = '-2';
-const String kTransactionStatusConverted = '-3';
-const String kTransactionStatusDeposit = '-4';
-const String kTransactionStatusWithdrawal = '-5';
+const String kTransactionStatusUnmatched = '1';
+const String kTransactionStatusMatched = '2';
+const String kTransactionStatusConverted = '3';
+const String kTransactionStatusDeposit = '-1';
+const String kTransactionStatusWithdrawal = '-2';
 
 const kTransactionStatuses = {
   kTransactionStatusUnmatched: 'unmatched',

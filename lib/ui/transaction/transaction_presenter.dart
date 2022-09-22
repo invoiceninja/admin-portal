@@ -17,7 +17,7 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.date,
       TransactionFields.description,
       TransactionFields.category,
-      TransactionFields.invoice,
+      TransactionFields.invoices,
       TransactionFields.expense,
     ];
   }
@@ -75,8 +75,8 @@ class TransactionPresenter extends EntityPresenter {
             state.bankAccountState.get(transaction.bankAccountId);
         return LinkTextRelatedEntity(
             entity: bankAccount, relation: transaction);
-      case TransactionFields.invoice:
-        final invoice = state.invoiceState.get(transaction.invoiceId);
+      case TransactionFields.invoices:
+        final invoice = state.invoiceState.get(transaction.invoiceIds);
         return LinkTextRelatedEntity(entity: invoice, relation: transaction);
       case TransactionFields.expense:
         final expense = state.expenseState.get(transaction.expenseId);
