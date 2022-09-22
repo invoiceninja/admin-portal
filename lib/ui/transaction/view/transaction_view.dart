@@ -115,11 +115,13 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _invoices.sort((invoiceA, invoiceB) {
+      /*
       if (_selectedInvoices.contains(invoiceA)) {
         return -1;
       } else if (_selectedInvoices.contains(invoiceB)) {
         return 1;
       }
+      */
 
       return invoiceB.date.compareTo(invoiceA.date);
     });
@@ -176,7 +178,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   placeholder: localization.search,
                 ),
               ),
-            )
+            ),
           ],
         ),
         ListDivider(),
