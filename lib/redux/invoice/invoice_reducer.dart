@@ -155,7 +155,7 @@ InvoiceEntity _clearEditing(InvoiceEntity invoice, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity invoice, dynamic action) {
-  return action.invoices;
+  return action.invoice;
 }
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
@@ -388,9 +388,9 @@ InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
 }
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
-  final InvoiceEntity invoice = action.invoices;
+  final InvoiceEntity invoice = action.invoice;
   return invoiceState.rebuild((b) => b
-    ..map[action.invoices.id] = invoice
+    ..map[action.invoice.id] = invoice
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
