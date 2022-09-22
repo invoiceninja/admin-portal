@@ -435,7 +435,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         return false;
       }
 
-      final filter = _vendorFilterController.text;
+      final filter = _categoryFilterController.text;
 
       if (filter.isNotEmpty) {
         if (!category.matchesFilter(filter)) {
@@ -587,9 +587,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               return ExpenseCategoryListItem(
                 expenseCategory: category,
                 showCheck: true,
-                isChecked: _selectedVendor?.id == category.id,
+                isChecked: _selectedCategory?.id == category.id,
                 onTap: () => setState(() {
-                  if (_selectedVendor?.id == category.id) {
+                  if (_selectedCategory?.id == category.id) {
                     _selectedCategory = null;
                   } else {
                     _selectedCategory = category;
