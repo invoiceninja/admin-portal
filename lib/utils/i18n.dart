@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'search_category': 'Search 1 Category',
+      'search_categories': 'Search :count Categories',
       'min_amount': 'Min Amount',
       'max_amount': 'Max Amount',
       'selected': 'Selected',
@@ -87356,6 +87358,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get maxAmount =>
       _localizedValues[localeCode]['max_amount'] ??
       _localizedValues['en']['max_amount'];
+
+  String get searchCategory =>
+      _localizedValues[localeCode]['search_category'] ??
+      _localizedValues['en']['search_category'];
+
+  String get searchCategories =>
+      _localizedValues[localeCode]['search_categories'] ??
+      _localizedValues['en']['search_categories'];
 
 
 // STARTER: lang field - do not remove comment

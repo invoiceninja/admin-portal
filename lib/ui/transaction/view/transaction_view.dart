@@ -232,7 +232,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       updateInvoiceList();
                     });
                   },
-                  placeholder: localization.search,
+                  placeholder:
+                      localization.searchInvoices.replaceFirst(':count ', ''),
                 ),
               ),
             ),
@@ -508,21 +509,21 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 padding: const EdgeInsets.only(
                     left: 18, top: 12, right: 10, bottom: 12),
                 child: SearchText(
-                  filterController: _vendorFilterController,
-                  focusNode: _vendorFocusNode,
-                  onChanged: (value) {
-                    setState(() {
-                      updateVendorList();
-                    });
-                  },
-                  onCleared: () {
-                    setState(() {
-                      _vendorFilterController.text = '';
-                      updateVendorList();
-                    });
-                  },
-                  placeholder: localization.search,
-                ),
+                    filterController: _vendorFilterController,
+                    focusNode: _vendorFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateVendorList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _vendorFilterController.text = '';
+                        updateVendorList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchVendors.replaceFirst(':count ', '')),
               ),
             ),
           ],
@@ -558,21 +559,21 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 padding: const EdgeInsets.only(
                     left: 18, top: 12, right: 10, bottom: 12),
                 child: SearchText(
-                  filterController: _categoryFilterController,
-                  focusNode: _categoryFocusNode,
-                  onChanged: (value) {
-                    setState(() {
-                      updateCategoryList();
-                    });
-                  },
-                  onCleared: () {
-                    setState(() {
-                      _categoryFilterController.text = '';
-                      updateCategoryList();
-                    });
-                  },
-                  placeholder: localization.search,
-                ),
+                    filterController: _categoryFilterController,
+                    focusNode: _categoryFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateCategoryList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _categoryFilterController.text = '';
+                        updateCategoryList();
+                      });
+                    },
+                    placeholder: localization.searchCategories
+                        .replaceFirst(':count ', '')),
               ),
             ),
           ],
