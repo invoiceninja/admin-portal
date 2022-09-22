@@ -75,6 +75,7 @@ class _TransactionViewState extends State<TransactionView> {
 class _MatchDeposits extends StatefulWidget {
   const _MatchDeposits({
     Key key,
+    // ignore: unused_element
     @required this.viewModel,
   }) : super(key: key);
 
