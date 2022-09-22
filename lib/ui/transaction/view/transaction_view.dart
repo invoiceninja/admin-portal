@@ -525,7 +525,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
             right: 20,
           ),
           child: AppButton(
-            label: localization.convertToPayment,
+            label: localization.convertToExpense,
             onPressed: _selectedVendor == null
                 ? null
                 : () {
