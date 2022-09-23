@@ -30,7 +30,6 @@ class _BankAccountViewState extends State<BankAccountView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: bankAccount,
-      showEdit: false,
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(

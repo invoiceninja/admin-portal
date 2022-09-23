@@ -1356,6 +1356,14 @@ void editEntity({
               completer: completer,
             ));
             break;
+          case EntityType.bankAccount:
+            store.dispatch(EditBankAccount(
+              bankAccount: entity,
+              completer: completer,
+            ));
+            break;
+          default:
+            print('## Edit not handled for $entityType');
         }
       });
 }
