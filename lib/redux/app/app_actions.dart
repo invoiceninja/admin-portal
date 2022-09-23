@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
-import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
