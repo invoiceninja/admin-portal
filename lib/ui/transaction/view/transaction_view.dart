@@ -57,23 +57,25 @@ class _TransactionViewState extends State<TransactionView> {
           ),
           ListDivider(),
           if (transaction.isConverted) ...[
-            if (true)
+            if (false)
               ...transaction.invoiceIds
                   .split(',')
                   .map((invoiceId) => state.invoiceState.get(invoiceId))
                   .map((invoice) =>
                       EntityListTile(entity: invoice, isFilter: false))
             else ...[
-              EntitiesListTile(
-                  entity: state.vendorState.get(transaction.vendorId),
-                  isFilter: false),
-              EntitiesListTile(
-                  entity:
-                      state.expenseCategoryState.get(transaction.categoryId),
-                  isFilter: false),
-              EntitiesListTile(
-                  entity: state.expenseState.get(transaction.expenseId),
-                  isFilter: false),
+              EntityListTile(
+                entity: state.vendorState.get(transaction.vendorId),
+                isFilter: false,
+              ),
+              EntityListTile(
+                entity: state.expenseCategoryState.get(transaction.categoryId),
+                isFilter: false,
+              ),
+              EntityListTile(
+                entity: state.expenseState.get(transaction.expenseId),
+                isFilter: false,
+              ),
             ]
           ] else ...[
             if (false)

@@ -209,7 +209,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
             isMenu: true,
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              title: Text(widget.title),
+              title: Text(widget.title ?? ''),
               subtitle: Text((widget.subtitle ?? '').isEmpty
                   ? AppLocalization.of(context).none
                   : widget.subtitle),
