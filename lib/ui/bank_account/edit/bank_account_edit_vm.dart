@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:redux/redux.dart';
 
@@ -24,7 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 class BankAccountEditScreen extends StatelessWidget {
   const BankAccountEditScreen({Key key}) : super(key: key);
 
-  static const String route = '/bankAccount/edit';
+  static const String route = '/$kSettings/$kSettingsBankAccountsEdit';
 
   @override
   Widget build(BuildContext context) {

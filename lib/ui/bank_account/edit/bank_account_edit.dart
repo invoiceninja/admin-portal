@@ -2,18 +2,13 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class BankAccountEdit extends StatefulWidget {
@@ -83,7 +78,6 @@ class _BankAccountEditState extends State<BankAccountEdit> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final bankAccount = viewModel.bankAccount;
-    final company = viewModel.company;
 
     return EditScaffold(
       entity: bankAccount,
