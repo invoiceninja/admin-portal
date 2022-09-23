@@ -231,6 +231,7 @@ Middleware<AppState> _convertToExpense(TransactionRepository repository) {
       store.state.credentials,
       action.transactionId,
       action.vendorId,
+      action.categoryId,
     )
         .then((TransactionEntity transactions) {
       store.dispatch(ConvertTransactionToExpenseSuccess(transactions));

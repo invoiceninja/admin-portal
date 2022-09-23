@@ -81,13 +81,15 @@ class TransactionViewVM {
               invoiceIds),
         );
       },
-      onConvertToExpense: (context, transactionId, vendorId) {
+      onConvertToExpense: (context, transactionId, vendorId, categoryId) {
         store.dispatch(
           ConvertTransactionToExpenseRequest(
-              snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).convertedTransaction),
-              transactionId,
-              vendorId),
+            snackBarCompleter<Null>(
+                context, AppLocalization.of(context).convertedTransaction),
+            transactionId,
+            vendorId,
+            categoryId,
+          ),
         );
       },
     );
@@ -99,7 +101,7 @@ class TransactionViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String, List<String>) onConvertToPayment;
-  final Function(BuildContext, String, String) onConvertToExpense;
+  final Function(BuildContext, String, String, String) onConvertToExpense;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

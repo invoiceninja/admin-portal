@@ -223,11 +223,13 @@ class ConvertTransactionToExpenseRequest implements StartSaving {
     this.completer,
     this.transactionId,
     this.vendorId,
+    this.categoryId,
   );
 
   final Completer completer;
   final String transactionId;
   final String vendorId;
+  final String categoryId;
 }
 
 class ConvertTransactionToExpenseSuccess implements StopSaving, PersistData {

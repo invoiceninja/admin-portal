@@ -73,7 +73,11 @@ class TransactionRepository {
   }
 
   Future<TransactionEntity> convertToExpense(
-      Credentials credentials, String transactionId, String vendorId) async {
+    Credentials credentials,
+    String transactionId,
+    String vendorId,
+    String categoryId,
+  ) async {
     final url = credentials.url + '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
@@ -82,6 +86,7 @@ class TransactionRepository {
         {
           'id': transactionId,
           'vendor_id': vendorId,
+          'ninja_category_id': categoryId,
         },
       ),
     );
