@@ -508,6 +508,7 @@ const String kSettingsTaskStatusView = 'task_status/view';
 const String kSettingsTaskStatusEdit = 'task_status/edit';
 const String kSettingsBankAccounts = 'bank_accounts';
 const String kSettingsBankAccountsView = 'bank_accounts/view';
+const String kSettingsBankAccountsEdit = 'bank_accounts/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,

@@ -731,7 +731,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         state.staticState),
                                     onSelected: (vendor) => viewModel.onChanged(
                                       invoice.rebuild(
-                                          (b) => b.vendorId = vendor.id),
+                                          (b) => b.vendorId = vendor?.id ?? ''),
                                     ),
                                     onCreateNew: (completer, name) {
                                       store.dispatch(SaveVendorRequest(

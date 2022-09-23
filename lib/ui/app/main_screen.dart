@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
@@ -671,6 +672,12 @@ class EntityScreens extends StatelessWidget {
           case EntityType.design:
             leftFilterChild = DesignViewScreen(isFilter: true);
             break;
+          case EntityType.transaction:
+            leftFilterChild = TransactionViewScreen(isFilter: true);
+            break;
+          case EntityType.expense:
+            leftFilterChild = ExpenseViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');
@@ -963,6 +970,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsBankAccountsView:
         screen = BankAccountViewScreen();
+        break;
+      case kSettingsBankAccountsEdit:
+        screen = BankAccountEditScreen();
         break;
     }
 

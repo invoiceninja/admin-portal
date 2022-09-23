@@ -103,7 +103,6 @@ abstract class BankAccountEntity extends Object
     return name;
   }
 
-  /*
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
@@ -112,9 +111,14 @@ abstract class BankAccountEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
+    if (!isDeleted) {
+      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+    }
+
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
-  */
 
   int compareTo(
       BankAccountEntity bankAccount, String sortField, bool sortAscending) {

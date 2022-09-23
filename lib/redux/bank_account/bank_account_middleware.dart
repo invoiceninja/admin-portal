@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -16,6 +17,7 @@ List<Middleware<AppState>> createStoreBankAccountsMiddleware([
 ]) {
   final viewBankAccountList = _viewBankAccountList();
   final viewBankAccount = _viewBankAccount();
+  final editBankAccount = _editBankAccount();
   final loadBankAccounts = _loadBankAccounts(repository);
   final loadBankAccount = _loadBankAccount(repository);
   final saveBankAccount = _saveBankAccount(repository);
@@ -26,6 +28,7 @@ List<Middleware<AppState>> createStoreBankAccountsMiddleware([
   return [
     TypedMiddleware<AppState, ViewBankAccountList>(viewBankAccountList),
     TypedMiddleware<AppState, ViewBankAccount>(viewBankAccount),
+    TypedMiddleware<AppState, EditBankAccount>(editBankAccount),
     TypedMiddleware<AppState, LoadBankAccounts>(loadBankAccounts),
     TypedMiddleware<AppState, LoadBankAccount>(loadBankAccount),
     TypedMiddleware<AppState, SaveBankAccountRequest>(saveBankAccount),
@@ -33,6 +36,20 @@ List<Middleware<AppState>> createStoreBankAccountsMiddleware([
     TypedMiddleware<AppState, DeleteBankAccountsRequest>(deleteBankAccount),
     TypedMiddleware<AppState, RestoreBankAccountsRequest>(restoreBankAccount),
   ];
+}
+
+Middleware<AppState> _editBankAccount() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as EditBankAccount;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(BankAccountEditScreen.route));
+
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(BankAccountEditScreen.route);
+    }
+  };
 }
 
 Middleware<AppState> _viewBankAccount() {

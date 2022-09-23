@@ -313,6 +313,13 @@ void handleExpenseCategoryAction(BuildContext context,
             .rebuild((b) => b..categoryId = expenseCategory.id),
       );
       break;
+    case EntityAction.newTransaction:
+      createEntity(
+        context: context,
+        entity: TransactionEntity(state: state)
+            .rebuild((b) => b..categoryId = expenseCategory.id),
+      );
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseCategoryListState.isInMultiselect()) {
         store.dispatch(StartExpenseCategoryMultiselect());
@@ -339,7 +346,7 @@ void handleExpenseCategoryAction(BuildContext context,
       );
       break;
     default:
-      print('## ERROR: unhandled action $action');
+      print('## ERROR: unhandled action $action in expense_category_actions');
       break;
   }
 }

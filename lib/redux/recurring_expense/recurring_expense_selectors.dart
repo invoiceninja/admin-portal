@@ -230,6 +230,27 @@ EntityStats recurringExpenseStatsForVendor(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedTransactionStatsForVendor = memo2(
+    (String vendorId, BuiltMap<String, TransactionEntity> transactionMap) =>
+        transactionStatsForVendor(vendorId, transactionMap));
+
+EntityStats transactionStatsForVendor(
+    String vendorId, BuiltMap<String, TransactionEntity> transactionMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  transactionMap.forEach((transactionId, transaction) {
+    if (transaction.vendorId == vendorId) {
+      if (transaction.isActive) {
+        countActive++;
+      } else if (transaction.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedRecurringExpenseStatsForUser = memo2(
     (String userId, BuiltMap<String, ExpenseEntity> expenseMap) =>
         recurringExpenseStatsForUser(userId, expenseMap));

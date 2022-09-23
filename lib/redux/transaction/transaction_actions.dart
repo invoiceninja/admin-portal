@@ -368,6 +368,11 @@ void handleTransactionAction(
           snackBarCompleter<Null>(context, localization.deletedTransaction),
           transactionIds));
       break;
+    case EntityAction.convert:
+      store.dispatch(ConvertTransactionsRequest(
+          snackBarCompleter<Null>(context, localization.convertedTransactions),
+          transactionIds));
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.transactionListState.isInMultiselect()) {
         store.dispatch(StartTransactionMultiselect());

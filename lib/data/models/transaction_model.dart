@@ -150,6 +150,8 @@ abstract class TransactionEntity extends Object
 
   double get deposit => isDeposit ? amount : 0;
 
+  bool get isMatched => statusId == kTransactionStatusMatched;
+
   bool get isConverted => statusId == kTransactionStatusConverted;
 
   @override
@@ -160,11 +162,14 @@ abstract class TransactionEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted &&
-        !multiselect &&
-        includeEdit &&
-        userCompany.canEditEntity(this)) {
-      actions.add(EntityAction.edit);
+    if (!isDeleted && userCompany.canEditEntity(this)) {
+      if (!multiselect && includeEdit) {
+        actions.add(EntityAction.edit);
+      }
+
+      if (true || isMatched) {
+        actions.add(EntityAction.convert);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {

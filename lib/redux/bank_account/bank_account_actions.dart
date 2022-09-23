@@ -25,6 +25,24 @@ class ViewBankAccount implements PersistUI, PersistPrefs {
   final bool force;
 }
 
+class EditBankAccount implements PersistUI, PersistPrefs {
+  EditBankAccount({
+    @required this.bankAccount,
+    this.completer,
+    this.force = false,
+  });
+
+  final BankAccountEntity bankAccount;
+  final Completer completer;
+  final bool force;
+}
+
+class UpdateBankAccount implements PersistUI {
+  UpdateBankAccount(this.bankAccount);
+
+  final BankAccountEntity bankAccount;
+}
+
 class LoadBankAccount {
   LoadBankAccount({this.completer, this.bankAccountId});
 

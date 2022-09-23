@@ -10,16 +10,16 @@ var memoizedDropdownBankAccountList = memo5(
             BuiltList<String> bankAccountList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
-            String clientId) =>
-        dropdownBankAccountsSelector(
-            bankAccountMap, bankAccountList, staticState, userMap, clientId));
+            String bankAccountId) =>
+        dropdownBankAccountsSelector(bankAccountMap, bankAccountList,
+            staticState, userMap, bankAccountId));
 
 List<String> dropdownBankAccountsSelector(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     BuiltList<String> bankAccountList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
-    String clientId) {
+    String bankAccountId) {
   final list = bankAccountList.where((bankAccountId) {
     final bankAccount = bankAccountMap[bankAccountId];
     /*

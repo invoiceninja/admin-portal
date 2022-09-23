@@ -952,6 +952,14 @@ void createEntityByType({
               ),
             ));
             break;
+          case EntityType.bankAccount:
+            store.dispatch(EditBankAccount(
+              force: force,
+              bankAccount: BankAccountEntity(state: state),
+            ));
+            break;
+          default:
+            print('## Create by type not handled for $entityType');
         }
       });
 }
@@ -1347,6 +1355,14 @@ void editEntity({
               completer: completer,
             ));
             break;
+          case EntityType.bankAccount:
+            store.dispatch(EditBankAccount(
+              bankAccount: entity,
+              completer: completer,
+            ));
+            break;
+          default:
+            print('## Edit not handled for $entityType');
         }
       });
 }
