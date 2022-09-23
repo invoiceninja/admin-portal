@@ -109,6 +109,7 @@ class EntityType extends EnumClass {
       case EntityType.invoice:
         return [
           EntityType.payment,
+          EntityType.transaction,
         ];
       case EntityType.quote:
         return [
@@ -162,6 +163,7 @@ class EntityType extends EnumClass {
           EntityType.purchaseOrder,
           EntityType.expense,
           EntityType.recurringExpense,
+          EntityType.transaction,
         ];
       case EntityType.task:
         return [
@@ -172,10 +174,12 @@ class EntityType extends EnumClass {
           EntityType.vendor,
           EntityType.project,
           EntityType.expenseCategory,
+          EntityType.transaction,
         ];
       case EntityType.expenseCategory:
         return [
           EntityType.expense,
+          EntityType.transaction,
         ];
       case EntityType.recurringExpense:
         return [
@@ -187,6 +191,17 @@ class EntityType extends EnumClass {
           EntityType.quote,
           EntityType.credit,
           EntityType.recurringInvoice,
+        ];
+      case EntityType.bankAccount:
+        return [
+          EntityType.transaction,
+        ];
+      case EntityType.transaction:
+        return [
+          EntityType.invoice,
+          EntityType.expense,
+          EntityType.vendor,
+          EntityType.expenseCategory,
         ];
       default:
         return [];

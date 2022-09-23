@@ -72,7 +72,9 @@ class TransactionPresenter extends EntityPresenter {
       case TransactionFields.description:
         return Text(transaction.description);
       case TransactionFields.accountType:
-        return Text(toTitleCase(transaction.accountType));
+        final bankAccount =
+            state.bankAccountState.get(transaction.bankAccountId);
+        return Text(toTitleCase(bankAccount.type));
       case TransactionFields.bankAccount:
         final bankAccount =
             state.bankAccountState.get(transaction.bankAccountId);

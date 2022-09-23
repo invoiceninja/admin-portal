@@ -123,4 +123,3 @@ EntityStats expenseStatsForExpenseCategory(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-

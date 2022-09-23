@@ -90,14 +90,32 @@ List<String> filteredTransactionsSelector(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     ListUIState transactionListState) {
   final filterEntityId = selectionState.filterEntityId;
-  //final filterEntityType = selectionState.filterEntityType;
+  final filterEntityType = selectionState.filterEntityType;
 
   final list = transactionList.where((transactionId) {
     final transaction = transactionMap[transactionId];
-    if (filterEntityId != null && transaction.id != filterEntityId) {
-      return false;
-    } else {
-      //
+
+    if (transaction.id == selectionState.selectedId) {
+      return true;
+    }
+
+    if (filterEntityType != null) {
+      if (filterEntityType == EntityType.expenseCategory &&
+          transaction.categoryId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.vendor &&
+          transaction.vendorId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.invoice &&
+          !transaction.invoiceIds.split(',').contains(filterEntityId)) {
+        return false;
+      } else if (filterEntityType == EntityType.expense &&
+          transaction.expenseId != filterEntityId) {
+        return false;
+      } else if (filterEntityType == EntityType.bankAccount &&
+          transaction.bankAccountId != filterEntityId) {
+        return false;
+      }
     }
 
     if (!transaction.matchesStates(transactionListState.stateFilters)) {

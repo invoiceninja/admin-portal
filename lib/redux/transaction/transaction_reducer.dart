@@ -207,6 +207,11 @@ ListUIState _clearListMultiselect(
 
 final transactionsReducer = combineReducers<TransactionState>([
   TypedReducer<TransactionState, SaveTransactionSuccess>(_updateTransaction),
+  TypedReducer<TransactionState, ConvertTransactionToPaymentSuccess>(
+      _convertTransactionToPayment),
+  TypedReducer<TransactionState, ConvertTransactionToExpenseSuccess>(
+      _convertTransactionToExpense),
+  //TypedReducer<TransactionState, ConvertTransactionsSuccess>(_convertTransactions),
   TypedReducer<TransactionState, AddTransactionSuccess>(_addTransaction),
   TypedReducer<TransactionState, LoadTransactionsSuccess>(
       _setLoadedTransactions),
@@ -259,6 +264,26 @@ TransactionState _updateTransaction(
   return transactionState
       .rebuild((b) => b..map[action.transaction.id] = action.transaction);
 }
+
+TransactionState _convertTransactionToPayment(TransactionState transactionState,
+    ConvertTransactionToPaymentSuccess action) {
+  return transactionState
+      .rebuild((b) => b..map[action.transaction.id] = action.transaction);
+}
+
+TransactionState _convertTransactionToExpense(TransactionState transactionState,
+    ConvertTransactionToExpenseSuccess action) {
+  return transactionState
+      .rebuild((b) => b..map[action.transaction.id] = action.transaction);
+}
+
+/*
+TransactionState _convertTransactions(
+    TransactionState transactionState, ConvertTransactionsSuccess action) {
+  return transactionState
+      .rebuild((b) => b..map[action.transaction.id] = action.transaction);
+}
+*/
 
 TransactionState _setLoadedTransaction(
     TransactionState transactionState, LoadTransactionSuccess action) {
