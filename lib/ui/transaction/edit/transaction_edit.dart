@@ -76,6 +76,22 @@ class _TransactionEditState extends State<TransactionEdit> {
     });
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    /*
+          setState(() {
+            _autoValidate = !isValid;
+          });
+            */
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -88,21 +104,7 @@ class _TransactionEditState extends State<TransactionEdit> {
           ? localization.newTransaction
           : localization.editTransaction,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -141,6 +143,8 @@ class _TransactionEditState extends State<TransactionEdit> {
                           TextInputType.numberWithOptions(decimal: true),
                       controller: _amountController,
                       onSavePressed: viewModel.onSavePressed,
+                      validator: (value) =>
+                          value.isEmpty ? localization.pleaseEnterAValue : null,
                     ),
                     EntityDropdown(
                       entityType: EntityType.currency,
@@ -167,6 +171,10 @@ class _TransactionEditState extends State<TransactionEdit> {
                         transaction.rebuild(
                             (b) => b.bankAccountId = bankAccount?.id ?? ''),
                       ),
+                      validator: (dynamic value) =>
+                          transaction.bankAccountId.isEmpty
+                              ? localization.pleaseEnterAValue
+                              : null,
                     ),
                     DecoratedFormField(
                       label: localization.description,
