@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -150,6 +151,22 @@ class _TransactionEditState extends State<TransactionEdit> {
                       onSelected: (SelectableEntity currency) =>
                           viewModel.onChanged(viewModel.transaction.rebuild(
                               (b) => b..currencyId = currency?.id ?? '')),
+                    ),
+                    EntityDropdown(
+                      entityType: EntityType.bankAccount,
+                      entityId: transaction.bankAccountId,
+                      labelText: localization.bankAccount,
+                      entityList: memoizedDropdownBankAccountList(
+                        state.bankAccountState.map,
+                        state.bankAccountState.list,
+                        state.staticState,
+                        state.userState.map,
+                        transaction.bankAccountId,
+                      ),
+                      onSelected: (bankAccount) => viewModel.onChanged(
+                        transaction.rebuild(
+                            (b) => b.bankAccountId = bankAccount?.id ?? ''),
+                      ),
                     ),
                     DecoratedFormField(
                       label: localization.description,
