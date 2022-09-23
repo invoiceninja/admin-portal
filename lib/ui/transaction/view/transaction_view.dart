@@ -393,7 +393,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           ),
           child: AppButton(
             label: localization.convertToPayment,
-            onPressed: _selectedInvoices.isEmpty
+            onPressed: _selectedInvoices.isEmpty || viewModel.state.isSaving
                 ? null
                 : () {
                     final viewModel = widget.viewModel;
@@ -636,7 +636,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
           child: AppButton(
             label: localization.convertToExpense,
-            onPressed: _selectedVendor == null
+            onPressed: _selectedVendor == null || viewModel.state.isSaving
                 ? null
                 : () {
                     final viewModel = widget.viewModel;

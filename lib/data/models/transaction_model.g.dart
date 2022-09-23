@@ -134,9 +134,6 @@ class _$TransactionEntitySerializer
       'base_type',
       serializers.serialize(object.baseType,
           specifiedType: const FullType(String)),
-      'account_type',
-      serializers.serialize(object.accountType,
-          specifiedType: const FullType(String)),
       'date',
       serializers.serialize(object.date, specifiedType: const FullType(String)),
       'bank_integration_id',
@@ -233,10 +230,6 @@ class _$TransactionEntitySerializer
           break;
         case 'base_type':
           result.baseType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'account_type':
-          result.accountType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'date':
@@ -565,8 +558,6 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String baseType;
   @override
-  final String accountType;
-  @override
   final String date;
   @override
   final String bankAccountId;
@@ -610,7 +601,6 @@ class _$TransactionEntity extends TransactionEntity {
       this.currencyId,
       this.category,
       this.baseType,
-      this.accountType,
       this.date,
       this.bankAccountId,
       this.description,
@@ -637,8 +627,6 @@ class _$TransactionEntity extends TransactionEntity {
         category, 'TransactionEntity', 'category');
     BuiltValueNullFieldError.checkNotNull(
         baseType, 'TransactionEntity', 'baseType');
-    BuiltValueNullFieldError.checkNotNull(
-        accountType, 'TransactionEntity', 'accountType');
     BuiltValueNullFieldError.checkNotNull(date, 'TransactionEntity', 'date');
     BuiltValueNullFieldError.checkNotNull(
         bankAccountId, 'TransactionEntity', 'bankAccountId');
@@ -681,7 +669,6 @@ class _$TransactionEntity extends TransactionEntity {
         currencyId == other.currencyId &&
         category == other.category &&
         baseType == other.baseType &&
-        accountType == other.accountType &&
         date == other.date &&
         bankAccountId == other.bankAccountId &&
         description == other.description &&
@@ -722,9 +709,9 @@ class _$TransactionEntity extends TransactionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, amount.hashCode), currencyId.hashCode), category.hashCode),
-                                                                                baseType.hashCode),
-                                                                            accountType.hashCode),
+                                                                            $jc($jc($jc(0, amount.hashCode), currencyId.hashCode),
+                                                                                category.hashCode),
+                                                                            baseType.hashCode),
                                                                         date.hashCode),
                                                                     bankAccountId.hashCode),
                                                                 description.hashCode),
@@ -751,7 +738,6 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('currencyId', currencyId)
           ..add('category', category)
           ..add('baseType', baseType)
-          ..add('accountType', accountType)
           ..add('date', date)
           ..add('bankAccountId', bankAccountId)
           ..add('description', description)
@@ -792,10 +778,6 @@ class TransactionEntityBuilder
   String _baseType;
   String get baseType => _$this._baseType;
   set baseType(String baseType) => _$this._baseType = baseType;
-
-  String _accountType;
-  String get accountType => _$this._accountType;
-  set accountType(String accountType) => _$this._accountType = accountType;
 
   String _date;
   String get date => _$this._date;
@@ -879,7 +861,6 @@ class TransactionEntityBuilder
       _currencyId = $v.currencyId;
       _category = $v.category;
       _baseType = $v.baseType;
-      _accountType = $v.accountType;
       _date = $v.date;
       _bankAccountId = $v.bankAccountId;
       _description = $v.description;
@@ -925,17 +906,16 @@ class TransactionEntityBuilder
                 category, 'TransactionEntity', 'category'),
             baseType: BuiltValueNullFieldError.checkNotNull(
                 baseType, 'TransactionEntity', 'baseType'),
-            accountType: BuiltValueNullFieldError.checkNotNull(
-                accountType, 'TransactionEntity', 'accountType'),
             date: BuiltValueNullFieldError.checkNotNull(
                 date, 'TransactionEntity', 'date'),
             bankAccountId: BuiltValueNullFieldError.checkNotNull(
                 bankAccountId, 'TransactionEntity', 'bankAccountId'),
             description: BuiltValueNullFieldError.checkNotNull(
                 description, 'TransactionEntity', 'description'),
-            statusId:
-                BuiltValueNullFieldError.checkNotNull(statusId, 'TransactionEntity', 'statusId'),
-            categoryId: BuiltValueNullFieldError.checkNotNull(categoryId, 'TransactionEntity', 'categoryId'),
+            statusId: BuiltValueNullFieldError.checkNotNull(
+                statusId, 'TransactionEntity', 'statusId'),
+            categoryId: BuiltValueNullFieldError.checkNotNull(
+                categoryId, 'TransactionEntity', 'categoryId'),
             invoiceIds: BuiltValueNullFieldError.checkNotNull(invoiceIds, 'TransactionEntity', 'invoiceIds'),
             expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
             vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'TransactionEntity', 'vendorId'),

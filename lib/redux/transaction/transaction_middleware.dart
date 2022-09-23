@@ -205,8 +205,8 @@ Middleware<AppState> _convertToPayment(TransactionRepository repository) {
       action.transactionId,
       action.invoiceIds,
     )
-        .then((TransactionEntity transactions) {
-      store.dispatch(ConvertTransactionToPaymentSuccess(transactions));
+        .then((TransactionEntity transaction) {
+      store.dispatch(ConvertTransactionToPaymentSuccess(transaction));
       store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
@@ -233,8 +233,8 @@ Middleware<AppState> _convertToExpense(TransactionRepository repository) {
       action.vendorId,
       action.categoryId,
     )
-        .then((TransactionEntity transactions) {
-      store.dispatch(ConvertTransactionToExpenseSuccess(transactions));
+        .then((TransactionEntity transaction) {
+      store.dispatch(ConvertTransactionToExpenseSuccess(transaction));
       store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);

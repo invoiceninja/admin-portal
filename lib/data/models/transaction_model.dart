@@ -89,7 +89,6 @@ abstract class TransactionEntity extends Object
       statusId: '',
       baseType: TYPE_DEPOSIT,
       transactionId: 0,
-      accountType: '',
       categoryId: '',
     );
   }
@@ -113,9 +112,6 @@ abstract class TransactionEntity extends Object
 
   @BuiltValueField(wireName: 'base_type')
   String get baseType;
-
-  @BuiltValueField(wireName: 'account_type')
-  String get accountType;
 
   String get date;
 
@@ -209,7 +205,11 @@ abstract class TransactionEntity extends Object
         response = transactionA.date.compareTo(transactionB.date);
         break;
       case TransactionFields.accountType:
-        response = transactionA.accountType.compareTo(transactionB.accountType);
+        final bankAccountA =
+            bankAccountMap[transactionA.bankAccountId] ?? BankAccountEntity();
+        final bankAccountB =
+            bankAccountMap[transactionB.bankAccountId] ?? BankAccountEntity();
+        response = bankAccountA.type.compareTo(bankAccountB.type);
         break;
       case TransactionFields.invoices:
         final invoiceA =
