@@ -578,6 +578,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.transaction:
             child = TransactionViewScreen();
             break;
+          case EntityType.bankAccount:
+            child = BankAccountViewScreen();
+            break;
           default:
             print('## View screen not defined for $previewEntityType');
         }

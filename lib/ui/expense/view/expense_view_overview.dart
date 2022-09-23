@@ -39,6 +39,7 @@ class ExpenseOverview extends StatelessWidget {
     final invoice = state.invoiceState.get(expense.invoiceId);
     final project = state.projectState.get(expense.projectId);
     final category = state.expenseCategoryState.get(expense.categoryId);
+    final transaction = state.transactionState.get(expense.transactionId);
     final user = state.userState.get(expense.assignedUserId);
     final recurringExpense =
         state.recurringExpenseState.get(expense.recurringId);
@@ -194,6 +195,7 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(entity: user, isFilter: isFilter),
         EntityListTile(entity: invoice, isFilter: isFilter),
         EntityListTile(entity: purchaseOrder, isFilter: isFilter),
+        EntityListTile(entity: transaction, isFilter: isFilter),
         if ((expense.recurringId ?? '').isNotEmpty)
           EntityListTile(entity: recurringExpense, isFilter: isFilter),
         if (expense.isRecurring)
