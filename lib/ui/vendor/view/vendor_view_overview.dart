@@ -132,6 +132,16 @@ class VendorOverview extends StatelessWidget {
                     vendor.id, state.recurringExpenseState.map)
                 .present(localization.active, localization.archived),
           ),
+        if (company.isModuleEnabled(EntityType.transaction))
+          EntitiesListTile(
+            entity: vendor,
+            title: localization.transactions,
+            entityType: EntityType.transaction,
+            isFilter: isFilter,
+            subtitle: memoizedTransactionStatsForVendor(
+                    vendor.id, state.transactionState.map)
+                .present(localization.active, localization.archived),
+          ),
         if ((vendor.publicNotes ?? '').isNotEmpty) ...[
           IconMessage(vendor.publicNotes),
           ListDivider()
