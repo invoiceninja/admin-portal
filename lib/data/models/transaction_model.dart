@@ -167,7 +167,7 @@ abstract class TransactionEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (true || isMatched) {
+      if (isMatched) {
         actions.add(EntityAction.convert);
       }
     }

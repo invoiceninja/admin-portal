@@ -88,18 +88,21 @@ class BankAccountScreen extends StatelessWidget {
       },
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: AppButton(
-                    label: localization.connectAccounts.toUpperCase(),
-                    onPressed: () => connectAccounts(context),
-                    iconData: Icons.link,
+          if (state.isHosted)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      label: localization.connectAccounts.toUpperCase(),
+                      onPressed: state.isEnterprisePlan
+                          ? () => connectAccounts(context)
+                          : null,
+                      iconData: Icons.link,
+                    ),
                   ),
-                ),
-                /*
+                  /*
                 SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
@@ -109,9 +112,9 @@ class BankAccountScreen extends StatelessWidget {
                   ),
                 ),
                 */
-              ],
+                ],
+              ),
             ),
-          ),
           Expanded(child: BankAccountListBuilder()),
         ],
       ),
