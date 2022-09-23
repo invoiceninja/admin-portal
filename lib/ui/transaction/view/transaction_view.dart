@@ -54,18 +54,18 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
-          /*
           Expanded(
-              child: _MatchDeposits(
-            viewModel: viewModel,
+            child: _MatchDeposits(
+              viewModel: viewModel,
+            ),
           ),
-          ),
-          */
+          /*
           Expanded(
             child: _MatchWithdrawals(
               viewModel: viewModel,
             ),
           ),
+          */
         ],
       ),
     );
