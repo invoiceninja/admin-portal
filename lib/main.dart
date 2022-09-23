@@ -52,17 +52,14 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_middleware.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_middleware.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
+import 'package:window_manager/window_manager.dart';
+// STARTER: import - do not remove comment
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/transaction/transaction_middleware.dart';
-
-import 'package:invoiceninja_flutter/redux/bank_account/bank_account_middleware.dart';
-
-import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
-import 'package:window_manager/window_manager.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();

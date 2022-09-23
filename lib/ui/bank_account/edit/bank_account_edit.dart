@@ -1,0 +1,135 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+class BankAccountEdit extends StatefulWidget {
+  const BankAccountEdit({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final BankAccountEditVM viewModel;
+
+  @override
+  _BankAccountEditState createState() => _BankAccountEditState();
+}
+
+class _BankAccountEditState extends State<BankAccountEdit> {
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_bankAccountEdit');
+  final FocusScopeNode _focusNode = FocusScopeNode();
+  bool _autoValidate = false;
+
+  final _nameController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
+
+  @override
+  void didChangeDependencies() {
+    _controllers = [
+      _nameController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final bankAccount = widget.viewModel.bankAccount;
+    _nameController.text = bankAccount.name;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  void _onChanged() {
+    final bankAccount = widget.viewModel.bankAccount
+        .rebuild((b) => b..name = _nameController.text.trim());
+    if (bankAccount != widget.viewModel.bankAccount) {
+      _debouncer.run(() {
+        widget.viewModel.onChanged(bankAccount);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final bankAccount = viewModel.bankAccount;
+    final company = viewModel.company;
+
+    return EditScaffold(
+      entity: bankAccount,
+      title: viewModel.bankAccount.isNew
+          ? localization.newBankAccount
+          : localization.editBankAccount,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          _autoValidate = !isValid;
+        });
+
+        if (!isValid) {
+          return;
+        }
+
+        viewModel.onSavePressed(context);
+      },
+      body: AppForm(
+        formKey: _formKey,
+        focusNode: _focusNode,
+        child: ScrollableListView(
+          key: ValueKey(
+              '__bankAccount_${bankAccount.id}_${bankAccount.updatedAt}__'),
+          children: <Widget>[
+            FormCard(
+              isLast: true,
+              children: <Widget>[
+                DecoratedFormField(
+                  autofocus: true,
+                  label: localization.name,
+                  controller: _nameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterAName
+                      : null,
+                  autovalidate: _autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
+                  keyboardType: TextInputType.text,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -69,6 +69,10 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<BankAccountEntity>([
   TypedReducer<BankAccountEntity, SaveBankAccountSuccess>(_updateEditing),
   TypedReducer<BankAccountEntity, AddBankAccountSuccess>(_updateEditing),
+  TypedReducer<BankAccountEntity, EditBankAccount>(_updateEditing),
+  TypedReducer<BankAccountEntity, UpdateBankAccount>((bankAccount, action) {
+    return action.bankAccount.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<BankAccountEntity, RestoreBankAccountsSuccess>(
       (bankAccounts, action) {
     return action.bankAccounts[0];
