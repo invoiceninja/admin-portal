@@ -54,18 +54,18 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
-          Expanded(
-            child: _MatchDeposits(
-              viewModel: viewModel,
+          if (false)
+            Expanded(
+              child: _MatchDeposits(
+                viewModel: viewModel,
+              ),
+            )
+          else
+            Expanded(
+              child: _MatchWithdrawals(
+                viewModel: viewModel,
+              ),
             ),
-          ),
-          /*
-          Expanded(
-            child: _MatchWithdrawals(
-              viewModel: viewModel,
-            ),
-          ),
-          */
         ],
       ),
     );
@@ -448,9 +448,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _categories.sort((categoryA, categoryB) {
-      return categoryB.name
+      return categoryA.name
           .toLowerCase()
-          .compareTo(categoryA.name.toLowerCase());
+          .compareTo(categoryB.name.toLowerCase());
     });
   }
 
@@ -480,7 +480,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _vendors.sort((vendorA, vendorB) {
-      return vendorB.name.toLowerCase().compareTo(vendorA.name.toLowerCase());
+      return vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
     });
   }
 
@@ -619,6 +619,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       context,
                       transaction.id,
                       _selectedVendor.id,
+                      _selectedCategory?.id ?? '',
                     );
                   },
             iconData: getEntityActionIcon(EntityAction.convertToExpense),
