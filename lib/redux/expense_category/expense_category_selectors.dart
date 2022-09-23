@@ -123,3 +123,26 @@ EntityStats expenseStatsForExpenseCategory(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
+
+var memoizedTransactionStatsForExpenseCategory = memo2((String companyGatewayId,
+        BuiltMap<String, TransactionEntity> transactionMap) =>
+    transactionStatsForExpenseCategory(companyGatewayId, transactionMap));
+
+EntityStats transactionStatsForExpenseCategory(
+  String categoryId,
+  BuiltMap<String, TransactionEntity> transactionMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  transactionMap.forEach((transactionId, transaction) {
+    if (transaction.categoryId == categoryId) {
+      if (transaction.isActive) {
+        countActive++;
+      } else if (transaction.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
