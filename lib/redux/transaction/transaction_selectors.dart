@@ -5,12 +5,13 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownTransactionList = memo9(
+var memoizedDropdownTransactionList = memo10(
     (BuiltMap<String, TransactionEntity> transactionMap,
             BuiltList<String> transactionList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
             BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             BuiltMap<String, ExpenseEntity> expenseMap,
             BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
             BuiltMap<String, BankAccountEntity> bankAccountMap,
@@ -21,6 +22,7 @@ var memoizedDropdownTransactionList = memo9(
             staticState,
             userMap,
             invoiceMap,
+            vendorMap,
             expenseMap,
             expenseCategoryMap,
             bankAccountMap,
@@ -32,6 +34,7 @@ List<String> dropdownTransactionsSelector(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltMap<String, BankAccountEntity> bankAccountMap,
@@ -50,16 +53,17 @@ List<String> dropdownTransactionsSelector(
     final transactionA = transactionMap[transactionAId];
     final transactionB = transactionMap[transactionBId];
     return transactionA.compareTo(transactionB, TransactionFields.date, true,
-        invoiceMap, expenseMap, expenseCategoryMap, bankAccountMap);
+        vendorMap, invoiceMap, expenseMap, expenseCategoryMap, bankAccountMap);
   });
 
   return list;
 }
 
-var memoizedFilteredTransactionList = memo8((SelectionState selectionState,
+var memoizedFilteredTransactionList = memo9((SelectionState selectionState,
         BuiltMap<String, TransactionEntity> transactionMap,
         BuiltList<String> transactionList,
         BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, VendorEntity> vendorMap,
         BuiltMap<String, ExpenseEntity> expenseMap,
         BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
         BuiltMap<String, BankAccountEntity> bankAccountMap,
@@ -69,6 +73,7 @@ var memoizedFilteredTransactionList = memo8((SelectionState selectionState,
         transactionMap,
         transactionList,
         invoiceMap,
+        vendorMap,
         expenseMap,
         expenseCategoryMap,
         bankAccountMap,
@@ -79,6 +84,7 @@ List<String> filteredTransactionsSelector(
     BuiltMap<String, TransactionEntity> transactionMap,
     BuiltList<String> transactionList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltMap<String, BankAccountEntity> bankAccountMap,
@@ -112,6 +118,7 @@ List<String> filteredTransactionsSelector(
         transactionB,
         transactionListState.sortField,
         transactionListState.sortAscending,
+        vendorMap,
         invoiceMap,
         expenseMap,
         expenseCategoryMap,

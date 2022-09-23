@@ -86,7 +86,7 @@ class TransactionRepository {
         {
           'id': transactionId,
           'vendor_id': vendorId,
-          'ninja_category_id': categoryId,
+          'category_id': categoryId,
         },
       ),
     );
