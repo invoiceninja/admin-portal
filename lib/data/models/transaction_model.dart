@@ -62,6 +62,7 @@ class TransactionFields {
   static const String expense = 'expense';
   static const String status = 'status';
   static const String accountType = 'account_type';
+  static const String defaultCategory = 'default_category';
 }
 
 abstract class TransactionEntity extends Object
@@ -203,6 +204,11 @@ abstract class TransactionEntity extends Object
         break;
       case TransactionFields.date:
         response = transactionA.date.compareTo(transactionB.date);
+        break;
+      case TransactionFields.defaultCategory:
+        response = transactionA.category
+            .toLowerCase()
+            .compareTo(transactionB.category.toLowerCase());
         break;
       case TransactionFields.accountType:
         final bankAccountA =

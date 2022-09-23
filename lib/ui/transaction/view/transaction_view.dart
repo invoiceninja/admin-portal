@@ -528,103 +528,124 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
+        Expanded(
+            child: Column(
           children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 18, top: 12, right: 10, bottom: 12),
+                    child: SearchText(
+                        filterController: _vendorFilterController,
+                        focusNode: _vendorFocusNode,
+                        onChanged: (value) {
+                          setState(() {
+                            updateVendorList();
+                          });
+                        },
+                        onCleared: () {
+                          setState(() {
+                            _vendorFilterController.text = '';
+                            updateVendorList();
+                          });
+                        },
+                        placeholder: localization.searchVendors
+                            .replaceFirst(':count ', '')),
+                  ),
+                ),
+              ],
+            ),
+            ListDivider(),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 18, top: 12, right: 10, bottom: 12),
-                child: SearchText(
-                    filterController: _vendorFilterController,
-                    focusNode: _vendorFocusNode,
-                    onChanged: (value) {
-                      setState(() {
-                        updateVendorList();
-                      });
-                    },
-                    onCleared: () {
-                      setState(() {
-                        _vendorFilterController.text = '';
-                        updateVendorList();
-                      });
-                    },
-                    placeholder:
-                        localization.searchVendors.replaceFirst(':count ', '')),
+              child: ListView.separated(
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _vendors.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final vendor = _vendors[index];
+                  return VendorListItem(
+                    vendor: vendor,
+                    showCheck: true,
+                    isChecked: _selectedVendor?.id == vendor.id,
+                    onTap: () => setState(() {
+                      if (_selectedVendor?.id == vendor.id) {
+                        _selectedVendor = null;
+                      } else {
+                        _selectedVendor = vendor;
+                      }
+                      updateVendorList();
+                    }),
+                  );
+                },
               ),
             ),
           ],
-        ),
+        )),
         ListDivider(),
         Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: _vendors.length,
-            itemBuilder: (BuildContext context, int index) {
-              final vendor = _vendors[index];
-              return VendorListItem(
-                vendor: vendor,
-                showCheck: true,
-                isChecked: _selectedVendor?.id == vendor.id,
-                onTap: () => setState(() {
-                  if (_selectedVendor?.id == vendor.id) {
-                    _selectedVendor = null;
-                  } else {
-                    _selectedVendor = vendor;
-                  }
-                  updateVendorList();
-                }),
-              );
-            },
-          ),
-        ),
-        ListDivider(),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 18, top: 12, right: 10, bottom: 12),
-                child: SearchText(
-                    filterController: _categoryFilterController,
-                    focusNode: _categoryFocusNode,
-                    onChanged: (value) {
-                      setState(() {
-                        updateCategoryList();
-                      });
-                    },
-                    onCleared: () {
-                      setState(() {
-                        _categoryFilterController.text = '';
-                        updateCategoryList();
-                      });
-                    },
-                    placeholder: localization.searchCategories
-                        .replaceFirst(':count ', '')),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 18, top: 12, right: 10, bottom: 12),
+                      child: SearchText(
+                          filterController: _categoryFilterController,
+                          focusNode: _categoryFocusNode,
+                          onChanged: (value) {
+                            setState(() {
+                              updateCategoryList();
+                            });
+                          },
+                          onCleared: () {
+                            setState(() {
+                              _categoryFilterController.text = '';
+                              updateCategoryList();
+                            });
+                          },
+                          placeholder: localization.searchCategories
+                              .replaceFirst(':count ', '')),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        ListDivider(),
-        Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: _categories.length,
-            itemBuilder: (BuildContext context, int index) {
-              final category = _categories[index];
-              return ExpenseCategoryListItem(
-                expenseCategory: category,
-                showCheck: true,
-                isChecked: _selectedCategory?.id == category.id,
-                onTap: () => setState(() {
-                  if (_selectedCategory?.id == category.id) {
-                    _selectedCategory = null;
-                  } else {
-                    _selectedCategory = category;
-                  }
-                  updateCategoryList();
-                }),
-              );
-            },
+              ListDivider(),
+              Expanded(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => ListDivider(),
+                  itemCount: _categories.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final category = _categories[index];
+                    return ExpenseCategoryListItem(
+                      expenseCategory: category,
+                      showCheck: true,
+                      isChecked: _selectedCategory?.id == category.id,
+                      onTap: () => setState(() {
+                        if (_selectedCategory?.id == category.id) {
+                          _selectedCategory = null;
+                        } else {
+                          _selectedCategory = category;
+                        }
+                        updateCategoryList();
+                      }),
+                    );
+                  },
+                ),
+              ),
+              if (transaction.category.isNotEmpty && _selectedCategory == null)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Text(
+                    '${localization.defaultCategory}: ${transaction.category}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+            ],
           ),
         ),
         ListDivider(),

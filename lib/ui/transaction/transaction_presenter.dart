@@ -32,6 +32,7 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.amount,
       TransactionFields.vendor,
       TransactionFields.category,
+      TransactionFields.defaultCategory,
     ];
   }
 
@@ -45,6 +46,8 @@ class TransactionPresenter extends EntityPresenter {
         return EntityStatusChip(entity: transaction, showState: true);
       case TransactionFields.date:
         return Text(formatDate(transaction.date, context));
+      case TransactionFields.defaultCategory:
+        return Text(transaction.category);
       case TransactionFields.amount:
         return Align(
           alignment: Alignment.centerRight,
