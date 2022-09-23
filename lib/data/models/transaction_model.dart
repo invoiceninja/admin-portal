@@ -85,13 +85,14 @@ abstract class TransactionEntity extends Object
       invoiceIds: '',
       statusId: '',
       baseType: TYPE_DEPOSIT,
+      transactionId: 0,
     );
   }
 
   TransactionEntity._();
 
-  static const TYPE_DEPOSIT = 'deposit';
-  static const TYPE_WITHDRAWL = 'withdrawal';
+  static const TYPE_DEPOSIT = 'CREDIT';
+  static const TYPE_WITHDRAWL = 'DEBIT';
 
   @override
   @memoized
@@ -105,7 +106,7 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'category_type')
   String get category;
 
-  @BuiltValueField(wireName: 'baseType')
+  @BuiltValueField(wireName: 'base_type')
   String get baseType;
 
   String get date;
@@ -118,11 +119,17 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
+  //@BuiltValueField(wireName: 'ninja_category_id')
+  //String get categoryId;
+
   @BuiltValueField(wireName: 'invoice_ids')
   String get invoiceIds;
 
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
+
+  @BuiltValueField(wireName: 'transaction_id')
+  int get transactionId;
 
   //@BuiltValueField(wireName: 'is_matched')
   //bool get isMached;
@@ -226,9 +233,7 @@ abstract class TransactionEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return transactionA.description
-          .toLowerCase()
-          .compareTo(transactionB.description.toLowerCase());
+      return transactionA.transactionId.compareTo(transactionB.transactionId);
     } else {
       return response;
     }

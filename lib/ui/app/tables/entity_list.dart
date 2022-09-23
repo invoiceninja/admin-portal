@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -329,148 +328,143 @@ class _EntityListState extends State<EntityList> {
         onRefresh: () => widget.onRefreshed(context),
         child: Column(
           children: [
-            AppBorder(
-              isTop: true,
-              child: AnimatedContainer(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                color: Theme.of(context).cardColor,
-                height: isInMultiselect ? kTopBottomBarHeight : 0,
+            AnimatedContainer(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              color: Theme.of(context).cardColor,
+              height: isInMultiselect ? kTopBottomBarHeight : 0,
+              duration: Duration(milliseconds: kDefaultAnimationDuration),
+              curve: Curves.easeInOutCubic,
+              child: AnimatedOpacity(
+                opacity: isInMultiselect ? 1 : 0,
                 duration: Duration(milliseconds: kDefaultAnimationDuration),
                 curve: Curves.easeInOutCubic,
-                child: AnimatedOpacity(
-                  opacity: isInMultiselect ? 1 : 0,
-                  duration: Duration(milliseconds: kDefaultAnimationDuration),
-                  curve: Curves.easeInOutCubic,
-                  child: Row(
-                    children: [
-                      if (state.prefState.moduleLayout == ModuleLayout.list ||
-                          entityType.isSetting)
-                        Checkbox(
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) {
-                            final endIndex = min(
-                                entityList.length, kMaxEntitiesPerBulkAction);
-                            final entities = entityList
-                                .sublist(0, endIndex)
-                                .map<BaseEntity>(
-                                    (entityId) => entityMap[entityId])
-                                .toList();
-                            handleEntitiesActions(
-                                entities, EntityAction.toggleMultiselect);
-                          },
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          value: entityList.length ==
-                              (listUIState.selectedIds ?? <String>[]).length,
-                        ),
-                      if (isDesktop(context)) ...[
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Text(isList
-                              ? '($countSelected)'
-                              : localization.countSelected
-                                  .replaceFirst(':count', '$countSelected')),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: OverflowView.flexible(
-                                spacing: 8,
-                                children: actions
-                                    .map(
-                                      (action) => OutlinedButton(
-                                        child: IconText(
-                                          icon: getEntityActionIcon(action),
-                                          text: localization.lookup('$action'),
-                                        ),
-                                        onPressed: () {
-                                          handleEntitiesActions(
-                                              entities, action);
-                                          widget.onClearMultiselect();
-                                        },
+                child: Row(
+                  children: [
+                    if (state.prefState.moduleLayout == ModuleLayout.list ||
+                        entityType.isSetting)
+                      Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onChanged: (value) {
+                          final endIndex =
+                              min(entityList.length, kMaxEntitiesPerBulkAction);
+                          final entities = entityList
+                              .sublist(0, endIndex)
+                              .map<BaseEntity>(
+                                  (entityId) => entityMap[entityId])
+                              .toList();
+                          handleEntitiesActions(
+                              entities, EntityAction.toggleMultiselect);
+                        },
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        value: entityList.length ==
+                            (listUIState.selectedIds ?? <String>[]).length,
+                      ),
+                    if (isDesktop(context)) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(isList
+                            ? '($countSelected)'
+                            : localization.countSelected
+                                .replaceFirst(':count', '$countSelected')),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: OverflowView.flexible(
+                              spacing: 8,
+                              children: actions
+                                  .map(
+                                    (action) => OutlinedButton(
+                                      child: IconText(
+                                        icon: getEntityActionIcon(action),
+                                        text: localization.lookup('$action'),
                                       ),
-                                    )
-                                    .toList(),
-                                builder: (context, remaining) {
-                                  return PopupMenuButton<EntityAction>(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            localization.more,
-                                            style: TextStyle(
-                                                color: state.prefState
-                                                        .enableDarkMode
-                                                    ? Colors.white
-                                                    : Colors.black),
-                                          ),
-                                          SizedBox(width: 4),
-                                          Icon(Icons.arrow_drop_down,
+                                      onPressed: () {
+                                        handleEntitiesActions(entities, action);
+                                        widget.onClearMultiselect();
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                              builder: (context, remaining) {
+                                return PopupMenuButton<EntityAction>(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          localization.more,
+                                          style: TextStyle(
                                               color:
                                                   state.prefState.enableDarkMode
                                                       ? Colors.white
                                                       : Colors.black),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(width: 4),
+                                        Icon(Icons.arrow_drop_down,
+                                            color:
+                                                state.prefState.enableDarkMode
+                                                    ? Colors.white
+                                                    : Colors.black),
+                                      ],
                                     ),
-                                    onSelected: (EntityAction action) {
-                                      handleEntitiesActions(entities, action);
-                                      widget.onClearMultiselect();
-                                    },
-                                    itemBuilder: (BuildContext context) {
-                                      return actions
-                                          .toList()
-                                          .sublist(actions.length - remaining)
-                                          .map((action) {
-                                        return PopupMenuItem<EntityAction>(
-                                          value: action,
-                                          child: Row(
-                                            children: <Widget>[
-                                              Icon(getEntityActionIcon(action),
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary),
-                                              SizedBox(width: 16.0),
-                                              Text(AppLocalization.of(context)
-                                                      .lookup(
-                                                          action.toString()) ??
-                                                  ''),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList();
-                                    },
-                                  );
-                                }),
-                          ),
-                        )
-                      ] else ...[
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: Text(localization.countSelected
-                              .replaceFirst(':count', '$countSelected')),
+                                  ),
+                                  onSelected: (EntityAction action) {
+                                    handleEntitiesActions(entities, action);
+                                    widget.onClearMultiselect();
+                                  },
+                                  itemBuilder: (BuildContext context) {
+                                    return actions
+                                        .toList()
+                                        .sublist(actions.length - remaining)
+                                        .map((action) {
+                                      return PopupMenuItem<EntityAction>(
+                                        value: action,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Icon(getEntityActionIcon(action),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary),
+                                            SizedBox(width: 16.0),
+                                            Text(AppLocalization.of(context)
+                                                    .lookup(
+                                                        action.toString()) ??
+                                                ''),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList();
+                                  },
+                                );
+                              }),
                         ),
-                        SaveCancelButtons(
-                          isHeader: false,
-                          saveLabel: localization.actions,
-                          isEnabled: entities.isNotEmpty,
-                          isCancelEnabled: true,
-                          onSavePressed: (context) async {
-                            await showEntityActionsDialog(
-                              entities: entities,
-                              multiselect: true,
-                              completer: Completer<Null>()
-                                ..future.then<dynamic>(
-                                    (_) => widget.onClearMultiselect()),
-                            );
-                          },
-                          onCancelPressed: (_) => widget.onClearMultiselect(),
-                        ),
-                      ]
-                    ],
-                  ),
+                      )
+                    ] else ...[
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Text(localization.countSelected
+                            .replaceFirst(':count', '$countSelected')),
+                      ),
+                      SaveCancelButtons(
+                        isHeader: false,
+                        saveLabel: localization.actions,
+                        isEnabled: entities.isNotEmpty,
+                        isCancelEnabled: true,
+                        onSavePressed: (context) async {
+                          await showEntityActionsDialog(
+                            entities: entities,
+                            multiselect: true,
+                            completer: Completer<Null>()
+                              ..future.then<dynamic>(
+                                  (_) => widget.onClearMultiselect()),
+                          );
+                        },
+                        onCancelPressed: (_) => widget.onClearMultiselect(),
+                      ),
+                    ]
+                  ],
                 ),
               ),
             ),

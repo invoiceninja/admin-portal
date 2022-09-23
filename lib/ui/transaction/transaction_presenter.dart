@@ -76,11 +76,13 @@ class TransactionPresenter extends EntityPresenter {
         return LinkTextRelatedEntity(
             entity: bankAccount, relation: transaction);
       case TransactionFields.invoices:
-        final invoice = state.invoiceState.get(transaction.invoiceIds);
-        return LinkTextRelatedEntity(entity: invoice, relation: transaction);
+        return Text(transaction.invoiceIds);
+      //final invoice = state.invoiceState.get(transaction.invoiceIds);
+      //return LinkTextRelatedEntity(entity: invoice, relation: transaction);
       case TransactionFields.expense:
-        final expense = state.expenseState.get(transaction.expenseId);
-        return LinkTextRelatedEntity(entity: expense, relation: transaction);
+        return Text(transaction.expenseId);
+      //final expense = state.expenseState.get(transaction.expenseId);
+      //return LinkTextRelatedEntity(entity: expense, relation: transaction);
       case TransactionFields.currency:
         return Text(state.bankAccountState.get(transaction.bankAccountId).name);
     }

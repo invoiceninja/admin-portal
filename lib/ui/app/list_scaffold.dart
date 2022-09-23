@@ -31,8 +31,6 @@ class ListScaffold extends StatelessWidget {
     this.onHamburgerLongPress,
     this.onCancelSettingsSection,
     this.onCancelSettingsIndex = 0,
-    this.createLabel,
-    this.onCreatePressed,
   });
 
   final EntityType entityType;
@@ -46,8 +44,6 @@ class ListScaffold extends StatelessWidget {
   final String onCancelSettingsSection;
   final int onCancelSettingsIndex;
   final Function onCheckboxPressed;
-  final String createLabel;
-  final Function onCreatePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -78,20 +74,16 @@ class ListScaffold extends StatelessWidget {
       );
     } else if (entityType != null && entityType != EntityType.settings) {
       leading = Padding(
-        padding: const EdgeInsets.only(left: 16, right: 12),
+        padding: const EdgeInsets.only(left: 16, right: 14),
         child: OutlinedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
                   state.prefState.colorThemeModel.colorSuccess)),
           onPressed: () {
-            if (onCreatePressed != null) {
-              onCreatePressed();
-            } else {
-              createEntityByType(entityType: entityType, context: context);
-            }
+            createEntityByType(entityType: entityType, context: context);
           },
           child: IconText(
-            text: createLabel ?? localization.create,
+            text: localization.create,
             icon: Icons.add,
             style: TextStyle(color: Colors.white),
           ),

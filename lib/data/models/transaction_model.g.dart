@@ -131,7 +131,7 @@ class _$TransactionEntitySerializer
       'category_type',
       serializers.serialize(object.category,
           specifiedType: const FullType(String)),
-      'baseType',
+      'base_type',
       serializers.serialize(object.baseType,
           specifiedType: const FullType(String)),
       'date',
@@ -151,6 +151,9 @@ class _$TransactionEntitySerializer
       'expense_id',
       serializers.serialize(object.expenseId,
           specifiedType: const FullType(String)),
+      'transaction_id',
+      serializers.serialize(object.transactionId,
+          specifiedType: const FullType(int)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -219,7 +222,7 @@ class _$TransactionEntitySerializer
           result.category = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'baseType':
+        case 'base_type':
           result.baseType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -246,6 +249,10 @@ class _$TransactionEntitySerializer
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'transaction_id':
+          result.transactionId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -549,6 +556,8 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String expenseId;
   @override
+  final int transactionId;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -580,6 +589,7 @@ class _$TransactionEntity extends TransactionEntity {
       this.statusId,
       this.invoiceIds,
       this.expenseId,
+      this.transactionId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -608,6 +618,8 @@ class _$TransactionEntity extends TransactionEntity {
         invoiceIds, 'TransactionEntity', 'invoiceIds');
     BuiltValueNullFieldError.checkNotNull(
         expenseId, 'TransactionEntity', 'expenseId');
+    BuiltValueNullFieldError.checkNotNull(
+        transactionId, 'TransactionEntity', 'transactionId');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'TransactionEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -639,6 +651,7 @@ class _$TransactionEntity extends TransactionEntity {
         statusId == other.statusId &&
         invoiceIds == other.invoiceIds &&
         expenseId == other.expenseId &&
+        transactionId == other.transactionId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -670,21 +683,24 @@ class _$TransactionEntity extends TransactionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            amount
+                                                                            $jc(
+                                                                                0,
+                                                                                amount
+                                                                                    .hashCode),
+                                                                            currencyId
                                                                                 .hashCode),
-                                                                        currencyId
+                                                                        category
                                                                             .hashCode),
-                                                                    category
+                                                                    baseType
                                                                         .hashCode),
-                                                                baseType
-                                                                    .hashCode),
-                                                            date.hashCode),
-                                                        bankAccountId.hashCode),
-                                                    description.hashCode),
-                                                statusId.hashCode),
-                                            invoiceIds.hashCode),
-                                        expenseId.hashCode),
+                                                                date.hashCode),
+                                                            bankAccountId
+                                                                .hashCode),
+                                                        description.hashCode),
+                                                    statusId.hashCode),
+                                                invoiceIds.hashCode),
+                                            expenseId.hashCode),
+                                        transactionId.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -708,6 +724,7 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('statusId', statusId)
           ..add('invoiceIds', invoiceIds)
           ..add('expenseId', expenseId)
+          ..add('transactionId', transactionId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -765,6 +782,10 @@ class TransactionEntityBuilder
   String get expenseId => _$this._expenseId;
   set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
+  int _transactionId;
+  int get transactionId => _$this._transactionId;
+  set transactionId(int transactionId) => _$this._transactionId = transactionId;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -816,6 +837,7 @@ class TransactionEntityBuilder
       _statusId = $v.statusId;
       _invoiceIds = $v.invoiceIds;
       _expenseId = $v.expenseId;
+      _transactionId = $v.transactionId;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -863,6 +885,7 @@ class TransactionEntityBuilder
             invoiceIds: BuiltValueNullFieldError.checkNotNull(
                 invoiceIds, 'TransactionEntity', 'invoiceIds'),
             expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
+            transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, 'TransactionEntity', 'transactionId'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TransactionEntity', 'updatedAt'),

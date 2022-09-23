@@ -7,9 +7,11 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
+import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -52,10 +54,18 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
+          /*
           Expanded(
               child: _MatchDeposits(
             viewModel: viewModel,
-          )),
+          ),
+          ),
+          */
+          Expanded(
+            child: _MatchWithdrawals(
+              viewModel: viewModel,
+            ),
+          ),
         ],
       ),
     );
@@ -65,6 +75,7 @@ class _TransactionViewState extends State<TransactionView> {
 class _MatchDeposits extends StatefulWidget {
   const _MatchDeposits({
     Key key,
+    // ignore: unused_element
     @required this.viewModel,
   }) : super(key: key);
 
@@ -81,8 +92,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   List<InvoiceEntity> _selectedInvoices;
 
   bool _showFilter = false;
-  String _minLimit = '';
-  String _maxLimit = '';
+  String _minAmount = '';
+  String _maxAmount = '';
   String _startDate = '';
   String _endDate = '';
 
@@ -122,14 +133,14 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (_showFilter) {
-        if (_minLimit.isNotEmpty) {
-          if (invoice.balanceOrAmount < parseDouble(_minLimit)) {
+        if (_minAmount.isNotEmpty) {
+          if (invoice.balanceOrAmount < parseDouble(_minAmount)) {
             return false;
           }
         }
 
-        if (_maxLimit.isNotEmpty) {
-          if (invoice.balanceOrAmount > parseDouble(_maxLimit)) {
+        if (_maxAmount.isNotEmpty) {
+          if (invoice.balanceOrAmount > parseDouble(_maxAmount)) {
             return false;
           }
         }
@@ -160,6 +171,18 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
       return invoiceB.date.compareTo(invoiceA.date);
     });
+  }
+
+  bool get isFiltered {
+    if (_minAmount.isNotEmpty || _maxAmount.isNotEmpty) {
+      return true;
+    }
+
+    if (_startDate.isNotEmpty || _endDate.isNotEmpty) {
+      return true;
+    }
+
+    return false;
   }
 
   @override
@@ -210,7 +233,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       updateInvoiceList();
                     });
                   },
-                  placeholder: localization.search,
+                  placeholder:
+                      localization.searchInvoices.replaceFirst(':count ', ''),
                 ),
               ),
             ),
@@ -218,7 +242,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               onPressed: () {
                 setState(() => _showFilter = !_showFilter);
               },
-              color: _showFilter ? state.accentColor : null,
+              color: _showFilter || isFiltered ? state.accentColor : null,
               icon: Icon(Icons.filter_alt),
               tooltip:
                   state.prefState.enableTooltips ? localization.filter : '',
@@ -235,17 +259,17 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               Expanded(
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Expanded(
                               child: DecoratedFormField(
-                            label: localization.minLimit,
+                            label: localization.minAmount,
                             onChanged: (value) {
                               setState(() {
-                                _minLimit = value;
+                                _minAmount = value;
                                 updateInvoiceList();
                               });
                             },
@@ -257,10 +281,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           ),
                           Expanded(
                               child: DecoratedFormField(
-                            label: localization.maxLimit,
+                            label: localization.maxAmount,
                             onChanged: (value) {
                               setState(() {
-                                _maxLimit = value;
+                                _maxAmount = value;
                                 updateInvoiceList();
                               });
                             },
@@ -328,7 +352,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ),
         if (_selectedInvoices.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
               '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
               textAlign: TextAlign.center,
@@ -338,9 +362,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 20,
+            left: 16,
             bottom: 18,
-            right: 20,
+            right: 16,
           ),
           child: AppButton(
             label: localization.convertToPayment,
@@ -352,6 +376,249 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       context,
                       transaction.id,
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
+                    );
+                  },
+            iconData: getEntityActionIcon(EntityAction.convertToExpense),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _MatchWithdrawals extends StatefulWidget {
+  const _MatchWithdrawals({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
+  final TransactionViewVM viewModel;
+
+  @override
+  State<_MatchWithdrawals> createState() => _MatchWithdrawalsState();
+}
+
+class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
+  TextEditingController _vendorFilterController;
+  TextEditingController _categoryFilterController;
+  FocusNode _vendorFocusNode;
+  FocusNode _categoryFocusNode;
+  List<VendorEntity> _vendors;
+  List<ExpenseCategoryEntity> _categories;
+  VendorEntity _selectedVendor;
+  ExpenseCategoryEntity _selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _vendorFilterController = TextEditingController();
+    _categoryFilterController = TextEditingController();
+
+    _vendorFocusNode = FocusNode();
+    _categoryFocusNode = FocusNode();
+
+    updateVendorList();
+    updateCategoryList();
+  }
+
+  void updateCategoryList() {
+    final state = widget.viewModel.state;
+    final categoryState = state.expenseCategoryState;
+
+    _categories = categoryState.map.values.where((category) {
+      if (_selectedCategory != null) {
+        if (category.id != _selectedCategory?.id) {
+          return false;
+        }
+      }
+
+      if (category.isDeleted) {
+        return false;
+      }
+
+      final filter = _categoryFilterController.text;
+
+      if (filter.isNotEmpty) {
+        if (!category.matchesFilter(filter)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
+    _categories.sort((categoryA, categoryB) {
+      return categoryB.name
+          .toLowerCase()
+          .compareTo(categoryA.name.toLowerCase());
+    });
+  }
+
+  void updateVendorList() {
+    final state = widget.viewModel.state;
+    final vendorState = state.vendorState;
+
+    _vendors = vendorState.map.values.where((vendor) {
+      if (_selectedVendor != null) {
+        if (vendor.id != _selectedVendor?.id) {
+          return false;
+        }
+      }
+
+      if (vendor.isDeleted) {
+        return false;
+      }
+
+      final filter = _vendorFilterController.text;
+
+      if (filter.isNotEmpty) {
+        if (!vendor.matchesFilter(filter)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).toList();
+    _vendors.sort((vendorA, vendorB) {
+      return vendorB.name.toLowerCase().compareTo(vendorA.name.toLowerCase());
+    });
+  }
+
+  @override
+  void dispose() {
+    _vendorFilterController.dispose();
+    _categoryFilterController.dispose();
+    _vendorFocusNode.dispose();
+    _categoryFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final transaction = viewModel.transaction;
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 12, right: 10, bottom: 12),
+                child: SearchText(
+                    filterController: _vendorFilterController,
+                    focusNode: _vendorFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateVendorList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _vendorFilterController.text = '';
+                        updateVendorList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchVendors.replaceFirst(':count ', '')),
+              ),
+            ),
+          ],
+        ),
+        ListDivider(),
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: _vendors.length,
+            itemBuilder: (BuildContext context, int index) {
+              final vendor = _vendors[index];
+              return VendorListItem(
+                vendor: vendor,
+                showCheck: true,
+                isChecked: _selectedVendor?.id == vendor.id,
+                onTap: () => setState(() {
+                  if (_selectedVendor?.id == vendor.id) {
+                    _selectedVendor = null;
+                  } else {
+                    _selectedVendor = vendor;
+                  }
+                  updateVendorList();
+                }),
+              );
+            },
+          ),
+        ),
+        ListDivider(),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 18, top: 12, right: 10, bottom: 12),
+                child: SearchText(
+                    filterController: _categoryFilterController,
+                    focusNode: _categoryFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateCategoryList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _categoryFilterController.text = '';
+                        updateCategoryList();
+                      });
+                    },
+                    placeholder: localization.searchCategories
+                        .replaceFirst(':count ', '')),
+              ),
+            ),
+          ],
+        ),
+        ListDivider(),
+        Expanded(
+          child: ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: _categories.length,
+            itemBuilder: (BuildContext context, int index) {
+              final category = _categories[index];
+              return ExpenseCategoryListItem(
+                expenseCategory: category,
+                showCheck: true,
+                isChecked: _selectedCategory?.id == category.id,
+                onTap: () => setState(() {
+                  if (_selectedCategory?.id == category.id) {
+                    _selectedCategory = null;
+                  } else {
+                    _selectedCategory = category;
+                  }
+                  updateCategoryList();
+                }),
+              );
+            },
+          ),
+        ),
+        ListDivider(),
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 16,
+            bottom: 16,
+            right: 16,
+          ),
+          child: AppButton(
+            label: localization.convertToExpense,
+            onPressed: _selectedVendor == null
+                ? null
+                : () {
+                    final viewModel = widget.viewModel;
+                    viewModel.onConvertToExpense(
+                      context,
+                      transaction.id,
+                      _selectedVendor.id,
                     );
                   },
             iconData: getEntityActionIcon(EntityAction.convertToExpense),

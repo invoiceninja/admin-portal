@@ -16,6 +16,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'new_bank_account': 'New Bank Account',
+      'connect_accounts': 'Connect Accounts',
+      'manage_rules': 'Manage Rules',
+      'search_category': 'Search 1 Category',
+      'search_categories': 'Search :count Categories',
+      'min_amount': 'Min Amount',
+      'max_amount': 'Max Amount',
       'selected': 'Selected',
       'converted_transaction': 'Successfully converted transaction',
       'convert_to_payment': 'Convert to Payment',
@@ -87346,6 +87353,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selected =>
       _localizedValues[localeCode]['selected'] ??
       _localizedValues['en']['selected'];
+
+  String get minAmount =>
+      _localizedValues[localeCode]['min_amount'] ??
+      _localizedValues['en']['min_amount'];
+
+  String get maxAmount =>
+      _localizedValues[localeCode]['max_amount'] ??
+      _localizedValues['en']['max_amount'];
+
+  String get searchCategory =>
+      _localizedValues[localeCode]['search_category'] ??
+      _localizedValues['en']['search_category'];
+
+  String get searchCategories =>
+      _localizedValues[localeCode]['search_categories'] ??
+      _localizedValues['en']['search_categories'];
+
+  String get connectAccounts =>
+      _localizedValues[localeCode]['connect_accounts'] ??
+      _localizedValues['en']['connect_accounts'];
+
+  String get manageRules =>
+      _localizedValues[localeCode]['manage_rules'] ??
+      _localizedValues['en']['manage_rules'];
+
+  String get newBankAccount =>
+      _localizedValues[localeCode]['new_bank_account'] ??
+      _localizedValues['en']['new_bank_account'];
 
 // STARTER: lang field - do not remove comment
 

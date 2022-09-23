@@ -4,12 +4,14 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_presenter.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'transaction_screen_vm.dart';
@@ -89,6 +91,16 @@ class TransactionScreen extends StatelessWidget {
       body: TransactionListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.transaction,
+        iconButtons: [
+          IconButton(
+              icon: Icon(getEntityIcon(EntityType.settings)),
+              onPressed: () {
+                store.dispatch(ViewSettings(
+                  section: kSettingsBankAccounts,
+                  company: state.company,
+                ));
+              })
+        ],
         tableColumns: TransactionPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             TransactionPresenter.getDefaultTableFields(userCompany),
