@@ -374,6 +374,23 @@ Reducer<bool> isPreviewVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((isPreviewEnabled, action) {
     return action.isPreviewVisible ?? isPreviewEnabled;
   }),
+  TypedReducer<bool, StartClientMultiselect>((value, action) => false),
+  TypedReducer<bool, StartProductMultiselect>((value, action) => false),
+  TypedReducer<bool, StartInvoiceMultiselect>((value, action) => false),
+  TypedReducer<bool, StartRecurringInvoiceMultiselect>(
+      (value, action) => false),
+  TypedReducer<bool, StartPaymentMultiselect>((value, action) => false),
+  TypedReducer<bool, StartQuoteMultiselect>((value, action) => false),
+  TypedReducer<bool, StartCreditMultiselect>((value, action) => false),
+  TypedReducer<bool, StartProjectMultiselect>((value, action) => false),
+  TypedReducer<bool, StartTaskMultiselect>((value, action) => false),
+  TypedReducer<bool, StartVendorMultiselect>((value, action) => false),
+  TypedReducer<bool, StartPurchaseOrderMultiselect>((value, action) => false),
+  TypedReducer<bool, StartExpenseMultiselect>((value, action) => false),
+  TypedReducer<bool, StartRecurringExpenseMultiselect>(
+      (value, action) => false),
+  TypedReducer<bool, StartTransactionMultiselect>((value, action) => false),
+  // TODO add to starter.sh
 ]);
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([
