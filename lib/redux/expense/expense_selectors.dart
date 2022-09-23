@@ -219,6 +219,9 @@ List<String> filteredExpensesSelector(
       } else if (filterEntityType == EntityType.recurringExpense &&
           expense.recurringId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.transaction &&
+          expense.transactionId != filterEntityId) {
+        return false;
       }
     } else if (expense.vendorId != null && !vendor.isActive) {
       return false;
