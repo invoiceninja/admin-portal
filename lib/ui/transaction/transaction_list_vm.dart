@@ -92,6 +92,7 @@ class TransactionListVM {
           state.transactionState.list,
           state.invoiceState.map,
           state.expenseState.map,
+          state.expenseCategoryState.map,
           state.bankAccountState.map,
           state.transactionListState),
       transactionMap: state.transactionState.map,

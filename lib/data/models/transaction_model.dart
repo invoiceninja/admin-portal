@@ -60,6 +60,7 @@ class TransactionFields {
   static const String expenseId = 'expense_id';
   static const String expense = 'expense';
   static const String status = 'status';
+  static const String accountType = 'account_type';
 }
 
 abstract class TransactionEntity extends Object
@@ -86,6 +87,8 @@ abstract class TransactionEntity extends Object
       statusId: '',
       baseType: TYPE_DEPOSIT,
       transactionId: 0,
+      accountType: '',
+      categoryId: '',
     );
   }
 
@@ -109,6 +112,9 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'base_type')
   String get baseType;
 
+  @BuiltValueField(wireName: 'account_type')
+  String get accountType;
+
   String get date;
 
   @BuiltValueField(wireName: 'bank_integration_id')
@@ -119,8 +125,8 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
-  //@BuiltValueField(wireName: 'ninja_category_id')
-  //String get categoryId;
+  @BuiltValueField(wireName: 'ninja_category_id')
+  String get categoryId;
 
   @BuiltValueField(wireName: 'invoice_ids')
   String get invoiceIds;
@@ -130,9 +136,6 @@ abstract class TransactionEntity extends Object
 
   @BuiltValueField(wireName: 'transaction_id')
   int get transactionId;
-
-  //@BuiltValueField(wireName: 'is_matched')
-  //bool get isMached;
 
   @override
   EntityType get entityType => EntityType.transaction;
@@ -173,6 +176,7 @@ abstract class TransactionEntity extends Object
     bool sortAscending,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltMap<String, BankAccountEntity> bankAccountMap,
   ) {
     int response = 0;
@@ -193,13 +197,11 @@ abstract class TransactionEntity extends Object
       case TransactionFields.status:
         response = transactionA.statusId.compareTo(transactionB.statusId);
         break;
-      case TransactionFields.category:
-        response = transactionA.category
-            .toLowerCase()
-            .compareTo(transactionB.category.toLowerCase());
-        break;
       case TransactionFields.date:
         response = transactionA.date.compareTo(transactionB.date);
+        break;
+      case TransactionFields.accountType:
+        response = transactionA.accountType.compareTo(transactionB.accountType);
         break;
       case TransactionFields.invoices:
         final invoiceA =
@@ -216,6 +218,15 @@ abstract class TransactionEntity extends Object
         response = expenseA.listDisplayName
             .toLowerCase()
             .compareTo(expenseB.listDisplayName.toLowerCase());
+        break;
+      case TransactionFields.category:
+        final categoryA = expenseCategoryMap[transactionA.categoryId] ??
+            ExpenseCategoryEntity();
+        final categoryB = expenseCategoryMap[transactionB.categoryId] ??
+            ExpenseCategoryEntity();
+        response = categoryA.listDisplayName
+            .toLowerCase()
+            .compareTo(categoryB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.bankAccount:
         final bankAccountA =

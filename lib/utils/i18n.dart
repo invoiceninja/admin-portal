@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'account_type': 'Account Type',
       'new_bank_account': 'New Bank Account',
       'connect_accounts': 'Connect Accounts',
       'manage_rules': 'Manage Rules',
@@ -87381,6 +87382,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get newBankAccount =>
       _localizedValues[localeCode]['new_bank_account'] ??
       _localizedValues['en']['new_bank_account'];
+
+  String get accountType =>
+      _localizedValues[localeCode]['account_type'] ??
+      _localizedValues['en']['account_type'];
 
 // STARTER: lang field - do not remove comment
 

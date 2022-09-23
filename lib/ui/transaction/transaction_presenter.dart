@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
@@ -26,6 +27,7 @@ class TransactionPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      TransactionFields.accountType,
       TransactionFields.bankAccount,
       TransactionFields.currency,
       TransactionFields.amount,
@@ -66,25 +68,38 @@ class TransactionPresenter extends EntityPresenter {
           child: Text(formatNumber(transaction.amount, context,
               currencyId: transaction.currencyId)),
         );
-      case TransactionFields.category:
-        return Text(toTitleCase(transaction.category.toLowerCase()));
       case TransactionFields.description:
         return Text(transaction.description);
+      case TransactionFields.accountType:
+        return Text(toTitleCase(transaction.accountType));
       case TransactionFields.bankAccount:
         final bankAccount =
             state.bankAccountState.get(transaction.bankAccountId);
         return LinkTextRelatedEntity(
             entity: bankAccount, relation: transaction);
       case TransactionFields.invoices:
-        return Text(transaction.invoiceIds);
-      //final invoice = state.invoiceState.get(transaction.invoiceIds);
-      //return LinkTextRelatedEntity(entity: invoice, relation: transaction);
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+          child: Wrap(
+            clipBehavior: Clip.antiAlias,
+            children: transaction.invoiceIds
+                .split(',')
+                .map((invoiceId) => state.invoiceState.map[invoiceId])
+                .where((invoice) => invoice != null)
+                .map((invoice) => Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: LinkTextRelatedEntity(
+                          entity: invoice, relation: transaction),
+                    ))
+                .toList(),
+          ),
+        );
       case TransactionFields.expense:
-        return Text(transaction.expenseId);
-      //final expense = state.expenseState.get(transaction.expenseId);
-      //return LinkTextRelatedEntity(entity: expense, relation: transaction);
-      case TransactionFields.currency:
-        return Text(state.bankAccountState.get(transaction.bankAccountId).name);
+        final expense = state.expenseState.get(transaction.expenseId);
+        return LinkTextRelatedEntity(entity: expense, relation: transaction);
+      case TransactionFields.category:
+        final category = state.expenseCategoryState.get(transaction.categoryId);
+        return LinkTextRelatedEntity(entity: category, relation: transaction);
     }
 
     return super.getField(field: field, context: context);
