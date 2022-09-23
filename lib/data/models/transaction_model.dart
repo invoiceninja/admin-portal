@@ -91,8 +91,8 @@ abstract class TransactionEntity extends Object
 
   TransactionEntity._();
 
-  static const TYPE_DEPOSIT = 'deposit';
-  static const TYPE_WITHDRAWL = 'withdrawal';
+  static const TYPE_DEPOSIT = 'CREDIT';
+  static const TYPE_WITHDRAWL = 'DEBIT';
 
   @override
   @memoized
