@@ -17,7 +17,6 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.withdrawal,
       TransactionFields.date,
       TransactionFields.description,
-      TransactionFields.category,
       TransactionFields.invoices,
       TransactionFields.expense,
     ];
@@ -31,6 +30,8 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.bankAccount,
       TransactionFields.currency,
       TransactionFields.amount,
+      TransactionFields.vendor,
+      TransactionFields.category,
     ];
   }
 
