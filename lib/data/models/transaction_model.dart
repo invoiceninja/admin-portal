@@ -52,6 +52,7 @@ class TransactionFields {
   static const String deposit = 'deposit';
   static const String withdrawal = 'withdrawal';
   static const String currency = 'currency';
+  static const String vendor = 'vendor';
   static const String category = 'category';
   static const String bankAccountId = 'bank_account_id';
   static const String bankAccount = 'bank_account';
@@ -83,6 +84,7 @@ abstract class TransactionEntity extends Object
       date: convertDateTimeToSqlDate(),
       description: '',
       expenseId: '',
+      vendorId: '',
       invoiceIds: '',
       statusId: '',
       baseType: TYPE_DEPOSIT,
@@ -134,6 +136,9 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
 
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
   @BuiltValueField(wireName: 'transaction_id')
   int get transactionId;
 
@@ -147,6 +152,8 @@ abstract class TransactionEntity extends Object
   double get withdrawal => isWithdrawal ? amount : 0;
 
   double get deposit => isDeposit ? amount : 0;
+
+  bool get isConverted => statusId == kTransactionStatusConverted;
 
   @override
   List<EntityAction> getActions(
@@ -174,6 +181,7 @@ abstract class TransactionEntity extends Object
     TransactionEntity transaction,
     String sortField,
     bool sortAscending,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
@@ -218,6 +226,13 @@ abstract class TransactionEntity extends Object
         response = expenseA.listDisplayName
             .toLowerCase()
             .compareTo(expenseB.listDisplayName.toLowerCase());
+        break;
+      case TransactionFields.vendor:
+        final vendorA = vendorMap[transactionA.vendorId] ?? VendorEntity();
+        final vendorB = vendorMap[transactionB.vendorId] ?? VendorEntity();
+        response = vendorA.listDisplayName
+            .toLowerCase()
+            .compareTo(vendorB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.category:
         final categoryA = expenseCategoryMap[transactionA.categoryId] ??

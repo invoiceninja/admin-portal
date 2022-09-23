@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -36,6 +37,7 @@ class _TransactionViewState extends State<TransactionView> {
     final viewModel = widget.viewModel;
     final transaction = viewModel.transaction;
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -54,18 +56,39 @@ class _TransactionViewState extends State<TransactionView> {
             secondValue: formatDate(transaction.date, context),
           ),
           ListDivider(),
-          if (false)
-            Expanded(
-              child: _MatchDeposits(
-                viewModel: viewModel,
+          if (transaction.isConverted) ...[
+            if (true)
+              ...transaction.invoiceIds
+                  .split(',')
+                  .map((invoiceId) => state.invoiceState.get(invoiceId))
+                  .map((invoice) =>
+                      EntityListTile(entity: invoice, isFilter: false))
+            else ...[
+              EntitiesListTile(
+                  entity: state.vendorState.get(transaction.vendorId),
+                  isFilter: false),
+              EntitiesListTile(
+                  entity:
+                      state.expenseCategoryState.get(transaction.categoryId),
+                  isFilter: false),
+              EntitiesListTile(
+                  entity: state.expenseState.get(transaction.expenseId),
+                  isFilter: false),
+            ]
+          ] else ...[
+            if (false)
+              Expanded(
+                child: _MatchDeposits(
+                  viewModel: viewModel,
+                ),
+              )
+            else
+              Expanded(
+                child: _MatchWithdrawals(
+                  viewModel: viewModel,
+                ),
               ),
-            )
-          else
-            Expanded(
-              child: _MatchWithdrawals(
-                viewModel: viewModel,
-              ),
-            ),
+          ],
         ],
       ),
     );
