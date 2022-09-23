@@ -158,7 +158,7 @@ class BankAccountScreen extends StatelessWidget {
               onPressed: () => createEntityByType(
                   context: context, entityType: EntityType.bankAccount),
               child: Icon(
-                Icons.link,
+                Icons.add,
                 color: Colors.white,
               ),
               tooltip: localization.newBankAccount,
