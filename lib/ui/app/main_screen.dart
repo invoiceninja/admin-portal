@@ -672,6 +672,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.design:
             leftFilterChild = DesignViewScreen(isFilter: true);
             break;
+          case EntityType.transaction:
+            leftFilterChild = TransactionViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');

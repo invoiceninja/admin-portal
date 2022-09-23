@@ -51,6 +51,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.remove_circle_outline;
     case EntityAction.restore:
       return Icons.restore;
+    case EntityAction.convert:
     case EntityAction.convertToInvoice:
     case EntityAction.convertToExpense:
     case EntityAction.convertToProject:
