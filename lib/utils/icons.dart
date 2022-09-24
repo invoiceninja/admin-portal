@@ -169,6 +169,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.fileDocument;
     case EntityType.transaction:
       return MdiIcons.bankTransfer;
+    case EntityType.bankAccount:
+      return MdiIcons.bank;
     default:
       return MdiIcons.crosshairsQuestion;
   }
