@@ -49,7 +49,7 @@ String toTitleCase(String text) {
     return text.toUpperCase();
   }
 
-  text = toSpaceCase(text);
+  text = toSpaceCase(text.toLowerCase());
   final words = text.split(' ');
   final capitalized = words.map((word) {
     if (word == 'url') {

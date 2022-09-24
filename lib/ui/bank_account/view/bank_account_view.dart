@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class BankAccountView extends StatefulWidget {
   const BankAccountView({
@@ -41,6 +44,7 @@ class _BankAccountViewState extends State<BankAccountView> {
             label: localization.balance,
             value: formatNumber(bankAccount.balance, context),
           ),
+          ListDivider(),
           EntitiesListTile(
             entity: bankAccount,
             isFilter: widget.isFilter,
@@ -50,6 +54,11 @@ class _BankAccountViewState extends State<BankAccountView> {
                     bankAccount.id, state.transactionState.map)
                 .present(localization.active, localization.archived),
           ),
+          FieldGrid({
+            localization.type: toTitleCase(bankAccount.type),
+            localization.status: toTitleCase(bankAccount.status),
+            localization.provider: toTitleCase(bankAccount.provider),
+          }),
         ],
       ),
     );
