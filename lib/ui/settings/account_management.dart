@@ -189,7 +189,6 @@ class _AccountManagementState extends State<AccountManagement>
           ScrollableListView(
             children: <Widget>[
               FormCard(
-                  // TODO change to kModules.keys
                   children: kModules.keys.map((module) {
                 return CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
