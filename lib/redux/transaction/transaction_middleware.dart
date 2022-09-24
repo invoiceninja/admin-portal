@@ -313,11 +313,7 @@ Middleware<AppState> _loadTransactions(TransactionRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      /*
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
-      }
-      */
+      store.dispatch(PersistData());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTransactionsFailure(error));
