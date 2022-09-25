@@ -14,6 +14,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/transaction_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
@@ -336,6 +337,18 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
+      case kReportTransaction:
+        reportResult = memoizedTransactionReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.transactionState.map,
+          state.vendorState.map,
+          state.expenseState.map,
+          state.expenseCategoryState.map,
+          state.invoiceState.map,
+          state.bankAccountState.map,
+          state.staticState,
+        );
     }
 
     final groupTotals = memoizeedGroupTotals(
