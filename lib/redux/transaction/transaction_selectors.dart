@@ -145,3 +145,24 @@ List<String> filteredTransactionsSelector(
 
   return list;
 }
+
+var memoizedTransactionStatsForBankAccount = memo2((String bankAccountId,
+        BuiltMap<String, TransactionEntity> transactionMap) =>
+    transactionStatsForBankAccount(bankAccountId, transactionMap));
+
+EntityStats transactionStatsForBankAccount(
+    String bankAccountId, BuiltMap<String, TransactionEntity> transactionMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  transactionMap.forEach((transactionId, transaction) {
+    if (transaction.bankAccountId == bankAccountId) {
+      if (transaction.isActive) {
+        countActive++;
+      } else if (transaction.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}

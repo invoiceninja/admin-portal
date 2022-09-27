@@ -268,6 +268,7 @@ void handleBankAccountAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final bankAccount = bankAccounts.first as BankAccountEntity;
   final bankAccountIds =
@@ -291,6 +292,12 @@ void handleBankAccountAction(
       store.dispatch(DeleteBankAccountsRequest(
           snackBarCompleter<Null>(context, localization.deletedBankAccount),
           bankAccountIds));
+      break;
+    case EntityAction.newTransaction:
+      createEntity(
+          context: context,
+          entity: TransactionEntity(state: state)
+              .rebuild((b) => b..bankAccountId = bankAccount.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.bankAccountListState.isInMultiselect()) {

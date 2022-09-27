@@ -152,6 +152,8 @@ class EntityPresenter {
       'stock_quantity',
       'notification_threshold',
       'partial',
+      'withdrawal',
+      'deposit',
     ].contains(field);
 
     return value;

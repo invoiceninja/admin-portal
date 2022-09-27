@@ -65,6 +65,10 @@ class _TransactionViewState extends State<TransactionView> {
                       EntityListTile(entity: invoice, isFilter: false))
             else ...[
               EntityListTile(
+                entity: state.bankAccountState.get(transaction.bankAccountId),
+                isFilter: false,
+              ),
+              EntityListTile(
                 entity: state.vendorState.get(transaction.vendorId),
                 isFilter: false,
               ),

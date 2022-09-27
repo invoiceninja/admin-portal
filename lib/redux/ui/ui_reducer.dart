@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 
@@ -177,6 +178,9 @@ Reducer<EntityType> loadingEntityTypeReducer = combineReducers([
   }),
   TypedReducer<EntityType, LoadRecurringExpensesRequest>((state, action) {
     return EntityType.recurringExpense;
+  }),
+  TypedReducer<EntityType, LoadTransactionsRequest>((state, action) {
+    return EntityType.transaction;
   }),
 ]);
 
