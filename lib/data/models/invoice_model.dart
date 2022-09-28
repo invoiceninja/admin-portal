@@ -69,6 +69,7 @@ class InvoiceFields {
   static const String poNumber = 'po_number';
   static const String date = 'date';
   static const String dueDate = 'due_date';
+  static const String dueDateDays = 'due_date_days';
   static const String nextSendDate = 'next_send_date';
   static const String lastSentDate = 'last_sent_date';
   static const String lastSentTemplate = 'last_sent_template';
@@ -873,6 +874,9 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.vendor:
         response =
             vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
+        break;
+      case InvoiceFields.dueDateDays:
+        response = invoiceA.dueDateDays.compareTo(invoiceB.dueDateDays);
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
