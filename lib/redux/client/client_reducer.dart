@@ -123,14 +123,19 @@ final editingReducer = combineReducers<ClientEntity>([
     return action.client.rebuild((b) => b..isChanged = true);
   }),
   TypedReducer<ClientEntity, AddContact>((client, action) {
-    return client.rebuild(
-        (b) => b..contacts.add(action.contact ?? ClientContactEntity()));
+    return client.rebuild((b) => b
+      ..contacts.add(action.contact ?? ClientContactEntity())
+      ..isChanged = true);
   }),
   TypedReducer<ClientEntity, DeleteContact>((client, action) {
-    return client.rebuild((b) => b..contacts.removeAt(action.index));
+    return client.rebuild((b) => b
+      ..contacts.removeAt(action.index)
+      ..isChanged = true);
   }),
   TypedReducer<ClientEntity, UpdateContact>((client, action) {
-    return client.rebuild((b) => b..contacts[action.index] = action.contact);
+    return client.rebuild((b) => b
+      ..contacts[action.index] = action.contact
+      ..isChanged = true);
   }),
   TypedReducer<ClientEntity, ViewClient>((client, action) {
     return ClientEntity();
