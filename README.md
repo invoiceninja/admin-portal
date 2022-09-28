@@ -1,9 +1,16 @@
 # Invoice Ninja
 
-Client app for [Invoice Ninja](https://github.com/invoiceninja/invoiceninja).
+Client application for [Invoice Ninja](https://github.com/invoiceninja/invoiceninja).
 
-- [Desktop Apps](https://invoiceninja.com/desktop)
-- [Mobile Apps](https://invoiceninja.com/mobile)
+#### Desktop Apps
+- [Windows](https://apps.microsoft.com/store/detail/invoice-ninja/9N3F2BBCFDR6)
+- [macOS](https://apps.apple.com/app/id1503970375?platform=mac)
+- [Linux](https://snapcraft.io/invoiceninja)
+
+#### Mobile Apps
+- [iOS](https://apps.apple.com/app/id1503970375?platform=iphone)
+- [Android](https://play.google.com/store/apps/details?id=com.invoiceninja.app)
+- [F-Droid](https://f-droid.org/en/packages/com.invoiceninja.app)
 
 <p align="center">
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/1.png" alt="Dashboard" width="200"/>
