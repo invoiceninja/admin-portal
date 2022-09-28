@@ -614,7 +614,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final currency = state
                                     .staticState.currencyMap[client.currencyId];
 
-                                double cost = product.price;
+                                double cost = (invoice.isPurchaseOrder &&
+                                        company.enableProductCost &&
+                                        product.cost != 0)
+                                    ? product.cost
+                                    : product.price;
                                 if (company.convertProductExchangeRate &&
                                     invoice.clientId != null &&
                                     client.currencyId != company.currencyId) {
@@ -742,6 +746,20 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                     EntityAutocompleteListTile(
                                                   onTap: (entity) =>
                                                       onSelected(entity),
+                                                  overrideSuggestedAmount:
+                                                      (entity) {
+                                                    final product =
+                                                        entity as ProductEntity;
+                                                    return formatNumber(
+                                                        (invoice.isPurchaseOrder &&
+                                                                company
+                                                                    .enableProductCost &&
+                                                                product.cost !=
+                                                                    0)
+                                                            ? product.cost
+                                                            : product.price,
+                                                        context);
+                                                  },
                                                   subtitle: entity
                                                               is ProductEntity &&
                                                           company
