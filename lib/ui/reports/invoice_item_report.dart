@@ -219,8 +219,12 @@ ReportResult lineItemReport(
       sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns));
 
   return ReportResult(
-    allColumns:
-        InvoiceItemReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: InvoiceItemReportFields.values
+        .where((field) =>
+            field != InvoiceItemReportFields.discount ||
+            userCompany.company.enableProductDiscount)
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
