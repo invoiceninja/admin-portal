@@ -113,7 +113,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: InkWell(
-                      onTap: () => launchUrl(Uri.parse(vendor.website)),
+                      onTap: () =>
+                          launchUrl(Uri.parse(untrimUrl(vendor.website))),
                       child: IconText(
                         icon: MdiIcons.earth,
                         text: trimUrl(vendor.website),
