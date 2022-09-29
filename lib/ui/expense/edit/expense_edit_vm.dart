@@ -153,7 +153,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           final navigator = navigatorKey.currentState;
 
           if (expense.isOld &&
-              expense.isChanged == false &&
+              expense.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(expense, action);

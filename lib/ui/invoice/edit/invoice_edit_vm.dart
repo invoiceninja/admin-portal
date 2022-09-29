@@ -152,7 +152,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           }
 
           if (invoice.isOld &&
-              invoice.isChanged == false &&
+              invoice.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(invoice, action);

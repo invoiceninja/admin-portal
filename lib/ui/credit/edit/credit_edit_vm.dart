@@ -99,7 +99,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           }
 
           if (credit.isOld &&
-              credit.isChanged == false &&
+              credit.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(credit, action);

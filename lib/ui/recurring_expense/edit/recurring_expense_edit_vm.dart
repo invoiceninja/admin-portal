@@ -132,7 +132,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           final recurringExpense = store.state.recurringExpenseUIState.editing;
           final localization = AppLocalization.of(context);
           if (recurringExpense.isOld &&
-              recurringExpense.isChanged == false &&
+              recurringExpense.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(recurringExpense, action);
