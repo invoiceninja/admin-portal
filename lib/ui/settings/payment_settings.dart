@@ -131,7 +131,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
             SizedBox(height: 16),
             if (!state.uiState.settingsUIState.isFiltered)
               BoolDropdownButton(
-                label: localization.enableApplyingPayments,
+                label: localization.enableApplyingPaymentsLater,
                 value: company.enableApplyingPayments,
                 helpLabel: localization.enableApplyingPaymentsHelp,
                 onChanged: (value) => viewModel.onCompanyChanged(

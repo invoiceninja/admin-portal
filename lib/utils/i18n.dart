@@ -200,7 +200,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'search_purchase_order': 'Search Purchase Order',
       'search_purchase_orders': 'Search Purchase Orders',
       'login_url': 'Login URL',
-      'enable_applying_payments': 'Enable Applying Payments',
+      'enable_applying_payments_later': 'Enable Applying Payments Later',
       'enable_applying_payments_help':
           'Support separately creating and applying payments',
       'payment_settings': 'Payment Settings',
@@ -86767,9 +86767,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['payment_settings'] ??
       _localizedValues['en']['payment_settings'];
 
-  String get enableApplyingPayments =>
-      _localizedValues[localeCode]['enable_applying_payments'] ??
-      _localizedValues['en']['enable_applying_payments'];
+  String get enableApplyingPaymentsLater =>
+      _localizedValues[localeCode]['enable_applying_payments_later'] ??
+      _localizedValues['en']['enable_applying_payments_later'];
 
   String get enableApplyingPaymentsHelp =>
       _localizedValues[localeCode]['enable_applying_payments_help'] ??
