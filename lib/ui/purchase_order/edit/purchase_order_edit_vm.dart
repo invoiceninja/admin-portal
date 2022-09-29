@@ -98,7 +98,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (purchaseOrder.isOld &&
-              purchaseOrder.isChanged == false &&
+              purchaseOrder.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(purchaseOrder, action);

@@ -97,7 +97,7 @@ class TaskEditVM {
           }
 
           if (task.isOld &&
-              task.isChanged == false &&
+              task.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(task, action);

@@ -99,7 +99,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (recurringInvoice.isOld &&
-              recurringInvoice.isChanged == false &&
+              recurringInvoice.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(recurringInvoice, action);

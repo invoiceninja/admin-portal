@@ -179,11 +179,14 @@ class DocumentTile extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            document.name ?? '',
-                            style: Theme.of(context).textTheme.headline6,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                          Tooltip(
+                            message: document.name ?? '',
+                            child: Text(
+                              document.name ?? '',
+                              style: Theme.of(context).textTheme.headline6,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                           Text(
                             '${formatDate(convertTimestampToDateString(document.createdAt), context)}\n${document.prettySize}',

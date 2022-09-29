@@ -98,7 +98,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
             return null;
           }
           if (quote.isOld &&
-              quote.isChanged == false &&
+              quote.isChanged != true &&
               action != null &&
               action.isClientSide) {
             handleEntityAction(quote, action);
