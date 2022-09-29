@@ -1173,6 +1173,15 @@ void createEntity({
               completer: completer,
             ));
             break;
+          case EntityType.bankAccount:
+            store.dispatch(EditBankAccount(
+              bankAccount: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+          default:
+            print('## createEntity not handled for ${entity.entityType}');
         }
       });
 }

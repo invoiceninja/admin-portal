@@ -171,6 +171,8 @@ class _TransactionEditState extends State<TransactionEdit> {
                         transaction.rebuild(
                             (b) => b.bankAccountId = bankAccount?.id ?? ''),
                       ),
+                      onAddPressed: (completer) =>
+                          viewModel.onAddBankAccountPressed(context, completer),
                       validator: (dynamic value) =>
                           transaction.bankAccountId.isEmpty
                               ? localization.pleaseEnterAValue
