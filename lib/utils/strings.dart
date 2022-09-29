@@ -215,6 +215,14 @@ int secondToLastIndexOf(String string, String pattern) {
   return string.lastIndexOf(pattern);
 }
 
+String untrimUrl(String url) {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+
+  return 'https://$url';
+}
+
 String trimUrl(String url) {
   url = url.replaceFirst('http://', '').replaceFirst('https://', '');
 

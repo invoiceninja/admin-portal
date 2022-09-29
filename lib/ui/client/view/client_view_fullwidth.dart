@@ -136,7 +136,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: InkWell(
-                        onTap: () => launchUrl(Uri.parse(client.website)),
+                        onTap: () =>
+                            launchUrl(Uri.parse(untrimUrl(client.website))),
                         child: IconText(
                           icon: MdiIcons.earth,
                           text: trimUrl(client.website),
