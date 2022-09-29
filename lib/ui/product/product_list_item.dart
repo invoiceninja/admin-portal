@@ -24,6 +24,7 @@ class ProductListItem extends StatelessWidget {
     this.onCheckboxChanged,
     this.isChecked = false,
     this.isDismissible = true,
+    this.showCost = false,
   });
 
   final GestureTapCallback onTap;
@@ -33,6 +34,7 @@ class ProductListItem extends StatelessWidget {
   final bool isDismissible;
   final ProductEntity product;
   final String filter;
+  final bool showCost;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,8 @@ class ProductListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        formatNumber(product.price, context,
+                        formatNumber(
+                            showCost ? product.cost : product.price, context,
                             roundToPrecision: false),
                         style: textStyle,
                         textAlign: TextAlign.end,
@@ -177,7 +180,8 @@ class ProductListItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                          formatNumber(product.price, context,
+                          formatNumber(
+                              showCost ? product.cost : product.price, context,
                               roundToPrecision: false),
                           style: Theme.of(context).textTheme.subtitle1),
                     ],

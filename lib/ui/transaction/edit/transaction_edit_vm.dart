@@ -45,6 +45,7 @@ class TransactionEditVM {
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.isLoading,
+    @required this.onAddBankAccountPressed,
   });
 
   factory TransactionEditVM.fromStore(Store<AppState> store) {
@@ -102,6 +103,20 @@ class TransactionEditVM {
           });
         });
       },
+      onAddBankAccountPressed: (context, completer) {
+        createEntity(
+            context: context,
+            entity: BankAccountEntity(state: state),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
+              }));
+        completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
+        });
+      },
     );
   }
 
@@ -114,4 +129,6 @@ class TransactionEditVM {
   final bool isSaving;
   final TransactionEntity origTransaction;
   final AppState state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)
+      onAddBankAccountPressed;
 }

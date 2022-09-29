@@ -126,16 +126,21 @@ VendorEntity _updateEditing(VendorEntity vendor, dynamic action) {
 }
 
 VendorEntity _addContact(VendorEntity vendor, AddVendorContact action) {
-  return vendor
-      .rebuild((b) => b..contacts.add(action.contact ?? VendorContactEntity()));
+  return vendor.rebuild((b) => b
+    ..contacts.add(action.contact ?? VendorContactEntity())
+    ..isChanged = true);
 }
 
 VendorEntity _removeContact(VendorEntity vendor, DeleteVendorContact action) {
-  return vendor.rebuild((b) => b..contacts.removeAt(action.index));
+  return vendor.rebuild((b) => b
+    ..contacts.removeAt(action.index)
+    ..isChanged = true);
 }
 
 VendorEntity _updateContact(VendorEntity vendor, UpdateVendorContact action) {
-  return vendor.rebuild((b) => b..contacts[action.index] = action.contact);
+  return vendor.rebuild((b) => b
+    ..contacts[action.index] = action.contact
+    ..isChanged = true);
 }
 
 final vendorListReducer = combineReducers<ListUIState>([

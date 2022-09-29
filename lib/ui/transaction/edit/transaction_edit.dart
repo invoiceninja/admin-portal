@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -98,6 +101,7 @@ class _TransactionEditState extends State<TransactionEdit> {
     final localization = AppLocalization.of(context);
     final transaction = viewModel.transaction;
     final state = viewModel.state;
+    final store = StoreProvider.of<AppState>(context);
 
     return EditScaffold(
       title: transaction.isNew
@@ -171,6 +175,14 @@ class _TransactionEditState extends State<TransactionEdit> {
                         transaction.rebuild(
                             (b) => b.bankAccountId = bankAccount?.id ?? ''),
                       ),
+                      onAddPressed: (completer) =>
+                          viewModel.onAddBankAccountPressed(context, completer),
+                      onCreateNew: (completer, name) {
+                        store.dispatch(SaveBankAccountRequest(
+                            bankAccount: BankAccountEntity()
+                                .rebuild((b) => b..name = name),
+                            completer: completer));
+                      },
                       validator: (dynamic value) =>
                           transaction.bankAccountId.isEmpty
                               ? localization.pleaseEnterAValue

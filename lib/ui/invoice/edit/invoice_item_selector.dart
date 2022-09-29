@@ -20,12 +20,14 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
+    @required this.invoice,
     @required this.clientId,
     @required this.showTasksAndExpenses,
     this.onItemsSelected,
     this.excluded,
   });
 
+  final InvoiceEntity invoice;
   final Function(List<InvoiceItemEntity>, [String, String]) onItemsSelected;
   final String clientId;
   final List<BaseEntity> excluded;
@@ -79,7 +81,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           convertProductToInvoiceItem(
             company: company,
             product: entity as ProductEntity,
-            invoice: state.invoiceUIState.editing,
+            invoice: widget.invoice,
             currencyMap: state.staticState.currencyMap,
             client: state.clientState.get(widget.clientId),
           ),
@@ -182,6 +184,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final product = state.productState.map[entityId];
           return ProductListItem(
             isDismissible: false,
+            showCost: widget.invoice.isPurchaseOrder &&
+                company.enableProductCost &&
+                product.cost != 0,
             onCheckboxChanged: (checked) => _toggleEntity(product),
             product: product,
             filter: _filter,
