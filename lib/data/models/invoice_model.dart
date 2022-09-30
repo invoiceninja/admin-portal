@@ -1053,10 +1053,6 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isQuote) {
-          if ((projectId ?? '').isEmpty) {
-            actions.add(EntityAction.convertToProject);
-          }
-
           if ((invoiceId ?? '').isEmpty) {
             if (!isApproved) {
               actions.add(EntityAction.approve);
@@ -1064,6 +1060,10 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.convertToInvoice);
           } else {
             actions.add(EntityAction.viewInvoice);
+          }
+
+          if ((projectId ?? '').isEmpty) {
+            actions.add(EntityAction.convertToProject);
           }
         } else if (isPurchaseOrder) {
           if (!isCancelled) {
@@ -1342,7 +1342,7 @@ abstract class InvoiceEntity extends Object
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
   Map<String, Map<String, dynamic>> getTaxes(int precision) {
     final taxes = <String, Map<String, dynamic>>{};
-    final taxable = getTaxable();
+    final taxable = getTaxable(precision);
 
     double calculateAmount(double taxable, double rate) {
       if (usesInclusiveTaxes) {

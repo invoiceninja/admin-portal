@@ -67,6 +67,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final shippingAddress =
         formatAddress(state, object: client, isShipping: true);
 
+    final hasMultipleContacts = client.contacts.length > 1;
+
     final showStanding = !state.prefState.isPreviewVisible &&
         !state.uiState.isEditing &&
         state.prefState.isModuleTable;
@@ -281,46 +283,65 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               children: [
                 Text(
                   localization.contacts +
-                      (client.contacts.length > 1
+                      (hasMultipleContacts
                           ? ' (${client.contacts.length})'
                           : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 8),
                 ...client.contacts.map((contact) {
-                  return Column(
+                  return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        contact.fullName,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      if (contact.email.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.email,
-                            child: IconText(
-                                icon: Icons.email, text: contact.email),
-                          ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              contact.fullName,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            if (contact.email.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.email,
+                                  child: IconText(
+                                      icon: Icons.email, text: contact.email),
+                                ),
+                              ),
+                            if (contact.phone.isNotEmpty)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: CopyToClipboard(
+                                  value: contact.phone,
+                                  child: IconText(
+                                      icon: Icons.phone, text: contact.phone),
+                                ),
+                              ),
+                            SizedBox(height: 8),
+                            if (!hasMultipleContacts) ...[
+                              PortalLinks(
+                                viewLink: contact.silentLink,
+                                copyLink: contact.link,
+                                client: client,
+                                style: PortalLinkStyle.icons,
+                              ),
+                              SizedBox(height: 16),
+                            ] else
+                              SizedBox(height: 8),
+                          ],
                         ),
-                      if (contact.phone.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.phone,
-                            child: IconText(
-                                icon: Icons.phone, text: contact.phone),
-                          ),
-                        ),
-                      SizedBox(height: 8),
-                      PortalLinks(
-                        viewLink: contact.silentLink,
-                        copyLink: contact.link,
-                        client: client,
-                        useIcons: true,
                       ),
-                      SizedBox(height: 16),
+                      if (hasMultipleContacts)
+                        PortalLinks(
+                          client: client,
+                          viewLink: contact.silentLink,
+                          copyLink: contact.link,
+                          style: PortalLinkStyle.dropdown,
+                        )
                     ],
                   );
                 }).toList(),
