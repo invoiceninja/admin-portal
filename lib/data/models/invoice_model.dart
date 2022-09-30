@@ -1053,10 +1053,6 @@ abstract class InvoiceEntity extends Object
         }
 
         if (isQuote) {
-          if ((projectId ?? '').isEmpty) {
-            actions.add(EntityAction.convertToProject);
-          }
-
           if ((invoiceId ?? '').isEmpty) {
             if (!isApproved) {
               actions.add(EntityAction.approve);
@@ -1064,6 +1060,10 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.convertToInvoice);
           } else {
             actions.add(EntityAction.viewInvoice);
+          }
+
+          if ((projectId ?? '').isEmpty) {
+            actions.add(EntityAction.convertToProject);
           }
         } else if (isPurchaseOrder) {
           if (!isCancelled) {
