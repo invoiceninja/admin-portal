@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -19,8 +20,10 @@ class WindowManager extends StatefulWidget {
 class _WindowManagerState extends State<WindowManager> with WindowListener {
   @override
   void initState() {
-    windowManager.addListener(this);
-    _init();
+    if (isDesktopOS()) {
+      windowManager.addListener(this);
+      _init();
+    }
 
     super.initState();
   }
@@ -32,6 +35,10 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 
   @override
   void onWindowResize() async {
+    if (!isDesktopOS()) {
+      return;
+    }
+
     final size = await windowManager.getSize();
     final prefs = await SharedPreferences.getInstance();
     prefs.setDouble(kSharedPrefWidth, size.width);
@@ -40,6 +47,10 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 
   @override
   void onWindowClose() async {
+    if (!isDesktopOS()) {
+      return;
+    }
+
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
 
     if (await windowManager.isPreventClose()) {
@@ -54,7 +65,10 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 
   @override
   void dispose() {
-    windowManager.removeListener(this);
+    if (isDesktopOS()) {
+      windowManager.removeListener(this);
+    }
+
     super.dispose();
   }
 
