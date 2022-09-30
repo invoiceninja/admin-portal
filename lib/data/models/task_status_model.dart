@@ -61,6 +61,7 @@ abstract class TaskStatusEntity extends Object
   factory TaskStatusEntity({String id, AppState state}) {
     return _$TaskStatusEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       name: '',
       color: '',
       createdUserId: '',

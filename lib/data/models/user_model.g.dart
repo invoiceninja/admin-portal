@@ -354,6 +354,13 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -459,6 +466,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -986,6 +997,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String assignedUserId;
   @override
+  final String idempotencyKey;
+  @override
   final String id;
 
   factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
@@ -1015,6 +1028,7 @@ class _$UserEntity extends UserEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(firstName, 'UserEntity', 'firstName');
@@ -1081,6 +1095,7 @@ class _$UserEntity extends UserEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1105,25 +1120,25 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode), password.hashCode),
-                                                                                emailVerifiedAt.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            isTwoFactorEnabled.hashCode),
-                                                        hasPassword.hashCode),
-                                                    lastEmailAddress.hashCode),
-                                                oauthUserToken.hashCode),
-                                            userCompany.hashCode),
-                                        oauthProvider.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode), password.hashCode), emailVerifiedAt.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customValue3.hashCode),
+                                                                    customValue4.hashCode),
+                                                                isTwoFactorEnabled.hashCode),
+                                                            hasPassword.hashCode),
+                                                        lastEmailAddress.hashCode),
+                                                    oauthUserToken.hashCode),
+                                                userCompany.hashCode),
+                                            oauthProvider.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            idempotencyKey.hashCode),
         id.hashCode));
   }
 
@@ -1153,6 +1168,7 @@ class _$UserEntity extends UserEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1262,6 +1278,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1296,6 +1317,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
+      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1352,6 +1374,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'UserEntity', 'id'));
     } catch (_) {
       String _$failedField;

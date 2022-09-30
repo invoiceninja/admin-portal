@@ -85,6 +85,7 @@ abstract class VendorEntity extends Object
   factory VendorEntity({String id, AppState state, UserEntity user}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       number: '',
       isChanged: false,
       name: '',
@@ -129,6 +130,7 @@ abstract class VendorEntity extends Object
 
   VendorEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..number = ''
     ..documents.clear()
     ..isChanged = false
@@ -488,6 +490,7 @@ abstract class VendorContactEntity extends Object
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
       id: BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       firstName: '',
       lastName: '',

@@ -75,6 +75,7 @@ abstract class ProductEntity extends Object
   factory ProductEntity({String id, AppState state}) {
     return _$ProductEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       productKey: '',
       notes: '',
@@ -112,6 +113,7 @@ abstract class ProductEntity extends Object
 
   ProductEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..documents.clear()
     ..isChanged = false
     ..isDeleted = false);

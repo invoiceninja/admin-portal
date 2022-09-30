@@ -216,6 +216,13 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -335,6 +342,10 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -587,6 +598,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String assignedUserId;
   @override
+  final String idempotencyKey;
+  @override
   final String id;
 
   factory _$ProductEntity([void Function(ProductEntityBuilder) updates]) =>
@@ -619,6 +632,7 @@ class _$ProductEntity extends ProductEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -702,6 +716,7 @@ class _$ProductEntity extends ProductEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -726,25 +741,25 @@ class _$ProductEntity extends ProductEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode),
-                                                                                taxRate2.hashCode),
-                                                                            taxName3.hashCode),
-                                                                        taxRate3.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    stockQuantity.hashCode),
-                                                stockNotificationThreshold.hashCode),
-                                            stockNotification.hashCode),
-                                        documents.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode),
+                                                                                taxName3.hashCode),
+                                                                            taxRate3.hashCode),
+                                                                        customValue1.hashCode),
+                                                                    customValue2.hashCode),
+                                                                customValue3.hashCode),
+                                                            customValue4.hashCode),
+                                                        stockQuantity.hashCode),
+                                                    stockNotificationThreshold.hashCode),
+                                                stockNotification.hashCode),
+                                            documents.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            idempotencyKey.hashCode),
         id.hashCode));
   }
 
@@ -777,6 +792,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -896,6 +912,11 @@ class ProductEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -933,6 +954,7 @@ class ProductEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
+      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -992,6 +1014,7 @@ class ProductEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'ProductEntity', 'id'));
     } catch (_) {
       String _$failedField;

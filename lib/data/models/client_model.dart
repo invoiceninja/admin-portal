@@ -115,6 +115,7 @@ abstract class ClientEntity extends Object
   }) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       settings: SettingsEntity(),
       name: '',
@@ -178,6 +179,7 @@ abstract class ClientEntity extends Object
 
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..idNumber = ''
     ..documents.clear()
     ..isChanged = false
@@ -776,6 +778,7 @@ abstract class ClientContactEntity extends Object
   factory ClientContactEntity() {
     return _$ClientContactEntity._(
       id: BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       firstName: '',
       lastName: '',

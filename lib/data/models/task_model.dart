@@ -260,6 +260,7 @@ abstract class TaskEntity extends Object
 
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       number: '',
       isChanged: false,
       description: '',
@@ -295,6 +296,7 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..number = ''
     ..isChanged = false
     ..isDeleted = false

@@ -51,6 +51,7 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   factory StubEntity({String id, AppState state}) {
     return _$StubEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       isDeleted: false,
       createdAt: 0,

@@ -63,6 +63,7 @@ abstract class SubscriptionEntity extends Object
   factory SubscriptionEntity({String id, AppState state}) {
     return _$SubscriptionEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       name: '',
       isChanged: false,
       isDeleted: false,

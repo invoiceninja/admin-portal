@@ -253,6 +253,13 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -355,6 +362,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -680,6 +691,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String assignedUserId;
   @override
+  final String idempotencyKey;
+  @override
   final String id;
 
   factory _$TaskEntity([void Function(TaskEntityBuilder) updates]) =>
@@ -708,6 +721,7 @@ class _$TaskEntity extends TaskEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -769,6 +783,7 @@ class _$TaskEntity extends TaskEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -793,25 +808,25 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode),
-                                                                                clientId.hashCode),
-                                                                            rate.hashCode),
-                                                                        projectId.hashCode),
-                                                                    timeLog.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                statusId.hashCode),
-                                            statusOrder.hashCode),
-                                        documents.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
+                                                                                rate.hashCode),
+                                                                            projectId.hashCode),
+                                                                        timeLog.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    statusId.hashCode),
+                                                statusOrder.hashCode),
+                                            documents.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            idempotencyKey.hashCode),
         id.hashCode));
   }
 
@@ -840,6 +855,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -940,6 +956,11 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -971,6 +992,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
+      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1025,6 +1047,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'TaskEntity', 'id'));
     } catch (_) {
       String _$failedField;

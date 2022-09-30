@@ -65,6 +65,7 @@ abstract class CompanyGatewayEntity extends Object
   factory CompanyGatewayEntity({String id, AppState state}) {
     return _$CompanyGatewayEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       isDeleted: false,
       gatewayId: '',

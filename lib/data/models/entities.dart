@@ -345,6 +345,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   static String get nextId => '${--counter}';
 
+  static String get nextIdempotencyKey => getRandomString();
+
   @nullable
   bool get isChanged;
 
@@ -372,6 +374,10 @@ abstract class BaseEntity implements SelectableEntity {
   @nullable
   @BuiltValueField(wireName: 'entity_type')
   EntityType get entityType;
+
+  @nullable
+  @BuiltValueField(wireName: 'idempotency_key')
+  String get idempotencyKey;
 
   String get entityKey => '__${entityType}__${id}__';
 
