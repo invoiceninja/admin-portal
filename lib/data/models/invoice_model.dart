@@ -1342,7 +1342,7 @@ abstract class InvoiceEntity extends Object
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
   Map<String, Map<String, dynamic>> getTaxes(int precision) {
     final taxes = <String, Map<String, dynamic>>{};
-    final taxable = getTaxable();
+    final taxable = getTaxable(precision);
 
     double calculateAmount(double taxable, double rate) {
       if (usesInclusiveTaxes) {
