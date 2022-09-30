@@ -56,6 +56,7 @@ abstract class BankAccountEntity extends Object
   factory BankAccountEntity({String id, AppState state}) {
     return _$BankAccountEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       isDeleted: false,
       createdAt: 0,

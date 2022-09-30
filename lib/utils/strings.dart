@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -231,4 +233,12 @@ String trimUrl(String url) {
   }
 
   return url;
+}
+
+// https://stackoverflow.com/a/61929967/497368
+String getRandomString([int length = 32]) {
+  const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  return String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(Random().nextInt(_chars.length))));
 }

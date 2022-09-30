@@ -60,6 +60,7 @@ abstract class TokenEntity extends Object
   factory TokenEntity({String id, AppState state}) {
     return _$TokenEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       name: '',
       token: '',

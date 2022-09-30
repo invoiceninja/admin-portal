@@ -58,6 +58,7 @@ abstract class DocumentEntity extends Object
   factory DocumentEntity({String id}) {
     return _$DocumentEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       name: '',
       url: '',
@@ -119,6 +120,7 @@ abstract class DocumentEntity extends Object
 
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..isChanged = false
     ..isDeleted = false);
 

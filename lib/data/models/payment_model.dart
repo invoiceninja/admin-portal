@@ -80,6 +80,7 @@ abstract class PaymentEntity extends Object
 
     return _$PaymentEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       amount: 0.0,
       transactionReference: '',

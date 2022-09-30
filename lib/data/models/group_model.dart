@@ -56,6 +56,7 @@ abstract class GroupEntity extends Object
   factory GroupEntity({String id, AppState state}) {
     return _$GroupEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       name: '',
       settings: SettingsEntity(),

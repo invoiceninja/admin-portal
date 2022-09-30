@@ -56,6 +56,7 @@ abstract class WebhookEntity extends Object
   factory WebhookEntity({String id, AppState state}) {
     return _$WebhookEntity._(
       id: id ?? BaseEntity.nextId,
+      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       eventId: '',
       format: 'JSON',

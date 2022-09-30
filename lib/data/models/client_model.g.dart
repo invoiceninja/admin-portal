@@ -283,6 +283,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -501,6 +508,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -609,6 +620,13 @@ class _$ClientContactEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -706,6 +724,10 @@ class _$ClientContactEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -1002,6 +1024,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String assignedUserId;
   @override
+  final String idempotencyKey;
+  @override
   final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
@@ -1056,6 +1080,7 @@ class _$ClientEntity extends ClientEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(groupId, 'ClientEntity', 'groupId');
@@ -1190,6 +1215,7 @@ class _$ClientEntity extends ClientEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1214,25 +1240,25 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
-                                                                                lastLogin.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            contacts.hashCode),
-                                                        activities.hashCode),
-                                                    ledger.hashCode),
-                                                gatewayTokens.hashCode),
-                                            documents.hashCode),
-                                        systemLogs.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode), lastLogin.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customValue3.hashCode),
+                                                                    customValue4.hashCode),
+                                                                contacts.hashCode),
+                                                            activities.hashCode),
+                                                        ledger.hashCode),
+                                                    gatewayTokens.hashCode),
+                                                documents.hashCode),
+                                            systemLogs.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            idempotencyKey.hashCode),
         id.hashCode));
   }
 
@@ -1287,6 +1313,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1508,6 +1535,11 @@ class ClientEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1567,6 +1599,7 @@ class ClientEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
+      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1647,6 +1680,7 @@ class ClientEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'ClientEntity', 'id'));
     } catch (_) {
       String _$failedField;
@@ -1721,6 +1755,8 @@ class _$ClientContactEntity extends ClientContactEntity {
   @override
   final String assignedUserId;
   @override
+  final String idempotencyKey;
+  @override
   final String id;
 
   factory _$ClientContactEntity(
@@ -1749,6 +1785,7 @@ class _$ClientContactEntity extends ClientContactEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -1821,6 +1858,7 @@ class _$ClientContactEntity extends ClientContactEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1845,25 +1883,25 @@ class _$ClientContactEntity extends ClientContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
-                                                                                password.hashCode),
-                                                                            phone.hashCode),
-                                                                        contactKey.hashCode),
-                                                                    isPrimary.hashCode),
-                                                                sendEmail.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            lastLogin.hashCode),
-                                        link.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), password.hashCode),
+                                                                                phone.hashCode),
+                                                                            contactKey.hashCode),
+                                                                        isPrimary.hashCode),
+                                                                    sendEmail.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                lastLogin.hashCode),
+                                            link.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            idempotencyKey.hashCode),
         id.hashCode));
   }
 
@@ -1891,6 +1929,7 @@ class _$ClientContactEntity extends ClientContactEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1986,6 +2025,11 @@ class ClientContactEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -2016,6 +2060,7 @@ class ClientContactEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
+      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -2067,6 +2112,7 @@ class ClientContactEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(id, 'ClientContactEntity', 'id'));
     replace(_$result);
     return _$result;
