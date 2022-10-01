@@ -39,6 +39,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.phone,
       ClientFields.website,
       ClientFields.language,
+      ClientFields.invoicelanguage,
       ClientFields.currency,
       ClientFields.taskRate,
       ClientFields.publicNotes,
@@ -109,6 +110,9 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.language:
         return Text(
             state.staticState.languageMap[client.languageId]?.name ?? '');
+      case ClientFields.invoicelanguage:
+        return Text(
+            state.staticState.languageMap[client.invoicelanguageId]?.name ?? '');
       case ClientFields.currency:
         return Text(
             state.staticState.currencyMap[client.currencyId]?.name ?? '');

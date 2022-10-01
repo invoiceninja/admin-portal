@@ -138,6 +138,10 @@ abstract class SettingsEntity
   String get languageId;
 
   @nullable
+  @BuiltValueField(wireName: 'invoicelanguage_id')
+  String get invoicelanguageId;
+
+  @nullable
   @BuiltValueField(wireName: 'show_currency_code')
   bool get showCurrencyCode;
 
@@ -914,6 +918,9 @@ abstract class SettingsEntity
   bool get hasDateFormat => dateFormatId != null && dateFormatId.isNotEmpty;
 
   bool get hasLanguage => languageId != null && languageId.isNotEmpty;
+
+
+  bool get hasinvoiceLanguage => invoicelanguageId != null && invoicelanguageId.isNotEmpty;
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 

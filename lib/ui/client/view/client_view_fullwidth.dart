@@ -170,6 +170,18 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                  if ((client.invoicelanguageId ?? '').isNotEmpty &&
+                      client.invoicelanguageId != state.company.settings.languageId)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 1),
+                      child: Text(
+                        state.staticState.languageMap[client.invoicelanguageId]
+                            ?.name ??
+                            '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   if ((client.settings.defaultTaskRate ?? 0) != 0)
                     Text(
                         '${localization.taskRate}: ${client.settings.defaultTaskRate}'),

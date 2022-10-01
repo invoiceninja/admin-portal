@@ -80,6 +80,7 @@ class ClientFields {
   static const String phone = 'phone';
   static const String website = 'website';
   static const String language = 'language';
+  static const String invoicelanguage = 'invoicelanguage';
   static const String taskRate = 'task_rate';
   static const String publicNotes = 'public_notes';
   static const String privateNotes = 'private_notes';
@@ -365,6 +366,9 @@ abstract class ClientEntity extends Object
   bool get hasLanguage =>
       settings.languageId != null && settings.languageId.isNotEmpty;
 
+  bool get hasinvoiceLanguage =>
+      settings.invoicelanguageId != null && settings.invoicelanguageId.isNotEmpty;
+
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
@@ -491,6 +495,15 @@ abstract class ClientEntity extends Object
             staticState.languageMap[clientA.languageId] ?? LanguageEntity();
         final languageB =
             staticState.languageMap[clientB.languageId] ?? LanguageEntity();
+        response = languageA.name
+            .toLowerCase()
+            .compareTo(languageB.name.toLowerCase());
+        break;
+      case ClientFields.invoicelanguage:
+        final languageA =
+            staticState.languageMap[clientA.invoicelanguageId] ?? LanguageEntity();
+        final languageB =
+            staticState.languageMap[clientB.invoicelanguageId] ?? LanguageEntity();
         response = languageA.name
             .toLowerCase()
             .compareTo(languageB.name.toLowerCase());
@@ -730,6 +743,7 @@ abstract class ClientEntity extends Object
       settings.currencyId != null && settings.currencyId.isNotEmpty;
 
   String get languageId => settings.languageId;
+  String get invoicelanguageId => settings.invoicelanguageId;
 
   ClientContactEntity getContact(String contactId) => contacts
       .firstWhere((contact) => contact.id == contactId, orElse: () => null);

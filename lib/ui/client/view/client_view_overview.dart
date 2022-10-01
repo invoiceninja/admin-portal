@@ -83,6 +83,11 @@ class ClientOverview extends StatelessWidget {
       fields[ClientFields.language] =
           statics.languageMap[client.languageId]?.name;
     }
+    if (client.hasLanguage &&
+        client.invoicelanguageId != company.settings.languageId) {
+      fields[ClientFields.invoicelanguage] =
+          statics.languageMap[client.invoicelanguageId]?.name;
+    }
 
     if (client.hasCurrency && client.currencyId != company.currencyId) {
       fields[ClientFields.currency] =

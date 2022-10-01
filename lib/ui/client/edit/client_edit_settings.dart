@@ -110,6 +110,14 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           onSelected: (SelectableEntity language) => viewModel.onChanged(client
               .rebuild((b) => b..settings.languageId = language?.id ?? '')),
         ),
+        EntityDropdown(
+          entityType: EntityType.language,
+          entityList: memoizedLanguageList(viewModel.staticState.languageMap),
+          labelText: localization.invoicelanguage,
+          entityId: client.invoicelanguageId,
+          onSelected: (SelectableEntity language) => viewModel.onChanged(client
+              .rebuild((b) => b..settings.invoicelanguageId = language?.id ?? '')),
+        ),
         if (company.isModuleEnabled(EntityType.invoice))
           AppDropdownButton<String>(
             showBlank: true,
