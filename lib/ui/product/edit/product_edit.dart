@@ -32,7 +32,6 @@ class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productEdit');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  bool _autoValidate = false;
 
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
@@ -149,10 +148,6 @@ class _ProductEditState extends State<ProductEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -175,7 +170,6 @@ class _ProductEditState extends State<ProductEdit> {
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterAProductKey
                       : null,
-                  autovalidate: _autoValidate,
                   onSavePressed: viewModel.onSavePressed,
                   keyboardType: TextInputType.text,
                 ),

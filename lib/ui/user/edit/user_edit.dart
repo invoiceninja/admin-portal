@@ -40,7 +40,6 @@ class _UserEditState extends State<UserEdit>
   final _debouncer = Debouncer();
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -171,10 +170,6 @@ class _UserEditState extends State<UserEdit>
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-
         if (!isValid) {
           return;
         }
@@ -197,7 +192,6 @@ class _UserEditState extends State<UserEdit>
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterAFirstName
                         : null,
-                    autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.name,
                   ),
@@ -207,7 +201,6 @@ class _UserEditState extends State<UserEdit>
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterALastName
                         : null,
-                    autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.name,
                   ),
@@ -217,7 +210,6 @@ class _UserEditState extends State<UserEdit>
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterYourEmail
                         : null,
-                    autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.emailAddress,
                   ),

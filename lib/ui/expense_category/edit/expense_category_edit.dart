@@ -27,7 +27,6 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_expenseCategoryEdit');
   final _debouncer = Debouncer();
-  bool _autoValidate = false;
 
   // STARTER: controllers - do not remove comment
   final _nameController = TextEditingController();
@@ -86,10 +85,6 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -107,7 +102,6 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                     DecoratedFormField(
                       autofocus: true,
                       controller: _nameController,
-                      autovalidate: _autoValidate,
                       label: localization.name,
                       onSavePressed: viewModel.onSavePressed,
                       keyboardType: TextInputType.text,

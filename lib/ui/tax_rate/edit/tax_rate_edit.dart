@@ -28,7 +28,6 @@ class _TaxRateEditState extends State<TaxRateEdit> {
       GlobalKey<FormState>(debugLabel: '_taxRateEdit');
 
   FocusScopeNode _focusNode;
-  bool autoValidate = false;
 
   final _nameController = TextEditingController();
   final _rateController = TextEditingController();
@@ -101,7 +100,6 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterAName
                     : null,
-                autovalidate: autoValidate,
                 onSavePressed: viewModel.onSavePressed,
                 keyboardType: TextInputType.text,
               ),

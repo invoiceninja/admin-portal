@@ -27,7 +27,6 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskStatusEdit');
   final _debouncer = Debouncer();
-  bool _autoValidate = false;
 
   final _nameController = TextEditingController();
 
@@ -84,10 +83,6 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -104,7 +99,6 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                     DecoratedFormField(
                       autofocus: true,
                       controller: _nameController,
-                      autovalidate: _autoValidate,
                       label: localization.name,
                       keyboardType: TextInputType.text,
                       validator: (val) => val.isEmpty || val.trim().isEmpty

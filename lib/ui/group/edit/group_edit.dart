@@ -32,7 +32,6 @@ class _GroupEditState extends State<GroupEdit> {
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
-  bool autoValidate = false;
 
   @override
   void didChangeDependencies() {
@@ -85,10 +84,6 @@ class _GroupEditState extends State<GroupEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-
         if (!isValid) {
           return;
         }
@@ -111,8 +106,7 @@ class _GroupEditState extends State<GroupEdit> {
                       onSavePressed: viewModel.onSavePressed,
                       validator: (val) => val.isEmpty || val.trim().isEmpty
                           ? localization.pleaseEnterAValue
-                          : null,
-                      autovalidate: autoValidate,
+                          : null,                      
                     ),
                   ],
                 ),

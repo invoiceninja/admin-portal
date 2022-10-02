@@ -27,7 +27,6 @@ class _BankAccountEditState extends State<BankAccountEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_bankAccountEdit');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  bool _autoValidate = false;
 
   final _nameController = TextEditingController();
 
@@ -88,10 +87,6 @@ class _BankAccountEditState extends State<BankAccountEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -115,7 +110,6 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterAName
                       : null,
-                  autovalidate: _autoValidate,
                   onSavePressed: viewModel.onSavePressed,
                   keyboardType: TextInputType.text,
                 ),

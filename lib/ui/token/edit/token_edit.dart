@@ -30,7 +30,6 @@ class _TokenEditState extends State<TokenEdit> {
   final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-  bool _autoValidate = false;
 
   @override
   void didChangeDependencies() {
@@ -81,10 +80,6 @@ class _TokenEditState extends State<TokenEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -102,7 +97,6 @@ class _TokenEditState extends State<TokenEdit> {
                       autofocus: true,
                       controller: _nameController,
                       label: localization.name,
-                      autovalidate: _autoValidate,
                       validator: (value) =>
                           value.isEmpty || value.trim().isEmpty
                               ? localization.pleaseEnterAName

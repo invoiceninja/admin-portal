@@ -53,7 +53,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  bool autoValidate = false;
   final _debouncer = Debouncer(sendFirstAction: true);
 
   final _nameController = TextEditingController();
@@ -272,7 +271,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterAName
                         : null,
-                    autovalidate: autoValidate,
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.text,
                   ),

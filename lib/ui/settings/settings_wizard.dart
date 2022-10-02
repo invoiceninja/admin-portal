@@ -48,7 +48,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
   final FocusScopeNode _focusNode = FocusScopeNode();
   final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
-  bool _autoValidate = false;
   bool _isSaving = false;
   bool _isSubdomainUnique = false;
   bool _isCheckingSubdomain = false;
@@ -127,10 +126,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
   void _onSavePressed() {
     final bool isValid = _formKey.currentState.validate();
 
-    setState(() {
-      _autoValidate = !isValid;
-    });
-
     if (!isValid || _isCheckingSubdomain) {
       return;
     }
@@ -196,7 +191,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final companyName = DecoratedFormField(
       autofocus: true,
       label: localization.companyName,
-      autovalidate: _autoValidate,
       controller: _nameController,
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -205,7 +199,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
     final firstName = DecoratedFormField(
       label: localization.firstName,
-      autovalidate: _autoValidate,
       controller: _firstNameController,
       keyboardType: TextInputType.name,
       autofillHints: [AutofillHints.givenName],
@@ -215,7 +208,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
     final lastName = DecoratedFormField(
       label: localization.lastName,
-      autovalidate: _autoValidate,
       controller: _lastNameController,
       keyboardType: TextInputType.name,
       autofillHints: [AutofillHints.familyName],
@@ -278,7 +270,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
     final subdomain = DecoratedFormField(
       label: localization.subdomain,
-      autovalidate: _autoValidate,
       controller: _subdomainController,
       keyboardType: TextInputType.text,
       validator: (value) {

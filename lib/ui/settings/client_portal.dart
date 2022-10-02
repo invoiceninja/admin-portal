@@ -53,7 +53,6 @@ class _ClientPortalState extends State<ClientPortal>
   TabController _controller;
 
   final _webClient = WebClient();
-  bool _autoValidate = false;
   bool _isSubdomainUnique = true;
   bool _isCheckingSubdomain = false;
 
@@ -218,10 +217,6 @@ class _ClientPortalState extends State<ClientPortal>
   void _onSavePressed(BuildContext context) {
     final bool isValid = _formKey.currentState.validate();
 
-    setState(() {
-      _autoValidate = !isValid;
-    });
-
     if (!isValid || _isCheckingSubdomain) {
       return;
     }
@@ -304,7 +299,6 @@ class _ClientPortalState extends State<ClientPortal>
                         company.portalMode == kClientPortalModeSubdomain) ...[
                       DecoratedFormField(
                         label: localization.subdomain,
-                        autovalidate: _autoValidate,
                         controller: _subdomainController,
                         keyboardType: TextInputType.text,
                         hint: localization.subdomainHelp,

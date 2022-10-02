@@ -35,8 +35,6 @@ class _ProjectEditState extends State<ProjectEdit> {
       GlobalKey<FormState>(debugLabel: '_projectEdit');
   final _debouncer = Debouncer();
 
-  bool _autoValidate = false;
-
   final _numberController = TextEditingController();
   final _nameController = TextEditingController();
   final _dueDateController = TextEditingController();
@@ -132,10 +130,6 @@ class _ProjectEditState extends State<ProjectEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
         if (!isValid) {
           return;
         }
@@ -156,7 +150,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                     validator: (String val) => val.trim().isEmpty
                         ? localization.pleaseEnterAName
                         : null,
-                    autovalidate: _autoValidate,
                     keyboardType: TextInputType.text,
                     autofocus: true,
                     label: localization.projectName,
@@ -175,7 +168,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                           validator: (String val) => val.trim().isEmpty
                               ? localization.pleaseSelectAClient
                               : null,
-                          autoValidate: _autoValidate,
                           onSelected: (client) {
                             viewModel.onChanged(project.rebuild(
                                 (b) => b..clientId = client?.id ?? ''));

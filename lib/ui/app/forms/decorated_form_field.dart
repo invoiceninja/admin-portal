@@ -15,7 +15,6 @@ class DecoratedFormField extends StatefulWidget {
     this.controller,
     this.label,
     this.onSavePressed,
-    this.autovalidate = false,
     this.autocorrect = false,
     this.obscureText = false,
     this.onChanged,
@@ -48,7 +47,6 @@ class DecoratedFormField extends StatefulWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final int minLines;
-  final bool autovalidate;
   final bool enabled;
   final bool autocorrect;
   final bool obscureText;
@@ -140,13 +138,11 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       autofocus: widget.autofocus,
       decoration: inputDecoration,
       validator: widget.validator,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: widget.keyboardType,
       maxLines: widget.expands ? null : widget.maxLines ?? 1,
       minLines: widget.expands ? null : widget.minLines,
       expands: widget.expands,
-      autovalidateMode: widget.autovalidate
-          ? AutovalidateMode.onUserInteraction
-          : AutovalidateMode.disabled,
       autocorrect:
           widget.isMoney || widget.isPercent ? false : widget.autocorrect,
       obscureText: widget.obscureText,
