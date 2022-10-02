@@ -204,48 +204,52 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 right: kMobileDialogPadding / (!showStanding ? 1 : 2),
                 bottom: kMobileDialogPadding,
                 left: kMobileDialogPadding / 2),
-            child: ListView(
+            child: Scrollbar(
+              thumbVisibility: true,
               controller: _scrollController3,
-              children: [
-                Text(
-                  localization.contacts +
-                      (vendor.contacts.length > 1
-                          ? ' (${vendor.contacts.length})'
-                          : ''),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(height: 8),
-                ...vendor.contacts.map((contact) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        contact.fullName,
-                        style: Theme.of(context).textTheme.subtitle1,
-                      ),
-                      if (contact.email.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.email,
-                            child: IconText(
-                                icon: Icons.email, text: contact.email),
-                          ),
+              child: ListView(
+                controller: _scrollController3,
+                children: [
+                  Text(
+                    localization.contacts +
+                        (vendor.contacts.length > 1
+                            ? ' (${vendor.contacts.length})'
+                            : ''),
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(height: 8),
+                  ...vendor.contacts.map((contact) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          contact.fullName,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
-                      if (contact.phone.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: CopyToClipboard(
-                            value: contact.phone,
-                            child: IconText(
-                                icon: Icons.phone, text: contact.phone),
+                        if (contact.email.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: CopyToClipboard(
+                              value: contact.email,
+                              child: IconText(
+                                  icon: Icons.email, text: contact.email),
+                            ),
                           ),
-                        ),
-                      SizedBox(height: 16),
-                    ],
-                  );
-                }).toList()
-              ],
+                        if (contact.phone.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: CopyToClipboard(
+                              value: contact.phone,
+                              child: IconText(
+                                  icon: Icons.phone, text: contact.phone),
+                            ),
+                          ),
+                        SizedBox(height: 16),
+                      ],
+                    );
+                  }).toList()
+                ],
+              ),
             ),
           )),
           if (showStanding)
