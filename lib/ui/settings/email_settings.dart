@@ -40,7 +40,6 @@ class _EmailSettingsState extends State<EmailSettings> {
       GlobalKey<FormState>(debugLabel: '_emailSettings');
 
   FocusScopeNode _focusNode;
-  bool autoValidate = false;
 
   final _fromNameController = TextEditingController();
   final _replyToEmailController = TextEditingController();

@@ -75,6 +75,16 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -85,7 +95,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
       title: viewModel.taxRate.isNew
           ? localization.newTaxRate
           : localization.editTaxRate,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: _onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
         focusNode: _focusNode,
@@ -100,14 +110,14 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                 validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterAName
                     : null,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
                 keyboardType: TextInputType.text,
               ),
               DecoratedFormField(
                 label: localization.rate,
                 controller: _rateController,
                 isPercent: true,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ],

@@ -67,6 +67,16 @@ class _TokenEditState extends State<TokenEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -77,15 +87,7 @@ class _TokenEditState extends State<TokenEdit> {
       entity: token,
       title: token.isNew ? localization.newToken : localization.editToken,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -101,7 +103,7 @@ class _TokenEditState extends State<TokenEdit> {
                           value.isEmpty || value.trim().isEmpty
                               ? localization.pleaseEnterAName
                               : null,
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: _onSavePressed,
                       keyboardType: TextInputType.text,
                     ),
                   ],

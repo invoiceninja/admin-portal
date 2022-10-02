@@ -341,7 +341,7 @@ class _ClientPortalState extends State<ClientPortal>
                                     state.isHosted
                                 ? localization.pleaseEnterAValue
                                 : null,
-                        onSavePressed: viewModel.onSavePressed,
+                        onSavePressed: _onSavePressed,
                       ),
                       SizedBox(height: 16),
                       if (state.isEnterprisePlan)

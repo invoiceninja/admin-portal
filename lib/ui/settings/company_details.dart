@@ -268,9 +268,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   DecoratedFormField(
                     label: localization.name,
                     controller: _nameController,
+                    /*
                     validator: (val) => val.isEmpty || val.trim().isEmpty
                         ? localization.pleaseEnterAName
                         : null,
+                        */
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.text,
                   ),
