@@ -72,6 +72,16 @@ class _BankAccountEditState extends State<BankAccountEdit> {
     }
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -84,15 +94,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
           ? localization.newBankAccount
           : localization.editBankAccount,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (_) => _onSavePressed(),
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -110,7 +112,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterAName
                       : null,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: (_) => _onSavePressed(),
                   keyboardType: TextInputType.text,
                 ),
               ],

@@ -46,6 +46,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
 
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_clientEditDetails');
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
 
@@ -115,6 +117,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     }
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   void _setContactControllers(Contact contact) {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
@@ -161,115 +173,118 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final client = viewModel.client;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
-    return FormCard(
-      isLast: true,
-      padding: isFullscreen
-          ? const EdgeInsets.only(
-              left: kMobileDialogPadding,
-              top: kMobileDialogPadding,
-              right: kMobileDialogPadding / 2,
-            )
-          : null,
-      children: <Widget>[
-        DecoratedFormField(
-          autofocus: true,
-          controller: _nameController,
-          validator: (String val) => !viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
-          onSavePressed: viewModel.onSavePressed,
-          label: localization.name,
-          keyboardType: TextInputType.text,
-          decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
-              ? InputDecoration(
-                  labelText: localization.name,
-                  suffixIcon: IconButton(
-                      alignment: Alignment.bottomCenter,
-                      color: Theme.of(context).cardColor,
-                      icon: Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () async {
-                        final contact = await getDeviceContact();
-                        if (contact != null) {
-                          setState(() {
-                            _setContactControllers(contact);
-                          });
-                        }
-                      }),
-                )
-              : null,
-        ),
-        if (client.isOld)
+    return Form(
+      key: _formKey,
+      child: FormCard(
+        isLast: true,
+        padding: isFullscreen
+            ? const EdgeInsets.only(
+                left: kMobileDialogPadding,
+                top: kMobileDialogPadding,
+                right: kMobileDialogPadding / 2,
+              )
+            : null,
+        children: <Widget>[
           DecoratedFormField(
-            label: localization.number,
-            controller: _numberController,
-            onSavePressed: viewModel.onSavePressed,
+            autofocus: true,
+            controller: _nameController,
+            validator: (String val) => !viewModel.client.hasNameSet
+                ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                : null,
+            onSavePressed: (_) => _onSavePressed(),
+            label: localization.name,
+            keyboardType: TextInputType.text,
+            decoration: !kIsWeb && (Platform.isIOS || Platform.isAndroid)
+                ? InputDecoration(
+                    labelText: localization.name,
+                    suffixIcon: IconButton(
+                        alignment: Alignment.bottomCenter,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () async {
+                          final contact = await getDeviceContact();
+                          if (contact != null) {
+                            setState(() {
+                              _setContactControllers(contact);
+                            });
+                          }
+                        }),
+                  )
+                : null,
+          ),
+          if (client.isOld)
+            DecoratedFormField(
+              label: localization.number,
+              controller: _numberController,
+              onSavePressed: (_) => _onSavePressed(),
+              keyboardType: TextInputType.text,
+            ),
+          if (memoizedGroupList(state.groupState.map).isNotEmpty)
+            DynamicSelector(
+              entityType: EntityType.group,
+              entityIds: memoizedGroupList(state.groupState.map),
+              entityId: client.groupId,
+              onChanged: (groupId) => viewModel
+                  .onChanged(client.rebuild((b) => b..groupId = groupId)),
+            ),
+          UserPicker(
+            userId: client.assignedUserId,
+            onChanged: (userId) => viewModel
+                .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
+          ),
+          DecoratedFormField(
+            label: localization.idNumber,
+            controller: _idNumberController,
+            onSavePressed: (_) => _onSavePressed(),
             keyboardType: TextInputType.text,
           ),
-        if (memoizedGroupList(state.groupState.map).isNotEmpty)
-          DynamicSelector(
-            entityType: EntityType.group,
-            entityIds: memoizedGroupList(state.groupState.map),
-            entityId: client.groupId,
-            onChanged: (groupId) => viewModel
-                .onChanged(client.rebuild((b) => b..groupId = groupId)),
+          DecoratedFormField(
+            label: localization.vatNumber,
+            controller: _vatNumberController,
+            onSavePressed: (_) => _onSavePressed(),
+            keyboardType: TextInputType.text,
           ),
-        UserPicker(
-          userId: client.assignedUserId,
-          onChanged: (userId) => viewModel
-              .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
-        ),
-        DecoratedFormField(
-          label: localization.idNumber,
-          controller: _idNumberController,
-          onSavePressed: viewModel.onSavePressed,
-          keyboardType: TextInputType.text,
-        ),
-        DecoratedFormField(
-          label: localization.vatNumber,
-          controller: _vatNumberController,
-          onSavePressed: viewModel.onSavePressed,
-          keyboardType: TextInputType.text,
-        ),
-        DecoratedFormField(
-          label: localization.website,
-          controller: _websiteController,
-          keyboardType: TextInputType.url,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        DecoratedFormField(
-          label: localization.phone,
-          controller: _phoneController,
-          keyboardType: TextInputType.phone,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        CustomField(
-          controller: _custom1Controller,
-          field: CustomFieldType.client1,
-          value: client.customValue1,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        CustomField(
-          controller: _custom2Controller,
-          field: CustomFieldType.client2,
-          value: client.customValue2,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        CustomField(
-          controller: _custom3Controller,
-          field: CustomFieldType.client3,
-          value: client.customValue3,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-        CustomField(
-          controller: _custom4Controller,
-          field: CustomFieldType.client4,
-          value: client.customValue4,
-          onSavePressed: viewModel.onSavePressed,
-        ),
-      ],
+          DecoratedFormField(
+            label: localization.website,
+            controller: _websiteController,
+            keyboardType: TextInputType.url,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+          DecoratedFormField(
+            label: localization.phone,
+            controller: _phoneController,
+            keyboardType: TextInputType.phone,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+          CustomField(
+            controller: _custom1Controller,
+            field: CustomFieldType.client1,
+            value: client.customValue1,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+          CustomField(
+            controller: _custom2Controller,
+            field: CustomFieldType.client2,
+            value: client.customValue2,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+          CustomField(
+            controller: _custom3Controller,
+            field: CustomFieldType.client3,
+            value: client.customValue3,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+          CustomField(
+            controller: _custom4Controller,
+            field: CustomFieldType.client4,
+            value: client.customValue4,
+            onSavePressed: (_) => _onSavePressed(),
+          ),
+        ],
+      ),
     );
   }
 }
