@@ -85,10 +85,7 @@ abstract class PaymentEntity extends Object
       amount: 0.0,
       transactionReference: '',
       date: convertDateTimeToSqlDate(),
-      typeId: state?.company != null &&
-              (state.company.settings.defaultPaymentTypeId ?? '').isNotEmpty
-          ? state.company.settings.defaultPaymentTypeId
-          : '',
+      typeId: settings.defaultPaymentTypeId ?? '',
       clientId: client?.id ?? '',
       privateNotes: '',
       exchangeRate: 1,
