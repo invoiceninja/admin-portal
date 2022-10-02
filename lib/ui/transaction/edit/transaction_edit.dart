@@ -82,12 +82,6 @@ class _TransactionEditState extends State<TransactionEdit> {
   void _onSavePressed() {
     final bool isValid = _formKey.currentState.validate();
 
-    /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
     if (!isValid) {
       return;
     }
@@ -146,7 +140,7 @@ class _TransactionEditState extends State<TransactionEdit> {
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: _amountController,
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: (_) => _onSavePressed(),
                       validator: (value) =>
                           value.isEmpty ? localization.pleaseEnterAValue : null,
                     ),

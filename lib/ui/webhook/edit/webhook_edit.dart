@@ -91,12 +91,6 @@ class _WebhookEditState extends State<WebhookEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
         if (!isValid) {
           return;
         }

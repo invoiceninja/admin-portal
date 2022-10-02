@@ -189,12 +189,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
         if (!isValid) {
           return;
         }
