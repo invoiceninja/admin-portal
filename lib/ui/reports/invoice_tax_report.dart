@@ -15,6 +15,7 @@ enum TaxRateReportFields {
   client_number,
   number,
   amount,
+  net_amount,
   date,
   tax_name,
   tax_rate,
@@ -110,6 +111,9 @@ ReportResult taxReport(
               break;
             case TaxRateReportFields.amount:
               value = invoice.amount;
+              break;
+            case TaxRateReportFields.net_amount:
+              value = invoice.netAmount;
               break;
             case TaxRateReportFields.tax_name:
               value = taxName;
