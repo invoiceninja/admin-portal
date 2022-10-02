@@ -194,6 +194,9 @@ ReportResult taxReport(
             case TaxRateReportFields.amount:
               value = credit.amount * -1;
               break;
+            case TaxRateReportFields.net_amount:
+              value = credit.netAmount * -1;
+              break;
             case TaxRateReportFields.tax_name:
               value = taxName;
               break;
