@@ -55,7 +55,6 @@ class _UserDetailsState extends State<UserDetails>
       GlobalKey<FormState>(debugLabel: '_userDetails');
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -135,10 +134,6 @@ class _UserDetailsState extends State<UserDetails>
 
   void _onSavePressed(BuildContext context) {
     final bool isValid = _formKey.currentState.validate();
-
-    setState(() {
-      autoValidate = !isValid ?? false;
-    });
 
     if (!isValid) {
       return;
@@ -320,7 +315,6 @@ class _UserDetailsState extends State<UserDetails>
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterAFirstName
                       : null,
-                  autovalidate: autoValidate,
                   onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
@@ -330,7 +324,6 @@ class _UserDetailsState extends State<UserDetails>
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterALastName
                       : null,
-                  autovalidate: autoValidate,
                   onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.name,
                 ),
@@ -340,7 +333,6 @@ class _UserDetailsState extends State<UserDetails>
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterYourEmail
                       : null,
-                  autovalidate: autoValidate,
                   onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -352,7 +344,6 @@ class _UserDetailsState extends State<UserDetails>
                 ),
                 PasswordFormField(
                   controller: _passwordController,
-                  autoValidate: autoValidate,
                   onSavePressed: _onSavePressed,
                 ),
               ]),

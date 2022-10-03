@@ -84,12 +84,6 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
         if (!isValid) {
           return;
         }

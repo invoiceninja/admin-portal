@@ -27,7 +27,6 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_expenseCategoryEdit');
   final _debouncer = Debouncer();
-  bool _autoValidate = false;
 
   // STARTER: controllers - do not remove comment
   final _nameController = TextEditingController();
@@ -71,6 +70,16 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
     }
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -83,19 +92,7 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
           ? localization.newExpenseCategory
           : localization.editExpenseCategory,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (_) => _onSavePressed(),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -107,9 +104,11 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                     DecoratedFormField(
                       autofocus: true,
                       controller: _nameController,
-                      autovalidate: _autoValidate,
                       label: localization.name,
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: (_) => _onSavePressed(),
+                      validator: (value) => value.trim().isEmpty
+                          ? localization.pleaseEnterAName
+                          : null,
                       keyboardType: TextInputType.text,
                     ),
                     FormColorPicker(

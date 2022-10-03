@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class PasswordFormField extends StatefulWidget {
   const PasswordFormField({
     this.controller,
-    this.autoValidate,
     this.newPassword = true,
     this.validate = true,
     this.onSavePressed,
@@ -17,7 +16,6 @@ class PasswordFormField extends StatefulWidget {
 
   final TextEditingController controller;
   final Function(BuildContext) onSavePressed;
-  final bool autoValidate;
   final bool newPassword;
   final bool validate;
   final String labelText;
@@ -44,7 +42,6 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       controller: widget.controller,
       onSavePressed: widget.onSavePressed,
       autocorrect: false,
-      autovalidate: widget.autoValidate,
       decoration: InputDecoration(
         labelText: widget.labelText ?? localization.password,
         suffixIcon: IconButton(

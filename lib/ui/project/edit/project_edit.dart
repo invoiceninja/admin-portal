@@ -35,8 +35,6 @@ class _ProjectEditState extends State<ProjectEdit> {
       GlobalKey<FormState>(debugLabel: '_projectEdit');
   final _debouncer = Debouncer();
 
-  bool _autoValidate = false;
-
   final _numberController = TextEditingController();
   final _nameController = TextEditingController();
   final _dueDateController = TextEditingController();
@@ -118,6 +116,16 @@ class _ProjectEditState extends State<ProjectEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -129,19 +137,7 @@ class _ProjectEditState extends State<ProjectEdit> {
       entity: project,
       title: project.isNew ? localization.newProject : localization.editProject,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       body: Form(
         key: _formKey,
         child: Builder(builder: (BuildContext context) {
@@ -156,11 +152,10 @@ class _ProjectEditState extends State<ProjectEdit> {
                     validator: (String val) => val.trim().isEmpty
                         ? localization.pleaseEnterAName
                         : null,
-                    autovalidate: _autoValidate,
                     keyboardType: TextInputType.text,
                     autofocus: true,
                     label: localization.projectName,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   project.isNew
                       ? EntityDropdown(
@@ -175,7 +170,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                           validator: (String val) => val.trim().isEmpty
                               ? localization.pleaseSelectAClient
                               : null,
-                          autoValidate: _autoValidate,
                           onSelected: (client) {
                             viewModel.onChanged(project.rebuild(
                                 (b) => b..clientId = client?.id ?? ''));
@@ -188,7 +182,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                           controller: _numberController,
                           label: localization.projectNumber,
                           keyboardType: TextInputType.text,
-                          onSavePressed: viewModel.onSavePressed,
+                          onSavePressed: _onSavePressed,
                         ),
                   UserPicker(
                     userId: project.assignedUserId,
@@ -208,38 +202,38 @@ class _ProjectEditState extends State<ProjectEdit> {
                         decimal: true, signed: true),
                     controller: _hoursController,
                     label: localization.budgetedHours,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   DecoratedFormField(
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),
                     controller: _taskRateController,
                     label: localization.taskRate,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.project1,
                     value: project.customValue1,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.project2,
                     value: project.customValue2,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   CustomField(
                     controller: _custom3Controller,
                     field: CustomFieldType.project3,
                     value: project.customValue3,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   CustomField(
                     controller: _custom4Controller,
                     field: CustomFieldType.project4,
                     value: project.customValue4,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   DecoratedFormField(
                     maxLines: 4,

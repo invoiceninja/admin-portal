@@ -75,6 +75,16 @@ class _WebhookEditState extends State<WebhookEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -88,21 +98,7 @@ class _WebhookEditState extends State<WebhookEdit> {
       entity: webhook,
       title: webhook.isNew ? localization.newWebhook : localization.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -156,7 +152,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                           child: DecoratedFormField(
                             label: localization.headerKey,
                             controller: _headerKeyController,
-                            onSavePressed: viewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                             onChanged: (value) => setState(() {}),
                             keyboardType: TextInputType.text,
                           ),
@@ -168,7 +164,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                           child: DecoratedFormField(
                             label: localization.headerValue,
                             controller: _headerValueController,
-                            onSavePressed: viewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                             onChanged: (value) => setState(() {}),
                             keyboardType: TextInputType.text,
                           ),

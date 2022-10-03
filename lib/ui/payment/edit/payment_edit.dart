@@ -55,7 +55,6 @@ class _PaymentEditState extends State<PaymentEdit> {
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
-  bool autoValidate = false;
 
   bool _showConvertCurrency = false;
   double _convertedAmount = 0;
@@ -123,6 +122,16 @@ class _PaymentEditState extends State<PaymentEdit> {
         widget.viewModel.onChanged(payment);
       });
     }
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
   }
 
   void convertCurrency(SelectableEntity currency) {
@@ -212,7 +221,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                   entityType: EntityType.client,
                   labelText: AppLocalization.of(context).client,
                   entityId: payment.clientId,
-                  autoValidate: autoValidate,
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectAClient
                       : null,
@@ -237,13 +245,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),
                     label: amountPlaceholder,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
               ] else
                 DecoratedFormField(
                   controller: _numberController,
                   label: localization.paymentNumber,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: (context) => _onSavePressed,
                   validator: (value) =>
                       value.isEmpty ? localization.pleaseEnterAValue : null,
                   keyboardType: TextInputType.text,
@@ -258,13 +266,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                     index: index,
                     entityType: EntityType.invoice,
                     limit: limit,
+                    onSavePressed: _onSavePressed,
                   ),
               if (payment.isApplying != true)
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectADate
                       : null,
-                  autoValidate: autoValidate,
                   labelText: localization.paymentDate,
                   selectedDate: payment.date,
                   onSelected: (date, _) {
@@ -294,37 +302,38 @@ class _PaymentEditState extends State<PaymentEdit> {
                       index: index,
                       entityType: EntityType.credit,
                       limit: 0,
+                      onSavePressed: _onSavePressed,
                     ),
               if (payment.isApplying != true)
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.text,
                 ),
               CustomField(
                 controller: _custom1Controller,
                 field: CustomFieldType.payment1,
                 value: payment.customValue1,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               CustomField(
                 controller: _custom2Controller,
                 field: CustomFieldType.payment2,
                 value: payment.customValue2,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               CustomField(
                 controller: _custom3Controller,
                 field: CustomFieldType.payment3,
                 value: payment.customValue3,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               CustomField(
                 controller: _custom4Controller,
                 field: CustomFieldType.payment4,
                 value: payment.customValue4,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               if (payment.isApplying != true)
                 DecoratedFormField(
@@ -385,7 +394,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       '__payment_amount_${payment.exchangeCurrencyId}__'),
                   controller: _exchangeRateController,
                   label: localization.exchangeRate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
                 Focus(
@@ -425,7 +434,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     onChanged: (value) {
                       _convertedAmount = parseDouble(value);
                     },
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: false),
                   ),
@@ -436,20 +445,6 @@ class _PaymentEditState extends State<PaymentEdit> {
         ],
       ),
     );
-
-    void onSavePressed(BuildContext context) {
-      final bool isValid = _formKey.currentState.validate();
-
-      setState(() {
-        autoValidate = !isValid;
-      });
-
-      if (!isValid) {
-        return;
-      }
-
-      viewModel.onSavePressed(context);
-    }
 
     if (payment.isApplying == true && isDesktop(context)) {
       return AlertDialog(
@@ -480,7 +475,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               ),
               TextButton(
                 child: Text(localization.apply.toUpperCase()),
-                onPressed: () => onSavePressed(context),
+                onPressed: () => _onSavePressed(context),
               ),
             ],
           ]);
@@ -493,7 +488,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ? localization.applyPayment
                 : localization.editPayment,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
-        onSavePressed: onSavePressed,
+        onSavePressed: _onSavePressed,
         body: ScrollableListView(
           children: [body],
         ),
@@ -510,6 +505,7 @@ class PaymentableEditor extends StatefulWidget {
     @required this.index,
     @required this.entityType,
     @required this.limit,
+    @required this.onSavePressed,
   }) : super(key: key);
 
   final PaymentEditVM viewModel;
@@ -517,6 +513,7 @@ class PaymentableEditor extends StatefulWidget {
   final int index;
   final EntityType entityType;
   final double limit;
+  final Function(BuildContext) onSavePressed;
 
   @override
   _PaymentableEditorState createState() => _PaymentableEditorState();
@@ -727,16 +724,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           ),
           Expanded(
             child: DecoratedFormField(
-              showClear: false,
-              controller: _amountController,
-              autocorrect: false,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: true),
-              label: widget.entityType == EntityType.invoice
-                  ? localization.amount
-                  : localization.applied,
-              onSavePressed: viewModel.onSavePressed,
-            ),
+                showClear: false,
+                controller: _amountController,
+                autocorrect: false,
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
+                label: widget.entityType == EntityType.invoice
+                    ? localization.amount
+                    : localization.applied,
+                onSavePressed: widget.onSavePressed),
           ),
         ],
         if ((widget.entityType == EntityType.invoice &&

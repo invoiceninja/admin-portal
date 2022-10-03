@@ -138,6 +138,16 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -186,21 +196,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
           ? localization.newSubscription
           : localization.editSubscription,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
@@ -229,7 +225,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   DecoratedFormField(
                     controller: _nameController,
                     label: localization.name,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                     keyboardType: TextInputType.text,
                   ),
                   DynamicSelector(
@@ -377,7 +373,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   DecoratedFormField(
                     label: localization.promoCode,
                     controller: _promoCodeController,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                     keyboardType: TextInputType.text,
                   ),
                   DiscountField(
@@ -397,7 +393,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     label: localization.returnUrl,
                     controller: _returnUrlController,
                     keyboardType: TextInputType.url,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   BoolDropdownButton(
                       label: localization.allowQueryOverrides,
@@ -453,7 +449,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: _onSavePressed,
                     ),
                 ],
               )
@@ -467,7 +463,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   label: localization.webhookUrl,
                   controller: _postPurchaseUrlController,
                   keyboardType: TextInputType.url,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 AppDropdownButton<String>(
                   showBlank: true,
@@ -493,7 +489,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       child: DecoratedFormField(
                         label: localization.headerKey,
                         controller: _postPurchaseHeaderKeyController,
-                        onSavePressed: viewModel.onSavePressed,
+                        onSavePressed: _onSavePressed,
                         onChanged: (value) => setState(() {}),
                         keyboardType: TextInputType.text,
                       ),
@@ -505,7 +501,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       child: DecoratedFormField(
                         label: localization.headerValue,
                         controller: _postPurchaseHeaderValueController,
-                        onSavePressed: viewModel.onSavePressed,
+                        onSavePressed: _onSavePressed,
                         onChanged: (value) => setState(() {}),
                         keyboardType: TextInputType.text,
                       ),

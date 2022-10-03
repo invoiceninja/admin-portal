@@ -88,6 +88,9 @@ abstract class SettingsEntity
           clientSettings?.clientManualPaymentNotification ??
               groupSettings?.clientManualPaymentNotification ??
               companySettings?.clientManualPaymentNotification,
+      defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
+          groupSettings?.defaultPaymentTypeId ??
+          companySettings?.defaultPaymentTypeId,
     );
   }
 

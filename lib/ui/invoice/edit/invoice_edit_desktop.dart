@@ -678,6 +678,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               childAspectRatio:
                                   ((constraints.maxWidth / 2) - 8) / 50,
                               children: [
+                                DesignPicker(
+                                  initialValue: invoice.designId,
+                                  onSelected: (value) {
+                                    viewModel.onChanged(invoice.rebuild(
+                                        (b) => b..designId = value.id));
+                                  },
+                                ),
                                 UserPicker(
                                   userId: invoice.assignedUserId,
                                   onChanged: (userId) => viewModel.onChanged(
@@ -755,13 +762,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       decimal: true),
                                   onSavePressed:
                                       widget.entityViewModel.onSavePressed,
-                                ),
-                                DesignPicker(
-                                  initialValue: invoice.designId,
-                                  onSelected: (value) {
-                                    viewModel.onChanged(invoice.rebuild(
-                                        (b) => b..designId = value.id));
-                                  },
                                 ),
                                 if (company.hasTaxes || invoice.isInvoice)
                                   Row(

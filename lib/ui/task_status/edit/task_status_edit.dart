@@ -27,7 +27,6 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskStatusEdit');
   final _debouncer = Debouncer();
-  bool _autoValidate = false;
 
   final _nameController = TextEditingController();
 
@@ -69,6 +68,16 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -81,19 +90,7 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
           ? localization.newTaskStatus
           : localization.editTaskStatus,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -104,13 +101,12 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
                     DecoratedFormField(
                       autofocus: true,
                       controller: _nameController,
-                      autovalidate: _autoValidate,
                       label: localization.name,
                       keyboardType: TextInputType.text,
                       validator: (val) => val.isEmpty || val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: _onSavePressed,
                     ),
                     FormColorPicker(
                       initialValue: taskStatus.color,

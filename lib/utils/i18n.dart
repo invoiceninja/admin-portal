@@ -16,6 +16,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'browser_pdf_viewer': 'Use Browser PDF Viewer',
+      'browser_pdf_viewer_help':
+          'Warning: prevents interacting with app over the PDF',
       'converted_transactions': 'Successfully converted transactions',
       'created_bank_account': 'Successfully created bank account',
       'updated_bank_account': 'Successfully updated bank account',
@@ -87411,6 +87414,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get updatedBankAccount =>
       _localizedValues[localeCode]['updated_bank_account'] ??
       _localizedValues['en']['updated_bank_account'];
+
+  String get browserPdfViewer =>
+      _localizedValues[localeCode]['browser_pdf_viewer'] ??
+      _localizedValues['en']['browser_pdf_viewer'];
+
+  String get browserPdfViewerHelp =>
+      _localizedValues[localeCode]['browser_pdf_viewer_help'] ??
+      _localizedValues['en']['browser_pdf_viewer_help'];
 
 // STARTER: lang field - do not remove comment
 

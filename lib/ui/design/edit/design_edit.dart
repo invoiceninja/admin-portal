@@ -251,12 +251,6 @@ class _DesignEditState extends State<DesignEdit>
             : (context) {
                 final bool isValid = _formKey.currentState.validate();
 
-                /*
-        setState(() {
-          _autoValidate = !isValid;
-        });
-        */
-
                 if (!isValid) {
                   return;
                 }
@@ -458,6 +452,8 @@ class _DesignSettingsState extends State<DesignSettings> {
               label: localization.name,
               controller: widget.nameController,
               keyboardType: TextInputType.text,
+              validator: (value) =>
+                  value.isEmpty ? localization.pleaseEnterAName : null,
             ),
             DesignPicker(
                 label: localization.design,

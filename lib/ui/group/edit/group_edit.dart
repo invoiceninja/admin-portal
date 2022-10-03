@@ -32,7 +32,6 @@ class _GroupEditState extends State<GroupEdit> {
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
-  bool autoValidate = false;
 
   @override
   void didChangeDependencies() {
@@ -72,6 +71,16 @@ class _GroupEditState extends State<GroupEdit> {
     }
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -82,19 +91,7 @@ class _GroupEditState extends State<GroupEdit> {
       entity: group,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       title: group.isNew ? localization.newGroup : localization.editGroup,
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          autoValidate = !isValid ?? false;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (_) => _onSavePressed(),
       body: Form(
         key: _formKey,
         child: Builder(
@@ -108,11 +105,10 @@ class _GroupEditState extends State<GroupEdit> {
                       label: localization.name,
                       keyboardType: TextInputType.text,
                       controller: _nameController,
-                      onSavePressed: viewModel.onSavePressed,
-                      validator: (val) => val.isEmpty || val.trim().isEmpty
-                          ? localization.pleaseEnterAValue
+                      onSavePressed: (_) => _onSavePressed(),
+                      validator: (value) => value.trim().isEmpty
+                          ? localization.pleaseEnterAName
                           : null,
-                      autovalidate: autoValidate,
                     ),
                   ],
                 ),

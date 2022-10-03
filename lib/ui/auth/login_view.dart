@@ -77,7 +77,6 @@ class _LoginState extends State<LoginView> {
   bool _createAccount = false;
 
   bool _recoverPassword = false;
-  bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
 
@@ -157,7 +156,6 @@ class _LoginState extends State<LoginView> {
                 : kAppProductionUrl;
 
     setState(() {
-      _autoValidate = !isValid ?? false;
       _loginError = '';
     });
 
@@ -223,7 +221,6 @@ class _LoginState extends State<LoginView> {
     final viewModel = widget.viewModel;
 
     setState(() {
-      _autoValidate = !isValid ?? false;
       _loginError = '';
     });
 
@@ -428,7 +425,6 @@ class _LoginState extends State<LoginView> {
                                   controller: _emailController,
                                   label: localization.email,
                                   keyboardType: TextInputType.emailAddress,
-                                  autovalidate: _autoValidate,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
                                           ? localization.pleaseEnterYourEmail
@@ -441,7 +437,6 @@ class _LoginState extends State<LoginView> {
                                   !_recoverPassword)
                                 PasswordFormField(
                                   controller: _passwordController,
-                                  autoValidate: false,
                                   newPassword: _createAccount,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
@@ -470,7 +465,6 @@ class _LoginState extends State<LoginView> {
                                   labelText:
                                       '${localization.secret} (${localization.optional})',
                                   controller: _secretController,
-                                  autoValidate: _autoValidate,
                                   validate: false,
                                   onSavePressed: (_) => _submitForm(),
                                 ),

@@ -100,6 +100,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final cliPhpVersion =
         _parseVersion(_response?.phpVersion?.currentPHPCLIVersion ?? '');
     final phpMemoryLimit = _response?.phpVersion?.memoryLimit ?? '';
+    final phpMemoryLimitDouble = parseDouble(phpMemoryLimit);
 
     return AlertDialog(
       content: _response == null
@@ -177,7 +178,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       ),
                 ],
                 */
-                if (parseDouble(_response.phpVersion.memoryLimit) < 512)
+                if (!state.account.isDocker &&
+                    phpMemoryLimitDouble > 100 &&
+                    phpMemoryLimitDouble < 512)
                   _HealthListTile(
                     title: 'PHP memory limit is too low',
                     subtitle:

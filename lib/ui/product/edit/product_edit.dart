@@ -32,7 +32,6 @@ class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productEdit');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  bool _autoValidate = false;
 
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
@@ -133,6 +132,16 @@ class _ProductEditState extends State<ProductEdit> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -146,19 +155,7 @@ class _ProductEditState extends State<ProductEdit> {
           ? localization.newProduct
           : localization.editProduct,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: _onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -175,8 +172,7 @@ class _ProductEditState extends State<ProductEdit> {
                   validator: (val) => val.isEmpty || val.trim().isEmpty
                       ? localization.pleaseEnterAProductKey
                       : null,
-                  autovalidate: _autoValidate,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                   keyboardType: TextInputType.text,
                 ),
                 DecoratedFormField(
@@ -190,7 +186,7 @@ class _ProductEditState extends State<ProductEdit> {
                   controller: _priceController,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: true, signed: true),
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 if (company.enableProductQuantity)
                   DecoratedFormField(
@@ -198,7 +194,7 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _quantityController,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                 if (company.enableProductCost)
                   DecoratedFormField(
@@ -206,7 +202,7 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _costController,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                 if (company.enableFirstItemTaxRate ||
                     product.taxName1.isNotEmpty)
@@ -245,32 +241,32 @@ class _ProductEditState extends State<ProductEdit> {
                   controller: _custom1Controller,
                   field: CustomFieldType.product1,
                   value: product.customValue1,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 CustomField(
                   controller: _custom2Controller,
                   field: CustomFieldType.product2,
                   value: product.customValue2,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 CustomField(
                   controller: _custom3Controller,
                   field: CustomFieldType.product3,
                   value: product.customValue3,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 CustomField(
                   controller: _custom4Controller,
                   field: CustomFieldType.product4,
                   value: product.customValue4,
-                  onSavePressed: viewModel.onSavePressed,
+                  onSavePressed: _onSavePressed,
                 ),
                 if (company.trackInventory) ...[
                   DecoratedFormField(
                     keyboardType: TextInputType.number,
                     controller: _stockQuantityController,
                     label: localization.stockQuantity,
-                    onSavePressed: viewModel.onSavePressed,
+                    onSavePressed: _onSavePressed,
                   ),
                   if (company.stockNotification) ...[
                     SizedBox(height: 16),
@@ -290,7 +286,7 @@ class _ProductEditState extends State<ProductEdit> {
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'
                                 : ''),
-                        onSavePressed: viewModel.onSavePressed,
+                        onSavePressed: _onSavePressed,
                       ),
                   ],
                 ],

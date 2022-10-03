@@ -77,12 +77,6 @@ class _StubEditState extends State<StubEdit> {
               onSavePressed: (context) {
           final bool isValid = _formKey.currentState.validate();
 
-            /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
-
           if (!isValid) {
             return;
           }
