@@ -33,7 +33,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       colorTheme: kColorThemeLight,
       enableTouchEvents: true,
       enableTooltips: true,
-      enableJSPDF: false,
+      enableJSPDF: true,
       isFilterVisible: false,
       textScaleFactor: 1,
       longPressSelectionIsDefault: true,
@@ -240,7 +240,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showPdfPreview = true
     ..enableTouchEvents = true
     ..enableFlexibleSearch = false
-    ..enableJSPDF = false
+    ..enableJSPDF = true
     ..enableTooltips = true
     ..textScaleFactor = 1
     ..colorTheme =
