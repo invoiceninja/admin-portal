@@ -29,7 +29,7 @@ class InvoiceEditFooter extends StatelessWidget {
     final total = formatNumber(
         invoice.calculateTotal(precision: precisionForInvoice(state, invoice)),
         context,
-        clientId: invoice.clientId);
+        clientId: invoice.isPurchaseOrder ? null : invoice.clientId);
     final useSidebarEditor =
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
     final showLayoutToggle = isDesktop(context);
