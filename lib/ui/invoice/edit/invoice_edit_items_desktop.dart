@@ -435,7 +435,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 formatNumber(item.cost, context,
                                         formatNumberType:
                                             FormatNumberType.inputMoney,
-                                        clientId: invoice.clientId) ??
+                                        clientId: invoice.isPurchaseOrder
+                                            ? null
+                                            : invoice.clientId) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
@@ -444,7 +446,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 formatNumber(item.quantity, context,
                                         formatNumberType:
                                             FormatNumberType.inputAmount,
-                                        clientId: invoice.clientId) ??
+                                        clientId: invoice.isPurchaseOrder
+                                            ? null
+                                            : invoice.clientId) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
@@ -453,7 +457,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 formatNumber(item.discount, context,
                                         formatNumberType:
                                             FormatNumberType.inputAmount,
-                                        clientId: invoice.clientId) ??
+                                        clientId: invoice.isPurchaseOrder
+                                            ? null
+                                            : invoice.clientId) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
@@ -470,7 +476,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Expanded(
                         child: Text(
                           formatNumber(item.total(invoice, precision), context,
-                                  clientId: invoice.clientId) ??
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId) ??
                               '',
                           textAlign: TextAlign.right,
                         ),
@@ -955,7 +963,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               initialValue: formatNumber(
                                   lineItems[index].cost, context,
                                   formatNumberType: FormatNumberType.inputMoney,
-                                  clientId: invoice.clientId),
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId),
                               onChanged: (value) => _onChanged(
                                 lineItems[index].rebuild(
                                     (b) => b..cost = parseDouble(value)),
@@ -983,7 +993,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   lineItems[index].quantity, context,
                                   formatNumberType:
                                       FormatNumberType.inputAmount,
-                                  clientId: invoice.clientId),
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId),
                               onChanged: (value) => _onChanged(
                                 lineItems[index].rebuild(
                                     (b) => b..quantity = parseDouble(value)),
@@ -1011,7 +1023,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   lineItems[index].discount, context,
                                   formatNumberType:
                                       FormatNumberType.inputAmount,
-                                  clientId: invoice.clientId),
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId),
                               onChanged: (value) => _onChanged(
                                   lineItems[index].rebuild(
                                       (b) => b..discount = parseDouble(value)),
@@ -1034,7 +1048,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         enabled: false,
                         initialValue: formatNumber(
                             lineItems[index].total(invoice, precision), context,
-                            clientId: invoice.clientId),
+                            clientId: invoice.isPurchaseOrder
+                                ? null
+                                : invoice.clientId),
                         textAlign: TextAlign.right,
                       ),
                     ),

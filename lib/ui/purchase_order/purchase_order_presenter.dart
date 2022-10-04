@@ -85,8 +85,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(purchaseOrder.amount, context,
-              clientId: purchaseOrder.clientId)),
+          child: Text(formatNumber(purchaseOrder.amount, context)),
         );
       case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
@@ -105,8 +104,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.discount:
         return Text(purchaseOrder.isAmountDiscount
             ? formatNumber(purchaseOrder.discount, context,
-                formatNumberType: FormatNumberType.money,
-                clientId: purchaseOrder.clientId)
+                formatNumberType: FormatNumberType.money)
             : formatNumber(purchaseOrder.discount, context,
                 formatNumberType: FormatNumberType.percent));
       case PurchaseOrderFields.poNumber:
