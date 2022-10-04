@@ -188,7 +188,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
           DecoratedFormField(
             autofocus: true,
             controller: _nameController,
-            validator: (String val) => !viewModel.client.hasNameSet
+            validator: (String val) => val.trim().isEmpty && !client.hasNameSet
                 ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                 : null,
             onSavePressed: _onSavePressed,
