@@ -106,7 +106,7 @@ class EntityStatusChip extends StatelessWidget {
           break;
         case EntityType.task:
           final task = entity as TaskEntity;
-          final status = state.taskStatusState.get(task.calculateStatusId);
+          final status = state.taskStatusState.get(task.statusId);
           label = task.isInvoiced
               ? localization.invoiced
               : task.isRunning
