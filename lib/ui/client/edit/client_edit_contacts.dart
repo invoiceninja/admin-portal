@@ -287,9 +287,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
         DecoratedFormField(
           autofocus: widget.isDialog,
           controller: _firstNameController,
-          validator: (String val) => !viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
+          validator: (String val) =>
+              val.trim().isEmpty && !viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
           keyboardType: TextInputType.name,
@@ -297,9 +298,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
         DecoratedFormField(
           controller: _lastNameController,
           label: localization.lastName,
-          validator: (String val) => !viewModel.client.hasNameSet
-              ? AppLocalization.of(context).pleaseEnterAClientOrContactName
-              : null,
+          validator: (String val) =>
+              val.trim().isEmpty && !viewModel.client.hasNameSet
+                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                  : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           keyboardType: TextInputType.name,
         ),

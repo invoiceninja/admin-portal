@@ -186,7 +186,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
           DecoratedFormField(
             autofocus: true,
             controller: _nameController,
-            validator: (String val) => val == null || val.isEmpty
+            validator: (String val) => val.trim().isEmpty
                 ? AppLocalization.of(context).pleaseEnterAName
                 : null,
             onSavePressed: _onSavePressed,
