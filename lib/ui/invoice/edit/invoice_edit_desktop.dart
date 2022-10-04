@@ -847,7 +847,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     precision:
                                         precisionForInvoice(state, invoice)),
                                 context,
-                                clientId: invoice.clientId),
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId),
                           ),
                           if (invoice.isOld &&
                               (invoice.isInvoice || invoice.isQuote))
@@ -861,7 +863,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
                               initialValue: formatNumber(
                                   invoice.paidToDate, context,
-                                  clientId: invoice.clientId),
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId),
                             ),
                           if (company.hasCustomSurcharge)
                             CustomSurcharges(
@@ -941,7 +945,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             state, invoice)) -
                                     invoice.paidToDate,
                                 context,
-                                clientId: invoice.clientId),
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId),
                           ),
                           if (invoice.partial != 0)
                             TextFormField(
@@ -954,7 +960,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
                               initialValue: formatNumber(
                                   invoice.partial, context,
-                                  clientId: invoice.clientId),
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId),
                             ),
                         ]),
                   ],
