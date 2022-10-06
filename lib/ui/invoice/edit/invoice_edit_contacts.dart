@@ -86,6 +86,7 @@ class InvoiceEditContacts extends StatelessWidget {
       }
 
       return ScrollableListView(
+        showScrollbar: true,
         children: clientContacts.map((contact) {
           final invitation = invoice.getInvitationForClientContact(contact);
           return _ClientContactListTile(
