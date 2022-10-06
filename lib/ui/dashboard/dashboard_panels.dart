@@ -538,7 +538,7 @@ class DashboardPanels extends StatelessWidget {
 
                   final textTheme = Theme.of(context).textTheme;
 
-                  final fieldMap = {
+                  final currentFieldMap = {
                     DashboardUISettings.FIELD_ACTIVE_INVOICES:
                         currentInvoiceData[0],
                     DashboardUISettings.FIELD_OUTSTANDING_INVOICES:
@@ -567,6 +567,35 @@ class DashboardPanels extends StatelessWidget {
                         currentExpenseData[3],
                   };
 
+                  final previousFieldMap = {
+                    DashboardUISettings.FIELD_ACTIVE_INVOICES:
+                        previousInvoiceData[0],
+                    DashboardUISettings.FIELD_OUTSTANDING_INVOICES:
+                        previousInvoiceData[1],
+                    DashboardUISettings.FIELD_COMPLETED_PAYMENTS:
+                        previousPaymentData[0],
+                    DashboardUISettings.FIELD_REFUNDED_PAYMENTS:
+                        previousPaymentData[1],
+                    DashboardUISettings.FIELD_ACTIVE_QUOTES:
+                        previousQuoteData[0],
+                    DashboardUISettings.FIELD_APPROVED_QUOTES:
+                        previousQuoteData[1],
+                    DashboardUISettings.FIELD_UNAPPROVED_QUOTES:
+                        previousQuoteData[2],
+                    DashboardUISettings.FIELD_LOGGED_TASKS: currentTaskData[0],
+                    DashboardUISettings.FIELD_INVOICED_TASKS:
+                        previousTaskData[1],
+                    DashboardUISettings.FIELD_PAID_TASKS: currentTaskData[2],
+                    DashboardUISettings.FIELD_LOGGED_EXPENSES:
+                        previousExpenseData[0],
+                    DashboardUISettings.FIELD_PENDING_EXPENSES:
+                        previousExpenseData[1],
+                    DashboardUISettings.FIELD_INVOICED_EXPENSES:
+                        previousExpenseData[2],
+                    DashboardUISettings.FIELD_INVOICE_PAID_EXPENSES:
+                        previousExpenseData[3],
+                  };
+
                   return Column(
                     children: [
                       SizedBox(height: 20),
@@ -581,16 +610,21 @@ class DashboardPanels extends StatelessWidget {
                           mainAxisSpacing: 12,
                           children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
-                            final data = fieldMap[dashboardField.field];
                             double value = 0;
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
+                              final data =
+                                  currentFieldMap[dashboardField.field];
                               value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
-                              value = data.previousTotal;
+                              final data =
+                                  previousFieldMap[dashboardField.field];
+                              value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_TOTAL) {
+                              final data =
+                                  currentFieldMap[dashboardField.field];
                               value = data.total;
                             }
                             return FormCard(
