@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -205,12 +206,32 @@ class _BottomBar extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: LiveText(() {
-                      final title = localization.duration +
+                      var title = localization.duration +
                           ' ' +
                           formatNumber(
                               task.calculateDuration().inSeconds.toDouble(),
                               context,
                               formatNumberType: FormatNumberType.duration);
+
+                      final duration = task.calculateDuration();
+                      if (duration.inSeconds > 0) {
+                        title += ' • ' +
+                            formatNumber(
+                              task.calculateAmount(
+                                taskRateSelector(
+                                  company: state.company,
+                                  project:
+                                      state.projectState.get(task.projectId),
+                                  client: state.clientState.get(task.clientId),
+                                  task: task,
+                                  group: null,
+                                ),
+                              ),
+                              context,
+                              clientId: state.clientState.get(task.clientId).id,
+                            );
+                      }
+
                       if (task.number.isNotEmpty) {
                         return '${task.number} • $title';
                       }
