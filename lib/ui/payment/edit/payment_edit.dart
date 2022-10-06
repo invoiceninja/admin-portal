@@ -203,7 +203,7 @@ class _PaymentEditState extends State<PaymentEdit> {
 
     double limit;
     if (payment.amount != 0) {
-      limit = payment.amount - paymentTotal;
+      limit = payment.amount - payment.applied - paymentTotal;
     } else if (creditTotal != 0) {
       limit = creditTotal - paymentTotal;
     }
