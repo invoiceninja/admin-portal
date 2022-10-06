@@ -21,6 +21,8 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'key',
+      serializers.serialize(object.key, specifiedType: const FullType(String)),
       'trial_started',
       serializers.serialize(object.trialStarted,
           specifiedType: const FullType(String)),
@@ -96,6 +98,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'key':
+          result.key = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'trial_started':
@@ -185,6 +191,8 @@ class _$AccountEntity extends AccountEntity {
   @override
   final String id;
   @override
+  final String key;
+  @override
   final String trialStarted;
   @override
   final String defaultUrl;
@@ -228,6 +236,7 @@ class _$AccountEntity extends AccountEntity {
 
   _$AccountEntity._(
       {this.id,
+      this.key,
       this.trialStarted,
       this.defaultUrl,
       this.reportErrors,
@@ -249,6 +258,7 @@ class _$AccountEntity extends AccountEntity {
       this.trialDaysLeft})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(key, 'AccountEntity', 'key');
     BuiltValueNullFieldError.checkNotNull(
         trialStarted, 'AccountEntity', 'trialStarted');
     BuiltValueNullFieldError.checkNotNull(
@@ -300,6 +310,7 @@ class _$AccountEntity extends AccountEntity {
     if (identical(other, this)) return true;
     return other is AccountEntity &&
         id == other.id &&
+        key == other.key &&
         trialStarted == other.trialStarted &&
         defaultUrl == other.defaultUrl &&
         reportErrors == other.reportErrors &&
@@ -342,7 +353,7 @@ class _$AccountEntity extends AccountEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, id.hashCode),
+                                                                            $jc($jc($jc(0, id.hashCode), key.hashCode),
                                                                                 trialStarted.hashCode),
                                                                             defaultUrl.hashCode),
                                                                         reportErrors.hashCode),
@@ -368,6 +379,7 @@ class _$AccountEntity extends AccountEntity {
   String toString() {
     return (newBuiltValueToStringHelper('AccountEntity')
           ..add('id', id)
+          ..add('key', key)
           ..add('trialStarted', trialStarted)
           ..add('defaultUrl', defaultUrl)
           ..add('reportErrors', reportErrors)
@@ -398,6 +410,10 @@ class AccountEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
+
+  String _key;
+  String get key => _$this._key;
+  set key(String key) => _$this._key = key;
 
   String _trialStarted;
   String get trialStarted => _$this._trialStarted;
@@ -492,6 +508,7 @@ class AccountEntityBuilder
     final $v = _$v;
     if ($v != null) {
       _id = $v.id;
+      _key = $v.key;
       _trialStarted = $v.trialStarted;
       _defaultUrl = $v.defaultUrl;
       _reportErrors = $v.reportErrors;
@@ -533,6 +550,8 @@ class AccountEntityBuilder
         new _$AccountEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'AccountEntity', 'id'),
+            key: BuiltValueNullFieldError.checkNotNull(
+                key, 'AccountEntity', 'key'),
             trialStarted: BuiltValueNullFieldError.checkNotNull(
                 trialStarted, 'AccountEntity', 'trialStarted'),
             defaultUrl: BuiltValueNullFieldError.checkNotNull(

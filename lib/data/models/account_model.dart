@@ -14,6 +14,7 @@ abstract class AccountEntity
   factory AccountEntity(bool reportErrors, {String id, AppState state}) {
     return _$AccountEntity._(
       id: '',
+      key: '',
       defaultUrl: '',
       plan: '',
       planExpires: '',
@@ -43,6 +44,8 @@ abstract class AccountEntity
   int get hashCode;
 
   String get id;
+
+  String get key;
 
   @BuiltValueField(wireName: 'trial_started')
   String get trialStarted;
@@ -120,6 +123,7 @@ abstract class AccountEntity
 
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
+    ..key = ''
     ..debugEnabled = false
     ..isDocker = false
     ..isSchedulerRunning = true
