@@ -4,10 +4,13 @@ import 'dart:core';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:version/version.dart';
 
 // Project imports:
@@ -70,9 +73,7 @@ class WebClient {
     String idToken,
     bool rawResponse = false,
   }) async {
-    if (Config.DEMO_MODE) {
-      throw 'Server requests are not supported in the demo';
-    }
+    _preCheck();
 
     if (!url.contains('?')) {
       url += '?';
@@ -129,9 +130,7 @@ class WebClient {
     String password,
     String idToken,
   }) async {
-    if (Config.DEMO_MODE) {
-      throw 'Server requests are not supported in the demo';
-    }
+    _preCheck();
 
     if (!url.contains('?')) {
       url += '?';
@@ -173,9 +172,7 @@ class WebClient {
     String idToken,
     dynamic data,
   }) async {
-    if (Config.DEMO_MODE) {
-      throw 'Server requests are not supported in the demo';
-    }
+    _preCheck();
 
     if (!url.contains('?')) {
       url += '?';
@@ -263,6 +260,17 @@ void _checkResponse(http.Response response) {
     throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
   } else if (response.statusCode >= 400) {
     throw _parseError(response.statusCode, response.body);
+  }
+}
+
+void _preCheck() {
+  if (Config.DEMO_MODE) {
+    throw 'Server requests are not supported in the demo';
+  }
+
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  if (store.state.isSaving) {
+    throw 'Please wait for the current request to complete';
   }
 }
 
