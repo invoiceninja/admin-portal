@@ -285,6 +285,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       _purchasePending = false;
     });
 
+    final navigator = Navigator.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
@@ -294,15 +295,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'inapp_transaction_id': purchaseDetails.purchaseID,
       'key': state.account.key,
       'plan': purchaseDetails.productID,
-      'plan_paid':
-      (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
+      'plan_paid': (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
     };
 
-    await WebClient().post(url, state.credentials.token,
-        data: jsonEncode(data));
-
+    await WebClient()
+        .post(url, state.credentials.token, data: jsonEncode(data));
 
     store.dispatch(RefreshData());
+
+    if (navigator.canPop()) {
+      navigator.pop();
+    }
   }
 
   void handleError(IAPError error) {
