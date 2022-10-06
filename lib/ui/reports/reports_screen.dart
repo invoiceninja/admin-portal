@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -416,12 +417,20 @@ class ReportsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     HelpText(localization.upgradeToViewReports),
-                    if (!isApple())
+                    if (!isApple() || supportsInAppPurchase())
                       AppButton(
-                        label: localization.upgrade.toUpperCase(),
-                        onPressed: () => launchUrl(
-                            Uri.parse(state.userCompany.ninjaPortalUrl)),
-                      )
+                          label: localization.upgrade.toUpperCase(),
+                          onPressed: () {
+                            if (supportsInAppPurchase()) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) => UpgradeDialog(),
+                              );
+                            } else {
+                              launchUrl(
+                                  Uri.parse(state.userCompany.ninjaPortalUrl));
+                            }
+                          })
                   ],
                 ),
               )

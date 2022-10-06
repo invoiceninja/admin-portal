@@ -505,13 +505,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                 ),
                                           ),
                                     onTap: () {
-                                      /*
-                                      showDialog<void>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              UpgradeDialog());
-                                      */
-
                                       store.dispatch(ViewSettings(
                                           clearFilter: true,
                                           company: company,
