@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
@@ -306,7 +307,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             padding: const EdgeInsets.only(bottom: 10),
             child: IconMessage(
               localization.customEmailsDisabledHelp,
-              trailing: isApple()
+              trailing: (isApple() && !supportsInAppPurchase())
                   ? null
                   : TextButton(
                       child: Text(
@@ -315,9 +316,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () => launchUrl(
-                          Uri.parse(state.userCompany.ninjaPortalUrl)),
-                    ),
+                      onPressed: () {
+                        if (supportsInAppPurchase()) {
+                          showDialog<void>(
+                            context: context,
+                            builder: (context) => UpgradeDialog(),
+                          );
+                        } else {
+                          launchUrl(
+                              Uri.parse(state.userCompany.ninjaPortalUrl));
+                        }
+                      }),
             ),
           ),
         ColoredBox(

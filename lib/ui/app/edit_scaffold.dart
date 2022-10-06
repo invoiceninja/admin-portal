@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -119,7 +120,7 @@ class EditScaffold extends StatelessWidget {
         child: Scaffold(
           body: state.companies.isEmpty
               ? LoadingIndicator()
-              : showUpgradeBanner && !isApple()
+              : showUpgradeBanner && (!isApple() || supportsInAppPurchase())
                   ? Column(
                       children: [
                         InkWell(
@@ -129,8 +130,15 @@ class EditScaffold extends StatelessWidget {
                           ),
                           onTap: state.userCompany.isOwner
                               ? () async {
-                                  launchUrl(Uri.parse(
-                                      state.userCompany.ninjaPortalUrl));
+                                  if (supportsInAppPurchase()) {
+                                    showDialog<void>(
+                                      context: context,
+                                      builder: (context) => UpgradeDialog(),
+                                    );
+                                  } else {
+                                    launchUrl(Uri.parse(
+                                        state.userCompany.ninjaPortalUrl));
+                                  }
                                 }
                               : null,
                         ),

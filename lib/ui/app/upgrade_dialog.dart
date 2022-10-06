@@ -15,6 +15,7 @@ import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -284,23 +285,27 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       _purchasePending = false;
     });
 
-    print('## PLAN UNLOCKED');
-    print('## ${purchaseDetails.purchaseID}');
-    print('## ${purchaseDetails.productID}');
-
+    final navigator = Navigator.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
-        '/admin/subscription';
+        '/api/admin/subscription';
 
-    await WebClient().post(url, state.credentials.token,
-        data: jsonEncode({
-          'inapp_transaction_id': purchaseDetails.purchaseID,
-          'account_id': state.account.id,
-          'plan': purchaseDetails.productID,
-          'plan_paid':
-              (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
-        }));
+    final data = {
+      'inapp_transaction_id': purchaseDetails.purchaseID,
+      'key': state.account.key,
+      'plan': purchaseDetails.productID,
+      'plan_paid': (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
+    };
+
+    await WebClient()
+        .post(url, state.credentials.token, data: jsonEncode(data));
+
+    store.dispatch(RefreshData());
+
+    if (navigator.canPop()) {
+      navigator.pop();
+    }
   }
 
   void handleError(IAPError error) {

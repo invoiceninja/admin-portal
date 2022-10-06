@@ -51,6 +51,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
   bool _isSaving = false;
   bool _isSubdomainUnique = false;
   bool _isCheckingSubdomain = false;
+  bool _hasCheckedSubdomain = false;
   String _currencyId = kCurrencyUSDollar;
   String _languageId = kLanguageEnglish;
   final _nameController = TextEditingController();
@@ -102,7 +103,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
         return;
       }
 
-      setState(() => _isCheckingSubdomain = true);
+      setState(() {
+        _isCheckingSubdomain = true;
+        _hasCheckedSubdomain = true;
+      });
 
       _webClient
           .post(url, credentials.token,
@@ -275,7 +279,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
       validator: (value) {
         if (value.isEmpty) {
           return localization.pleaseEnterAValue;
-        } else if (!_isCheckingSubdomain && !_isSubdomainUnique) {
+        } else if (_hasCheckedSubdomain &&
+            !_isCheckingSubdomain &&
+            !_isSubdomainUnique) {
           return localization.subdomainIsNotAvailable;
         }
 

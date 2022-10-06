@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -335,24 +336,31 @@ class _AccountOverview extends StatelessWidget {
             ),
           ),
         if (state.userCompany.ninjaPortalUrl.isNotEmpty &&
-            !isApple() &&
+            (!isApple() || supportsInAppPurchase()) &&
             state.isHosted)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
             child: OutlinedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconText(
-                  icon: MdiIcons.openInNew,
-                  text: (account.isEligibleForTrial
-                          ? localization.startFreeTrial
-                          : localization.changePlan)
-                      .toUpperCase(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconText(
+                    icon: MdiIcons.openInNew,
+                    text: (account.isEligibleForTrial
+                            ? localization.startFreeTrial
+                            : localization.changePlan)
+                        .toUpperCase(),
+                  ),
                 ),
-              ),
-              onPressed: () =>
-                  launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl)),
-            ),
+                onPressed: () {
+                  if (supportsInAppPurchase()) {
+                    showDialog<void>(
+                      context: context,
+                      builder: (context) => UpgradeDialog(),
+                    );
+                  } else {
+                    launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+                  }
+                }),
           ),
         FormCard(
           children: [
