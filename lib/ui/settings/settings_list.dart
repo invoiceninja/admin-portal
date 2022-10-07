@@ -474,6 +474,7 @@ class SettingsSearch extends StatelessWidget {
           'activate_company',
           'enable_markdown',
           'include_drafts',
+          'include_deleted',
           'api_tokens',
           'api_webhooks',
           'purge_data',

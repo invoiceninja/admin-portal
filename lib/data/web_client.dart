@@ -4,13 +4,13 @@ import 'dart:core';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+//import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+//import 'package:invoiceninja_flutter/main_app.dart';
+//import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:version/version.dart';
 
 // Project imports:
@@ -268,10 +268,12 @@ void _preCheck() {
     throw 'Server requests are not supported in the demo';
   }
 
+  /*
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   if (store.state.isSaving) {
     throw 'Please wait for the current request to complete';
   }
+  */
 }
 
 String _parseError(int code, String response) {

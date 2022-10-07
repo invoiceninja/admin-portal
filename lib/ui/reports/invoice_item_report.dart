@@ -94,7 +94,8 @@ ReportResult lineItemReport(
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if (invoice.isDeleted || client.isDeleted) {
+    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 

@@ -123,7 +123,7 @@ ReportResult clientReport(
   for (var clientId in clientMap.keys) {
     final client = clientMap[clientId];
     final contact = client.primaryContact;
-    if (client.isDeleted) {
+    if (client.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

@@ -118,7 +118,7 @@ ReportResult recurringExpenseReport(
     final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
-    if (expense.isDeleted) {
+    if (expense.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

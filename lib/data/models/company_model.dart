@@ -108,6 +108,7 @@ abstract class CompanyEntity extends Object
       markdownEmailEnabled: true,
       useCommaAsDecimalPlace: false,
       reportIncludeDrafts: false,
+      reportIncludeDeleted: false,
       stopOnUnpaidRecurring: false,
       useQuoteTermsOnConversion: false,
       enableApplyingPayments: false,
@@ -269,6 +270,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'report_include_drafts')
   bool get reportIncludeDrafts;
+
+  @BuiltValueField(wireName: 'report_include_deleted')
+  bool get reportIncludeDeleted;
 
   @BuiltValueField(wireName: 'use_quote_terms_on_conversion')
   bool get useQuoteTermsOnConversion;
@@ -677,6 +681,7 @@ abstract class CompanyEntity extends Object
     ..stockNotificationThreshold = 0
     ..stockNotification = true
     ..reportIncludeDrafts = false
+    ..reportIncludeDeleted = false
     ..convertRateToClient = true
     ..stopOnUnpaidRecurring = false
     ..numberOfExpenseTaxRates = 0

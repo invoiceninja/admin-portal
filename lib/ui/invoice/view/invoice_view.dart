@@ -162,14 +162,16 @@ class _InvoiceViewState extends State<InvoiceView>
                         child: InvoiceOverview(
                           viewModel: viewModel,
                           isFilter: widget.isFilter,
-                          key: ValueKey(viewModel.invoice.id),
+                          key: ValueKey(
+                              '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
                         ),
                       ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewContacts(
                           viewModel: viewModel,
-                          key: ValueKey(viewModel.invoice.id),
+                          key: ValueKey(
+                              '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
                         ),
                       ),
                       RefreshIndicator(
@@ -177,14 +179,16 @@ class _InvoiceViewState extends State<InvoiceView>
                         child: InvoiceViewDocuments(
                             viewModel: viewModel,
                             invoice: viewModel.invoice,
-                            key: ValueKey(viewModel.invoice.id)),
+                            key: ValueKey(
+                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
                       ),
                       if (invoice.isRecurring)
                         RefreshIndicator(
                           onRefresh: () => viewModel.onRefreshed(context),
                           child: InvoiceViewSchedule(
                             viewModel: viewModel,
-                            key: ValueKey(viewModel.invoice.id),
+                            key: ValueKey(
+                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
                           ),
                         ),
                       if (!invoice.isRecurring)
@@ -199,7 +203,8 @@ class _InvoiceViewState extends State<InvoiceView>
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewActivity(
                             viewModel: viewModel,
-                            key: ValueKey(viewModel.invoice.id)),
+                            key: ValueKey(
+                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
                       ),
                     ],
                   ),

@@ -97,7 +97,7 @@ ReportResult transactionReport(
   for (var transactionId in transactionMap.keys) {
     final transaction = transactionMap[transactionId];
 
-    if (transaction.isDeleted) {
+    if (transaction.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

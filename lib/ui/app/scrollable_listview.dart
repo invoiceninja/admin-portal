@@ -8,12 +8,14 @@ class ScrollableListView extends StatefulWidget {
     this.scrollController,
     this.padding,
     this.primary,
+    this.showScrollbar = false,
   }) : super(key: key);
 
   final List<Widget> children;
   final ScrollController scrollController;
   final EdgeInsetsGeometry padding;
   final bool primary;
+  final bool showScrollbar;
 
   @override
   _ScrollableListViewState createState() => _ScrollableListViewState();
@@ -36,15 +38,26 @@ class _ScrollableListViewState extends State<ScrollableListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    final controller = widget.primary == true
+        ? null
+        : widget.scrollController ?? _scrollController;
+    Widget child = ListView(
       padding: widget.padding,
       children: widget.children,
-      controller: widget.primary == true
-          ? null
-          : widget.scrollController ?? _scrollController,
+      controller: controller,
       shrinkWrap: true,
       primary: widget.primary,
     );
+
+    if (widget.showScrollbar) {
+      child = Scrollbar(
+        child: child,
+        controller: controller,
+        thumbVisibility: true,
+      );
+    }
+
+    return child;
   }
 }
 

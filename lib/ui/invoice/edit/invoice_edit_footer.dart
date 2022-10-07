@@ -34,7 +34,7 @@ class InvoiceEditFooter extends StatelessWidget {
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
     final showLayoutToggle = isDesktop(context);
     final title =
-        '${localization.lookup('${invoice.entityType.snakeCase}_total')}: $total';
+        '${localization.lookup('${invoice.entityType.snakeCase}_total')} $total';
 
     return BottomAppBar(
       elevation: 0,

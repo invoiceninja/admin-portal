@@ -82,7 +82,7 @@ ReportResult productReport(
   for (var productId in productMap.keys) {
     final product = productMap[productId];
 
-    if (product.isDeleted) {
+    if (product.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

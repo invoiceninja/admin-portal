@@ -125,7 +125,7 @@ ReportResult expenseReport(
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
     final project = projectMap[expense.projectId] ?? ProjectEntity();
 
-    if (expense.isDeleted) {
+    if (expense.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

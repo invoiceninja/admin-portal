@@ -146,6 +146,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'report_include_drafts',
       serializers.serialize(object.reportIncludeDrafts,
           specifiedType: const FullType(bool)),
+      'report_include_deleted',
+      serializers.serialize(object.reportIncludeDeleted,
+          specifiedType: const FullType(bool)),
       'use_quote_terms_on_conversion',
       serializers.serialize(object.useQuoteTermsOnConversion,
           specifiedType: const FullType(bool)),
@@ -555,6 +558,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'report_include_drafts':
           result.reportIncludeDrafts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'report_include_deleted':
+          result.reportIncludeDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'use_quote_terms_on_conversion':
@@ -1607,6 +1614,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool reportIncludeDrafts;
   @override
+  final bool reportIncludeDeleted;
+  @override
   final bool useQuoteTermsOnConversion;
   @override
   final bool enableApplyingPayments;
@@ -1774,6 +1783,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.markdownEmailEnabled,
       this.useCommaAsDecimalPlace,
       this.reportIncludeDrafts,
+      this.reportIncludeDeleted,
       this.useQuoteTermsOnConversion,
       this.enableApplyingPayments,
       this.trackInventory,
@@ -1910,6 +1920,8 @@ class _$CompanyEntity extends CompanyEntity {
         useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace');
     BuiltValueNullFieldError.checkNotNull(
         reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts');
+    BuiltValueNullFieldError.checkNotNull(
+        reportIncludeDeleted, 'CompanyEntity', 'reportIncludeDeleted');
     BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion,
         'CompanyEntity', 'useQuoteTermsOnConversion');
     BuiltValueNullFieldError.checkNotNull(
@@ -2064,6 +2076,7 @@ class _$CompanyEntity extends CompanyEntity {
         markdownEmailEnabled == other.markdownEmailEnabled &&
         useCommaAsDecimalPlace == other.useCommaAsDecimalPlace &&
         reportIncludeDrafts == other.reportIncludeDrafts &&
+        reportIncludeDeleted == other.reportIncludeDeleted &&
         useQuoteTermsOnConversion == other.useQuoteTermsOnConversion &&
         enableApplyingPayments == other.enableApplyingPayments &&
         trackInventory == other.trackInventory &&
@@ -2150,7 +2163,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
                                                                                 invoiceTaskDatelog.hashCode),
                                                                             invoiceTaskProject.hashCode),
                                                                         autoStartTasks.hashCode),
@@ -2212,6 +2225,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('markdownEmailEnabled', markdownEmailEnabled)
           ..add('useCommaAsDecimalPlace', useCommaAsDecimalPlace)
           ..add('reportIncludeDrafts', reportIncludeDrafts)
+          ..add('reportIncludeDeleted', reportIncludeDeleted)
           ..add('useQuoteTermsOnConversion', useQuoteTermsOnConversion)
           ..add('enableApplyingPayments', enableApplyingPayments)
           ..add('trackInventory', trackInventory)
@@ -2458,6 +2472,11 @@ class CompanyEntityBuilder
   bool get reportIncludeDrafts => _$this._reportIncludeDrafts;
   set reportIncludeDrafts(bool reportIncludeDrafts) =>
       _$this._reportIncludeDrafts = reportIncludeDrafts;
+
+  bool _reportIncludeDeleted;
+  bool get reportIncludeDeleted => _$this._reportIncludeDeleted;
+  set reportIncludeDeleted(bool reportIncludeDeleted) =>
+      _$this._reportIncludeDeleted = reportIncludeDeleted;
 
   bool _useQuoteTermsOnConversion;
   bool get useQuoteTermsOnConversion => _$this._useQuoteTermsOnConversion;
@@ -2836,6 +2855,7 @@ class CompanyEntityBuilder
       _markdownEmailEnabled = $v.markdownEmailEnabled;
       _useCommaAsDecimalPlace = $v.useCommaAsDecimalPlace;
       _reportIncludeDrafts = $v.reportIncludeDrafts;
+      _reportIncludeDeleted = $v.reportIncludeDeleted;
       _useQuoteTermsOnConversion = $v.useQuoteTermsOnConversion;
       _enableApplyingPayments = $v.enableApplyingPayments;
       _trackInventory = $v.trackInventory;
@@ -2972,6 +2992,7 @@ class CompanyEntityBuilder
               markdownEmailEnabled: BuiltValueNullFieldError.checkNotNull(markdownEmailEnabled, 'CompanyEntity', 'markdownEmailEnabled'),
               useCommaAsDecimalPlace: BuiltValueNullFieldError.checkNotNull(useCommaAsDecimalPlace, 'CompanyEntity', 'useCommaAsDecimalPlace'),
               reportIncludeDrafts: BuiltValueNullFieldError.checkNotNull(reportIncludeDrafts, 'CompanyEntity', 'reportIncludeDrafts'),
+              reportIncludeDeleted: BuiltValueNullFieldError.checkNotNull(reportIncludeDeleted, 'CompanyEntity', 'reportIncludeDeleted'),
               useQuoteTermsOnConversion: BuiltValueNullFieldError.checkNotNull(useQuoteTermsOnConversion, 'CompanyEntity', 'useQuoteTermsOnConversion'),
               enableApplyingPayments: BuiltValueNullFieldError.checkNotNull(enableApplyingPayments, 'CompanyEntity', 'enableApplyingPayments'),
               trackInventory: BuiltValueNullFieldError.checkNotNull(trackInventory, 'CompanyEntity', 'trackInventory'),

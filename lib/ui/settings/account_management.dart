@@ -362,38 +362,40 @@ class _AccountOverview extends StatelessWidget {
                   }
                 }),
           ),
+        FormCard(children: [
+          SwitchListTile(
+            value: !company.isDisabled,
+            onChanged: (value) {
+              viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..isDisabled = !value));
+            },
+            title: Text(localization.activateCompany),
+            subtitle: Text(localization.activateCompanyHelp),
+            activeColor: Theme.of(context).colorScheme.secondary,
+          ),
+          SwitchListTile(
+            value: company.markdownEnabled,
+            onChanged: (value) {
+              viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..markdownEnabled = value));
+            },
+            title: Text(localization.enablePdfMarkdown),
+            subtitle: Text(localization.enableMarkdownHelp),
+            activeColor: Theme.of(context).colorScheme.secondary,
+          ),
+          SwitchListTile(
+            value: company.markdownEmailEnabled,
+            onChanged: (value) {
+              viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..markdownEmailEnabled = value));
+            },
+            title: Text(localization.enableEmailMarkdown),
+            subtitle: Text(localization.enableEmailMarkdownHelp),
+            activeColor: Theme.of(context).colorScheme.secondary,
+          ),
+        ]),
         FormCard(
           children: [
-            SwitchListTile(
-              value: !company.isDisabled,
-              onChanged: (value) {
-                viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..isDisabled = !value));
-              },
-              title: Text(localization.activateCompany),
-              subtitle: Text(localization.activateCompanyHelp),
-              activeColor: Theme.of(context).colorScheme.secondary,
-            ),
-            SwitchListTile(
-              value: company.markdownEnabled,
-              onChanged: (value) {
-                viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..markdownEnabled = value));
-              },
-              title: Text(localization.enablePdfMarkdown),
-              subtitle: Text(localization.enableMarkdownHelp),
-              activeColor: Theme.of(context).colorScheme.secondary,
-            ),
-            SwitchListTile(
-              value: company.markdownEmailEnabled,
-              onChanged: (value) {
-                viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..markdownEmailEnabled = value));
-              },
-              title: Text(localization.enableEmailMarkdown),
-              subtitle: Text(localization.enableEmailMarkdownHelp),
-              activeColor: Theme.of(context).colorScheme.secondary,
-            ),
             SwitchListTile(
               value: company.reportIncludeDrafts,
               onChanged: (value) {
@@ -402,6 +404,16 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.includeDrafts),
               subtitle: Text(localization.includeDraftsHelp),
+              activeColor: Theme.of(context).colorScheme.secondary,
+            ),
+            SwitchListTile(
+              value: company.reportIncludeDeleted,
+              onChanged: (value) {
+                viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..reportIncludeDeleted = value));
+              },
+              title: Text(localization.includeDeleted),
+              subtitle: Text(localization.includeDeletedHelp),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
           ],

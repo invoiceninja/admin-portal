@@ -134,7 +134,8 @@ ReportResult quoteReport(
     final contact = client.getContact(quote.invitations.first.clientContactId);
     //final vendor = vendorMap[quote.vendorId];
 
-    if (quote.isDeleted || client.isDeleted) {
+    if ((quote.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 

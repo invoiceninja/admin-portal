@@ -136,7 +136,9 @@ ReportResult purchaseOrderReport(
         vendor.getContact(purchaseOrder.invitations.first.vendorContactId);
     //final vendor = vendorMap[purchaseOrder.vendorId];
 
-    if (purchaseOrder.isDeleted || vendor.isDeleted) {
+    if ((purchaseOrder.isDeleted &&
+            !userCompany.company.reportIncludeDeleted) ||
+        vendor.isDeleted) {
       continue;
     }
 

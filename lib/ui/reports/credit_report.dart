@@ -134,7 +134,8 @@ ReportResult creditReport(
 
     final contact = client.getContact(credit.invitations.first.clientContactId);
 
-    if (credit.isDeleted || client.isDeleted) {
+    if ((credit.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 

@@ -117,7 +117,7 @@ ReportResult contactReport(
 
   for (var clientId in clientMap.keys) {
     final client = clientMap[clientId];
-    if (client.isDeleted) {
+    if (client.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

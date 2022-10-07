@@ -163,7 +163,8 @@ ReportResult invoiceReport(
     final contact =
         client.getContact(invoice.invitations.first.clientContactId);
 
-    if (invoice.isDeleted || client.isDeleted) {
+    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 
