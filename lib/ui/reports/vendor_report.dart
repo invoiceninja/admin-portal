@@ -113,7 +113,7 @@ ReportResult vendorReport(
   for (var vendorId in vendorMap.keys) {
     final vendor = vendorMap[vendorId];
     final contact = vendor.primaryContact;
-    if (vendor.isDeleted) {
+    if (vendor.isDeleted && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 

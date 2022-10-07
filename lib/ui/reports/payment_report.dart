@@ -112,13 +112,13 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentInvoiceMap[payment.id] = [];
-      if (payment.isDeleted) {
+      if (payment.isDeleted && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var invoicePaymentable in payment.invoicePaymentables) {
         final invoice =
             invoiceMap[invoicePaymentable.invoiceId] ?? InvoiceEntity();
-        if (invoice.isDeleted) {
+        if (invoice.isDeleted && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
         paymentInvoiceMap[payment.id].add(invoice.number);
@@ -130,13 +130,13 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentCreditMap[payment.id] = [];
-      if (payment.isDeleted) {
+      if (payment.isDeleted && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var creditPaymentable in payment.invoicePaymentables) {
         final credit =
             creditMap[creditPaymentable.invoiceId] ?? InvoiceEntity();
-        if (credit.isDeleted) {
+        if (credit.isDeleted && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
         paymentCreditMap[payment.id].add(credit.number);
@@ -148,7 +148,8 @@ ReportResult paymentReport(
     final payment = paymentMap[paymentId] ?? PaymentEntity();
     final client = clientMap[payment.clientId] ?? ClientEntity();
 
-    if (payment.isDeleted || client.isDeleted) {
+    if ((payment.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 

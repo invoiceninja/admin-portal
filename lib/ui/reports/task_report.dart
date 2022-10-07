@@ -116,7 +116,8 @@ ReportResult taskReport(
     final project = projectMap[task.projectId] ?? ProjectEntity();
     final group = groupMap[client.groupId] ?? GroupEntity();
 
-    if (task.isDeleted || client.isDeleted) {
+    if ((task.isDeleted && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted) {
       continue;
     }
 

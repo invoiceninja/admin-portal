@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'include_deleted': 'Include Deleted',
+      'include_deleted_help': 'Include deleted records in reports',
       'due_on': 'Due On',
       'browser_pdf_viewer': 'Use Browser PDF Viewer',
       'browser_pdf_viewer_help':
@@ -87427,6 +87429,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get dueOn =>
       _localizedValues[localeCode]['due_on'] ??
       _localizedValues['en']['due_on'];
+
+  String get includeDeleted =>
+      _localizedValues[localeCode]['include_deleted'] ??
+      _localizedValues['en']['include_deleted'];
+
+  String get includeDeletedHelp =>
+      _localizedValues[localeCode]['include_deleted_help'] ??
+      _localizedValues['en']['include_deleted_help'];
 
 // STARTER: lang field - do not remove comment
 
