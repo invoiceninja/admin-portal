@@ -34,7 +34,7 @@ bool supportsMicrosoftOAuth() => kIsWeb;
 bool supportsBankAccounts() => !kReleaseMode;
 
 // TODO remove this function
-bool supportsInAppPurchase() => false;
+bool supportsInAppPurchase() => isIOS();
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
 

@@ -303,9 +303,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     store.dispatch(RefreshData());
 
+    /*
     if (navigator.canPop()) {
       navigator.pop();
     }
+     */
   }
 
   void handleError(IAPError error) {
