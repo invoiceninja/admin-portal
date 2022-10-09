@@ -980,4 +980,14 @@ class SelectionState {
   final String selectedId;
   final String filterEntityId;
   final EntityType filterEntityType;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is SelectionState) {
+      return selectedId == other.selectedId &&
+          filterEntityId == other.filterEntityId &&
+          filterEntityType == other.filterEntityType;
+    }
+    return false;
+  }
 }
