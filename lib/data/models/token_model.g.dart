@@ -158,13 +158,6 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -217,10 +210,6 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -437,8 +426,6 @@ class _$TokenEntity extends TokenEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$TokenEntity([void Function(TokenEntityBuilder) updates]) =>
@@ -455,7 +442,6 @@ class _$TokenEntity extends TokenEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(isSystem, 'TokenEntity', 'isSystem');
@@ -491,7 +477,6 @@ class _$TokenEntity extends TokenEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -507,18 +492,16 @@ class _$TokenEntity extends TokenEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc($jc(0, isSystem.hashCode),
-                                                token.hashCode),
-                                            name.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                        $jc($jc(0, isSystem.hashCode),
+                                            token.hashCode),
+                                        name.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -535,7 +518,6 @@ class _$TokenEntity extends TokenEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -586,11 +568,6 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -610,7 +587,6 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -648,7 +624,6 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(id, 'TokenEntity', 'id'));
     replace(_$result);
     return _$result;

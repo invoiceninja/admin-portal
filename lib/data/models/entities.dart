@@ -375,10 +375,6 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'entity_type')
   EntityType get entityType;
 
-  @nullable
-  @BuiltValueField(wireName: 'idempotency_key')
-  String get idempotencyKey;
-
   String get entityKey => '__${entityType}__${id}__';
 
   bool get isNew => (id ?? '').isEmpty || (int.tryParse(id) ?? 0) < 0;

@@ -152,7 +152,6 @@ abstract class InvoiceEntity extends Object
     }
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       entityType: entityType ?? EntityType.invoice,
       isChanged: false,
       amount: 0,
@@ -288,7 +287,6 @@ abstract class InvoiceEntity extends Object
     return rebuild(
       (b) => b
         ..id = BaseEntity.nextId
-        ..idempotencyKey = BaseEntity.nextIdempotencyKey
         ..isChanged = false
         ..isDeleted = false
         ..statusId = kInvoiceStatusDraft
@@ -1728,7 +1726,6 @@ abstract class InvitationEntity extends Object
   }) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       clientContactId: clientContactId ?? '',
       vendorContactId: vendorContactId ?? '',

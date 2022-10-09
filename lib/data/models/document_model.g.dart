@@ -180,13 +180,6 @@ class _$DocumentEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -264,10 +257,6 @@ class _$DocumentEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -501,8 +490,6 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$DocumentEntity([void Function(DocumentEntityBuilder) updates]) =>
@@ -525,7 +512,6 @@ class _$DocumentEntity extends DocumentEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'DocumentEntity', 'name');
@@ -575,7 +561,6 @@ class _$DocumentEntity extends DocumentEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -598,25 +583,23 @@ class _$DocumentEntity extends DocumentEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    $jc(
-                                                                        $jc(0,
-                                                                            name.hashCode),
-                                                                        hash.hashCode),
-                                                                    type.hashCode),
-                                                                url.hashCode),
-                                                            width.hashCode),
-                                                        height.hashCode),
-                                                    size.hashCode),
-                                                preview.hashCode),
-                                            isDefault.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                                                    $jc(0,
+                                                                        name.hashCode),
+                                                                    hash.hashCode),
+                                                                type.hashCode),
+                                                            url.hashCode),
+                                                        width.hashCode),
+                                                    height.hashCode),
+                                                size.hashCode),
+                                            preview.hashCode),
+                                        isDefault.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -639,7 +622,6 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -715,11 +697,6 @@ class DocumentEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -745,7 +722,6 @@ class DocumentEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -795,7 +771,6 @@ class DocumentEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(id, 'DocumentEntity', 'id'));
     replace(_$result);
     return _$result;

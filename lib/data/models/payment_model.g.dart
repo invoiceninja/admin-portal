@@ -213,6 +213,13 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object value;
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.isApplying;
     if (value != null) {
       result
@@ -262,13 +269,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -298,6 +298,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'number':
           result.number = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'client_id':
@@ -432,10 +436,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -734,6 +734,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String number;
   @override
+  final String idempotencyKey;
+  @override
   final String clientId;
   @override
   final String statusId;
@@ -798,8 +800,6 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$PaymentEntity([void Function(PaymentEntityBuilder) updates]) =>
@@ -810,6 +810,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.applied,
       this.refunded,
       this.number,
+      this.idempotencyKey,
       this.clientId,
       this.statusId,
       this.transactionReference,
@@ -842,7 +843,6 @@ class _$PaymentEntity extends PaymentEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(amount, 'PaymentEntity', 'amount');
@@ -915,6 +915,7 @@ class _$PaymentEntity extends PaymentEntity {
         applied == other.applied &&
         refunded == other.refunded &&
         number == other.number &&
+        idempotencyKey == other.idempotencyKey &&
         clientId == other.clientId &&
         statusId == other.statusId &&
         transactionReference == other.transactionReference &&
@@ -947,7 +948,6 @@ class _$PaymentEntity extends PaymentEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -972,25 +972,25 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode), vendorId.hashCode),
-                                                                                invitationId.hashCode),
-                                                                            clientContactId.hashCode),
-                                                                        companyGatewayId.hashCode),
-                                                                    currencyId.hashCode),
-                                                                isApplying.hashCode),
-                                                            sendEmail.hashCode),
-                                                        gatewayRefund.hashCode),
-                                                    paymentables.hashCode),
-                                                invoices.hashCode),
-                                            credits.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), idempotencyKey.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode),
+                                                                                vendorId.hashCode),
+                                                                            invitationId.hashCode),
+                                                                        clientContactId.hashCode),
+                                                                    companyGatewayId.hashCode),
+                                                                currencyId.hashCode),
+                                                            isApplying.hashCode),
+                                                        sendEmail.hashCode),
+                                                    gatewayRefund.hashCode),
+                                                paymentables.hashCode),
+                                            invoices.hashCode),
+                                        credits.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -1001,6 +1001,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('applied', applied)
           ..add('refunded', refunded)
           ..add('number', number)
+          ..add('idempotencyKey', idempotencyKey)
           ..add('clientId', clientId)
           ..add('statusId', statusId)
           ..add('transactionReference', transactionReference)
@@ -1033,7 +1034,6 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1058,6 +1058,11 @@ class PaymentEntityBuilder
   String _number;
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
+
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
 
   String _clientId;
   String get clientId => _$this._clientId;
@@ -1200,11 +1205,6 @@ class PaymentEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1218,6 +1218,7 @@ class PaymentEntityBuilder
       _applied = $v.applied;
       _refunded = $v.refunded;
       _number = $v.number;
+      _idempotencyKey = $v.idempotencyKey;
       _clientId = $v.clientId;
       _statusId = $v.statusId;
       _transactionReference = $v.transactionReference;
@@ -1250,7 +1251,6 @@ class PaymentEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1282,6 +1282,7 @@ class PaymentEntityBuilder
                   refunded, 'PaymentEntity', 'refunded'),
               number: BuiltValueNullFieldError.checkNotNull(
                   number, 'PaymentEntity', 'number'),
+              idempotencyKey: idempotencyKey,
               clientId: BuiltValueNullFieldError.checkNotNull(
                   clientId, 'PaymentEntity', 'clientId'),
               statusId: BuiltValueNullFieldError.checkNotNull(
@@ -1319,7 +1320,6 @@ class PaymentEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'PaymentEntity', 'id'));
     } catch (_) {
       String _$failedField;

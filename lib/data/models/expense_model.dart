@@ -111,7 +111,6 @@ abstract class ExpenseEntity extends Object
     final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       entityType: entityType ?? EntityType.expense,
       number: '',
       isChanged: false,
@@ -178,7 +177,6 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..number = ''
     ..isChanged = false
     ..isDeleted = false

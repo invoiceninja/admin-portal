@@ -220,13 +220,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -363,10 +356,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -463,13 +452,6 @@ class _$VendorContactEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -551,10 +533,6 @@ class _$VendorContactEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -813,8 +791,6 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
@@ -850,7 +826,6 @@ class _$VendorEntity extends VendorEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'VendorEntity', 'name');
@@ -936,7 +911,6 @@ class _$VendorEntity extends VendorEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -961,25 +935,25 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), number.hashCode),
-                                                                                vatNumber.hashCode),
-                                                                            idNumber.hashCode),
-                                                                        currencyId.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    contacts.hashCode),
-                                                activities.hashCode),
-                                            documents.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode),
+                                                                                number.hashCode),
+                                                                            vatNumber.hashCode),
+                                                                        idNumber.hashCode),
+                                                                    currencyId.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                contacts.hashCode),
+                                            activities.hashCode),
+                                        documents.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -1015,7 +989,6 @@ class _$VendorEntity extends VendorEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1149,11 +1122,6 @@ class VendorEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1194,7 +1162,6 @@ class VendorEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1257,7 +1224,6 @@ class VendorEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'VendorEntity', 'id'));
     } catch (_) {
       String _$failedField;
@@ -1315,8 +1281,6 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$VendorContactEntity(
@@ -1341,7 +1305,6 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -1402,7 +1365,6 @@ class _$VendorContactEntity extends VendorContactEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1427,31 +1389,28 @@ class _$VendorContactEntity extends VendorContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                firstName
-                                                                                    .hashCode),
-                                                                            lastName
+                                                                            0,
+                                                                            firstName
                                                                                 .hashCode),
-                                                                        email
+                                                                        lastName
                                                                             .hashCode),
-                                                                    isPrimary
+                                                                    email
                                                                         .hashCode),
-                                                                phone.hashCode),
-                                                            customValue1
-                                                                .hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            link.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                                                isPrimary
+                                                                    .hashCode),
+                                                            phone.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        link.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -1475,7 +1434,6 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1555,11 +1513,6 @@ class VendorContactEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1588,7 +1541,6 @@ class VendorContactEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1636,7 +1588,6 @@ class VendorContactEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(id, 'VendorContactEntity', 'id'));
     replace(_$result);
     return _$result;

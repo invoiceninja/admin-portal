@@ -285,7 +285,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       _purchasePending = false;
     });
 
-    final navigator = Navigator.of(context);
+    //final navigator = Navigator.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +

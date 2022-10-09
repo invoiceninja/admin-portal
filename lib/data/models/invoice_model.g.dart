@@ -417,13 +417,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(EntityType)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -733,10 +726,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
           break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1022,13 +1011,6 @@ class _$InvitationEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(EntityType)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -1107,10 +1089,6 @@ class _$InvitationEntitySerializer
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1571,8 +1549,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final EntityType entityType;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$InvoiceEntity([void Function(InvoiceEntityBuilder) updates]) =>
@@ -1650,7 +1626,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(amount, 'InvoiceEntity', 'amount');
@@ -1834,7 +1809,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
         entityType == other.entityType &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1859,25 +1833,25 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode),
-                                                                                dueDateDays.hashCode),
-                                                                            invoiceId.hashCode),
-                                                                        recurringId.hashCode),
-                                                                    autoBillEnabled.hashCode),
-                                                                filename.hashCode),
-                                                            recurringDates.hashCode),
-                                                        lineItems.hashCode),
-                                                    invitations.hashCode),
-                                                documents.hashCode),
-                                            isChanged.hashCode),
-                                        createdAt.hashCode),
-                                    updatedAt.hashCode),
-                                archivedAt.hashCode),
-                            isDeleted.hashCode),
-                        createdUserId.hashCode),
-                    assignedUserId.hashCode),
-                entityType.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
+                                                                                remainingCycles.hashCode),
+                                                                            dueDateDays.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    recurringId.hashCode),
+                                                                autoBillEnabled.hashCode),
+                                                            filename.hashCode),
+                                                        recurringDates.hashCode),
+                                                    lineItems.hashCode),
+                                                invitations.hashCode),
+                                            documents.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -1955,7 +1929,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
           ..add('entityType', entityType)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -2275,11 +2248,6 @@ class InvoiceEntityBuilder
   EntityType get entityType => _$this._entityType;
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -2362,7 +2330,6 @@ class InvoiceEntityBuilder
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
       _entityType = $v.entityType;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -2466,7 +2433,6 @@ class InvoiceEntityBuilder
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
               entityType: entityType,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'InvoiceEntity', 'id'));
     } catch (_) {
       String _$failedField;
@@ -2895,8 +2861,6 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final EntityType entityType;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$InvitationEntity(
@@ -2920,7 +2884,6 @@ class _$InvitationEntity extends InvitationEntity {
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(key, 'InvitationEntity', 'key');
@@ -2968,7 +2931,6 @@ class _$InvitationEntity extends InvitationEntity {
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
         entityType == other.entityType &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -2986,20 +2948,18 @@ class _$InvitationEntity extends InvitationEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc($jc(0, key.hashCode),
-                                                        link.hashCode),
-                                                    clientContactId.hashCode),
-                                                vendorContactId.hashCode),
-                                            isChanged.hashCode),
-                                        createdAt.hashCode),
-                                    updatedAt.hashCode),
-                                archivedAt.hashCode),
-                            isDeleted.hashCode),
-                        createdUserId.hashCode),
-                    assignedUserId.hashCode),
-                entityType.hashCode),
-            idempotencyKey.hashCode),
+                                                $jc($jc(0, key.hashCode),
+                                                    link.hashCode),
+                                                clientContactId.hashCode),
+                                            vendorContactId.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -3022,7 +2982,6 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
           ..add('entityType', entityType)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -3100,11 +3059,6 @@ class InvitationEntityBuilder
   EntityType get entityType => _$this._entityType;
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -3132,7 +3086,6 @@ class InvitationEntityBuilder
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
       _entityType = $v.entityType;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -3179,7 +3132,6 @@ class InvitationEntityBuilder
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             entityType: entityType,
-            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(id, 'InvitationEntity', 'id'));
     replace(_$result);
     return _$result;

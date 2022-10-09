@@ -172,13 +172,6 @@ class _$ExpenseCategoryEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -228,10 +221,6 @@ class _$ExpenseCategoryEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -457,8 +446,6 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$ExpenseCategoryEntity(
@@ -475,7 +462,6 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -513,7 +499,6 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -527,18 +512,14 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            color.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                $jc($jc($jc(0, name.hashCode), color.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -554,7 +535,6 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -602,11 +582,6 @@ class ExpenseCategoryEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -627,7 +602,6 @@ class ExpenseCategoryEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -663,7 +637,6 @@ class ExpenseCategoryEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            idempotencyKey: idempotencyKey,
             id: BuiltValueNullFieldError.checkNotNull(
                 id, 'ExpenseCategoryEntity', 'id'));
     replace(_$result);

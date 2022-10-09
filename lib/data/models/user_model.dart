@@ -118,7 +118,6 @@ abstract class UserEntity extends Object
       {String id, AppState state, UserCompanyEntity userCompany}) {
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       createdUserId: '',
       createdAt: 0,

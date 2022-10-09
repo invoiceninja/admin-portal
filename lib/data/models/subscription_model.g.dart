@@ -222,13 +222,6 @@ class _$SubscriptionEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -351,10 +344,6 @@ class _$SubscriptionEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -690,8 +679,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final String assignedUserId;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$SubscriptionEntity(
@@ -726,7 +713,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'SubscriptionEntity', 'name');
@@ -816,7 +802,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -841,25 +826,25 @@ class _$SubscriptionEntity extends SubscriptionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode), isAmountDiscount.hashCode),
-                                                                                allowCancellation.hashCode),
-                                                                            perSeatEnabled.hashCode),
-                                                                        maxSeatsLimit.hashCode),
-                                                                    trialEnabled.hashCode),
-                                                                trialDuration.hashCode),
-                                                            allowQueryOverrides.hashCode),
-                                                        allowPlanChanges.hashCode),
-                                                    refundPeriod.hashCode),
-                                                webhookConfiguration.hashCode),
-                                            purchasePage.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode),
+                                                                                isAmountDiscount.hashCode),
+                                                                            allowCancellation.hashCode),
+                                                                        perSeatEnabled.hashCode),
+                                                                    maxSeatsLimit.hashCode),
+                                                                trialEnabled.hashCode),
+                                                            trialDuration.hashCode),
+                                                        allowQueryOverrides.hashCode),
+                                                    allowPlanChanges.hashCode),
+                                                refundPeriod.hashCode),
+                                            webhookConfiguration.hashCode),
+                                        purchasePage.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -893,7 +878,6 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1023,11 +1007,6 @@ class SubscriptionEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1064,7 +1043,6 @@ class SubscriptionEntityBuilder
       _isDeleted = $v.isDeleted;
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1123,7 +1101,6 @@ class SubscriptionEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'SubscriptionEntity', 'id'));
     } catch (_) {
       String _$failedField;

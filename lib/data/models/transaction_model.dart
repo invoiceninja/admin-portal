@@ -71,7 +71,6 @@ abstract class TransactionEntity extends Object
   factory TransactionEntity({String id, AppState state}) {
     return _$TransactionEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       isDeleted: false,
       createdAt: 0,
