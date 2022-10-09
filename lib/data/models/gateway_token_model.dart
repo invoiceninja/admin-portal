@@ -60,7 +60,6 @@ abstract class GatewayTokenEntity extends Object
   factory GatewayTokenEntity({String id}) {
     return _$GatewayTokenEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       token: '',
       customerReference: '',

@@ -390,13 +390,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(EntityType)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -871,10 +864,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1738,8 +1727,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final EntityType entityType;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$CompanyEntity([void Function(CompanyEntityBuilder) updates]) =>
@@ -1845,7 +1832,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(enableCustomSurchargeTaxes1,
@@ -2138,7 +2124,6 @@ class _$CompanyEntity extends CompanyEntity {
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
         entityType == other.entityType &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -2163,25 +2148,25 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
-                                                                                invoiceTaskDatelog.hashCode),
-                                                                            invoiceTaskProject.hashCode),
-                                                                        autoStartTasks.hashCode),
-                                                                    showTasksTable.hashCode),
-                                                                showTaskEndDate.hashCode),
-                                                            settings.hashCode),
-                                                        enabledModules.hashCode),
-                                                    calculateExpenseTaxByAmount.hashCode),
-                                                stopOnUnpaidRecurring.hashCode),
-                                            isChanged.hashCode),
-                                        createdAt.hashCode),
-                                    updatedAt.hashCode),
-                                archivedAt.hashCode),
-                            isDeleted.hashCode),
-                        createdUserId.hashCode),
-                    assignedUserId.hashCode),
-                entityType.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
+                                                                                invoiceTaskTimelog.hashCode),
+                                                                            invoiceTaskDatelog.hashCode),
+                                                                        invoiceTaskProject.hashCode),
+                                                                    autoStartTasks.hashCode),
+                                                                showTasksTable.hashCode),
+                                                            showTaskEndDate.hashCode),
+                                                        settings.hashCode),
+                                                    enabledModules.hashCode),
+                                                calculateExpenseTaxByAmount.hashCode),
+                                            stopOnUnpaidRecurring.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -2287,7 +2272,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
           ..add('entityType', entityType)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -2802,11 +2786,6 @@ class CompanyEntityBuilder
   EntityType get entityType => _$this._entityType;
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -2917,7 +2896,6 @@ class CompanyEntityBuilder
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
       _entityType = $v.entityType;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -3054,7 +3032,6 @@ class CompanyEntityBuilder
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
               entityType: entityType,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'CompanyEntity', 'id'));
     } catch (_) {
       String _$failedField;

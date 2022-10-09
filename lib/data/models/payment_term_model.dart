@@ -57,7 +57,6 @@ abstract class PaymentTermEntity extends Object
   factory PaymentTermEntity({String id, AppState state}) {
     return _$PaymentTermEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       isDeleted: false,
       archivedAt: 0,

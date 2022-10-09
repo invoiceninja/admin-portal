@@ -59,7 +59,6 @@ abstract class TaxRateEntity extends Object
   factory TaxRateEntity({String id, String name, double rate, AppState state}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       name: name ?? '',
       rate: rate ?? 0.0,

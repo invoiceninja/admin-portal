@@ -138,6 +138,10 @@ abstract class PaymentEntity extends Object
 
   String get number;
 
+  @nullable
+  @BuiltValueField(wireName: 'idempotency_key')
+  String get idempotencyKey;
+
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;

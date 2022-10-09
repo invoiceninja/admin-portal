@@ -95,7 +95,6 @@ abstract class DesignEntity extends Object
 
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       createdAt: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -137,7 +136,6 @@ abstract class DesignEntity extends Object
 
   DesignEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..isChanged = false
     ..isDeleted = false);
 

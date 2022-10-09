@@ -79,7 +79,6 @@ abstract class ProjectEntity extends Object
   }) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       number: '',
       isChanged: false,
       name: '',
@@ -112,7 +111,6 @@ abstract class ProjectEntity extends Object
 
   ProjectEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..idempotencyKey = BaseEntity.nextIdempotencyKey
     ..number = ''
     ..documents.clear()
     ..isChanged = false

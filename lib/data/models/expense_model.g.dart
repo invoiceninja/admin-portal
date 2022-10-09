@@ -343,13 +343,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(EntityType)));
     }
-    value = object.idempotencyKey;
-    if (value != null) {
-      result
-        ..add('idempotency_key')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -576,10 +569,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'idempotency_key':
-          result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -980,8 +969,6 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final EntityType entityType;
   @override
-  final String idempotencyKey;
-  @override
   final String id;
 
   factory _$ExpenseEntity([void Function(ExpenseEntityBuilder) updates]) =>
@@ -1040,7 +1027,6 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.idempotencyKey,
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -1179,7 +1165,6 @@ class _$ExpenseEntity extends ExpenseEntity {
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
         entityType == other.entityType &&
-        idempotencyKey == other.idempotencyKey &&
         id == other.id;
   }
 
@@ -1204,25 +1189,25 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), statusId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode), taxAmount2.hashCode), taxAmount3.hashCode), usesInclusiveTaxes.hashCode),
-                                                                                calculateTaxByAmount.hashCode),
-                                                                            documents.hashCode),
-                                                                        number.hashCode),
-                                                                    recurringId.hashCode),
-                                                                frequencyId.hashCode),
-                                                            lastSentDate.hashCode),
-                                                        nextSendDate.hashCode),
-                                                    remainingCycles.hashCode),
-                                                recurringDates.hashCode),
-                                            isChanged.hashCode),
-                                        createdAt.hashCode),
-                                    updatedAt.hashCode),
-                                archivedAt.hashCode),
-                            isDeleted.hashCode),
-                        createdUserId.hashCode),
-                    assignedUserId.hashCode),
-                entityType.hashCode),
-            idempotencyKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), currencyId.hashCode), categoryId.hashCode), amount.hashCode), date.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), clientId.hashCode), invoiceId.hashCode), vendorId.hashCode), projectId.hashCode), statusId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), taxAmount1.hashCode), taxAmount2.hashCode), taxAmount3.hashCode),
+                                                                                usesInclusiveTaxes.hashCode),
+                                                                            calculateTaxByAmount.hashCode),
+                                                                        documents.hashCode),
+                                                                    number.hashCode),
+                                                                recurringId.hashCode),
+                                                            frequencyId.hashCode),
+                                                        lastSentDate.hashCode),
+                                                    nextSendDate.hashCode),
+                                                remainingCycles.hashCode),
+                                            recurringDates.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -1281,7 +1266,6 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
           ..add('entityType', entityType)
-          ..add('idempotencyKey', idempotencyKey)
           ..add('id', id))
         .toString();
   }
@@ -1514,11 +1498,6 @@ class ExpenseEntityBuilder
   EntityType get entityType => _$this._entityType;
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
-      _$this._idempotencyKey = idempotencyKey;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1582,7 +1561,6 @@ class ExpenseEntityBuilder
       _createdUserId = $v.createdUserId;
       _assignedUserId = $v.assignedUserId;
       _entityType = $v.entityType;
-      _idempotencyKey = $v.idempotencyKey;
       _id = $v.id;
       _$v = null;
     }
@@ -1665,7 +1643,6 @@ class ExpenseEntityBuilder
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
               entityType: entityType,
-              idempotencyKey: idempotencyKey,
               id: BuiltValueNullFieldError.checkNotNull(id, 'ExpenseEntity', 'id'));
     } catch (_) {
       String _$failedField;

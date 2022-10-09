@@ -58,7 +58,6 @@ abstract class ExpenseCategoryEntity extends Object
   factory ExpenseCategoryEntity({String id, AppState state}) {
     return _$ExpenseCategoryEntity._(
       id: id ?? BaseEntity.nextId,
-      idempotencyKey: BaseEntity.nextIdempotencyKey,
       isChanged: false,
       name: '',
       color: '',
