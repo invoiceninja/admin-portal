@@ -1331,134 +1331,136 @@ void _showAbout(BuildContext context) async {
                     title: Text(state.user.fullName),
                     subtitle: Text(state.user.email),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: AppButton(
-                      label: localization.appPlatforms.toUpperCase(),
-                      iconData: MdiIcons.desktopMac,
-                      onPressed: () {
-                        showDialog<AlertDialog>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                actions: [
-                                  TextButton(
-                                    child: Text(
-                                        localization.sourceCode.toUpperCase()),
-                                    onPressed: () {
-                                      showDialog<AlertDialog>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            actions: [
-                                              TextButton(
-                                                child: Text(localization.close
-                                                    .toUpperCase()),
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                              ),
-                                            ],
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.stretch,
-                                              children: [
-                                                Text('Backend'),
-                                                AppButton(
-                                                  label: 'Laravel/PHP',
-                                                  iconData: MdiIcons.server,
-                                                  onPressed: () => launchUrl(
-                                                      Uri.parse(
-                                                          kSourceCodeBackend)),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 30),
-                                                  child: Text('Frontend'),
-                                                ),
-                                                AppButton(
-                                                  label: 'Flutter/Dart',
-                                                  iconData:
-                                                      MdiIcons.desktopClassic,
-                                                  onPressed: () => launchUrl(
-                                                      Uri.parse(
-                                                          kSourceCodeFrontend)),
-                                                ),
-                                                AppButton(
-                                                  label: 'Storefront SDK',
-                                                  iconData: MdiIcons.tools,
-                                                  onPressed: () => launchUrl(
-                                                      Uri.parse(
-                                                          kSourceCodeFrontendSDK)),
+                  if (!isApple())
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: AppButton(
+                        label: localization.appPlatforms.toUpperCase(),
+                        iconData: MdiIcons.desktopMac,
+                        onPressed: () {
+                          showDialog<AlertDialog>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  actions: [
+                                    TextButton(
+                                      child: Text(localization.sourceCode
+                                          .toUpperCase()),
+                                      onPressed: () {
+                                        showDialog<AlertDialog>(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              actions: [
+                                                TextButton(
+                                                  child: Text(localization.close
+                                                      .toUpperCase()),
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
                                                 ),
                                               ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  TextButton(
-                                    child:
-                                        Text(localization.close.toUpperCase()),
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                  ),
-                                ],
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(localization.desktop),
-                                    AppButton(
-                                      label: 'Windows',
-                                      iconData: MdiIcons.microsoftWindows,
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  Text('Backend'),
+                                                  AppButton(
+                                                    label: 'Laravel/PHP',
+                                                    iconData: MdiIcons.server,
+                                                    onPressed: () => launchUrl(
+                                                        Uri.parse(
+                                                            kSourceCodeBackend)),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 30),
+                                                    child: Text('Frontend'),
+                                                  ),
+                                                  AppButton(
+                                                    label: 'Flutter/Dart',
+                                                    iconData:
+                                                        MdiIcons.desktopClassic,
+                                                    onPressed: () => launchUrl(
+                                                        Uri.parse(
+                                                            kSourceCodeFrontend)),
+                                                  ),
+                                                  AppButton(
+                                                    label: 'Storefront SDK',
+                                                    iconData: MdiIcons.tools,
+                                                    onPressed: () => launchUrl(
+                                                        Uri.parse(
+                                                            kSourceCodeFrontendSDK)),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                          localization.close.toUpperCase()),
                                       onPressed: () =>
-                                          launchUrl(Uri.parse(kWindowsUrl)),
-                                    ),
-                                    AppButton(
-                                      label: 'macOS',
-                                      iconData: MdiIcons.apple,
-                                      onPressed: () =>
-                                          launchUrl(Uri.parse(kMacOSUrl)),
-                                    ),
-                                    AppButton(
-                                      label: 'Linux',
-                                      iconData: MdiIcons.linux,
-                                      onPressed: () =>
-                                          launchUrl(Uri.parse(kLinuxUrl)),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 30),
-                                      child: Text(localization.mobile),
-                                    ),
-                                    AppButton(
-                                      label: 'iOS',
-                                      iconData: MdiIcons.apple,
-                                      onPressed: () =>
-                                          launchUrl(Uri.parse(kAppleStoreUrl)),
-                                    ),
-                                    AppButton(
-                                      label: 'Android',
-                                      iconData: MdiIcons.android,
-                                      onPressed: () =>
-                                          launchUrl(Uri.parse(kGoogleStoreUrl)),
-                                    ),
-                                    AppButton(
-                                      label: 'F-Droid',
-                                      iconData: MdiIcons.android,
-                                      onPressed: () => launchUrl(
-                                          Uri.parse(kGoogleFDroidUrl)),
+                                          Navigator.of(context).pop(),
                                     ),
                                   ],
-                                ),
-                              );
-                            });
-                      },
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(localization.desktop),
+                                      AppButton(
+                                        label: 'Windows',
+                                        iconData: MdiIcons.microsoftWindows,
+                                        onPressed: () =>
+                                            launchUrl(Uri.parse(kWindowsUrl)),
+                                      ),
+                                      AppButton(
+                                        label: 'macOS',
+                                        iconData: MdiIcons.apple,
+                                        onPressed: () =>
+                                            launchUrl(Uri.parse(kMacOSUrl)),
+                                      ),
+                                      AppButton(
+                                        label: 'Linux',
+                                        iconData: MdiIcons.linux,
+                                        onPressed: () =>
+                                            launchUrl(Uri.parse(kLinuxUrl)),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 30),
+                                        child: Text(localization.mobile),
+                                      ),
+                                      AppButton(
+                                        label: 'iOS',
+                                        iconData: MdiIcons.apple,
+                                        onPressed: () => launchUrl(
+                                            Uri.parse(kAppleStoreUrl)),
+                                      ),
+                                      AppButton(
+                                        label: 'Android',
+                                        iconData: MdiIcons.android,
+                                        onPressed: () => launchUrl(
+                                            Uri.parse(kGoogleStoreUrl)),
+                                      ),
+                                      AppButton(
+                                        label: 'F-Droid',
+                                        iconData: MdiIcons.android,
+                                        onPressed: () => launchUrl(
+                                            Uri.parse(kGoogleFDroidUrl)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                      ),
                     ),
-                  ),
                   AppButton(
                     label: (localization.releaseNotes).toUpperCase(),
                     iconData: MdiIcons.note,
