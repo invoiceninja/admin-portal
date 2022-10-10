@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'would_you_rate_the_app': 'Would you like to rate the app?',
       'include_deleted': 'Include Deleted',
       'include_deleted_help': 'Include deleted records in reports',
       'due_on': 'Due On',
@@ -87437,6 +87438,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeDeletedHelp =>
       _localizedValues[localeCode]['include_deleted_help'] ??
       _localizedValues['en']['include_deleted_help'];
+
+String get wouldYouRateTheApp =>
+      _localizedValues[localeCode]['would_you_rate_the_app'] ??
+      _localizedValues['en']['would_you_rate_the_app'];
 
 // STARTER: lang field - do not remove comment
 

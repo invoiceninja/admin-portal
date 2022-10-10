@@ -21,6 +21,15 @@ class _ReviewAppState extends State<ReviewApp> {
   bool _likesTheApp;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (isApple()) {
+      _likesTheApp = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
@@ -41,11 +50,13 @@ class _ReviewAppState extends State<ReviewApp> {
         children: [
           SizedBox(height: 12),
           Text(
-            _likesTheApp == null
-                ? localization.areYouEnjoyingTheApp
-                : _likesTheApp == true
-                    ? localization.wouldYouRateIt
-                    : localization.wouldYouTellUsMore,
+            isApple()
+                ? localization.wouldYouRateTheApp
+                : _likesTheApp == null
+                    ? localization.areYouEnjoyingTheApp
+                    : _likesTheApp == true
+                        ? localization.wouldYouRateIt
+                        : localization.wouldYouTellUsMore,
             style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
