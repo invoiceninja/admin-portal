@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
@@ -318,31 +317,29 @@ class MainScreen extends StatelessWidget {
 
           return false;
         },
-        child: WindowManager(
-          child: DesktopSessionTimeout(
-            child: SafeArea(
-              child: FocusTraversalGroup(
-                policy: ReadingOrderTraversalPolicy(),
-                child: Column(
-                  children: [
-                    if (isWindows()) AppTitleBar(),
-                    Expanded(
-                      child: ChangeLayoutBanner(
-                        appLayout: prefState.appLayout,
-                        suggestedLayout: AppLayout.desktop,
-                        child: Row(children: <Widget>[
-                          if (prefState.showMenu) MenuDrawerBuilder(),
-                          Expanded(
-                              child: AppBorder(
-                            child: screen,
-                            isLeft: prefState.showMenu &&
-                                (!state.isFullScreen || showFilterSidebar),
-                          )),
-                        ]),
-                      ),
+        child: DesktopSessionTimeout(
+          child: SafeArea(
+            child: FocusTraversalGroup(
+              policy: ReadingOrderTraversalPolicy(),
+              child: Column(
+                children: [
+                  if (isWindows()) AppTitleBar(),
+                  Expanded(
+                    child: ChangeLayoutBanner(
+                      appLayout: prefState.appLayout,
+                      suggestedLayout: AppLayout.desktop,
+                      child: Row(children: <Widget>[
+                        if (prefState.showMenu) MenuDrawerBuilder(),
+                        Expanded(
+                            child: AppBorder(
+                          child: screen,
+                          isLeft: prefState.showMenu &&
+                              (!state.isFullScreen || showFilterSidebar),
+                        )),
+                      ]),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
