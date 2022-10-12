@@ -215,17 +215,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       (ProductDetails productDetails) {
         final PurchaseDetails previousPurchase = purchases[productDetails.id];
 
-        String description = productDetails.description;
-
-        // TODO remove this code
-        // Workaround for product in app store with blank values
-        if (description.isEmpty &&
-            productDetails.id == kProductEnterprisePlanMonth_10) {
-          description = 'One month of the Enterprise Plan (10 users)';
-        }
-
         return ListTile(
-          title: Text(description),
+          title: Text(productDetails.description),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
