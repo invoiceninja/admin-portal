@@ -69,7 +69,7 @@ class EditScaffold extends StatelessWidget {
         (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
-        ? (state.account.trialStarted.isEmpty
+        ? (state.account.isEligibleForTrial && !supportsInAppPurchase()
             ? localization.startFreeTrialMessage
             : localization.upgradeToPaidPlan)
         : localization.ownerUpgradeToPaidPlan;
