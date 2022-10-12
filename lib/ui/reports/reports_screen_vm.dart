@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/ui/reports/purchase_order_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
@@ -314,6 +315,17 @@ class ReportsScreenVM {
           state.clientState.map,
           state.vendorState.map,
           state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportPurchaseOrderItem:
+        reportResult = memoizedPurchaseOrderItemReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.productState.map,
+          state.purchaseOrderState.map,
+          state.clientState.map,
+          state.vendorState.map,
           state.staticState,
         );
         break;

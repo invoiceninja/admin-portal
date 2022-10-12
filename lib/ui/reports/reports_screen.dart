@@ -117,6 +117,7 @@ class ReportsScreen extends StatelessWidget {
         kReportVendor,
         if (state.company.isModuleEnabled(EntityType.purchaseOrder))
           kReportPurchaseOrder,
+        kReportPurchaseOrderItem,
       ],
       if (state.company.isModuleEnabled(EntityType.transaction))
         kReportTransaction,

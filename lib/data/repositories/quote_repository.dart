@@ -27,7 +27,7 @@ class QuoteRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/quotes/$entityId?include=history,activities',
+        '${credentials.url}/quotes/$entityId?include=activities.history',
         credentials.token);
 
     final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
@@ -83,9 +83,9 @@ class QuoteRepository {
     dynamic response;
 
     if (quote.isNew) {
-      url = credentials.url + '/quotes?include=history,activities';
+      url = credentials.url + '/quotes?include=activities.history';
     } else {
-      url = '${credentials.url}/quotes/${quote.id}?include=history,activities';
+      url = '${credentials.url}/quotes/${quote.id}?include=activities.history';
     }
 
     if (action == EntityAction.convertToInvoice) {
