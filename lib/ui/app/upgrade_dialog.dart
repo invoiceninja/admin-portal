@@ -27,6 +27,7 @@ class UpgradeDialog extends StatefulWidget {
 }
 
 class _UpgradeDialogState extends State<UpgradeDialog> {
+  final _scrollController = ScrollController();
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>> _subscription;
   List<ProductDetails> _products = <ProductDetails>[];
@@ -115,6 +116,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       iosPlatformAddition.setDelegate(null);
     }
     _subscription.cancel();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -124,18 +126,23 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
       stack.add(
-        ListView(
-          children: <Widget>[
-            if (Platform.isIOS)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: Text(
-                  'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+        Scrollbar(
+          thumbVisibility: true,
+          controller: _scrollController,
+          child: ListView(
+            controller: _scrollController,
+            children: <Widget>[
+              if (Platform.isIOS)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
                 ),
-              ),
-            _buildProductList(),
-          ],
+              _buildProductList(),
+            ],
+          ),
         ),
       );
     } else {
@@ -215,17 +222,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       (ProductDetails productDetails) {
         final PurchaseDetails previousPurchase = purchases[productDetails.id];
 
-        String description = productDetails.description;
-
-        // TODO remove this code
-        // Workaround for product in app store with blank values
-        if (description.isEmpty &&
-            productDetails.id == kProductEnterprisePlanMonth_10) {
-          description = 'One month of the Enterprise Plan (10 users)';
-        }
-
         return ListTile(
-          title: Text(description),
+          title: Text(productDetails.description),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -301,6 +301,7 @@ abstract class InvoiceEntity extends Object
         ..number = ''
         ..date = convertDateTimeToSqlDate()
         ..dueDate = ''
+        ..partialDueDate = ''
         ..documents.clear()
         ..lineItems.replace(lineItems
             .where((lineItem) =>
