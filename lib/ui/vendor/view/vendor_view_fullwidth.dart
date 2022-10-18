@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -266,7 +267,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: 2,
+                  length: 3,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -282,6 +283,9 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                               text: documents.isEmpty
                                   ? localization.documents
                                   : '${localization.documents} (${documents.length})',
+                            ),
+                            Tab(
+                              child: Text(localization.activity),
                             ),
                           ],
                         ),
@@ -314,6 +318,13 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: VendorViewDocuments(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.vendor.id),
+                                ),
+                              ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: VendorViewActivity(
                                   viewModel: viewModel,
                                   key: ValueKey(viewModel.vendor.id),
                                 ),
