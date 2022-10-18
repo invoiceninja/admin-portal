@@ -927,9 +927,6 @@ abstract class ActivityEntity
         ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
 
-    print('## Activityy: IS $activity');
-    print('##');
-
     return activity;
   }
 
