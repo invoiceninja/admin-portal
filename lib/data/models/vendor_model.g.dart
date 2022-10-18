@@ -192,6 +192,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object value;
+    value = object.loadedAt;
+    if (value != null) {
+      result
+        ..add('loadedAt')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -234,6 +240,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       iterator.moveNext();
       final Object value = iterator.current;
       switch (key) {
+        case 'loadedAt':
+          result.loadedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -733,6 +743,8 @@ class VendorItemResponseBuilder
 
 class _$VendorEntity extends VendorEntity {
   @override
+  final int loadedAt;
+  @override
   final String name;
   @override
   final String address1;
@@ -797,7 +809,8 @@ class _$VendorEntity extends VendorEntity {
       (new VendorEntityBuilder()..update(updates)).build();
 
   _$VendorEntity._(
-      {this.name,
+      {this.loadedAt,
+      this.name,
       this.address1,
       this.address2,
       this.city,
@@ -960,6 +973,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('VendorEntity')
+          ..add('loadedAt', loadedAt)
           ..add('name', name)
           ..add('address1', address1)
           ..add('address2', address2)
@@ -997,6 +1011,10 @@ class _$VendorEntity extends VendorEntity {
 class VendorEntityBuilder
     implements Builder<VendorEntity, VendorEntityBuilder> {
   _$VendorEntity _$v;
+
+  int _loadedAt;
+  int get loadedAt => _$this._loadedAt;
+  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
 
   String _name;
   String get name => _$this._name;
@@ -1133,6 +1151,7 @@ class VendorEntityBuilder
   VendorEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _loadedAt = $v.loadedAt;
       _name = $v.name;
       _address1 = $v.address1;
       _address2 = $v.address2;
@@ -1185,6 +1204,7 @@ class VendorEntityBuilder
     try {
       _$result = _$v ??
           new _$VendorEntity._(
+              loadedAt: loadedAt,
               name: BuiltValueNullFieldError.checkNotNull(
                   name, 'VendorEntity', 'name'),
               address1: BuiltValueNullFieldError.checkNotNull(
