@@ -626,7 +626,7 @@ class _LoginState extends State<LoginView> {
                     ),
                     if (!_isSelfHosted &&
                         !_recoverPassword &&
-                        (!isApple() || supportsInAppPurchase()) &&
+                        !isMacOS() && // TODO remove once IAP macOS is supported
                         (!kIsWeb || state.authState.isHosted))
                       Padding(
                           padding: const EdgeInsets.only(top: 6, bottom: 10),
