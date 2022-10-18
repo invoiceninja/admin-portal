@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'long_press_to_select': 'Long Press to Select',
       'purchase_order_number': 'Purchase Order Number',
       'purchase_order_item': 'Purchase Order Item',
       'would_you_rate_the_app': 'Would you like to rate the app?',
@@ -87452,6 +87453,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get purchaseOrderNumber =>
       _localizedValues[localeCode]['purchase_order_number'] ??
       _localizedValues['en']['purchase_order_number'];
+
+  String get longPressToSelect =>
+      _localizedValues[localeCode]['long_press_to_select'] ??
+      _localizedValues['en']['long_press_to_select'];
+
 
 // STARTER: lang field - do not remove comment
 

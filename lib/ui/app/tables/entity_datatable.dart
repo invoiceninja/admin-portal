@@ -115,7 +115,9 @@ class EntityDataTableSource extends AppDataTableSource {
               children: <Widget>[
                 IconButton(
                   tooltip: prefState.enableTooltips
-                      ? AppLocalization.of(context).editRecord
+                      ? AppLocalization.of(context).editRecord +
+                          '\n' +
+                          AppLocalization.of(context).longPressToSelect
                       : null,
                   onPressed: () => editEntity(entity: entity),
                   icon: GestureDetector(
