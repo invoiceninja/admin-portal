@@ -1586,12 +1586,7 @@ void selectEntity({
       store.dispatch(TogglePreviewSidebar());
     }
   } else {
-    ClientEntity client;
-    if (forceView && entity is BelongsToClient) {
-      client = state.clientState.get((entity as BelongsToClient).clientId);
-    }
-
-    viewEntity(entity: entity, filterEntity: client);
+    viewEntity(entity: entity);
   }
 }
 
