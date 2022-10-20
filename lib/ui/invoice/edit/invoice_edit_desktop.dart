@@ -806,40 +806,51 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           children: [
                                             if (company.hasTaxes)
                                               Expanded(
-                                                child: SwitchListTile(
-                                                  dense: true,
-                                                  activeColor: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                  title: Text(localization
-                                                      .inclusiveTaxes),
-                                                  value: invoice
-                                                      .usesInclusiveTaxes,
-                                                  onChanged: (value) {
-                                                    viewModel.onChanged(
-                                                        invoice.rebuild((b) => b
-                                                          ..usesInclusiveTaxes =
-                                                              value));
-                                                  },
+                                                child: Tooltip(
+                                                  message: localization
+                                                      .inclusiveTaxes,
+                                                  child: SwitchListTile(
+                                                    dense: true,
+                                                    activeColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                    title: Text(localization
+                                                        .inclusiveTaxes),
+                                                    value: invoice
+                                                        .usesInclusiveTaxes,
+                                                    onChanged: (value) {
+                                                      viewModel.onChanged(invoice
+                                                          .rebuild((b) => b
+                                                            ..usesInclusiveTaxes =
+                                                                value));
+                                                    },
+                                                  ),
                                                 ),
                                               ),
-                                            if (invoice.isInvoice)
+                                            if (invoice.isInvoice &&
+                                                invoice.isLinkedToRecurring)
                                               Expanded(
-                                                child: SwitchListTile(
-                                                  dense: true,
-                                                  activeColor: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                  title: Text(localization
-                                                      .autoBillEnabled),
-                                                  value:
-                                                      invoice.autoBillEnabled,
-                                                  onChanged: (value) {
-                                                    viewModel.onChanged(
-                                                        invoice.rebuild((b) => b
-                                                          ..autoBillEnabled =
-                                                              value));
-                                                  },
+                                                child: Tooltip(
+                                                  message: localization
+                                                      .autoBillEnabled,
+                                                  child: SwitchListTile(
+                                                    dense: true,
+                                                    activeColor:
+                                                        Theme.of(context)
+                                                            .colorScheme
+                                                            .secondary,
+                                                    title: Text(localization
+                                                        .autoBillEnabled),
+                                                    value:
+                                                        invoice.autoBillEnabled,
+                                                    onChanged: (value) {
+                                                      viewModel.onChanged(invoice
+                                                          .rebuild((b) => b
+                                                            ..autoBillEnabled =
+                                                                value));
+                                                    },
+                                                  ),
                                                 ),
                                               ),
                                           ],

@@ -1233,6 +1233,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isRecurring => [EntityType.recurringInvoice].contains(entityType);
 
+  bool get isLinkedToRecurring => (recurringId ?? '').isNotEmpty;
+
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
 
   EmailTemplate get emailTemplate => isPurchaseOrder
