@@ -183,6 +183,40 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     ),
                 ],
               ),
+              if (isDesktop(context))
+                FormCard(
+                  children: [
+                    SwitchListTile(
+                      title: Text(localization.showPdfPreview),
+                      subtitle: Text(localization.showPdfPreviewHelp),
+                      value: prefState.showPdfPreview,
+                      onChanged: (value) =>
+                          viewModel.onShowPdfChanged(context, value),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      secondary: Icon(MdiIcons.filePdfBox),
+                    ),
+                    if (kIsWeb || !kReleaseMode)
+                      SwitchListTile(
+                        title: Text(localization.browserPdfViewer),
+                        subtitle: Text(localization.browserPdfViewerHelp),
+                        value: !prefState.enableJSPDF,
+                        onChanged: (value) =>
+                            viewModel.onEnableJSPDFChanged(context, !value),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        secondary: Icon(MdiIcons.filePdfBox),
+                      ),
+                    SizedBox(height: 10),
+                    BoolDropdownButton(
+                      label: localization.previewLocation,
+                      value: prefState.showPdfPreviewSideBySide,
+                      onChanged: (value) {
+                        viewModel.onShowPdfSideBySideChanged(context, value);
+                      },
+                      disabledLabel: localization.bottom,
+                      enabledLabel: localization.side,
+                    ),
+                  ],
+                ),
               FormCard(
                 children: <Widget>[
                   Padding(
@@ -260,25 +294,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(Icons.touch_app),
                     ),
-                    SwitchListTile(
-                      title: Text(localization.showPdfPreview),
-                      subtitle: Text(localization.showPdfPreviewHelp),
-                      value: prefState.showPdfPreview,
-                      onChanged: (value) =>
-                          viewModel.onShowPdfChanged(context, value),
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      secondary: Icon(MdiIcons.filePdfBox),
-                    ),
-                    if (kIsWeb || !kReleaseMode)
-                      SwitchListTile(
-                        title: Text(localization.browserPdfViewer),
-                        subtitle: Text(localization.browserPdfViewerHelp),
-                        value: !prefState.enableJSPDF,
-                        onChanged: (value) =>
-                            viewModel.onEnableJSPDFChanged(context, !value),
-                        activeColor: Theme.of(context).colorScheme.secondary,
-                        secondary: Icon(MdiIcons.filePdfBox),
-                      ),
                   ],
                   /*
                   SwitchListTile(

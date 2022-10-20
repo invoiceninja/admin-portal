@@ -164,6 +164,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.persistUi,
     this.tapSelectedToEdit,
     this.showPdfPreview,
+    this.showPdfPreviewSideBySide,
     this.editAfterSaving,
     this.enableTouchEvents,
     this.enableTooltips,
@@ -189,6 +190,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool tapSelectedToEdit;
   final double textScaleFactor;
   final bool showPdfPreview;
+  final bool showPdfPreviewSideBySide;
   final bool enableJSPDF;
   final BuiltMap<String, String> customColors;
   final bool editAfterSaving;
