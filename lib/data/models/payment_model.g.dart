@@ -179,6 +179,9 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'invitation_id',
       serializers.serialize(object.invitationId,
           specifiedType: const FullType(String)),
+      'transaction_id',
+      serializers.serialize(object.transactionId,
+          specifiedType: const FullType(String)),
       'client_contact_id',
       serializers.serialize(object.clientContactId,
           specifiedType: const FullType(String)),
@@ -366,6 +369,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'invitation_id':
           result.invitationId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'transaction_id':
+          result.transactionId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'client_contact_id':
@@ -768,6 +775,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String invitationId;
   @override
+  final String transactionId;
+  @override
   final String clientContactId;
   @override
   final String companyGatewayId;
@@ -827,6 +836,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.projectId,
       this.vendorId,
       this.invitationId,
+      this.transactionId,
       this.clientContactId,
       this.companyGatewayId,
       this.currencyId,
@@ -881,6 +891,8 @@ class _$PaymentEntity extends PaymentEntity {
     BuiltValueNullFieldError.checkNotNull(
         invitationId, 'PaymentEntity', 'invitationId');
     BuiltValueNullFieldError.checkNotNull(
+        transactionId, 'PaymentEntity', 'transactionId');
+    BuiltValueNullFieldError.checkNotNull(
         clientContactId, 'PaymentEntity', 'clientContactId');
     BuiltValueNullFieldError.checkNotNull(
         companyGatewayId, 'PaymentEntity', 'companyGatewayId');
@@ -932,6 +944,7 @@ class _$PaymentEntity extends PaymentEntity {
         projectId == other.projectId &&
         vendorId == other.vendorId &&
         invitationId == other.invitationId &&
+        transactionId == other.transactionId &&
         clientContactId == other.clientContactId &&
         companyGatewayId == other.companyGatewayId &&
         currencyId == other.currencyId &&
@@ -972,9 +985,9 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), idempotencyKey.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode),
-                                                                                vendorId.hashCode),
-                                                                            invitationId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), idempotencyKey.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode), vendorId.hashCode),
+                                                                                invitationId.hashCode),
+                                                                            transactionId.hashCode),
                                                                         clientContactId.hashCode),
                                                                     companyGatewayId.hashCode),
                                                                 currencyId.hashCode),
@@ -1018,6 +1031,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
           ..add('invitationId', invitationId)
+          ..add('transactionId', transactionId)
           ..add('clientContactId', clientContactId)
           ..add('companyGatewayId', companyGatewayId)
           ..add('currencyId', currencyId)
@@ -1130,6 +1144,11 @@ class PaymentEntityBuilder
   String get invitationId => _$this._invitationId;
   set invitationId(String invitationId) => _$this._invitationId = invitationId;
 
+  String _transactionId;
+  String get transactionId => _$this._transactionId;
+  set transactionId(String transactionId) =>
+      _$this._transactionId = transactionId;
+
   String _clientContactId;
   String get clientContactId => _$this._clientContactId;
   set clientContactId(String clientContactId) =>
@@ -1209,7 +1228,9 @@ class PaymentEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  PaymentEntityBuilder();
+  PaymentEntityBuilder() {
+    PaymentEntity._initializeBuilder(this);
+  }
 
   PaymentEntityBuilder get _$this {
     final $v = _$v;
@@ -1235,6 +1256,7 @@ class PaymentEntityBuilder
       _projectId = $v.projectId;
       _vendorId = $v.vendorId;
       _invitationId = $v.invitationId;
+      _transactionId = $v.transactionId;
       _clientContactId = $v.clientContactId;
       _companyGatewayId = $v.companyGatewayId;
       _currencyId = $v.currencyId;
@@ -1304,6 +1326,7 @@ class PaymentEntityBuilder
               projectId: BuiltValueNullFieldError.checkNotNull(projectId, 'PaymentEntity', 'projectId'),
               vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'PaymentEntity', 'vendorId'),
               invitationId: BuiltValueNullFieldError.checkNotNull(invitationId, 'PaymentEntity', 'invitationId'),
+              transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, 'PaymentEntity', 'transactionId'),
               clientContactId: BuiltValueNullFieldError.checkNotNull(clientContactId, 'PaymentEntity', 'clientContactId'),
               companyGatewayId: BuiltValueNullFieldError.checkNotNull(companyGatewayId, 'PaymentEntity', 'companyGatewayId'),
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'PaymentEntity', 'currencyId'),

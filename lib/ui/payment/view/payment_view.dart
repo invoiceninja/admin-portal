@@ -155,6 +155,12 @@ class _PaymentViewState extends State<PaymentView> {
                         ),
                         ListDivider(),
                       ],
+                      if (payment.transactionId.isNotEmpty)
+                        EntityListTile(
+                          isFilter: widget.isFilter,
+                          entity:
+                              state.transactionState.get(payment.transactionId),
+                        ),
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty
                           ? Column(
