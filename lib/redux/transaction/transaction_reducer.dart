@@ -54,6 +54,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SortTransactions>((selectedId, action) => ''),
   TypedReducer<String, FilterTransactions>((selectedId, action) => ''),
   TypedReducer<String, FilterTransactionsByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterTransactionsByStatus>((selectedId, action) => ''),
   TypedReducer<String, FilterTransactionsByCustom1>((selectedId, action) => ''),
   TypedReducer<String, FilterTransactionsByCustom2>((selectedId, action) => ''),
   TypedReducer<String, FilterTransactionsByCustom3>((selectedId, action) => ''),

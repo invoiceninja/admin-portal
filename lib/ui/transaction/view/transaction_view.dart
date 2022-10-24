@@ -135,6 +135,15 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     _focusNode = FocusNode();
     _selectedInvoices = [];
 
+    final transactions = widget.viewModel.transactions;
+    final state = widget.viewModel.state;
+    if (transactions.isNotEmpty) {
+      _selectedInvoices = transactions.first.invoiceIds
+          .split(',')
+          .map((invoiceId) => state.invoiceState.get(invoiceId))
+          .toList();
+    }
+
     updateInvoiceList();
   }
 
@@ -446,6 +455,19 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendorFocusNode = FocusNode();
     _categoryFocusNode = FocusNode();
+
+    final transactions = widget.viewModel.transactions;
+    final state = widget.viewModel.state;
+    if (transactions.isNotEmpty) {
+      final transaction = transactions.first;
+      if ((transaction.categoryId ?? '').isNotEmpty) {
+        _selectedCategory =
+            state.expenseCategoryState.get(transaction.categoryId);
+      }
+      if ((transaction.vendorId ?? '').isNotEmpty) {
+        _selectedVendor = state.vendorState.get(transaction.vendorId);
+      }
+    }
 
     updateVendorList();
     updateCategoryList();
