@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_fullwidth.dart';
@@ -48,7 +49,7 @@ class _VendorViewState extends State<VendorView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 3,
+        length: 4,
         initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -83,6 +84,7 @@ class _VendorViewState extends State<VendorView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
+    final documents = vendor.documents;
 
     if (widget.isTopFilter) {
       return Material(
@@ -110,6 +112,7 @@ class _VendorViewState extends State<VendorView>
       entity: vendor,
       appBarBottom: TabBar(
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.overview,
@@ -118,7 +121,12 @@ class _VendorViewState extends State<VendorView>
             text: localization.details,
           ),
           Tab(
-            text: localization.documents,
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
+          ),
+          Tab(
+            text: localization.activity,
           ),
         ],
       ),
@@ -144,6 +152,13 @@ class _VendorViewState extends State<VendorView>
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: VendorViewDocuments(
                       viewModel: viewModel,
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: VendorViewActivity(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.vendor.id),
                     ),
                   ),
                 ],

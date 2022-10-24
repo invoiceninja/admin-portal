@@ -57,7 +57,7 @@ class _TransactionViewState extends State<TransactionView> {
           ),
           ListDivider(),
           if (transaction.isConverted) ...[
-            if (false)
+            if (transaction.isDeposit)
               ...transaction.invoiceIds
                   .split(',')
                   .map((invoiceId) => state.invoiceState.get(invoiceId))
@@ -82,7 +82,7 @@ class _TransactionViewState extends State<TransactionView> {
               ),
             ]
           ] else ...[
-            if (false)
+            if (transaction.isDeposit)
               Expanded(
                 child: _MatchDeposits(
                   viewModel: viewModel,

@@ -16,6 +16,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'preview_location': 'Preview Location',
+      'bottom': 'Bottom',
+      'side': 'Side',
+      'pdf_preview': 'PDF Preview',
+      'long_press_to_select': 'Long Press to Select',
       'purchase_order_number': 'Purchase Order Number',
       'purchase_order_item': 'Purchase Order Item',
       'would_you_rate_the_app': 'Would you like to rate the app?',
@@ -24,7 +29,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'due_on': 'Due On',
       'browser_pdf_viewer': 'Use Browser PDF Viewer',
       'browser_pdf_viewer_help':
-          'Warning: prevents interacting with app over the PDF',
+          'Warning: Prevents interacting with app over the PDF',
       'converted_transactions': 'Successfully converted transactions',
       'created_bank_account': 'Successfully created bank account',
       'updated_bank_account': 'Successfully updated bank account',
@@ -87452,6 +87457,25 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get purchaseOrderNumber =>
       _localizedValues[localeCode]['purchase_order_number'] ??
       _localizedValues['en']['purchase_order_number'];
+
+  String get longPressToSelect =>
+      _localizedValues[localeCode]['long_press_to_select'] ??
+      _localizedValues['en']['long_press_to_select'];
+
+  String get pdfPreview =>
+      _localizedValues[localeCode]['pdf_preview'] ??
+      _localizedValues['en']['pdf_preview'];
+
+  String get previewLocation =>
+      _localizedValues[localeCode]['preview_location'] ??
+      _localizedValues['en']['preview_location'];
+
+  String get bottom =>
+      _localizedValues[localeCode]['bottom'] ??
+      _localizedValues['en']['bottom'];
+
+  String get side =>
+      _localizedValues[localeCode]['side'] ?? _localizedValues['en']['side'];
 
 // STARTER: lang field - do not remove comment
 

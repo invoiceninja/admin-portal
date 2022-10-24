@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
@@ -9,6 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+import '../../../redux/app/app_state.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
   const InvoiceEditContacts({
@@ -119,31 +122,57 @@ class _ClientContactListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final invitationButton = (invitation?.link ?? '').isNotEmpty
+        ? IconButton(
+            tooltip: localization.copyLink,
+            icon: Icon(Icons.copy),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: invitation.link));
+              showToast(localization.copiedToClipboard.replaceFirst(
+                  ':value', invitation.link.substring(0, 40) + '...'));
+            },
+          )
+        : SizedBox();
 
-    return ListTile(
-      title: Text(clientContact.fullName.isNotEmpty
-          ? clientContact.fullName
-          : AppLocalization.of(context).blankContact),
-      subtitle: clientContact.email != null ? Text(clientContact.email) : null,
-      onTap: onTap,
-      leading: IgnorePointer(
-        child: Checkbox(
-          activeColor: Theme.of(context).colorScheme.secondary,
-          value: invitation != null,
-          onChanged: (value) => null,
-        ),
-      ),
-      trailing: (invitation?.link ?? '').isEmpty
-          ? null
-          : IconButton(
-              tooltip: localization.copyLink,
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: invitation.link));
-                showToast(localization.copiedToClipboard.replaceFirst(
-                    ':value', invitation.link.substring(0, 40) + '...'));
-              },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              Checkbox(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                value: invitation != null,
+                onChanged: (value) => onTap(),
+              ),
+              if (store.state.prefState.showPdfPreviewSideBySide)
+                invitationButton,
+            ],
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  clientContact.fullName.isNotEmpty
+                      ? clientContact.fullName
+                      : AppLocalization.of(context).blankContact,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                if (clientContact.email != null)
+                  Text(
+                    clientContact.email,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+              ],
             ),
+          ),
+          if (!store.state.prefState.showPdfPreviewSideBySide) invitationButton,
+        ],
+      ),
     );
   }
 }
@@ -164,31 +193,57 @@ class _VendorContactListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final invitationButton = (invitation?.link ?? '').isNotEmpty
+        ? IconButton(
+            tooltip: localization.copyLink,
+            icon: Icon(Icons.copy),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: invitation.link));
+              showToast(localization.copiedToClipboard.replaceFirst(
+                  ':value', invitation.link.substring(0, 40) + '...'));
+            },
+          )
+        : SizedBox();
 
-    return ListTile(
-      title: Text(vendorContact.fullName.isNotEmpty
-          ? vendorContact.fullName
-          : AppLocalization.of(context).blankContact),
-      subtitle: vendorContact.email != null ? Text(vendorContact.email) : null,
-      onTap: onTap,
-      leading: IgnorePointer(
-        child: Checkbox(
-          activeColor: Theme.of(context).colorScheme.secondary,
-          value: invitation != null,
-          onChanged: (value) => null,
-        ),
-      ),
-      trailing: (invitation?.link ?? '').isEmpty
-          ? null
-          : IconButton(
-              tooltip: localization.copyLink,
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: invitation.link));
-                showToast(localization.copiedToClipboard.replaceFirst(
-                    ':value', invitation.link.substring(0, 40) + '...'));
-              },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              Checkbox(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                value: invitation != null,
+                onChanged: (value) => onTap(),
+              ),
+              if (store.state.prefState.showPdfPreviewSideBySide)
+                invitationButton,
+            ],
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  vendorContact.fullName.isNotEmpty
+                      ? vendorContact.fullName
+                      : AppLocalization.of(context).blankContact,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                if (vendorContact.email != null)
+                  Text(
+                    vendorContact.email,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+              ],
             ),
+          ),
+          if (!store.state.prefState.showPdfPreviewSideBySide) invitationButton,
+        ],
+      ),
     );
   }
 }

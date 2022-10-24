@@ -48,53 +48,52 @@ import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions
 
 PrefState prefReducer(
     PrefState state, dynamic action, String selectedCompanyId) {
-  return state.rebuild(
-    (b) => b
-      ..companyPrefs[selectedCompanyId] =
-          companyPrefReducer(state.companyPrefs[selectedCompanyId], action)
-      ..appLayout = layoutReducer(state.appLayout, action)
-      ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
-      ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
-      ..isPreviewVisible =
-          isPreviewVisibleReducer(state.isPreviewVisible, action)
-      ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
-      ..historySidebarMode =
-          historySidebarReducer(state.historySidebarMode, action)
-      ..hideDesktopWarning =
-          hideDesktopWarningReducer(state.hideDesktopWarning, action)
-      ..hideGatewayWarning =
-          hideGatewayWarningReducer(state.hideGatewayWarning, action)
-      ..hideReviewApp = hideReviewAppReducer(state.hideReviewApp, action)
-      ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
-      ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
-      ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
-      ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-      ..enableJSPDF = enableJspdfReducer(state.enableJSPDF, action)
-      ..enableTooltips = enableTooltipsReducer(state.enableTooltips, action)
-      ..enableFlexibleSearch =
-          enableFlexibleSearchReducer(state.enableFlexibleSearch, action)
-      ..persistData = persistDataReducer(state.persistData, action)
-      ..persistUI = persistUIReducer(state.persistUI, action)
-      ..showKanban = showKanbanReducer(state.showKanban, action)
-      ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
-      ..longPressSelectionIsDefault =
-          longPressReducer(state.longPressSelectionIsDefault, action)
-      ..tapSelectedToEdit =
-          tapSelectedToEditReducer(state.tapSelectedToEdit, action)
-      ..requireAuthentication =
-          requireAuthenticationReducer(state.requireAuthentication, action)
-      ..colorTheme = colorThemeReducer(state.colorTheme, action)
-      ..customColors.replace(customColorsReducer(state.customColors, action))
-      ..useSidebarEditor
-          .replace(sidebarEditorReducer(state.useSidebarEditor, action))
-      ..useSidebarViewer
-          .replace(sidebarViewerReducer(state.useSidebarViewer, action))
-      ..sortFields.replace(sortFieldsReducer(state.sortFields, action))
-      ..editAfterSaving = editAfterSavingReducer(state.editAfterSaving, action)
-      ..enableTouchEvents =
-          enableTouchEventsReducer(state.enableTouchEvents, action)
-      ..showPdfPreview = showPdfPreviewReducer(state.showPdfPreview, action),
-  );
+  return state.rebuild((b) => b
+    ..companyPrefs[selectedCompanyId] =
+        companyPrefReducer(state.companyPrefs[selectedCompanyId], action)
+    ..appLayout = layoutReducer(state.appLayout, action)
+    ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
+    ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
+    ..isPreviewVisible = isPreviewVisibleReducer(state.isPreviewVisible, action)
+    ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
+    ..historySidebarMode =
+        historySidebarReducer(state.historySidebarMode, action)
+    ..hideDesktopWarning =
+        hideDesktopWarningReducer(state.hideDesktopWarning, action)
+    ..hideGatewayWarning =
+        hideGatewayWarningReducer(state.hideGatewayWarning, action)
+    ..hideReviewApp = hideReviewAppReducer(state.hideReviewApp, action)
+    ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
+    ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
+    ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
+    ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..enableJSPDF = enableJspdfReducer(state.enableJSPDF, action)
+    ..enableTooltips = enableTooltipsReducer(state.enableTooltips, action)
+    ..enableFlexibleSearch =
+        enableFlexibleSearchReducer(state.enableFlexibleSearch, action)
+    ..persistData = persistDataReducer(state.persistData, action)
+    ..persistUI = persistUIReducer(state.persistUI, action)
+    ..showKanban = showKanbanReducer(state.showKanban, action)
+    ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
+    ..longPressSelectionIsDefault =
+        longPressReducer(state.longPressSelectionIsDefault, action)
+    ..tapSelectedToEdit =
+        tapSelectedToEditReducer(state.tapSelectedToEdit, action)
+    ..requireAuthentication =
+        requireAuthenticationReducer(state.requireAuthentication, action)
+    ..colorTheme = colorThemeReducer(state.colorTheme, action)
+    ..customColors.replace(customColorsReducer(state.customColors, action))
+    ..useSidebarEditor
+        .replace(sidebarEditorReducer(state.useSidebarEditor, action))
+    ..useSidebarViewer
+        .replace(sidebarViewerReducer(state.useSidebarViewer, action))
+    ..sortFields.replace(sortFieldsReducer(state.sortFields, action))
+    ..editAfterSaving = editAfterSavingReducer(state.editAfterSaving, action)
+    ..enableTouchEvents =
+        enableTouchEventsReducer(state.enableTouchEvents, action)
+    ..showPdfPreview = showPdfPreviewReducer(state.showPdfPreview, action)
+    ..showPdfPreviewSideBySide = showPdfPreviewSideBySideReducer(
+        state.showPdfPreviewSideBySide, action));
 }
 
 BuiltMap<EntityType, PrefStateSortField> _resortFields(
@@ -408,6 +407,12 @@ Reducer<String> colorThemeReducer = combineReducers([
 Reducer<bool> showPdfPreviewReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.showPdfPreview ?? value;
+  }),
+]);
+
+Reducer<bool> showPdfPreviewSideBySideReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
+    return action.showPdfPreviewSideBySide ?? value;
   }),
 ]);
 

@@ -292,16 +292,21 @@ VendorState _restoreVendorSuccess(
 VendorState _addVendor(VendorState vendorState, AddVendorSuccess action) {
   return vendorState.rebuild((b) => b
     ..map[action.vendor.id] = action.vendor
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
     ..list.add(action.vendor.id));
 }
 
 VendorState _updateVendor(VendorState vendorState, SaveVendorSuccess action) {
-  return vendorState.rebuild((b) => b..map[action.vendor.id] = action.vendor);
+  return vendorState.rebuild((b) => b
+    ..map[action.vendor.id] = action.vendor
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 VendorState _setLoadedVendor(
     VendorState vendorState, LoadVendorSuccess action) {
-  return vendorState.rebuild((b) => b..map[action.vendor.id] = action.vendor);
+  return vendorState.rebuild((b) => b
+    ..map[action.vendor.id] = action.vendor
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 VendorState _setLoadedVendors(

@@ -164,6 +164,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.persistUi,
     this.tapSelectedToEdit,
     this.showPdfPreview,
+    this.showPdfPreviewSideBySide,
     this.editAfterSaving,
     this.enableTouchEvents,
     this.enableTooltips,
@@ -189,6 +190,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool tapSelectedToEdit;
   final double textScaleFactor;
   final bool showPdfPreview;
+  final bool showPdfPreviewSideBySide;
   final bool enableJSPDF;
   final BuiltMap<String, String> customColors;
   final bool editAfterSaving;
@@ -1586,12 +1588,7 @@ void selectEntity({
       store.dispatch(TogglePreviewSidebar());
     }
   } else {
-    ClientEntity client;
-    if (forceView && entity is BelongsToClient) {
-      client = state.clientState.get((entity as BelongsToClient).clientId);
-    }
-
-    viewEntity(entity: entity, filterEntity: client);
+    viewEntity(entity: entity);
   }
 }
 

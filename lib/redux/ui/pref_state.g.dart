@@ -149,6 +149,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'showPdfPreview',
       serializers.serialize(object.showPdfPreview,
           specifiedType: const FullType(bool)),
+      'showPdfPreviewSideBySide',
+      serializers.serialize(object.showPdfPreviewSideBySide,
+          specifiedType: const FullType(bool)),
       'enableTouchEvents',
       serializers.serialize(object.enableTouchEvents,
           specifiedType: const FullType(bool)),
@@ -279,6 +282,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'showPdfPreview':
           result.showPdfPreview = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'showPdfPreviewSideBySide':
+          result.showPdfPreviewSideBySide = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'enableTouchEvents':
@@ -624,6 +631,8 @@ class _$PrefState extends PrefState {
   @override
   final bool showPdfPreview;
   @override
+  final bool showPdfPreviewSideBySide;
+  @override
   final bool enableTouchEvents;
   @override
   final bool enableFlexibleSearch;
@@ -681,6 +690,7 @@ class _$PrefState extends PrefState {
       this.isMenuVisible,
       this.showKanban,
       this.showPdfPreview,
+      this.showPdfPreviewSideBySide,
       this.enableTouchEvents,
       this.enableFlexibleSearch,
       this.isHistoryVisible,
@@ -724,6 +734,8 @@ class _$PrefState extends PrefState {
         showKanban, 'PrefState', 'showKanban');
     BuiltValueNullFieldError.checkNotNull(
         showPdfPreview, 'PrefState', 'showPdfPreview');
+    BuiltValueNullFieldError.checkNotNull(
+        showPdfPreviewSideBySide, 'PrefState', 'showPdfPreviewSideBySide');
     BuiltValueNullFieldError.checkNotNull(
         enableTouchEvents, 'PrefState', 'enableTouchEvents');
     BuiltValueNullFieldError.checkNotNull(
@@ -789,6 +801,7 @@ class _$PrefState extends PrefState {
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
         showPdfPreview == other.showPdfPreview &&
+        showPdfPreviewSideBySide == other.showPdfPreviewSideBySide &&
         enableTouchEvents == other.enableTouchEvents &&
         enableFlexibleSearch == other.enableFlexibleSearch &&
         isHistoryVisible == other.isHistoryVisible &&
@@ -833,7 +846,7 @@ class _$PrefState extends PrefState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), useSidebarViewer.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode), enableTouchEvents.hashCode), enableFlexibleSearch.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, appLayout.hashCode), moduleLayout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), useSidebarEditor.hashCode), useSidebarViewer.hashCode), customColors.hashCode), isPreviewVisible.hashCode), isMenuVisible.hashCode), showKanban.hashCode), showPdfPreview.hashCode), showPdfPreviewSideBySide.hashCode), enableTouchEvents.hashCode), enableFlexibleSearch.hashCode),
                                                                                 isHistoryVisible.hashCode),
                                                                             enableDarkMode.hashCode),
                                                                         isFilterVisible.hashCode),
@@ -869,6 +882,7 @@ class _$PrefState extends PrefState {
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
           ..add('showPdfPreview', showPdfPreview)
+          ..add('showPdfPreviewSideBySide', showPdfPreviewSideBySide)
           ..add('enableTouchEvents', enableTouchEvents)
           ..add('enableFlexibleSearch', enableFlexibleSearch)
           ..add('isHistoryVisible', isHistoryVisible)
@@ -952,6 +966,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool get showPdfPreview => _$this._showPdfPreview;
   set showPdfPreview(bool showPdfPreview) =>
       _$this._showPdfPreview = showPdfPreview;
+
+  bool _showPdfPreviewSideBySide;
+  bool get showPdfPreviewSideBySide => _$this._showPdfPreviewSideBySide;
+  set showPdfPreviewSideBySide(bool showPdfPreviewSideBySide) =>
+      _$this._showPdfPreviewSideBySide = showPdfPreviewSideBySide;
 
   bool _enableTouchEvents;
   bool get enableTouchEvents => _$this._enableTouchEvents;
@@ -1073,6 +1092,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isMenuVisible = $v.isMenuVisible;
       _showKanban = $v.showKanban;
       _showPdfPreview = $v.showPdfPreview;
+      _showPdfPreviewSideBySide = $v.showPdfPreviewSideBySide;
       _enableTouchEvents = $v.enableTouchEvents;
       _enableFlexibleSearch = $v.enableFlexibleSearch;
       _isHistoryVisible = $v.isHistoryVisible;
@@ -1135,6 +1155,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
                   showKanban, 'PrefState', 'showKanban'),
               showPdfPreview:
                   BuiltValueNullFieldError.checkNotNull(showPdfPreview, 'PrefState', 'showPdfPreview'),
+              showPdfPreviewSideBySide: BuiltValueNullFieldError.checkNotNull(showPdfPreviewSideBySide, 'PrefState', 'showPdfPreviewSideBySide'),
               enableTouchEvents: BuiltValueNullFieldError.checkNotNull(enableTouchEvents, 'PrefState', 'enableTouchEvents'),
               enableFlexibleSearch: BuiltValueNullFieldError.checkNotNull(enableFlexibleSearch, 'PrefState', 'enableFlexibleSearch'),
               isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, 'PrefState', 'isHistoryVisible'),

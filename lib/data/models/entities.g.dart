@@ -628,6 +628,13 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.vendorContactId;
+    if (value != null) {
+      result
+        ..add('vendor_contact_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.tokenId;
     if (value != null) {
       result
@@ -735,6 +742,10 @@ class _$ActivityEntitySerializer
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_contact_id':
+          result.vendorContactId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'token_id':
@@ -1077,6 +1088,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final String vendorId;
   @override
+  final String vendorContactId;
+  @override
   final String tokenId;
   @override
   final InvoiceHistoryEntity history;
@@ -1105,6 +1118,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.taskId,
       this.projectId,
       this.vendorId,
+      this.vendorContactId,
       this.tokenId,
       this.history})
       : super._() {
@@ -1149,6 +1163,7 @@ class _$ActivityEntity extends ActivityEntity {
         taskId == other.taskId &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
+        vendorContactId == other.vendorContactId &&
         tokenId == other.tokenId &&
         history == other.history;
   }
@@ -1174,24 +1189,24 @@ class _$ActivityEntity extends ActivityEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, notes.hashCode), key.hashCode), activityTypeId.hashCode),
-                                                                                clientId.hashCode),
-                                                                            userId.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    recurringInvoiceId.hashCode),
-                                                                recurringExpenseId.hashCode),
-                                                            purchaseOrderId.hashCode),
-                                                        quoteId.hashCode),
-                                                    paymentId.hashCode),
-                                                creditId.hashCode),
-                                            updatedAt.hashCode),
-                                        expenseId.hashCode),
-                                    isSystem.hashCode),
-                                ip.hashCode),
-                            contactId.hashCode),
-                        taskId.hashCode),
-                    projectId.hashCode),
-                vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, notes.hashCode), key.hashCode), activityTypeId.hashCode), clientId.hashCode),
+                                                                                userId.hashCode),
+                                                                            invoiceId.hashCode),
+                                                                        recurringInvoiceId.hashCode),
+                                                                    recurringExpenseId.hashCode),
+                                                                purchaseOrderId.hashCode),
+                                                            quoteId.hashCode),
+                                                        paymentId.hashCode),
+                                                    creditId.hashCode),
+                                                updatedAt.hashCode),
+                                            expenseId.hashCode),
+                                        isSystem.hashCode),
+                                    ip.hashCode),
+                                contactId.hashCode),
+                            taskId.hashCode),
+                        projectId.hashCode),
+                    vendorId.hashCode),
+                vendorContactId.hashCode),
             tokenId.hashCode),
         history.hashCode));
   }
@@ -1219,6 +1234,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('taskId', taskId)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
+          ..add('vendorContactId', vendorContactId)
           ..add('tokenId', tokenId)
           ..add('history', history))
         .toString();
@@ -1313,6 +1329,11 @@ class ActivityEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  String _vendorContactId;
+  String get vendorContactId => _$this._vendorContactId;
+  set vendorContactId(String vendorContactId) =>
+      _$this._vendorContactId = vendorContactId;
+
   String _tokenId;
   String get tokenId => _$this._tokenId;
   set tokenId(String tokenId) => _$this._tokenId = tokenId;
@@ -1347,6 +1368,7 @@ class ActivityEntityBuilder
       _taskId = $v.taskId;
       _projectId = $v.projectId;
       _vendorId = $v.vendorId;
+      _vendorContactId = $v.vendorContactId;
       _tokenId = $v.tokenId;
       _history = $v.history?.toBuilder();
       _$v = null;
@@ -1396,6 +1418,7 @@ class ActivityEntityBuilder
               taskId: taskId,
               projectId: projectId,
               vendorId: vendorId,
+              vendorContactId: vendorContactId,
               tokenId: tokenId,
               history: _history?.build());
     } catch (_) {

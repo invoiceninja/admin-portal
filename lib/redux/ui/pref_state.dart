@@ -43,6 +43,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       hideReviewApp: false,
       showKanban: false,
       showPdfPreview: true,
+      showPdfPreviewSideBySide: false,
       persistData: false,
       persistUI: true,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
@@ -116,6 +117,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get showKanban;
 
   bool get showPdfPreview;
+
+  bool get showPdfPreviewSideBySide;
 
   bool get enableTouchEvents;
 
@@ -238,6 +241,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..persistUI = true
     ..editAfterSaving = true
     ..showPdfPreview = true
+    ..showPdfPreviewSideBySide = false
     ..enableTouchEvents = true
     ..enableFlexibleSearch = false
     ..enableJSPDF = true

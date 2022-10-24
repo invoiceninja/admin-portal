@@ -720,6 +720,10 @@ abstract class ActivityEntity
   String get vendorId;
 
   @nullable
+  @BuiltValueField(wireName: 'vendor_contact_id')
+  String get vendorContactId;
+
+  @nullable
   @BuiltValueField(wireName: 'token_id')
   String get tokenId;
 
@@ -875,9 +879,11 @@ abstract class ActivityEntity
     ExpenseEntity recurringExpense,
     InvoiceEntity purchaseOrder,
   }) {
-    ClientContactEntity contact;
+    ClientContactEntity clientContact;
+    VendorContactEntity vendorContact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
-      contact = client.getContact(contactId);
+      vendorContact = vendor.getContact(vendorContactId);
+      clientContact = client.getContact(contactId);
     }
 
     activity =
@@ -889,8 +895,26 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(
         ':recurring_expense', recurringExpense?.number ?? '');
     activity = activity.replaceFirst(':quote', quote?.number ?? '');
-    activity = activity.replaceFirst(':contact',
-        contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
+    if ([
+      kActivityViewPurchaseOrder,
+      kActivityAcceptPurchaseOrder,
+    ].contains(activityTypeId)) {
+      activity = activity.replaceFirst(
+          ':contact',
+          (vendorContact?.fullName ?? '').isNotEmpty
+              ? vendorContact.fullName
+              : (vendor?.name ?? '').isNotEmpty
+                  ? vendor.name
+                  : user?.fullName ?? '');
+    } else {
+      activity = activity.replaceFirst(
+          ':contact',
+          (clientContact?.fullName ?? '').isNotEmpty
+              ? clientContact.fullName
+              : (client?.displayName ?? '').isNotEmpty
+                  ? client.displayName
+                  : user?.fullName ?? '');
+    }
     activity = activity.replaceFirst(
         ':payment', payment?.transactionReferenceOrNumber ?? '');
     activity = activity.replaceFirst(':credit', credit?.number ?? '');

@@ -1204,6 +1204,12 @@ class _$UserSettingsEntitySerializer
             const FullType(String),
             const FullType(BuiltList, const [const FullType(String)])
           ])),
+      'react_table_column',
+      serializers.serialize(object.reactTableColumns,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
       'report_settings',
       serializers.serialize(object.reportSettings,
           specifiedType: const FullType(BuiltMap, const [
@@ -1256,6 +1262,13 @@ class _$UserSettingsEntitySerializer
           break;
         case 'table_columns':
           result.tableColumns.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
+          break;
+        case 'react_table_column':
+          result.reactTableColumns.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(BuiltList, const [const FullType(String)])
@@ -3732,6 +3745,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   final BuiltMap<String, BuiltList<String>> tableColumns;
   @override
+  final BuiltMap<String, BuiltList<String>> reactTableColumns;
+  @override
   final BuiltMap<String, ReportSettingsEntity> reportSettings;
   @override
   final int numberYearsActive;
@@ -3751,6 +3766,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   _$UserSettingsEntity._(
       {this.accentColor,
       this.tableColumns,
+      this.reactTableColumns,
       this.reportSettings,
       this.numberYearsActive,
       this.includeDeletedClients,
@@ -3760,6 +3776,8 @@ class _$UserSettingsEntity extends UserSettingsEntity {
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         tableColumns, 'UserSettingsEntity', 'tableColumns');
+    BuiltValueNullFieldError.checkNotNull(
+        reactTableColumns, 'UserSettingsEntity', 'reactTableColumns');
     BuiltValueNullFieldError.checkNotNull(
         reportSettings, 'UserSettingsEntity', 'reportSettings');
     BuiltValueNullFieldError.checkNotNull(
@@ -3789,6 +3807,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return other is UserSettingsEntity &&
         accentColor == other.accentColor &&
         tableColumns == other.tableColumns &&
+        reactTableColumns == other.reactTableColumns &&
         reportSettings == other.reportSettings &&
         numberYearsActive == other.numberYearsActive &&
         includeDeletedClients == other.includeDeletedClients &&
@@ -3806,8 +3825,10 @@ class _$UserSettingsEntity extends UserSettingsEntity {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, accentColor.hashCode),
-                                tableColumns.hashCode),
+                            $jc(
+                                $jc($jc(0, accentColor.hashCode),
+                                    tableColumns.hashCode),
+                                reactTableColumns.hashCode),
                             reportSettings.hashCode),
                         numberYearsActive.hashCode),
                     includeDeletedClients.hashCode),
@@ -3821,6 +3842,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
           ..add('accentColor', accentColor)
           ..add('tableColumns', tableColumns)
+          ..add('reactTableColumns', reactTableColumns)
           ..add('reportSettings', reportSettings)
           ..add('numberYearsActive', numberYearsActive)
           ..add('includeDeletedClients', includeDeletedClients)
@@ -3844,6 +3866,13 @@ class UserSettingsEntityBuilder
       _$this._tableColumns ??= new MapBuilder<String, BuiltList<String>>();
   set tableColumns(MapBuilder<String, BuiltList<String>> tableColumns) =>
       _$this._tableColumns = tableColumns;
+
+  MapBuilder<String, BuiltList<String>> _reactTableColumns;
+  MapBuilder<String, BuiltList<String>> get reactTableColumns =>
+      _$this._reactTableColumns ??= new MapBuilder<String, BuiltList<String>>();
+  set reactTableColumns(
+          MapBuilder<String, BuiltList<String>> reactTableColumns) =>
+      _$this._reactTableColumns = reactTableColumns;
 
   MapBuilder<String, ReportSettingsEntity> _reportSettings;
   MapBuilder<String, ReportSettingsEntity> get reportSettings =>
@@ -3886,6 +3915,7 @@ class UserSettingsEntityBuilder
     if ($v != null) {
       _accentColor = $v.accentColor;
       _tableColumns = $v.tableColumns.toBuilder();
+      _reactTableColumns = $v.reactTableColumns.toBuilder();
       _reportSettings = $v.reportSettings.toBuilder();
       _numberYearsActive = $v.numberYearsActive;
       _includeDeletedClients = $v.includeDeletedClients;
@@ -3916,6 +3946,7 @@ class UserSettingsEntityBuilder
           new _$UserSettingsEntity._(
               accentColor: accentColor,
               tableColumns: tableColumns.build(),
+              reactTableColumns: reactTableColumns.build(),
               reportSettings: reportSettings.build(),
               numberYearsActive: BuiltValueNullFieldError.checkNotNull(
                   numberYearsActive, 'UserSettingsEntity', 'numberYearsActive'),
@@ -3939,6 +3970,8 @@ class UserSettingsEntityBuilder
       try {
         _$failedField = 'tableColumns';
         tableColumns.build();
+        _$failedField = 'reactTableColumns';
+        reactTableColumns.build();
         _$failedField = 'reportSettings';
         reportSettings.build();
 
