@@ -144,7 +144,7 @@ abstract class TransactionEntity extends Object
 
   bool get isDeposit => baseType == TYPE_DEPOSIT;
 
-  bool get isWithdrawal => baseType == TYPE_WITHDRAWL;
+  bool get isWithdrawal => !isDeposit;
 
   double get withdrawal => isWithdrawal ? amount : 0;
 
