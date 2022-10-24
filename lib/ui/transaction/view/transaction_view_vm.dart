@@ -37,28 +37,40 @@ class TransactionViewScreen extends StatelessWidget {
 class TransactionViewVM {
   TransactionViewVM({
     @required this.state,
-    @required this.transaction,
+    @required this.transactions,
     @required this.company,
     @required this.onEntityAction,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
-    @required this.isDirty,
     @required this.onConvertToPayment,
     @required this.onConvertToExpense,
   });
 
   factory TransactionViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final transaction =
-        state.transactionState.map[state.transactionUIState.selectedId] ??
-            TransactionEntity(id: state.transactionUIState.selectedId);
+    final List<TransactionEntity> transactions = [];
+    List<String> transactionIds = [];
+    if (state.transactionListState.isInMultiselect()) {
+      transactionIds = state.transactionListState.selectedIds.toList();
+    } else {
+      transactionIds = [state.transactionUIState.selectedId];
+    }
+
+    transactionIds.forEach((transactionId) {
+      transactions.add(
+          state.transactionState.map[state.transactionUIState.selectedId] ??
+              TransactionEntity(id: state.transactionUIState.selectedId));
+    });
 
     Future<Null> _handleRefresh(BuildContext context) {
+      if (transactions.isEmpty) {
+        return null;
+      }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(
-          LoadTransaction(completer: completer, transactionId: transaction.id));
+      store.dispatch(LoadTransaction(
+          completer: completer, transactionId: transactions.first.id));
       return completer.future;
     }
 
@@ -67,11 +79,10 @@ class TransactionViewVM {
       company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
-      isDirty: transaction.isNew,
-      transaction: transaction,
+      transactions: transactions,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions([transaction], action, autoPop: true),
+          handleEntitiesActions(transactions, action, autoPop: true),
       onConvertToPayment: (context, transactionId, invoiceIds) {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
@@ -96,7 +107,7 @@ class TransactionViewVM {
   }
 
   final AppState state;
-  final TransactionEntity transaction;
+  final List<TransactionEntity> transactions;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
@@ -104,5 +115,4 @@ class TransactionViewVM {
   final Function(BuildContext, String, String, String) onConvertToExpense;
   final bool isSaving;
   final bool isLoading;
-  final bool isDirty;
 }

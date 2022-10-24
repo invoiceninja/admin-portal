@@ -35,7 +35,9 @@ class _TransactionViewState extends State<TransactionView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
+    final transactions = viewModel.transactions;
+    final transaction =
+        transactions.isNotEmpty ? transactions.first : TransactionEntity();
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
@@ -225,7 +227,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
+    final transactions = viewModel.transactions;
+    final transaction =
+        transactions.isNotEmpty ? transactions.first : TransactionEntity();
     final state = viewModel.state;
 
     String currencyId;
@@ -526,7 +530,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
+    final transactions = viewModel.transactions;
+    final transaction =
+        transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
     return Column(
       mainAxisSize: MainAxisSize.max,
