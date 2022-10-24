@@ -154,7 +154,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     if (transactions.isNotEmpty) {
       _selectedInvoices = transactions.first.invoiceIds
           .split(',')
-          .map((invoiceId) => state.invoiceState.get(invoiceId))
+          .map((invoiceId) => state.invoiceState.map[invoiceId])
+          .where((invoice) => invoice != null)
           .toList();
     }
 
