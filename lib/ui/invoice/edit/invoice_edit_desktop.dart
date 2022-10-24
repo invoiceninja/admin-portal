@@ -829,7 +829,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                 ),
                                               ),
                                             if (invoice.isInvoice &&
-                                                invoice.isLinkedToRecurring)
+                                                originalInvoice.autoBillEnabled)
                                               Expanded(
                                                 child: Tooltip(
                                                   message: localization
