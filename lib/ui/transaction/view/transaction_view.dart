@@ -37,27 +37,32 @@ class _TransactionViewState extends State<TransactionView> {
     final viewModel = widget.viewModel;
     final transactions = viewModel.transactions;
     final transaction =
-        transactions.isNotEmpty ? transactions.first : TransactionEntity();
+        transactions.isEmpty ? TransactionEntity() : transactions.first;
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: transaction,
+      title: transactions.length > 1
+          ? '${transactions.length} ${localization.selected}'
+          : null,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          EntityHeader(
-            entity: transaction,
-            label: transaction.isDeposit
-                ? localization.deposit
-                : localization.withdrawal,
-            value: formatNumber(transaction.amount, context,
-                currencyId: transaction.currencyId),
-            secondLabel: localization.date,
-            secondValue: formatDate(transaction.date, context),
-          ),
-          ListDivider(),
+          if (transactions.length == 1) ...[
+            EntityHeader(
+              entity: transaction,
+              label: transaction.isDeposit
+                  ? localization.deposit
+                  : localization.withdrawal,
+              value: formatNumber(transaction.amount, context,
+                  currencyId: transaction.currencyId),
+              secondLabel: localization.date,
+              secondValue: formatDate(transaction.date, context),
+            ),
+            ListDivider(),
+          ],
           if (transaction.isConverted) ...[
             if (transaction.isDeposit)
               ...transaction.invoiceIds
