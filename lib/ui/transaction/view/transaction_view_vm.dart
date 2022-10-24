@@ -58,9 +58,8 @@ class TransactionViewVM {
     }
 
     transactionIds.forEach((transactionId) {
-      transactions.add(
-          state.transactionState.map[state.transactionUIState.selectedId] ??
-              TransactionEntity(id: state.transactionUIState.selectedId));
+      transactions.add(state.transactionState.map[transactionId] ??
+          TransactionEntity(id: transactionId));
     });
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -83,21 +82,21 @@ class TransactionViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(transactions, action, autoPop: true),
-      onConvertToPayment: (context, transactionId, invoiceIds) {
+      onConvertToPayment: (context, invoiceIds) {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
               snackBarCompleter<Null>(
                   context, AppLocalization.of(context).convertedTransaction),
-              transactionId,
+              transactionIds.first,
               invoiceIds),
         );
       },
-      onConvertToExpense: (context, transactionId, vendorId, categoryId) {
+      onConvertToExpense: (context, vendorId, categoryId) {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
                 context, AppLocalization.of(context).convertedTransaction),
-            [transactionId],
+            transactionIds,
             vendorId,
             categoryId,
           ),
@@ -111,8 +110,8 @@ class TransactionViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, String, List<String>) onConvertToPayment;
-  final Function(BuildContext, String, String, String) onConvertToExpense;
+  final Function(BuildContext, List<String>) onConvertToPayment;
+  final Function(BuildContext, String, String) onConvertToExpense;
   final bool isSaving;
   final bool isLoading;
 }

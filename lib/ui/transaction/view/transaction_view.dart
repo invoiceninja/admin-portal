@@ -227,9 +227,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final transactions = viewModel.transactions;
-    final transaction =
-        transactions.isNotEmpty ? transactions.first : TransactionEntity();
     final state = viewModel.state;
 
     String currencyId;
@@ -407,7 +404,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToPayment(
                       context,
-                      transaction.id,
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
                     );
                   },
@@ -673,7 +669,6 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToExpense(
                       context,
-                      transaction.id,
                       _selectedVendor.id,
                       _selectedCategory?.id ?? '',
                     );
