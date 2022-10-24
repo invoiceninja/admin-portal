@@ -71,6 +71,11 @@ class _TransactionViewState extends State<TransactionView> {
                   ListDivider(),
                 ],
                 if (transaction.isConverted) ...[
+                  EntityListTile(
+                    entity:
+                        state.bankAccountState.get(transaction.bankAccountId),
+                    isFilter: false,
+                  ),
                   if (transaction.isDeposit)
                     ...transaction.invoiceIds
                         .split(',')
@@ -78,11 +83,6 @@ class _TransactionViewState extends State<TransactionView> {
                         .map((invoice) =>
                             EntityListTile(entity: invoice, isFilter: false))
                   else ...[
-                    EntityListTile(
-                      entity:
-                          state.bankAccountState.get(transaction.bankAccountId),
-                      isFilter: false,
-                    ),
                     EntityListTile(
                       entity: state.vendorState.get(transaction.vendorId),
                       isFilter: false,
