@@ -35,67 +35,83 @@ class _TransactionViewState extends State<TransactionView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
+    final transactions = viewModel.transactions;
+    final transaction =
+        transactions.isEmpty ? TransactionEntity() : transactions.first;
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
+    final hasUnconvertable = transactions
+            .where((transaction) =>
+                !transaction.isWithdrawal || transaction.isConverted)
+            .isNotEmpty &&
+        transactions.length > 1;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: transaction,
+      title: transactions.length > 1
+          ? '${transactions.length} ${localization.selected}'
+          : null,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          EntityHeader(
-            entity: transaction,
-            label: transaction.isDeposit
-                ? localization.deposit
-                : localization.withdrawal,
-            value: formatNumber(transaction.amount, context,
-                currencyId: transaction.currencyId),
-            secondLabel: localization.date,
-            secondValue: formatDate(transaction.date, context),
-          ),
-          ListDivider(),
-          if (transaction.isConverted) ...[
-            if (transaction.isDeposit)
-              ...transaction.invoiceIds
-                  .split(',')
-                  .map((invoiceId) => state.invoiceState.get(invoiceId))
-                  .map((invoice) =>
-                      EntityListTile(entity: invoice, isFilter: false))
-            else ...[
-              EntityListTile(
-                entity: state.bankAccountState.get(transaction.bankAccountId),
-                isFilter: false,
-              ),
-              EntityListTile(
-                entity: state.vendorState.get(transaction.vendorId),
-                isFilter: false,
-              ),
-              EntityListTile(
-                entity: state.expenseCategoryState.get(transaction.categoryId),
-                isFilter: false,
-              ),
-              EntityListTile(
-                entity: state.expenseState.get(transaction.expenseId),
-                isFilter: false,
-              ),
-            ]
-          ] else ...[
-            if (transaction.isDeposit)
-              Expanded(
-                child: _MatchDeposits(
-                  viewModel: viewModel,
-                ),
-              )
-            else
-              Expanded(
-                child: _MatchWithdrawals(
-                  viewModel: viewModel,
-                ),
-              ),
-          ],
-        ],
+        children: hasUnconvertable
+            ? []
+            : [
+                if (transactions.length == 1) ...[
+                  EntityHeader(
+                    entity: transaction,
+                    label: transaction.isDeposit
+                        ? localization.deposit
+                        : localization.withdrawal,
+                    value: formatNumber(transaction.amount, context,
+                        currencyId: transaction.currencyId),
+                    secondLabel: localization.date,
+                    secondValue: formatDate(transaction.date, context),
+                  ),
+                  ListDivider(),
+                ],
+                if (transaction.isConverted) ...[
+                  EntityListTile(
+                    entity:
+                        state.bankAccountState.get(transaction.bankAccountId),
+                    isFilter: false,
+                  ),
+                  if (transaction.isDeposit)
+                    ...transaction.invoiceIds
+                        .split(',')
+                        .map((invoiceId) => state.invoiceState.get(invoiceId))
+                        .map((invoice) =>
+                            EntityListTile(entity: invoice, isFilter: false))
+                  else ...[
+                    EntityListTile(
+                      entity: state.vendorState.get(transaction.vendorId),
+                      isFilter: false,
+                    ),
+                    EntityListTile(
+                      entity: state.expenseCategoryState
+                          .get(transaction.categoryId),
+                      isFilter: false,
+                    ),
+                    EntityListTile(
+                      entity: state.expenseState.get(transaction.expenseId),
+                      isFilter: false,
+                    ),
+                  ]
+                ] else ...[
+                  if (transaction.isDeposit)
+                    Expanded(
+                      child: _MatchDeposits(
+                        viewModel: viewModel,
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: _MatchWithdrawals(
+                        viewModel: viewModel,
+                      ),
+                    ),
+                ],
+              ],
       ),
     );
   }
@@ -132,6 +148,16 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     _filterController = TextEditingController();
     _focusNode = FocusNode();
     _selectedInvoices = [];
+
+    final transactions = widget.viewModel.transactions;
+    final state = widget.viewModel.state;
+    if (transactions.isNotEmpty) {
+      _selectedInvoices = transactions.first.invoiceIds
+          .split(',')
+          .map((invoiceId) => state.invoiceState.map[invoiceId])
+          .where((invoice) => invoice != null)
+          .toList();
+    }
 
     updateInvoiceList();
   }
@@ -225,7 +251,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
     final state = viewModel.state;
 
     String currencyId;
@@ -403,7 +428,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToPayment(
                       context,
-                      transaction.id,
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
                     );
                   },
@@ -446,6 +470,19 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendorFocusNode = FocusNode();
     _categoryFocusNode = FocusNode();
+
+    final transactions = widget.viewModel.transactions;
+    final state = widget.viewModel.state;
+    if (transactions.isNotEmpty) {
+      final transaction = transactions.first;
+      if ((transaction.categoryId ?? '').isNotEmpty) {
+        _selectedCategory =
+            state.expenseCategoryState.get(transaction.categoryId);
+      }
+      if ((transaction.vendorId ?? '').isNotEmpty) {
+        _selectedVendor = state.vendorState.get(transaction.vendorId);
+      }
+    }
 
     updateVendorList();
     updateCategoryList();
@@ -526,7 +563,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final transaction = viewModel.transaction;
+    final transactions = viewModel.transactions;
+    final transaction =
+        transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -667,7 +706,6 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToExpense(
                       context,
-                      transaction.id,
                       _selectedVendor.id,
                       _selectedCategory?.id ?? '',
                     );

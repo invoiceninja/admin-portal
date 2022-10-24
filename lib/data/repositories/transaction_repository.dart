@@ -70,15 +70,15 @@ class TransactionRepository {
       ),
     );
 
-    final TransactionItemResponse transactionResponse = serializers
-        .deserializeWith(TransactionItemResponse.serializer, response);
+    final TransactionListResponse transactionResponse = serializers
+        .deserializeWith(TransactionListResponse.serializer, response);
 
-    return transactionResponse.data;
+    return transactionResponse.data.first;
   }
 
-  Future<TransactionEntity> convertToExpense(
+  Future<BuiltList<TransactionEntity>> convertToExpense(
     Credentials credentials,
-    String transactionId,
+    List<String> transactionIds,
     String vendorId,
     String categoryId,
   ) async {
@@ -88,19 +88,19 @@ class TransactionRepository {
       credentials.token,
       data: json.encode(
         {
-          'transactions': [
-            {
-              'id': transactionId,
-              'vendor_id': vendorId,
-              'ninja_category_id': categoryId,
-            }
-          ]
+          'transactions': transactionIds
+              .map((transactionId) => {
+                    'id': transactionId,
+                    'vendor_id': vendorId,
+                    'ninja_category_id': categoryId,
+                  })
+              .toList()
         },
       ),
     );
 
-    final TransactionItemResponse transactionResponse = serializers
-        .deserializeWith(TransactionItemResponse.serializer, response);
+    final TransactionListResponse transactionResponse = serializers
+        .deserializeWith(TransactionListResponse.serializer, response);
 
     return transactionResponse.data;
   }

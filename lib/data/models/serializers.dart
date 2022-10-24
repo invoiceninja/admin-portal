@@ -118,7 +118,7 @@ part 'serializers.g.dart';
   TransactionEntity,
   TransactionListResponse,
   TransactionItemResponse,
-
+  TransactionStatusEntity,
   BankAccountEntity,
   BankAccountListResponse,
   BankAccountItemResponse,

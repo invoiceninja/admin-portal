@@ -388,7 +388,7 @@ Reducer<bool> isPreviewVisibleReducer = combineReducers([
   TypedReducer<bool, StartExpenseMultiselect>((value, action) => false),
   TypedReducer<bool, StartRecurringExpenseMultiselect>(
       (value, action) => false),
-  TypedReducer<bool, StartTransactionMultiselect>((value, action) => false),
+  TypedReducer<bool, StartTransactionMultiselect>((value, action) => true),
   // TODO add to starter.sh
 ]);
 

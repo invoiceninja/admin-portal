@@ -34,9 +34,9 @@ abstract class TransactionState
     }
   }
 
-  TransactionState loadTransactions(BuiltList<TransactionEntity> clients) {
+  TransactionState loadTransactions(BuiltList<TransactionEntity> transactions) {
     final map = Map<String, TransactionEntity>.fromIterable(
-      clients,
+      transactions,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );

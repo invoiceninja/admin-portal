@@ -114,6 +114,7 @@ abstract class PaymentEntity extends Object
       companyGatewayId: '',
       clientContactId: '',
       currencyId: '',
+      transactionId: '',
       invitationId: '',
       isApplying: false,
     );
@@ -189,6 +190,9 @@ abstract class PaymentEntity extends Object
 
   @BuiltValueField(wireName: 'invitation_id')
   String get invitationId;
+
+  @BuiltValueField(wireName: 'transaction_id')
+  String get transactionId;
 
   @BuiltValueField(wireName: 'client_contact_id')
   String get clientContactId;
@@ -490,6 +494,10 @@ abstract class PaymentEntity extends Object
 
     return amount - (refunded ?? 0);
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(PaymentEntityBuilder builder) =>
+      builder..transactionId = '';
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }
