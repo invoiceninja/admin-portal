@@ -95,7 +95,15 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
-                context, AppLocalization.of(context).convertedTransaction),
+                context, AppLocalization.of(context).convertedTransaction)
+              ..future.then((value) {
+                if (state.transactionListState.isInMultiselect()) {
+                  store.dispatch(ClearTransactionMultiselect());
+                  if (store.state.prefState.isPreviewVisible) {
+                    store.dispatch(TogglePreviewSidebar());
+                  }
+                }
+              }),
             transactionIds,
             vendorId,
             categoryId,
