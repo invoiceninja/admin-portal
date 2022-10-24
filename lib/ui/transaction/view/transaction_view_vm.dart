@@ -83,10 +83,10 @@ class TransactionViewVM {
       },
       onConvertToExpense: (context, transactionId, vendorId, categoryId) {
         store.dispatch(
-          ConvertTransactionToExpenseRequest(
+          ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
                 context, AppLocalization.of(context).convertedTransaction),
-            transactionId,
+            [transactionId],
             vendorId,
             categoryId,
           ),

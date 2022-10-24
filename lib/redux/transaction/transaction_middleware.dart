@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
@@ -41,7 +42,7 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
     TypedMiddleware<AppState, ConvertTransactionsRequest>(convertTransactions),
     TypedMiddleware<AppState, ConvertTransactionToPaymentRequest>(
         convertToPayment),
-    TypedMiddleware<AppState, ConvertTransactionToExpenseRequest>(
+    TypedMiddleware<AppState, ConvertTransactionsToExpensesRequest>(
         convertToExpense),
   ];
 }
@@ -225,23 +226,23 @@ Middleware<AppState> _convertToPayment(TransactionRepository repository) {
 
 Middleware<AppState> _convertToExpense(TransactionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ConvertTransactionToExpenseRequest;
+    final action = dynamicAction as ConvertTransactionsToExpensesRequest;
     repository
         .convertToExpense(
       store.state.credentials,
-      action.transactionId,
+      action.transactionIds,
       action.vendorId,
       action.categoryId,
     )
-        .then((TransactionEntity transaction) {
-      store.dispatch(ConvertTransactionToExpenseSuccess(transaction));
+        .then((BuiltList<TransactionEntity> transactions) {
+      store.dispatch(ConvertTransactionsToExpensesSuccess(transactions));
       store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ConvertTransactionToExpenseFailure(error));
+      store.dispatch(ConvertTransactionsToExpensesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

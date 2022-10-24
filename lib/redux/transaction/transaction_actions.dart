@@ -218,28 +218,28 @@ class ConvertTransactionToPaymentFailure implements StopSaving {
   final dynamic error;
 }
 
-class ConvertTransactionToExpenseRequest implements StartSaving {
-  ConvertTransactionToExpenseRequest(
+class ConvertTransactionsToExpensesRequest implements StartSaving {
+  ConvertTransactionsToExpensesRequest(
     this.completer,
-    this.transactionId,
+    this.transactionIds,
     this.vendorId,
     this.categoryId,
   );
 
   final Completer completer;
-  final String transactionId;
+  final List<String> transactionIds;
   final String vendorId;
   final String categoryId;
 }
 
-class ConvertTransactionToExpenseSuccess implements StopSaving, PersistData {
-  ConvertTransactionToExpenseSuccess(this.transaction);
+class ConvertTransactionsToExpensesSuccess implements StopSaving, PersistData {
+  ConvertTransactionsToExpensesSuccess(this.transactions);
 
-  final TransactionEntity transaction;
+  final BuiltList<TransactionEntity> transactions;
 }
 
-class ConvertTransactionToExpenseFailure implements StopSaving {
-  ConvertTransactionToExpenseFailure(this.error);
+class ConvertTransactionsToExpensesFailure implements StopSaving {
+  ConvertTransactionsToExpensesFailure(this.error);
 
   final dynamic error;
 }

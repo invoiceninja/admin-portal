@@ -209,7 +209,7 @@ final transactionsReducer = combineReducers<TransactionState>([
   TypedReducer<TransactionState, SaveTransactionSuccess>(_updateTransaction),
   TypedReducer<TransactionState, ConvertTransactionToPaymentSuccess>(
       _convertTransactionToPayment),
-  TypedReducer<TransactionState, ConvertTransactionToExpenseSuccess>(
+  TypedReducer<TransactionState, ConvertTransactionsToExpensesSuccess>(
       _convertTransactionToExpense),
   //TypedReducer<TransactionState, ConvertTransactionsSuccess>(_convertTransactions),
   TypedReducer<TransactionState, AddTransactionSuccess>(_addTransaction),
@@ -272,9 +272,8 @@ TransactionState _convertTransactionToPayment(TransactionState transactionState,
 }
 
 TransactionState _convertTransactionToExpense(TransactionState transactionState,
-    ConvertTransactionToExpenseSuccess action) {
-  return transactionState
-      .rebuild((b) => b..map[action.transaction.id] = action.transaction);
+    ConvertTransactionsToExpensesSuccess action) {
+  return transactionState.loadTransactions(action.transactions);
 }
 
 /*
