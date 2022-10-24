@@ -59,10 +59,12 @@ class TransactionRepository {
       url,
       credentials.token,
       data: json.encode(
-        {
-          'id': transactionId,
-          'invoice_ids': invoiceIds.join(','),
-        },
+        [
+          {
+            'id': transactionId,
+            'invoice_ids': invoiceIds.join(','),
+          }
+        ],
       ),
     );
 
@@ -83,11 +85,13 @@ class TransactionRepository {
       url,
       credentials.token,
       data: json.encode(
-        {
-          'id': transactionId,
-          'vendor_id': vendorId,
-          'ninja_category_id': categoryId,
-        },
+        [
+          {
+            'id': transactionId,
+            'vendor_id': vendorId,
+            'ninja_category_id': categoryId,
+          }
+        ],
       ),
     );
 
