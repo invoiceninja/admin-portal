@@ -197,4 +197,3 @@ EntityStats purchaseOrderStatsForVendor(
 
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-

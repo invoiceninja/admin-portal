@@ -189,7 +189,7 @@ void passwordCallback({
   final user = state.user;
 
   print(
-      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider.isEmpty}, ${state.company.oauthPasswordRequired}');
+      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company.oauthPasswordRequired}');
 
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
