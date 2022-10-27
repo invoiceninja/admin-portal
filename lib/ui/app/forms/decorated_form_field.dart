@@ -150,6 +150,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       initialValue: widget.initialValue,
       textInputAction: widget.keyboardType == TextInputType.multiline
           ? TextInputAction.newline
+          // On web typing enter is clearing the value when using TextInputAction.next
           : enterShouldSubmit || kIsWeb
               ? TextInputAction.done
               : TextInputAction.next,
