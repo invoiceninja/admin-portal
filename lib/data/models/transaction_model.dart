@@ -328,7 +328,13 @@ abstract class TransactionEntity extends Object
   }
 
   @override
-  String get listDisplayName => description;
+  String get listDisplayName {
+    if (description.isNotEmpty) {
+      return description;
+    } else {
+      return '$date';
+    }
+  }
 
   @override
   double get listDisplayAmount => amount;

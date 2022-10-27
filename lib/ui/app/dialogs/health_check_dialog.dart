@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -54,7 +55,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final url = '${credentials.url}/health_check';
 
     webClient.get(url, credentials.token).then((dynamic response) {
-      //print('## response: $response');
+      if (!kReleaseMode) {
+        print('## response: $response');
+      }
       setState(() {
         _response = serializers.deserializeWith(
             HealthCheckResponse.serializer, response);
@@ -208,7 +211,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: 'APP_URL has trailing slash',
                     subtitle: 'Remove the slash in the .env file',
                     isWarning: true,
-                  )
+                  ),
+                if (_response.exchangeRateApiNotConfigured)
+                  _HealthListTile(
+                    title: 'Exchange Rate API Not Enabled',
+                    subtitle: 'Add an Open Exchange key to the .env file',
+                    isWarning: true,
+                    url:
+                        'https://invoiceninja.github.io/docs/self-host-installation/#currency-conversion',
+                  ),
               ],
             ),
       actions: _response == null
