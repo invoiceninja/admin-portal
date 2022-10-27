@@ -592,79 +592,49 @@ class EntityScreens extends StatelessWidget {
       if (prefState.isFilterVisible) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? ClientEditScreen()
-                : ClientViewScreen(isFilter: true);
+            leftFilterChild = ClientViewScreen(isFilter: true);
             break;
           case EntityType.invoice:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? InvoiceViewScreen()
-                : InvoiceViewScreen(isFilter: true);
+            leftFilterChild = InvoiceViewScreen(isFilter: true);
             break;
           case EntityType.quote:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? QuoteViewScreen()
-                : QuoteViewScreen(isFilter: true);
+            leftFilterChild = QuoteViewScreen(isFilter: true);
             break;
           case EntityType.credit:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? CreditViewScreen()
-                : CreditViewScreen(isFilter: true);
+            leftFilterChild = CreditViewScreen(isFilter: true);
             break;
           case EntityType.purchaseOrder:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? PurchaseOrderViewScreen()
-                : PurchaseOrderViewScreen(isFilter: true);
+            leftFilterChild = PurchaseOrderViewScreen(isFilter: true);
             break;
           case EntityType.payment:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? PaymentEditScreen()
-                : PaymentViewScreen(isFilter: true);
+            leftFilterChild = PaymentViewScreen(isFilter: true);
             break;
           case EntityType.user:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? UserEditScreen()
-                : UserViewScreen(isFilter: true);
+            leftFilterChild = UserViewScreen(isFilter: true);
             break;
           case EntityType.group:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? GroupEditScreen()
-                : GroupViewScreen(isFilter: true);
+            leftFilterChild = GroupViewScreen(isFilter: true);
             break;
           case EntityType.subscription:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? SubscriptionEditScreen()
-                : SubscriptionViewScreen(isFilter: true);
+            leftFilterChild = SubscriptionViewScreen(isFilter: true);
             break;
           case EntityType.companyGateway:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? CompanyGatewayEditScreen()
-                : CompanyGatewayViewScreen(isFilter: true);
+            leftFilterChild = CompanyGatewayViewScreen(isFilter: true);
             break;
           case EntityType.recurringInvoice:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? RecurringInvoiceEditScreen()
-                : RecurringInvoiceViewScreen(isFilter: true);
+            leftFilterChild = RecurringInvoiceViewScreen(isFilter: true);
             break;
           case EntityType.expenseCategory:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? ExpenseCategoryEditScreen()
-                : ExpenseCategoryViewScreen(isFilter: true);
+            leftFilterChild = ExpenseCategoryViewScreen(isFilter: true);
             break;
           case EntityType.taskStatus:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? TaskStatusEditScreen()
-                : TaskStatusViewScreen(isFilter: true);
+            leftFilterChild = TaskStatusViewScreen(isFilter: true);
             break;
           case EntityType.vendor:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? VendorEditScreen()
-                : VendorViewScreen(isFilter: true);
+            leftFilterChild = VendorViewScreen(isFilter: true);
             break;
           case EntityType.project:
-            leftFilterChild = editingFilterEntity && !uiState.isEditing
-                ? ProjectEditScreen()
-                : ProjectViewScreen(isFilter: true);
+            leftFilterChild = ProjectViewScreen(isFilter: true);
             break;
           case EntityType.design:
             leftFilterChild = DesignViewScreen(isFilter: true);
