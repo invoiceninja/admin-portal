@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -149,7 +150,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       initialValue: widget.initialValue,
       textInputAction: widget.keyboardType == TextInputType.multiline
           ? TextInputAction.newline
-          : enterShouldSubmit
+          : enterShouldSubmit || kIsWeb
               ? TextInputAction.done
               : TextInputAction.next,
       onChanged: (value) {
