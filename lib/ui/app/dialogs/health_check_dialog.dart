@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -54,7 +55,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final url = '${credentials.url}/health_check';
 
     webClient.get(url, credentials.token).then((dynamic response) {
-      //print('## response: $response');
+      if (!kReleaseMode) {
+        print('## response: $response');
+      }
       setState(() {
         _response = serializers.deserializeWith(
             HealthCheckResponse.serializer, response);
