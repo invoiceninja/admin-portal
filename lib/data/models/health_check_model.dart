@@ -55,6 +55,9 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'trailing_slash')
   bool get trailingSlash;
 
+  @BuiltValueField(wireName: 'exchange_rate_api_not_configured')
+  bool get exchangeRateApiNotConfigured;
+
   String get queue;
 
   // ignore: unused_element

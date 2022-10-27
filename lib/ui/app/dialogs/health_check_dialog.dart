@@ -211,7 +211,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: 'APP_URL has trailing slash',
                     subtitle: 'Remove the slash in the .env file',
                     isWarning: true,
-                  )
+                  ),
+                if (_response.exchangeRateApiNotConfigured)
+                  _HealthListTile(
+                    title: 'Exchange Rate API Not Enabled',
+                    subtitle: 'Add an Open Exchange key to the .env file',
+                    isWarning: true,
+                    url:
+                        'https://invoiceninja.github.io/docs/self-host-installation/#currency-conversion',
+                  ),
               ],
             ),
       actions: _response == null

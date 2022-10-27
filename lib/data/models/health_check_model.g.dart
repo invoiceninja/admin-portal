@@ -65,6 +65,9 @@ class _$HealthCheckResponseSerializer
       'trailing_slash',
       serializers.serialize(object.trailingSlash,
           specifiedType: const FullType(bool)),
+      'exchange_rate_api_not_configured',
+      serializers.serialize(object.exchangeRateApiNotConfigured,
+          specifiedType: const FullType(bool)),
       'queue',
       serializers.serialize(object.queue,
           specifiedType: const FullType(String)),
@@ -136,6 +139,10 @@ class _$HealthCheckResponseSerializer
           break;
         case 'trailing_slash':
           result.trailingSlash = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'exchange_rate_api_not_configured':
+          result.exchangeRateApiNotConfigured = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'queue':
@@ -250,6 +257,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool trailingSlash;
   @override
+  final bool exchangeRateApiNotConfigured;
+  @override
   final String queue;
 
   factory _$HealthCheckResponse(
@@ -270,6 +279,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.pendingJobs,
       this.pdfEngine,
       this.trailingSlash,
+      this.exchangeRateApiNotConfigured,
       this.queue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -298,6 +308,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         pdfEngine, 'HealthCheckResponse', 'pdfEngine');
     BuiltValueNullFieldError.checkNotNull(
         trailingSlash, 'HealthCheckResponse', 'trailingSlash');
+    BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured,
+        'HealthCheckResponse', 'exchangeRateApiNotConfigured');
     BuiltValueNullFieldError.checkNotNull(
         queue, 'HealthCheckResponse', 'queue');
   }
@@ -328,6 +340,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         pendingJobs == other.pendingJobs &&
         pdfEngine == other.pdfEngine &&
         trailingSlash == other.trailingSlash &&
+        exchangeRateApiNotConfigured == other.exchangeRateApiNotConfigured &&
         queue == other.queue;
   }
 
@@ -348,21 +361,24 @@ class _$HealthCheckResponse extends HealthCheckResponse {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            0,
-                                                            systemHealth
+                                                            $jc(
+                                                                0,
+                                                                systemHealth
+                                                                    .hashCode),
+                                                            phpVersion
                                                                 .hashCode),
-                                                        phpVersion.hashCode),
-                                                    envWritable.hashCode),
-                                                dbCheck.hashCode),
-                                            cacheEnabled.hashCode),
-                                        phantomEnabled.hashCode),
-                                    openBasedir.hashCode),
-                                filePermissions.hashCode),
-                            execEnabled.hashCode),
-                        emailDriver.hashCode),
-                    pendingJobs.hashCode),
-                pdfEngine.hashCode),
-            trailingSlash.hashCode),
+                                                        envWritable.hashCode),
+                                                    dbCheck.hashCode),
+                                                cacheEnabled.hashCode),
+                                            phantomEnabled.hashCode),
+                                        openBasedir.hashCode),
+                                    filePermissions.hashCode),
+                                execEnabled.hashCode),
+                            emailDriver.hashCode),
+                        pendingJobs.hashCode),
+                    pdfEngine.hashCode),
+                trailingSlash.hashCode),
+            exchangeRateApiNotConfigured.hashCode),
         queue.hashCode));
   }
 
@@ -382,6 +398,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('pendingJobs', pendingJobs)
           ..add('pdfEngine', pdfEngine)
           ..add('trailingSlash', trailingSlash)
+          ..add('exchangeRateApiNotConfigured', exchangeRateApiNotConfigured)
           ..add('queue', queue))
         .toString();
   }
@@ -448,6 +465,11 @@ class HealthCheckResponseBuilder
   set trailingSlash(bool trailingSlash) =>
       _$this._trailingSlash = trailingSlash;
 
+  bool _exchangeRateApiNotConfigured;
+  bool get exchangeRateApiNotConfigured => _$this._exchangeRateApiNotConfigured;
+  set exchangeRateApiNotConfigured(bool exchangeRateApiNotConfigured) =>
+      _$this._exchangeRateApiNotConfigured = exchangeRateApiNotConfigured;
+
   String _queue;
   String get queue => _$this._queue;
   set queue(String queue) => _$this._queue = queue;
@@ -472,6 +494,7 @@ class HealthCheckResponseBuilder
       _pendingJobs = $v.pendingJobs;
       _pdfEngine = $v.pdfEngine;
       _trailingSlash = $v.trailingSlash;
+      _exchangeRateApiNotConfigured = $v.exchangeRateApiNotConfigured;
       _queue = $v.queue;
       _$v = null;
     }
@@ -516,6 +539,7 @@ class HealthCheckResponseBuilder
               pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, 'HealthCheckResponse', 'pendingJobs'),
               pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, 'HealthCheckResponse', 'pdfEngine'),
               trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, 'HealthCheckResponse', 'trailingSlash'),
+              exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, 'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
               queue: BuiltValueNullFieldError.checkNotNull(queue, 'HealthCheckResponse', 'queue'));
     } catch (_) {
       String _$failedField;
