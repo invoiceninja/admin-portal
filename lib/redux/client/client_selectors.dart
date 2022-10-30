@@ -171,7 +171,7 @@ double getClientUnappliedPayments(
   double amount = 0;
 
   paymentMap.forEach((paymentId, payment) {
-    if (payment.clientId == clientId) {
+    if (!payment.isDeleted && payment.clientId == clientId) {
       amount += payment.amount - payment.applied;
     }
   });
@@ -188,7 +188,7 @@ double getClientAvailableCredits(
   double amount = 0;
 
   creditMap.forEach((creditId, credit) {
-    if (credit.clientId == clientId) {
+    if (!credit.isDeleted && credit.clientId == clientId) {
       amount += credit.balance;
     }
   });
