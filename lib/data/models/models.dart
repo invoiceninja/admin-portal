@@ -123,6 +123,7 @@ class EntityAction extends EnumClass {
   static const EntityAction convertToExpense = _$convertToExpense;
   static const EntityAction convertToPayment = _$convertToPayment;
   static const EntityAction merge = _$merge;
+  static const EntityAction bulkPrint = _$bulkPrint;
 
   @override
   String toString() {
