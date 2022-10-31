@@ -84,8 +84,11 @@ class _VariablesHelpState extends State<VariablesHelp>
                   'payments',
                   if (widget.showInvoiceAsInvoices) ...[
                     'invoice_references',
-                    'invoice.po_number',
                     'payment.status',
+                    'invoices.po_number',
+                    'invoices.amount',
+                    'invoices.balance',
+                    'invoices.due_date',
                   ] else if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
                     QuoteFields.discount,
