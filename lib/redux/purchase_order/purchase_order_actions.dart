@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
@@ -11,6 +14,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewPurchaseOrderList implements PersistUI {
@@ -564,7 +568,7 @@ class UpdatePurchaseOrderTab implements PersistUI {
 }
 
 void handlePurchaseOrderAction(BuildContext context,
-    List<BaseEntity> purchaseOrders, EntityAction action) {
+    List<BaseEntity> purchaseOrders, EntityAction action) async {
   if (purchaseOrders.isEmpty) {
     return;
   }
@@ -598,6 +602,27 @@ void handlePurchaseOrderAction(BuildContext context,
       store.dispatch(DeletePurchaseOrdersRequest(
           snackBarCompleter<Null>(context, localization.deletedPurchaseOrder),
           purchaseOrderIds));
+      break;
+    case EntityAction.printPdf:
+      final invitation = purchaseOrder.invitations.first;
+      final url = invitation.downloadLink;
+      store.dispatch(StartSaving());
+      final http.Response response =
+          await WebClient().get(url, '', rawResponse: true);
+      store.dispatch(StopSaving());
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      break;
+    case EntityAction.bulkPrint:
+      store.dispatch(StartSaving());
+      final url = state.credentials.url + '/purchase_orders/bulk';
+      final data = json.encode({
+        'ids': purchaseOrderIds,
+        'action': EntityAction.bulkPrint.toApiParam()
+      });
+      final http.Response response = await WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true);
+      store.dispatch(StopSaving());
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
       break;
     case EntityAction.addToInventory:
       store.dispatch(AddPurchaseOrdersToInventoryRequest(
