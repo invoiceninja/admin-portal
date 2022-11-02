@@ -142,6 +142,7 @@ class ImportType extends EnumClass {
           EntityType.product.toString(): 'products',
           EntityType.vendor.toString(): 'vendors',
           EntityType.expense.toString(): 'expenses',
+          'bank_transaction': 'transactions',
         };
       case ImportType.freshbooks:
       case ImportType.invoicely:

@@ -297,6 +297,7 @@ class _FileImportState extends State<_FileImport> {
       multipartFiles: _multipartFiles.values.toList(),
       data: {
         'import_type': widget.importType.toString(),
+        'bank_integration_id': 'W4QbYEKbzq',
       },
     ).then((dynamic result) {
       setState(() => {_isLoading = false, _multipartFiles.clear()});
