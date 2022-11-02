@@ -18,11 +18,14 @@ List<String> dropdownPaymentTermsSelector(
   final Map<int, bool> numDays = {};
   final list = paymentTermList.where((paymentTermId) {
     final paymentTerm = paymentTermMap[paymentTermId];
+    if (!paymentTerm.isActive) {
+      return false;
+    }
     if (numDays.containsKey(paymentTerm.numDays)) {
       return false;
     }
     numDays[paymentTerm.numDays] = true;
-    return paymentTerm.isActive;
+    return true;
   }).toList();
 
   list.sort((paymentTermAId, paymentTermBId) {
