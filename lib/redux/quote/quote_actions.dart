@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -687,6 +688,16 @@ Future handleQuoteAction(
       store.dispatch(StartSaving());
       final http.Response response =
           await WebClient().get(url, '', rawResponse: true);
+      store.dispatch(StopSaving());
+      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      break;
+    case EntityAction.bulkPrint:
+      store.dispatch(StartSaving());
+      final url = state.credentials.url + '/quotes/bulk';
+      final data = json.encode(
+          {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
+      final http.Response response = await WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
       break;

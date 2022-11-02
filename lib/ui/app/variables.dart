@@ -81,11 +81,13 @@ class _VariablesHelpState extends State<VariablesHelp>
                   'created_by_user',
                   'assigned_to_user',
                   'invoices',
-                  'payments',
                   if (widget.showInvoiceAsInvoices) ...[
                     'invoice_references',
-                    'invoice.po_number',
                     'payment.status',
+                    'invoices.po_number',
+                    'invoices.amount',
+                    'invoices.balance',
+                    'invoices.due_date',
                   ] else if (widget.showInvoiceAsQuote) ...[
                     QuoteFields.amount,
                     QuoteFields.discount,
@@ -109,6 +111,7 @@ class _VariablesHelpState extends State<VariablesHelp>
                     InvoiceFields.number,
                     InvoiceFields.terms,
                     InvoiceFields.footer,
+                    'payments',
                   ],
                   if (company.hasCustomField(CustomFieldType.invoice1))
                     InvoiceFields.customValue1,

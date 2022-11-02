@@ -1026,6 +1026,7 @@ abstract class InvoiceEntity extends Object
 
       if (multiselect) {
         if (!isRecurring) {
+          actions.add(EntityAction.bulkPrint);
           actions.add(EntityAction.bulkDownload);
         }
       } else {

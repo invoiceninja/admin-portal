@@ -829,6 +829,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                 ),
                                               ),
                                             if (invoice.isInvoice &&
+                                                originalInvoice != null &&
                                                 originalInvoice.autoBillEnabled)
                                               Expanded(
                                                 child: Tooltip(
