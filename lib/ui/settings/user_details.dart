@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -405,7 +406,8 @@ class _UserDetailsState extends State<UserDetails>
                             if (!state.user.phoneVerified) {
                               showDialog<void>(
                                 context: context,
-                                //builder: (BuildContext context) => _VerifyPhoneNumber(state: viewModel.state),
+                                builder: (BuildContext context) =>
+                                    UserSmsVerification(),
                               );
                             } else {
                               showDialog<void>(

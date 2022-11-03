@@ -186,3 +186,17 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     );
   }
 }
+
+class UserSmsVerification extends StatefulWidget {
+  const UserSmsVerification({Key key}) : super(key: key);
+
+  @override
+  State<UserSmsVerification> createState() => _UserSmsVerificationState();
+}
+
+class _UserSmsVerificationState extends State<UserSmsVerification> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
