@@ -269,8 +269,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     }
 
     double totalSelected = 0;
-    _selectedInvoices
-        .forEach((invoice) => totalSelected += invoice.balanceOrAmount);
+    _selectedInvoices.forEach((invoice) {
+      totalSelected += invoice.balanceOrAmount;
+    });
 
     return Column(
       mainAxisSize: MainAxisSize.max,
