@@ -97,7 +97,7 @@ class PaymentPresenter extends EntityPresenter {
             alignment: Alignment.centerRight,
             child: Text(formatNumber(
                 payment.amount * payment.exchangeRate, context,
-                clientId: payment.exchangeCurrencyId)));
+                currencyId: payment.exchangeCurrencyId)));
       case PaymentFields.status:
         return EntityStatusChip(entity: payment, showState: true);
       case PaymentFields.customValue1:
