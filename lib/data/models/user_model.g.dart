@@ -273,7 +273,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'password',
       serializers.serialize(object.password,
           specifiedType: const FullType(String)),
-      'phone_verified',
+      'verified_phone_number',
       serializers.serialize(object.phoneVerified,
           specifiedType: const FullType(bool)),
       'custom_value1',
@@ -395,7 +395,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           result.emailVerifiedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'phone_verified':
+        case 'verified_phone_number':
           result.phoneVerified = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
