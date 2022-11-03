@@ -116,7 +116,7 @@ class ProjectEditVM {
               } else {
                 navigator.pop(savedProject);
               }
-            } else {
+            } else if (state.projectUIState.saveCompleter == null) {
               if (!state.prefState.isPreviewVisible) {
                 store.dispatch(TogglePreviewSidebar());
               }

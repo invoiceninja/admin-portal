@@ -1,6 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
@@ -10,9 +17,11 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -562,6 +571,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final transactions = viewModel.transactions;
     final transaction =
@@ -598,6 +608,30 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             .replaceFirst(':count ', '')),
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    final completer = snackBarCompleter<VendorEntity>(
+                        context, localization.createdVendor);
+                    createEntity(
+                        context: context,
+                        entity: VendorEntity(state: viewModel.state),
+                        force: true,
+                        completer: completer,
+                        cancelCompleter: Completer<Null>()
+                          ..future.then((_) {
+                            store.dispatch(
+                                UpdateCurrentRoute(TransactionScreen.route));
+                          }));
+                    completer.future.then((SelectableEntity vendor) {
+                      store.dispatch(SaveTransactionSuccess(
+                          transaction.rebuild((b) => b..vendorId = vendor.id)));
+                      store.dispatch(
+                          UpdateCurrentRoute(TransactionScreen.route));
+                    });
+                  },
+                  icon: Icon(Icons.add_circle_outline),
+                ),
+                SizedBox(width: 8),
               ],
             ),
             ListDivider(),
@@ -653,6 +687,31 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               .replaceFirst(':count ', '')),
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      final completer =
+                          snackBarCompleter<ExpenseCategoryEntity>(
+                              context, localization.createdExpenseCategory);
+                      createEntity(
+                          context: context,
+                          entity: ExpenseCategoryEntity(state: viewModel.state),
+                          force: true,
+                          completer: completer,
+                          cancelCompleter: Completer<Null>()
+                            ..future.then((_) {
+                              store.dispatch(
+                                  UpdateCurrentRoute(TransactionScreen.route));
+                            }));
+                      completer.future.then((SelectableEntity category) {
+                        store.dispatch(SaveTransactionSuccess(transaction
+                            .rebuild((b) => b..categoryId = category.id)));
+                        store.dispatch(
+                            UpdateCurrentRoute(TransactionScreen.route));
+                      });
+                    },
+                    icon: Icon(Icons.add_circle_outline),
+                  ),
+                  SizedBox(width: 8),
                 ],
               ),
               ListDivider(),

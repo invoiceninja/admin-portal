@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:redux/redux.dart';
 
@@ -17,8 +19,24 @@ EntityUIState expenseCategoryUIReducer(
     ..listUIState.replace(expenseCategoryListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
+    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
+
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditExpenseCategory>(
+      (completer, action) {
+    return action.completer;
+  }),
+]);
+
+final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
+  TypedReducer<Completer<SelectableEntity>, EditExpenseCategory>(
+      (completer, action) {
+    return action.cancelCompleter;
+  }),
+]);
 
 final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewExpenseCategory>((completer, action) => true),

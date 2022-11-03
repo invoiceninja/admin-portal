@@ -105,7 +105,7 @@ class VendorEditVM {
               } else {
                 navigator.pop(savedVendor);
               }
-            } else {
+            } else if (state.vendorUIState.saveCompleter == null) {
               if (!state.prefState.isPreviewVisible) {
                 store.dispatch(TogglePreviewSidebar());
               }
