@@ -140,6 +140,7 @@ class _MatchDeposits extends StatefulWidget {
 }
 
 class _MatchDepositsState extends State<_MatchDeposits> {
+  final _invoiceScrollController = ScrollController();
   TextEditingController _filterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
@@ -251,6 +252,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
   @override
   void dispose() {
+    _invoiceScrollController.dispose();
     _filterController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -393,25 +395,30 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: _invoices.length,
-            itemBuilder: (BuildContext context, int index) {
-              final invoice = _invoices[index];
-              return InvoiceListItem(
-                invoice: invoice,
-                showCheck: true,
-                isChecked: _selectedInvoices.contains(invoice),
-                onTap: () => setState(() {
-                  if (_selectedInvoices.contains(invoice)) {
-                    _selectedInvoices.remove(invoice);
-                  } else {
-                    _selectedInvoices.add(invoice);
-                  }
-                  updateInvoiceList();
-                }),
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            controller: _invoiceScrollController,
+            child: ListView.separated(
+              controller: _invoiceScrollController,
+              separatorBuilder: (context, index) => ListDivider(),
+              itemCount: _invoices.length,
+              itemBuilder: (BuildContext context, int index) {
+                final invoice = _invoices[index];
+                return InvoiceListItem(
+                  invoice: invoice,
+                  showCheck: true,
+                  isChecked: _selectedInvoices.contains(invoice),
+                  onTap: () => setState(() {
+                    if (_selectedInvoices.contains(invoice)) {
+                      _selectedInvoices.remove(invoice);
+                    } else {
+                      _selectedInvoices.add(invoice);
+                    }
+                    updateInvoiceList();
+                  }),
+                );
+              },
+            ),
           ),
         ),
         if (_selectedInvoices.isNotEmpty)
@@ -462,6 +469,9 @@ class _MatchWithdrawals extends StatefulWidget {
 }
 
 class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
+  final _vendorScrollController = ScrollController();
+  final _categoryScrollController = ScrollController();
+
   TextEditingController _vendorFilterController;
   TextEditingController _categoryFilterController;
   FocusNode _vendorFocusNode;
@@ -572,6 +582,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     _categoryFilterController.dispose();
     _vendorFocusNode.dispose();
     _categoryFocusNode.dispose();
+    _vendorScrollController.dispose();
+    _categoryScrollController.dispose();
     super.dispose();
   }
 
@@ -643,27 +655,33 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
             ),
             ListDivider(),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => ListDivider(),
-                itemCount: _vendors.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final vendor = _vendors[index];
-                  return VendorListItem(
-                    vendor: vendor,
-                    showCheck: true,
-                    isChecked: _selectedVendor?.id == vendor.id,
-                    onTap: () => setState(() {
-                      if (_selectedVendor?.id == vendor.id) {
-                        _selectedVendor = null;
-                      } else {
-                        _selectedVendor = vendor;
-                      }
-                      updateVendorList();
-                      store.dispatch(SaveTransactionSuccess(transaction.rebuild(
-                          (b) => b..pendingVendorId = _selectedVendor?.id)));
-                    }),
-                  );
-                },
+              child: Scrollbar(
+                thumbVisibility: true,
+                controller: _vendorScrollController,
+                child: ListView.separated(
+                  controller: _vendorScrollController,
+                  separatorBuilder: (context, index) => ListDivider(),
+                  itemCount: _vendors.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final vendor = _vendors[index];
+                    return VendorListItem(
+                      vendor: vendor,
+                      showCheck: true,
+                      isChecked: _selectedVendor?.id == vendor.id,
+                      onTap: () => setState(() {
+                        if (_selectedVendor?.id == vendor.id) {
+                          _selectedVendor = null;
+                        } else {
+                          _selectedVendor = vendor;
+                        }
+                        updateVendorList();
+                        store.dispatch(SaveTransactionSuccess(
+                            transaction.rebuild((b) =>
+                                b..pendingVendorId = _selectedVendor?.id)));
+                      }),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -726,28 +744,33 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               ),
               ListDivider(),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => ListDivider(),
-                  itemCount: _categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final category = _categories[index];
-                    return ExpenseCategoryListItem(
-                      expenseCategory: category,
-                      showCheck: true,
-                      isChecked: _selectedCategory?.id == category.id,
-                      onTap: () => setState(() {
-                        if (_selectedCategory?.id == category.id) {
-                          _selectedCategory = null;
-                        } else {
-                          _selectedCategory = category;
-                        }
-                        updateCategoryList();
-                        store.dispatch(SaveTransactionSuccess(
-                            transaction.rebuild((b) =>
-                                b..pendingCategoryId = _selectedCategory?.id)));
-                      }),
-                    );
-                  },
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  controller: _categoryScrollController,
+                  child: ListView.separated(
+                    controller: _categoryScrollController,
+                    separatorBuilder: (context, index) => ListDivider(),
+                    itemCount: _categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final category = _categories[index];
+                      return ExpenseCategoryListItem(
+                        expenseCategory: category,
+                        showCheck: true,
+                        isChecked: _selectedCategory?.id == category.id,
+                        onTap: () => setState(() {
+                          if (_selectedCategory?.id == category.id) {
+                            _selectedCategory = null;
+                          } else {
+                            _selectedCategory = category;
+                          }
+                          updateCategoryList();
+                          store.dispatch(SaveTransactionSuccess(
+                              transaction.rebuild((b) => b
+                                ..pendingCategoryId = _selectedCategory?.id)));
+                        }),
+                      );
+                    },
+                  ),
                 ),
               ),
               if (transaction.category.isNotEmpty && _selectedCategory == null)
