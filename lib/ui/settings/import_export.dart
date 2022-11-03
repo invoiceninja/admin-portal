@@ -571,7 +571,9 @@ class __FileMapperState extends State<_FileMapper> {
             _bankAccountId,
           ),
           onSelected: (bankAccount) {
-            _bankAccountId = bankAccount?.id;
+            setState(() {
+              _bankAccountId = bankAccount?.id;
+            });
           },
           onCreateNew: (completer, name) {
             store.dispatch(SaveBankAccountRequest(
