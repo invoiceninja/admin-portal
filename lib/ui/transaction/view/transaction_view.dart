@@ -431,7 +431,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
                     );
                   },
-            iconData: getEntityActionIcon(EntityAction.convertToExpense),
+            iconData: getEntityActionIcon(EntityAction.convertToPayment),
           ),
         )
       ],
@@ -700,13 +700,13 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
           child: AppButton(
             label: localization.convertToExpense,
-            onPressed: _selectedVendor == null || viewModel.state.isSaving
+            onPressed: viewModel.state.isSaving
                 ? null
                 : () {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToExpense(
                       context,
-                      _selectedVendor.id,
+                      _selectedVendor?.id ?? '',
                       _selectedCategory?.id ?? '',
                     );
                   },
