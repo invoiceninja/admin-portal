@@ -15,14 +15,14 @@ import 'package:invoiceninja_flutter/ui/app/pinput.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class SmsVerification extends StatefulWidget {
-  const SmsVerification();
+class AccountSmsVerification extends StatefulWidget {
+  const AccountSmsVerification();
 
   @override
-  State<SmsVerification> createState() => _SmsVerificationState();
+  State<AccountSmsVerification> createState() => _AccountSmsVerificationState();
 }
 
-class _SmsVerificationState extends State<SmsVerification> {
+class _AccountSmsVerificationState extends State<AccountSmsVerification> {
   bool _showCode = false;
   bool _isLoading = false;
   String _code = '';
@@ -184,5 +184,19 @@ class _SmsVerificationState extends State<SmsVerification> {
         ]
       ],
     );
+  }
+}
+
+class UserSmsVerification extends StatefulWidget {
+  const UserSmsVerification({Key key}) : super(key: key);
+
+  @override
+  State<UserSmsVerification> createState() => _UserSmsVerificationState();
+}
+
+class _UserSmsVerificationState extends State<UserSmsVerification> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

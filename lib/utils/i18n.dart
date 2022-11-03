@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'bank_transaction': 'Transaction',
       'bulk_print': 'Print PDF',
       'vendor_postal_code': 'Vendor Postal Code',
       'preview_location': 'Preview Location',
@@ -87486,6 +87487,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get bulkPrint =>
       _localizedValues[localeCode]['bulk_print'] ??
       _localizedValues['en']['bulk_print'];
+
+  String get bankTransaction =>
+      _localizedValues[localeCode]['bank_transaction'] ??
+      _localizedValues['en']['bank_transaction'];
 
 // STARTER: lang field - do not remove comment
 

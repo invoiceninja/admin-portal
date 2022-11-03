@@ -70,6 +70,16 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     }
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -81,15 +91,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
           ? localization.newPaymentTerm
           : localization.editPaymentTerm,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -105,6 +107,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
                       validator: (value) => value == null || value.isEmpty
                           ? localization.pleaseEnterAValue
                           : null,
+                      onSavePressed: (context) => _onSavePressed(),
                     ),
                   ],
                 ),

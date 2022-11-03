@@ -273,6 +273,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'password',
       serializers.serialize(object.password,
           specifiedType: const FullType(String)),
+      'phone_verified',
+      serializers.serialize(object.phoneVerified,
+          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -391,6 +394,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'email_verified_at':
           result.emailVerifiedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'phone_verified':
+          result.phoneVerified = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -952,6 +959,8 @@ class _$UserEntity extends UserEntity {
   @override
   final int emailVerifiedAt;
   @override
+  final bool phoneVerified;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -998,6 +1007,7 @@ class _$UserEntity extends UserEntity {
       this.phone,
       this.password,
       this.emailVerifiedAt,
+      this.phoneVerified,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1022,6 +1032,8 @@ class _$UserEntity extends UserEntity {
     BuiltValueNullFieldError.checkNotNull(email, 'UserEntity', 'email');
     BuiltValueNullFieldError.checkNotNull(phone, 'UserEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(password, 'UserEntity', 'password');
+    BuiltValueNullFieldError.checkNotNull(
+        phoneVerified, 'UserEntity', 'phoneVerified');
     BuiltValueNullFieldError.checkNotNull(
         customValue1, 'UserEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
@@ -1064,6 +1076,7 @@ class _$UserEntity extends UserEntity {
         phone == other.phone &&
         password == other.password &&
         emailVerifiedAt == other.emailVerifiedAt &&
+        phoneVerified == other.phoneVerified &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1105,8 +1118,8 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode), password.hashCode),
-                                                                                emailVerifiedAt.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode), password.hashCode), emailVerifiedAt.hashCode),
+                                                                                phoneVerified.hashCode),
                                                                             customValue1.hashCode),
                                                                         customValue2.hashCode),
                                                                     customValue3.hashCode),
@@ -1136,6 +1149,7 @@ class _$UserEntity extends UserEntity {
           ..add('phone', phone)
           ..add('password', password)
           ..add('emailVerifiedAt', emailVerifiedAt)
+          ..add('phoneVerified', phoneVerified)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1185,6 +1199,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   int get emailVerifiedAt => _$this._emailVerifiedAt;
   set emailVerifiedAt(int emailVerifiedAt) =>
       _$this._emailVerifiedAt = emailVerifiedAt;
+
+  bool _phoneVerified;
+  bool get phoneVerified => _$this._phoneVerified;
+  set phoneVerified(bool phoneVerified) =>
+      _$this._phoneVerified = phoneVerified;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1279,6 +1298,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _phone = $v.phone;
       _password = $v.password;
       _emailVerifiedAt = $v.emailVerifiedAt;
+      _phoneVerified = $v.phoneVerified;
       _customValue1 = $v.customValue1;
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
@@ -1330,16 +1350,17 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               password: BuiltValueNullFieldError.checkNotNull(
                   password, 'UserEntity', 'password'),
               emailVerifiedAt: emailVerifiedAt,
+              phoneVerified: BuiltValueNullFieldError.checkNotNull(
+                  phoneVerified, 'UserEntity', 'phoneVerified'),
               customValue1: BuiltValueNullFieldError.checkNotNull(
                   customValue1, 'UserEntity', 'customValue1'),
               customValue2: BuiltValueNullFieldError.checkNotNull(
                   customValue2, 'UserEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(
                   customValue3, 'UserEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(
-                  customValue4, 'UserEntity', 'customValue4'),
-              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(
-                  isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled'),
+              customValue4:
+                  BuiltValueNullFieldError.checkNotNull(customValue4, 'UserEntity', 'customValue4'),
+              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled'),
               hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, 'UserEntity', 'hasPassword'),
               lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, 'UserEntity', 'lastEmailAddress'),
               oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, 'UserEntity', 'oauthUserToken'),
