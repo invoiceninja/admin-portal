@@ -175,7 +175,7 @@ abstract class UserEntity extends Object
   @BuiltValueField(wireName: 'email_verified_at')
   int get emailVerifiedAt;
 
-  @BuiltValueField(wireName: 'phone_verified')
+  @BuiltValueField(wireName: 'verified_phone_number')
   bool get phoneVerified;
 
   @BuiltValueField(wireName: 'custom_value1')

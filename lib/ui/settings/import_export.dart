@@ -571,7 +571,9 @@ class __FileMapperState extends State<_FileMapper> {
             _bankAccountId,
           ),
           onSelected: (bankAccount) {
-            _bankAccountId = bankAccount?.id;
+            setState(() {
+              _bankAccountId = bankAccount?.id;
+            });
           },
           onCreateNew: (completer, name) {
             store.dispatch(SaveBankAccountRequest(
@@ -656,12 +658,9 @@ class __FileMapperState extends State<_FileMapper> {
     ]);
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: FormCard(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
+      child: FormCard(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
       ),
     );
   }

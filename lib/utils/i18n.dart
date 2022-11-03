@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'base_type': 'Base Type',
+      'category_type': 'Category Type',
       'bank_transaction': 'Transaction',
       'bulk_print': 'Print PDF',
       'vendor_postal_code': 'Vendor Postal Code',
@@ -87455,6 +87457,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get bankTransaction =>
       _localizedValues[localeCode]['bank_transaction'] ??
       _localizedValues['en']['bank_transaction'];
+
+  String get baseType =>
+      _localizedValues[localeCode]['base_type'] ??
+      _localizedValues['en']['base_type'];
+
+  String get categoryType =>
+      _localizedValues[localeCode]['category_type'] ??
+      _localizedValues['en']['category_type'];
 
 // STARTER: lang field - do not remove comment
 
