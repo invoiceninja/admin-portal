@@ -64,6 +64,7 @@ abstract class ImportRequest
     @required String hash,
     @required String importType,
     @required bool skipHeader,
+    @required String bankAccountId,
     @required BuiltMap<String, ImportRequestMapping> columnMap,
   }) {
     return _$ImportRequest._(
@@ -71,6 +72,7 @@ abstract class ImportRequest
       importType: importType,
       skipHeader: skipHeader,
       columnMap: columnMap,
+      bankAccountId: bankAccountId,
     );
   }
 
@@ -84,6 +86,9 @@ abstract class ImportRequest
 
   @BuiltValueField(wireName: 'import_type')
   String get importType;
+
+  @BuiltValueField(wireName: 'bank_integration_id')
+  String get bankAccountId;
 
   @BuiltValueField(wireName: 'skip_header')
   bool get skipHeader;

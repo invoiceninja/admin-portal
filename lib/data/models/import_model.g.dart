@@ -256,6 +256,9 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
       'import_type',
       serializers.serialize(object.importType,
           specifiedType: const FullType(String)),
+      'bank_integration_id',
+      serializers.serialize(object.bankAccountId,
+          specifiedType: const FullType(String)),
       'skip_header',
       serializers.serialize(object.skipHeader,
           specifiedType: const FullType(bool)),
@@ -288,6 +291,10 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
           break;
         case 'import_type':
           result.importType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'bank_integration_id':
+          result.bankAccountId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'skip_header':
@@ -622,6 +629,8 @@ class _$ImportRequest extends ImportRequest {
   @override
   final String importType;
   @override
+  final String bankAccountId;
+  @override
   final bool skipHeader;
   @override
   final BuiltMap<String, ImportRequestMapping> columnMap;
@@ -630,11 +639,17 @@ class _$ImportRequest extends ImportRequest {
       (new ImportRequestBuilder()..update(updates)).build();
 
   _$ImportRequest._(
-      {this.hash, this.importType, this.skipHeader, this.columnMap})
+      {this.hash,
+      this.importType,
+      this.bankAccountId,
+      this.skipHeader,
+      this.columnMap})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(hash, 'ImportRequest', 'hash');
     BuiltValueNullFieldError.checkNotNull(
         importType, 'ImportRequest', 'importType');
+    BuiltValueNullFieldError.checkNotNull(
+        bankAccountId, 'ImportRequest', 'bankAccountId');
     BuiltValueNullFieldError.checkNotNull(
         skipHeader, 'ImportRequest', 'skipHeader');
     BuiltValueNullFieldError.checkNotNull(
@@ -654,6 +669,7 @@ class _$ImportRequest extends ImportRequest {
     return other is ImportRequest &&
         hash == other.hash &&
         importType == other.importType &&
+        bankAccountId == other.bankAccountId &&
         skipHeader == other.skipHeader &&
         columnMap == other.columnMap;
   }
@@ -662,7 +678,9 @@ class _$ImportRequest extends ImportRequest {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, hash.hashCode), importType.hashCode),
+        $jc(
+            $jc($jc($jc(0, hash.hashCode), importType.hashCode),
+                bankAccountId.hashCode),
             skipHeader.hashCode),
         columnMap.hashCode));
   }
@@ -672,6 +690,7 @@ class _$ImportRequest extends ImportRequest {
     return (newBuiltValueToStringHelper('ImportRequest')
           ..add('hash', hash)
           ..add('importType', importType)
+          ..add('bankAccountId', bankAccountId)
           ..add('skipHeader', skipHeader)
           ..add('columnMap', columnMap))
         .toString();
@@ -690,6 +709,11 @@ class ImportRequestBuilder
   String get importType => _$this._importType;
   set importType(String importType) => _$this._importType = importType;
 
+  String _bankAccountId;
+  String get bankAccountId => _$this._bankAccountId;
+  set bankAccountId(String bankAccountId) =>
+      _$this._bankAccountId = bankAccountId;
+
   bool _skipHeader;
   bool get skipHeader => _$this._skipHeader;
   set skipHeader(bool skipHeader) => _$this._skipHeader = skipHeader;
@@ -707,6 +731,7 @@ class ImportRequestBuilder
     if ($v != null) {
       _hash = $v.hash;
       _importType = $v.importType;
+      _bankAccountId = $v.bankAccountId;
       _skipHeader = $v.skipHeader;
       _columnMap = $v.columnMap.toBuilder();
       _$v = null;
@@ -735,6 +760,8 @@ class ImportRequestBuilder
                   hash, 'ImportRequest', 'hash'),
               importType: BuiltValueNullFieldError.checkNotNull(
                   importType, 'ImportRequest', 'importType'),
+              bankAccountId: BuiltValueNullFieldError.checkNotNull(
+                  bankAccountId, 'ImportRequest', 'bankAccountId'),
               skipHeader: BuiltValueNullFieldError.checkNotNull(
                   skipHeader, 'ImportRequest', 'skipHeader'),
               columnMap: columnMap.build());
