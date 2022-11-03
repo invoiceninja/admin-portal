@@ -10,6 +10,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/data/models/bank_account_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -223,6 +228,7 @@ class _FileImportState extends State<_FileImport> {
   bool _isLoading = false;
   bool _importJsonData = false;
   bool _importJsonSettings = false;
+  String _bankAccountId;
 
   void uploadJsonFile() {
     final localization = AppLocalization.of(context);
@@ -297,7 +303,7 @@ class _FileImportState extends State<_FileImport> {
       multipartFiles: _multipartFiles.values.toList(),
       data: {
         'import_type': widget.importType.toString(),
-        'bank_integration_id': 'W4QbYEKbzq',
+        'bank_integration_id': _bankAccountId,
       },
     ).then((dynamic result) {
       setState(() => {_isLoading = false, _multipartFiles.clear()});
@@ -318,6 +324,8 @@ class _FileImportState extends State<_FileImport> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     final List<Widget> children = [
       InputDecorator(
@@ -388,30 +396,57 @@ class _FileImportState extends State<_FileImport> {
       ]));
     }
 
-    children.add(SizedBox(height: 20));
+    if (widget.importType == ImportType.csv &&
+        _multipartFiles.containsKey('bank_transaction')) {
+      children.add(EntityDropdown(
+        entityType: EntityType.bankAccount,
+        entityId: _bankAccountId,
+        labelText: localization.bankAccount,
+        entityList: memoizedDropdownBankAccountList(
+          state.bankAccountState.map,
+          state.bankAccountState.list,
+          state.staticState,
+          state.userState.map,
+          '',
+        ),
+        onSelected: (bankAccount) {
+          _bankAccountId = bankAccount?.id;
+        },
+        onCreateNew: (completer, name) {
+          store.dispatch(SaveBankAccountRequest(
+              bankAccount: BankAccountEntity().rebuild((b) => b..name = name),
+              completer: completer));
+        },
+        validator: (dynamic value) => (_bankAccountId ?? '').isEmpty
+            ? localization.pleaseEnterAValue
+            : null,
+      ));
 
-    if (widget.importType == ImportType.json) {
-      children.addAll([
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(
-            localization.jsonHelp,
-            style: TextStyle(color: Colors.grey),
+      children.add(SizedBox(height: 20));
+
+      if (widget.importType == ImportType.json) {
+        children.addAll([
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              localization.jsonHelp,
+              style: TextStyle(color: Colors.grey),
+            ),
           ),
-        ),
-        SwitchListTile(
-          activeColor: Theme.of(context).colorScheme.secondary,
-          title: Text(localization.importSettings),
-          value: _importJsonSettings,
-          onChanged: (value) => setState(() => _importJsonSettings = value),
-        ),
-        SwitchListTile(
-          activeColor: Theme.of(context).colorScheme.secondary,
-          title: Text(localization.importData),
-          value: _importJsonData,
-          onChanged: (value) => setState(() => _importJsonData = value),
-        ),
-      ]);
+          SwitchListTile(
+            activeColor: Theme.of(context).colorScheme.secondary,
+            title: Text(localization.importSettings),
+            value: _importJsonSettings,
+            onChanged: (value) => setState(() => _importJsonSettings = value),
+          ),
+          SwitchListTile(
+            activeColor: Theme.of(context).colorScheme.secondary,
+            title: Text(localization.importData),
+            value: _importJsonData,
+            onChanged: (value) => setState(() => _importJsonData = value),
+          ),
+        ]);
+      }
     }
 
     if (_isLoading)

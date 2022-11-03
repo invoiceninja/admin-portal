@@ -403,7 +403,8 @@ class _UserDetailsState extends State<UserDetails>
                               return;
                             }
 
-                            if (!state.user.phoneVerified) {
+                            if (!kReleaseMode &&
+                                (state.isHosted && !state.user.phoneVerified)) {
                               showDialog<void>(
                                 context: context,
                                 builder: (BuildContext context) =>
