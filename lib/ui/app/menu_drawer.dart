@@ -396,7 +396,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         showDialog<void>(
                                           context: context,
                                           builder: (BuildContext context) =>
-                                              SmsVerification(),
+                                              AccountSmsVerification(),
                                         );
                                       },
                                       icon: Icon(Icons.warning,
@@ -416,7 +416,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       showDialog<void>(
                                         context: context,
                                         builder: (BuildContext context) =>
-                                            SmsVerification(),
+                                            AccountSmsVerification(),
                                       );
                                     },
                                   ),

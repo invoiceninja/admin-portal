@@ -402,11 +402,18 @@ class _UserDetailsState extends State<UserDetails>
                               return;
                             }
 
-                            showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  _EnableTwoFactor(state: viewModel.state),
-                            );
+                            if (!state.user.phoneVerified) {
+                              showDialog<void>(
+                                context: context,
+                                //builder: (BuildContext context) => _VerifyPhoneNumber(state: viewModel.state),
+                              );
+                            } else {
+                              showDialog<void>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _EnableTwoFactor(state: viewModel.state),
+                              );
+                            }
                           }
                         },
                       ),

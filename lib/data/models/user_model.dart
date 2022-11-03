@@ -140,6 +140,7 @@ abstract class UserEntity extends Object
       lastEmailAddress: '',
       oauthUserToken: '',
       password: '',
+      phoneVerified: false,
     );
   }
 
@@ -173,6 +174,9 @@ abstract class UserEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'email_verified_at')
   int get emailVerifiedAt;
+
+  @BuiltValueField(wireName: 'phone_verified')
+  bool get phoneVerified;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -332,6 +336,7 @@ abstract class UserEntity extends Object
   static void _initializeBuilder(UserEntityBuilder builder) => builder
     ..isTwoFactorEnabled = false
     ..hasPassword = false
+    ..phoneVerified = false
     ..password = ''
     ..lastEmailAddress = ''
     ..oauthUserToken = '';
