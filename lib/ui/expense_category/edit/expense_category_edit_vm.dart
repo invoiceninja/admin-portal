@@ -92,12 +92,13 @@ class ExpenseCategoryEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
-              if (expenseCategory.isNew) {
+              if (expenseCategory.isNew &&
+                  state.expenseCategoryUIState.saveCompleter == null) {
                 navigator.pushReplacementNamed(ExpenseCategoryViewScreen.route);
               } else {
                 navigator.pop(savedExpenseCategory);
               }
-            } else {
+            } else if (state.expenseCategoryUIState.saveCompleter == null) {
               viewEntity(entity: savedExpenseCategory, force: true);
             }
           }).catchError((Object error) {

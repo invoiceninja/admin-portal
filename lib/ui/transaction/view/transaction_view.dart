@@ -1,6 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
@@ -10,9 +17,11 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -131,6 +140,7 @@ class _MatchDeposits extends StatefulWidget {
 }
 
 class _MatchDepositsState extends State<_MatchDeposits> {
+  final _invoiceScrollController = ScrollController();
   TextEditingController _filterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
@@ -242,6 +252,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
   @override
   void dispose() {
+    _invoiceScrollController.dispose();
     _filterController.dispose();
     _focusNode.dispose();
     super.dispose();
@@ -260,8 +271,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     }
 
     double totalSelected = 0;
-    _selectedInvoices
-        .forEach((invoice) => totalSelected += invoice.balanceOrAmount);
+    _selectedInvoices.forEach((invoice) {
+      totalSelected += invoice.balanceOrAmount;
+    });
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -383,25 +395,30 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: _invoices.length,
-            itemBuilder: (BuildContext context, int index) {
-              final invoice = _invoices[index];
-              return InvoiceListItem(
-                invoice: invoice,
-                showCheck: true,
-                isChecked: _selectedInvoices.contains(invoice),
-                onTap: () => setState(() {
-                  if (_selectedInvoices.contains(invoice)) {
-                    _selectedInvoices.remove(invoice);
-                  } else {
-                    _selectedInvoices.add(invoice);
-                  }
-                  updateInvoiceList();
-                }),
-              );
-            },
+          child: Scrollbar(
+            thumbVisibility: true,
+            controller: _invoiceScrollController,
+            child: ListView.separated(
+              controller: _invoiceScrollController,
+              separatorBuilder: (context, index) => ListDivider(),
+              itemCount: _invoices.length,
+              itemBuilder: (BuildContext context, int index) {
+                final invoice = _invoices[index];
+                return InvoiceListItem(
+                  invoice: invoice,
+                  showCheck: true,
+                  isChecked: _selectedInvoices.contains(invoice),
+                  onTap: () => setState(() {
+                    if (_selectedInvoices.contains(invoice)) {
+                      _selectedInvoices.remove(invoice);
+                    } else {
+                      _selectedInvoices.add(invoice);
+                    }
+                    updateInvoiceList();
+                  }),
+                );
+              },
+            ),
           ),
         ),
         if (_selectedInvoices.isNotEmpty)
@@ -431,7 +448,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       _selectedInvoices.map((invoice) => invoice.id).toList(),
                     );
                   },
-            iconData: getEntityActionIcon(EntityAction.convertToExpense),
+            iconData: getEntityActionIcon(EntityAction.convertToPayment),
           ),
         )
       ],
@@ -452,6 +469,9 @@ class _MatchWithdrawals extends StatefulWidget {
 }
 
 class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
+  final _vendorScrollController = ScrollController();
+  final _categoryScrollController = ScrollController();
+
   TextEditingController _vendorFilterController;
   TextEditingController _categoryFilterController;
   FocusNode _vendorFocusNode;
@@ -475,11 +495,17 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final state = widget.viewModel.state;
     if (transactions.isNotEmpty) {
       final transaction = transactions.first;
-      if ((transaction.categoryId ?? '').isNotEmpty) {
+      if ((transaction.pendingCategoryId ?? '').isNotEmpty) {
+        _selectedCategory =
+            state.expenseCategoryState.get(transaction.pendingCategoryId);
+      } else if ((transaction.categoryId ?? '').isNotEmpty) {
         _selectedCategory =
             state.expenseCategoryState.get(transaction.categoryId);
       }
-      if ((transaction.vendorId ?? '').isNotEmpty) {
+
+      if ((transaction.pendingVendorId ?? '').isNotEmpty) {
+        _selectedVendor = state.vendorState.get(transaction.pendingVendorId);
+      } else if ((transaction.vendorId ?? '').isNotEmpty) {
         _selectedVendor = state.vendorState.get(transaction.vendorId);
       }
     }
@@ -556,12 +582,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     _categoryFilterController.dispose();
     _vendorFocusNode.dispose();
     _categoryFocusNode.dispose();
+    _vendorScrollController.dispose();
+    _categoryScrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final transactions = viewModel.transactions;
     final transaction =
@@ -598,29 +627,61 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             .replaceFirst(':count ', '')),
                   ),
                 ),
+                IconButton(
+                  onPressed: () {
+                    final completer = snackBarCompleter<VendorEntity>(
+                        context, localization.createdVendor);
+                    createEntity(
+                        context: context,
+                        entity: VendorEntity(state: viewModel.state),
+                        force: true,
+                        completer: completer,
+                        cancelCompleter: Completer<Null>()
+                          ..future.then((_) {
+                            store.dispatch(
+                                UpdateCurrentRoute(TransactionScreen.route));
+                          }));
+                    completer.future.then((SelectableEntity vendor) {
+                      store.dispatch(SaveTransactionSuccess(transaction
+                          .rebuild((b) => b..pendingVendorId = vendor.id)));
+                      store.dispatch(
+                          UpdateCurrentRoute(TransactionScreen.route));
+                    });
+                  },
+                  icon: Icon(Icons.add_circle_outline),
+                ),
+                SizedBox(width: 8),
               ],
             ),
             ListDivider(),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (context, index) => ListDivider(),
-                itemCount: _vendors.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final vendor = _vendors[index];
-                  return VendorListItem(
-                    vendor: vendor,
-                    showCheck: true,
-                    isChecked: _selectedVendor?.id == vendor.id,
-                    onTap: () => setState(() {
-                      if (_selectedVendor?.id == vendor.id) {
-                        _selectedVendor = null;
-                      } else {
-                        _selectedVendor = vendor;
-                      }
-                      updateVendorList();
-                    }),
-                  );
-                },
+              child: Scrollbar(
+                thumbVisibility: true,
+                controller: _vendorScrollController,
+                child: ListView.separated(
+                  controller: _vendorScrollController,
+                  separatorBuilder: (context, index) => ListDivider(),
+                  itemCount: _vendors.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final vendor = _vendors[index];
+                    return VendorListItem(
+                      vendor: vendor,
+                      showCheck: true,
+                      isChecked: _selectedVendor?.id == vendor.id,
+                      onTap: () => setState(() {
+                        if (_selectedVendor?.id == vendor.id) {
+                          _selectedVendor = null;
+                        } else {
+                          _selectedVendor = vendor;
+                        }
+                        updateVendorList();
+                        store.dispatch(SaveTransactionSuccess(
+                            transaction.rebuild((b) =>
+                                b..pendingVendorId = _selectedVendor?.id)));
+                      }),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -653,29 +714,63 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               .replaceFirst(':count ', '')),
                     ),
                   ),
+                  IconButton(
+                    onPressed: () {
+                      final completer =
+                          snackBarCompleter<ExpenseCategoryEntity>(
+                              context, localization.createdExpenseCategory);
+                      createEntity(
+                          context: context,
+                          entity: ExpenseCategoryEntity(state: viewModel.state),
+                          force: true,
+                          completer: completer,
+                          cancelCompleter: Completer<Null>()
+                            ..future.then((_) {
+                              store.dispatch(
+                                  UpdateCurrentRoute(TransactionScreen.route));
+                            }));
+                      completer.future.then((SelectableEntity category) {
+                        store.dispatch(SaveTransactionSuccess(
+                            transaction.rebuild(
+                                (b) => b..pendingCategoryId = category.id)));
+                        store.dispatch(
+                            UpdateCurrentRoute(TransactionScreen.route));
+                      });
+                    },
+                    icon: Icon(Icons.add_circle_outline),
+                  ),
+                  SizedBox(width: 8),
                 ],
               ),
               ListDivider(),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => ListDivider(),
-                  itemCount: _categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final category = _categories[index];
-                    return ExpenseCategoryListItem(
-                      expenseCategory: category,
-                      showCheck: true,
-                      isChecked: _selectedCategory?.id == category.id,
-                      onTap: () => setState(() {
-                        if (_selectedCategory?.id == category.id) {
-                          _selectedCategory = null;
-                        } else {
-                          _selectedCategory = category;
-                        }
-                        updateCategoryList();
-                      }),
-                    );
-                  },
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  controller: _categoryScrollController,
+                  child: ListView.separated(
+                    controller: _categoryScrollController,
+                    separatorBuilder: (context, index) => ListDivider(),
+                    itemCount: _categories.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final category = _categories[index];
+                      return ExpenseCategoryListItem(
+                        expenseCategory: category,
+                        showCheck: true,
+                        isChecked: _selectedCategory?.id == category.id,
+                        onTap: () => setState(() {
+                          if (_selectedCategory?.id == category.id) {
+                            _selectedCategory = null;
+                          } else {
+                            _selectedCategory = category;
+                          }
+                          updateCategoryList();
+                          store.dispatch(SaveTransactionSuccess(
+                              transaction.rebuild((b) => b
+                                ..pendingCategoryId = _selectedCategory?.id)));
+                        }),
+                      );
+                    },
+                  ),
                 ),
               ),
               if (transaction.category.isNotEmpty && _selectedCategory == null)
@@ -700,13 +795,13 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
           child: AppButton(
             label: localization.convertToExpense,
-            onPressed: _selectedVendor == null || viewModel.state.isSaving
+            onPressed: viewModel.state.isSaving
                 ? null
                 : () {
                     final viewModel = widget.viewModel;
                     viewModel.onConvertToExpense(
                       context,
-                      _selectedVendor.id,
+                      _selectedVendor?.id ?? '',
                       _selectedCategory?.id ?? '',
                     );
                   },

@@ -124,7 +124,7 @@ class ClientEditVM {
                 } else {
                   navigator.pop(savedClient);
                 }
-              } else {
+              } else if (state.clientUIState.saveCompleter == null) {
                 if (!state.prefState.isPreviewVisible) {
                   store.dispatch(TogglePreviewSidebar());
                 }

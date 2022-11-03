@@ -576,6 +576,10 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final int transactionId;
   @override
+  final String pendingVendorId;
+  @override
+  final String pendingCategoryId;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -610,6 +614,8 @@ class _$TransactionEntity extends TransactionEntity {
       this.expenseId,
       this.vendorId,
       this.transactionId,
+      this.pendingVendorId,
+      this.pendingCategoryId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -678,6 +684,8 @@ class _$TransactionEntity extends TransactionEntity {
         expenseId == other.expenseId &&
         vendorId == other.vendorId &&
         transactionId == other.transactionId &&
+        pendingVendorId == other.pendingVendorId &&
+        pendingCategoryId == other.pendingCategoryId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -709,18 +717,18 @@ class _$TransactionEntity extends TransactionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, amount.hashCode), currencyId.hashCode),
-                                                                                category.hashCode),
-                                                                            baseType.hashCode),
-                                                                        date.hashCode),
-                                                                    bankAccountId.hashCode),
-                                                                description.hashCode),
-                                                            statusId.hashCode),
-                                                        categoryId.hashCode),
-                                                    invoiceIds.hashCode),
-                                                expenseId.hashCode),
-                                            vendorId.hashCode),
-                                        transactionId.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, amount.hashCode), currencyId.hashCode), category.hashCode), baseType.hashCode),
+                                                                                date.hashCode),
+                                                                            bankAccountId.hashCode),
+                                                                        description.hashCode),
+                                                                    statusId.hashCode),
+                                                                categoryId.hashCode),
+                                                            invoiceIds.hashCode),
+                                                        expenseId.hashCode),
+                                                    vendorId.hashCode),
+                                                transactionId.hashCode),
+                                            pendingVendorId.hashCode),
+                                        pendingCategoryId.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -747,6 +755,8 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('expenseId', expenseId)
           ..add('vendorId', vendorId)
           ..add('transactionId', transactionId)
+          ..add('pendingVendorId', pendingVendorId)
+          ..add('pendingCategoryId', pendingCategoryId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -816,6 +826,16 @@ class TransactionEntityBuilder
   int get transactionId => _$this._transactionId;
   set transactionId(int transactionId) => _$this._transactionId = transactionId;
 
+  String _pendingVendorId;
+  String get pendingVendorId => _$this._pendingVendorId;
+  set pendingVendorId(String pendingVendorId) =>
+      _$this._pendingVendorId = pendingVendorId;
+
+  String _pendingCategoryId;
+  String get pendingCategoryId => _$this._pendingCategoryId;
+  set pendingCategoryId(String pendingCategoryId) =>
+      _$this._pendingCategoryId = pendingCategoryId;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -870,6 +890,8 @@ class TransactionEntityBuilder
       _expenseId = $v.expenseId;
       _vendorId = $v.vendorId;
       _transactionId = $v.transactionId;
+      _pendingVendorId = $v.pendingVendorId;
+      _pendingCategoryId = $v.pendingCategoryId;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -920,6 +942,8 @@ class TransactionEntityBuilder
             expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
             vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'TransactionEntity', 'vendorId'),
             transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, 'TransactionEntity', 'transactionId'),
+            pendingVendorId: pendingVendorId,
+            pendingCategoryId: pendingCategoryId,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TransactionEntity', 'updatedAt'),

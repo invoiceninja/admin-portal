@@ -189,6 +189,11 @@ Middleware<AppState> _saveExpenseCategory(
       }
 
       action.completer.complete(expenseCategory);
+
+      final expenseCategoryUIState = store.state.expenseCategoryUIState;
+      if (expenseCategoryUIState.saveCompleter != null) {
+        expenseCategoryUIState.saveCompleter.complete(expenseCategory);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveExpenseCategoryFailure(error));

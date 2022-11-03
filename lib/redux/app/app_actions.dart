@@ -1131,6 +1131,7 @@ void createEntity({
               expenseCategory: entity,
               force: force,
               completer: completer,
+              cancelCompleter: cancelCompleter,
             ));
             break;
           case EntityType.recurringInvoice:

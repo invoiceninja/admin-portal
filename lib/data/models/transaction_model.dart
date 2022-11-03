@@ -139,6 +139,14 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'transaction_id')
   int get transactionId;
 
+  @nullable
+  @BuiltValueField(serialize: false)
+  String get pendingVendorId;
+
+  @nullable
+  @BuiltValueField(serialize: false)
+  String get pendingCategoryId;
+
   @override
   EntityType get entityType => EntityType.transaction;
 
@@ -168,7 +176,7 @@ abstract class TransactionEntity extends Object
       }
 
       if (isMatched) {
-        actions.add(EntityAction.convert);
+        //actions.add(EntityAction.convert);
       }
     }
 
