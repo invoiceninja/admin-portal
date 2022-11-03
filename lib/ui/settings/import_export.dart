@@ -656,12 +656,9 @@ class __FileMapperState extends State<_FileMapper> {
     ]);
 
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: FormCard(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
+      child: FormCard(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
       ),
     );
   }
