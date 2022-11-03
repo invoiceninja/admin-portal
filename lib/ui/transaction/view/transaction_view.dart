@@ -658,6 +658,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                         _selectedVendor = vendor;
                       }
                       updateVendorList();
+                      store.dispatch(SaveTransactionSuccess(transaction.rebuild(
+                          (b) => b..pendingVendorId = _selectedVendor?.id)));
                     }),
                   );
                 },
@@ -739,6 +741,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                           _selectedCategory = category;
                         }
                         updateCategoryList();
+                        store.dispatch(SaveTransactionSuccess(
+                            transaction.rebuild((b) =>
+                                b..pendingCategoryId = _selectedCategory?.id)));
                       }),
                     );
                   },
