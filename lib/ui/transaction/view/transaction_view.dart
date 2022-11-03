@@ -484,11 +484,17 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final state = widget.viewModel.state;
     if (transactions.isNotEmpty) {
       final transaction = transactions.first;
-      if ((transaction.categoryId ?? '').isNotEmpty) {
+      if ((transaction.pendingCategoryId ?? '').isNotEmpty) {
+        _selectedCategory =
+            state.expenseCategoryState.get(transaction.pendingCategoryId);
+      } else if ((transaction.categoryId ?? '').isNotEmpty) {
         _selectedCategory =
             state.expenseCategoryState.get(transaction.categoryId);
       }
-      if ((transaction.vendorId ?? '').isNotEmpty) {
+
+      if ((transaction.pendingVendorId ?? '').isNotEmpty) {
+        _selectedVendor = state.vendorState.get(transaction.pendingVendorId);
+      } else if ((transaction.vendorId ?? '').isNotEmpty) {
         _selectedVendor = state.vendorState.get(transaction.vendorId);
       }
     }
@@ -623,8 +629,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                                 UpdateCurrentRoute(TransactionScreen.route));
                           }));
                     completer.future.then((SelectableEntity vendor) {
-                      store.dispatch(SaveTransactionSuccess(
-                          transaction.rebuild((b) => b..vendorId = vendor.id)));
+                      store.dispatch(SaveTransactionSuccess(transaction
+                          .rebuild((b) => b..pendingVendorId = vendor.id)));
                       store.dispatch(
                           UpdateCurrentRoute(TransactionScreen.route));
                     });
@@ -703,8 +709,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                                   UpdateCurrentRoute(TransactionScreen.route));
                             }));
                       completer.future.then((SelectableEntity category) {
-                        store.dispatch(SaveTransactionSuccess(transaction
-                            .rebuild((b) => b..categoryId = category.id)));
+                        store.dispatch(SaveTransactionSuccess(
+                            transaction.rebuild(
+                                (b) => b..pendingCategoryId = category.id)));
                         store.dispatch(
                             UpdateCurrentRoute(TransactionScreen.route));
                       });
