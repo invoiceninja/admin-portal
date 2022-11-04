@@ -537,81 +537,83 @@ class _AccountOverview extends StatelessWidget {
                 ),
               ),
             ])),
-        Padding(
-          padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
-          child: ListDivider(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: AppButton(
-                  label: localization.purgeData.toUpperCase(),
-                  color: Colors.red,
-                  iconData: isMobile(context) ? null : Icons.delete,
-                  onPressed: () {
-                    confirmCallback(
-                        context: context,
-                        message:
-                            localization.purgeDataMessage + _getDataStats(),
-                        typeToConfirm: localization.purge.toLowerCase(),
-                        callback: (_) {
-                          passwordCallback(
-                              alwaysRequire: true,
-                              context: context,
-                              callback: (password, idToken) {
-                                viewModel.onPurgeData(
-                                    context, password, idToken);
-                              });
-                        });
-                  },
-                ),
-              ),
-              SizedBox(width: kGutterWidth),
-              Expanded(
-                child: AppButton(
-                  label: companies.length == 1
-                      ? localization.cancelAccount.toUpperCase()
-                      : localization.deleteCompany.toUpperCase(),
-                  color: Colors.red,
-                  iconData: isMobile(context) ? null : Icons.delete,
-                  onPressed: () {
-                    String message = companies.length == 1
-                        ? localization.cancelAccountMessage
-                        : localization.deleteCompanyMessage;
-
-                    message = message.replaceFirst(
-                        ':company',
-                        company.displayName.isEmpty
-                            ? localization.newCompany
-                            : company.displayName);
-                    message += _getDataStats();
-
-                    confirmCallback(
-                        context: context,
-                        message: message,
-                        typeToConfirm: localization.delete.toLowerCase(),
-                        askForReason: true,
-                        callback: (String reason) {
-                          passwordCallback(
-                              alwaysRequire: true,
-                              context: context,
-                              callback: (password, idToken) {
-                                viewModel.onCompanyDelete(
-                                  context,
-                                  password,
-                                  idToken,
-                                  reason,
-                                );
-                              });
-                        });
-                  },
-                ),
-              ),
-            ],
+        if (state.userCompany.isOwner) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
+            child: ListDivider(),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: AppButton(
+                    label: localization.purgeData.toUpperCase(),
+                    color: Colors.red,
+                    iconData: isMobile(context) ? null : Icons.delete,
+                    onPressed: () {
+                      confirmCallback(
+                          context: context,
+                          message:
+                              localization.purgeDataMessage + _getDataStats(),
+                          typeToConfirm: localization.purge.toLowerCase(),
+                          callback: (_) {
+                            passwordCallback(
+                                alwaysRequire: true,
+                                context: context,
+                                callback: (password, idToken) {
+                                  viewModel.onPurgeData(
+                                      context, password, idToken);
+                                });
+                          });
+                    },
+                  ),
+                ),
+                SizedBox(width: kGutterWidth),
+                Expanded(
+                  child: AppButton(
+                    label: companies.length == 1
+                        ? localization.cancelAccount.toUpperCase()
+                        : localization.deleteCompany.toUpperCase(),
+                    color: Colors.red,
+                    iconData: isMobile(context) ? null : Icons.delete,
+                    onPressed: () {
+                      String message = companies.length == 1
+                          ? localization.cancelAccountMessage
+                          : localization.deleteCompanyMessage;
+
+                      message = message.replaceFirst(
+                          ':company',
+                          company.displayName.isEmpty
+                              ? localization.newCompany
+                              : company.displayName);
+                      message += _getDataStats();
+
+                      confirmCallback(
+                          context: context,
+                          message: message,
+                          typeToConfirm: localization.delete.toLowerCase(),
+                          askForReason: true,
+                          callback: (String reason) {
+                            passwordCallback(
+                                alwaysRequire: true,
+                                context: context,
+                                callback: (password, idToken) {
+                                  viewModel.onCompanyDelete(
+                                    context,
+                                    password,
+                                    idToken,
+                                    reason,
+                                  );
+                                });
+                          });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ],
     );
   }
