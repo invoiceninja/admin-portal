@@ -120,31 +120,33 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           if (_updateAllPurchaseOrderDesigns) EntityType.purchaseOrder,
         ]);
       },
-      appBarBottom: TabBar(
-        key: ValueKey(state.settingsUIState.updatedAt),
-        controller: _controller,
-        isScrollable: true,
-        tabs: [
-          Tab(text: localization.generalSettings),
-          Tab(text: localization.clientDetails),
-          Tab(text: localization.companyDetails),
-          Tab(text: localization.companyAddress),
-          if (company.isModuleEnabled(EntityType.invoice))
-            Tab(text: localization.invoiceDetails),
-          if (company.isModuleEnabled(EntityType.quote))
-            Tab(text: localization.quoteDetails),
-          if (company.isModuleEnabled(EntityType.credit))
-            Tab(text: localization.creditDetails),
-          if (company.isModuleEnabled(EntityType.vendor))
-            Tab(text: localization.vendorDetails),
-          if (company.isModuleEnabled(EntityType.purchaseOrder))
-            Tab(text: localization.purchaseOrderDetails),
-          Tab(text: localization.productColumns),
-          if (company.isModuleEnabled(EntityType.task))
-            Tab(text: localization.taskColumns),
-          Tab(text: localization.totalFields),
-        ],
-      ),
+      appBarBottom: state.settingsUIState.isFiltered
+          ? null
+          : TabBar(
+              key: ValueKey(state.settingsUIState.updatedAt),
+              controller: _controller,
+              isScrollable: true,
+              tabs: [
+                Tab(text: localization.generalSettings),
+                Tab(text: localization.clientDetails),
+                Tab(text: localization.companyDetails),
+                Tab(text: localization.companyAddress),
+                if (company.isModuleEnabled(EntityType.invoice))
+                  Tab(text: localization.invoiceDetails),
+                if (company.isModuleEnabled(EntityType.quote))
+                  Tab(text: localization.quoteDetails),
+                if (company.isModuleEnabled(EntityType.credit))
+                  Tab(text: localization.creditDetails),
+                if (company.isModuleEnabled(EntityType.vendor))
+                  Tab(text: localization.vendorDetails),
+                if (company.isModuleEnabled(EntityType.purchaseOrder))
+                  Tab(text: localization.purchaseOrderDetails),
+                Tab(text: localization.productColumns),
+                if (company.isModuleEnabled(EntityType.task))
+                  Tab(text: localization.taskColumns),
+                Tab(text: localization.totalFields),
+              ],
+            ),
       body: AppTabForm(
         tabController: _controller,
         formKey: _formKey,
