@@ -165,7 +165,7 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsDeviceSettings,
                 viewModel: widget.viewModel,
               ),
-            if (showAll && state.userCompany.isOwner)
+            if (showAll && state.userCompany.isAdmin)
               SettingsListTile(
                 section: kSettingsAccountManagement,
                 viewModel: widget.viewModel,

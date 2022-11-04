@@ -930,7 +930,8 @@ abstract class SettingsEntity
 
   SettingsEntity setFieldsForSection(String section, List<String> fields) {
     if (pdfVariables == null) {
-      return rebuild((b) => b..pdfVariables.replace({section: fields}));
+      return rebuild(
+          (b) => b..pdfVariables.replace({section: BuiltList<String>(fields)}));
     } else {
       return rebuild((b) => b..pdfVariables[section] = BuiltList(fields));
     }
