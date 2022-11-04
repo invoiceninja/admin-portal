@@ -70,6 +70,7 @@ abstract class BankAccountEntity extends Object
       provider: '',
       balance: 0,
       currency: '',
+      disabledUpstream: false,
     );
   }
 
@@ -90,6 +91,9 @@ abstract class BankAccountEntity extends Object
 
   @BuiltValueField(wireName: 'provider_name')
   String get provider;
+
+  @BuiltValueField(wireName: 'disabled_upstream')
+  bool get disabledUpstream;
 
   double get balance;
 
@@ -184,6 +188,10 @@ abstract class BankAccountEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+// ignore: unused_element
+  static void _initializeBuilder(BankAccountEntityBuilder builder) =>
+      builder..disabledUpstream = false;
 
   static Serializer<BankAccountEntity> get serializer =>
       _$bankAccountEntitySerializer;
