@@ -384,7 +384,7 @@ class _UserDetailsState extends State<UserDetails>
                               .toUpperCase(),
                           textAlign: TextAlign.center,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (state.settingsUIState.isChanged) {
                             showMessageDialog(
                                 context: context,
@@ -406,11 +406,19 @@ class _UserDetailsState extends State<UserDetails>
 
                             if (!kReleaseMode &&
                                 (state.isHosted && !state.user.phoneVerified)) {
-                              showDialog<void>(
+                              final bool phoneVerified = await showDialog<bool>(
                                 context: context,
                                 builder: (BuildContext context) =>
                                     UserSmsVerification(),
                               );
+
+                              if (phoneVerified) {
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _EnableTwoFactor(state: viewModel.state),
+                                );
+                              }
                             } else {
                               showDialog<void>(
                                 context: context,

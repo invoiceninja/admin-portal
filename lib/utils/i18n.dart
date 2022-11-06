@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'change_number': 'Change Number',
       'resend_code': 'Resend Code',
       'base_type': 'Base Type',
       'category_type': 'Category Type',
@@ -118,7 +119,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense_tax_rates': 'Expense Tax Rates',
       'invoice_item_tax_rates': 'Invoice Item Tax Rates',
       'verified_phone_number': 'Successfully verified phone number',
-      'code_was_sent': 'A code has been sent via SMS',
+      'code_was_sent': 'A code has been sent via SMS',      
+      'code_was_sent_to': 'A code has been sent via SMS to :number',
       'resend': 'Resend',
       'verify': 'Verify',
       'enter_phone_number': 'Please provide a phone number',
@@ -126,6 +128,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'verify_phone_number': 'Verify Phone Number',
       'verify_phone_number_help':
           'Please verify your phone number to send emails',
+      'verify_phone_number_2fa_help':
+          'Please verify your phone number for 2FA backup',
       'merged_clients': 'Successfully merged clients',
       'merge_into': 'Merge Into',
       'merge': 'Merge',
@@ -87470,6 +87474,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get resendCode =>
       _localizedValues[localeCode]['resend_code'] ??
       _localizedValues['en']['resend_code'];
+
+  String get verifyPhoneNumber2faHelp =>
+      _localizedValues[localeCode]['verify_phone_number_2fa_help'] ??
+      _localizedValues['en']['verify_phone_number_2fa_help'];
+
+  String get codeWasSentTo =>
+      _localizedValues[localeCode]['code_was_sent_to'] ??
+      _localizedValues['en']['code_was_sent_to'];
+
+String get changeNumber =>
+      _localizedValues[localeCode]['change_number'] ??
+      _localizedValues['en']['change_number'];
+
 
 // STARTER: lang field - do not remove comment
 

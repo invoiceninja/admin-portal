@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/pinput.dart';
@@ -188,7 +189,12 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
 }
 
 class UserSmsVerification extends StatefulWidget {
-  const UserSmsVerification({Key key}) : super(key: key);
+  const UserSmsVerification({
+    Key key,
+    this.showChangeNumber = false,
+  }) : super(key: key);
+
+  final bool showChangeNumber;
 
   @override
   State<UserSmsVerification> createState() => _UserSmsVerificationState();
@@ -268,7 +274,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
         _isLoading = false;
       });
       if (navigator.canPop()) {
-        navigator.pop();
+        navigator.pop(true);
       }
       showToast(localization.verifiedPhoneNumber);
       store.dispatch(RefreshData());
@@ -289,6 +295,8 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return AlertDialog(
       title: Text(localization.verifyPhoneNumber),
@@ -301,7 +309,8 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(localization.codeWasSent),
+                  Text(localization.codeWasSentTo
+                      .replaceFirst(':number', state.user.phone)),
                   SizedBox(height: 20),
                   AppPinput(
                     onCompleted: (code) => _code = code,
@@ -317,6 +326,15 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
           ),
         ),
         if (!_isLoading) ...[
+          TextButton(
+            onPressed: () {
+              store.dispatch(ViewSettings(section: kSettingsUserDetails));
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localization.changeNumber.toUpperCase(),
+            ),
+          ),
           TextButton(
             onPressed: () => _sendCode(),
             child: Text(
