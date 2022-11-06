@@ -1,5 +1,4 @@
-const FLUTTER_VERSION = const <String, String>
-{
+const FLUTTER_VERSION = const <String, String>{
   "frameworkVersion": "3.3.4",
   "channel": "stable",
   "repositoryUrl": "git@github.com:flutter/flutter.git",
@@ -9,5 +8,4 @@ const FLUTTER_VERSION = const <String, String>
   "dartSdkVersion": "2.18.2",
   "devToolsVersion": "2.15.0",
   "flutterRoot": "C:\\Users\\hillel\\Documents\\flutter"
-}
-;
+};
