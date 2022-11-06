@@ -551,7 +551,6 @@ class __FileMapperState extends State<_FileMapper> {
                 }
 
                 _mapping[entry.key][i] = value;
-                widget.formKey.currentState.validate();
               });
             },
           ),
