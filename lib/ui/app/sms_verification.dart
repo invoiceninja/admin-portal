@@ -30,7 +30,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
   final _webClient = WebClient();
 
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_smsVerification');
+      GlobalKey<FormState>(debugLabel: '_accountSmsVerification');
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   void _sendCode() {
@@ -195,8 +195,142 @@ class UserSmsVerification extends StatefulWidget {
 }
 
 class _UserSmsVerificationState extends State<UserSmsVerification> {
+  bool _isLoading = false;
+  String _code = '';
+  final _webClient = WebClient();
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_userSmsVerification');
+  final FocusScopeNode _focusNode = FocusScopeNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      _sendCode();
+    });
+  }
+
+  void _sendCode() {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/sms_reset';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode(
+              {'email': state.user.email},
+            ))
+        .then((dynamic data) {
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
+  }
+
+  void _verifyCode() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final localization = AppLocalization.of(context);
+    final credentials = store.state.credentials;
+    final url = '${credentials.url}/sms_reset/confirm';
+    final navigator = Navigator.of(context);
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _webClient
+        .post(url, credentials.token,
+            data: json.encode({
+              'code': _code,
+              'email': state.user.email,
+            }))
+        .then((dynamic data) {
+      setState(() {
+        _isLoading = false;
+      });
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+      showToast(localization.verifiedPhoneNumber);
+      store.dispatch(RefreshData());
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(context: context, message: error);
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localization.verifyPhoneNumber),
+      content: _isLoading
+          ? LoadingIndicator(height: 80)
+          : AppForm(
+              focusNode: _focusNode,
+              formKey: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(localization.codeWasSent),
+                  SizedBox(height: 20),
+                  AppPinput(
+                    onCompleted: (code) => _code = code,
+                  ),
+                ],
+              ),
+            ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            localization.cancel.toUpperCase(),
+          ),
+        ),
+        if (!_isLoading) ...[
+          TextButton(
+            onPressed: () => _sendCode(),
+            child: Text(
+              localization.resendCode.toUpperCase(),
+            ),
+          ),
+          TextButton(
+            onPressed: () => _verifyCode(),
+            child: Text(
+              localization.verify.toUpperCase(),
+            ),
+          ),
+        ],
+      ],
+    );
   }
 }

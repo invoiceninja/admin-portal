@@ -374,6 +374,7 @@ class _UserDetailsState extends State<UserDetails>
                         SizedBox(width: kTableColumnGap),
                       ]
                     ],
+                    if (!kReleaseMode) Text('VERIFIED: ${user.phoneVerified}'),
                     Expanded(
                       child: OutlinedButton(
                         child: Text(

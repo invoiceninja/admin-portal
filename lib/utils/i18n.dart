@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'resend_code': 'Resend Code',
       'base_type': 'Base Type',
       'category_type': 'Category Type',
       'bank_transaction': 'Transaction',
@@ -87465,6 +87466,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get categoryType =>
       _localizedValues[localeCode]['category_type'] ??
       _localizedValues['en']['category_type'];
+
+  String get resendCode =>
+      _localizedValues[localeCode]['resend_code'] ??
+      _localizedValues['en']['resend_code'];
 
 // STARTER: lang field - do not remove comment
 
