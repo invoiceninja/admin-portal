@@ -630,7 +630,7 @@ class __FileMapperState extends State<_FileMapper> {
                     skipHeader: _useFirstRowAsHeaders,
                     columnMap: BuiltMap(convertedMapping),
                     importType: widget.importType.name,
-                    bankAccountId: _bankAccountId,
+                    bankAccountId: _bankAccountId ?? '',
                   );
 
                   final data = serializers.serializeWith(
