@@ -119,7 +119,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense_tax_rates': 'Expense Tax Rates',
       'invoice_item_tax_rates': 'Invoice Item Tax Rates',
       'verified_phone_number': 'Successfully verified phone number',
-      'code_was_sent': 'A code has been sent via SMS',      
+      'code_was_sent': 'A code has been sent via SMS',
       'code_was_sent_to': 'A code has been sent via SMS to :number',
       'resend': 'Resend',
       'verify': 'Verify',
@@ -2341,7 +2341,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -4542,7 +4542,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -6735,7 +6735,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -8944,7 +8944,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -11115,7 +11115,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -13311,7 +13311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -15506,7 +15506,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -17699,7 +17699,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -19925,7 +19925,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -22118,7 +22118,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -24313,7 +24313,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -26509,7 +26509,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -28730,7 +28730,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -31003,7 +31003,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -33279,7 +33279,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -35523,7 +35523,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -37708,7 +37708,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -39929,7 +39929,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -42119,7 +42119,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -44313,7 +44313,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -46507,7 +46507,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -48705,7 +48705,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -50897,7 +50897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -53090,7 +53090,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -55286,7 +55286,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -57498,7 +57498,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -59726,7 +59726,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -61922,7 +61922,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -64116,7 +64116,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -66318,7 +66318,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -68526,7 +68526,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -70721,7 +70721,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -72926,7 +72926,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -75163,7 +75163,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -77370,7 +77370,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -79561,7 +79561,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_document_upload': 'Vendor Document Upload',
       'vendor_document_upload_help': 'Enable vendors to upload documents',
       'are_you_enjoying_the_app': 'Are you enjoying the app?',
-      'yes_its_great': 'Yes, it\"s great!',
+      'yes_its_great': 'Yes, it\'s great!',
       'not_so_much': 'Not so much',
       'would_you_rate_it': 'Great to hear! Would you like to rate it?',
       'would_you_tell_us_more':
@@ -87483,10 +87483,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['code_was_sent_to'] ??
       _localizedValues['en']['code_was_sent_to'];
 
-String get changeNumber =>
+  String get changeNumber =>
       _localizedValues[localeCode]['change_number'] ??
       _localizedValues['en']['change_number'];
-
 
 // STARTER: lang field - do not remove comment
 
