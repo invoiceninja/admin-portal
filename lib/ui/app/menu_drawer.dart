@@ -421,6 +421,48 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     },
                                   ),
                                 )
+                            else if (state.user.isTwoFactorEnabled &&
+                                !state.user.phoneVerified &&
+                                state.isHosted)
+                              if (state.isMenuCollapsed)
+                                Tooltip(
+                                  message:
+                                      localization.verifyPhoneNumber2faHelp,
+                                  child: ListTile(
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 12),
+                                    leading: IconButton(
+                                      onPressed: () {
+                                        showDialog<void>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              UserSmsVerification(
+                                            showChangeNumber: true,
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.warning,
+                                          color: Colors.orange),
+                                    ),
+                                  ),
+                                )
+                              else
+                                Material(
+                                  child: ListTile(
+                                    tileColor: Colors.orange.shade800,
+                                    subtitle: Text(
+                                      localization.verifyPhoneNumber2faHelp,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            UserSmsVerification(),
+                                      );
+                                    },
+                                  ),
+                                )
                             else if (state.company.isDisabled &&
                                 state.userCompany.isAdmin)
                               if (state.isMenuCollapsed)
