@@ -1439,7 +1439,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the "Paid to Date" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -2352,7 +2352,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -2674,7 +2674,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -2906,7 +2906,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -3637,7 +3637,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opsionet e faturës',
       'hide_paid_to_date': 'Fshihe Paguar deri më tash',
       'hide_paid_to_date_help':
-          'Shfaqni \"Paguar deri më tash\" në faturat tuaja pasi të jetë pranuar pagesa.',
+          'Shfaqni \'Paguar deri më tash\' në faturat tuaja pasi të jetë pranuar pagesa.',
       'invoice_embed_documents': 'Dokumentet e lidhura',
       'invoice_embed_documents_help': 'Vendos fotografinë në faturë.',
       'all_pages_header': 'Shfaqe Header',
@@ -4553,7 +4553,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -4875,7 +4875,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -5107,7 +5107,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'نسخ إلى',
@@ -6746,7 +6746,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -7068,7 +7068,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -7302,7 +7302,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Редактор на цял екран',
       'sidebar_editor': 'Редактор на страничната лента',
-      'please_type_to_confirm': 'За да потвърдите, моля напишете \":value\"',
+      'please_type_to_confirm': 'За да потвърдите, моля напишете \':value\'',
       'purge': 'Изчистете',
       'service': 'Услуга',
       'clone_to': 'Клонирай към',
@@ -8031,9 +8031,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Общи настройки',
       'invoice_options': 'Опции на фактурата',
-      'hide_paid_to_date': 'Скрий \"Изплатено до момента\"',
+      'hide_paid_to_date': 'Скрий \'Изплатено до момента\'',
       'hide_paid_to_date_help':
-          'Покажи \"Изплатено до момента\" във фактурите, след като е получено плащане.',
+          'Покажи \'Изплатено до момента\' във фактурите, след като е получено плащане.',
       'invoice_embed_documents': 'Свързани документи',
       'invoice_embed_documents_help':
           'Включване на прикачените изображения във фактурата.',
@@ -8266,7 +8266,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'import_export': 'Импорт | Експорт',
       'custom_fields': 'Собствени полета',
       'invoice_design': 'Дизайн на фактура',
-      'buy_now_buttons': 'Бутони \"Купи сега\"',
+      'buy_now_buttons': 'Бутони \'Купи сега\'',
       'email_settings': 'Email настройки',
       'templates_and_reminders': 'Шаблони и напомняния',
       'credit_cards_and_banks': 'Кредитни Карти & Банки',
@@ -8299,7 +8299,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'no_record_selected': 'Няма избрани записи',
       'error_unsaved_changes': 'Моля запазете или откажете промените',
       'download': 'Сваляне',
-      'requires_an_enterprise_plan': 'Изисква \"Enterprise\" абонамент',
+      'requires_an_enterprise_plan': 'Изисква \'Enterprise\' абонамент',
       'take_picture': 'Направи Снимка',
       'upload_file': 'Качване на Файл',
       'document': 'Документ',
@@ -8955,7 +8955,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -9277,7 +9277,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -9508,7 +9508,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': '服務',
       'clone_to': 'Clone To',
@@ -11126,7 +11126,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -11448,7 +11448,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -11680,7 +11680,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -12406,7 +12406,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opcije računa',
       'hide_paid_to_date': 'Sakrij datum plaćanja',
       'hide_paid_to_date_help':
-          'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
+          'Prikažite \'Datum plaćanja\' na računima, onda kada je uplata primljena.',
       'invoice_embed_documents': 'Ugrađeni dokumenti',
       'invoice_embed_documents_help': 'Ubaci dodane dokumente u račun.',
       'all_pages_header': 'Prikaži zaglavlje na',
@@ -13322,7 +13322,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -13645,7 +13645,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Přihlášení úspěšné',
       'login_failure': 'Přihlášení selhalo',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Zahrnout odstraněné klienty',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -13878,7 +13878,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -14602,7 +14602,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Možnosti faktury',
       'hide_paid_to_date': 'Skrýt Zaplaceno ke dni',
       'hide_paid_to_date_help':
-          'Zobrazit na faktuře \"Zaplaceno ke dni\" pouze když přijde platba.',
+          'Zobrazit na faktuře \'Zaplaceno ke dni\' pouze když přijde platba.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Zobrazit hlavičku',
@@ -15517,7 +15517,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -15839,7 +15839,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -16071,7 +16071,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -17026,7 +17026,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'import_export': 'Import/Eksport',
       'custom_fields': 'Brugerdefineret felt',
       'invoice_design': 'Fakturadesign',
-      'buy_now_buttons': '\"Køb nu\" knapper',
+      'buy_now_buttons': '\'Køb nu\' knapper',
       'email_settings': 'E-mail-indstillinger',
       'templates_and_reminders': 'Templates & Reminders',
       'credit_cards_and_banks': 'Credit Cards & Banks',
@@ -17710,7 +17710,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -18039,7 +18039,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -18226,7 +18226,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'supported_events': 'Ondersteunde gebeurtenissen',
       'converted_amount': 'Omgezet bedrag',
       'converted_balance': 'Omgekeerd balans',
-      'converted_paid_to_date': '\"Reeds betaald\" omzetten',
+      'converted_paid_to_date': '\'Reeds betaald\' omzetten',
       'converted_credit_balance': 'Omgerekend creditsaldo',
       'converted_total': 'Totaal omzetten',
       'is_sent': 'Is verzonden',
@@ -18279,7 +18279,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Editor volledig scherm',
       'sidebar_editor': 'Zijbalk Editor',
-      'please_type_to_confirm': 'Typ \":value\" om te bevestigen',
+      'please_type_to_confirm': 'Typ \':value\' om te bevestigen',
       'purge': 'Wissen',
       'service': 'Service',
       'clone_to': 'Dupliceer naar',
@@ -19010,9 +19010,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Succesvol hersteld: waarde gebruikers',
       'general_settings': 'Algemene instellingen',
       'invoice_options': 'Factuuropties',
-      'hide_paid_to_date': 'Verberg \"Reeds betaald\"',
+      'hide_paid_to_date': 'Verberg \'Reeds betaald\'',
       'hide_paid_to_date_help':
-          'Toon alleen het \"Reeds betaald\" gebied op je facturen als er een betaling gemaakt is.',
+          'Toon alleen het \'Reeds betaald\' gebied op je facturen als er een betaling gemaakt is.',
       'invoice_embed_documents': 'Documenten invoegen',
       'invoice_embed_documents_help':
           'Bijgevoegde afbeeldingen weergeven in de factuur.',
@@ -19936,7 +19936,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -20258,7 +20258,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -20490,7 +20490,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -21214,7 +21214,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -22129,7 +22129,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -22685,7 +22685,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Kinnitamiseks tippige \":value\".',
+      'please_type_to_confirm': 'Kinnitamiseks tippige \':value\'.',
       'purge': 'Purge',
       'service': 'Teenus',
       'clone_to': 'Kloonida',
@@ -23408,7 +23408,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Arve Valikud',
       'hide_paid_to_date': 'Peida Tasutud Väli',
       'hide_paid_to_date_help':
-          'Ainult näita \"Tasutud\" välja arvel, kui makse on loodud.',
+          'Ainult näita \'Tasutud\' välja arvel, kui makse on loodud.',
       'invoice_embed_documents': 'Manusta dokumendid',
       'invoice_embed_documents_help': 'Lisage arvele lisatud pildid.',
       'all_pages_header': 'Näita Päist',
@@ -24324,7 +24324,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -24647,7 +24647,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -24881,7 +24881,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -25601,9 +25601,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Yleiset asetukset',
       'invoice_options': 'Laskun valinnat',
-      'hide_paid_to_date': 'Piilota \"Maksettu tähän asti\"',
+      'hide_paid_to_date': 'Piilota \'Maksettu tähän asti\'',
       'hide_paid_to_date_help':
-          'Näytä \"Maksettava päivämäärään mennessä\" kenttä laskuillasi vain maksetuilla laskuilla.',
+          'Näytä \'Maksettava päivämäärään mennessä\' kenttä laskuillasi vain maksetuilla laskuilla.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Sisällytä liitetyt kuvat laskuun.',
       'all_pages_header': 'näytä Header on',
@@ -26520,7 +26520,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -26844,7 +26844,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -27078,11 +27078,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'URL Webhook',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Veuillez entrer \":value\" pour confirmer',
+      'please_type_to_confirm': 'Veuillez entrer \':value\' pour confirmer',
       'purge': 'Purger',
       'service': 'Service',
       'clone_to': 'Cloner en',
-      'clone_to_other': 'Cloner en \"Autre\"',
+      'clone_to_other': 'Cloner en \'Autre\'',
       'labels': 'Labels',
       'add_custom': 'Ajouter',
       'payment_tax': 'Payment Tax',
@@ -27815,9 +27815,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Paramètres généraux',
       'invoice_options': 'Options de facturation',
-      'hide_paid_to_date': 'Masquer \"Payé à ce jour\"',
+      'hide_paid_to_date': 'Masquer \'Payé à ce jour\'',
       'hide_paid_to_date_help':
-          'Afficher la ligne \"Payé à ce jour\" sur vos factures seulement une fois qu\'un paiement a été reçu.',
+          'Afficher la ligne \'Payé à ce jour\' sur vos factures seulement une fois qu\'un paiement a été reçu.',
       'invoice_embed_documents': 'Documents intégrés',
       'invoice_embed_documents_help':
           'Inclure l\'image attachée dans la facture.',
@@ -28741,7 +28741,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -29067,7 +29067,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -29313,7 +29313,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'URL Webhook',
       'fullscreen_editor': 'Éditeur plein écran',
       'sidebar_editor': 'Éditeur de barre latérale',
-      'please_type_to_confirm': 'Veuillez saisir \":value\" pour confirmer',
+      'please_type_to_confirm': 'Veuillez saisir \':value\' pour confirmer',
       'purge': 'Purger',
       'service': 'Service',
       'clone_to': 'Cloner vers',
@@ -30071,9 +30071,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Les :value utilisateurs ont été restaurés avec succès',
       'general_settings': 'Paramètres généraux',
       'invoice_options': 'Options de facture',
-      'hide_paid_to_date': 'Masquer \"Payé à ce jour\"',
+      'hide_paid_to_date': 'Masquer \'Payé à ce jour\'',
       'hide_paid_to_date_help':
-          'Afficher seulement la ligne \"Payé à ce jour\" sur les factures pour lesquelles il y a au moins un paiement.',
+          'Afficher seulement la ligne \'Payé à ce jour\' sur les factures pour lesquelles il y a au moins un paiement.',
       'invoice_embed_documents': 'Documents intégrés',
       'invoice_embed_documents_help':
           'Inclure les images jointes dans la facture.',
@@ -31014,7 +31014,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -31608,7 +31608,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'fullscreen_editor': 'Vollbild Editor',
       'sidebar_editor': 'Seitenmenü Editor',
       'please_type_to_confirm':
-          'Bitte geben Sie \":value\" zur Bestätigung ein',
+          'Bitte geben Sie \':value\' zur Bestätigung ein',
       'purge': 'Bereinigen',
       'service': 'Dienst',
       'clone_to': 'Duplizieren zu',
@@ -32354,9 +32354,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': ':value Benutzer erfolgreich wiederhergestellt',
       'general_settings': 'Allgemeine Einstellungen',
       'invoice_options': 'Rechnungsoptionen',
-      'hide_paid_to_date': '\"Bereits gezahlt\" ausblenden',
+      'hide_paid_to_date': '\'Bereits gezahlt\' ausblenden',
       'hide_paid_to_date_help':
-          '\"Bereits gezahlt\" nur anzeigen, wenn eine Zahlung eingegangen ist.',
+          '\'Bereits gezahlt\' nur anzeigen, wenn eine Zahlung eingegangen ist.',
       'invoice_embed_documents': 'Dokumente einbetten',
       'invoice_embed_documents_help':
           'Bildanhänge zu den Rechnungen hinzufügen.',
@@ -32593,7 +32593,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'import_export': 'Import/Export',
       'custom_fields': 'Benutzerdefinierte Felder',
       'invoice_design': 'Rechnungsdesign',
-      'buy_now_buttons': '\"Kaufe jetzt\"-Buttons',
+      'buy_now_buttons': '\'Kaufe jetzt\'-Buttons',
       'email_settings': 'E-Mail-Einstellungen',
       'templates_and_reminders': 'Vorlagen & Mahnungen',
       'credit_cards_and_banks': 'Kreditkarten & Banken',
@@ -32932,11 +32932,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'mark_sent': 'Als versendet markieren',
       'marked_invoice_as_sent': 'Rechnung erfolgreich als versendet markiert',
       'marked_invoice_as_paid':
-          'Die Rechnung wurde erfolgreich als \"versendet\" markiert',
+          'Die Rechnung wurde erfolgreich als \'versendet\' markiert',
       'marked_invoices_as_sent':
           'Erfolgreich Rechnungen als versendet markiert',
       'marked_invoices_as_paid':
-          'Die Rechnung wurde erfolgreich als \"versendet\" markiert',
+          'Die Rechnung wurde erfolgreich als \'versendet\' markiert',
       'done': 'Erledigt',
       'please_enter_a_client_or_contact_name':
           'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
@@ -33290,7 +33290,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -33617,7 +33617,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -33855,7 +33855,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'fullscreen_editor': 'Επεξεργαστής Πλήρους Οθόνης',
       'sidebar_editor': 'Επεξεργαστής Πλάγιας Μπάρας',
       'please_type_to_confirm':
-          'Παρακαλούμε πληκρολογήστε \":value\" για επιβεβαίωση',
+          'Παρακαλούμε πληκρολογήστε \':value\' για επιβεβαίωση',
       'purge': 'Εκκαθάριση',
       'service': 'Υπηρεσία',
       'clone_to': 'Κλωνοποίηση Σε',
@@ -34599,7 +34599,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Επιλογές Τιμολογίου',
       'hide_paid_to_date': 'Απόκρυψη Εξοφλημένου Ποσού',
       'hide_paid_to_date_help':
-          'Εμφάνιση πεδίου \"Εξοφλημένο Ποσό\" μόνο στο παραστατικό όταν ληφθεί μια πληρωμή.',
+          'Εμφάνιση πεδίου \'Εξοφλημένο Ποσό\' μόνο στο παραστατικό όταν ληφθεί μια πληρωμή.',
       'invoice_embed_documents': 'Ενσωματωμένα Έγγραφα',
       'invoice_embed_documents_help':
           'Συμπεριλάβετε τις συνημμένες εικόνες στο τιμολόγιο',
@@ -35534,7 +35534,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -35857,7 +35857,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -36087,7 +36087,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -36105,10 +36105,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_late': 'חשבונית באיחור',
       'quote_expired': 'Quote Expired',
       'partial_due': 'מועד לתשלום חלקי',
-      'invoice_total': 'סה\"כ חשבונית',
-      'quote_total': 'סה\"כ ערכת מחיר',
-      'credit_total': 'סה\"כ זיכוי',
-      'recurring_invoice_total': 'סה\"כ בחשבונית',
+      'invoice_total': 'סה\'כ חשבונית',
+      'quote_total': 'סה\'כ ערכת מחיר',
+      'credit_total': 'סה\'כ זיכוי',
+      'recurring_invoice_total': 'סה\'כ בחשבונית',
       'actions': 'Actions',
       'expense_number': 'Expense Number',
       'task_number': 'מספר משימה',
@@ -36273,8 +36273,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reminder3_sent': 'Reminder 3 Sent',
       'reminder_last_sent': 'Reminder Last Sent',
       'pdf_page_info': 'Page :current of :total',
-      'emailed_invoices': 'חשבונית נשלחה בדוא\"ל בהצלחה',
-      'emailed_quotes': 'הצעת מחיר נשלחה בדוא\"ל בהצךחה',
+      'emailed_invoices': 'חשבונית נשלחה בדוא\'ל בהצלחה',
+      'emailed_quotes': 'הצעת מחיר נשלחה בדוא\'ל בהצךחה',
       'emailed_credits': 'Successfully emailed credits',
       'gateway': 'Gateway',
       'view_in_stripe': 'View in Stripe',
@@ -36393,7 +36393,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_invoice': 'שלח חשבונית במייל',
       'email_quote': 'שלח ערכת מחיר במייל',
       'email_credit': 'Email Credit',
-      'email_payment': 'שלח תשלום בדוא\"ל',
+      'email_payment': 'שלח תשלום בדוא\'ל',
       'client_email_not_set': 'Client does not have an email address set',
       'ledger': 'Ledger',
       'view_pdf': 'View PDF',
@@ -36666,7 +36666,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'aging': 'זמן',
       'profit_and_loss': 'רווח והפסד',
       'reports': 'דוח',
-      'report': 'דו\"ח',
+      'report': 'דו\'ח',
       'add_company': 'הוסף חברה',
       'unpaid_invoice': 'חשבונית לא שולמה',
       'paid_invoice': 'חשבונית שולמה',
@@ -36675,7 +36675,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refund': 'החזר',
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by',
-      'contact_email': 'דוא\"ל איש קשר',
+      'contact_email': 'דוא\'ל איש קשר',
       'multiselect': 'Multiselect',
       'entity_state': 'מצב',
       'verify_password': 'Verify Password',
@@ -36697,7 +36697,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'documentation': 'מדריכים',
       'contact_us': 'צור קשר',
       'subtotal': 'סיכום ביניים',
-      'line_total': 'סה\"כ',
+      'line_total': 'סה\'כ',
       'item': 'פריט',
       'credit_email': 'Credit Email',
       'iframe_url': 'אתר אינטרנט',
@@ -36809,7 +36809,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'אפשרויות חשבונית',
       'hide_paid_to_date': 'הסתר שולם עד כה',
       'hide_paid_to_date_help':
-          'הצג אך ורק \"שולם עד תאריך\" על חשבונית אחרי שהתקבל תשלום',
+          'הצג אך ורק \'שולם עד תאריך\' על חשבונית אחרי שהתקבל תשלום',
       'invoice_embed_documents': 'מסמכים מוטמעים',
       'invoice_embed_documents_help': 'כלול קבצים מצורפים כתמונות בחשבונית',
       'all_pages_header': 'Show Header on',
@@ -36832,7 +36832,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'כותרת תחתונה להצעת מחיר',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'אוטומטית בדוא\"ל חשבוניות חוזרות כאשר הן נוצרות.',
+          'אוטומטית בדוא\'ל חשבוניות חוזרות כאשר הן נוצרות.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
           'Automatically archive quotes when they are converted.',
@@ -36904,13 +36904,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'plain': 'רגיל',
       'light': 'בהיר',
       'dark': 'כהה',
-      'email_design': 'עיצוב דוא\"ל',
+      'email_design': 'עיצוב דוא\'ל',
       'attach_pdf': 'Attach PDF',
       'attach_documents': 'Attach Documents',
       'attach_ubl': 'Attach UBL',
       'email_style': 'Email Style',
       'enable_email_markup': 'אפשר סימון',
-      'reply_to_email': 'השב לדוא\"ל',
+      'reply_to_email': 'השב לדוא\'ל',
       'reply_to_name': 'Reply-To Name',
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
@@ -37251,7 +37251,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'details': 'פרטים',
       'phone': 'טלפון',
       'website': 'אתר אינטרנט',
-      'vat_number': 'מספר עוסק מע\"מ',
+      'vat_number': 'מספר עוסק מע\'מ',
       'id_number': 'מספר ח.פ. / ת.ז.',
       'create': 'צור',
       'copied_to_clipboard': 'Copied :value to the clipboard',
@@ -37266,7 +37266,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'cancel': 'בטל',
       'ok': 'Ok',
       'remove': 'הסר',
-      'email_is_invalid': 'כתובת דוא\"ל לא תקינה',
+      'email_is_invalid': 'כתובת דוא\'ל לא תקינה',
       'product': 'מוצר',
       'products': 'מוצרים',
       'new_product': 'פרויקט חדש',
@@ -37310,7 +37310,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_invoices': 'חשבונית נמחקה בהצלחה :',
       'restored_invoices': 'שוחזר בהצלחה :value invoices',
       'emailed_invoice': 'חשבונית נשלחה לדואר אלקטרוני בהצלחה',
-      'emailed_payment': 'תשלום נשלח בדוא\"ל בהצלחה',
+      'emailed_payment': 'תשלום נשלח בדוא\'ל בהצלחה',
       'amount': 'כמות',
       'invoice_number': 'מספר חשבונית',
       'invoice_date': 'תאריך חשבונית',
@@ -37343,7 +37343,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'click_plus_to_add_item': 'Click + to add an item',
       'click_plus_to_add_time': 'Click + to add time',
       'count_selected': ':count selected',
-      'total': 'סה\"כ',
+      'total': 'סה\'כ',
       'percent': 'אחוז',
       'edit': 'ערוך',
       'dismiss': 'Dismiss',
@@ -37399,7 +37399,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'net': 'Net',
       'client_portal': 'פורטל לקוחות',
       'show_tasks': 'הצג משימות',
-      'email_reminders': 'שלח דוא\"ל תזכורות',
+      'email_reminders': 'שלח דוא\'ל תזכורות',
       'enabled': 'Enabled',
       'recipients': 'מקבל',
       'initial_email': 'אימייל ראשוני',
@@ -37414,7 +37414,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'subject': 'נושא',
       'body': 'גוף',
       'send_email': 'שליחת מייל',
-      'email_receipt': 'שלח חשבונית תשלום לדוא\"ל הלקוח',
+      'email_receipt': 'שלח חשבונית תשלום לדוא\'ל הלקוח',
       'auto_billing': 'חיוב אוטומטי',
       'button': 'Button',
       'preview': 'צפיה מקדימה',
@@ -37460,7 +37460,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':משתמש הנפיק חשבונית :חשבונית',
       'activity_5': ':משתמש עדכן חשבונית :חשבונית',
       'activity_6':
-          ':משתמש שלח חשבונית בדוא\"ל חשבונית עבור : לקוח אל :איש קשר',
+          ':משתמש שלח חשבונית בדוא\'ל חשבונית עבור : לקוח אל :איש קשר',
       'activity_7': 'איש קשר צפה בחשבונית :חשבונית עבור :לקוח',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':חשבוניות שנמחקו על ידי משתמש :חשבוניות',
@@ -37512,7 +37512,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_54': ':user reopened ticket :ticket',
       'activity_55': ':contact replied ticket :ticket',
       'activity_56': ':user viewed ticket :ticket',
-      'activity_57': 'שליחת חשבונית בדוא\"ל נכשלה :invoice',
+      'activity_57': 'שליחת חשבונית בדוא\'ל נכשלה :invoice',
       'activity_58': ':user שחזר חשבונית :invoice',
       'activity_59': ':user ביטל חשבונית :invoice',
       'activity_60': ':contact viewed quote :quote',
@@ -37578,7 +37578,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'default_tax_rate_2': 'Default Tax Rate 2',
       'default_tax_name_3': 'Default Tax Name 3',
       'default_tax_rate_3': 'Default Tax Rate 3',
-      'email_subject_invoice': 'שורת נושא בדוא\"ל חשבונית',
+      'email_subject_invoice': 'שורת נושא בדוא\'ל חשבונית',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
       'email_subject_payment_partial': 'Email Partial Payment Subject',
@@ -37719,7 +37719,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -38042,7 +38042,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -38277,7 +38277,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Editor a schermo intero',
       'sidebar_editor': 'Editor barra laterale',
-      'please_type_to_confirm': 'Digita \":value\" per confermare',
+      'please_type_to_confirm': 'Digita \':value\' per confermare',
       'purge': 'Purge',
       'service': 'Servizio',
       'clone_to': 'Clona come',
@@ -39007,7 +39007,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opzioni Fattura',
       'hide_paid_to_date': 'Nascondi la data di pagamento',
       'hide_paid_to_date_help':
-          'Visualizza l\'area \"Pagato alla data\" sulle fatture solo dopo aver ricevuto un pagamento.',
+          'Visualizza l\'area \'Pagato alla data\' sulle fatture solo dopo aver ricevuto un pagamento.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Includi immagini allegate alla fattura.',
       'all_pages_header': 'Mostra l\'Intestazione su',
@@ -39940,7 +39940,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -40262,7 +40262,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -40492,7 +40492,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -41215,7 +41215,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': '請求書オプション',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -42130,7 +42130,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -42452,7 +42452,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -42684,7 +42684,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Serviss',
       'clone_to': 'Clone To',
@@ -43408,7 +43408,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -44324,7 +44324,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -44646,7 +44646,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -44878,7 +44878,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -45602,7 +45602,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide paid to date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Įkelti dokumentai',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -46518,7 +46518,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -46840,7 +46840,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -47074,7 +47074,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Услуга',
       'clone_to': 'Clone To',
@@ -47799,7 +47799,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Поставки за фактура',
       'hide_paid_to_date': 'Сокриј Платено до датум',
       'hide_paid_to_date_help':
-          'Прикажи \"Платено до датум\" на фактурите откако ќе биде примено плаќањето.',
+          'Прикажи \'Платено до датум\' на фактурите откако ќе биде примено плаќањето.',
       'invoice_embed_documents': 'Вметни документи',
       'invoice_embed_documents_help':
           'Вклучи ги прикачените слики во фактурата.',
@@ -48716,7 +48716,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -49038,7 +49038,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -49270,7 +49270,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook-URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -50908,7 +50908,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -51230,7 +51230,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -51462,7 +51462,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -52186,7 +52186,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+          'Only display the \'Paid to Date\' area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -53101,7 +53101,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -53426,7 +53426,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -53658,7 +53658,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Usługa',
       'clone_to': 'Powiel do',
@@ -54379,9 +54379,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Ustawienia ogólne',
       'invoice_options': 'Opcje faktury',
-      'hide_paid_to_date': 'Ukryj pole \"Zapłacono\"',
+      'hide_paid_to_date': 'Ukryj pole \'Zapłacono\'',
       'hide_paid_to_date_help':
-          'Wyświetlaj \"Zapłacono\" tylko przy tych fakturach, do których otrzymano płatność.',
+          'Wyświetlaj \'Zapłacono\' tylko przy tych fakturach, do których otrzymano płatność.',
       'invoice_embed_documents': 'Załączniki',
       'invoice_embed_documents_help': 'Wstaw do faktury załączniki graficzne.',
       'all_pages_header': 'Pokaż nagłówek na',
@@ -55297,7 +55297,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -55595,7 +55595,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'check_status': 'Check Status',
       'free_trial': 'Free Trial',
       'free_trial_ends_in_days':
-          'O período de testes do plano \"Pro\", termina em :count dias, clique para atualizar.',
+          'O período de testes do plano \'Pro\', termina em :count dias, clique para atualizar.',
       'free_trial_ends_today':
           'Today is the last day of the Pro plan trial, click to upgrade.',
       'change_email': 'Change Email',
@@ -55620,7 +55620,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -55854,7 +55854,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Tela cheia',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Serviço',
       'clone_to': 'Clonar para',
@@ -56586,7 +56586,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opções da Fatura',
       'hide_paid_to_date': 'Ocultar Pago até Hoje',
       'hide_paid_to_date_help':
-          'Apenas mostrar \"Pago até a Data\" em suas faturas uma vez que o pagamento for recebido.',
+          'Apenas mostrar \'Pago até a Data\' em suas faturas uma vez que o pagamento for recebido.',
       'invoice_embed_documents': 'Embutir Documentos',
       'invoice_embed_documents_help': 'Incluir imagens anexas na fatura.',
       'all_pages_header': 'Exibir Cabeçalho em',
@@ -57509,7 +57509,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -57831,7 +57831,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -58072,7 +58072,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Editor em ecrã inteiro',
       'sidebar_editor': 'Editor da Barra Lateral',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Apagar',
       'service': 'Serviço',
       'clone_to': 'Duplicar para',
@@ -58807,7 +58807,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opções da Nota de Pagamento',
       'hide_paid_to_date': 'Ocultar Data de Pagamento',
       'hide_paid_to_date_help':
-          'Mostrar apenas a \"Data de Pagamento\" quanto o pagamento for efetuado.',
+          'Mostrar apenas a \'Data de Pagamento\' quanto o pagamento for efetuado.',
       'invoice_embed_documents': 'Documentos Incorporados',
       'invoice_embed_documents_help':
           'Incluir imagens anexadas na nota de pagamento.',
@@ -59737,7 +59737,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -60059,7 +60059,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -60291,7 +60291,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -61013,9 +61013,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Optiuni Generale',
       'invoice_options': 'Opțiuni Factură',
-      'hide_paid_to_date': 'Ascunde câmpul \"Plătit până la\"',
+      'hide_paid_to_date': 'Ascunde câmpul \'Plătit până la\'',
       'hide_paid_to_date_help':
-          'Afișează \"Plătit pana la\" decât când plata a fost efectuată.',
+          'Afișează \'Plătit pana la\' decât când plata a fost efectuată.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -61933,7 +61933,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -62255,7 +62255,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -62487,7 +62487,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Услуга',
       'clone_to': 'Clone To',
@@ -63209,7 +63209,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': 'Successfully restored :value users',
       'general_settings': 'Общие настройки',
       'invoice_options': 'Настройки счета',
-      'hide_paid_to_date': 'Скрыть \"Оплатить до\"',
+      'hide_paid_to_date': 'Скрыть \'Оплатить до\'',
       'hide_paid_to_date_help':
           'Показывать только «Оплатить до» в ваших счетах после получения платежа.',
       'invoice_embed_documents': 'Embed Documents',
@@ -64127,7 +64127,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -64683,7 +64683,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Uređivač preko celog ekrana',
       'sidebar_editor': 'Uređivač na bočnoj traci',
-      'please_type_to_confirm': 'Molimo unesite \":value\" da biste potvrdili',
+      'please_type_to_confirm': 'Molimo unesite \':value\' da biste potvrdili',
       'purge': 'Očistiti',
       'service': 'Usluga',
       'clone_to': 'Kloniraj u',
@@ -65408,7 +65408,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opcije računa',
       'hide_paid_to_date': 'Sakrij datum plaćanja',
       'hide_paid_to_date_help':
-          'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
+          'Prikažite \'Datum plaćanja\' na računima, onda kada je uplata primljena.',
       'invoice_embed_documents': 'Priložite dokumente',
       'invoice_embed_documents_help': 'Uključite priložene slike u fakturu.',
       'all_pages_header': 'Prikaži zaglavlje na',
@@ -66329,7 +66329,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -67622,7 +67622,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Možnosti faktúry',
       'hide_paid_to_date': 'Skryť Uhradené k dátumu',
       'hide_paid_to_date_help':
-          'Po prijatí úhrady zobraziť len oblasť \"Uhradené k dátumu\" na faktúrach.',
+          'Po prijatí úhrady zobraziť len oblasť \'Uhradené k dátumu\' na faktúrach.',
       'invoice_embed_documents': 'Zapracovať dokumenty',
       'invoice_embed_documents_help': 'Zahrnúť priložené obrázky do faktúry.',
       'all_pages_header': 'Zobraziť hlavičku na',
@@ -68537,7 +68537,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -68859,7 +68859,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -69092,7 +69092,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Storitev',
       'clone_to': 'Kopiraj v ...',
@@ -69816,7 +69816,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Možnosti računa',
       'hide_paid_to_date': 'Skrij datum plačila',
       'hide_paid_to_date_help':
-          'Prikaži le \"Plačano\" polje v računu, nakar je bilo plačilo prejeto.',
+          'Prikaži le \'Plačano\' polje v računu, nakar je bilo plačilo prejeto.',
       'invoice_embed_documents': 'Omogočeni dokumenti',
       'invoice_embed_documents_help': 'V računu vključi pripete slike.',
       'all_pages_header': 'Prikaži glavo na',
@@ -70732,7 +70732,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -71055,7 +71055,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -71289,7 +71289,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Servicio',
       'clone_to': 'Clone To',
@@ -72110,7 +72110,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portal_mode': 'Portal Mode',
       'email_signature': 'Un cordial saludo,',
       'enable_email_markup_help':
-          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
+          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \'schema.org\' a sus correos electrónicos.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Oscuro',
@@ -72937,7 +72937,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -73260,7 +73260,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -73502,7 +73502,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Editor a Pantalla Completa',
       'sidebar_editor': 'Editor de Barra Lateral',
-      'please_type_to_confirm': 'Por favor, escribe \":value\" para confirmar',
+      'please_type_to_confirm': 'Por favor, escribe \':value\' para confirmar',
       'purge': 'Purgar',
       'service': 'Servicio',
       'clone_to': 'Clonar a',
@@ -74343,7 +74343,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'portal_mode': 'Modo portal',
       'email_signature': 'Un cordial saludo,',
       'enable_email_markup_help':
-          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
+          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \'schema.org\' a sus correos electrónicos.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Oscuro',
@@ -75174,7 +75174,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -75499,7 +75499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -75737,7 +75737,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullskärms editor',
       'sidebar_editor': 'Sidofälts editor',
-      'please_type_to_confirm': 'Ange \":value\" för att bekräfta',
+      'please_type_to_confirm': 'Ange \':value\' för att bekräfta',
       'purge': 'Rensa',
       'service': 'Service',
       'clone_to': 'Klona till',
@@ -76464,9 +76464,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_users': ':value användare har återställts',
       'general_settings': 'Generella inställningar',
       'invoice_options': 'Fakturainställningar',
-      'hide_paid_to_date': 'Dölj \"Betald till\"',
+      'hide_paid_to_date': 'Dölj \'Betald till\'',
       'hide_paid_to_date_help':
-          'Visa bara \"Betald till\"-sektionen på fakturan när en betalning har mottagits.',
+          'Visa bara \'Betald till\'-sektionen på fakturan när en betalning har mottagits.',
       'invoice_embed_documents': 'Bädda in dokument',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Visa Header på',
@@ -77381,7 +77381,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -77703,7 +77703,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -77935,7 +77935,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'การบริการ',
       'clone_to': 'Clone To',
@@ -78659,7 +78659,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'ตัวเลือกใบเสนอราคา',
       'hide_paid_to_date': 'ซ่อนการจ่ายเงินไปยังวันที่',
       'hide_paid_to_date_help':
-          'แสดงเฉพาะพื้นที่ \"ชำระเงินถึงวันที่\" ในใบแจ้งหนี้ของคุณเมื่อได้รับการชำระเงินแล้ว',
+          'แสดงเฉพาะพื้นที่ \'ชำระเงินถึงวันที่\' ในใบแจ้งหนี้ของคุณเมื่อได้รับการชำระเงินแล้ว',
       'invoice_embed_documents': 'ฝังเอกสาร',
       'invoice_embed_documents_help': 'รวมภาพที่แนบมาในใบแจ้งหนี้',
       'all_pages_header': 'แสดงหัวเรื่อง',
@@ -79572,7 +79572,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last_sent_template': 'Last Sent Template',
       'enable_flexible_search': 'Enable Flexible Search',
       'enable_flexible_search_help':
-          'Match non-contiguous characters, ie. \"ct\" matches \"cat\"',
+          'Match non-contiguous characters, ie. \'ct\' matches \'cat\'',
       'vendor_details': 'Vendor Details',
       'purchase_order_details': 'Purchase Order Details',
       'qr_iban': 'QR IBAN',
@@ -79894,7 +79894,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'login_success': 'Successful Login',
       'login_failure': 'Failed Login',
       'exported_data':
-          'Once the file is ready you\"ll receive an email with a download link',
+          'Once the file is ready you\'ll receive an email with a download link',
       'include_deleted_clients': 'Include Deleted Clients',
       'include_deleted_clients_help':
           'Load records belonging to deleted clients',
@@ -80126,7 +80126,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'webhook_url': 'Webhook URL',
       'fullscreen_editor': 'Fullscreen Editor',
       'sidebar_editor': 'Sidebar Editor',
-      'please_type_to_confirm': 'Please type \":value\" to confirm',
+      'please_type_to_confirm': 'Please type \':value\' to confirm',
       'purge': 'Purge',
       'service': 'Service',
       'clone_to': 'Clone To',
@@ -80851,7 +80851,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Fatura Seçenekleri',
       'hide_paid_to_date': 'Ödeme Tarihini Gizle',
       'hide_paid_to_date_help':
-          'Bir ödeme alındığında yalnızca faturalarınızdaki \"Ödenen Tarihi\" alanını görüntüleyin.',
+          'Bir ödeme alındığında yalnızca faturalarınızdaki \'Ödenen Tarihi\' alanını görüntüleyin.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
