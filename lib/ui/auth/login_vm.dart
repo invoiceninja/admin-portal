@@ -57,6 +57,7 @@ class LoginVM {
     @required this.authState,
     @required this.onLoginPressed,
     @required this.onRecoverPressed,
+    @required this.onDisable2FAPressed,
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
     @required this.onGoogleSignUpPressed,
@@ -88,6 +89,14 @@ class LoginVM {
     @required String url,
     @required String secret,
   }) onRecoverPressed;
+
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    @required String email,
+    @required String url,
+    @required String secret,
+  }) onDisable2FAPressed;
 
   final Function(
     BuildContext,
@@ -359,6 +368,24 @@ class LoginVM {
             .then((_) => _handleLogin(context: context, isSignUp: true));
       },
       onRecoverPressed: (
+        BuildContext context,
+        Completer<Null> completer, {
+        @required String email,
+        @required String url,
+        @required String secret,
+      }) async {
+        if (store.state.isLoading) {
+          return;
+        }
+
+        store.dispatch(RecoverPasswordRequest(
+          completer: completer,
+          email: email.trim(),
+          url: _formatApiUrl(url),
+          secret: secret.trim(),
+        ));
+      },
+      onDisable2FAPressed: (
         BuildContext context,
         Completer<Null> completer, {
         @required String email,

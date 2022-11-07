@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'disable_2fa': 'Disable 2FA',
       'change_number': 'Change Number',
       'resend_code': 'Resend Code',
       'base_type': 'Base Type',
@@ -87486,6 +87487,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get changeNumber =>
       _localizedValues[localeCode]['change_number'] ??
       _localizedValues['en']['change_number'];
+
+  String get disable2fa =>
+      _localizedValues[localeCode]['disable_2fa'] ??
+      _localizedValues['en']['disable_2fa'];
+
 
 // STARTER: lang field - do not remove comment
 
