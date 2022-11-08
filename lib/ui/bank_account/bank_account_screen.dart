@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_list_vm.dart';
@@ -91,18 +92,26 @@ class BankAccountScreen extends StatelessWidget {
           if (state.isHosted)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: AppButton(
-                      label: localization.connectAccounts.toUpperCase(),
-                      onPressed: state.isEnterprisePlan
-                          ? () => connectAccounts(context)
-                          : null,
-                      iconData: Icons.link,
-                    ),
-                  ),
-                  /*
+              child: true || state.isEnterprisePlan
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: AppButton(
+                            label: localization.connectAccounts.toUpperCase(),
+                            onPressed: () => connectAccounts(context),
+                            iconData: Icons.link,
+                          ),
+                        ),
+                        SizedBox(width: kGutterWidth),
+                        Expanded(
+                          child: AppButton(
+                            label: localization.refreshAccounts.toUpperCase(),
+                            onPressed: () =>
+                                viewModel.onRefreshAccounts(context),
+                            iconData: Icons.refresh,
+                          ),
+                        ),
+                        /*
                 SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
@@ -112,8 +121,14 @@ class BankAccountScreen extends StatelessWidget {
                   ),
                 ),
                 */
-                ],
-              ),
+                      ],
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 8),
+                      child: Center(
+                          child: HelpText(
+                              localization.upgradeToConnectBankAccount)),
+                    ),
             ),
           Expanded(child: BankAccountListBuilder()),
         ],
@@ -149,7 +164,6 @@ class BankAccountScreen extends StatelessWidget {
             store.dispatch(FilterBankAccountsByCustom3(value)),
         onSelectedCustom4: (value) =>
             store.dispatch(FilterBankAccountsByCustom4(value)),
-        onRefreshPressed: viewModel.onRefreshAccounts,
       ),
       floatingActionButton: state.prefState.isMenuFloated
           ? FloatingActionButton(

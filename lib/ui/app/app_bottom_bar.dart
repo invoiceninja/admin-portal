@@ -43,7 +43,6 @@ class AppBottomBar extends StatefulWidget {
     this.iconButtons = const [],
     this.onPaymentTypeChanged,
     this.paymentTypes = const [],
-    this.onRefreshPressed,
   });
 
   final EntityType entityType;
@@ -67,7 +66,6 @@ class AppBottomBar extends StatefulWidget {
   final List<IconButton> iconButtons;
   final List<PaymentTypeEntity> paymentTypes;
   final Function onPaymentTypeChanged;
-  final Function onRefreshPressed;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -547,9 +545,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           ? localization.refreshData
                           : '',
                       child: InkWell(
-                        onTap: () => widget.onRefreshPressed != null
-                            ? widget.onRefreshPressed()
-                            : store.dispatch(RefreshData()),
+                        onTap: () => store.dispatch(RefreshData()),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Icon(Icons.refresh),
