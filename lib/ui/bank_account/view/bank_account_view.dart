@@ -39,11 +39,12 @@ class _BankAccountViewState extends State<BankAccountView> {
       entity: bankAccount,
       body: ScrollableListView(
         children: <Widget>[
-          EntityHeader(
-            entity: bankAccount,
-            label: localization.balance,
-            value: formatNumber(bankAccount.balance, context),
-          ),
+          if (bankAccount.isConnected)
+            EntityHeader(
+              entity: bankAccount,
+              label: localization.balance,
+              value: formatNumber(bankAccount.balance, context),
+            ),
           ListDivider(),
           EntitiesListTile(
             entity: bankAccount,
@@ -58,6 +59,10 @@ class _BankAccountViewState extends State<BankAccountView> {
             localization.type: toTitleCase(bankAccount.type),
             localization.status: toTitleCase(bankAccount.status),
             localization.provider: toTitleCase(bankAccount.provider),
+            if (bankAccount.isConnected)
+              localization.autoSync: bankAccount.autoSync
+                  ? localization.enabled
+                  : localization.disabled,
           }),
         ],
       ),
