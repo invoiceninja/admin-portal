@@ -260,15 +260,20 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final credentials = store.state.credentials;
-    final url = formatApiUrl(kReleaseMode ? kAppProductionUrl : kAppStagingUrl);
     final navigator = Navigator.of(context);
+
+    var url = formatApiUrl(kReleaseMode ? kAppProductionUrl : kAppStagingUrl);
+    url = '$url/sms_reset/confirm';
+    if (widget.email == null) {
+      url += '?validate_only=true';
+    }
 
     setState(() {
       _isLoading = true;
     });
 
     _webClient
-        .post('$url/sms_reset/confirm', credentials.token,
+        .post(url, credentials.token,
             data: json.encode({
               'code': _code,
               'email': widget.email ?? state.user.email,
@@ -280,7 +285,9 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
       if (navigator.canPop()) {
         navigator.pop();
       }
-      showToast(localization.verifiedPhoneNumber);
+      showToast(widget.email == null
+          ? localization.verifiedPhoneNumber
+          : localization.disabledTwoFactor);
       store.dispatch(RefreshData());
     }).catchError((dynamic error) {
       setState(() {

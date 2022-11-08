@@ -266,6 +266,8 @@ class _LoginState extends State<LoginView> {
     if (_loginType == LOGIN_TYPE_EMAIL) {
       if (_disable2FA) {
         _buttonController.reset();
+        _disable2FA = false;
+        _recoverPassword = false;
         showDialog<void>(
           context: context,
           builder: (BuildContext context) => UserSmsVerification(
