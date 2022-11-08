@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -263,21 +264,13 @@ class _LoginState extends State<LoginView> {
                 : kAppProductionUrl;
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
-      if (_recoverPassword) {
-        viewModel.onRecoverPressed(
-          context,
-          completer,
-          email: _emailController.text,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
-        );
-      } else if (_disable2FA) {
-        viewModel.onDisable2FAPressed(
-          context,
-          completer,
-          email: _emailController.text,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
+      if (_disable2FA) {
+        _buttonController.reset();
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext context) => UserSmsVerification(
+            email: _emailController.text.trim(),
+          ),
         );
       } else {
         viewModel.onLoginPressed(
@@ -680,7 +673,7 @@ class _LoginState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   if (_recoverPassword) ...[
-                    if (!_disable2FA)
+                    if (!_disable2FA && !_isSelfHosted)
                       InkWell(
                         onTap: () {
                           setState(() {
