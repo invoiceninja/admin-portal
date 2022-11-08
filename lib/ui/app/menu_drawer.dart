@@ -509,8 +509,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             if (state.userCompany.isOwner &&
                                 state.isHosted &&
                                 !isPaidAccount(context) &&
-                                (!isApple() || supportsInAppPurchase()) &&
-                                kReleaseMode)
+                                (!isApple() || supportsInAppPurchase()))
                               Material(
                                 child: Tooltip(
                                   message: state.isMenuCollapsed
