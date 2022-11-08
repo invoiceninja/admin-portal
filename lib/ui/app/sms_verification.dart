@@ -310,7 +310,9 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.verifyPhoneNumber),
+      title: Text(widget.email == null
+          ? localization.verifyPhoneNumber
+          : localization.disableTwoFactor),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
