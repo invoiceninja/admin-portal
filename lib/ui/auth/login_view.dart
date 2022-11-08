@@ -593,7 +593,9 @@ class _LoginState extends State<LoginView> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  if (_loginType == LOGIN_TYPE_EMAIL)
+                                  if (_disable2FA)
+                                    Icon(Icons.smartphone, color: Colors.white)
+                                  else if (_loginType == LOGIN_TYPE_EMAIL)
                                     Icon(Icons.mail, color: Colors.white)
                                   else if (_loginType == LOGIN_TYPE_MICROSOFT)
                                     Icon(MdiIcons.microsoft,
@@ -610,7 +612,7 @@ class _LoginState extends State<LoginView> {
                                   SizedBox(width: 10),
                                   Text(
                                     _disable2FA
-                                        ? localization.disable2fa
+                                        ? localization.sendCode
                                         : _recoverPassword
                                             ? localization.recoverPassword
                                             : _createAccount
