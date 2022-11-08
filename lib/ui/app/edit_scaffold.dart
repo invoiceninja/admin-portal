@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
 import 'package:overflow_view/overflow_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -59,6 +60,7 @@ class EditScaffold extends StatelessWidget {
     final state = store.state;
     final account = state.account;
     final localization = AppLocalization.of(context);
+    Function bannerClick;
 
     bool showUpgradeBanner = false;
     bool isEnabled = (isMobile(context) ||
@@ -97,6 +99,18 @@ class EditScaffold extends StatelessWidget {
       isCancelEnabled = true;
     }
 
+    if (TransactionEditScreen.route.contains(state.uiState.baseRoute) &&
+        state.bankAccountState.list.isEmpty) {
+      showUpgradeBanner = true;
+      if (state.isEnterprisePlan) {
+        upgradeMessage = localization.clickHereToConnectBankAccount;
+        bannerClick =
+            () => store.dispatch(ViewSettings(section: kSettingsBankAccounts));
+      } else {
+        upgradeMessage = localization.upgradeToConnectBankAccount;
+      }
+    }
+
     final entityActions = <EntityAction>[
       if (isDesktop(context) &&
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
@@ -120,7 +134,9 @@ class EditScaffold extends StatelessWidget {
         child: Scaffold(
           body: state.companies.isEmpty
               ? LoadingIndicator()
-              : showUpgradeBanner && (!isApple() || supportsInAppPurchase())
+              : showUpgradeBanner &&
+                      state.userCompany.isOwner &&
+                      (!isApple() || supportsInAppPurchase())
                   ? Column(
                       children: [
                         InkWell(
@@ -128,19 +144,19 @@ class EditScaffold extends StatelessWidget {
                             upgradeMessage,
                             color: Colors.orange.shade800,
                           ),
-                          onTap: state.userCompany.isOwner
-                              ? () async {
-                                  if (supportsInAppPurchase()) {
-                                    showDialog<void>(
-                                      context: context,
-                                      builder: (context) => UpgradeDialog(),
-                                    );
-                                  } else {
-                                    launchUrl(Uri.parse(
-                                        state.userCompany.ninjaPortalUrl));
-                                  }
-                                }
-                              : null,
+                          onTap: () async {
+                            if (bannerClick != null) {
+                              bannerClick();
+                            } else if (supportsInAppPurchase()) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) => UpgradeDialog(),
+                              );
+                            } else {
+                              launchUrl(
+                                  Uri.parse(state.userCompany.ninjaPortalUrl));
+                            }
+                          },
                         ),
                         Expanded(child: body),
                       ],
