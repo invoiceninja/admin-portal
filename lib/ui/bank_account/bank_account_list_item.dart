@@ -73,8 +73,9 @@ class BankAccountListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              Text(formatNumber(bankAccount.balance, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+              if (bankAccount.isConnected)
+                Text(formatNumber(bankAccount.balance, context),
+                    style: Theme.of(context).textTheme.subtitle1),
             ],
           ),
         ),
