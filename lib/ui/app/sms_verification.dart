@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -14,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/pinput.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AccountSmsVerification extends StatefulWidget {
@@ -191,10 +193,12 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
 class UserSmsVerification extends StatefulWidget {
   const UserSmsVerification({
     Key key,
+    this.email,
     this.showChangeNumber = false,
   }) : super(key: key);
 
   final bool showChangeNumber;
+  final String email;
 
   @override
   State<UserSmsVerification> createState() => _UserSmsVerificationState();
@@ -222,16 +226,16 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final credentials = state.credentials;
-    final url = '${credentials.url}/sms_reset';
+    final url = formatApiUrl(kReleaseMode ? kAppProductionUrl : kAppStagingUrl);
 
     setState(() {
       _isLoading = true;
     });
 
     _webClient
-        .post(url, credentials.token,
+        .post('$url/sms_reset', credentials.token,
             data: json.encode(
-              {'email': state.user.email},
+              {'email': widget.email ?? state.user.email},
             ))
         .then((dynamic data) {
       setState(() {
@@ -256,8 +260,13 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final credentials = store.state.credentials;
-    final url = '${credentials.url}/sms_reset/confirm';
     final navigator = Navigator.of(context);
+
+    var url = formatApiUrl(kReleaseMode ? kAppProductionUrl : kAppStagingUrl);
+    url = '$url/sms_reset/confirm';
+    if (widget.email == null) {
+      url += '?validate_only=true';
+    }
 
     setState(() {
       _isLoading = true;
@@ -267,16 +276,18 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
         .post(url, credentials.token,
             data: json.encode({
               'code': _code,
-              'email': state.user.email,
+              'email': widget.email ?? state.user.email,
             }))
         .then((dynamic data) {
       setState(() {
         _isLoading = false;
       });
       if (navigator.canPop()) {
-        navigator.pop(true);
+        navigator.pop();
       }
-      showToast(localization.verifiedPhoneNumber);
+      showToast(widget.email == null
+          ? localization.verifiedPhoneNumber
+          : localization.disabledTwoFactor);
       store.dispatch(RefreshData());
     }).catchError((dynamic error) {
       setState(() {
@@ -299,7 +310,9 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.verifyPhoneNumber),
+      title: Text(widget.email == null
+          ? localization.verifyPhoneNumber
+          : localization.disableTwoFactor),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
@@ -326,15 +339,16 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
           ),
         ),
         if (!_isLoading) ...[
-          TextButton(
-            onPressed: () {
-              store.dispatch(ViewSettings(section: kSettingsUserDetails));
-              Navigator.of(context).pop();
-            },
-            child: Text(
-              localization.changeNumber.toUpperCase(),
+          if (widget.showChangeNumber)
+            TextButton(
+              onPressed: () {
+                store.dispatch(ViewSettings(section: kSettingsUserDetails));
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                localization.changeNumber.toUpperCase(),
+              ),
             ),
-          ),
           TextButton(
             onPressed: () => _sendCode(),
             child: Text(

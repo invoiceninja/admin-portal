@@ -404,15 +404,14 @@ class _UserDetailsState extends State<UserDetails>
                               return;
                             }
 
-                            if (!kReleaseMode &&
-                                (state.isHosted && !state.user.phoneVerified)) {
+                            if (state.isHosted && !state.user.phoneVerified) {
                               final bool phoneVerified = await showDialog<bool>(
                                 context: context,
                                 builder: (BuildContext context) =>
                                     UserSmsVerification(),
                               );
 
-                              if (phoneVerified) {
+                              if (phoneVerified == true) {
                                 showDialog<void>(
                                   context: context,
                                   builder: (BuildContext context) =>

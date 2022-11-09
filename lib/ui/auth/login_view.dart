@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -77,6 +78,7 @@ class _LoginState extends State<LoginView> {
   bool _createAccount = false;
 
   bool _recoverPassword = false;
+  bool _disable2FA = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
 
@@ -235,6 +237,7 @@ class _LoginState extends State<LoginView> {
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
+          _disable2FA = false;
           _buttonController.reset();
           showDialog<MessageDialog>(
               context: context,
@@ -261,13 +264,15 @@ class _LoginState extends State<LoginView> {
                 : kAppProductionUrl;
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
-      if (_recoverPassword) {
-        viewModel.onRecoverPressed(
-          context,
-          completer,
-          email: _emailController.text,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
+      if (_disable2FA) {
+        _buttonController.reset();
+        _disable2FA = false;
+        _recoverPassword = false;
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext context) => UserSmsVerification(
+            email: _emailController.text.trim(),
+          ),
         );
       } else {
         viewModel.onLoginPressed(
@@ -583,7 +588,9 @@ class _LoginState extends State<LoginView> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  if (_loginType == LOGIN_TYPE_EMAIL)
+                                  if (_disable2FA)
+                                    Icon(Icons.smartphone, color: Colors.white)
+                                  else if (_loginType == LOGIN_TYPE_EMAIL)
                                     Icon(Icons.mail, color: Colors.white)
                                   else if (_loginType == LOGIN_TYPE_MICROSOFT)
                                     Icon(MdiIcons.microsoft,
@@ -599,24 +606,29 @@ class _LoginState extends State<LoginView> {
                                     ),
                                   SizedBox(width: 10),
                                   Text(
-                                    _recoverPassword
-                                        ? localization.recoverPassword
-                                        : _createAccount
-                                            ? (_loginType == LOGIN_TYPE_EMAIL
-                                                ? localization.emailSignUp
-                                                : _loginType ==
-                                                        LOGIN_TYPE_MICROSOFT
-                                                    ? localization
-                                                        .microsoftSignUp
-                                                    : localization.googleSignUp)
-                                            : (_loginType == LOGIN_TYPE_EMAIL
-                                                ? localization.emailSignIn
-                                                : _loginType ==
-                                                        LOGIN_TYPE_MICROSOFT
-                                                    ? localization
-                                                        .microsoftSignIn
-                                                    : localization
-                                                        .googleSignIn),
+                                    _disable2FA
+                                        ? localization.sendCode
+                                        : _recoverPassword
+                                            ? localization.recoverPassword
+                                            : _createAccount
+                                                ? (_loginType ==
+                                                        LOGIN_TYPE_EMAIL
+                                                    ? localization.emailSignUp
+                                                    : _loginType ==
+                                                            LOGIN_TYPE_MICROSOFT
+                                                        ? localization
+                                                            .microsoftSignUp
+                                                        : localization
+                                                            .googleSignUp)
+                                                : (_loginType ==
+                                                        LOGIN_TYPE_EMAIL
+                                                    ? localization.emailSignIn
+                                                    : _loginType ==
+                                                            LOGIN_TYPE_MICROSOFT
+                                                        ? localization
+                                                            .microsoftSignIn
+                                                        : localization
+                                                            .googleSignIn),
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.white),
                                   )
@@ -662,11 +674,34 @@ class _LoginState extends State<LoginView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  if (!_createAccount)
+                  if (_recoverPassword) ...[
+                    if (!_disable2FA && !_isSelfHosted)
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _disable2FA = true;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.lock, size: 16),
+                                SizedBox(width: 8),
+                                Text(localization.disable2fa),
+                              ]),
+                        ),
+                      ),
                     InkWell(
                       onTap: () {
                         setState(() {
-                          _recoverPassword = !_recoverPassword;
+                          if (_disable2FA) {
+                            _disable2FA = false;
+                          } else {
+                            _recoverPassword = false;
+                          }
                         });
                       },
                       child: Padding(
@@ -675,67 +710,88 @@ class _LoginState extends State<LoginView> {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              if (!_recoverPassword)
-                                Icon(MdiIcons.lock, size: 16),
+                              Icon(Icons.cancel, size: 16),
                               SizedBox(width: 8),
-                              Text(_recoverPassword
-                                  ? localization.cancel
-                                  : localization.recoverPassword),
+                              Text(localization.cancel),
                             ]),
                       ),
                     ),
-                  if (!_recoverPassword && !_isSelfHosted)
-                    InkWell(
-                      onTap: () {
-                        launchUrl(Uri.parse(kStatusCheckUrl));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(14),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.security, size: 16),
-                            SizedBox(width: 8),
-                            Text(localization.checkStatus)
-                          ],
+                  ] else ...[
+                    if (!_createAccount)
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            _recoverPassword = true;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                if (!_recoverPassword)
+                                  Icon(MdiIcons.lock, size: 16),
+                                SizedBox(width: 8),
+                                Text(_recoverPassword
+                                    ? localization.cancel
+                                    : localization.recoverPassword),
+                              ]),
                         ),
                       ),
-                    ),
-                  if (!_recoverPassword)
-                    if (kIsWeb)
+                    if (!_recoverPassword && !_isSelfHosted)
                       InkWell(
-                        onTap: () =>
-                            launchUrl(Uri.parse(getNativeAppUrl(platform))),
+                        onTap: () {
+                          launchUrl(Uri.parse(kStatusCheckUrl));
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(getNativeAppIcon(platform), size: 16),
+                              Icon(Icons.security, size: 16),
                               SizedBox(width: 8),
-                              Text('$platform ${localization.app}')
+                              Text(localization.checkStatus)
                             ],
                           ),
                         ),
-                      )
-                    else
-                      InkWell(
-                        onTap: () => launchUrl(Uri.parse(kDocsUrl)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.book, size: 16),
-                              SizedBox(width: 8),
-                              Text(localization.documentation)
-                            ],
+                      ),
+                    if (!_recoverPassword)
+                      if (kIsWeb)
+                        InkWell(
+                          onTap: () =>
+                              launchUrl(Uri.parse(getNativeAppUrl(platform))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(getNativeAppIcon(platform), size: 16),
+                                SizedBox(width: 8),
+                                Text('$platform ${localization.app}')
+                              ],
+                            ),
                           ),
-                        ),
-                      )
+                        )
+                      else
+                        InkWell(
+                          onTap: () => launchUrl(Uri.parse(kDocsUrl)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.book, size: 16),
+                                SizedBox(width: 8),
+                                Text(localization.documentation)
+                              ],
+                            ),
+                          ),
+                        )
+                  ]
                 ],
               ),
             ],

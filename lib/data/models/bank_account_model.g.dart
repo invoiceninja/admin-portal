@@ -130,6 +130,9 @@ class _$BankAccountEntitySerializer
       'provider_name',
       serializers.serialize(object.provider,
           specifiedType: const FullType(String)),
+      'auto_sync',
+      serializers.serialize(object.autoSync,
+          specifiedType: const FullType(bool)),
       'disabled_upstream',
       serializers.serialize(object.disabledUpstream,
           specifiedType: const FullType(bool)),
@@ -210,6 +213,10 @@ class _$BankAccountEntitySerializer
         case 'provider_name':
           result.provider = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'auto_sync':
+          result.autoSync = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'disabled_upstream':
           result.disabledUpstream = serializers.deserialize(value,
@@ -462,6 +469,8 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final String provider;
   @override
+  final bool autoSync;
+  @override
   final bool disabledUpstream;
   @override
   final double balance;
@@ -493,6 +502,7 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.status,
       this.type,
       this.provider,
+      this.autoSync,
       this.disabledUpstream,
       this.balance,
       this.currency,
@@ -511,6 +521,8 @@ class _$BankAccountEntity extends BankAccountEntity {
     BuiltValueNullFieldError.checkNotNull(type, 'BankAccountEntity', 'type');
     BuiltValueNullFieldError.checkNotNull(
         provider, 'BankAccountEntity', 'provider');
+    BuiltValueNullFieldError.checkNotNull(
+        autoSync, 'BankAccountEntity', 'autoSync');
     BuiltValueNullFieldError.checkNotNull(
         disabledUpstream, 'BankAccountEntity', 'disabledUpstream');
     BuiltValueNullFieldError.checkNotNull(
@@ -542,6 +554,7 @@ class _$BankAccountEntity extends BankAccountEntity {
         status == other.status &&
         type == other.type &&
         provider == other.provider &&
+        autoSync == other.autoSync &&
         disabledUpstream == other.disabledUpstream &&
         balance == other.balance &&
         currency == other.currency &&
@@ -572,11 +585,16 @@ class _$BankAccountEntity extends BankAccountEntity {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            $jc(0,
-                                                                name.hashCode),
-                                                            status.hashCode),
-                                                        type.hashCode),
-                                                    provider.hashCode),
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    name
+                                                                        .hashCode),
+                                                                status
+                                                                    .hashCode),
+                                                            type.hashCode),
+                                                        provider.hashCode),
+                                                    autoSync.hashCode),
                                                 disabledUpstream.hashCode),
                                             balance.hashCode),
                                         currency.hashCode),
@@ -597,6 +615,7 @@ class _$BankAccountEntity extends BankAccountEntity {
           ..add('status', status)
           ..add('type', type)
           ..add('provider', provider)
+          ..add('autoSync', autoSync)
           ..add('disabledUpstream', disabledUpstream)
           ..add('balance', balance)
           ..add('currency', currency)
@@ -631,6 +650,10 @@ class BankAccountEntityBuilder
   String _provider;
   String get provider => _$this._provider;
   set provider(String provider) => _$this._provider = provider;
+
+  bool _autoSync;
+  bool get autoSync => _$this._autoSync;
+  set autoSync(bool autoSync) => _$this._autoSync = autoSync;
 
   bool _disabledUpstream;
   bool get disabledUpstream => _$this._disabledUpstream;
@@ -690,6 +713,7 @@ class BankAccountEntityBuilder
       _status = $v.status;
       _type = $v.type;
       _provider = $v.provider;
+      _autoSync = $v.autoSync;
       _disabledUpstream = $v.disabledUpstream;
       _balance = $v.balance;
       _currency = $v.currency;
@@ -729,6 +753,8 @@ class BankAccountEntityBuilder
                 type, 'BankAccountEntity', 'type'),
             provider: BuiltValueNullFieldError.checkNotNull(
                 provider, 'BankAccountEntity', 'provider'),
+            autoSync: BuiltValueNullFieldError.checkNotNull(
+                autoSync, 'BankAccountEntity', 'autoSync'),
             disabledUpstream: BuiltValueNullFieldError.checkNotNull(
                 disabledUpstream, 'BankAccountEntity', 'disabledUpstream'),
             balance: BuiltValueNullFieldError.checkNotNull(
@@ -738,10 +764,9 @@ class BankAccountEntityBuilder
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, 'BankAccountEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'BankAccountEntity', 'updatedAt'),
-            archivedAt:
-                BuiltValueNullFieldError.checkNotNull(archivedAt, 'BankAccountEntity', 'archivedAt'),
+            updatedAt:
+                BuiltValueNullFieldError.checkNotNull(updatedAt, 'BankAccountEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'BankAccountEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,

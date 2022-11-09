@@ -71,6 +71,7 @@ abstract class BankAccountEntity extends Object
       balance: 0,
       currency: '',
       disabledUpstream: false,
+      autoSync: false,
     );
   }
 
@@ -92,6 +93,9 @@ abstract class BankAccountEntity extends Object
   @BuiltValueField(wireName: 'provider_name')
   String get provider;
 
+  @BuiltValueField(wireName: 'auto_sync')
+  bool get autoSync;
+
   @BuiltValueField(wireName: 'disabled_upstream')
   bool get disabledUpstream;
 
@@ -106,6 +110,8 @@ abstract class BankAccountEntity extends Object
     // STARTER: display name - do not remove comment
     return name;
   }
+
+  bool get isConnected => type.isNotEmpty;
 
   @override
   List<EntityAction> getActions(
@@ -190,8 +196,9 @@ abstract class BankAccountEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
 // ignore: unused_element
-  static void _initializeBuilder(BankAccountEntityBuilder builder) =>
-      builder..disabledUpstream = false;
+  static void _initializeBuilder(BankAccountEntityBuilder builder) => builder
+    ..disabledUpstream = false
+    ..autoSync = false;
 
   static Serializer<BankAccountEntity> get serializer =>
       _$bankAccountEntitySerializer;
