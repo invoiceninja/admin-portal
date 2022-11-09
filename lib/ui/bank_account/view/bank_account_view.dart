@@ -37,6 +37,7 @@ class _BankAccountViewState extends State<BankAccountView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: bankAccount,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[
           if (bankAccount.isConnected)
