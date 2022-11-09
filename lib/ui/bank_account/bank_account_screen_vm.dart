@@ -74,6 +74,7 @@ class BankAccountScreenVM {
 
         webClient.post(url, credentials.token).then((dynamic response) {
           store.dispatch(StopSaving());
+          store.dispatch(RefreshData());
           showToast(localization.refreshComplete);
         }).catchError((dynamic error) {
           store.dispatch(StopSaving());
