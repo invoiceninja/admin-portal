@@ -64,6 +64,10 @@ class InvoiceDesignVM {
           store.dispatch(UpdateSettings(settings: settings));
         },
         onSavePressed: (context, entityTypes) {
+          if (!state.isProPlan) {
+            return;
+          }
+
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             switch (settingsUIState.entityType) {

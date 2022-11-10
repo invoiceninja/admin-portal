@@ -64,6 +64,10 @@ class ClientPortalVM {
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
+          if (!state.isProPlan) {
+            return;
+          }
+
           Debouncer.runOnComplete(
             () {
               final settingsUIState = store.state.uiState.settingsUIState;
