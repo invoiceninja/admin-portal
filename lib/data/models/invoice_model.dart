@@ -1493,6 +1493,7 @@ class ProductItemFields {
   static const String unitCost = 'unit_cost';
   static const String productCost = 'product_cost';
   static const String tax = 'tax';
+  static const String taxAmount = 'tax_amount';
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
   static const String grossLineTotal = 'gross_line_total';
@@ -1515,6 +1516,7 @@ class TaskItemFields {
   static const String rate = 'rate';
   static const String serviceCost = 'service_cost';
   static const String tax = 'tax';
+  static const String taxAmount = 'tax_amount';
   static const String hours = 'hours';
   static const String lineTotal = 'line_total';
   static const String grossLineTotal = 'gross_line_total';
