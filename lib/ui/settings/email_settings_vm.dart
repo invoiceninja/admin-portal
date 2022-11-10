@@ -58,6 +58,10 @@ class EmailSettingsVM {
           store.dispatch(UpdateSettings(settings: settings));
         },
         onSavePressed: (context) {
+          if (!state.isProPlan) {
+            return;
+          }
+
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final settings = settingsUIState.settings;

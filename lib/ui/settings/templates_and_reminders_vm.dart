@@ -67,6 +67,10 @@ class TemplatesAndRemindersVM {
         store.dispatch(UpdateSettingsTemplate(selectedTemplate: template));
       },
       onSavePressed: (context, updateReminders) {
+        if (!state.isProPlan) {
+          return;
+        }
+
         Debouncer.runOnComplete(() {
           final callback = () async {
             if (!updateReminders) {
