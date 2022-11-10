@@ -91,7 +91,8 @@ class BankAccountScreen extends StatelessWidget {
         children: [
           if (state.isHosted)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.only(
+                  left: 16, top: 8, right: 16, bottom: 10),
               child: state.isEnterprisePlan
                   ? Row(
                       children: [

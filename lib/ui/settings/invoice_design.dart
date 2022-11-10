@@ -819,7 +819,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.description,
                 if (company.enableProductQuantity) ProductItemFields.quantity,
                 ProductItemFields.unitCost,
-                if (company.hasItemTaxes) ProductItemFields.tax,
+                if (company.hasItemTaxes) ...[
+                  ProductItemFields.tax,
+                  ProductItemFields.taxAmount,
+                ],
                 if (company.enableProductDiscount) ProductItemFields.discount,
                 ProductItemFields.lineTotal,
                 ProductItemFields.custom1,
@@ -856,7 +859,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   TaskItemFields.description,
                   TaskItemFields.hours,
                   TaskItemFields.rate,
-                  if (company.hasItemTaxes) TaskItemFields.tax,
+                  if (company.hasItemTaxes) ...[
+                    TaskItemFields.tax,
+                    TaskItemFields.taxAmount,
+                  ],
                   if (company.enableProductDiscount) TaskItemFields.discount,
                   TaskItemFields.lineTotal,
                   TaskItemFields.custom1,

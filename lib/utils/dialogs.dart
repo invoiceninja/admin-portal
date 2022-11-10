@@ -215,8 +215,9 @@ void passwordCallback({
 
   if (user.oauthProvider.isEmpty ||
       skipOAuth ||
+      user.isConnectedToApple ||
+      //(user.isConnectedToApple && !supportsAppleOAuth()) ||
       (user.isConnectedToGoogle && !supportsGoogleOAuth()) ||
-      (user.isConnectedToApple && !supportsAppleOAuth()) ||
       (user.isConnectedToMicrosoft && !supportsMicrosoftOAuth())) {
     showDialog<Null>(
       context: context,
