@@ -75,6 +75,10 @@ class GroupEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        if (!state.isProPlan) {
+          return;
+        }
+
         Debouncer.runOnComplete(() {
           final group = store.state.groupUIState.editing;
           final localization = navigatorKey.localization;
