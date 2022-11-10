@@ -661,7 +661,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ],
                           ),
                           SizedBox(
-                            height: 176,
+                            height: 180,
                             child: TabBarView(
                               controller: _optionTabController,
                               children: <Widget>[
@@ -802,7 +802,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             .entityViewModel.onSavePressed,
                                       ),
                                       if (company.hasTaxes || invoice.isInvoice)
-                                        Row(
+                                        Column(
                                           children: [
                                             if (company.hasTaxes)
                                               Expanded(
@@ -815,8 +815,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                         Theme.of(context)
                                                             .colorScheme
                                                             .secondary,
-                                                    title: Text(localization
-                                                        .inclusiveTaxes),
+                                                    title: Text(
+                                                      localization
+                                                          .inclusiveTaxes,
+                                                      maxLines: 1,
+                                                    ),
                                                     value: invoice
                                                         .usesInclusiveTaxes,
                                                     onChanged: (value) {
@@ -828,9 +831,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                   ),
                                                 ),
                                               ),
-                                            if (invoice.isInvoice &&
-                                                originalInvoice != null &&
-                                                originalInvoice.autoBillEnabled)
+                                            if (invoice.isInvoice)
                                               Expanded(
                                                 child: Tooltip(
                                                   message: localization
@@ -841,8 +842,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                         Theme.of(context)
                                                             .colorScheme
                                                             .secondary,
-                                                    title: Text(localization
-                                                        .autoBillEnabled),
+                                                    title: Text(
+                                                      localization
+                                                          .autoBillEnabled,
+                                                      maxLines: 1,
+                                                    ),
                                                     value:
                                                         invoice.autoBillEnabled,
                                                     onChanged: (value) {

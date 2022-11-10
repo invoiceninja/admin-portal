@@ -333,11 +333,7 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'defaults',
-          'auto_bill',
-          'payment_type',
           'payment_terms',
-          'online_payment_email',
-          'manual_payment_email',
           'invoice_terms',
           'invoice_footer',
           'quote_terms',
@@ -383,9 +379,13 @@ class SettingsSearch extends StatelessWidget {
       kSettingsPaymentSettings: [
         [
           'company_gateways',
+          'auto_bill',
           'auto_bill_on',
+          'payment_type',
+          'online_payment_email',
+          'manual_payment_email',
           'use_available_credits',
-          'enable_applying_payments',
+          'enable_applying_payments_later',
           'allow_over_payment',
           'allow_under_payment',
         ]
