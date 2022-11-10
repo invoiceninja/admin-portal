@@ -79,7 +79,7 @@ class SubscriptionEditVM {
         }
       },
       onSavePressed: (BuildContext context) {
-        if (!state.isProPlan) {
+        if (!state.isProPlan && !state.isTrial) {
           return;
         }
 

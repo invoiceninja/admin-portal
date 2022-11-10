@@ -64,7 +64,7 @@ class ClientPortalVM {
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
-          if (!state.isProPlan) {
+          if (!state.isProPlan && !state.isTrial) {
             return;
           }
 

@@ -70,7 +70,7 @@ class DesignEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        if (!state.isProPlan) {
+        if (!state.isProPlan && !state.isTrial) {
           return;
         }
 
