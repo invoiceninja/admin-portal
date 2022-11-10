@@ -63,12 +63,7 @@ class EditScaffold extends StatelessWidget {
     Function bannerClick;
 
     bool showUpgradeBanner = false;
-    bool isEnabled = (isMobile(context) ||
-            !state.uiState.isInSettings ||
-            state.uiState.isEditing ||
-            state.settingsUIState.isChanged) &&
-        !state.isSaving &&
-        (entity?.isEditable ?? true);
+    bool isEnabled = !state.isSaving && (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String upgradeMessage = state.userCompany.isOwner
         ? (state.account.isEligibleForTrial && !supportsInAppPurchase()
@@ -134,42 +129,41 @@ class EditScaffold extends StatelessWidget {
         child: Scaffold(
           body: state.companies.isEmpty
               ? LoadingIndicator()
-              : showUpgradeBanner &&
-                      state.userCompany.isOwner &&
-                      (!isApple() || supportsInAppPurchase())
-                  ? Column(
+              : Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Column(
                       children: [
-                        InkWell(
-                          child: IconMessage(
-                            upgradeMessage,
-                            color: Colors.orange.shade800,
+                        if (showUpgradeBanner &&
+                            state.userCompany.isOwner &&
+                            (!isApple() || supportsInAppPurchase()))
+                          InkWell(
+                            child: IconMessage(
+                              upgradeMessage,
+                              color: Colors.orange.shade800,
+                            ),
+                            onTap: () async {
+                              if (bannerClick != null) {
+                                bannerClick();
+                              } else if (supportsInAppPurchase()) {
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (context) => UpgradeDialog(),
+                                );
+                              } else {
+                                launchUrl(Uri.parse(
+                                    state.userCompany.ninjaPortalUrl));
+                              }
+                            },
                           ),
-                          onTap: () async {
-                            if (bannerClick != null) {
-                              bannerClick();
-                            } else if (supportsInAppPurchase()) {
-                              showDialog<void>(
-                                context: context,
-                                builder: (context) => UpgradeDialog(),
-                              );
-                            } else {
-                              launchUrl(
-                                  Uri.parse(state.userCompany.ninjaPortalUrl));
-                            }
-                          },
+                        Expanded(
+                          child: body,
                         ),
-                        Expanded(child: body),
                       ],
-                    )
-                  : state.isSaving && isDesktop(context)
-                      ? Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            body,
-                            LinearProgressIndicator(),
-                          ],
-                        )
-                      : body,
+                    ),
+                    if (state.isSaving) LinearProgressIndicator(),
+                  ],
+                ),
           drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
           appBar: AppBar(
             centerTitle: false,
@@ -349,10 +343,15 @@ class EditScaffold extends StatelessWidget {
                           ),
                           SizedBox(width: 8),
                           OutlinedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(state
-                                    .prefState.colorThemeModel.colorSuccess)),
-                            onPressed: state.isSaving || onSavePressed == null
+                            style: isEnabled
+                                ? ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        state.prefState.colorThemeModel
+                                            .colorSuccess))
+                                : null,
+                            onPressed: !isEnabled ||
+                                    state.isSaving ||
+                                    onSavePressed == null
                                 ? null
                                 : () {
                                     // Clear focus now to prevent un-focus after save from
