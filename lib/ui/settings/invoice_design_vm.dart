@@ -64,7 +64,7 @@ class InvoiceDesignVM {
           store.dispatch(UpdateSettings(settings: settings));
         },
         onSavePressed: (context, entityTypes) {
-          if (!state.isProPlan) {
+          if (!state.isProPlan && !state.isTrial) {
             return;
           }
 

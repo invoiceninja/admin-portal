@@ -67,7 +67,7 @@ class TemplatesAndRemindersVM {
         store.dispatch(UpdateSettingsTemplate(selectedTemplate: template));
       },
       onSavePressed: (context, updateReminders) {
-        if (!state.isProPlan) {
+        if (!state.isProPlan && !state.isTrial) {
           return;
         }
 

@@ -63,7 +63,7 @@ class GeneratedNumbersVM {
           store.dispatch(UpdateSettings(settings: settings));
         },
         onSavePressed: (context) {
-          if (!state.isProPlan) {
+          if (!state.isProPlan && !state.isTrial) {
             return;
           }
 
