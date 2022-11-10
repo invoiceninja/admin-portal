@@ -6,7 +6,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -501,32 +500,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  AppDropdownButton<String>(
-                      labelText: localization.autoBill,
-                      value: settings.autoBill,
-                      onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..autoBill = value)),
-                      items: [
-                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                        CompanyGatewayEntity.TOKEN_BILLING_OFF
-                      ]
-                          .map((value) => DropdownMenuItem(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ))
-                          .toList()),
-                  EntityDropdown(
-                    entityType: EntityType.paymentType,
-                    entityList: memoizedPaymentTypeList(
-                        state.staticState.paymentTypeMap),
-                    labelText: localization.paymentType,
-                    entityId: settings.defaultPaymentTypeId,
-                    onSelected: (paymentType) => viewModel.onSettingsChanged(
-                        settings.rebuild(
-                            (b) => b..defaultPaymentTypeId = paymentType?.id)),
-                  ),
                   if (company.isModuleEnabled(EntityType.invoice))
                     AppDropdownButton<String>(
                       showBlank: true,
@@ -626,33 +599,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    BoolDropdownButton(
-                      value: settings.clientOnlinePaymentNotification,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..clientOnlinePaymentNotification = value)),
-                      label: localization.onlinePaymentEmail,
-                      helpLabel: localization.emailReceipt,
-                      iconData: Icons.email,
-                    ),
-                    BoolDropdownButton(
-                      value: settings.clientManualPaymentNotification,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..clientManualPaymentNotification = value)),
-                      label: localization.manualPaymentEmail,
-                      helpLabel: localization.emailReceipt,
-                      iconData: Icons.email,
-                    ),
-                    BoolDropdownButton(
-                      value: settings.clientMarkPaidPaymentNotification,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..clientMarkPaidPaymentNotification = value)),
-                      label: localization.markPaidPaymentEmail,
-                      helpLabel: localization.emailReceipt,
-                      iconData: Icons.email,
-                    ),
                     BoolDropdownButton(
                       value: company.useQuoteTermsOnConversion,
                       onChanged: (value) => viewModel.onCompanyChanged(

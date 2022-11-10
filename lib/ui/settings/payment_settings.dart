@@ -1,11 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -90,45 +94,83 @@ class _PaymentSettingsState extends State<PaymentSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          FormCard(children: <Widget>[
-            AppDropdownButton<String>(
-              labelText: localization.autoBillOn,
-              value: settings.autoBillDate,
-              onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                  settings.rebuild((b) => b..autoBillDate = value)),
-              items: [
-                DropdownMenuItem(
-                  child: Text(localization.sendDate),
-                  value: SettingsEntity.AUTO_BILL_ON_SEND_DATE,
-                ),
-                DropdownMenuItem(
-                  child: Text(localization.dueDate),
-                  value: SettingsEntity.AUTO_BILL_ON_DUE_DATE,
-                ),
-              ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButton(
+              iconData: Icons.settings,
+              label: localization.configureGateways.toUpperCase(),
+              onPressed: () => viewModel.onConfigureGatewaysPressed(context),
             ),
-            AppDropdownButton<String>(
-                labelText: localization.useAvailableCredits,
-                value: settings.useCreditsPayment,
-                onChanged: (dynamic value) {
-                  viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..useCreditsPayment = value));
-                },
+          ),
+          SizedBox(height: 8),
+          FormCard(
+            children: <Widget>[
+              AppDropdownButton<String>(
+                  labelText: localization.autoBill,
+                  value: settings.autoBill,
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..autoBill = value)),
+                  items: [
+                    CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                    CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                    CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                    CompanyGatewayEntity.TOKEN_BILLING_OFF
+                  ]
+                      .map((value) => DropdownMenuItem(
+                            child: Text(localization.lookup(value)),
+                            value: value,
+                          ))
+                      .toList()),
+              AppDropdownButton<String>(
+                labelText: localization.autoBillOn,
+                value: settings.autoBillDate,
+                onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..autoBillDate = value)),
                 items: [
                   DropdownMenuItem(
-                    child: Text(localization.always),
-                    value: CompanyEntity.USE_CREDITS_ALWAYS,
+                    child: Text(localization.sendDate),
+                    value: SettingsEntity.AUTO_BILL_ON_SEND_DATE,
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.showOption),
-                    value: CompanyEntity.USE_CREDITS_OPTION,
+                    child: Text(localization.dueDate),
+                    value: SettingsEntity.AUTO_BILL_ON_DUE_DATE,
                   ),
-                  DropdownMenuItem(
-                    child: Text(localization.off),
-                    value: CompanyEntity.USE_CREDITS_OFF,
-                  ),
-                ]),
-            SizedBox(height: 16),
+                ],
+              ),
+              EntityDropdown(
+                entityType: EntityType.paymentType,
+                entityList:
+                    memoizedPaymentTypeList(state.staticState.paymentTypeMap),
+                labelText: localization.paymentType,
+                entityId: settings.defaultPaymentTypeId,
+                onSelected: (paymentType) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..defaultPaymentTypeId = paymentType?.id)),
+              ),
+              AppDropdownButton<String>(
+                  labelText: localization.useAvailableCredits,
+                  value: settings.useCreditsPayment,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..useCreditsPayment = value));
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(localization.always),
+                      value: CompanyEntity.USE_CREDITS_ALWAYS,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(localization.showOption),
+                      value: CompanyEntity.USE_CREDITS_OPTION,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(localization.off),
+                      value: CompanyEntity.USE_CREDITS_OFF,
+                    ),
+                  ]),
+            ],
+          ),
+          FormCard(children: [
             if (!state.uiState.settingsUIState.isFiltered)
               BoolDropdownButton(
                 label: localization.enableApplyingPaymentsLater,
@@ -163,14 +205,38 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 ),
               ),
           ]),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: AppButton(
-              iconData: Icons.settings,
-              label: localization.configureGateways.toUpperCase(),
-              onPressed: () => viewModel.onConfigureGatewaysPressed(context),
-            ),
-          ),
+          FormCard(
+            isLast: true,
+            children: [
+              BoolDropdownButton(
+                value: settings.clientOnlinePaymentNotification,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..clientOnlinePaymentNotification = value)),
+                label: localization.onlinePaymentEmail,
+                helpLabel: localization.emailReceipt,
+                iconData: Icons.email,
+              ),
+              BoolDropdownButton(
+                value: settings.clientManualPaymentNotification,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..clientManualPaymentNotification = value)),
+                label: localization.manualPaymentEmail,
+                helpLabel: localization.emailReceipt,
+                iconData: Icons.email,
+              ),
+              BoolDropdownButton(
+                value: settings.clientMarkPaidPaymentNotification,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..clientMarkPaidPaymentNotification = value)),
+                label: localization.markPaidPaymentEmail,
+                helpLabel: localization.emailReceipt,
+                iconData: Icons.email,
+              ),
+            ],
+          )
         ],
       ),
     );
