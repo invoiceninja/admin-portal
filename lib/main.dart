@@ -98,9 +98,14 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
-  SecurityContext.defaultContext.setTrustedCertificatesBytes(
-    Uint8List.fromList(isrgRootX1.codeUnits),
-  );
+
+  try {
+    SecurityContext.defaultContext.setTrustedCertificatesBytes(
+      Uint8List.fromList(isrgRootX1.codeUnits),
+    );
+  } catch (e) {
+    // Ignore CERT_ALREADY_IN_HASH_TABLE
+  }
 
   if (isDesktopOS()) {
     await windowManager.ensureInitialized();
