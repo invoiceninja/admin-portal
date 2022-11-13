@@ -37,7 +37,7 @@ bool supportsInAppPurchase() {
     return false;
   }
 
-  return isIOS();
+  return isIOS() || isAndroid();
 }
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();

@@ -126,22 +126,25 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
       stack.add(
-        Scrollbar(
-          thumbVisibility: true,
-          controller: _scrollController,
-          child: ListView(
+        Container(
+          width: double.maxFinite,
+          child: Scrollbar(
+            thumbVisibility: true,
             controller: _scrollController,
-            children: <Widget>[
-              if (Platform.isIOS)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Text(
-                    'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+            child: ListView(
+              controller: _scrollController,
+              children: <Widget>[
+                if (Platform.isIOS)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
                   ),
-                ),
-              _buildProductList(),
-            ],
+                _buildProductList(),
+              ],
+            ),
           ),
         ),
       );
@@ -292,7 +295,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final data = {
       'inapp_transaction_id': purchaseDetails.purchaseID,
       'key': state.account.key,
-      'plan': purchaseDetails.productID,
+      'plan': purchaseDetails.productID.replaceAll('-', '_'),
       'plan_paid': (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
     };
 

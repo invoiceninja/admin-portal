@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
@@ -18,28 +17,12 @@ class ReviewApp extends StatefulWidget {
 }
 
 class _ReviewAppState extends State<ReviewApp> {
-  bool _likesTheApp;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (isApple()) {
-      _likesTheApp = true;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
 
     if (kIsWeb || isLinux()) {
-      return SizedBox();
-    }
-
-    // TODO remove this code
-    if (isWindows()) {
       return SizedBox();
     }
 
@@ -50,13 +33,7 @@ class _ReviewAppState extends State<ReviewApp> {
         children: [
           SizedBox(height: 12),
           Text(
-            isApple()
-                ? localization.wouldYouRateTheApp
-                : _likesTheApp == null
-                    ? localization.areYouEnjoyingTheApp
-                    : _likesTheApp == true
-                        ? localization.wouldYouRateIt
-                        : localization.wouldYouTellUsMore,
+            localization.wouldYouRateTheApp,
             style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
@@ -65,40 +42,25 @@ class _ReviewAppState extends State<ReviewApp> {
             children: [
               TextButton(
                 onPressed: () async {
-                  if (_likesTheApp == null) {
-                    setState(() {
-                      _likesTheApp = true;
-                    });
+                  // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
+                  if (isAndroid()) {
+                    AppReview.openStoreListing();
+                  } else if (await AppReview.isAvailable()) {
+                    AppReview.requestReview();
+                  } else if (kIsWeb || isLinux()) {
+                    launchUrl(Uri.parse(getRateAppURL(context)));
                   } else {
-                    if (_likesTheApp == true) {
-                      // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
-                      if (isAndroid()) {
-                        AppReview.openStoreListing();
-                      } else if (await AppReview.isAvailable()) {
-                        AppReview.requestReview();
-                      } else if (kIsWeb || isLinux()) {
-                        launchUrl(Uri.parse(getRateAppURL(context)));
-                      } else {
-                        AppReview.openStoreListing();
-                      }
-                    } else {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) => ContactUsDialog(),
-                      );
-                    }
-
-                    store.dispatch(DismissReviewAppPermanently());
+                    AppReview.openStoreListing();
                   }
+
+                  store.dispatch(DismissReviewAppPermanently());
                 },
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 100),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text(
-                      _likesTheApp == null
-                          ? localization.yesItsGreat
-                          : localization.sureHappyTo,
+                      localization.sureHappyTo,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -106,22 +68,14 @@ class _ReviewAppState extends State<ReviewApp> {
               ),
               TextButton(
                 onPressed: () async {
-                  if (_likesTheApp == null) {
-                    setState(() {
-                      _likesTheApp = false;
-                    });
-                  } else {
-                    store.dispatch(DismissReviewAppPermanently());
-                  }
+                  store.dispatch(DismissReviewAppPermanently());
                 },
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 100),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text(
-                      _likesTheApp == null
-                          ? localization.notSoMuch
-                          : localization.noNotNow,
+                      localization.noNotNow,
                       textAlign: TextAlign.center,
                     ),
                   ),
