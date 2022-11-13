@@ -31,20 +31,6 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 // TODO remove this function
 bool supportsMicrosoftOAuth() => kIsWeb;
 
-// TODO remove this function
-bool supportsBankAccounts() {
-  if (!kReleaseMode) {
-    return true;
-  }
-
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
-  if (store.state.isSelfHosted) {
-    return true;
-  }
-
-  return false;
-}
-
 bool supportsInAppPurchase() {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   if (store.state.isSelfHosted) {
