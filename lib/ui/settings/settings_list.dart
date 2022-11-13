@@ -204,7 +204,7 @@ class _SettingsListState extends State<SettingsList> {
               section: kSettingsTemplatesAndReminders,
               viewModel: widget.viewModel,
             ),
-            if (showAll && supportsBankAccounts())
+            if (showAll)
               SettingsListTile(
                 section: kSettingsBankAccounts,
                 viewModel: widget.viewModel,
@@ -574,12 +574,11 @@ class SettingsSearch extends StatelessWidget {
           'late_fees',
         ]
       ],
-      if (supportsBankAccounts())
-        kSettingsBankAccounts: [
-          [
-            'bank_accounts',
-          ],
+      kSettingsBankAccounts: [
+        [
+          'bank_accounts',
         ],
+      ],
       kSettingsGroupSettings: [
         [
           'groups',

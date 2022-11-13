@@ -285,7 +285,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ),
                         ),
                     ],
-                  ] else
+                  ] else ...[
                     OutlinedButton(
                       child: Text(localization.setDefaultDesign.toUpperCase()),
                       onPressed: () {
@@ -296,6 +296,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ));
                       },
                     ),
+                    SizedBox(height: 16),
+                  ],
                   AppDropdownButton(
                     labelText: localization.pageLayout,
                     value: settings.pageLayout,
