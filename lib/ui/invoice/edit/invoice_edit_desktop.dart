@@ -124,6 +124,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   @override
   void didChangeDependencies() {
+    _saveDefaultTerms = false;
+    _saveDefaultFooter = false;
+
     _controllers = [
       _invoiceNumberController,
       _poNumberController,
