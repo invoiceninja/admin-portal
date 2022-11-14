@@ -214,6 +214,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.entityViewModel;
+    viewModel.onSavePressed(context, _saveDefaultTerms, _saveDefaultFooter);
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -457,8 +462,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               controller: _partialController,
                               keyboardType: TextInputType.numberWithOptions(
                                   decimal: true, signed: true),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
+                              onSavePressed: _onSavePressed,
                               validator: (String value) {
                                 final amount =
                                     parseDouble(_partialController.text);
@@ -487,13 +491,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             controller: _custom1Controller,
                             field: CustomFieldType.invoice1,
                             value: invoice.customValue1,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           CustomField(
                             controller: _custom3Controller,
                             field: CustomFieldType.invoice3,
                             value: invoice.customValue3,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                         ],
                       ),
@@ -522,14 +526,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     .pleaseEnterAnInvoiceNumber
                                 : null,
                             keyboardType: TextInputType.text,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           if (!invoice.isPurchaseOrder)
                             DecoratedFormField(
                               label: localization.poNumber,
                               controller: _poNumberController,
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
+                              onSavePressed: _onSavePressed,
                               keyboardType: TextInputType.text,
                             ),
                           DiscountField(
@@ -562,13 +565,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             controller: _custom2Controller,
                             field: CustomFieldType.invoice2,
                             value: invoice.customValue2,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           CustomField(
                             controller: _custom4Controller,
                             field: CustomFieldType.invoice4,
                             value: invoice.customValue4,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                         ],
                       ),
@@ -851,8 +854,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         keyboardType:
                                             TextInputType.numberWithOptions(
                                                 decimal: true),
-                                        onSavePressed: widget
-                                            .entityViewModel.onSavePressed,
+                                        onSavePressed: _onSavePressed,
                                       ),
                                       if (company.hasTaxes || invoice.isInvoice)
                                         Column(
@@ -1041,8 +1043,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     surcharge3Controller: _surcharge3Controller,
                                     surcharge4Controller: _surcharge4Controller,
                                     isAfterTaxes: true,
-                                    onSavePressed:
-                                        widget.entityViewModel.onSavePressed,
+                                    onSavePressed: _onSavePressed,
                                   ),
                                 TextFormField(
                                   enabled: false,
