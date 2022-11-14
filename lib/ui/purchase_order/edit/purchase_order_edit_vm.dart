@@ -53,7 +53,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity purchaseOrder,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,

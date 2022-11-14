@@ -178,9 +178,9 @@ class SavePurchaseOrderDocumentFailure implements StopSaving {
 
 class SavePurchaseOrderRequest implements StartSaving {
   SavePurchaseOrderRequest({
-    this.completer,
-    this.purchaseOrder,
-    this.action,
+    @required this.completer,
+    @required this.purchaseOrder,
+    @required this.action,
   });
 
   final Completer completer;

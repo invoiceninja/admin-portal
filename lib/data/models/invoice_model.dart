@@ -242,6 +242,8 @@ abstract class InvoiceEntity extends Object
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
       dueDateDays: 'terms',
+      saveDefaultTerms: false,
+      saveDefaultFooter: false,
     );
   }
 
@@ -602,6 +604,12 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(compare: false)
   BuiltList<ActivityEntity> get activities;
+
+  @BuiltValueField(serialize: false)
+  bool get saveDefaultTerms;
+
+  @BuiltValueField(serialize: false)
+  bool get saveDefaultFooter;
 
   bool get isApproved {
     if (isQuote &&
@@ -1481,6 +1489,8 @@ abstract class InvoiceEntity extends Object
     ..projectId = ''
     ..expenseId = ''
     ..vendorId = ''
+    ..saveDefaultTerms = false
+    ..saveDefaultFooter = false
     ..autoBillEnabled = false
     ..subscriptionId = '';
 

@@ -419,7 +419,11 @@ Middleware<AppState> _savePurchaseOrder(PurchaseOrderRepository repository) {
           action.purchaseOrder.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedPurchaseOrder, action.action)
+        .saveData(
+      store.state.credentials,
+      updatedPurchaseOrder,
+      action.action,
+    )
         .then((InvoiceEntity purchaseOrder) {
       if (action.purchaseOrder.isNew) {
         store.dispatch(AddPurchaseOrderSuccess(purchaseOrder));

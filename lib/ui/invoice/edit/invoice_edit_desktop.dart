@@ -80,6 +80,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   TabController _tableTabController;
 
   bool _showTasksTable = false;
+  bool _showSaveDefault = false;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -108,6 +109,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final invoice = widget.viewModel.invoice;
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
+    _showSaveDefault = false &&
+        (invoice.isInvoice ||
+            invoice.isQuote ||
+            invoice.isCredit ||
+            invoice.isPurchaseOrder);
 
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 6);
@@ -205,6 +211,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         widget.viewModel.onChanged(invoice);
       });
     }
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.entityViewModel;
+    viewModel.onSavePressed(context);
   }
 
   @override
@@ -450,8 +461,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               controller: _partialController,
                               keyboardType: TextInputType.numberWithOptions(
                                   decimal: true, signed: true),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
+                              onSavePressed: _onSavePressed,
                               validator: (String value) {
                                 final amount =
                                     parseDouble(_partialController.text);
@@ -480,13 +490,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             controller: _custom1Controller,
                             field: CustomFieldType.invoice1,
                             value: invoice.customValue1,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           CustomField(
                             controller: _custom3Controller,
                             field: CustomFieldType.invoice3,
                             value: invoice.customValue3,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                         ],
                       ),
@@ -515,14 +525,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     .pleaseEnterAnInvoiceNumber
                                 : null,
                             keyboardType: TextInputType.text,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           if (!invoice.isPurchaseOrder)
                             DecoratedFormField(
                               label: localization.poNumber,
                               controller: _poNumberController,
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
+                              onSavePressed: _onSavePressed,
                               keyboardType: TextInputType.text,
                             ),
                           DiscountField(
@@ -555,13 +564,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             controller: _custom2Controller,
                             field: CustomFieldType.invoice2,
                             value: invoice.customValue2,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                           CustomField(
                             controller: _custom4Controller,
                             field: CustomFieldType.invoice4,
                             value: invoice.customValue4,
-                            onSavePressed: widget.entityViewModel.onSavePressed,
+                            onSavePressed: _onSavePressed,
                           ),
                         ],
                       ),
@@ -661,29 +670,75 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ],
                           ),
                           SizedBox(
-                            height: 180,
+                            height: 186,
                             child: TabBarView(
                               controller: _optionTabController,
                               children: <Widget>[
-                                DecoratedFormField(
-                                  maxLines: 8,
-                                  controller: _termsController,
-                                  keyboardType: TextInputType.multiline,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultTerms(invoice.entityType),
+                                Column(
+                                  children: [
+                                    DecoratedFormField(
+                                      maxLines: _showSaveDefault ? 5 : 8,
+                                      controller: _termsController,
+                                      keyboardType: TextInputType.multiline,
+                                      hint: invoice.isOld &&
+                                              !invoice.isRecurringInvoice
+                                          ? ''
+                                          : settings.getDefaultTerms(
+                                              invoice.entityType),
+                                    ),
+                                    if (_showSaveDefault) ...[
+                                      SizedBox(height: 8),
+                                      CheckboxListTile(
+                                        dense: true,
+                                        value: invoice.saveDefaultTerms,
+                                        title: Text(
+                                            localization.saveAsDefaultTerms),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        onChanged: (value) {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) =>
+                                                  b..saveDefaultTerms = value));
+                                        },
+                                      ),
+                                    ],
+                                  ],
                                 ),
-                                DecoratedFormField(
-                                  maxLines: 8,
-                                  controller: _footerController,
-                                  keyboardType: TextInputType.multiline,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultFooter(invoice.entityType),
+                                Column(
+                                  children: [
+                                    DecoratedFormField(
+                                      maxLines: _showSaveDefault ? 5 : 8,
+                                      controller: _footerController,
+                                      keyboardType: TextInputType.multiline,
+                                      hint: invoice.isOld &&
+                                              !invoice.isRecurringInvoice
+                                          ? ''
+                                          : settings.getDefaultFooter(
+                                              invoice.entityType),
+                                    ),
+                                    if (_showSaveDefault) ...[
+                                      SizedBox(height: 8),
+                                      CheckboxListTile(
+                                        dense: true,
+                                        value: invoice.saveDefaultFooter,
+                                        title: Text(
+                                            localization.saveAsDefaultFooter),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        onChanged: (value) {
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) => b
+                                                ..saveDefaultFooter = value));
+                                        },
+                                      ),
+                                    ],
+                                  ],
                                 ),
                                 DecoratedFormField(
                                   maxLines: 8,
@@ -798,8 +853,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         keyboardType:
                                             TextInputType.numberWithOptions(
                                                 decimal: true),
-                                        onSavePressed: widget
-                                            .entityViewModel.onSavePressed,
+                                        onSavePressed: _onSavePressed,
                                       ),
                                       if (company.hasTaxes || invoice.isInvoice)
                                         Column(
@@ -988,8 +1042,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     surcharge3Controller: _surcharge3Controller,
                                     surcharge4Controller: _surcharge4Controller,
                                     isAfterTaxes: true,
-                                    onSavePressed:
-                                        widget.entityViewModel.onSavePressed,
+                                    onSavePressed: _onSavePressed,
                                   ),
                                 TextFormField(
                                   enabled: false,

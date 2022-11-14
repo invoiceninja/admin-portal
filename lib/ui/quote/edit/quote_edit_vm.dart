@@ -21,7 +21,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_edit.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -53,7 +53,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity invoice,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,

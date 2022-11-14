@@ -94,6 +94,13 @@ class PurchaseOrderRepository {
       url += '&accept=true';
     }
 
+    if (purchaseOrder.saveDefaultTerms) {
+      url += '&save_default_terms=true';
+    }
+    if (purchaseOrder.saveDefaultFooter) {
+      url += '&save_default_footer=true';
+    }
+
     if (purchaseOrder.isNew) {
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));

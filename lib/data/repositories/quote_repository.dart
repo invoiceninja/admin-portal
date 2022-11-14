@@ -96,6 +96,13 @@ class QuoteRepository {
       url += '&approve=true';
     }
 
+    if (quote.saveDefaultTerms) {
+      url += '&save_default_terms=true';
+    }
+    if (quote.saveDefaultFooter) {
+      url += '&save_default_footer=true';
+    }
+
     if (quote.isNew) {
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));

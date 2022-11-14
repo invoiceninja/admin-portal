@@ -97,6 +97,13 @@ class InvoiceRepository {
       url += '&cancel=true';
     }
 
+    if (invoice.saveDefaultTerms) {
+      url += '&save_default_terms=true';
+    }
+    if (invoice.saveDefaultFooter) {
+      url += '&save_default_footer=true';
+    }
+
     if (invoice.isNew) {
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));

@@ -1531,6 +1531,10 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<ActivityEntity> activities;
   @override
+  final bool saveDefaultTerms;
+  @override
+  final bool saveDefaultFooter;
+  @override
   final int loadedAt;
   @override
   final bool isChanged;
@@ -1617,6 +1621,8 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invitations,
       this.documents,
       this.activities,
+      this.saveDefaultTerms,
+      this.saveDefaultFooter,
       this.loadedAt,
       this.isChanged,
       this.createdAt,
@@ -1721,6 +1727,10 @@ class _$InvoiceEntity extends InvoiceEntity {
     BuiltValueNullFieldError.checkNotNull(
         activities, 'InvoiceEntity', 'activities');
     BuiltValueNullFieldError.checkNotNull(
+        saveDefaultTerms, 'InvoiceEntity', 'saveDefaultTerms');
+    BuiltValueNullFieldError.checkNotNull(
+        saveDefaultFooter, 'InvoiceEntity', 'saveDefaultFooter');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, 'InvoiceEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, 'InvoiceEntity', 'updatedAt');
@@ -1801,6 +1811,8 @@ class _$InvoiceEntity extends InvoiceEntity {
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         documents == other.documents &&
+        saveDefaultTerms == other.saveDefaultTerms &&
+        saveDefaultFooter == other.saveDefaultFooter &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1833,17 +1845,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
-                                                                                remainingCycles.hashCode),
-                                                                            dueDateDays.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    recurringId.hashCode),
-                                                                autoBillEnabled.hashCode),
-                                                            filename.hashCode),
-                                                        recurringDates.hashCode),
-                                                    lineItems.hashCode),
-                                                invitations.hashCode),
-                                            documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
+                                                                                invoiceId.hashCode),
+                                                                            recurringId.hashCode),
+                                                                        autoBillEnabled.hashCode),
+                                                                    filename.hashCode),
+                                                                recurringDates.hashCode),
+                                                            lineItems.hashCode),
+                                                        invitations.hashCode),
+                                                    documents.hashCode),
+                                                saveDefaultTerms.hashCode),
+                                            saveDefaultFooter.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1920,6 +1932,8 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invitations', invitations)
           ..add('documents', documents)
           ..add('activities', activities)
+          ..add('saveDefaultTerms', saveDefaultTerms)
+          ..add('saveDefaultFooter', saveDefaultFooter)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -2210,6 +2224,16 @@ class InvoiceEntityBuilder
   set activities(ListBuilder<ActivityEntity> activities) =>
       _$this._activities = activities;
 
+  bool _saveDefaultTerms;
+  bool get saveDefaultTerms => _$this._saveDefaultTerms;
+  set saveDefaultTerms(bool saveDefaultTerms) =>
+      _$this._saveDefaultTerms = saveDefaultTerms;
+
+  bool _saveDefaultFooter;
+  bool get saveDefaultFooter => _$this._saveDefaultFooter;
+  set saveDefaultFooter(bool saveDefaultFooter) =>
+      _$this._saveDefaultFooter = saveDefaultFooter;
+
   int _loadedAt;
   int get loadedAt => _$this._loadedAt;
   set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
@@ -2321,6 +2345,8 @@ class InvoiceEntityBuilder
       _invitations = $v.invitations.toBuilder();
       _documents = $v.documents.toBuilder();
       _activities = $v.activities.toBuilder();
+      _saveDefaultTerms = $v.saveDefaultTerms;
+      _saveDefaultFooter = $v.saveDefaultFooter;
       _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -2424,6 +2450,8 @@ class InvoiceEntityBuilder
               invitations: invitations.build(),
               documents: documents.build(),
               activities: activities.build(),
+              saveDefaultTerms: BuiltValueNullFieldError.checkNotNull(saveDefaultTerms, 'InvoiceEntity', 'saveDefaultTerms'),
+              saveDefaultFooter: BuiltValueNullFieldError.checkNotNull(saveDefaultFooter, 'InvoiceEntity', 'saveDefaultFooter'),
               loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'InvoiceEntity', 'createdAt'),

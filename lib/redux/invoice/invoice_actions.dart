@@ -199,9 +199,9 @@ class DeleteInvoiceItem implements PersistUI {
 
 class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
-    this.completer,
-    this.invoice,
-    this.entityAction,
+    @required this.completer,
+    @required this.invoice,
+    @required this.entityAction,
   });
 
   final Completer completer;
