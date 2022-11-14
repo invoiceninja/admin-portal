@@ -77,7 +77,7 @@ class _QuoteEditState extends State<QuoteEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    widget.viewModel.onSavePressed(context, false, false, action);
   }
 
   @override

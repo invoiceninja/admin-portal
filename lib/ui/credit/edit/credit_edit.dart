@@ -77,7 +77,7 @@ class _CreditEditState extends State<CreditEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    widget.viewModel.onSavePressed(context, false, false, action);
   }
 
   @override

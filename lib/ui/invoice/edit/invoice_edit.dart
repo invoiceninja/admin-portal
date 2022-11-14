@@ -85,10 +85,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
           context: context,
           message: AppLocalization.of(context).cancelInvoice,
           callback: (_) {
-            widget.viewModel.onSavePressed(context, action);
+            widget.viewModel.onSavePressed(context, false, false, action);
           });
     } else {
-      widget.viewModel.onSavePressed(context, action);
+      widget.viewModel.onSavePressed(context, false, false, action);
     }
   }
 

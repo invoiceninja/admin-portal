@@ -53,7 +53,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity invoice,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext) onSavePressed,
+    Function(BuildContext, [bool, bool, EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -84,7 +84,8 @@ class CreditEditVM extends AbstractInvoiceEditVM {
       invoice: credit,
       invoiceItemIndex: state.creditUIState.editingItemIndex,
       origInvoice: store.state.creditState.map[credit.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context,
+          [saveDefaultTerms, saveDefaultFooter, EntityAction action]) {
         Debouncer.runOnComplete(() {
           final credit = store.state.creditUIState.editing;
           final localization = navigatorKey.localization;

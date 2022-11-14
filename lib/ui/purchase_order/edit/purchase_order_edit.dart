@@ -77,7 +77,7 @@ class _PurchaseOrderEditState extends State<PurchaseOrderEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    widget.viewModel.onSavePressed(context, false, false, action);
   }
 
   @override
