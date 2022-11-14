@@ -342,8 +342,7 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
           .replace(action.quote.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedQuote, action.action,
-            action.saveDefaultTerms, action.saveDefaultFooter)
+        .saveData(store.state.credentials, updatedQuote, action.action)
         .then((InvoiceEntity quote) {
       if (action.quote.isNew) {
         store.dispatch(AddQuoteSuccess(quote));

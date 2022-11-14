@@ -76,8 +76,6 @@ class InvoiceRepository {
     Credentials credentials,
     InvoiceEntity invoice, {
     EntityAction action,
-    bool saveDefaultTerms,
-    bool saveDefaultFooter,
   }) async {
     invoice = invoice.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
@@ -99,10 +97,10 @@ class InvoiceRepository {
       url += '&cancel=true';
     }
 
-    if (saveDefaultTerms) {
+    if (invoice.saveDefaultTerms) {
       url += '&save_default_terms=true';
     }
-    if (saveDefaultFooter) {
+    if (invoice.saveDefaultFooter) {
       url += '&save_default_footer=true';
     }
 

@@ -66,7 +66,7 @@ abstract class AbstractInvoiceEditVM {
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
   final InvoiceEntity origInvoice;
-  final Function(BuildContext, [bool, bool, EntityAction]) onSavePressed;
+  final Function(BuildContext, [EntityAction]) onSavePressed;
   final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
@@ -81,7 +81,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity invoice,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext, [bool, bool, EntityAction]) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -112,8 +112,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
       invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onSavePressed: (BuildContext context,
-          [saveDefaultTerms, saveDefaultFooter, EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final invoice = store.state.invoiceUIState.editing;
           final localization = navigatorKey.localization;
@@ -164,8 +163,6 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               invoice: invoice,
               entityAction: action,
-              saveDefaultFooter: saveDefaultFooter,
-              saveDefaultTerms: saveDefaultTerms,
             ));
             return completer.future.then((savedInvoice) {
               showToast(invoice.isNew

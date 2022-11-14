@@ -53,7 +53,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity purchaseOrder,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext, [bool, bool, EntityAction]) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -84,8 +84,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
       purchaseOrder: purchaseOrder,
       invoiceItemIndex: state.purchaseOrderUIState.editingItemIndex,
       origInvoice: store.state.purchaseOrderState.map[purchaseOrder.id],
-      onSavePressed: (BuildContext context,
-          [saveDefaultTerms, saveDefaultFooter, EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final purchaseOrder = store.state.purchaseOrderUIState.editing;
           final localization = navigatorKey.localization;
@@ -110,8 +109,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               purchaseOrder: purchaseOrder,
               action: action,
-              saveDefaultTerms: saveDefaultTerms,
-              saveDefaultFooter: saveDefaultFooter,
             ));
             return completer.future.then((savedPurchaseOrder) {
               showToast(purchaseOrder.isNew

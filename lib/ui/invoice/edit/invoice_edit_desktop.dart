@@ -81,8 +81,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   bool _showTasksTable = false;
   bool _showSaveDefault = false;
-  bool _saveDefaultTerms = false;
-  bool _saveDefaultFooter = false;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -124,9 +122,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   @override
   void didChangeDependencies() {
-    _saveDefaultTerms = false;
-    _saveDefaultFooter = false;
-
     _controllers = [
       _invoiceNumberController,
       _poNumberController,
@@ -219,7 +214,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   void _onSavePressed(BuildContext context) {
     final viewModel = widget.entityViewModel;
-    viewModel.onSavePressed(context, _saveDefaultTerms, _saveDefaultFooter);
+    viewModel.onSavePressed(context);
   }
 
   @override
@@ -694,7 +689,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       SizedBox(height: 8),
                                       CheckboxListTile(
                                         dense: true,
-                                        value: _saveDefaultTerms,
+                                        value: invoice.saveDefaultTerms,
                                         title: Text(
                                             localization.saveAsDefaultTerms),
                                         controlAffinity:
@@ -703,9 +698,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             .colorScheme
                                             .secondary,
                                         onChanged: (value) {
-                                          setState(() {
-                                            _saveDefaultTerms = value;
-                                          });
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) =>
+                                                  b..saveDefaultTerms = value));
                                         },
                                       ),
                                     ],
@@ -727,7 +722,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       SizedBox(height: 8),
                                       CheckboxListTile(
                                         dense: true,
-                                        value: _saveDefaultFooter,
+                                        value: invoice.saveDefaultFooter,
                                         title: Text(
                                             localization.saveAsDefaultFooter),
                                         controlAffinity:
@@ -736,9 +731,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             .colorScheme
                                             .secondary,
                                         onChanged: (value) {
-                                          setState(() {
-                                            _saveDefaultFooter = value;
-                                          });
+                                          viewModel.onChanged(invoice.rebuild(
+                                              (b) => b
+                                                ..saveDefaultFooter = value));
                                         },
                                       ),
                                     ],

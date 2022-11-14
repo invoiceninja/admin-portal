@@ -76,7 +76,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, false, false, action);
+    widget.viewModel.onSavePressed(context, action);
   }
 
   @override

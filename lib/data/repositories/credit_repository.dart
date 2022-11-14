@@ -75,8 +75,6 @@ class CreditRepository {
     Credentials credentials,
     InvoiceEntity credit,
     EntityAction action,
-    bool saveDefaultTerms,
-    bool saveDefaultFooter,
   ) async {
     credit = credit.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, credit);

@@ -384,8 +384,6 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       store.state.credentials,
       updatedInvoice,
       action: action.entityAction,
-      saveDefaultTerms: action.saveDefaultTerms,
-      saveDefaultFooter: action.saveDefaultFooter,
     )
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {

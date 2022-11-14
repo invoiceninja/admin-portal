@@ -181,15 +181,11 @@ class SavePurchaseOrderRequest implements StartSaving {
     @required this.completer,
     @required this.purchaseOrder,
     @required this.action,
-    @required this.saveDefaultTerms,
-    @required this.saveDefaultFooter,
   });
 
   final Completer completer;
   final InvoiceEntity purchaseOrder;
   final EntityAction action;
-  final bool saveDefaultTerms;
-  final bool saveDefaultFooter;
 }
 
 class SavePurchaseOrderSuccess implements StopSaving, PersistData, PersistUI {

@@ -53,7 +53,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity invoice,
     int invoiceItemIndex,
     InvoiceEntity origInvoice,
-    Function(BuildContext, [bool, bool, EntityAction]) onSavePressed,
+    Function(BuildContext, [EntityAction]) onSavePressed,
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -84,8 +84,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
       invoice: quote,
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
-      onSavePressed: (BuildContext context,
-          [saveDefaultTerms, saveDefaultFooter, EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction action]) {
         Debouncer.runOnComplete(() {
           final quote = store.state.quoteUIState.editing;
           final localization = navigatorKey.localization;
@@ -110,8 +109,6 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               quote: quote,
               action: action,
-              saveDefaultTerms: saveDefaultTerms,
-              saveDefaultFooter: saveDefaultFooter,
             ));
             return completer.future.then((savedQuote) {
               showToast(quote.isNew
