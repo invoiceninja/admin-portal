@@ -302,7 +302,8 @@ Middleware<AppState> _saveCredit(CreditRepository repository) {
           .replace(action.credit.lineItems.where((item) => !item.isEmpty)));
 
     repository
-        .saveData(store.state.credentials, updatedCredit, action.action)
+        .saveData(store.state.credentials, updatedCredit, action.action,
+            action.saveDefaultTerms, action.saveDefaultFooter)
         .then((InvoiceEntity credit) {
       if (action.credit.isNew) {
         store.dispatch(AddCreditSuccess(credit));

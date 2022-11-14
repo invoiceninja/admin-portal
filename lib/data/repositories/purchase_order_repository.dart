@@ -74,6 +74,8 @@ class PurchaseOrderRepository {
     Credentials credentials,
     InvoiceEntity purchaseOrder,
     EntityAction action,
+    bool saveDefaultTerms,
+    bool saveDefaultFooter,
   ) async {
     purchaseOrder = purchaseOrder.rebuild((b) => b..documents.clear());
     final data =
@@ -92,6 +94,13 @@ class PurchaseOrderRepository {
       url += '&mark_sent=true';
     } else if (action == EntityAction.accept) {
       url += '&accept=true';
+    }
+
+    if (saveDefaultTerms) {
+      url += '&save_default_terms=true';
+    }
+    if (saveDefaultFooter) {
+      url += '&save_default_footer=true';
     }
 
     if (purchaseOrder.isNew) {

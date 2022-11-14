@@ -76,6 +76,8 @@ class QuoteRepository {
     Credentials credentials,
     InvoiceEntity quote,
     EntityAction action,
+    bool saveDefaultTerms,
+    bool saveDefaultFooter,
   ) async {
     quote = quote.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
@@ -94,6 +96,13 @@ class QuoteRepository {
       url += '&mark_sent=true';
     } else if (action == EntityAction.approve) {
       url += '&approve=true';
+    }
+
+    if (saveDefaultTerms) {
+      url += '&save_default_terms=true';
+    }
+    if (saveDefaultFooter) {
+      url += '&save_default_footer=true';
     }
 
     if (quote.isNew) {
