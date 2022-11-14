@@ -772,7 +772,7 @@ abstract class TaskEntity extends Object
       } else if (status.id == kTaskStatusLogged && isStopped && !isInvoiced) {
         return true;
       } else if (status.id == statusId) {
-        return true;
+        return !isInvoiced;
       }
     }
 
