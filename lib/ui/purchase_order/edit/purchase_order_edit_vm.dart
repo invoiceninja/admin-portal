@@ -110,6 +110,8 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               purchaseOrder: purchaseOrder,
               action: action,
+              saveDefaultTerms: saveDefaultTerms,
+              saveDefaultFooter: saveDefaultFooter,
             ));
             return completer.future.then((savedPurchaseOrder) {
               showToast(purchaseOrder.isNew

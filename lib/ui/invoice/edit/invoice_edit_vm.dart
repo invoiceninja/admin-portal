@@ -164,6 +164,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               invoice: invoice,
               entityAction: action,
+              saveDefaultFooter: saveDefaultFooter,
+              saveDefaultTerms: saveDefaultTerms,
             ));
             return completer.future.then((savedInvoice) {
               showToast(invoice.isNew

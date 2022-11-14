@@ -201,11 +201,15 @@ class SaveCreditRequest implements StartSaving {
     @required this.completer,
     @required this.credit,
     @required this.action,
+    @required this.saveDefaultTerms,
+    @required this.saveDefaultFooter,
   });
 
   final Completer completer;
   final InvoiceEntity credit;
   final EntityAction action;
+  final bool saveDefaultTerms;
+  final bool saveDefaultFooter;
 }
 
 class SaveCreditSuccess implements StopSaving, PersistData, PersistUI {

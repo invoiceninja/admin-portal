@@ -110,6 +110,8 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               quote: quote,
               action: action,
+              saveDefaultTerms: saveDefaultTerms,
+              saveDefaultFooter: saveDefaultFooter,
             ));
             return completer.future.then((savedQuote) {
               showToast(quote.isNew

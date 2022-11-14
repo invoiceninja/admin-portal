@@ -111,6 +111,8 @@ class CreditEditVM extends AbstractInvoiceEditVM {
               completer: completer,
               credit: credit,
               action: action,
+              saveDefaultTerms: saveDefaultTerms,
+              saveDefaultFooter: saveDefaultFooter,
             ));
             return completer.future.then((savedCredit) {
               showToast(credit.isNew
