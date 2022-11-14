@@ -80,6 +80,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   TabController _tableTabController;
 
   bool _showTasksTable = false;
+  bool _showSaveDefault = false;
+  bool _saveDefaultTerms = false;
+  bool _saveDefaultFooter = false;
   FocusNode _focusNode;
 
   final _invoiceNumberController = TextEditingController();
@@ -108,6 +111,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final invoice = widget.viewModel.invoice;
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
+    _showSaveDefault = invoice.isInvoice ||
+        invoice.isQuote ||
+        invoice.isCredit ||
+        invoice.isPurchaseOrder;
 
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 6);
@@ -661,29 +668,75 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             ],
                           ),
                           SizedBox(
-                            height: 180,
+                            height: 186,
                             child: TabBarView(
                               controller: _optionTabController,
                               children: <Widget>[
-                                DecoratedFormField(
-                                  maxLines: 8,
-                                  controller: _termsController,
-                                  keyboardType: TextInputType.multiline,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultTerms(invoice.entityType),
+                                Column(
+                                  children: [
+                                    DecoratedFormField(
+                                      maxLines: _showSaveDefault ? 5 : 8,
+                                      controller: _termsController,
+                                      keyboardType: TextInputType.multiline,
+                                      hint: invoice.isOld &&
+                                              !invoice.isRecurringInvoice
+                                          ? ''
+                                          : settings.getDefaultTerms(
+                                              invoice.entityType),
+                                    ),
+                                    if (_showSaveDefault) ...[
+                                      SizedBox(height: 8),
+                                      CheckboxListTile(
+                                        dense: true,
+                                        value: _saveDefaultTerms,
+                                        title: Text(
+                                            localization.saveAsDefaultTerms),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _saveDefaultTerms = value;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ],
                                 ),
-                                DecoratedFormField(
-                                  maxLines: 8,
-                                  controller: _footerController,
-                                  keyboardType: TextInputType.multiline,
-                                  hint: invoice.isOld &&
-                                          !invoice.isRecurringInvoice
-                                      ? ''
-                                      : settings
-                                          .getDefaultFooter(invoice.entityType),
+                                Column(
+                                  children: [
+                                    DecoratedFormField(
+                                      maxLines: _showSaveDefault ? 5 : 8,
+                                      controller: _footerController,
+                                      keyboardType: TextInputType.multiline,
+                                      hint: invoice.isOld &&
+                                              !invoice.isRecurringInvoice
+                                          ? ''
+                                          : settings.getDefaultFooter(
+                                              invoice.entityType),
+                                    ),
+                                    if (_showSaveDefault) ...[
+                                      SizedBox(height: 8),
+                                      CheckboxListTile(
+                                        dense: true,
+                                        value: _saveDefaultFooter,
+                                        title: Text(
+                                            localization.saveAsDefaultFooter),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _saveDefaultFooter = value;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ],
                                 ),
                                 DecoratedFormField(
                                   maxLines: 8,
