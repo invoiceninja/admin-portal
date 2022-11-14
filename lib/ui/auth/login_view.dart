@@ -264,16 +264,26 @@ class _LoginState extends State<LoginView> {
                 : kAppProductionUrl;
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
-      if (_disable2FA) {
-        _buttonController.reset();
-        _disable2FA = false;
-        _recoverPassword = false;
-        showDialog<void>(
-          context: context,
-          builder: (BuildContext context) => UserSmsVerification(
-            email: _emailController.text.trim(),
-          ),
-        );
+      if (_recoverPassword) {
+        if (_disable2FA) {
+          _buttonController.reset();
+          _disable2FA = false;
+          _recoverPassword = false;
+          showDialog<void>(
+            context: context,
+            builder: (BuildContext context) => UserSmsVerification(
+              email: _emailController.text.trim(),
+            ),
+          );
+        } else {
+          viewModel.onRecoverPressed(
+            context,
+            completer,
+            email: _emailController.text,
+            url: url,
+            secret: _isSelfHosted ? _secretController.text : '',
+          );
+        }
       } else {
         viewModel.onLoginPressed(
           context,

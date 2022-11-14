@@ -109,10 +109,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final invoice = widget.viewModel.invoice;
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
-    _showSaveDefault = invoice.isInvoice ||
-        invoice.isQuote ||
-        invoice.isCredit ||
-        invoice.isPurchaseOrder;
+    _showSaveDefault = false &&
+        (invoice.isInvoice ||
+            invoice.isQuote ||
+            invoice.isCredit ||
+            invoice.isPurchaseOrder);
 
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 6);
