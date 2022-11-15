@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/repositories/purchase_order_repository.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
@@ -530,11 +531,10 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
       action.page,
       state.createdAtLimit,
       //state.filterDeletedClients,
-      state.recordsPerPage,
     )
         .then((data) {
       store.dispatch(LoadPurchaseOrdersSuccess(data));
-      if (data.length == state.recordsPerPage) {
+      if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadPurchaseOrders(
           completer: action.completer,
           page: action.page + 1,

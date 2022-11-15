@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 // Package imports:
@@ -306,11 +307,10 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
       action.page,
       state.createdAtLimit,
       state.filterDeletedClients,
-      state.recordsPerPage,
     )
         .then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
-      if (data.length == state.recordsPerPage) {
+      if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadPayments(
           completer: action.completer,
           page: action.page + 1,

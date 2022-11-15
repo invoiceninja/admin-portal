@@ -774,9 +774,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get reportErrors => account?.reportErrors ?? false;
 
-  int get recordsPerPage =>
-      isHosted ? kHostedRecordsPerPage : kSelfhostedRecordsPerPage;
-
   bool get isHosted => account == null ? authState.isHosted : account.isHosted;
 
   bool get isSelfHosted => !isHosted;

@@ -38,9 +38,9 @@ class ProductRepository {
   }
 
   Future<BuiltList<ProductEntity>> loadList(
-      Credentials credentials, int page, int recordsPerPage) async {
+      Credentials credentials, int page) async {
     final url =
-        credentials.url + '/products?per_page=$recordsPerPage&page=$page';
+        credentials.url + '/products?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
