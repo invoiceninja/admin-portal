@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -24,7 +25,6 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, EmailPurchaseOrderVM>(
-      /*
       onInit: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
@@ -34,7 +34,6 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
           store.dispatch(LoadVendor(vendorId: vendor.id));
         }
       },
-      */
       converter: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
