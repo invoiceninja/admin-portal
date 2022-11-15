@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
@@ -41,7 +42,8 @@ class DismissibleEntity extends StatelessWidget {
         store.state.getListState(entity.entityType).isInMultiselect();
 
     final widget = SelectedIndicator(
-      isSelected: isSelected &&
+      isSelected: isDesktop(context) &&
+          isSelected &&
           showCheckbox &&
           isDismissible &&
           !isMultiselect &&
