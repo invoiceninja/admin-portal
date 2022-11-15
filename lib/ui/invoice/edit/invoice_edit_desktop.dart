@@ -676,15 +676,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               children: <Widget>[
                                 Column(
                                   children: [
-                                    DecoratedFormField(
-                                      maxLines: _showSaveDefault ? 5 : 8,
-                                      controller: _termsController,
-                                      keyboardType: TextInputType.multiline,
-                                      hint: invoice.isOld &&
-                                              !invoice.isRecurringInvoice
-                                          ? ''
-                                          : settings.getDefaultTerms(
-                                              invoice.entityType),
+                                    Expanded(
+                                      child: DecoratedFormField(
+                                        maxLines: _showSaveDefault ? 5 : 8,
+                                        controller: _termsController,
+                                        keyboardType: TextInputType.multiline,
+                                        hint: invoice.isOld &&
+                                                !invoice.isRecurringInvoice
+                                            ? ''
+                                            : settings.getDefaultTerms(
+                                                invoice.entityType),
+                                      ),
                                     ),
                                     if (_showSaveDefault) ...[
                                       SizedBox(height: 8),
@@ -709,15 +711,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                                 Column(
                                   children: [
-                                    DecoratedFormField(
-                                      maxLines: _showSaveDefault ? 5 : 8,
-                                      controller: _footerController,
-                                      keyboardType: TextInputType.multiline,
-                                      hint: invoice.isOld &&
-                                              !invoice.isRecurringInvoice
-                                          ? ''
-                                          : settings.getDefaultFooter(
-                                              invoice.entityType),
+                                    Expanded(
+                                      child: DecoratedFormField(
+                                        maxLines: _showSaveDefault ? 5 : 8,
+                                        controller: _footerController,
+                                        keyboardType: TextInputType.multiline,
+                                        hint: invoice.isOld &&
+                                                !invoice.isRecurringInvoice
+                                            ? ''
+                                            : settings.getDefaultFooter(
+                                                invoice.entityType),
+                                      ),
                                     ),
                                     if (_showSaveDefault) ...[
                                       SizedBox(height: 8),
