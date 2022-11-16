@@ -31,10 +31,9 @@ class PurchaseOrderRepository {
     int page,
     int createdAt,
     //bool filterDeleted,
-    int recordsPerPage,
   ) async {
     final url = credentials.url +
-        '/purchase_orders?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
+        '/purchase_orders?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /*
     if (filterDeleted) {

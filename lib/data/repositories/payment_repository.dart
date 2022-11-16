@@ -37,9 +37,9 @@ class PaymentRepository {
   }
 
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials, int page,
-      int createdAt, bool filterDeleted, int recordsPerPage) async {
+      int createdAt, bool filterDeleted) async {
     String url = credentials.url +
-        '/payments?per_page=$recordsPerPage&page=$page&created_at=$createdAt';
+        '/payments?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';

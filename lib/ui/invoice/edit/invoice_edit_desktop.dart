@@ -109,11 +109,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final invoice = widget.viewModel.invoice;
     _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
-    _showSaveDefault = false &&
-        (invoice.isInvoice ||
-            invoice.isQuote ||
-            invoice.isCredit ||
-            invoice.isPurchaseOrder);
+    _showSaveDefault = invoice.isInvoice ||
+        invoice.isQuote ||
+        invoice.isCredit ||
+        invoice.isPurchaseOrder;
 
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 6);
@@ -676,15 +675,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               children: <Widget>[
                                 Column(
                                   children: [
-                                    DecoratedFormField(
-                                      maxLines: _showSaveDefault ? 5 : 8,
-                                      controller: _termsController,
-                                      keyboardType: TextInputType.multiline,
-                                      hint: invoice.isOld &&
-                                              !invoice.isRecurringInvoice
-                                          ? ''
-                                          : settings.getDefaultTerms(
-                                              invoice.entityType),
+                                    Expanded(
+                                      child: DecoratedFormField(
+                                        maxLines: _showSaveDefault ? 5 : 8,
+                                        controller: _termsController,
+                                        keyboardType: TextInputType.multiline,
+                                        hint: invoice.isOld &&
+                                                !invoice.isRecurringInvoice
+                                            ? ''
+                                            : settings.getDefaultTerms(
+                                                invoice.entityType),
+                                      ),
                                     ),
                                     if (_showSaveDefault) ...[
                                       SizedBox(height: 8),
@@ -709,15 +710,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                                 Column(
                                   children: [
-                                    DecoratedFormField(
-                                      maxLines: _showSaveDefault ? 5 : 8,
-                                      controller: _footerController,
-                                      keyboardType: TextInputType.multiline,
-                                      hint: invoice.isOld &&
-                                              !invoice.isRecurringInvoice
-                                          ? ''
-                                          : settings.getDefaultFooter(
-                                              invoice.entityType),
+                                    Expanded(
+                                      child: DecoratedFormField(
+                                        maxLines: _showSaveDefault ? 5 : 8,
+                                        controller: _footerController,
+                                        keyboardType: TextInputType.multiline,
+                                        hint: invoice.isOld &&
+                                                !invoice.isRecurringInvoice
+                                            ? ''
+                                            : settings.getDefaultFooter(
+                                                invoice.entityType),
+                                      ),
                                     ),
                                     if (_showSaveDefault) ...[
                                       SizedBox(height: 8),

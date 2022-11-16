@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -295,11 +296,9 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadClientsRequest());
-    repository
-        .loadList(state.credentials, action.page, state.recordsPerPage)
-        .then((data) {
+    repository.loadList(state.credentials, action.page).then((data) {
       store.dispatch(LoadClientsSuccess(data));
-      if (data.length == state.recordsPerPage) {
+      if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadClients(
           completer: action.completer,
           page: action.page + 1,

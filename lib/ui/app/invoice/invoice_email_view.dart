@@ -271,22 +271,27 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return SizedBox();
     }
 
-    return Stack(
-      children: [
-        if (_isLoading) LinearProgressIndicator(),
-        if (supportsInlineBrowser())
-          EmailPreview(
-            isLoading: _isLoading,
-            subject: _subjectPreview,
-            body: _emailPreview,
-          )
-        else
-          IgnorePointer(
-            child: ExampleEditor(
-              value: html2md.convert(_bodyPreview),
-            ),
-          )
-      ],
+    return Container(
+      color: Colors.white,
+      height: double.infinity,
+      child: Stack(
+        children: [
+          if (_isLoading) LinearProgressIndicator(),
+          if (supportsInlineBrowser())
+            EmailPreview(
+              isLoading: _isLoading,
+              subject: _subjectPreview,
+              body: _emailPreview,
+            )
+          else
+            IgnorePointer(
+              child: ExampleEditor(
+                value: '### $_subjectPreview\n\n\n' +
+                    html2md.convert(_bodyPreview),
+              ),
+            )
+        ],
+      ),
     );
   }
 
@@ -438,13 +443,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     ),
                     Expanded(
                       flex: supportsInlineBrowser() ? 3 : 2,
-                      child: Container(
-                        child: _buildPreview(context),
-                        color: supportsInlineBrowser()
-                            ? Colors.white
-                            : const Color(0xFFE4E8EB),
-                        height: double.infinity,
-                      ),
+                      child: _buildPreview(context),
                     ),
                   ],
                 ],
@@ -521,11 +520,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ],
             ),
             _buildEdit(context),
-            invoice.isCredit
-                ? CreditPdfScreen(showAppBar: false)
-                : invoice.isQuote
-                    ? QuotePdfScreen(showAppBar: false)
-                    : InvoicePdfScreen(showAppBar: false),
+            invoice.isPurchaseOrder
+                ? PurchaseOrderPdfScreen(showAppBar: false)
+                : invoice.isCredit
+                    ? CreditPdfScreen(showAppBar: false)
+                    : invoice.isQuote
+                        ? QuotePdfScreen(showAppBar: false)
+                        : InvoicePdfScreen(showAppBar: false),
             _buildHistory(context),
           ],
         ),
