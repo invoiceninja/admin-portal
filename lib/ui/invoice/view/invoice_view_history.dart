@@ -82,12 +82,12 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
                 personName,
           ),
           subtitle: Text(formatDate(
-                convertTimestampToDateString(history.createdAt),
+                convertTimestampToDateString(activity.updatedAt),
                 context,
                 showTime: true,
               ) +
               ' • ' +
-              timeago.format(convertTimestampToDate(history.createdAt),
+              timeago.format(convertTimestampToDate(activity.updatedAt),
                   locale: localeSelector(state, twoLetter: true))),
           trailing: Icon(Icons.chevron_right),
           onTap: () =>
