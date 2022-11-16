@@ -817,7 +817,7 @@ abstract class GatewayEntity extends Object
         options.values
             .where((option) => option.supportTokenBilling)
             .isNotEmpty) {
-      return 'AutoBill';
+      return 'Auto-Bill';
     }
 
     final gatewayIds = options.keys.toList();
