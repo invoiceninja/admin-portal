@@ -94,15 +94,6 @@ class _PaymentSettingsState extends State<PaymentSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: AppButton(
-              iconData: Icons.settings,
-              label: localization.configureGateways.toUpperCase(),
-              onPressed: () => viewModel.onConfigureGatewaysPressed(context),
-            ),
-          ),
-          SizedBox(height: 8),
           FormCard(
             children: <Widget>[
               AppDropdownButton<String>(
@@ -170,6 +161,15 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   ]),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButton(
+              iconData: Icons.settings,
+              label: localization.configureGateways.toUpperCase(),
+              onPressed: () => viewModel.onConfigureGatewaysPressed(context),
+            ),
+          ),
+          SizedBox(height: 8),
           FormCard(children: [
             if (!state.uiState.settingsUIState.isFiltered)
               BoolDropdownButton(
