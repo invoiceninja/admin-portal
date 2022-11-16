@@ -28,7 +28,7 @@ class _ProductSettingsState extends State<ProductSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productSettings');
   FocusScopeNode _focusNode;
-  final _debouncer = Debouncer(sendFirstAction: true);
+  final _debouncer = Debouncer();
   final _stockThresholdController = TextEditingController();
   List<TextEditingController> _controllers = [];
 

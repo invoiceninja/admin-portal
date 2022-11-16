@@ -77,11 +77,9 @@ Completer<Null> errorCompleter(BuildContext context) {
 class Debouncer {
   Debouncer({
     this.milliseconds = kMillisecondsToDebounceUpdate,
-    this.sendFirstAction = false,
   });
 
   final int milliseconds;
-  final bool sendFirstAction;
 
   static VoidCallback action;
   static Timer timer;
@@ -92,16 +90,11 @@ class Debouncer {
       return;
     }
 
-    if (timer == null) {
-      if (sendFirstAction) {
-        action();
-      } else {
-        Debouncer.action = action;
-      }
-    } else {
+    if (timer != null) {
       timer.cancel();
-      Debouncer.action = action;
     }
+
+    Debouncer.action = action;
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
       if (action != null) {
