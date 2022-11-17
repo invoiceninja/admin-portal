@@ -51,9 +51,10 @@ class _DesignEditState extends State<DesignEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_designEdit');
 
-  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
   final _debouncer = Debouncer();
-  final _htmlDebouncer = Debouncer();
+  final _pdfDebouncer =
+      SimpleDebouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _htmlDebouncer = SimpleDebouncer();
 
   final _nameController = TextEditingController();
   final _htmlController = TextEditingController();

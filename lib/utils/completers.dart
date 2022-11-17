@@ -118,8 +118,12 @@ class Debouncer {
   }
 }
 
-class PersistUIDebouncer {
-  PersistUIDebouncer();
+class SimpleDebouncer {
+  SimpleDebouncer({
+    this.milliseconds = kMillisecondsToDebounceWrite,
+  });
+
+  final int milliseconds;
 
   static VoidCallback action;
   static Timer timer;
@@ -132,7 +136,7 @@ class PersistUIDebouncer {
       Debouncer.action = action;
     }
 
-    timer = Timer(Duration(milliseconds: kMillisecondsToDebounceWrite), () {
+    timer = Timer(Duration(milliseconds: milliseconds), () {
       if (action != null) {
         action();
       }
