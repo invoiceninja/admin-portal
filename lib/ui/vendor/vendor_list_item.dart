@@ -42,7 +42,6 @@ class VendorListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? vendor.matchesFilterValue(filter)
         : null;
-    final listUIState = vendorUIState.listUIState;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
     final documents = vendor.documents ?? <DocumentEntity>[];
