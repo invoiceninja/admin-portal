@@ -435,6 +435,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TransactionEntity)]),
           () => new ListBuilder<TransactionEntity>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(TransactionRuleEntity)]),
+          () => new ListBuilder<TransactionRuleEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(

@@ -24,7 +24,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
-  final _transaction_rulesController = TextEditingController();
+  final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -32,14 +32,14 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
   void didChangeDependencies() {
     _controllers = [
       // STARTER: array - do not remove comment
-      _transaction_rulesController,
+      _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transactionRule = widget.viewModel.transactionRule;
     // STARTER: read value - do not remove comment
-    _transaction_rulesController.text = transaction_rule.transaction_rules;
+    _nameController.text = transactionRule.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -60,7 +60,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
     _debouncer.run(() {
       final transactionRule = widget.viewModel.transactionRule.rebuild((b) => b
         // STARTER: set value - do not remove comment
-        ..transaction_rules = _transaction_rulesController.text.trim());
+        ..name = _nameController.text.trim());
       if (transactionRule != widget.viewModel.transactionRule) {
         widget.viewModel.onChanged(transactionRule);
       }
@@ -96,7 +96,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                   children: <Widget>[
                     // STARTER: widgets - do not remove comment
                     TextFormField(
-                      controller: _transaction_rulesController,
+                      controller: _nameController,
                       autocorrect: false,
                       decoration: InputDecoration(
                         labelText: 'Transaction_rules',

@@ -214,7 +214,7 @@ else
 
     echo "app_state: has changes"
     comment="STARTER: has changes - do not remove comment"
-    code="case ${Module}EditScreen.route: return has${module_camel}UIState.editing.isChanged == true;${lineBreak}"
+    code="case ${Module}EditScreen.route: return ${module_camel}UIState.editing.isChanged == true;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do

@@ -63,8 +63,7 @@ abstract class TransactionRuleEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      // STARTER: constructor - do not remove comment
-      transaction_rules: '',
+      name: '',
     );
   }
 
@@ -110,8 +109,10 @@ abstract class TransactionRuleEntity extends Object
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
-      case TransactionRuleFields.transaction_rules:
-        response = transactionRuleA.name.compareTo(transactionRuleB.name);
+      case TransactionRuleFields.name:
+        response = transactionRuleA.name
+            .toLowerCase()
+            .compareTo(transactionRuleB.name.toLowerCase());
         break;
 
       default:

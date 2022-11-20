@@ -53,7 +53,7 @@ List<String> filteredTransactionRulesSelector(
     BuiltList<String> transactionRuleList,
     ListUIState transactionRuleListState) {
   final filterEntityId = selectionState.filterEntityId;
-  final filterEntityType = selectionState.filterEntityType;
+  //final filterEntityType = selectionState.filterEntityType;
 
   final list = transactionRuleList.where((transactionRuleId) {
     final transactionRule = transactionRuleMap[transactionRuleId];
@@ -62,23 +62,6 @@ List<String> filteredTransactionRulesSelector(
     } else {}
 
     if (!transactionRule.matchesStates(transactionRuleListState.stateFilters)) {
-      return false;
-    }
-    if (transactionRuleListState.custom1Filters.isNotEmpty &&
-        !transactionRuleListState.custom1Filters
-            .contains(transactionRule.customValue1)) {
-      return false;
-    } else if (transactionRuleListState.custom2Filters.isNotEmpty &&
-        !transactionRuleListState.custom2Filters
-            .contains(transactionRule.customValue2)) {
-      return false;
-    } else if (transactionRuleListState.custom3Filters.isNotEmpty &&
-        !transactionRuleListState.custom3Filters
-            .contains(transactionRule.customValue3)) {
-      return false;
-    } else if (transactionRuleListState.custom4Filters.isNotEmpty &&
-        !transactionRuleListState.custom4Filters
-            .contains(transactionRule.customValue4)) {
       return false;
     }
 

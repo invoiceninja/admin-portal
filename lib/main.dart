@@ -56,6 +56,7 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_middleware.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_middleware.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_middleware.dart';
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_middleware.dart';
 import 'package:window_manager/window_manager.dart';
 // STARTER: import - do not remove comment
 
@@ -63,7 +64,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // https://github.com/dart-lang/io/issues/83#issuecomment-940617222
-const isrgRootX1 = '''-----BEGIN CERTIFICATE-----
+const isrgRootX1 =
+    '''-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
 cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMTUwNjA0MTEwNDM4
