@@ -42,6 +42,8 @@ class EntityType extends EnumClass {
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
   // STARTER: entity type - do not remove comment
+  static const EntityType transactionRule = _$transactionRule;
+
   static const EntityType transaction = _$transaction;
 
   static const EntityType bankAccount = _$bankAccount;

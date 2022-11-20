@@ -142,6 +142,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreTransactionRulesMiddleware())
         ..addAll(createStoreTransactionsMiddleware())
         ..addAll(createStoreBankAccountsMiddleware())
         ..addAll(createStorePurchaseOrdersMiddleware())

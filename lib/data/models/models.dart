@@ -42,6 +42,7 @@ export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 export 'package:invoiceninja_flutter/data/models/bank_account_model.dart';
 export 'package:invoiceninja_flutter/data/models/transaction_model.dart';
 // STARTER: export - do not remove comment
+export 'package:invoiceninja_flutter/data/models/transaction_rule_model.dart';
 
 part 'models.g.dart';
 

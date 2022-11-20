@@ -32,6 +32,8 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
@@ -106,6 +108,10 @@ final lastErrorReducer = combineReducers<String>([
     return '${action.error}';
   }),
   // STARTER: errors - do not remove comment
+  TypedReducer<String, LoadTransactionRulesFailure>((state, action) {
+    return '${action.error}';
+  }),
+
   TypedReducer<String, LoadTransactionsFailure>((state, action) {
     return '${action.error}';
   }),
