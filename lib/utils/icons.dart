@@ -100,6 +100,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.delete_forever;
     case EntityAction.viewInvoice:
       return MdiIcons.fileAccount;
+    case EntityAction.viewExpense:
+      return MdiIcons.fileImage;
     case EntityAction.changeStatus:
       return Icons.adjust;
     case EntityAction.cancel:
