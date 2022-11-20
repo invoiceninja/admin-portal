@@ -785,6 +785,13 @@ abstract class GatewayEntity extends Object
       return true;
     }
 
+    if ('autobill'.contains(filter) &&
+        options.values
+            .where((option) => option.supportTokenBilling)
+            .isNotEmpty) {
+      return true;
+    }
+
     final gatewayIds = options.keys.toList();
     final localization = AppLocalization.of(navigatorKey.currentContext);
 
@@ -804,6 +811,13 @@ abstract class GatewayEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    }
+
+    if ('autobill'.contains(filter) &&
+        options.values
+            .where((option) => option.supportTokenBilling)
+            .isNotEmpty) {
+      return 'Auto-Bill';
     }
 
     final gatewayIds = options.keys.toList();

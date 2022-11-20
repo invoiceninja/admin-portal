@@ -49,7 +49,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   final _recurringPrefixController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer(sendFirstAction: true);
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -490,7 +490,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   final _patternController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer(sendFirstAction: true);
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {

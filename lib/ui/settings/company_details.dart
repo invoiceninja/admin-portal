@@ -52,7 +52,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  final _debouncer = Debouncer(sendFirstAction: true);
+  final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
   final _idNumberController = TextEditingController();

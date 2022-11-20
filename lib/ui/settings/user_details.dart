@@ -64,7 +64,7 @@ class _UserDetailsState extends State<UserDetails>
   final _passwordController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-  final _debouncer = Debouncer(sendFirstAction: true);
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -374,7 +374,6 @@ class _UserDetailsState extends State<UserDetails>
                         SizedBox(width: kTableColumnGap),
                       ]
                     ],
-                    if (!kReleaseMode) Text('VERIFIED: ${user.phoneVerified}'),
                     Expanded(
                       child: OutlinedButton(
                         child: Text(

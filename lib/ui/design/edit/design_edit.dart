@@ -51,8 +51,10 @@ class _DesignEditState extends State<DesignEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_designEdit');
 
-  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
-  final _htmlDebouncer = Debouncer();
+  final _debouncer = Debouncer();
+  final _pdfDebouncer =
+      SimpleDebouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _htmlDebouncer = SimpleDebouncer();
 
   final _nameController = TextEditingController();
   final _htmlController = TextEditingController();
@@ -145,6 +147,8 @@ class _DesignEditState extends State<DesignEdit>
       if (debounce) {
         _debouncer.run(() {
           widget.viewModel.onChanged(design);
+        });
+        _pdfDebouncer.run(() {
           _loadPreview(context, design);
         });
       } else {

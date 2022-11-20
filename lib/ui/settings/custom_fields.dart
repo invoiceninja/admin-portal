@@ -319,7 +319,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
   String _fieldType = kFieldTypeSingleLineText;
 
   List<TextEditingController> _controllers = [];
-  //final _debouncer = Debouncer(sendFirstAction: true);
+  //final _debouncer = Debouncer();
 
   @override
   void dispose() {

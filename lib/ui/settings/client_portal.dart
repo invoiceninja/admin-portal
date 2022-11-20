@@ -56,10 +56,10 @@ class _ClientPortalState extends State<ClientPortal>
   bool _isSubdomainUnique = true;
   bool _isCheckingSubdomain = false;
 
-  final _debouncer = Debouncer(
-    milliseconds: kMillisecondsToDebounceSave,
-    sendFirstAction: true,
-  );
+  final _subdomainDebouncer =
+      SimpleDebouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _debouncer = Debouncer();
+
   final _subdomainController = TextEditingController();
   final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
@@ -95,7 +95,7 @@ class _ClientPortalState extends State<ClientPortal>
   void _validateSubdomain() {
     setState(() => _isSubdomainUnique = false);
 
-    _debouncer.run(() {
+    _subdomainDebouncer.run(() {
       final subdomain = _subdomainController.text.trim();
       final store = StoreProvider.of<AppState>(context);
       final state = store.state;

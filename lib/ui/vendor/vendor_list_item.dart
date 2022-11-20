@@ -42,7 +42,6 @@ class VendorListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? vendor.matchesFilterValue(filter)
         : null;
-    final listUIState = vendorUIState.listUIState;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
     final documents = vendor.documents ?? <DocumentEntity>[];
@@ -85,8 +84,7 @@ class VendorListItem extends StatelessWidget {
                                     value: isChecked,
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                    onChanged: (value) => null,
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -161,12 +159,11 @@ class VendorListItem extends StatelessWidget {
                     : selectEntity(entity: vendor, longPress: true),
                 leading: showCheck
                     ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
                         child: Checkbox(
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => null,
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )

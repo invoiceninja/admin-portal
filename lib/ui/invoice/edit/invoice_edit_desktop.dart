@@ -1124,7 +1124,8 @@ class _PdfPreview extends StatefulWidget {
 }
 
 class __PdfPreviewState extends State<_PdfPreview> {
-  final _pdfDebouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _pdfDebouncer =
+      SimpleDebouncer(milliseconds: kMillisecondsToDebounceSave);
 
   int _pageCount = 1;
   int _currentPage = 1;
