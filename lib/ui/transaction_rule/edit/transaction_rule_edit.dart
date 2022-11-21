@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -78,9 +83,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final transactionRule = viewModel.transactionRule;
+    final state = viewModel.state;
 
     return EditScaffold(
       title: transactionRule.isNew
@@ -102,12 +109,25 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       onSavePressed: (context) => _onSubmitted(),
                     ),
                     EntityDropdown(
-                        entityType: EntityType.vendor,
-                        labelText: localization.vendor,
-                        onSelected: (vendor) {
-                          viewModel.onChanged(transactionRule
-                              .rebuild((b) => b..vendorId = vendor.id));
-                        })
+                      entityType: EntityType.vendor,
+                      entityId: transactionRule.vendorId,
+                      entityList: memoizedDropdownVendorList(
+                          state.vendorState.map,
+                          state.vendorState.list,
+                          state.userState.map,
+                          state.staticState),
+                      labelText: localization.vendor,
+                      onSelected: (vendor) {
+                        viewModel.onChanged(transactionRule
+                            .rebuild((b) => b..vendorId = vendor.id));
+                      },
+                      onCreateNew: (completer, name) {
+                        store.dispatch(SaveVendorRequest(
+                            vendor:
+                                VendorEntity().rebuild((b) => b..name = name),
+                            completer: completer));
+                      },
+                    )
                   ],
                 ),
               ],
