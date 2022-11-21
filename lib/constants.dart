@@ -17,6 +17,7 @@ const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
+const String kBankingURL = 'https://invoiceninja.com/banking/';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kSourceCodeBackend =

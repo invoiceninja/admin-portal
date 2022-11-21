@@ -17,7 +17,8 @@ class TransactionRuleRepository {
   Future<TransactionRuleEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/transaction_rules/$entityId', credentials.token);
+        '${credentials.url}/bank_transaction_rules/$entityId',
+        credentials.token);
 
     final TransactionRuleItemResponse transactionRuleResponse = serializers
         .deserializeWith(TransactionRuleItemResponse.serializer, response);
@@ -27,7 +28,7 @@ class TransactionRuleRepository {
 
   Future<BuiltList<TransactionRuleEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/transaction_rules?';
+    final String url = credentials.url + '/bnak_transaction_rules?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TransactionRuleListResponse transactionRuleResponse = serializers
@@ -43,7 +44,7 @@ class TransactionRuleRepository {
     }
 
     final url = credentials.url +
-        '/transaction_rules/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        '/bank_transaction_rules/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -61,10 +62,11 @@ class TransactionRuleRepository {
 
     if (transactionRule.isNew) {
       response = await webClient.post(
-          credentials.url + '/transaction_rules', credentials.token,
+          credentials.url + '/bank_transaction_rules', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/transaction_rules/${transactionRule.id}';
+      final url =
+          '${credentials.url}/bank_transaction_rules/${transactionRule.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
