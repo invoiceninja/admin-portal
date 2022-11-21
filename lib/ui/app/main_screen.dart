@@ -18,6 +18,9 @@ import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dar
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/view/transaction_rule_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
@@ -943,6 +946,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsBankAccountsEdit:
         screen = BankAccountEditScreen();
+        break;
+      case kSettingsTransactionRules:
+        screen = TransactionRuleScreenBuilder();
+        break;
+      case kSettingsTransactionRulesView:
+        screen = TransactionRuleViewScreen();
+        break;
+      case kSettingsTransactionRulesEdit:
+        screen = TransactionRuleEditScreen();
         break;
     }
 

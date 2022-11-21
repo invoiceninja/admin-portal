@@ -259,6 +259,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.subscription);
     case kSettingsBankAccounts:
       return MdiIcons.bank;
+    case kSettingsTransactionRules:
+      return Icons.rule_folder;
     default:
       return null;
   }

@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -98,7 +99,7 @@ class BankAccountScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: AppButton(
-                            label: localization.connectAccounts.toUpperCase(),
+                            label: localization.connect.toUpperCase(),
                             onPressed: () => connectAccounts(context),
                             iconData: Icons.link,
                           ),
@@ -106,22 +107,23 @@ class BankAccountScreen extends StatelessWidget {
                         SizedBox(width: kGutterWidth),
                         Expanded(
                           child: AppButton(
-                            label: localization.refreshAccounts.toUpperCase(),
+                            label: localization.refresh.toUpperCase(),
                             onPressed: () =>
                                 viewModel.onRefreshAccounts(context),
                             iconData: Icons.refresh,
                           ),
                         ),
-                        /*
-                SizedBox(width: kGutterWidth),
-                Expanded(
-                  child: AppButton(
-                    label: localization.manageRules.toUpperCase(),
-                    onPressed: () => null,
-                    iconData: Icons.refresh,
-                  ),
-                ),
-                */
+                        SizedBox(width: kGutterWidth),
+                        Expanded(
+                          child: AppButton(
+                            label: localization.rules.toUpperCase(),
+                            onPressed: () {
+                              store.dispatch(ViewSettings(
+                                  section: kSettingsTransactionRules));
+                            },
+                            iconData: Icons.rule_folder,
+                          ),
+                        ),
                       ],
                     )
                   : Padding(

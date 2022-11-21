@@ -508,6 +508,9 @@ const String kSettingsTaskStatusEdit = 'task_status/edit';
 const String kSettingsBankAccounts = 'bank_accounts';
 const String kSettingsBankAccountsView = 'bank_accounts/view';
 const String kSettingsBankAccountsEdit = 'bank_accounts/edit';
+const String kSettingsTransactionRules = 'transaction_rules';
+const String kSettingsTransactionRulesView = 'transaction_rules/view';
+const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,

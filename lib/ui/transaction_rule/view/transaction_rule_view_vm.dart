@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -15,7 +16,9 @@ class TransactionRuleViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
-  static const String route = '/transaction_rule/view';
+
+  static const String route = '/$kSettings/$kSettingsTransactionRulesView';
+
   final bool isFilter;
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
@@ -16,7 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionRuleEditScreen extends StatelessWidget {
   const TransactionRuleEditScreen({Key key}) : super(key: key);
-  static const String route = '/transaction_rule/edit';
+
+  static const String route = '/$kSettings/$kSettingsTransactionRulesEdit';
 
   @override
   Widget build(BuildContext context) {
