@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
@@ -99,6 +101,12 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       controller: _nameController,
                       onSavePressed: (context) => _onSubmitted(),
                     ),
+                    EntityDropdown(
+                        entityType: EntityType.vendor,
+                        labelText: localization.vendor,
+                        onSelected: (vendor) {
+                          //viewModel.onChanged(transactionRule.rebuild((b) => b..))
+                        })
                   ],
                 ),
               ],

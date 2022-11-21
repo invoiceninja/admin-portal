@@ -64,6 +64,11 @@ abstract class TransactionRuleEntity extends Object
       assignedUserId: '',
       archivedAt: 0,
       name: '',
+      matchesOnAll: true,
+      autoConvert: false,
+      appliesTo: TransactionEntity.TYPE_WITHDRAWL,
+      vendorId: '',
+      categoryId: '',
     );
   }
 
@@ -73,8 +78,22 @@ abstract class TransactionRuleEntity extends Object
   @memoized
   int get hashCode;
 
-  // STARTER: properties - do not remove comment
   String get name;
+
+  @BuiltValueField(wireName: 'matches_on_all')
+  bool get matchesOnAll;
+
+  @BuiltValueField(wireName: 'auto_convert')
+  bool get autoConvert;
+
+  @BuiltValueField(wireName: 'applies_to')
+  String get appliesTo;
+
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
+  @BuiltValueField(wireName: 'category_id')
+  String get categoryId;
 
   @override
   EntityType get entityType => EntityType.transactionRule;
