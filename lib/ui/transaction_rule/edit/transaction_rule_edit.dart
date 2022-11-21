@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -119,7 +122,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       labelText: localization.vendor,
                       onSelected: (vendor) {
                         viewModel.onChanged(transactionRule
-                            .rebuild((b) => b..vendorId = vendor.id));
+                            .rebuild((b) => b..vendorId = vendor?.id ?? ''));
                       },
                       onCreateNew: (completer, name) {
                         store.dispatch(SaveVendorRequest(
@@ -127,7 +130,29 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                 VendorEntity().rebuild((b) => b..name = name),
                             completer: completer));
                       },
-                    )
+                    ),
+                    EntityDropdown(
+                      entityType: EntityType.expenseCategory,
+                      entityId: transactionRule.categoryId,
+                      entityList: memoizedDropdownExpenseCategoryList(
+                        state.expenseCategoryState.map,
+                        state.expenseCategoryState.list,
+                        state.staticState,
+                        state.userState.map,
+                        transactionRule.categoryId,
+                      ),
+                      labelText: localization.category,
+                      onSelected: (category) {
+                        viewModel.onChanged(transactionRule.rebuild(
+                            (b) => b..categoryId = category?.id ?? ''));
+                      },
+                      onCreateNew: (completer, name) {
+                        store.dispatch(SaveExpenseCategoryRequest(
+                            expenseCategory: ExpenseCategoryEntity()
+                                .rebuild((b) => b..name = name),
+                            completer: completer));
+                      },
+                    ),
                   ],
                 ),
               ],
