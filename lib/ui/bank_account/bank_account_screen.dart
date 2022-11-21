@@ -96,42 +96,45 @@ class BankAccountScreen extends StatelessWidget {
                   left: 16, top: 8, right: 16, bottom: 10),
               child: Row(
                 children: [
-                  if (state.isEnterprisePlan) ...[
-                    Expanded(
-                      child: AppButton(
-                        label: localization.connect.toUpperCase(),
-                        onPressed: () => connectAccounts(context),
-                        iconData: Icons.link,
+                  if (state.isHosted) ...[
+                    if (state.isEnterprisePlan) ...[
+                      Expanded(
+                        child: AppButton(
+                          label: localization.connect.toUpperCase(),
+                          onPressed: () => connectAccounts(context),
+                          iconData: Icons.link,
+                        ),
                       ),
-                    ),
+                      SizedBox(width: kGutterWidth),
+                      Expanded(
+                        child: AppButton(
+                          label: localization.refresh.toUpperCase(),
+                          onPressed: () => viewModel.onRefreshAccounts(context),
+                          iconData: Icons.refresh,
+                        ),
+                      ),
+                    ] else
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 8),
+                          child: Center(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HelpText(
+                                  localization.upgradeToConnectBankAccount),
+                              SizedBox(height: 16),
+                              TextButton(
+                                onPressed: () =>
+                                    launchUrl(Uri.parse(kBankingURL)),
+                                child: Text(localization.learnMore),
+                              )
+                            ],
+                          )),
+                        ),
+                      ),
                     SizedBox(width: kGutterWidth),
-                    Expanded(
-                      child: AppButton(
-                        label: localization.refresh.toUpperCase(),
-                        onPressed: () => viewModel.onRefreshAccounts(context),
-                        iconData: Icons.refresh,
-                      ),
-                    ),
-                  ] else
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 8),
-                        child: Center(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HelpText(localization.upgradeToConnectBankAccount),
-                            SizedBox(height: 16),
-                            TextButton(
-                              onPressed: () =>
-                                  launchUrl(Uri.parse(kBankingURL)),
-                              child: Text(localization.learnMore),
-                            )
-                          ],
-                        )),
-                      ),
-                    ),
-                  SizedBox(width: kGutterWidth),
+                  ],
                   Expanded(
                     child: AppButton(
                       label: localization.rules.toUpperCase(),

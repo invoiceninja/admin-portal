@@ -105,7 +105,8 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         entityType: EntityType.vendor,
                         labelText: localization.vendor,
                         onSelected: (vendor) {
-                          //viewModel.onChanged(transactionRule.rebuild((b) => b..))
+                          viewModel.onChanged(transactionRule
+                              .rebuild((b) => b..vendorId = vendor.id));
                         })
                   ],
                 ),
