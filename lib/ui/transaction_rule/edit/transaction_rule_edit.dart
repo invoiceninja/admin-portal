@@ -111,6 +111,31 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       controller: _nameController,
                       onSavePressed: (context) => _onSubmitted(),
                     ),
+                    SizedBox(height: 12),
+                    SwitchListTile(
+                      title: Text(localization.matchAllRules),
+                      subtitle: Text(localization.matchAllRulesHelp),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      value: transactionRule.matchesOnAll,
+                      onChanged: (value) {
+                        viewModel.onChanged(transactionRule
+                            .rebuild((b) => b..matchesOnAll = value));
+                      },
+                    ),
+                    SwitchListTile(
+                      title: Text(localization.autoConvert),
+                      subtitle: Text(localization.autoConvertHelp),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      value: transactionRule.autoConvert,
+                      onChanged: (value) {
+                        viewModel.onChanged(transactionRule
+                            .rebuild((b) => b..autoConvert = value));
+                      },
+                    ),
+                  ],
+                ),
+                FormCard(
+                  children: [
                     EntityDropdown(
                       entityType: EntityType.vendor,
                       entityId: transactionRule.vendorId,
