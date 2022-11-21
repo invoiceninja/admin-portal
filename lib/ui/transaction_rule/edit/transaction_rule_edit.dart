@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -23,7 +24,6 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
       GlobalKey<FormState>(debugLabel: '_transactionRuleEdit');
   final _debouncer = Debouncer();
 
-  // STARTER: controllers - do not remove comment
   final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -31,14 +31,12 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
       _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transactionRule = widget.viewModel.transactionRule;
-    // STARTER: read value - do not remove comment
     _nameController.text = transactionRule.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -58,13 +56,22 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final transactionRule = widget.viewModel.transactionRule.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        ..name = _nameController.text.trim());
+      final transactionRule = widget.viewModel.transactionRule
+          .rebuild((b) => b..name = _nameController.text.trim());
       if (transactionRule != widget.viewModel.transactionRule) {
         widget.viewModel.onChanged(transactionRule);
       }
     });
+  }
+
+  void _onSubmitted() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
   }
 
   @override
@@ -78,15 +85,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
           ? localization.newTransactionRule
           : localization.editTransactionRule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSubmitted(),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
@@ -94,13 +93,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                    TextFormField(
+                    DecoratedFormField(
+                      label: localization.name,
+                      keyboardType: TextInputType.text,
                       controller: _nameController,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Transaction_rules',
-                      ),
+                      onSavePressed: (context) => _onSubmitted(),
                     ),
                   ],
                 ),

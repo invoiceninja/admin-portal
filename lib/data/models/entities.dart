@@ -92,6 +92,7 @@ class EntityType extends EnumClass {
         EntityType.taskStatus,
         EntityType.subscription,
         EntityType.bankAccount,
+        EntityType.transactionRule,
       ].contains(this);
 
   List<EntityType> get relatedTypes {
