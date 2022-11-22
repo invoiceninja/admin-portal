@@ -161,6 +161,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                               style: Theme.of(context).textTheme.caption,
                             ),
                           ),
+                          SizedBox(width: 100),
                         ],
                       ),
                       SizedBox(height: 4),
@@ -179,10 +180,25 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                               Expanded(
                                 child: Text(rule.value),
                               ),
+                              SizedBox(
+                                width: 100,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          viewModel.onChanged(
+                                              transactionRule.rebuild((b) =>
+                                                  b..rules.remove(rule)));
+                                        },
+                                        icon: Icon(Icons.clear))
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 8),
                     ],
                     OutlinedButton(
                       onPressed: () async {
