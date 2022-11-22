@@ -146,6 +146,10 @@ class _$TransactionRuleEntitySerializer
       'category_id',
       serializers.serialize(object.categoryId,
           specifiedType: const FullType(String)),
+      'rules',
+      serializers.serialize(object.rules,
+          specifiedType: const FullType(BuiltList,
+              const [const FullType(TransactionRuleCriteriaEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -225,6 +229,12 @@ class _$TransactionRuleEntitySerializer
         case 'category_id':
           result.categoryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'rules':
+          result.rules.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(TransactionRuleCriteriaEntity)
+              ])) as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -531,6 +541,8 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
   @override
   final String categoryId;
   @override
+  final BuiltList<TransactionRuleCriteriaEntity> rules;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -558,6 +570,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
       this.appliesTo,
       this.vendorId,
       this.categoryId,
+      this.rules,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -579,6 +592,8 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
         vendorId, 'TransactionRuleEntity', 'vendorId');
     BuiltValueNullFieldError.checkNotNull(
         categoryId, 'TransactionRuleEntity', 'categoryId');
+    BuiltValueNullFieldError.checkNotNull(
+        rules, 'TransactionRuleEntity', 'rules');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'TransactionRuleEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -607,6 +622,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
         appliesTo == other.appliesTo &&
         vendorId == other.vendorId &&
         categoryId == other.categoryId &&
+        rules == other.rules &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -632,12 +648,17 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, name.hashCode),
-                                                        matchesOnAll.hashCode),
-                                                    autoConvert.hashCode),
-                                                appliesTo.hashCode),
-                                            vendorId.hashCode),
-                                        categoryId.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                name.hashCode),
+                                                            matchesOnAll
+                                                                .hashCode),
+                                                        autoConvert.hashCode),
+                                                    appliesTo.hashCode),
+                                                vendorId.hashCode),
+                                            categoryId.hashCode),
+                                        rules.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -657,6 +678,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
           ..add('appliesTo', appliesTo)
           ..add('vendorId', vendorId)
           ..add('categoryId', categoryId)
+          ..add('rules', rules)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -696,6 +718,12 @@ class TransactionRuleEntityBuilder
   String _categoryId;
   String get categoryId => _$this._categoryId;
   set categoryId(String categoryId) => _$this._categoryId = categoryId;
+
+  ListBuilder<TransactionRuleCriteriaEntity> _rules;
+  ListBuilder<TransactionRuleCriteriaEntity> get rules =>
+      _$this._rules ??= new ListBuilder<TransactionRuleCriteriaEntity>();
+  set rules(ListBuilder<TransactionRuleCriteriaEntity> rules) =>
+      _$this._rules = rules;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -742,6 +770,7 @@ class TransactionRuleEntityBuilder
       _appliesTo = $v.appliesTo;
       _vendorId = $v.vendorId;
       _categoryId = $v.categoryId;
+      _rules = $v.rules.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -768,30 +797,44 @@ class TransactionRuleEntityBuilder
 
   @override
   _$TransactionRuleEntity build() {
-    final _$result = _$v ??
-        new _$TransactionRuleEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, 'TransactionRuleEntity', 'name'),
-            matchesOnAll: BuiltValueNullFieldError.checkNotNull(
-                matchesOnAll, 'TransactionRuleEntity', 'matchesOnAll'),
-            autoConvert: BuiltValueNullFieldError.checkNotNull(
-                autoConvert, 'TransactionRuleEntity', 'autoConvert'),
-            appliesTo: BuiltValueNullFieldError.checkNotNull(
-                appliesTo, 'TransactionRuleEntity', 'appliesTo'),
-            vendorId: BuiltValueNullFieldError.checkNotNull(
-                vendorId, 'TransactionRuleEntity', 'vendorId'),
-            categoryId: BuiltValueNullFieldError.checkNotNull(
-                categoryId, 'TransactionRuleEntity', 'categoryId'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'TransactionRuleEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'TransactionRuleEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TransactionRuleEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionRuleEntity', 'id'));
+    _$TransactionRuleEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$TransactionRuleEntity._(
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, 'TransactionRuleEntity', 'name'),
+              matchesOnAll: BuiltValueNullFieldError.checkNotNull(
+                  matchesOnAll, 'TransactionRuleEntity', 'matchesOnAll'),
+              autoConvert: BuiltValueNullFieldError.checkNotNull(
+                  autoConvert, 'TransactionRuleEntity', 'autoConvert'),
+              appliesTo: BuiltValueNullFieldError.checkNotNull(
+                  appliesTo, 'TransactionRuleEntity', 'appliesTo'),
+              vendorId: BuiltValueNullFieldError.checkNotNull(
+                  vendorId, 'TransactionRuleEntity', 'vendorId'),
+              categoryId: BuiltValueNullFieldError.checkNotNull(
+                  categoryId, 'TransactionRuleEntity', 'categoryId'),
+              rules: rules.build(),
+              isChanged: isChanged,
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, 'TransactionRuleEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(
+                  updatedAt, 'TransactionRuleEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TransactionRuleEntity', 'archivedAt'),
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionRuleEntity', 'id'));
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'rules';
+        rules.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'TransactionRuleEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

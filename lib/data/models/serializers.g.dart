@@ -196,6 +196,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TransactionEntity.serializer)
       ..add(TransactionItemResponse.serializer)
       ..add(TransactionListResponse.serializer)
+      ..add(TransactionRuleCriteriaEntity.serializer)
       ..add(TransactionRuleEntity.serializer)
       ..add(TransactionRuleItemResponse.serializer)
       ..add(TransactionRuleListResponse.serializer)
@@ -572,6 +573,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TransactionEntity)]),
           () => new ListBuilder<TransactionEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(TransactionRuleCriteriaEntity)]),
+          () => new ListBuilder<TransactionRuleCriteriaEntity>())
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(TransactionRuleEntity)]),

@@ -69,6 +69,7 @@ abstract class TransactionRuleEntity extends Object
       appliesTo: TransactionEntity.TYPE_WITHDRAWL,
       vendorId: '',
       categoryId: '',
+      rules: BuiltList<TransactionRuleCriteriaEntity>(),
     );
   }
 
@@ -94,6 +95,8 @@ abstract class TransactionRuleEntity extends Object
 
   @BuiltValueField(wireName: 'category_id')
   String get categoryId;
+
+  BuiltList<TransactionRuleCriteriaEntity> get rules;
 
   @override
   EntityType get entityType => EntityType.transactionRule;
@@ -195,6 +198,9 @@ abstract class TransactionRuleCriteriaEntity
   }
 
   TransactionRuleCriteriaEntity._();
+
+  static const SEARCH_KEY_DESCRIPTION = 'description';
+  static const SEARCH_KEY_AMOUNT = 'amount';
 
   @override
   @memoized

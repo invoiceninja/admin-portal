@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
+import 'package:invoiceninja_flutter/data/models/transaction_rule_model.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
@@ -11,7 +12,9 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -99,8 +102,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSubmitted(),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -111,7 +115,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       controller: _nameController,
                       onSavePressed: (context) => _onSubmitted(),
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 16),
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
@@ -131,6 +135,25 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         viewModel.onChanged(transactionRule
                             .rebuild((b) => b..autoConvert = value));
                       },
+                    ),
+                  ],
+                ),
+                FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    OutlinedButton(
+                      onPressed: () {
+                        showDialog<TransactionRuleCriteriaEntity>(
+                            context: context,
+                            builder: (context) => _RuleCriteria());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: IconText(
+                          text: localization.addRule,
+                          icon: Icons.add,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -182,7 +205,64 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _RuleCriteria extends StatefulWidget {
+  const _RuleCriteria({
+    Key key,
+    this.criteria,
+  }) : super(key: key);
+
+  final TransactionRuleCriteriaEntity criteria;
+
+  @override
+  State<_RuleCriteria> createState() => __RuleCriteriaState();
+}
+
+class __RuleCriteriaState extends State<_RuleCriteria> {
+  TransactionRuleCriteriaEntity _criteria;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _criteria = widget.criteria ?? TransactionRuleCriteriaEntity();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppDropdownButton<String>(
+            labelText: localization.field,
+            value: _criteria.searchKey,
+            onChanged: (dynamic value) {
+              setState(() {
+                _criteria = _criteria.rebuild((b) => b..searchKey = value);
+              });
+            },
+            items: [
+              DropdownMenuItem<String>(
+                child: Text(localization.description),
+                value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.amount),
+                value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
