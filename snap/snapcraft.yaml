@@ -30,6 +30,7 @@ apps:
     extensions: [flutter-stable]
     plugs:
       - network
+      - home
 
 parts:
   invoiceninja:
