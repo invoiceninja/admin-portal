@@ -155,7 +155,7 @@ abstract class TransactionRuleEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
-        //
+        name,
       ],
       needle: filter,
     );
