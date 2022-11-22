@@ -128,16 +128,6 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   ),
                 ],
               ),
-              EntityDropdown(
-                entityType: EntityType.paymentType,
-                entityList:
-                    memoizedPaymentTypeList(state.staticState.paymentTypeMap),
-                labelText: localization.paymentType,
-                entityId: settings.defaultPaymentTypeId,
-                onSelected: (paymentType) => viewModel.onSettingsChanged(
-                    settings.rebuild(
-                        (b) => b..defaultPaymentTypeId = paymentType?.id)),
-              ),
               AppDropdownButton<String>(
                   labelText: localization.useAvailableCredits,
                   value: settings.useCreditsPayment,
@@ -159,6 +149,16 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                       value: CompanyEntity.USE_CREDITS_OFF,
                     ),
                   ]),
+              EntityDropdown(
+                entityType: EntityType.paymentType,
+                entityList:
+                    memoizedPaymentTypeList(state.staticState.paymentTypeMap),
+                labelText: localization.paymentType,
+                entityId: settings.defaultPaymentTypeId,
+                onSelected: (paymentType) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..defaultPaymentTypeId = paymentType?.id)),
+              ),
             ],
           ),
           Padding(
