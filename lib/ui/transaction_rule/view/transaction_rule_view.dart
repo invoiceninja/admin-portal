@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/view/transaction_rule_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionRuleView extends StatefulWidget {
   const TransactionRuleView({
@@ -22,13 +24,24 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final transactionRule = viewModel.transactionRule;
+    final localization = AppLocalization.of(context);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: transactionRule,
+      title: transactionRule.name,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
-        children: <Widget>[],
+        children: <Widget>[
+          FieldGrid({
+            localization.matchAllRules: transactionRule.matchesOnAll
+                ? localization.enabled
+                : localization.disabled,
+            localization.autoConvert: transactionRule.autoConvert
+                ? localization.enabled
+                : localization.disabled,
+          })
+        ],
       ),
     );
   }
