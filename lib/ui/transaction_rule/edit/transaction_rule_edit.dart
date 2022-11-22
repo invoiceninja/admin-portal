@@ -141,11 +141,58 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                 FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (transactionRule.rules.isNotEmpty) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Text(
+                            localization.field,
+                            style: Theme.of(context).textTheme.caption,
+                          )),
+                          Expanded(
+                            child: Text(
+                              localization.operator,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              localization.value,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 4),
+                      for (var rule in transactionRule.rules)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child:
+                                    Text(localization.lookup(rule.searchKey)),
+                              ),
+                              Expanded(
+                                child: Text(localization.lookup(rule.operator)),
+                              ),
+                              Expanded(
+                                child: Text(rule.value),
+                              ),
+                            ],
+                          ),
+                        ),
+                      SizedBox(height: 16),
+                    ],
                     OutlinedButton(
-                      onPressed: () {
-                        showDialog<TransactionRuleCriteriaEntity>(
-                            context: context,
-                            builder: (context) => _RuleCriteria());
+                      onPressed: () async {
+                        final rule =
+                            await showDialog<TransactionRuleCriteriaEntity>(
+                                context: context,
+                                builder: (context) => _RuleCriteria());
+
+                        viewModel.onChanged(
+                            transactionRule.rebuild((b) => b..rules.add(rule)));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -261,8 +308,32 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
               ),
             ],
           ),
+          DecoratedFormField(
+            label: localization.value,
+            initialValue: _criteria.value,
+            keyboardType: TextInputType.text,
+            onChanged: (value) {
+              setState(() {
+                _criteria = _criteria.rebuild((b) => b..value = value);
+              });
+            },
+          )
         ],
       ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(_criteria);
+          },
+          child: Text(localization.done.toUpperCase()),
+        ),
+      ],
     );
   }
 }

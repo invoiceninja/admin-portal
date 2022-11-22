@@ -202,6 +202,17 @@ abstract class TransactionRuleCriteriaEntity
   static const SEARCH_KEY_DESCRIPTION = 'description';
   static const SEARCH_KEY_AMOUNT = 'amount';
 
+  static const NUMBER_OPERATOR_EQUALS = '=';
+  static const NUMBER_OPERATOR_GREATER_THAN = '>';
+  static const NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS = '>=';
+  static const NUMBER_OPERATOR_LESS_THAN = '<';
+  static const NUMBER_OPERATOR_LESS_THAN_OR_EQUALS = '<=';
+
+  static const STRING_OPERATOR_IS = 'is';
+  static const STRING_OPERATOR_CONTAINS = 'contains';
+  static const STRING_OPERATOR_STARTS_WITH = 'starts_with';
+  static const STRING_OPERATOR_IS_EMPTY = 'is_empty';
+
   @override
   @memoized
   int get hashCode;
