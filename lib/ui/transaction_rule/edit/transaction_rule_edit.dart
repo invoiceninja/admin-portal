@@ -319,6 +319,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
     _criteria = widget.criteria ?? TransactionRuleCriteriaEntity();
   }
 
+  void onDonePressed() {
+    if (_criteria.searchKey.isEmpty ||
+        _criteria.operator.isEmpty ||
+        _criteria.value.isEmpty) {
+      return;
+    }
+
+    Navigator.of(context).pop(_criteria);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -421,6 +431,7 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 _criteria = _criteria.rebuild((b) => b..value = value);
               });
             },
+            onSavePressed: (context) => onDonePressed(),
           )
         ],
       ),
@@ -432,9 +443,7 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
           child: Text(localization.cancel.toUpperCase()),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(_criteria);
-          },
+          onPressed: onDonePressed,
           child: Text(localization.done.toUpperCase()),
         ),
       ],
