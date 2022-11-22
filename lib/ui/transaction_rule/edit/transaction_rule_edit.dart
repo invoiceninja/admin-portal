@@ -217,7 +217,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                             ],
                           ),
                         ),
-                      SizedBox(height: 8),
+                      SizedBox(height: 12),
                     ],
                     OutlinedButton(
                       onPressed: () async {
