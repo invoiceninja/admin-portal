@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -47,6 +49,7 @@ class TransactionRuleViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onBackPressed,
   });
 
   factory TransactionRuleViewVM.fromStore(Store<AppState> store) {
@@ -71,6 +74,9 @@ class TransactionRuleViewVM {
       isDirty: transactionRule.isNew,
       transactionRule: transactionRule,
       onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(TransactionRuleScreen.route));
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([transactionRule], action, autoPop: true),
     );
@@ -80,6 +86,7 @@ class TransactionRuleViewVM {
   final TransactionRuleEntity transactionRule;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
+  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

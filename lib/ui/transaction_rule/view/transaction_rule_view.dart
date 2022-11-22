@@ -26,6 +26,7 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: transactionRule,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[],
       ),

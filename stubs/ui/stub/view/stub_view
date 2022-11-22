@@ -27,6 +27,7 @@ class _StubViewState extends State<StubView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: stub,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[
         ],

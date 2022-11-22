@@ -293,15 +293,15 @@ class _$TransactionRuleCriteriaEntitySerializer
       'search_key',
       serializers.serialize(object.searchKey,
           specifiedType: const FullType(String)),
-      'value',
-      serializers.serialize(object.value,
+      'operator',
+      serializers.serialize(object.operator,
           specifiedType: const FullType(String)),
     ];
     Object value;
-    value = object.operator;
+    value = object.value;
     if (value != null) {
       result
-        ..add('operator')
+        ..add('value')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -861,7 +861,7 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
     BuiltValueNullFieldError.checkNotNull(
         searchKey, 'TransactionRuleCriteriaEntity', 'searchKey');
     BuiltValueNullFieldError.checkNotNull(
-        value, 'TransactionRuleCriteriaEntity', 'value');
+        operator, 'TransactionRuleCriteriaEntity', 'operator');
   }
 
   @override
@@ -947,9 +947,9 @@ class TransactionRuleCriteriaEntityBuilder
         new _$TransactionRuleCriteriaEntity._(
             searchKey: BuiltValueNullFieldError.checkNotNull(
                 searchKey, 'TransactionRuleCriteriaEntity', 'searchKey'),
-            operator: operator,
-            value: BuiltValueNullFieldError.checkNotNull(
-                value, 'TransactionRuleCriteriaEntity', 'value'));
+            operator: BuiltValueNullFieldError.checkNotNull(
+                operator, 'TransactionRuleCriteriaEntity', 'operator'),
+            value: value);
     replace(_$result);
     return _$result;
   }

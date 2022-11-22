@@ -182,7 +182,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                 child: Text(localization.lookup(rule.operator)),
                               ),
                               Expanded(
-                                child: Text(rule.value),
+                                child: Text(rule.value ?? ''),
                               ),
                               SizedBox(
                                 width: 100,
@@ -322,7 +322,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
   void onDonePressed() {
     if (_criteria.searchKey.isEmpty ||
         _criteria.operator.isEmpty ||
-        _criteria.value.isEmpty) {
+        (_criteria.value.isEmpty &&
+            _criteria.operator !=
+                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)) {
       return;
     }
 
@@ -422,17 +424,19 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                     ),
                   ],
           ),
-          DecoratedFormField(
-            label: localization.value,
-            initialValue: _criteria.value,
-            keyboardType: TextInputType.text,
-            onChanged: (value) {
-              setState(() {
-                _criteria = _criteria.rebuild((b) => b..value = value);
-              });
-            },
-            onSavePressed: (context) => onDonePressed(),
-          )
+          if (_criteria.operator !=
+              TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
+            DecoratedFormField(
+              label: localization.value,
+              initialValue: _criteria.value,
+              keyboardType: TextInputType.text,
+              onChanged: (value) {
+                setState(() {
+                  _criteria = _criteria.rebuild((b) => b..value = value);
+                });
+              },
+              onSavePressed: (context) => onDonePressed(),
+            )
         ],
       ),
       actions: [
