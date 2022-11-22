@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_e
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TransactionRuleEdit extends StatefulWidget {
   const TransactionRuleEdit({
@@ -186,12 +187,30 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     IconButton(
-                                        onPressed: () {
-                                          viewModel.onChanged(
-                                              transactionRule.rebuild((b) =>
-                                                  b..rules.remove(rule)));
-                                        },
-                                        icon: Icon(Icons.clear))
+                                      onPressed: () async {
+                                        final updatedRule = await showDialog<
+                                                TransactionRuleCriteriaEntity>(
+                                            context: context,
+                                            builder: (context) =>
+                                                _RuleCriteria(criteria: rule));
+                                        final index =
+                                            transactionRule.rules.indexOf(rule);
+                                        viewModel.onChanged(
+                                            transactionRule.rebuild((b) => b
+                                              ..rules.replaceRange(index,
+                                                  index + 1, [updatedRule])));
+                                      },
+                                      icon: Icon(MdiIcons.circleEditOutline),
+                                    ),
+                                    SizedBox(width: 8),
+                                    IconButton(
+                                      onPressed: () {
+                                        viewModel.onChanged(
+                                            transactionRule.rebuild(
+                                                (b) => b..rules.remove(rule)));
+                                      },
+                                      icon: Icon(Icons.clear),
+                                    ),
                                   ],
                                 ),
                               ),
