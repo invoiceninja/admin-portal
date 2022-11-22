@@ -14,6 +14,9 @@ Serializer<TransactionRuleItemResponse>
     new _$TransactionRuleItemResponseSerializer();
 Serializer<TransactionRuleEntity> _$transactionRuleEntitySerializer =
     new _$TransactionRuleEntitySerializer();
+Serializer<TransactionRuleCriteriaEntity>
+    _$transactionRuleCriteriaEntitySerializer =
+    new _$TransactionRuleCriteriaEntitySerializer();
 
 class _$TransactionRuleListResponseSerializer
     implements StructuredSerializer<TransactionRuleListResponse> {
@@ -253,6 +256,66 @@ class _$TransactionRuleEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TransactionRuleCriteriaEntitySerializer
+    implements StructuredSerializer<TransactionRuleCriteriaEntity> {
+  @override
+  final Iterable<Type> types = const [
+    TransactionRuleCriteriaEntity,
+    _$TransactionRuleCriteriaEntity
+  ];
+  @override
+  final String wireName = 'TransactionRuleCriteriaEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, TransactionRuleCriteriaEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'search_key',
+      serializers.serialize(object.searchKey,
+          specifiedType: const FullType(String)),
+      'operator',
+      serializers.serialize(object.operator,
+          specifiedType: const FullType(String)),
+      'value',
+      serializers.serialize(object.value,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  TransactionRuleCriteriaEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TransactionRuleCriteriaEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'search_key':
+          result.searchKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'operator':
+          result.operator = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'value':
+          result.value = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -729,6 +792,120 @@ class TransactionRuleEntityBuilder
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionRuleEntity', 'id'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
+  @override
+  final String searchKey;
+  @override
+  final String operator;
+  @override
+  final String value;
+
+  factory _$TransactionRuleCriteriaEntity(
+          [void Function(TransactionRuleCriteriaEntityBuilder) updates]) =>
+      (new TransactionRuleCriteriaEntityBuilder()..update(updates)).build();
+
+  _$TransactionRuleCriteriaEntity._({this.searchKey, this.operator, this.value})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        searchKey, 'TransactionRuleCriteriaEntity', 'searchKey');
+    BuiltValueNullFieldError.checkNotNull(
+        operator, 'TransactionRuleCriteriaEntity', 'operator');
+    BuiltValueNullFieldError.checkNotNull(
+        value, 'TransactionRuleCriteriaEntity', 'value');
+  }
+
+  @override
+  TransactionRuleCriteriaEntity rebuild(
+          void Function(TransactionRuleCriteriaEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TransactionRuleCriteriaEntityBuilder toBuilder() =>
+      new TransactionRuleCriteriaEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TransactionRuleCriteriaEntity &&
+        searchKey == other.searchKey &&
+        operator == other.operator &&
+        value == other.value;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc($jc(0, searchKey.hashCode), operator.hashCode), value.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TransactionRuleCriteriaEntity')
+          ..add('searchKey', searchKey)
+          ..add('operator', operator)
+          ..add('value', value))
+        .toString();
+  }
+}
+
+class TransactionRuleCriteriaEntityBuilder
+    implements
+        Builder<TransactionRuleCriteriaEntity,
+            TransactionRuleCriteriaEntityBuilder> {
+  _$TransactionRuleCriteriaEntity _$v;
+
+  String _searchKey;
+  String get searchKey => _$this._searchKey;
+  set searchKey(String searchKey) => _$this._searchKey = searchKey;
+
+  String _operator;
+  String get operator => _$this._operator;
+  set operator(String operator) => _$this._operator = operator;
+
+  String _value;
+  String get value => _$this._value;
+  set value(String value) => _$this._value = value;
+
+  TransactionRuleCriteriaEntityBuilder();
+
+  TransactionRuleCriteriaEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _searchKey = $v.searchKey;
+      _operator = $v.operator;
+      _value = $v.value;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TransactionRuleCriteriaEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$TransactionRuleCriteriaEntity;
+  }
+
+  @override
+  void update(void Function(TransactionRuleCriteriaEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TransactionRuleCriteriaEntity build() {
+    final _$result = _$v ??
+        new _$TransactionRuleCriteriaEntity._(
+            searchKey: BuiltValueNullFieldError.checkNotNull(
+                searchKey, 'TransactionRuleCriteriaEntity', 'searchKey'),
+            operator: BuiltValueNullFieldError.checkNotNull(
+                operator, 'TransactionRuleCriteriaEntity', 'operator'),
+            value: BuiltValueNullFieldError.checkNotNull(
+                value, 'TransactionRuleCriteriaEntity', 'value'));
     replace(_$result);
     return _$result;
   }

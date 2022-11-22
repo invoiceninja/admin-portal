@@ -180,3 +180,37 @@ abstract class TransactionRuleEntity extends Object
   static Serializer<TransactionRuleEntity> get serializer =>
       _$transactionRuleEntitySerializer;
 }
+
+abstract class TransactionRuleCriteriaEntity
+    implements
+        Built<TransactionRuleCriteriaEntity,
+            TransactionRuleCriteriaEntityBuilder> {
+  factory TransactionRuleCriteriaEntity(
+      {String searchKey, String operator, String value}) {
+    return _$TransactionRuleCriteriaEntity._(
+      searchKey: searchKey ?? '',
+      operator: operator ?? '',
+      value: value ?? '',
+    );
+  }
+
+  TransactionRuleCriteriaEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'search_key')
+  String get searchKey;
+
+  String get operator;
+
+  String get value;
+
+  // ignore: unused_element
+  //static void _initializeBuilder(TransactionRuleCriteriaEntityBuilder builder) =>
+  //    builder..productCost = 0;
+
+  static Serializer<TransactionRuleCriteriaEntity> get serializer =>
+      _$transactionRuleCriteriaEntitySerializer;
+}
