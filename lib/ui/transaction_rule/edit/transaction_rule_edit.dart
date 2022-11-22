@@ -115,6 +115,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       keyboardType: TextInputType.text,
                       controller: _nameController,
                       onSavePressed: (context) => _onSubmitted(),
+                      validator: (value) => value.trim().isEmpty
+                          ? localization.pleaseEnterAName
+                          : null,
                     ),
                     SizedBox(height: 16),
                     SwitchListTile(
