@@ -35,6 +35,7 @@ class TransactionRuleScreen extends StatelessWidget {
       entityType: EntityType.transactionRule,
       onHamburgerLongPress: () =>
           store.dispatch(StartTransactionRuleMultiselect()),
+      onCancelSettingsSection: kSettingsBankAccounts,
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.transactionRuleListState.filterClearedAt}__'),
