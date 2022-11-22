@@ -310,7 +310,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
             value: _criteria.searchKey,
             onChanged: (dynamic value) {
               setState(() {
-                _criteria = _criteria.rebuild((b) => b..searchKey = value);
+                _criteria = _criteria.rebuild((b) => b
+                  ..searchKey = value
+                  ..operator = '');
               });
             },
             items: [
@@ -323,6 +325,82 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
               ),
             ],
+          ),
+          AppDropdownButton<String>(
+            labelText: localization.operator,
+            value: _criteria.operator,
+            onChanged: (dynamic value) {
+              setState(() {
+                _criteria = _criteria.rebuild((b) => b..operator = value);
+              });
+            },
+            items: _criteria.searchKey ==
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
+                ? [
+                    DropdownMenuItem<String>(
+                      child: Text(localization.contains),
+                      value: TransactionRuleCriteriaEntity
+                          .STRING_OPERATOR_CONTAINS,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.contains),
+                      value: TransactionRuleCriteriaEntity
+                          .STRING_OPERATOR_STARTS_WITH,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.contains),
+                      value: TransactionRuleCriteriaEntity.STRING_OPERATOR_IS,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(localization.contains),
+                      value: TransactionRuleCriteriaEntity
+                          .STRING_OPERATOR_IS_EMPTY,
+                    ),
+                  ]
+                : [
+                    DropdownMenuItem<String>(
+                      child: Text(TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_LESS_THAN),
+                      value: TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_LESS_THAN,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS),
+                      value: TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(
+                          TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS),
+                      value:
+                          TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_GREATER_THAN),
+                      value: TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_GREATER_THAN,
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text(TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS),
+                      value: TransactionRuleCriteriaEntity
+                          .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
+                    ),
+                  ],
+            /*
+            items: [            
+              DropdownMenuItem<String>(
+                child: Text(localization.description),
+                value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.amount),
+                value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+              ),
+            ],
+            */
           ),
           DecoratedFormField(
             label: localization.value,
