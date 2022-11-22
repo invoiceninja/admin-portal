@@ -343,16 +343,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                           .STRING_OPERATOR_CONTAINS,
                     ),
                     DropdownMenuItem<String>(
-                      child: Text(localization.contains),
+                      child: Text(localization.startsWith),
                       value: TransactionRuleCriteriaEntity
                           .STRING_OPERATOR_STARTS_WITH,
                     ),
                     DropdownMenuItem<String>(
-                      child: Text(localization.contains),
+                      child: Text(localization.isWord),
                       value: TransactionRuleCriteriaEntity.STRING_OPERATOR_IS,
                     ),
                     DropdownMenuItem<String>(
-                      child: Text(localization.contains),
+                      child: Text(localization.isEmpty),
                       value: TransactionRuleCriteriaEntity
                           .STRING_OPERATOR_IS_EMPTY,
                     ),
@@ -389,18 +389,6 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                           .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
                     ),
                   ],
-            /*
-            items: [            
-              DropdownMenuItem<String>(
-                child: Text(localization.description),
-                value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-              ),
-              DropdownMenuItem<String>(
-                child: Text(localization.amount),
-                value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
-              ),
-            ],
-            */
           ),
           DecoratedFormField(
             label: localization.value,
