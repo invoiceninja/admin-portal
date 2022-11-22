@@ -220,6 +220,7 @@ abstract class TransactionRuleCriteriaEntity
   @BuiltValueField(wireName: 'search_key')
   String get searchKey;
 
+  @nullable
   String get operator;
 
   String get value;
