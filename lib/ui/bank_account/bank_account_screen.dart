@@ -122,10 +122,24 @@ class BankAccountScreen extends StatelessWidget {
                           children: [
                             HelpText(localization.upgradeToConnectBankAccount),
                             SizedBox(height: 16),
-                            TextButton(
-                              onPressed: () =>
-                                  launchUrl(Uri.parse(kBankingURL)),
-                              child: Text(localization.learnMore),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () =>
+                                      launchUrl(Uri.parse(kBankingURL)),
+                                  child: Text(localization.learnMore),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    store.dispatch(ViewSettings(
+                                        clearFilter: true,
+                                        company: state.company,
+                                        user: state.user,
+                                        section: kSettingsAccountManagement));
+                                  },
+                                  child: Text(localization.upgrade),
+                                ),
+                              ],
                             )
                           ],
                         )),
