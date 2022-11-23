@@ -88,7 +88,7 @@ abstract class TransactionEntity extends Object
       vendorId: '',
       invoiceIds: '',
       statusId: '',
-      baseType: TYPE_DEPOSIT,
+      baseType: TYPE_WITHDRAWL,
       transactionId: 0,
       categoryId: '',
       transactionRuleId: '',
