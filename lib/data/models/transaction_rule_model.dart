@@ -222,12 +222,12 @@ abstract class TransactionRuleCriteriaEntity
 
   String get operator;
 
-  @nullable
   String get value;
 
   // ignore: unused_element
-  //static void _initializeBuilder(TransactionRuleCriteriaEntityBuilder builder) =>
-  //    builder..productCost = 0;
+  static void _initializeBuilder(
+          TransactionRuleCriteriaEntityBuilder builder) =>
+      builder..value = '';
 
   static Serializer<TransactionRuleCriteriaEntity> get serializer =>
       _$transactionRuleCriteriaEntitySerializer;

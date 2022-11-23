@@ -91,6 +91,7 @@ abstract class TransactionEntity extends Object
       baseType: TYPE_DEPOSIT,
       transactionId: 0,
       categoryId: '',
+      transactionRuleId: '',
     );
   }
 
@@ -138,6 +139,9 @@ abstract class TransactionEntity extends Object
 
   @BuiltValueField(wireName: 'transaction_id')
   int get transactionId;
+
+  @BuiltValueField(wireName: 'bank_transaction_rule_id')
+  String get transactionRuleId;
 
   @nullable
   @BuiltValueField(serialize: false)
@@ -354,6 +358,7 @@ abstract class TransactionEntity extends Object
   static void _initializeBuilder(TransactionEntityBuilder builder) => builder
     ..baseType = ''
     ..bankAccountId = ''
+    ..transactionRuleId = ''
     ..currencyId = '';
 
   static Serializer<TransactionEntity> get serializer =>
