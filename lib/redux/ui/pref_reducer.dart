@@ -40,6 +40,8 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
@@ -575,6 +577,19 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
+  TypedReducer<BuiltList<HistoryRecord>, ViewTransactionRule>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.transactionRuleId,
+              entityType: EntityType.transactionRule))),
+  TypedReducer<BuiltList<HistoryRecord>, EditTransactionRule>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.transactionRule.id,
+              entityType: EntityType.transactionRule))),
+
   TypedReducer<BuiltList<HistoryRecord>, ViewTransaction>(
       (historyList, action) => _addToHistory(
           historyList,

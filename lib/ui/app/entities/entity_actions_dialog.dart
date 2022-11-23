@@ -31,6 +31,8 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
@@ -183,6 +185,12 @@ class EntityActionListTile extends StatelessWidget {
             break;
           case EntityType.bankAccount:
             handleBankAccountAction(mainContext, entities, action);
+            break;
+          case EntityType.transaction:
+            handleTransactionAction(mainContext, entities, action);
+            break;
+          case EntityType.transactionRule:
+            handleTransactionRuleAction(mainContext, entities, action);
             break;
           // TODO add to starter.sh
           default:

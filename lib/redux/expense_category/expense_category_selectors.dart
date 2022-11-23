@@ -13,9 +13,9 @@ var memoizedDropdownExpenseCategoryList = memo5(
             BuiltList<String> expenseCategoryList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
-            String clientId) =>
+            String categoryId) =>
         dropdownExpenseCategoriesSelector(expenseCategoryMap,
-            expenseCategoryList, staticState, userMap, clientId));
+            expenseCategoryList, staticState, userMap, categoryId));
 
 List<String> dropdownExpenseCategoriesSelector(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,

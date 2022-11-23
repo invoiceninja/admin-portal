@@ -196,6 +196,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TransactionEntity.serializer)
       ..add(TransactionItemResponse.serializer)
       ..add(TransactionListResponse.serializer)
+      ..add(TransactionRuleCriteriaEntity.serializer)
+      ..add(TransactionRuleEntity.serializer)
+      ..add(TransactionRuleItemResponse.serializer)
+      ..add(TransactionRuleListResponse.serializer)
+      ..add(TransactionRuleState.serializer)
+      ..add(TransactionRuleUIState.serializer)
       ..add(TransactionState.serializer)
       ..add(TransactionStatusEntity.serializer)
       ..add(TransactionUIState.serializer)
@@ -430,6 +436,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TransactionEntity)]),
           () => new ListBuilder<TransactionEntity>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(TransactionRuleEntity)]),
+          () => new ListBuilder<TransactionRuleEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaskEntity)]),
           () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(
@@ -563,6 +573,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TransactionEntity)]),
           () => new ListBuilder<TransactionEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(TransactionRuleCriteriaEntity)]),
+          () => new ListBuilder<TransactionRuleCriteriaEntity>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(TransactionRuleEntity)]),
+          () => new ListBuilder<TransactionRuleEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserCompanyEntity)]),
           () => new ListBuilder<UserCompanyEntity>())
@@ -915,6 +933,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(TransactionEntity)
           ]),
           () => new MapBuilder<String, TransactionEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TransactionRuleEntity)
+          ]),
+          () => new MapBuilder<String, TransactionRuleEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

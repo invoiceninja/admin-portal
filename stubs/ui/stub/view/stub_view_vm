@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -42,6 +44,7 @@ class StubViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onBackPressed,
   });
 
   factory StubViewVM.fromStore(Store<AppState> store) {
@@ -64,6 +67,9 @@ class StubViewVM {
         isDirty: stub.isNew,
         stub: stub,
         onRefreshed: (context) => _handleRefresh(context),
+              onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(StubScreen.route));
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([stub], action, autoPop: true),
         );
@@ -74,6 +80,7 @@ class StubViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

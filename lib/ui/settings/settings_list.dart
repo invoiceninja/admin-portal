@@ -579,6 +579,11 @@ class SettingsSearch extends StatelessWidget {
           'bank_accounts',
         ],
       ],
+      kSettingsTransactionRules: [
+        [
+          'transaction_rules',
+        ],
+      ],
       kSettingsGroupSettings: [
         [
           'groups',

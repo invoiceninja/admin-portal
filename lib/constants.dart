@@ -17,6 +17,7 @@ const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
+const String kBankingURL = 'https://invoiceninja.com/banking/';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kSourceCodeBackend =
@@ -508,6 +509,9 @@ const String kSettingsTaskStatusEdit = 'task_status/edit';
 const String kSettingsBankAccounts = 'bank_accounts';
 const String kSettingsBankAccountsView = 'bank_accounts/view';
 const String kSettingsBankAccountsEdit = 'bank_accounts/edit';
+const String kSettingsTransactionRules = 'transaction_rules';
+const String kSettingsTransactionRulesView = 'transaction_rules/view';
+const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,

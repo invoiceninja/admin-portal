@@ -30,6 +30,7 @@ const EntityType _$gateway = const EntityType._('gateway');
 const EntityType _$gatewayToken = const EntityType._('gatewayToken');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
 const EntityType _$design = const EntityType._('design');
+const EntityType _$transactionRule = const EntityType._('transactionRule');
 const EntityType _$transaction = const EntityType._('transaction');
 const EntityType _$bankAccount = const EntityType._('bankAccount');
 const EntityType _$recurringExpense = const EntityType._('recurringExpense');
@@ -103,6 +104,8 @@ EntityType _$typeValueOf(String name) {
       return _$invoiceItem;
     case 'design':
       return _$design;
+    case 'transactionRule':
+      return _$transactionRule;
     case 'transaction':
       return _$transaction;
     case 'bankAccount':
@@ -178,6 +181,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$gatewayToken,
   _$invoiceItem,
   _$design,
+  _$transactionRule,
   _$transaction,
   _$bankAccount,
   _$recurringExpense,

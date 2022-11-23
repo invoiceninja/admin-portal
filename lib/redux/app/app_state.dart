@@ -71,6 +71,8 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart'
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_vm.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_state.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
 
 part 'app_state.g.dart';
 
@@ -272,6 +274,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.transactionRule:
+        return transactionRuleState.map;
+
       case EntityType.transaction:
         return transactionState.map;
 
@@ -361,6 +366,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.transactionRule:
+        return transactionRuleState.list;
+
       case EntityType.transaction:
         return transactionState.list;
 
@@ -439,6 +447,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.transactionRule:
+        return transactionRuleUIState;
+
       case EntityType.transaction:
         return transactionUIState;
 
@@ -518,6 +529,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  TransactionRuleState get transactionRuleState =>
+      userCompanyState.transactionRuleState;
+  ListUIState get transactionRuleListState =>
+      uiState.transactionRuleUIState.listUIState;
+  TransactionRuleUIState get transactionRuleUIState =>
+      uiState.transactionRuleUIState;
+
   TransactionState get transactionState => userCompanyState.transactionState;
   ListUIState get transactionListState =>
       uiState.transactionUIState.listUIState;
@@ -703,6 +721,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return creditUIState.editing.isChanged == true;
       // STARTER: has changes - do not remove comment
+      case TransactionRuleEditScreen.route:
+        return transactionRuleUIState.editing.isChanged == true;
       case TransactionEditScreen.route:
         return transactionUIState.editing.isChanged == true;
       case PurchaseOrderEditScreen.route:

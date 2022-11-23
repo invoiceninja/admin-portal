@@ -119,12 +119,12 @@ class _TransactionEditState extends State<TransactionEdit> {
                         },
                         items: [
                           DropdownMenuItem(
-                            child: Text(localization.deposit),
-                            value: TransactionEntity.TYPE_DEPOSIT,
-                          ),
-                          DropdownMenuItem(
                             child: Text(localization.withdrawal),
                             value: TransactionEntity.TYPE_WITHDRAWL,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.deposit),
+                            value: TransactionEntity.TYPE_DEPOSIT,
                           ),
                         ]),
                     DatePicker(

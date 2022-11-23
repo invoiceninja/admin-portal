@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -89,48 +90,79 @@ class BankAccountScreen extends StatelessWidget {
       },
       body: Column(
         children: [
-          if (state.isHosted)
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, top: 8, right: 16, bottom: 10),
-              child: state.isEnterprisePlan
-                  ? Row(
-                      children: [
-                        Expanded(
-                          child: AppButton(
-                            label: localization.connectAccounts.toUpperCase(),
-                            onPressed: () => connectAccounts(context),
-                            iconData: Icons.link,
-                          ),
-                        ),
-                        SizedBox(width: kGutterWidth),
-                        Expanded(
-                          child: AppButton(
-                            label: localization.refreshAccounts.toUpperCase(),
-                            onPressed: () =>
-                                viewModel.onRefreshAccounts(context),
-                            iconData: Icons.refresh,
-                          ),
-                        ),
-                        /*
-                SizedBox(width: kGutterWidth),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 10),
+            child: Row(
+              children: [
+                if (state.isHosted) ...[
+                  if (state.isEnterprisePlan) ...[
+                    Expanded(
+                      child: AppButton(
+                        label: localization.connect.toUpperCase(),
+                        onPressed: () => connectAccounts(context),
+                        iconData: Icons.link,
+                      ),
+                    ),
+                    SizedBox(width: kGutterWidth),
+                    Expanded(
+                      child: AppButton(
+                        label: localization.refresh.toUpperCase(),
+                        onPressed: () => viewModel.onRefreshAccounts(context),
+                        iconData: Icons.refresh,
+                      ),
+                    ),
+                  ] else
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 8),
+                        child: Center(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HelpText(localization.upgradeToConnectBankAccount),
+                            SizedBox(height: 16),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () =>
+                                      launchUrl(Uri.parse(kBankingURL)),
+                                  child: Text(localization.learnMore),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    store.dispatch(ViewSettings(
+                                        clearFilter: true,
+                                        company: state.company,
+                                        user: state.user,
+                                        section: kSettingsAccountManagement));
+                                  },
+                                  child: Text(localization.upgrade),
+                                ),
+                              ],
+                            )
+                          ],
+                        )),
+                      ),
+                    ),
+                  SizedBox(width: kGutterWidth),
+                ],
                 Expanded(
                   child: AppButton(
-                    label: localization.manageRules.toUpperCase(),
-                    onPressed: () => null,
-                    iconData: Icons.refresh,
+                    label: (state.isHosted
+                            ? localization.rules
+                            : localization.manageRules)
+                        .toUpperCase(),
+                    onPressed: () {
+                      store.dispatch(
+                          ViewSettings(section: kSettingsTransactionRules));
+                    },
+                    iconData: Icons.rule_folder,
                   ),
-                ),
-                */
-                      ],
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 8),
-                      child: Center(
-                          child: HelpText(
-                              localization.upgradeToConnectBankAccount)),
-                    ),
+                )
+              ],
             ),
+          ),
           Expanded(child: BankAccountListBuilder()),
         ],
       ),

@@ -100,6 +100,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.delete_forever;
     case EntityAction.viewInvoice:
       return MdiIcons.fileAccount;
+    case EntityAction.viewExpense:
+      return MdiIcons.fileImage;
     case EntityAction.changeStatus:
       return Icons.adjust;
     case EntityAction.cancel:
@@ -172,6 +174,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.bankTransfer;
     case EntityType.bankAccount:
       return MdiIcons.bank;
+    case EntityType.transactionRule:
+      return Icons.rule_folder;
     default:
       return MdiIcons.crosshairsQuestion;
   }
@@ -255,6 +259,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.subscription);
     case kSettingsBankAccounts:
       return MdiIcons.bank;
+    case kSettingsTransactionRules:
+      return Icons.rule_folder;
     default:
       return null;
   }

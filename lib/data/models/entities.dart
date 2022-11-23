@@ -42,6 +42,8 @@ class EntityType extends EnumClass {
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
   // STARTER: entity type - do not remove comment
+  static const EntityType transactionRule = _$transactionRule;
+
   static const EntityType transaction = _$transaction;
 
   static const EntityType bankAccount = _$bankAccount;
@@ -90,6 +92,7 @@ class EntityType extends EnumClass {
         EntityType.taskStatus,
         EntityType.subscription,
         EntityType.bankAccount,
+        EntityType.transactionRule,
       ].contains(this);
 
   List<EntityType> get relatedTypes {
@@ -295,11 +298,20 @@ abstract class EntityStatus {
 }
 
 class EntityStats {
-  const EntityStats({this.countActive, this.countArchived});
+  const EntityStats({
+    this.countActive,
+    this.countArchived,
+    this.total,
+    this.currencyId,
+  });
 
   final int countActive;
 
   final int countArchived;
+
+  final double total;
+
+  final String currencyId;
 
   String present(String activeLabel, String archivedLabel) {
     String str = '';

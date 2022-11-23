@@ -125,6 +125,16 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
             ]
           ]),
+          if (!viewModel.state.settingsUIState.isFiltered)
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 0, bottom: 8, right: 20, left: 20),
+              child: AppButton(
+                iconData: Icons.settings,
+                label: localization.configureStatuses.toUpperCase(),
+                onPressed: () => viewModel.onConfigureStatusesPressed(context),
+              ),
+            ),
           FormCard(
             children: <Widget>[
               if (!viewModel.state.settingsUIState.isFiltered) ...[
@@ -172,6 +182,7 @@ class _TaskSettingsState extends State<TaskSettings> {
             ],
           ),
           FormCard(
+            isLast: true,
             children: [
               BoolDropdownButton(
                 label: localization.clientPortal,
@@ -202,16 +213,6 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
             ],
           ),
-          if (!viewModel.state.settingsUIState.isFiltered)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppButton(
-                iconData: Icons.settings,
-                label: localization.configureStatuses.toUpperCase(),
-                onPressed: () => viewModel.onConfigureStatusesPressed(context),
-              ),
-            ),
-          SizedBox(height: 20),
         ],
       ),
     );

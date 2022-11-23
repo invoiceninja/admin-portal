@@ -88,9 +88,10 @@ abstract class TransactionEntity extends Object
       vendorId: '',
       invoiceIds: '',
       statusId: '',
-      baseType: TYPE_DEPOSIT,
+      baseType: TYPE_WITHDRAWL,
       transactionId: 0,
       categoryId: '',
+      transactionRuleId: '',
     );
   }
 
@@ -139,6 +140,9 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'transaction_id')
   int get transactionId;
 
+  @BuiltValueField(wireName: 'bank_transaction_rule_id')
+  String get transactionRuleId;
+
   @nullable
   @BuiltValueField(serialize: false)
   String get pendingVendorId;
@@ -176,7 +180,7 @@ abstract class TransactionEntity extends Object
       }
 
       if (isMatched) {
-        //actions.add(EntityAction.convert);
+        actions.add(EntityAction.convert);
       }
     }
 
@@ -354,6 +358,7 @@ abstract class TransactionEntity extends Object
   static void _initializeBuilder(TransactionEntityBuilder builder) => builder
     ..baseType = ''
     ..bankAccountId = ''
+    ..transactionRuleId = ''
     ..currencyId = '';
 
   static Serializer<TransactionEntity> get serializer =>
