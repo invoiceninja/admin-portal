@@ -4,6 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/foundation.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -1065,7 +1066,11 @@ abstract class InvoiceEntity extends Object
 
         if (userCompany.canCreate(EntityType.payment)) {
           if (isPayable && isInvoice) {
-            actions.addAll([EntityAction.markPaid, EntityAction.newPayment]);
+            actions.addAll([
+              EntityAction.newPayment,
+              EntityAction.markPaid,
+              if (!kReleaseMode) EntityAction.autoBill,
+            ]);
           } else if (isCredit) {
             if (balanceOrAmount < 0) {
               actions.add(EntityAction.markPaid);

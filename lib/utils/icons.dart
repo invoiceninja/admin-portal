@@ -112,6 +112,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.inventory;
     case EntityAction.merge:
       return MdiIcons.merge;
+    case EntityAction.autoBill:
+      return MdiIcons.contactlessPaymentCircle;
     default:
       return null;
   }
