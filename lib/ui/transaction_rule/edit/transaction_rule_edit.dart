@@ -114,6 +114,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       label: localization.name,
                       keyboardType: TextInputType.text,
                       controller: _nameController,

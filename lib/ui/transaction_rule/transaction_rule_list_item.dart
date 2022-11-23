@@ -39,7 +39,28 @@ class TransactionRuleListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? transactionRule.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch;
+
+    var subtitle = '';
+
+    if (filterMatch != null) {
+      subtitle = filterMatch;
+    } else {
+      final vendor = state.vendorState.get(transactionRule.vendorId);
+      final category =
+          state.expenseCategoryState.get(transactionRule.categoryId);
+
+      if (vendor.isOld) {
+        subtitle += vendor.name;
+
+        if (category.isOld) {
+          subtitle += ' • ';
+        }
+      }
+
+      if (category.isOld) {
+        subtitle += category.name;
+      }
+    }
 
     return DismissibleEntity(
       userCompany: state.userCompany,
