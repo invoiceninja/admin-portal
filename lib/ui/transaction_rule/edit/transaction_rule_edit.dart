@@ -96,6 +96,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
     final transactionRule = viewModel.transactionRule;
     final state = viewModel.state;
 
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textStyle = TextStyle(color: textColor.withOpacity(.65));
+
     return EditScaffold(
       title: transactionRule.isNew
           ? localization.newTransactionRule
@@ -151,18 +154,18 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           Expanded(
                               child: Text(
                             localization.field,
-                            style: Theme.of(context).textTheme.caption,
+                            style: textStyle,
                           )),
                           Expanded(
                             child: Text(
                               localization.operator,
-                              style: Theme.of(context).textTheme.caption,
+                              style: textStyle,
                             ),
                           ),
                           Expanded(
                             child: Text(
                               localization.value,
-                              style: Theme.of(context).textTheme.caption,
+                              style: textStyle,
                             ),
                           ),
                           SizedBox(width: 100),

@@ -31,6 +31,9 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textStyle = TextStyle(color: textColor.withOpacity(.65));
+
     final transactionStats = memoizedTransactionStatsForTransactionRule(
         transactionRule.id, state.transactionState.map);
 
@@ -51,16 +54,62 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 '${transactionStats.countActive + transactionStats.countArchived}',
           ),
           ListDivider(),
-          FieldGrid(
-            {
-              localization.matchAllRules: transactionRule.matchesOnAll
-                  ? localization.enabled
-                  : localization.disabled,
-              localization.autoConvert: transactionRule.autoConvert
-                  ? localization.enabled
-                  : localization.disabled,
-            },
-          ),
+          FieldGrid({
+            localization.matchAllRules: transactionRule.matchesOnAll
+                ? localization.enabled
+                : localization.disabled,
+            localization.autoConvert: transactionRule.autoConvert
+                ? localization.enabled
+                : localization.disabled,
+          }),
+          if (transactionRule.rules.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, top: 20, right: 20, bottom: 4),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: Text(
+                    localization.field,
+                    style: textStyle,
+                  )),
+                  Expanded(
+                    child: Text(
+                      localization.operator,
+                      style: textStyle,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      localization.value,
+                      style: textStyle,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 4),
+            for (var rule in transactionRule.rules)
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(localization.lookup(rule.searchKey)),
+                    ),
+                    Expanded(
+                      child: Text(localization.lookup(rule.operator)),
+                    ),
+                    Expanded(
+                      child: Text(rule.value),
+                    ),
+                  ],
+                ),
+              ),
+            SizedBox(height: 20),
+            ListDivider(),
+          ],
         ],
       ),
     );
