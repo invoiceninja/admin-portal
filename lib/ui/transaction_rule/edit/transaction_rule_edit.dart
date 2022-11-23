@@ -315,6 +315,8 @@ class _RuleCriteria extends StatefulWidget {
 
 class __RuleCriteriaState extends State<_RuleCriteria> {
   TransactionRuleCriteriaEntity _criteria;
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_ruleCriteria');
 
   @override
   void initState() {
@@ -324,6 +326,12 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
   }
 
   void onDonePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     if (_criteria.searchKey.isEmpty ||
         _criteria.operator.isEmpty ||
         (_criteria.value.isEmpty &&
@@ -340,108 +348,118 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
     final localization = AppLocalization.of(context);
 
     return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AppDropdownButton<String>(
-            labelText: localization.field,
-            value: _criteria.searchKey,
-            onChanged: (dynamic value) {
-              setState(() {
-                _criteria = _criteria.rebuild((b) => b
-                  ..searchKey = value
-                  ..operator = '');
-              });
-            },
-            items: [
-              DropdownMenuItem<String>(
-                child: Text(localization.description),
-                value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-              ),
-              DropdownMenuItem<String>(
-                child: Text(localization.amount),
-                value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
-              ),
-            ],
-          ),
-          AppDropdownButton<String>(
-            labelText: localization.operator,
-            value: _criteria.operator,
-            onChanged: (dynamic value) {
-              setState(() {
-                _criteria = _criteria.rebuild((b) => b..operator = value);
-              });
-            },
-            items: _criteria.searchKey ==
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
-                ? [
-                    DropdownMenuItem<String>(
-                      child: Text(localization.contains),
-                      value: TransactionRuleCriteriaEntity
-                          .STRING_OPERATOR_CONTAINS,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(localization.startsWith),
-                      value: TransactionRuleCriteriaEntity
-                          .STRING_OPERATOR_STARTS_WITH,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(localization.isWord),
-                      value: TransactionRuleCriteriaEntity.STRING_OPERATOR_IS,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(localization.isEmpty),
-                      value: TransactionRuleCriteriaEntity
-                          .STRING_OPERATOR_IS_EMPTY,
-                    ),
-                  ]
-                : [
-                    DropdownMenuItem<String>(
-                      child: Text(TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_LESS_THAN),
-                      value: TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_LESS_THAN,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS),
-                      value: TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(
-                          TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS),
-                      value:
-                          TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_GREATER_THAN),
-                      value: TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_GREATER_THAN,
-                    ),
-                    DropdownMenuItem<String>(
-                      child: Text(TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS),
-                      value: TransactionRuleCriteriaEntity
-                          .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
-                    ),
-                  ],
-          ),
-          if (_criteria.operator !=
-              TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
-            DecoratedFormField(
-              label: localization.value,
-              initialValue: _criteria.value,
-              keyboardType: TextInputType.text,
-              onChanged: (value) {
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AppDropdownButton<String>(
+              labelText: localization.field,
+              value: _criteria.searchKey,
+              onChanged: (dynamic value) {
                 setState(() {
-                  _criteria = _criteria.rebuild((b) => b..value = value);
+                  _criteria = _criteria.rebuild((b) => b
+                    ..searchKey = value
+                    ..operator = value ==
+                            TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
+                        ? TransactionRuleCriteriaEntity.STRING_OPERATOR_CONTAINS
+                        : TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS);
                 });
               },
-              onSavePressed: (context) => onDonePressed(),
-            )
-        ],
+              items: [
+                DropdownMenuItem<String>(
+                  child: Text(localization.description),
+                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                ),
+                DropdownMenuItem<String>(
+                  child: Text(localization.amount),
+                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+                ),
+              ],
+            ),
+            AppDropdownButton<String>(
+              labelText: localization.operator,
+              value: _criteria.operator,
+              onChanged: (dynamic value) {
+                setState(() {
+                  _criteria = _criteria.rebuild((b) => b..operator = value);
+                });
+              },
+              items: _criteria.searchKey ==
+                      TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
+                  ? [
+                      DropdownMenuItem<String>(
+                        child: Text(localization.contains),
+                        value: TransactionRuleCriteriaEntity
+                            .STRING_OPERATOR_CONTAINS,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.startsWith),
+                        value: TransactionRuleCriteriaEntity
+                            .STRING_OPERATOR_STARTS_WITH,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.isWord),
+                        value: TransactionRuleCriteriaEntity.STRING_OPERATOR_IS,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.isEmpty),
+                        value: TransactionRuleCriteriaEntity
+                            .STRING_OPERATOR_IS_EMPTY,
+                      ),
+                    ]
+                  : [
+                      DropdownMenuItem<String>(
+                        child: Text(TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_LESS_THAN),
+                        value: TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_LESS_THAN,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS),
+                        value: TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_EQUALS),
+                        value: TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_EQUALS,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_GREATER_THAN),
+                        value: TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_GREATER_THAN,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS),
+                        value: TransactionRuleCriteriaEntity
+                            .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
+                      ),
+                    ],
+            ),
+            if (_criteria.operator !=
+                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
+              DecoratedFormField(
+                autofocus: true,
+                label: localization.value,
+                initialValue: _criteria.value,
+                keyboardType: TextInputType.text,
+                onChanged: (value) {
+                  setState(() {
+                    _criteria = _criteria.rebuild((b) => b..value = value);
+                  });
+                },
+                onSavePressed: (context) => onDonePressed(),
+                validator: (value) => value.trim().isEmpty
+                    ? localization.pleaseEnterAValue
+                    : null,
+              )
+          ],
+        ),
       ),
       actions: [
         TextButton(

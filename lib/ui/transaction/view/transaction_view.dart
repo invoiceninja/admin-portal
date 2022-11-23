@@ -85,6 +85,11 @@ class _TransactionViewState extends State<TransactionView> {
                         state.bankAccountState.get(transaction.bankAccountId),
                     isFilter: false,
                   ),
+                  EntityListTile(
+                    entity: state.transactionRuleState
+                        .get(transaction.transactionRuleId),
+                    isFilter: false,
+                  ),
                   if (transaction.isDeposit)
                     ...transaction.invoiceIds
                         .split(',')

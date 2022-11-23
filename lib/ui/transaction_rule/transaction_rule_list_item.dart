@@ -45,19 +45,19 @@ class TransactionRuleListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else {
-      final vendor = state.vendorState.get(transactionRule.vendorId);
+      final vendor = state.vendorState.map[transactionRule.vendorId];
       final category =
-          state.expenseCategoryState.get(transactionRule.categoryId);
+          state.expenseCategoryState.map[transactionRule.categoryId];
 
-      if (vendor.isOld) {
+      if (vendor != null) {
         subtitle += vendor.name;
 
-        if (category.isOld) {
+        if (category != null) {
           subtitle += ' • ';
         }
       }
 
-      if (category.isOld) {
+      if (category != null) {
         subtitle += category.name;
       }
     }
