@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -110,6 +112,21 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
             SizedBox(height: 20),
             ListDivider(),
           ],
+          FieldGrid({
+            localization.vendor:
+                state.vendorState.get(transactionRule.vendorId).name,
+            localization.category:
+                state.expenseCategoryState.get(transactionRule.categoryId).name,
+          }),
+          EntitiesListTile(
+            entity: transactionRule,
+            isFilter: widget.isFilter,
+            entityType: EntityType.transaction,
+            title: localization.transactions,
+            subtitle: transactionStats.present(
+                localization.active, localization.archived),
+            hideNew: true,
+          ),
         ],
       ),
     );

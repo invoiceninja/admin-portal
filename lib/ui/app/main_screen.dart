@@ -651,6 +651,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.bankAccount:
             leftFilterChild = BankAccountViewScreen(isFilter: true);
             break;
+          case EntityType.transactionRule:
+            leftFilterChild = TransactionRuleViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');
