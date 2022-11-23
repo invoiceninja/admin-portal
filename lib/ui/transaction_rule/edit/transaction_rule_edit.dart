@@ -182,7 +182,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                 child: Text(localization.lookup(rule.operator)),
                               ),
                               Expanded(
-                                child: Text(rule.value ?? ''),
+                                child: Text(rule.value),
                               ),
                               SizedBox(
                                 width: 100,

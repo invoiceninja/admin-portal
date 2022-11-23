@@ -79,3 +79,37 @@ List<String> filteredTransactionRulesSelector(
 
   return list;
 }
+
+var memoizedTransactionStatsForTransactionRule = memo2(
+    (String userId, BuiltMap<String, TransactionEntity> transactionMap) =>
+        transactionStatsForTransactionRule(userId, transactionMap));
+
+EntityStats transactionStatsForTransactionRule(
+  String transactionRuleId,
+  BuiltMap<String, TransactionEntity> transactionMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  double total = 0;
+  String currencyId;
+
+  transactionMap.forEach((transactionId, transaction) {
+    if (transaction.transactionRuleId == transactionRuleId) {
+      if (transaction.isActive) {
+        countActive++;
+      } else if (transaction.isDeleted) {
+        countArchived++;
+      }
+
+      currencyId ??= transaction.currencyId;
+      total += transaction.amount;
+    }
+  });
+
+  return EntityStats(
+    countActive: countActive,
+    countArchived: countArchived,
+    total: total,
+    currencyId: currencyId,
+  );
+}

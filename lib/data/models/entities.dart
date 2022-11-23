@@ -298,11 +298,20 @@ abstract class EntityStatus {
 }
 
 class EntityStats {
-  const EntityStats({this.countActive, this.countArchived});
+  const EntityStats({
+    this.countActive,
+    this.countArchived,
+    this.total,
+    this.currencyId,
+  });
 
   final int countActive;
 
   final int countArchived;
+
+  final double total;
+
+  final String currencyId;
 
   String present(String activeLabel, String archivedLabel) {
     String str = '';
