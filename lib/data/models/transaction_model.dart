@@ -180,7 +180,7 @@ abstract class TransactionEntity extends Object
       }
 
       if (isMatched) {
-        //actions.add(EntityAction.convert);
+        actions.add(EntityAction.convert);
       }
     }
 
