@@ -92,7 +92,7 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
             for (var rule in transactionRule.rules)
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                 child: Row(
                   children: [
                     Expanded(
