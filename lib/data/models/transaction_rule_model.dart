@@ -191,8 +191,8 @@ abstract class TransactionRuleCriteriaEntity
   factory TransactionRuleCriteriaEntity(
       {String searchKey, String operator, String value}) {
     return _$TransactionRuleCriteriaEntity._(
-      searchKey: searchKey ?? '',
-      operator: operator ?? '',
+      searchKey: searchKey ?? SEARCH_KEY_DESCRIPTION,
+      operator: operator ?? STRING_OPERATOR_CONTAINS,
       value: value ?? '',
     );
   }
