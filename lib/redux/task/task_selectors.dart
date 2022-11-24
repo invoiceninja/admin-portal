@@ -30,7 +30,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   final dates = <String>{};
 
   if (project.isOld && includeProjectHeader) {
-    notes += '## ${project.name}\n';
+    if (state.company.markdownEnabled) {
+      notes += '## ${project.name}\n';
+    } else {
+      notes += '<div class="project-header">${project.name}</div>\n';
+    }
   }
 
   notes += task.description;
@@ -50,7 +54,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
             showTime: true);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
-        notes += '$start - $end<br/>\n';
+        notes += '$start - $end';
+        if (state.company.markdownEnabled) {
+          notes += '<br/>';
+        }
+        notes += '\n';
       } else if (state.company.invoiceTaskDatelog) {
         final date = formatDate(time.startDate.toIso8601String(), context,
             showTime: false);
@@ -60,7 +68,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
             showTime: true, showDate: false);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
-        notes += '$start - $end<br/>\n';
+        notes += '$start - $end';
+        if (state.company.markdownEnabled) {
+          notes += '<br/>';
+        }
+        notes += '\n';
       }
     });
     notes += '</div>\n';

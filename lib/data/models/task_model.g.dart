@@ -170,9 +170,9 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'number',
       serializers.serialize(object.number,
           specifiedType: const FullType(String)),
-      'duration',
-      serializers.serialize(object.duration,
-          specifiedType: const FullType(int)),
+      'invoice_lock',
+      serializers.serialize(object.invoiceLock,
+          specifiedType: const FullType(bool)),
       'invoice_id',
       serializers.serialize(object.invoiceId,
           specifiedType: const FullType(String)),
@@ -275,9 +275,9 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'duration':
-          result.duration = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'invoice_lock':
+          result.invoiceLock = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -640,7 +640,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String number;
   @override
-  final int duration;
+  final bool invoiceLock;
   @override
   final String invoiceId;
   @override
@@ -688,7 +688,7 @@ class _$TaskEntity extends TaskEntity {
   _$TaskEntity._(
       {this.description,
       this.number,
-      this.duration,
+      this.invoiceLock,
       this.invoiceId,
       this.clientId,
       this.rate,
@@ -713,7 +713,8 @@ class _$TaskEntity extends TaskEntity {
     BuiltValueNullFieldError.checkNotNull(
         description, 'TaskEntity', 'description');
     BuiltValueNullFieldError.checkNotNull(number, 'TaskEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(duration, 'TaskEntity', 'duration');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceLock, 'TaskEntity', 'invoiceLock');
     BuiltValueNullFieldError.checkNotNull(invoiceId, 'TaskEntity', 'invoiceId');
     BuiltValueNullFieldError.checkNotNull(clientId, 'TaskEntity', 'clientId');
     BuiltValueNullFieldError.checkNotNull(rate, 'TaskEntity', 'rate');
@@ -749,7 +750,7 @@ class _$TaskEntity extends TaskEntity {
     return other is TaskEntity &&
         description == other.description &&
         number == other.number &&
-        duration == other.duration &&
+        invoiceLock == other.invoiceLock &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
         rate == other.rate &&
@@ -793,7 +794,7 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), duration.hashCode), invoiceId.hashCode),
+                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), invoiceLock.hashCode), invoiceId.hashCode),
                                                                                 clientId.hashCode),
                                                                             rate.hashCode),
                                                                         projectId.hashCode),
@@ -820,7 +821,7 @@ class _$TaskEntity extends TaskEntity {
     return (newBuiltValueToStringHelper('TaskEntity')
           ..add('description', description)
           ..add('number', number)
-          ..add('duration', duration)
+          ..add('invoiceLock', invoiceLock)
           ..add('invoiceId', invoiceId)
           ..add('clientId', clientId)
           ..add('rate', rate)
@@ -856,9 +857,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
-  int _duration;
-  int get duration => _$this._duration;
-  set duration(int duration) => _$this._duration = duration;
+  bool _invoiceLock;
+  bool get invoiceLock => _$this._invoiceLock;
+  set invoiceLock(bool invoiceLock) => _$this._invoiceLock = invoiceLock;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -944,14 +945,16 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TaskEntityBuilder();
+  TaskEntityBuilder() {
+    TaskEntity._initializeBuilder(this);
+  }
 
   TaskEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _description = $v.description;
       _number = $v.number;
-      _duration = $v.duration;
+      _invoiceLock = $v.invoiceLock;
       _invoiceId = $v.invoiceId;
       _clientId = $v.clientId;
       _rate = $v.rate;
@@ -998,8 +1001,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
                   description, 'TaskEntity', 'description'),
               number: BuiltValueNullFieldError.checkNotNull(
                   number, 'TaskEntity', 'number'),
-              duration: BuiltValueNullFieldError.checkNotNull(
-                  duration, 'TaskEntity', 'duration'),
+              invoiceLock: BuiltValueNullFieldError.checkNotNull(
+                  invoiceLock, 'TaskEntity', 'invoiceLock'),
               invoiceId: BuiltValueNullFieldError.checkNotNull(
                   invoiceId, 'TaskEntity', 'invoiceId'),
               clientId: BuiltValueNullFieldError.checkNotNull(
@@ -1010,8 +1013,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
                   projectId, 'TaskEntity', 'projectId'),
               timeLog: BuiltValueNullFieldError.checkNotNull(
                   timeLog, 'TaskEntity', 'timeLog'),
-              customValue1:
-                  BuiltValueNullFieldError.checkNotNull(customValue1, 'TaskEntity', 'customValue1'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(
+                  customValue1, 'TaskEntity', 'customValue1'),
               customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'TaskEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'TaskEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'TaskEntity', 'customValue4'),

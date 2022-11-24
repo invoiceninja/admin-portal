@@ -133,6 +133,18 @@ class _$SubscriptionEntitySerializer
       'recurring_product_ids',
       serializers.serialize(object.recurringProductIds,
           specifiedType: const FullType(String)),
+      'optional_product_ids',
+      serializers.serialize(object.optionalProductIds,
+          specifiedType: const FullType(String)),
+      'optional_recurring_product_ids',
+      serializers.serialize(object.optionalRecurringProductIds,
+          specifiedType: const FullType(String)),
+      'registration_required',
+      serializers.serialize(object.registrationRequired,
+          specifiedType: const FullType(bool)),
+      'use_inventory_management',
+      serializers.serialize(object.useInventoryManagement,
+          specifiedType: const FullType(bool)),
       'frequency_id',
       serializers.serialize(object.frequencyId,
           specifiedType: const FullType(String)),
@@ -252,6 +264,22 @@ class _$SubscriptionEntitySerializer
         case 'recurring_product_ids':
           result.recurringProductIds = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'optional_product_ids':
+          result.optionalProductIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'optional_recurring_product_ids':
+          result.optionalRecurringProductIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'registration_required':
+          result.registrationRequired = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'use_inventory_management':
+          result.useInventoryManagement = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'frequency_id':
           result.frequencyId = serializers.deserialize(value,
@@ -633,6 +661,14 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final String recurringProductIds;
   @override
+  final String optionalProductIds;
+  @override
+  final String optionalRecurringProductIds;
+  @override
+  final bool registrationRequired;
+  @override
+  final bool useInventoryManagement;
+  @override
   final String frequencyId;
   @override
   final String autoBill;
@@ -690,6 +726,10 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.groupId,
       this.productIds,
       this.recurringProductIds,
+      this.optionalProductIds,
+      this.optionalRecurringProductIds,
+      this.registrationRequired,
+      this.useInventoryManagement,
       this.frequencyId,
       this.autoBill,
       this.promoCode,
@@ -722,6 +762,14 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         productIds, 'SubscriptionEntity', 'productIds');
     BuiltValueNullFieldError.checkNotNull(
         recurringProductIds, 'SubscriptionEntity', 'recurringProductIds');
+    BuiltValueNullFieldError.checkNotNull(
+        optionalProductIds, 'SubscriptionEntity', 'optionalProductIds');
+    BuiltValueNullFieldError.checkNotNull(optionalRecurringProductIds,
+        'SubscriptionEntity', 'optionalRecurringProductIds');
+    BuiltValueNullFieldError.checkNotNull(
+        registrationRequired, 'SubscriptionEntity', 'registrationRequired');
+    BuiltValueNullFieldError.checkNotNull(
+        useInventoryManagement, 'SubscriptionEntity', 'useInventoryManagement');
     BuiltValueNullFieldError.checkNotNull(
         frequencyId, 'SubscriptionEntity', 'frequencyId');
     BuiltValueNullFieldError.checkNotNull(
@@ -779,6 +827,10 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         groupId == other.groupId &&
         productIds == other.productIds &&
         recurringProductIds == other.recurringProductIds &&
+        optionalProductIds == other.optionalProductIds &&
+        optionalRecurringProductIds == other.optionalRecurringProductIds &&
+        registrationRequired == other.registrationRequired &&
+        useInventoryManagement == other.useInventoryManagement &&
         frequencyId == other.frequencyId &&
         autoBill == other.autoBill &&
         promoCode == other.promoCode &&
@@ -826,7 +878,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), optionalProductIds.hashCode), optionalRecurringProductIds.hashCode), registrationRequired.hashCode), useInventoryManagement.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode),
                                                                                 isAmountDiscount.hashCode),
                                                                             allowCancellation.hashCode),
                                                                         perSeatEnabled.hashCode),
@@ -855,6 +907,10 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('groupId', groupId)
           ..add('productIds', productIds)
           ..add('recurringProductIds', recurringProductIds)
+          ..add('optionalProductIds', optionalProductIds)
+          ..add('optionalRecurringProductIds', optionalRecurringProductIds)
+          ..add('registrationRequired', registrationRequired)
+          ..add('useInventoryManagement', useInventoryManagement)
           ..add('frequencyId', frequencyId)
           ..add('autoBill', autoBill)
           ..add('promoCode', promoCode)
@@ -903,6 +959,26 @@ class SubscriptionEntityBuilder
   String get recurringProductIds => _$this._recurringProductIds;
   set recurringProductIds(String recurringProductIds) =>
       _$this._recurringProductIds = recurringProductIds;
+
+  String _optionalProductIds;
+  String get optionalProductIds => _$this._optionalProductIds;
+  set optionalProductIds(String optionalProductIds) =>
+      _$this._optionalProductIds = optionalProductIds;
+
+  String _optionalRecurringProductIds;
+  String get optionalRecurringProductIds => _$this._optionalRecurringProductIds;
+  set optionalRecurringProductIds(String optionalRecurringProductIds) =>
+      _$this._optionalRecurringProductIds = optionalRecurringProductIds;
+
+  bool _registrationRequired;
+  bool get registrationRequired => _$this._registrationRequired;
+  set registrationRequired(bool registrationRequired) =>
+      _$this._registrationRequired = registrationRequired;
+
+  bool _useInventoryManagement;
+  bool get useInventoryManagement => _$this._useInventoryManagement;
+  set useInventoryManagement(bool useInventoryManagement) =>
+      _$this._useInventoryManagement = useInventoryManagement;
 
   String _frequencyId;
   String get frequencyId => _$this._frequencyId;
@@ -1011,7 +1087,9 @@ class SubscriptionEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  SubscriptionEntityBuilder();
+  SubscriptionEntityBuilder() {
+    SubscriptionEntity._initializeBuilder(this);
+  }
 
   SubscriptionEntityBuilder get _$this {
     final $v = _$v;
@@ -1020,6 +1098,10 @@ class SubscriptionEntityBuilder
       _groupId = $v.groupId;
       _productIds = $v.productIds;
       _recurringProductIds = $v.recurringProductIds;
+      _optionalProductIds = $v.optionalProductIds;
+      _optionalRecurringProductIds = $v.optionalRecurringProductIds;
+      _registrationRequired = $v.registrationRequired;
+      _useInventoryManagement = $v.useInventoryManagement;
       _frequencyId = $v.frequencyId;
       _autoBill = $v.autoBill;
       _promoCode = $v.promoCode;
@@ -1074,14 +1156,18 @@ class SubscriptionEntityBuilder
                   productIds, 'SubscriptionEntity', 'productIds'),
               recurringProductIds: BuiltValueNullFieldError.checkNotNull(
                   recurringProductIds, 'SubscriptionEntity', 'recurringProductIds'),
-              frequencyId: BuiltValueNullFieldError.checkNotNull(
-                  frequencyId, 'SubscriptionEntity', 'frequencyId'),
-              autoBill: BuiltValueNullFieldError.checkNotNull(
-                  autoBill, 'SubscriptionEntity', 'autoBill'),
-              promoCode: BuiltValueNullFieldError.checkNotNull(
-                  promoCode, 'SubscriptionEntity', 'promoCode'),
-              promoDiscount:
-                  BuiltValueNullFieldError.checkNotNull(promoDiscount, 'SubscriptionEntity', 'promoDiscount'),
+              optionalProductIds: BuiltValueNullFieldError.checkNotNull(
+                  optionalProductIds, 'SubscriptionEntity', 'optionalProductIds'),
+              optionalRecurringProductIds: BuiltValueNullFieldError.checkNotNull(
+                  optionalRecurringProductIds, 'SubscriptionEntity', 'optionalRecurringProductIds'),
+              registrationRequired: BuiltValueNullFieldError.checkNotNull(
+                  registrationRequired, 'SubscriptionEntity', 'registrationRequired'),
+              useInventoryManagement:
+                  BuiltValueNullFieldError.checkNotNull(useInventoryManagement, 'SubscriptionEntity', 'useInventoryManagement'),
+              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, 'SubscriptionEntity', 'frequencyId'),
+              autoBill: BuiltValueNullFieldError.checkNotNull(autoBill, 'SubscriptionEntity', 'autoBill'),
+              promoCode: BuiltValueNullFieldError.checkNotNull(promoCode, 'SubscriptionEntity', 'promoCode'),
+              promoDiscount: BuiltValueNullFieldError.checkNotNull(promoDiscount, 'SubscriptionEntity', 'promoDiscount'),
               price: BuiltValueNullFieldError.checkNotNull(price, 'SubscriptionEntity', 'price'),
               isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, 'SubscriptionEntity', 'isAmountDiscount'),
               allowCancellation: BuiltValueNullFieldError.checkNotNull(allowCancellation, 'SubscriptionEntity', 'allowCancellation'),

@@ -94,7 +94,10 @@ class TaskRepository {
       url = credentials.url + '/tasks/${task.id}?';
     }
 
-    if (action == EntityAction.start) {
+    if ([
+      EntityAction.start,
+      EntityAction.resume,
+    ].contains(action)) {
       url += '&start=true';
     } else if (action == EntityAction.stop) {
       url += '&stop=true';

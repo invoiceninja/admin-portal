@@ -368,7 +368,7 @@ void handleTransactionAction(
           snackBarCompleter<Null>(context, localization.deletedTransaction),
           transactionIds));
       break;
-    case EntityAction.convert:
+    case EntityAction.convertMatched:
       store.dispatch(ConvertTransactionsRequest(
           snackBarCompleter<Null>(context, localization.convertedTransactions),
           transactionIds));

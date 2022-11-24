@@ -22,10 +22,6 @@ const EntityAction _$cloneToRecurring =
     const EntityAction._('cloneToRecurring');
 const EntityAction _$cloneToPurchaseOrder =
     const EntityAction._('cloneToPurchaseOrder');
-const EntityAction _$convertToInvoice =
-    const EntityAction._('convertToInvoice');
-const EntityAction _$convertToProject =
-    const EntityAction._('convertToProject');
 const EntityAction _$approve = const EntityAction._('approve');
 const EntityAction _$applyCredit = const EntityAction._('applyCredit');
 const EntityAction _$applyPayment = const EntityAction._('applyPayment');
@@ -85,10 +81,15 @@ const EntityAction _$save = const EntityAction._('save');
 const EntityAction _$accept = const EntityAction._('accept');
 const EntityAction _$addToInventory = const EntityAction._('addToInventory');
 const EntityAction _$convert = const EntityAction._('convert');
+const EntityAction _$convertMatched = const EntityAction._('convertMatched');
 const EntityAction _$convertToExpense =
     const EntityAction._('convertToExpense');
 const EntityAction _$convertToPayment =
     const EntityAction._('convertToPayment');
+const EntityAction _$convertToInvoice =
+    const EntityAction._('convertToInvoice');
+const EntityAction _$convertToProject =
+    const EntityAction._('convertToProject');
 const EntityAction _$merge = const EntityAction._('merge');
 const EntityAction _$bulkPrint = const EntityAction._('bulkPrint');
 const EntityAction _$autoBill = const EntityAction._('autoBill');
@@ -123,10 +124,6 @@ EntityAction _$valueOf(String name) {
       return _$cloneToRecurring;
     case 'cloneToPurchaseOrder':
       return _$cloneToPurchaseOrder;
-    case 'convertToInvoice':
-      return _$convertToInvoice;
-    case 'convertToProject':
-      return _$convertToProject;
     case 'approve':
       return _$approve;
     case 'applyCredit':
@@ -235,10 +232,16 @@ EntityAction _$valueOf(String name) {
       return _$addToInventory;
     case 'convert':
       return _$convert;
+    case 'convertMatched':
+      return _$convertMatched;
     case 'convertToExpense':
       return _$convertToExpense;
     case 'convertToPayment':
       return _$convertToPayment;
+    case 'convertToInvoice':
+      return _$convertToInvoice;
+    case 'convertToProject':
+      return _$convertToProject;
     case 'merge':
       return _$merge;
     case 'bulkPrint':
@@ -266,8 +269,6 @@ final BuiltSet<EntityAction> _$values =
   _$cloneToExpense,
   _$cloneToRecurring,
   _$cloneToPurchaseOrder,
-  _$convertToInvoice,
-  _$convertToProject,
   _$approve,
   _$applyCredit,
   _$applyPayment,
@@ -322,8 +323,11 @@ final BuiltSet<EntityAction> _$values =
   _$accept,
   _$addToInventory,
   _$convert,
+  _$convertMatched,
   _$convertToExpense,
   _$convertToPayment,
+  _$convertToInvoice,
+  _$convertToProject,
   _$merge,
   _$bulkPrint,
   _$autoBill,

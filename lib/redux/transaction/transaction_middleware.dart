@@ -178,7 +178,7 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
     final action = dynamicAction as ConvertTransactionsRequest;
     repository
         .bulkAction(store.state.credentials, action.transactionIds,
-            EntityAction.convert)
+            EntityAction.convertMatched)
         .then((List<TransactionEntity> transactions) {
       store.dispatch(ConvertTransactionsSuccess(transactions));
       store.dispatch(RefreshData());

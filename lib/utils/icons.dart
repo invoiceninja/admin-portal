@@ -53,6 +53,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.restore:
       return Icons.restore;
     case EntityAction.convert:
+    case EntityAction.convertMatched:
     case EntityAction.convertToInvoice:
     case EntityAction.convertToExpense:
     case EntityAction.convertToProject:

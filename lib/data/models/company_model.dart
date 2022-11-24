@@ -115,6 +115,7 @@ abstract class CompanyEntity extends Object
       trackInventory: false,
       stockNotificationThreshold: 0,
       stockNotification: true,
+      invoiceTaskLock: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -289,6 +290,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'stock_notification')
   bool get stockNotification;
+
+  @BuiltValueField(wireName: 'invoice_task_lock')
+  bool get invoiceTaskLock;
 
   BuiltList<GroupEntity> get groups;
 
@@ -691,6 +695,7 @@ abstract class CompanyEntity extends Object
     ..stopOnUnpaidRecurring = false
     ..numberOfExpenseTaxRates = 0
     ..invoiceTaskProject = false
+    ..invoiceTaskLock = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
