@@ -263,7 +263,6 @@ abstract class TaskEntity extends Object
       number: '',
       isChanged: false,
       description: '',
-      duration: 0,
       rate: 0,
       invoiceId: '',
       clientId: project?.clientId ?? client?.id ?? '',
@@ -278,6 +277,7 @@ abstract class TaskEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      invoiceLock: false,
       assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
@@ -299,7 +299,6 @@ abstract class TaskEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..invoiceId = ''
-    ..duration = 0
     ..documents.clear());
 
   TaskEntity toggle() => isRunning ? stop() : start();
@@ -324,7 +323,8 @@ abstract class TaskEntity extends Object
 
   String get number;
 
-  int get duration;
+  @BuiltValueField(wireName: 'invoice_lock')
+  bool get invoiceLock;
 
   bool get areTimesValid {
     final times = getTaskTimes();
@@ -592,7 +592,7 @@ abstract class TaskEntity extends Object
         if (isRunning) {
           actions.add(EntityAction.stop);
         } else {
-          if (duration > 0) {
+          if (calculateDuration().inSeconds > 0) {
             actions.add(EntityAction.resume);
           } else {
             actions.add(EntityAction.start);
@@ -649,7 +649,8 @@ abstract class TaskEntity extends Object
 
     switch (sortField) {
       case TaskFields.duration:
-        response = taskA.duration.compareTo(taskB.duration);
+        response =
+            taskA.calculateDuration().compareTo(taskB.calculateDuration());
         break;
       case TaskFields.description:
         response = taskA.description.compareTo(taskB.description);
@@ -815,6 +816,10 @@ abstract class TaskEntity extends Object
   }
 
   bool get isStopped => !isRunning;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaskEntityBuilder builder) =>
+      builder..invoiceLock = false;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

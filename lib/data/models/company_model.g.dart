@@ -164,6 +164,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'stock_notification',
       serializers.serialize(object.stockNotification,
           specifiedType: const FullType(bool)),
+      'invoice_task_lock',
+      serializers.serialize(object.invoiceTaskLock,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -579,6 +582,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'stock_notification':
           result.stockNotification = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_lock':
+          result.invoiceTaskLock = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1638,6 +1645,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool stockNotification;
   @override
+  final bool invoiceTaskLock;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1801,6 +1810,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.trackInventory,
       this.stockNotificationThreshold,
       this.stockNotification,
+      this.invoiceTaskLock,
       this.groups,
       this.activities,
       this.taxRates,
@@ -1944,6 +1954,8 @@ class _$CompanyEntity extends CompanyEntity {
         'CompanyEntity', 'stockNotificationThreshold');
     BuiltValueNullFieldError.checkNotNull(
         stockNotification, 'CompanyEntity', 'stockNotification');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceTaskLock, 'CompanyEntity', 'invoiceTaskLock');
     BuiltValueNullFieldError.checkNotNull(groups, 'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, 'CompanyEntity', 'activities');
@@ -2096,6 +2108,7 @@ class _$CompanyEntity extends CompanyEntity {
         trackInventory == other.trackInventory &&
         stockNotificationThreshold == other.stockNotificationThreshold &&
         stockNotification == other.stockNotification &&
+        invoiceTaskLock == other.invoiceTaskLock &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -2177,7 +2190,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
                                                                                 invoiceTaskTimelog.hashCode),
                                                                             invoiceTaskDatelog.hashCode),
                                                                         invoiceTaskProject.hashCode),
@@ -2245,6 +2258,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('trackInventory', trackInventory)
           ..add('stockNotificationThreshold', stockNotificationThreshold)
           ..add('stockNotification', stockNotification)
+          ..add('invoiceTaskLock', invoiceTaskLock)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2516,6 +2530,11 @@ class CompanyEntityBuilder
   bool get stockNotification => _$this._stockNotification;
   set stockNotification(bool stockNotification) =>
       _$this._stockNotification = stockNotification;
+
+  bool _invoiceTaskLock;
+  bool get invoiceTaskLock => _$this._invoiceTaskLock;
+  set invoiceTaskLock(bool invoiceTaskLock) =>
+      _$this._invoiceTaskLock = invoiceTaskLock;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2876,6 +2895,7 @@ class CompanyEntityBuilder
       _trackInventory = $v.trackInventory;
       _stockNotificationThreshold = $v.stockNotificationThreshold;
       _stockNotification = $v.stockNotification;
+      _invoiceTaskLock = $v.invoiceTaskLock;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -3013,6 +3033,7 @@ class CompanyEntityBuilder
               trackInventory: BuiltValueNullFieldError.checkNotNull(trackInventory, 'CompanyEntity', 'trackInventory'),
               stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, 'CompanyEntity', 'stockNotificationThreshold'),
               stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, 'CompanyEntity', 'stockNotification'),
+              invoiceTaskLock: BuiltValueNullFieldError.checkNotNull(invoiceTaskLock, 'CompanyEntity', 'invoiceTaskLock'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

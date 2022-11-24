@@ -84,7 +84,7 @@ class TaskViewVM {
           .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
       completer.future.then((savedTask) {
         showToast(savedTask.isRunning
-            ? (savedTask.duration > 0
+            ? (savedTask.calculateDuration().inSeconds > 0
                 ? localization.resumedTask
                 : localization.startedTask)
             : localization.stoppedTask);

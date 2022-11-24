@@ -89,6 +89,10 @@ abstract class SubscriptionEntity extends Object
       refundPeriod: 0,
       trialDuration: 0,
       trialEnabled: false,
+      optionalProductIds: '',
+      optionalRecurringProductIds: '',
+      registrationRequired: false,
+      useInventoryManagement: false,
       webhookConfiguration: WebhookConfigurationEntity(),
     );
   }
@@ -112,6 +116,18 @@ abstract class SubscriptionEntity extends Object
 
   @BuiltValueField(wireName: 'recurring_product_ids')
   String get recurringProductIds;
+
+  @BuiltValueField(wireName: 'optional_product_ids')
+  String get optionalProductIds;
+
+  @BuiltValueField(wireName: 'optional_recurring_product_ids')
+  String get optionalRecurringProductIds;
+
+  @BuiltValueField(wireName: 'registration_required')
+  bool get registrationRequired;
+
+  @BuiltValueField(wireName: 'use_inventory_management')
+  bool get useInventoryManagement;
 
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
@@ -243,6 +259,13 @@ abstract class SubscriptionEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(SubscriptionEntityBuilder builder) => builder
+    ..optionalProductIds = ''
+    ..optionalRecurringProductIds = ''
+    ..registrationRequired = false
+    ..useInventoryManagement = false;
 
   static Serializer<SubscriptionEntity> get serializer =>
       _$subscriptionEntitySerializer;
