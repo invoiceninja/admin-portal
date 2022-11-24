@@ -243,7 +243,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 ],
               ),
               FormCard(
-                isLast: true,
                 children: <Widget>[
                   EntityDropdown(
                     entityType: EntityType.product,
@@ -328,6 +327,97 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .toList(),
                 ],
               ),
+              FormCard(
+                isLast: true,
+                children: <Widget>[
+                  EntityDropdown(
+                    entityType: EntityType.product,
+                    entityList: dropdownProductsSelector(state.productState.map,
+                        state.productState.list, state.userState.map),
+                    entityMap: state.productState.map,
+                    labelText: localization.optionalProducts,
+                    onSelected: (value) {
+                      final parts = subscription.optionalProductIds.split(',');
+                      viewModel.onChanged(subscription.rebuild((b) => b
+                        ..optionalProductIds = <String>[...parts, value.id]
+                            .where((part) => part.isNotEmpty)
+                            .join(',')));
+
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        FocusScope.of(context).unfocus();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  ...subscription.optionalProductIds
+                      .split(',')
+                      .where((element) => element.isNotEmpty)
+                      .map((productId) => ListTile(
+                            title: Text(
+                                state.productState.get(productId).productKey),
+                            trailing: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                final parts =
+                                    subscription.optionalProductIds.split(',');
+                                parts.remove(productId);
+                                viewModel.onChanged(subscription.rebuild((b) =>
+                                    b..optionalProductIds = parts.join(',')));
+                              },
+                            ),
+                          ))
+                      .toList(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  EntityDropdown(
+                    entityType: EntityType.product,
+                    entityList: dropdownProductsSelector(state.productState.map,
+                        state.productState.list, state.userState.map),
+                    entityMap: state.productState.map,
+                    labelText: localization.optionalRecurringProducts,
+                    onSelected: (value) {
+                      final parts =
+                          subscription.optionalRecurringProductIds.split(',');
+                      viewModel.onChanged(subscription.rebuild((b) => b
+                        ..optionalRecurringProductIds = <String>[
+                          ...parts,
+                          value.id
+                        ].where((part) => part.isNotEmpty).join(',')));
+
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        FocusScope.of(context).unfocus();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  ...subscription.optionalRecurringProductIds
+                      .split(',')
+                      .where((element) => element.isNotEmpty)
+                      .map((productId) => ListTile(
+                            title: Text(
+                                state.productState.get(productId).productKey),
+                            trailing: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                final parts = subscription
+                                    .optionalRecurringProductIds
+                                    .split(',');
+                                parts.remove(productId);
+                                viewModel.onChanged(subscription.rebuild((b) =>
+                                    b
+                                      ..optionalRecurringProductIds =
+                                          parts.join(',')));
+                              },
+                            ),
+                          ))
+                      .toList(),
+                ],
+              ),
             ],
           ),
           ScrollableListView(
@@ -366,10 +456,6 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                             ))
                         .toList(),
                   ),
-                ],
-              ),
-              FormCard(
-                children: [
                   DecoratedFormField(
                     label: localization.promoCode,
                     controller: _promoCodeController,
@@ -387,6 +473,22 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 ],
               ),
               FormCard(
+                children: [
+                  BoolDropdownButton(
+                      label: localization.registrationRequired,
+                      helpLabel: localization.registrationRequiredHelp,
+                      value: subscription.registrationRequired,
+                      onChanged: (value) => viewModel.onChanged(subscription
+                          .rebuild((b) => b..registrationRequired = value))),
+                  BoolDropdownButton(
+                      label: localization.useInventoryManagement,
+                      helpLabel: localization.useInventoryManagementHelp,
+                      value: subscription.useInventoryManagement,
+                      onChanged: (value) => viewModel.onChanged(subscription
+                          .rebuild((b) => b..useInventoryManagement = value))),
+                ],
+              ),
+              FormCard(
                 isLast: true,
                 children: [
                   DecoratedFormField(
@@ -395,6 +497,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     keyboardType: TextInputType.url,
                     onSavePressed: _onSavePressed,
                   ),
+                  SizedBox(height: 16),
                   BoolDropdownButton(
                       label: localization.allowQueryOverrides,
                       value: subscription.allowQueryOverrides,
