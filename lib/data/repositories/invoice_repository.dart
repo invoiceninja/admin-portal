@@ -95,6 +95,8 @@ class InvoiceRepository {
       url += '&mark_sent=true';
     } else if (action == EntityAction.cancelInvoice) {
       url += '&cancel=true';
+    } else if (action == EntityAction.autoBill) {
+      url += '&auto_bill=true';
     }
 
     if (invoice.saveDefaultTerms) {
