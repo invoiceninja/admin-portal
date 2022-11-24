@@ -65,8 +65,6 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToExpense = _$cloneToExpense;
   static const EntityAction cloneToRecurring = _$cloneToRecurring;
   static const EntityAction cloneToPurchaseOrder = _$cloneToPurchaseOrder;
-  static const EntityAction convertToInvoice = _$convertToInvoice;
-  static const EntityAction convertToProject = _$convertToProject;
   static const EntityAction approve = _$approve;
   static const EntityAction applyCredit = _$applyCredit;
   static const EntityAction applyPayment = _$applyPayment;
@@ -121,8 +119,11 @@ class EntityAction extends EnumClass {
   static const EntityAction accept = _$accept;
   static const EntityAction addToInventory = _$addToInventory;
   static const EntityAction convert = _$convert;
+  static const EntityAction convertMatched = _$convertMatched;
   static const EntityAction convertToExpense = _$convertToExpense;
   static const EntityAction convertToPayment = _$convertToPayment;
+  static const EntityAction convertToInvoice = _$convertToInvoice;
+  static const EntityAction convertToProject = _$convertToProject;
   static const EntityAction merge = _$merge;
   static const EntityAction bulkPrint = _$bulkPrint;
   static const EntityAction autoBill = _$autoBill;
@@ -146,6 +147,7 @@ class EntityAction extends EnumClass {
         EntityAction.restore,
         EntityAction.purge,
         EntityAction.sendNow,
+        EntityAction.autoBill,
       ].contains(this);
 
   bool get requiresSecondRequest => [
