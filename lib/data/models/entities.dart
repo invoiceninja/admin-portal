@@ -206,6 +206,10 @@ class EntityType extends EnumClass {
           EntityType.vendor,
           EntityType.expenseCategory,
         ];
+      case EntityType.transactionRule:
+        return [
+          EntityType.transaction,
+        ];
       default:
         return [];
     }

@@ -307,6 +307,25 @@ class MarkInvoicesPaidFailure implements StopSaving {
   final dynamic error;
 }
 
+class AutoBillInvoicesRequest implements StartSaving {
+  AutoBillInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class AutoBillInvoicesSuccess implements StopSaving {
+  AutoBillInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class AutoBillInvoicesFailure implements StopSaving {
+  AutoBillInvoicesFailure(this.error);
+
+  final dynamic error;
+}
+
 class CancelInvoicesRequest implements StartSaving {
   CancelInvoicesRequest(this.completer, this.invoiceIds);
 
@@ -562,6 +581,15 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsPaid
                   : localization.markedInvoicesAsPaid),
+          invoiceIds));
+      break;
+    case EntityAction.autoBill:
+      store.dispatch(AutoBillInvoicesRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.autoBilledInvoice
+                  : localization.autoBilledInvoices),
           invoiceIds));
       break;
     case EntityAction.sendEmail:

@@ -1065,7 +1065,11 @@ abstract class InvoiceEntity extends Object
 
         if (userCompany.canCreate(EntityType.payment)) {
           if (isPayable && isInvoice) {
-            actions.addAll([EntityAction.markPaid, EntityAction.newPayment]);
+            actions.addAll([
+              EntityAction.newPayment,
+              EntityAction.markPaid,
+              EntityAction.autoBill,
+            ]);
           } else if (isCredit) {
             if (balanceOrAmount < 0) {
               actions.add(EntityAction.markPaid);
