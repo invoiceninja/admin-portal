@@ -30,7 +30,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   final dates = <String>{};
 
   if (project.isOld && includeProjectHeader) {
-    notes += '## ${project.name}\n';
+    if (state.company.markdownEnabled) {
+      notes += '## ${project.name}\n';
+    } else {
+      notes += '<div class="project-header">${project.name}</div>\n';
+    }
   }
 
   notes += task.description;
