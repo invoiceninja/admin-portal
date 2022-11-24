@@ -165,6 +165,8 @@ class EntityAction extends EnumClass {
       return 'cancel';
     } else if (this == EntityAction.convertToExpense) {
       return 'expense';
+    } else if (this == EntityAction.resume) {
+      return 'start';
     }
 
     // else if (value == 'approve') {
