@@ -1803,7 +1803,11 @@ class ReportNumberValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    if (currencyId == null) {
+    if (currencyId == null ||
+        column.endsWith('_rate') ||
+        column.endsWith('_rate1') ||
+        column.endsWith('_rate2') ||
+        column.endsWith('_rate3')) {
       return formatNumber(value, context,
           formatNumberType: FormatNumberType.double);
     }
