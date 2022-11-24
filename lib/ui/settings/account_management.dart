@@ -537,7 +537,7 @@ class _AccountOverview extends StatelessWidget {
                 ),
               ),
             ])),
-        if (state.userCompany.isOwner) ...[
+        if (state.userCompany.isOwner && !state.isDemo) ...[
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: ListDivider(),
