@@ -524,6 +524,7 @@ const List<String> kAdvancedSettings = [
   kSettingsTemplatesAndReminders,
   kSettingsSubscriptions,
   kSettingsUserManagement,
+  kSettingsTransactionRules,
 ];
 
 const String kReportClient = 'client';
