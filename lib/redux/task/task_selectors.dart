@@ -75,12 +75,16 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         notes += '\n';
       }
     });
-    notes += '</div>\n';
 
     if (state.company.invoiceTaskDatelog && !state.company.invoiceTaskTimelog) {
-      notes += '\n' + dates.join('\n');
+      if (state.company.markdownEnabled) {
+        notes += dates.join('<br/>\n');
+      } else {
+        notes += dates.join('\n');
+      }
     }
 
+    notes += '</div>\n';
     notes = notes.trim();
   }
 
