@@ -139,3 +139,25 @@ class SimpleDebouncer {
     });
   }
 }
+
+class PersistDebouncer {
+  PersistDebouncer({
+    this.milliseconds = kMillisecondsToDebounceWrite,
+  });
+
+  final int milliseconds;
+
+  static Timer timer;
+
+  void run(VoidCallback action) {
+    if (timer != null) {
+      timer.cancel();
+    }
+
+    timer = Timer(Duration(milliseconds: milliseconds), () {
+      if (action != null) {
+        action();
+      }
+    });
+  }
+}
