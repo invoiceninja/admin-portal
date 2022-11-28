@@ -125,23 +125,17 @@ class SimpleDebouncer {
 
   final int milliseconds;
 
-  static VoidCallback action;
   static Timer timer;
 
   void run(VoidCallback action) {
-    if (timer == null) {
-      Debouncer.action = action;
-    } else {
+    if (timer != null) {
       timer.cancel();
-      Debouncer.action = action;
     }
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
       if (action != null) {
         action();
       }
-      Debouncer.action = null;
-      Debouncer.timer = null;
     });
   }
 }
