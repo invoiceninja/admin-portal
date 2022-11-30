@@ -1305,11 +1305,13 @@ void editEntity({
             store.dispatch(EditProduct(product: entity, completer: completer));
             break;
           case EntityType.task:
-            store.dispatch(EditTask(
-              task: entity,
-              taskTimeIndex: subIndex,
-              completer: completer,
-            ));
+            if (!state.company.invoiceTaskLock ||
+                !(entity as TaskEntity).isInvoiced)
+              store.dispatch(EditTask(
+                task: entity,
+                taskTimeIndex: subIndex,
+                completer: completer,
+              ));
             break;
           case EntityType.expense:
             store.dispatch(

@@ -578,9 +578,12 @@ abstract class TaskEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
+    final isLocked = userCompany.company.invoiceTaskLock && isInvoiced;
+
     if (!isDeleted) {
       if (includeEdit &&
           userCompany.canEditEntity(this) &&
+          !isLocked &&
           !isDeleted &&
           !multiselect) {
         actions.add(EntityAction.edit);
