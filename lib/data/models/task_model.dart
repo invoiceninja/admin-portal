@@ -77,6 +77,8 @@ class TaskFields {
   static const String status = 'status';
   static const String isInvoiced = 'is_invoiced';
   static const String date = 'date';
+  static const String assignedTo = 'assigned_to';
+  static const String createdBy = 'created_by';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
@@ -718,6 +720,20 @@ abstract class TaskEntity extends Object
       case TaskFields.number:
         response = compareNatural(
             taskA.number.toLowerCase(), taskB.number.toLowerCase());
+        break;
+      case TaskFields.createdBy:
+        final userA = userMap[taskA.createdUserId] ?? UserEntity();
+        final userB = userMap[taskB.createdUserId] ?? UserEntity();
+        response = userA.fullName
+            .toLowerCase()
+            .compareTo(userB.fullName.toLowerCase());
+        break;
+      case TaskFields.assignedTo:
+        final userA = userMap[taskA.assignedUserId] ?? UserEntity();
+        final userB = userMap[taskB.assignedUserId] ?? UserEntity();
+        response = userA.fullName
+            .toLowerCase()
+            .compareTo(userB.fullName.toLowerCase());
         break;
       case TaskFields.status:
         final taskAStatus = taskA.isRunning
