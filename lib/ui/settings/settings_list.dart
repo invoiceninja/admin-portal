@@ -418,6 +418,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_start_tasks',
           'show_tasks_table',
           'client_portal',
+          'lock_tasks',
         ],
       ],
       kSettingsTaskStatuses: [

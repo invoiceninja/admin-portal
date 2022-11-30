@@ -158,9 +158,6 @@ abstract class CompanyEntity extends Object
   static const USE_CREDITS_OPTION = 'option';
   static const USE_CREDITS_OFF = 'off';
 
-  static const LOCK_TASKS_OFF = 'off';
-  static const LOCK_TASKS_INVOICED = 'when_invoiced';
-
   @override
   @memoized
   int get hashCode;
