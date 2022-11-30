@@ -150,6 +150,25 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                               ))
                           .toList(),
                     ),
+                    if (!state.uiState.settingsUIState.isFiltered)
+                      AppDropdownButton<bool>(
+                        value: settings.lockInvoices,
+                        onChanged: (dynamic value) =>
+                            viewModel.onCompanyChanged(
+                          company.rebuild((b) => b..invoiceTaskLock = value),
+                        ),
+                        labelText: localization.lockInvoices,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.off),
+                            value: false,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.whenInvoiced),
+                            value: true,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ],

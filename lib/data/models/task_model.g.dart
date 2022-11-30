@@ -170,9 +170,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'number',
       serializers.serialize(object.number,
           specifiedType: const FullType(String)),
-      'invoice_lock',
-      serializers.serialize(object.invoiceLock,
-          specifiedType: const FullType(bool)),
       'invoice_id',
       serializers.serialize(object.invoiceId,
           specifiedType: const FullType(String)),
@@ -274,10 +271,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'number':
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_lock':
-          result.invoiceLock = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -640,8 +633,6 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String number;
   @override
-  final bool invoiceLock;
-  @override
   final String invoiceId;
   @override
   final String clientId;
@@ -688,7 +679,6 @@ class _$TaskEntity extends TaskEntity {
   _$TaskEntity._(
       {this.description,
       this.number,
-      this.invoiceLock,
       this.invoiceId,
       this.clientId,
       this.rate,
@@ -713,8 +703,6 @@ class _$TaskEntity extends TaskEntity {
     BuiltValueNullFieldError.checkNotNull(
         description, 'TaskEntity', 'description');
     BuiltValueNullFieldError.checkNotNull(number, 'TaskEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceLock, 'TaskEntity', 'invoiceLock');
     BuiltValueNullFieldError.checkNotNull(invoiceId, 'TaskEntity', 'invoiceId');
     BuiltValueNullFieldError.checkNotNull(clientId, 'TaskEntity', 'clientId');
     BuiltValueNullFieldError.checkNotNull(rate, 'TaskEntity', 'rate');
@@ -750,7 +738,6 @@ class _$TaskEntity extends TaskEntity {
     return other is TaskEntity &&
         description == other.description &&
         number == other.number &&
-        invoiceLock == other.invoiceLock &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
         rate == other.rate &&
@@ -794,7 +781,7 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), number.hashCode), invoiceLock.hashCode), invoiceId.hashCode),
+                                                                            $jc($jc($jc($jc(0, description.hashCode), number.hashCode), invoiceId.hashCode),
                                                                                 clientId.hashCode),
                                                                             rate.hashCode),
                                                                         projectId.hashCode),
@@ -821,7 +808,6 @@ class _$TaskEntity extends TaskEntity {
     return (newBuiltValueToStringHelper('TaskEntity')
           ..add('description', description)
           ..add('number', number)
-          ..add('invoiceLock', invoiceLock)
           ..add('invoiceId', invoiceId)
           ..add('clientId', clientId)
           ..add('rate', rate)
@@ -856,10 +842,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String _number;
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
-
-  bool _invoiceLock;
-  bool get invoiceLock => _$this._invoiceLock;
-  set invoiceLock(bool invoiceLock) => _$this._invoiceLock = invoiceLock;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -945,16 +927,13 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  TaskEntityBuilder() {
-    TaskEntity._initializeBuilder(this);
-  }
+  TaskEntityBuilder();
 
   TaskEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _description = $v.description;
       _number = $v.number;
-      _invoiceLock = $v.invoiceLock;
       _invoiceId = $v.invoiceId;
       _clientId = $v.clientId;
       _rate = $v.rate;
@@ -1001,8 +980,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
                   description, 'TaskEntity', 'description'),
               number: BuiltValueNullFieldError.checkNotNull(
                   number, 'TaskEntity', 'number'),
-              invoiceLock: BuiltValueNullFieldError.checkNotNull(
-                  invoiceLock, 'TaskEntity', 'invoiceLock'),
               invoiceId: BuiltValueNullFieldError.checkNotNull(
                   invoiceId, 'TaskEntity', 'invoiceId'),
               clientId: BuiltValueNullFieldError.checkNotNull(
@@ -1015,7 +992,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
                   timeLog, 'TaskEntity', 'timeLog'),
               customValue1: BuiltValueNullFieldError.checkNotNull(
                   customValue1, 'TaskEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'TaskEntity', 'customValue2'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(
+                  customValue2, 'TaskEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'TaskEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'TaskEntity', 'customValue4'),
               statusId: BuiltValueNullFieldError.checkNotNull(statusId, 'TaskEntity', 'statusId'),

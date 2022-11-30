@@ -279,7 +279,6 @@ abstract class TaskEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      invoiceLock: false,
       assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
@@ -324,9 +323,6 @@ abstract class TaskEntity extends Object
   String get description;
 
   String get number;
-
-  @BuiltValueField(wireName: 'invoice_lock')
-  bool get invoiceLock;
 
   bool get areTimesValid {
     final times = getTaskTimes();
@@ -834,8 +830,8 @@ abstract class TaskEntity extends Object
   bool get isStopped => !isRunning;
 
   // ignore: unused_element
-  static void _initializeBuilder(TaskEntityBuilder builder) =>
-      builder..invoiceLock = false;
+  //static void _initializeBuilder(TaskEntityBuilder builder) =>
+  //    builder..;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }
