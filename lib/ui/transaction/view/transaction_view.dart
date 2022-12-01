@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -151,6 +152,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
 
+  bool _matchExisting = false;
   bool _showFilter = false;
   String _minAmount = '';
   String _maxAmount = '';
@@ -284,12 +286,24 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: BoolDropdownButton(
+            value: _matchExisting,
+            onChanged: (value) {
+              setState(() => _matchExisting = value);
+            },
+            enabledLabel: localization.matchPayment,
+            disabledLabel: localization.createPayment,
+          ),
+        ),
+        ListDivider(),
         Row(
           children: [
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 18, top: 12, right: 10, bottom: 12),
+                    left: 20, top: 12, right: 10, bottom: 12),
                 child: SearchText(
                   filterController: _filterController,
                   focusNode: _focusNode,
@@ -304,8 +318,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                       updateInvoiceList();
                     });
                   },
-                  placeholder:
-                      localization.searchInvoices.replaceFirst(':count ', ''),
+                  placeholder: (_matchExisting
+                          ? localization.searchPayments
+                          : localization.searchInvoices)
+                      .replaceFirst(':count ', ''),
                 ),
               ),
             ),
@@ -477,6 +493,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   final _vendorScrollController = ScrollController();
   final _categoryScrollController = ScrollController();
 
+  bool _matchExisting = false;
   TextEditingController _vendorFilterController;
   TextEditingController _categoryFilterController;
   FocusNode _vendorFocusNode;
@@ -605,6 +622,18 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: BoolDropdownButton(
+            value: _matchExisting,
+            onChanged: (value) {
+              setState(() => _matchExisting = value);
+            },
+            enabledLabel: localization.matchExpense,
+            disabledLabel: localization.createExpense,
+          ),
+        ),
+        ListDivider(),
         Expanded(
             child: Column(
           children: [
@@ -613,7 +642,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 18, top: 12, right: 10, bottom: 12),
+                        left: 20, top: 12, right: 10, bottom: 12),
                     child: SearchText(
                         filterController: _vendorFilterController,
                         focusNode: _vendorFocusNode,
@@ -700,7 +729,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 18, top: 12, right: 10, bottom: 12),
+                          left: 20, top: 12, right: 10, bottom: 12),
                       child: SearchText(
                           filterController: _categoryFilterController,
                           focusNode: _categoryFocusNode,

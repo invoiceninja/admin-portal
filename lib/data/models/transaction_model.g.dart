@@ -151,6 +151,9 @@ class _$TransactionEntitySerializer
       'invoice_ids',
       serializers.serialize(object.invoiceIds,
           specifiedType: const FullType(String)),
+      'payment_id',
+      serializers.serialize(object.paymentId,
+          specifiedType: const FullType(String)),
       'expense_id',
       serializers.serialize(object.expenseId,
           specifiedType: const FullType(String)),
@@ -257,6 +260,10 @@ class _$TransactionEntitySerializer
           break;
         case 'invoice_ids':
           result.invoiceIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'payment_id':
+          result.paymentId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'expense_id':
@@ -577,6 +584,8 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String invoiceIds;
   @override
+  final String paymentId;
+  @override
   final String expenseId;
   @override
   final String vendorId;
@@ -620,6 +629,7 @@ class _$TransactionEntity extends TransactionEntity {
       this.statusId,
       this.categoryId,
       this.invoiceIds,
+      this.paymentId,
       this.expenseId,
       this.vendorId,
       this.transactionId,
@@ -654,6 +664,8 @@ class _$TransactionEntity extends TransactionEntity {
         categoryId, 'TransactionEntity', 'categoryId');
     BuiltValueNullFieldError.checkNotNull(
         invoiceIds, 'TransactionEntity', 'invoiceIds');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentId, 'TransactionEntity', 'paymentId');
     BuiltValueNullFieldError.checkNotNull(
         expenseId, 'TransactionEntity', 'expenseId');
     BuiltValueNullFieldError.checkNotNull(
@@ -693,6 +705,7 @@ class _$TransactionEntity extends TransactionEntity {
         statusId == other.statusId &&
         categoryId == other.categoryId &&
         invoiceIds == other.invoiceIds &&
+        paymentId == other.paymentId &&
         expenseId == other.expenseId &&
         vendorId == other.vendorId &&
         transactionId == other.transactionId &&
@@ -730,12 +743,12 @@ class _$TransactionEntity extends TransactionEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, amount.hashCode), currencyId.hashCode), category.hashCode), baseType.hashCode), date.hashCode),
-                                                                                bankAccountId.hashCode),
-                                                                            description.hashCode),
-                                                                        statusId.hashCode),
-                                                                    categoryId.hashCode),
-                                                                invoiceIds.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), currencyId.hashCode), category.hashCode), baseType.hashCode), date.hashCode), bankAccountId.hashCode),
+                                                                                description.hashCode),
+                                                                            statusId.hashCode),
+                                                                        categoryId.hashCode),
+                                                                    invoiceIds.hashCode),
+                                                                paymentId.hashCode),
                                                             expenseId.hashCode),
                                                         vendorId.hashCode),
                                                     transactionId.hashCode),
@@ -765,6 +778,7 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('statusId', statusId)
           ..add('categoryId', categoryId)
           ..add('invoiceIds', invoiceIds)
+          ..add('paymentId', paymentId)
           ..add('expenseId', expenseId)
           ..add('vendorId', vendorId)
           ..add('transactionId', transactionId)
@@ -827,6 +841,10 @@ class TransactionEntityBuilder
   String _invoiceIds;
   String get invoiceIds => _$this._invoiceIds;
   set invoiceIds(String invoiceIds) => _$this._invoiceIds = invoiceIds;
+
+  String _paymentId;
+  String get paymentId => _$this._paymentId;
+  set paymentId(String paymentId) => _$this._paymentId = paymentId;
 
   String _expenseId;
   String get expenseId => _$this._expenseId;
@@ -906,6 +924,7 @@ class TransactionEntityBuilder
       _statusId = $v.statusId;
       _categoryId = $v.categoryId;
       _invoiceIds = $v.invoiceIds;
+      _paymentId = $v.paymentId;
       _expenseId = $v.expenseId;
       _vendorId = $v.vendorId;
       _transactionId = $v.transactionId;
@@ -956,9 +975,10 @@ class TransactionEntityBuilder
                 description, 'TransactionEntity', 'description'),
             statusId: BuiltValueNullFieldError.checkNotNull(
                 statusId, 'TransactionEntity', 'statusId'),
-            categoryId: BuiltValueNullFieldError.checkNotNull(
-                categoryId, 'TransactionEntity', 'categoryId'),
+            categoryId:
+                BuiltValueNullFieldError.checkNotNull(categoryId, 'TransactionEntity', 'categoryId'),
             invoiceIds: BuiltValueNullFieldError.checkNotNull(invoiceIds, 'TransactionEntity', 'invoiceIds'),
+            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, 'TransactionEntity', 'paymentId'),
             expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
             vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'TransactionEntity', 'vendorId'),
             transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, 'TransactionEntity', 'transactionId'),

@@ -92,6 +92,7 @@ abstract class TransactionEntity extends Object
       transactionId: 0,
       categoryId: '',
       transactionRuleId: '',
+      paymentId: '',
     );
   }
 
@@ -130,6 +131,9 @@ abstract class TransactionEntity extends Object
 
   @BuiltValueField(wireName: 'invoice_ids')
   String get invoiceIds;
+
+  @BuiltValueField(wireName: 'payment_id')
+  String get paymentId;
 
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
@@ -359,6 +363,7 @@ abstract class TransactionEntity extends Object
     ..baseType = ''
     ..bankAccountId = ''
     ..transactionRuleId = ''
+    ..paymentId = ''
     ..currencyId = '';
 
   static Serializer<TransactionEntity> get serializer =>
