@@ -147,7 +147,9 @@ class _MatchDeposits extends StatefulWidget {
 
 class _MatchDepositsState extends State<_MatchDeposits> {
   final _invoiceScrollController = ScrollController();
-  TextEditingController _filterController;
+  final _paymentScrollController = ScrollController();
+  TextEditingController _invoiceFilterController;
+  TextEditingController _paymentFilterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
@@ -162,7 +164,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   @override
   void initState() {
     super.initState();
-    _filterController = TextEditingController();
+    _invoiceFilterController = TextEditingController();
+    _paymentFilterController = TextEditingController();
     _focusNode = FocusNode();
     _selectedInvoices = [];
 
@@ -194,7 +197,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         return false;
       }
 
-      final filter = _filterController.text;
+      final filter = _invoiceFilterController.text;
 
       if (filter.isNotEmpty) {
         final client = state.clientState.get(invoice.clientId);
@@ -233,16 +236,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _invoices.sort((invoiceA, invoiceB) {
-      /*
-      if (_selectedInvoices.contains(invoiceA)) {
-        return -1;
-      } else if (_selectedInvoices.contains(invoiceB)) {
-        return 1;
-      }
-      */
-
       return invoiceB.date.compareTo(invoiceA.date);
     });
+  }
+
+  void updatePaymentList() {
+    //
   }
 
   bool get isFiltered {
@@ -260,7 +259,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   @override
   void dispose() {
     _invoiceScrollController.dispose();
-    _filterController.dispose();
+    _paymentScrollController.dispose();
+    _invoiceFilterController.dispose();
+    _paymentFilterController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -302,46 +303,48 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           ),
         ),
         ListDivider(),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 22, top: 12, right: 10, bottom: 12),
-                child: SearchText(
-                  filterController: _filterController,
-                  focusNode: _focusNode,
-                  onChanged: (value) {
-                    setState(() {
-                      updateInvoiceList();
-                    });
-                  },
-                  onCleared: () {
-                    setState(() {
-                      _filterController.text = '';
-                      updateInvoiceList();
-                    });
-                  },
-                  placeholder: (_matchExisting
-                          ? localization.searchPayments
-                          : localization.searchInvoices)
-                      .replaceFirst(':count ', ''),
+        if (_matchExisting)
+          ...[]
+        else ...[
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _invoiceFilterController,
+                    focusNode: _focusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateInvoiceList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _invoiceFilterController.text = '';
+                        updateInvoiceList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchInvoices.replaceFirst(':count ', ''),
+                  ),
                 ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                setState(() => _showFilter = !_showFilter);
-              },
-              color: _showFilter || isFiltered ? state.accentColor : null,
-              icon: Icon(Icons.filter_alt),
-              tooltip:
-                  state.prefState.enableTooltips ? localization.filter : '',
-            ),
-            SizedBox(width: 8),
-          ],
-        ),
-        ListDivider(),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          ),
+          ListDivider(),
+        ],
         AnimatedContainer(
           duration: Duration(milliseconds: 200),
           height: _showFilter ? 138 : 0,
@@ -419,42 +422,46 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             ],
           ),
         ),
-        Expanded(
-          child: Scrollbar(
-            thumbVisibility: true,
-            controller: _invoiceScrollController,
-            child: ListView.separated(
+        if (_matchExisting)
+          ...[]
+        else ...[
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
               controller: _invoiceScrollController,
-              separatorBuilder: (context, index) => ListDivider(),
-              itemCount: _invoices.length,
-              itemBuilder: (BuildContext context, int index) {
-                final invoice = _invoices[index];
-                return InvoiceListItem(
-                  invoice: invoice,
-                  showCheck: true,
-                  isChecked: _selectedInvoices.contains(invoice),
-                  onTap: () => setState(() {
-                    if (_selectedInvoices.contains(invoice)) {
-                      _selectedInvoices.remove(invoice);
-                    } else {
-                      _selectedInvoices.add(invoice);
-                    }
-                    updateInvoiceList();
-                  }),
-                );
-              },
+              child: ListView.separated(
+                controller: _invoiceScrollController,
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _invoices.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final invoice = _invoices[index];
+                  return InvoiceListItem(
+                    invoice: invoice,
+                    showCheck: true,
+                    isChecked: _selectedInvoices.contains(invoice),
+                    onTap: () => setState(() {
+                      if (_selectedInvoices.contains(invoice)) {
+                        _selectedInvoices.remove(invoice);
+                      } else {
+                        _selectedInvoices.add(invoice);
+                      }
+                      updateInvoiceList();
+                    }),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        if (_selectedInvoices.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+          if (_selectedInvoices.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Text(
+                '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
-          ),
+        ],
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
