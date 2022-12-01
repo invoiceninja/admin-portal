@@ -399,35 +399,41 @@ class _LoginState extends State<LoginView> {
                         if (!_recoverPassword &&
                             (!kIsWeb || !kReleaseMode)) ...[
                           RuledText(localization.selectPlatform),
-                          AppToggleButtons(
-                            tabLabels: [
-                              localization.hosted,
-                              localization.selfhosted,
-                            ],
-                            selectedIndex: _isSelfHosted ? 1 : 0,
-                            onTabChanged: (index) {
-                              setState(() {
-                                _isSelfHosted = index == 1;
-                                _createAccount = false;
-                                _loginError = '';
-                                if (index == 1) {
-                                  _loginType = LOGIN_TYPE_EMAIL;
-                                }
-                              });
-                            },
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: AppToggleButtons(
+                              tabLabels: [
+                                localization.hosted,
+                                localization.selfhosted,
+                              ],
+                              selectedIndex: _isSelfHosted ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _isSelfHosted = index == 1;
+                                  _createAccount = false;
+                                  _loginError = '';
+                                  if (index == 1) {
+                                    _loginType = LOGIN_TYPE_EMAIL;
+                                  }
+                                });
+                              },
+                            ),
                           ),
                         ],
                         if (!_isSelfHosted && _loginTypes.length > 1) ...[
                           RuledText(localization.selectMethod),
-                          AppToggleButtons(
-                            tabLabels: _loginTypes,
-                            selectedIndex: _loginTypes.indexOf(_loginType),
-                            onTabChanged: (index) {
-                              setState(() {
-                                _loginType = _loginTypes[index];
-                                _loginError = '';
-                              });
-                            },
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: AppToggleButtons(
+                              tabLabels: _loginTypes,
+                              selectedIndex: _loginTypes.indexOf(_loginType),
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _loginType = _loginTypes[index];
+                                  _loginError = '';
+                                });
+                              },
+                            ),
                           )
                         ],
                         Padding(

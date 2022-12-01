@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -287,14 +287,18 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: BoolDropdownButton(
-            value: _matchExisting,
-            onChanged: (value) {
-              setState(() => _matchExisting = value);
-            },
-            enabledLabel: localization.matchPayment,
-            disabledLabel: localization.createPayment,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Center(
+            child: AppToggleButtons(
+              padding: 0,
+              onTabChanged: (value) =>
+                  setState(() => _matchExisting = value == 1),
+              selectedIndex: _matchExisting ? 1 : 0,
+              tabLabels: [
+                localization.createPayment,
+                localization.matchPayment,
+              ],
+            ),
           ),
         ),
         ListDivider(),
@@ -303,7 +307,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: 20, top: 12, right: 10, bottom: 12),
+                    left: 22, top: 12, right: 10, bottom: 12),
                 child: SearchText(
                   filterController: _filterController,
                   focusNode: _focusNode,
@@ -623,14 +627,18 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: BoolDropdownButton(
-            value: _matchExisting,
-            onChanged: (value) {
-              setState(() => _matchExisting = value);
-            },
-            enabledLabel: localization.matchExpense,
-            disabledLabel: localization.createExpense,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Center(
+            child: AppToggleButtons(
+              padding: 0,
+              onTabChanged: (value) =>
+                  setState(() => _matchExisting = value == 1),
+              selectedIndex: _matchExisting ? 1 : 0,
+              tabLabels: [
+                localization.createExpense,
+                localization.matchExpense,
+              ],
+            ),
           ),
         ),
         ListDivider(),
@@ -642,7 +650,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 20, top: 12, right: 10, bottom: 12),
+                        left: 22, top: 12, right: 10, bottom: 12),
                     child: SearchText(
                         filterController: _vendorFilterController,
                         focusNode: _vendorFocusNode,
@@ -729,7 +737,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          left: 20, top: 12, right: 10, bottom: 12),
+                          left: 22, top: 12, right: 10, bottom: 12),
                       child: SearchText(
                           filterController: _categoryFilterController,
                           focusNode: _categoryFocusNode,
