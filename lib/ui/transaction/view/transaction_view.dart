@@ -153,6 +153,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
+  List<PaymentEntity> _payments;
+  PaymentEntity _selectedPayment;
 
   bool _matchExisting = false;
   bool _showFilter = false;
@@ -180,6 +182,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     }
 
     updateInvoiceList();
+    updatePaymentList();
   }
 
   void updateInvoiceList() {
