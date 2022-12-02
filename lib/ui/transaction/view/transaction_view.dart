@@ -873,132 +873,132 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
         ),
         ListDivider(),
-        Expanded(
-            child: Column(
-          children: [
-            if (_matchExisting)
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 22, top: 12, right: 10, bottom: 12),
-                      child: SearchText(
-                        filterController: _expenseFilterController,
-                        focusNode: _expenseFocusNode,
-                        onChanged: (value) {
-                          setState(() {
-                            updateExpenseList();
-                          });
-                        },
-                        onCleared: () {
-                          setState(() {
-                            _expenseFilterController.text = '';
-                            updateExpenseList();
-                          });
-                        },
-                        placeholder: localization.searchExpenses
-                            .replaceFirst(':count ', ''),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() => _showFilter = !_showFilter);
-                    },
-                    color: _showFilter || isFiltered ? state.accentColor : null,
-                    icon: Icon(Icons.filter_alt),
-                    tooltip: state.prefState.enableTooltips
-                        ? localization.filter
-                        : '',
-                  ),
-                  SizedBox(width: 8),
-                ],
-              )
-            else
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 22, top: 12, right: 10, bottom: 12),
-                      child: SearchText(
-                          filterController: _vendorFilterController,
-                          focusNode: _vendorFocusNode,
-                          onChanged: (value) {
-                            setState(() {
-                              updateVendorList();
-                            });
-                          },
-                          onCleared: () {
-                            setState(() {
-                              _vendorFilterController.text = '';
-                              updateVendorList();
-                            });
-                          },
-                          placeholder: localization.searchVendors
-                              .replaceFirst(':count ', '')),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      final completer = snackBarCompleter<VendorEntity>(
-                          context, localization.createdVendor);
-                      createEntity(
-                          context: context,
-                          entity: VendorEntity(state: viewModel.state),
-                          force: true,
-                          completer: completer,
-                          cancelCompleter: Completer<Null>()
-                            ..future.then((_) {
-                              store.dispatch(
-                                  UpdateCurrentRoute(TransactionScreen.route));
-                            }));
-                      completer.future.then((SelectableEntity vendor) {
-                        store.dispatch(SaveTransactionSuccess(transaction
-                            .rebuild((b) => b..pendingVendorId = vendor.id)));
-                        store.dispatch(
-                            UpdateCurrentRoute(TransactionScreen.route));
+        if (_matchExisting) ...[
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _expenseFilterController,
+                    focusNode: _expenseFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateExpenseList();
                       });
                     },
-                    icon: Icon(Icons.add_circle_outline),
+                    onCleared: () {
+                      setState(() {
+                        _expenseFilterController.text = '';
+                        updateExpenseList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchExpenses.replaceFirst(':count ', ''),
                   ),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ListDivider(),
-            Expanded(
-              child: Scrollbar(
-                thumbVisibility: true,
-                controller: _vendorScrollController,
-                child: ListView.separated(
-                  controller: _vendorScrollController,
-                  separatorBuilder: (context, index) => ListDivider(),
-                  itemCount: _vendors.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final vendor = _vendors[index];
-                    return VendorListItem(
-                      vendor: vendor,
-                      showCheck: true,
-                      isChecked: _selectedVendor?.id == vendor.id,
-                      onTap: () => setState(() {
-                        if (_selectedVendor?.id == vendor.id) {
-                          _selectedVendor = null;
-                        } else {
-                          _selectedVendor = vendor;
-                        }
-                        updateVendorList();
-                        store.dispatch(SaveTransactionSuccess(
-                            transaction.rebuild((b) =>
-                                b..pendingVendorId = _selectedVendor?.id)));
-                      }),
-                    );
-                  },
                 ),
               ),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          ),
+        ] else
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 22, top: 12, right: 10, bottom: 12),
+                        child: SearchText(
+                            filterController: _vendorFilterController,
+                            focusNode: _vendorFocusNode,
+                            onChanged: (value) {
+                              setState(() {
+                                updateVendorList();
+                              });
+                            },
+                            onCleared: () {
+                              setState(() {
+                                _vendorFilterController.text = '';
+                                updateVendorList();
+                              });
+                            },
+                            placeholder: localization.searchVendors
+                                .replaceFirst(':count ', '')),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        final completer = snackBarCompleter<VendorEntity>(
+                            context, localization.createdVendor);
+                        createEntity(
+                            context: context,
+                            entity: VendorEntity(state: viewModel.state),
+                            force: true,
+                            completer: completer,
+                            cancelCompleter: Completer<Null>()
+                              ..future.then((_) {
+                                store.dispatch(UpdateCurrentRoute(
+                                    TransactionScreen.route));
+                              }));
+                        completer.future.then((SelectableEntity vendor) {
+                          store.dispatch(SaveTransactionSuccess(transaction
+                              .rebuild((b) => b..pendingVendorId = vendor.id)));
+                          store.dispatch(
+                              UpdateCurrentRoute(TransactionScreen.route));
+                        });
+                      },
+                      icon: Icon(Icons.add_circle_outline),
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+                ListDivider(),
+                Expanded(
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: _vendorScrollController,
+                    child: ListView.separated(
+                      controller: _vendorScrollController,
+                      separatorBuilder: (context, index) => ListDivider(),
+                      itemCount: _vendors.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final vendor = _vendors[index];
+                        return VendorListItem(
+                          vendor: vendor,
+                          showCheck: true,
+                          isChecked: _selectedVendor?.id == vendor.id,
+                          onTap: () => setState(() {
+                            if (_selectedVendor?.id == vendor.id) {
+                              _selectedVendor = null;
+                            } else {
+                              _selectedVendor = vendor;
+                            }
+                            updateVendorList();
+                            store.dispatch(SaveTransactionSuccess(
+                                transaction.rebuild((b) =>
+                                    b..pendingVendorId = _selectedVendor?.id)));
+                          }),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        )),
+          ),
         ListDivider(),
         Expanded(
           child: Column(
