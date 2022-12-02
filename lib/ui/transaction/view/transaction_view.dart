@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
@@ -361,8 +362,44 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ),
         ListDivider(),
         if (_matchExisting)
-          ...[]
-        else ...[
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _paymentFilterController,
+                    focusNode: _focusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updatePaymentList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _paymentFilterController.text = '';
+                        updatePaymentList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchPayments.replaceFirst(':count ', ''),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          )
+        else
           Row(
             children: [
               Expanded(
@@ -400,8 +437,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               SizedBox(width: 8),
             ],
           ),
-          ListDivider(),
-        ],
+        ListDivider(),
         AnimatedContainer(
           duration: Duration(milliseconds: 200),
           height: _showFilter ? 138 : 0,
@@ -479,9 +515,35 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             ],
           ),
         ),
-        if (_matchExisting)
-          ...[]
-        else ...[
+        if (_matchExisting) ...[
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              controller: _paymentScrollController,
+              child: ListView.separated(
+                controller: _paymentScrollController,
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _payments.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final payment = _payments[index];
+                  return PaymentListItem(
+                    payment: payment,
+                    showCheck: true,
+                    isChecked: _selectedPayment?.id ?? '' == payment.id,
+                    onTap: () => setState(() {
+                      if (_selectedPayment?.id ?? '' == payment.id) {
+                        _selectedPayment = null;
+                      } else {
+                        _selectedPayment = payment;
+                      }
+                      updatePaymentList();
+                    }),
+                  );
+                },
+              ),
+            ),
+          ),
+        ] else ...[
           Expanded(
             child: Scrollbar(
               thumbVisibility: true,
