@@ -838,11 +838,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   void dispose() {
     _vendorFilterController.dispose();
     _categoryFilterController.dispose();
+    _expenseFilterController.dispose();
+
     _vendorFocusNode.dispose();
     _categoryFocusNode.dispose();
+    _expenseFocusNode.dispose();
+
     _vendorScrollController.dispose();
     _categoryScrollController.dispose();
     _expenseScrollController.dispose();
+
     super.dispose();
   }
 
