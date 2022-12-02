@@ -603,7 +603,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                                     .toList(),
                               );
                             },
-                  iconData: getEntityActionIcon(EntityAction.convertToPayment),
+                  iconData: Icons.link,
                 )
               : AppButton(
                   label: localization.convertToPayment,
@@ -619,7 +619,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                                     .toList(),
                               );
                             },
-                  iconData: getEntityActionIcon(EntityAction.convertToPayment),
+                  iconData: Icons.add_circle_outline,
                 ),
         )
       ],
