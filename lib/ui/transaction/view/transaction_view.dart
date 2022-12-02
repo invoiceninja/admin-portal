@@ -244,7 +244,61 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   }
 
   void updatePaymentList() {
-    //
+    final state = widget.viewModel.state;
+    final paymentState = state.paymentState;
+
+    _payments = paymentState.map.values.where((payment) {
+      if (_selectedPayment != null) {
+        if (payment.id != _selectedPayment.id) {
+          return false;
+        }
+      }
+
+      if (payment.transactionId.isNotEmpty || payment.isDeleted) {
+        return false;
+      }
+
+      final filter = _paymentFilterController.text;
+
+      if (filter.isNotEmpty) {
+        final client = state.clientState.get(payment.clientId);
+        if (!payment.matchesFilter(filter) &&
+            !client.matchesNameOrEmail(filter)) {
+          return false;
+        }
+      }
+
+      if (_showFilter) {
+        if (_minAmount.isNotEmpty) {
+          if (payment.amount < parseDouble(_minAmount)) {
+            return false;
+          }
+        }
+
+        if (_maxAmount.isNotEmpty) {
+          if (payment.amount > parseDouble(_maxAmount)) {
+            return false;
+          }
+        }
+
+        if (_startDate.isNotEmpty) {
+          if (payment.date.compareTo(_startDate) == -1) {
+            return false;
+          }
+        }
+
+        if (_endDate.isNotEmpty) {
+          if (payment.date.compareTo(_endDate) == 1) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }).toList();
+    _payments.sort((paymentA, paymentB) {
+      return paymentB.date.compareTo(paymentA.date);
+    });
   }
 
   bool get isFiltered {
