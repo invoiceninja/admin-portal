@@ -529,9 +529,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   return PaymentListItem(
                     payment: payment,
                     showCheck: true,
-                    isChecked: _selectedPayment?.id ?? '' == payment.id,
+                    isChecked: (_selectedPayment?.id ?? '') == payment.id,
                     onTap: () => setState(() {
-                      if (_selectedPayment?.id ?? '' == payment.id) {
+                      if ((_selectedPayment?.id ?? '') == payment.id) {
                         _selectedPayment = null;
                       } else {
                         _selectedPayment = payment;
@@ -588,19 +588,39 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             bottom: 18,
             right: 20,
           ),
-          child: AppButton(
-            label: localization.convertToPayment,
-            onPressed: _selectedInvoices.isEmpty || viewModel.state.isSaving
-                ? null
-                : () {
-                    final viewModel = widget.viewModel;
-                    viewModel.onConvertToPayment(
-                      context,
-                      _selectedInvoices.map((invoice) => invoice.id).toList(),
-                    );
-                  },
-            iconData: getEntityActionIcon(EntityAction.convertToPayment),
-          ),
+          child: _matchExisting
+              ? AppButton(
+                  label: localization.linkToPayment,
+                  onPressed:
+                      _selectedPayment == null || viewModel.state.isSaving
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onConvertToPayment(
+                                context,
+                                _selectedInvoices
+                                    .map((invoice) => invoice.id)
+                                    .toList(),
+                              );
+                            },
+                  iconData: getEntityActionIcon(EntityAction.convertToPayment),
+                )
+              : AppButton(
+                  label: localization.convertToPayment,
+                  onPressed:
+                      _selectedInvoices.isEmpty || viewModel.state.isSaving
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onConvertToPayment(
+                                context,
+                                _selectedInvoices
+                                    .map((invoice) => invoice.id)
+                                    .toList(),
+                              );
+                            },
+                  iconData: getEntityActionIcon(EntityAction.convertToPayment),
+                ),
         )
       ],
     );

@@ -218,6 +218,54 @@ class ConvertTransactionToPaymentFailure implements StopSaving {
   final dynamic error;
 }
 
+class LinkTransactionToPaymentRequest implements StartSaving {
+  LinkTransactionToPaymentRequest(
+    this.completer,
+    this.transactionId,
+    this.paymentId,
+  );
+
+  final Completer completer;
+  final String transactionId;
+  final String paymentId;
+}
+
+class LinkTransactionToPaymentSuccess implements StopSaving, PersistData {
+  LinkTransactionToPaymentSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class LinkTransactionToPaymentFailure implements StopSaving {
+  LinkTransactionToPaymentFailure(this.error);
+
+  final dynamic error;
+}
+
+class LinkTransactionToExpenseRequest implements StartSaving {
+  LinkTransactionToExpenseRequest(
+    this.completer,
+    this.transactionId,
+    this.expenseId,
+  );
+
+  final Completer completer;
+  final String transactionId;
+  final String expenseId;
+}
+
+class LinkTransactionToExpenseSuccess implements StopSaving, PersistData {
+  LinkTransactionToExpenseSuccess(this.transaction);
+
+  final TransactionEntity transaction;
+}
+
+class LinkTransactionToExpenseFailure implements StopSaving {
+  LinkTransactionToExpenseFailure(this.error);
+
+  final dynamic error;
+}
+
 class ConvertTransactionsToExpensesRequest implements StartSaving {
   ConvertTransactionsToExpensesRequest(
     this.completer,
