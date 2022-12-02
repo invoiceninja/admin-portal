@@ -468,9 +468,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 16,
+            left: 20,
             bottom: 18,
-            right: 16,
+            right: 20,
           ),
           child: AppButton(
             label: localization.convertToPayment,
@@ -841,9 +841,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 16,
+            left: 20,
             bottom: 16,
-            right: 16,
+            right: 20,
           ),
           child: AppButton(
             label: localization.convertToExpense,
