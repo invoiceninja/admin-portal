@@ -919,6 +919,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               SizedBox(width: 8),
             ],
           ),
+          ListDivider(),
           AnimatedContainer(
             duration: Duration(milliseconds: 200),
             height: _showFilter ? 138 : 0,
