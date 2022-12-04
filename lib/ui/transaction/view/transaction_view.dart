@@ -345,22 +345,24 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Center(
-            child: AppToggleButtons(
-              padding: 0,
-              onTabChanged: (value) =>
-                  setState(() => _matchExisting = value == 1),
-              selectedIndex: _matchExisting ? 1 : 0,
-              tabLabels: [
-                localization.createPayment,
-                localization.matchPayment,
-              ],
+        if (viewModel.transactions.length == 1) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: AppToggleButtons(
+                padding: 0,
+                onTabChanged: (value) =>
+                    setState(() => _matchExisting = value == 1),
+                selectedIndex: _matchExisting ? 1 : 0,
+                tabLabels: [
+                  localization.createPayment,
+                  localization.matchPayment,
+                ],
+              ),
             ),
           ),
-        ),
-        ListDivider(),
+          ListDivider(),
+        ],
         if (_matchExisting)
           Row(
             children: [
@@ -865,21 +867,23 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Center(
-            child: AppToggleButtons(
-              padding: 0,
-              onTabChanged: (value) =>
-                  setState(() => _matchExisting = value == 1),
-              selectedIndex: _matchExisting ? 1 : 0,
-              tabLabels: [
-                localization.createExpense,
-                localization.matchExpense,
-              ],
+        if (viewModel.transactions.length == 1) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: AppToggleButtons(
+                padding: 0,
+                onTabChanged: (value) =>
+                    setState(() => _matchExisting = value == 1),
+                selectedIndex: _matchExisting ? 1 : 0,
+                tabLabels: [
+                  localization.createExpense,
+                  localization.matchExpense,
+                ],
+              ),
             ),
           ),
-        ),
+        ],
         ListDivider(),
         if (_matchExisting) ...[
           Row(
