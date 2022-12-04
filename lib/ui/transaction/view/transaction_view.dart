@@ -1009,15 +1009,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   final expense = _expenses[index];
                   return ExpenseListItem(
                     expense: expense,
-                    showCheckbox: true,
-                    isChecked: _selectedVendor?.id == expense.id,
+                    showCheck: true,
+                    isChecked: _selectedExpense?.id == expense.id,
                     onTap: () => setState(() {
-                      if (_selectedVendor?.id == expense.id) {
+                      if (_selectedExpense?.id == expense.id) {
                         _selectedExpense = null;
                       } else {
                         _selectedExpense = expense;
                       }
-                      updateVendorList();
+                      updateExpenseList();
                       store.dispatch(SaveTransactionSuccess(transaction.rebuild(
                           (b) => b..pendingExpenseId = _selectedExpense?.id)));
                     }),

@@ -94,6 +94,7 @@ class TransactionViewVM {
         );
       },
       onLinkToExpense: (context, expenseId) {
+        print('## EXPOENSE ID: $expenseId');
         store.dispatch(
           LinkTransactionToExpenseRequest(
               snackBarCompleter<Null>(

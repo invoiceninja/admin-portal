@@ -25,7 +25,7 @@ class ExpenseListItem extends StatelessWidget {
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
-    this.showCheckbox = true,
+    this.showCheck = false,
     this.isDismissible = true,
     this.isChecked = false,
   });
@@ -34,7 +34,7 @@ class ExpenseListItem extends StatelessWidget {
   final GestureTapCallback onTap;
   final ExpenseEntity expense;
   final String filter;
-  final bool showCheckbox;
+  final bool showCheck;
   final bool isDismissible;
   final bool isChecked;
 
@@ -52,12 +52,6 @@ class ExpenseListItem extends StatelessWidget {
         ? (expense.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
-    final listUIState = expenseUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final isChecked = isDismissible
-        ? (isInMultiselect && listUIState.isSelected(expense.id))
-        : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
@@ -81,9 +75,10 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      showCheckbox: this.showCheckbox,
+      showCheckbox: showCheck,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
+          !showCheck &&
           expense.id ==
               (uiState.isEditing
                   ? expenseUIState.editing.id
@@ -96,8 +91,9 @@ class ExpenseListItem extends StatelessWidget {
             ? InkWell(
                 onTap: () =>
                     onTap != null ? onTap() : selectEntity(entity: expense),
-                onLongPress: () =>
-                    selectEntity(entity: expense, longPress: true),
+                onLongPress: () => onTap != null
+                    ? null
+                    : selectEntity(entity: expense, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -109,11 +105,10 @@ class ExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: showCheckbox
+                        child: showCheck
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IgnorePointer(
-                                  ignoring: listUIState.isInMultiselect(),
                                   child: Checkbox(
                                     value: isChecked,
                                     materialTapTargetSize:
@@ -190,11 +185,11 @@ class ExpenseListItem extends StatelessWidget {
             : ListTile(
                 onTap: () =>
                     onTap != null ? onTap() : selectEntity(entity: expense),
-                onLongPress: () =>
-                    selectEntity(entity: expense, longPress: true),
-                leading: showCheckbox
+                onLongPress: () => onTap != null
+                    ? null
+                    : selectEntity(entity: expense, longPress: true),
+                leading: showCheck
                     ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
                         child: Checkbox(
                           value: isChecked,
                           materialTapTargetSize:
