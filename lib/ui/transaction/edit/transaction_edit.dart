@@ -181,6 +181,7 @@ class _TransactionEditState extends State<TransactionEdit> {
                           transaction.bankAccountId.isEmpty
                               ? localization.pleaseEnterAValue
                               : null,
+                      overrideSuggestedAmount: (entity) => '',
                     ),
                     DecoratedFormField(
                       label: localization.description,
