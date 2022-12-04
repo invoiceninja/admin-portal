@@ -184,7 +184,8 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
         .bulkAction(store.state.credentials, action.transactionIds,
             EntityAction.convertMatched)
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(ConvertTransactionsSuccess(transactions));
+      store.dispatch(ConvertTransactionsSuccess(
+          BuiltList<TransactionEntity>(transactions)));
       store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);

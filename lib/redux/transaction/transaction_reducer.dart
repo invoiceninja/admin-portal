@@ -212,7 +212,12 @@ final transactionsReducer = combineReducers<TransactionState>([
       _convertTransactionToPayment),
   TypedReducer<TransactionState, ConvertTransactionsToExpensesSuccess>(
       _convertTransactionToExpense),
-  //TypedReducer<TransactionState, ConvertTransactionsSuccess>(_convertTransactions),
+  TypedReducer<TransactionState, LinkTransactionToPaymentSuccess>(
+      _linkTransactionToPayment),
+  TypedReducer<TransactionState, LinkTransactionToExpenseSuccess>(
+      _linkTransactionToExpense),
+  TypedReducer<TransactionState, ConvertTransactionsSuccess>(
+      _convertTransactions),
   TypedReducer<TransactionState, AddTransactionSuccess>(_addTransaction),
   TypedReducer<TransactionState, LoadTransactionsSuccess>(
       _setLoadedTransactions),
@@ -277,13 +282,22 @@ TransactionState _convertTransactionToExpense(TransactionState transactionState,
   return transactionState.loadTransactions(action.transactions);
 }
 
-/*
-TransactionState _convertTransactions(
-    TransactionState transactionState, ConvertTransactionsSuccess action) {
+TransactionState _linkTransactionToPayment(
+    TransactionState transactionState, LinkTransactionToPaymentSuccess action) {
   return transactionState
       .rebuild((b) => b..map[action.transaction.id] = action.transaction);
 }
-*/
+
+TransactionState _linkTransactionToExpense(
+    TransactionState transactionState, LinkTransactionToExpenseSuccess action) {
+  return transactionState
+      .rebuild((b) => b..map[action.transaction.id] = action.transaction);
+}
+
+TransactionState _convertTransactions(
+    TransactionState transactionState, ConvertTransactionsSuccess action) {
+  return transactionState.loadTransactions(action.transactions);
+}
 
 TransactionState _setLoadedTransaction(
     TransactionState transactionState, LoadTransactionSuccess action) {

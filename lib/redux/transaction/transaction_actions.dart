@@ -302,7 +302,7 @@ class ConvertTransactionsRequest implements StartSaving {
 class ConvertTransactionsSuccess implements StopSaving, PersistData {
   ConvertTransactionsSuccess(this.transactions);
 
-  final List<TransactionEntity> transactions;
+  final BuiltList<TransactionEntity> transactions;
 }
 
 class ConvertTransactionsFailure implements StopSaving {
