@@ -11,19 +11,21 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/expense_category/expense_category_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionView extends StatefulWidget {
@@ -146,11 +148,16 @@ class _MatchDeposits extends StatefulWidget {
 
 class _MatchDepositsState extends State<_MatchDeposits> {
   final _invoiceScrollController = ScrollController();
-  TextEditingController _filterController;
+  final _paymentScrollController = ScrollController();
+  TextEditingController _invoiceFilterController;
+  TextEditingController _paymentFilterController;
   FocusNode _focusNode;
   List<InvoiceEntity> _invoices;
   List<InvoiceEntity> _selectedInvoices;
+  List<PaymentEntity> _payments;
+  PaymentEntity _selectedPayment;
 
+  bool _matchExisting = false;
   bool _showFilter = false;
   String _minAmount = '';
   String _maxAmount = '';
@@ -160,7 +167,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   @override
   void initState() {
     super.initState();
-    _filterController = TextEditingController();
+    _invoiceFilterController = TextEditingController();
+    _paymentFilterController = TextEditingController();
     _focusNode = FocusNode();
     _selectedInvoices = [];
 
@@ -175,6 +183,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     }
 
     updateInvoiceList();
+    updatePaymentList();
   }
 
   void updateInvoiceList() {
@@ -192,7 +201,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         return false;
       }
 
-      final filter = _filterController.text;
+      final filter = _invoiceFilterController.text;
 
       if (filter.isNotEmpty) {
         final client = state.clientState.get(invoice.clientId);
@@ -231,15 +240,65 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _invoices.sort((invoiceA, invoiceB) {
-      /*
-      if (_selectedInvoices.contains(invoiceA)) {
-        return -1;
-      } else if (_selectedInvoices.contains(invoiceB)) {
-        return 1;
-      }
-      */
-
       return invoiceB.date.compareTo(invoiceA.date);
+    });
+  }
+
+  void updatePaymentList() {
+    final state = widget.viewModel.state;
+    final paymentState = state.paymentState;
+
+    _payments = paymentState.map.values.where((payment) {
+      if (_selectedPayment != null) {
+        if (payment.id != _selectedPayment.id) {
+          return false;
+        }
+      }
+
+      if (payment.transactionId.isNotEmpty || payment.isDeleted) {
+        return false;
+      }
+
+      final filter = _paymentFilterController.text;
+
+      if (filter.isNotEmpty) {
+        final client = state.clientState.get(payment.clientId);
+        if (!payment.matchesFilter(filter) &&
+            !client.matchesNameOrEmail(filter)) {
+          return false;
+        }
+      }
+
+      if (_showFilter) {
+        if (_minAmount.isNotEmpty) {
+          if (payment.amount < parseDouble(_minAmount)) {
+            return false;
+          }
+        }
+
+        if (_maxAmount.isNotEmpty) {
+          if (payment.amount > parseDouble(_maxAmount)) {
+            return false;
+          }
+        }
+
+        if (_startDate.isNotEmpty) {
+          if (payment.date.compareTo(_startDate) == -1) {
+            return false;
+          }
+        }
+
+        if (_endDate.isNotEmpty) {
+          if (payment.date.compareTo(_endDate) == 1) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }).toList();
+    _payments.sort((paymentA, paymentB) {
+      return paymentB.date.compareTo(paymentA.date);
     });
   }
 
@@ -258,7 +317,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   @override
   void dispose() {
     _invoiceScrollController.dispose();
-    _filterController.dispose();
+    _paymentScrollController.dispose();
+    _invoiceFilterController.dispose();
+    _paymentFilterController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -284,43 +345,100 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 18, top: 12, right: 10, bottom: 12),
-                child: SearchText(
-                  filterController: _filterController,
-                  focusNode: _focusNode,
-                  onChanged: (value) {
-                    setState(() {
-                      updateInvoiceList();
-                    });
-                  },
-                  onCleared: () {
-                    setState(() {
-                      _filterController.text = '';
-                      updateInvoiceList();
-                    });
-                  },
-                  placeholder:
-                      localization.searchInvoices.replaceFirst(':count ', ''),
-                ),
+        if (viewModel.transactions.length == 1) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: AppToggleButtons(
+                padding: 0,
+                onTabChanged: (value) =>
+                    setState(() => _matchExisting = value == 1),
+                selectedIndex: _matchExisting ? 1 : 0,
+                tabLabels: [
+                  localization.createPayment,
+                  localization.matchPayment,
+                ],
               ),
             ),
-            IconButton(
-              onPressed: () {
-                setState(() => _showFilter = !_showFilter);
-              },
-              color: _showFilter || isFiltered ? state.accentColor : null,
-              icon: Icon(Icons.filter_alt),
-              tooltip:
-                  state.prefState.enableTooltips ? localization.filter : '',
-            ),
-            SizedBox(width: 8),
-          ],
-        ),
+          ),
+          ListDivider(),
+        ],
+        if (_matchExisting)
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _paymentFilterController,
+                    focusNode: _focusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updatePaymentList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _paymentFilterController.text = '';
+                        updatePaymentList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchPayments.replaceFirst(':count ', ''),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          )
+        else
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _invoiceFilterController,
+                    focusNode: _focusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateInvoiceList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _invoiceFilterController.text = '';
+                        updateInvoiceList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchInvoices.replaceFirst(':count ', ''),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          ),
         ListDivider(),
         AnimatedContainer(
           duration: Duration(milliseconds: 200),
@@ -399,62 +517,112 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             ],
           ),
         ),
-        Expanded(
-          child: Scrollbar(
-            thumbVisibility: true,
-            controller: _invoiceScrollController,
-            child: ListView.separated(
+        if (_matchExisting) ...[
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              controller: _paymentScrollController,
+              child: ListView.separated(
+                controller: _paymentScrollController,
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _payments.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final payment = _payments[index];
+                  return PaymentListItem(
+                    payment: payment,
+                    showCheck: true,
+                    isChecked: (_selectedPayment?.id ?? '') == payment.id,
+                    onTap: () => setState(() {
+                      if ((_selectedPayment?.id ?? '') == payment.id) {
+                        _selectedPayment = null;
+                      } else {
+                        _selectedPayment = payment;
+                      }
+                      updatePaymentList();
+                    }),
+                  );
+                },
+              ),
+            ),
+          ),
+        ] else ...[
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
               controller: _invoiceScrollController,
-              separatorBuilder: (context, index) => ListDivider(),
-              itemCount: _invoices.length,
-              itemBuilder: (BuildContext context, int index) {
-                final invoice = _invoices[index];
-                return InvoiceListItem(
-                  invoice: invoice,
-                  showCheck: true,
-                  isChecked: _selectedInvoices.contains(invoice),
-                  onTap: () => setState(() {
-                    if (_selectedInvoices.contains(invoice)) {
-                      _selectedInvoices.remove(invoice);
-                    } else {
-                      _selectedInvoices.add(invoice);
-                    }
-                    updateInvoiceList();
-                  }),
-                );
-              },
+              child: ListView.separated(
+                controller: _invoiceScrollController,
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _invoices.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final invoice = _invoices[index];
+                  return InvoiceListItem(
+                    invoice: invoice,
+                    showCheck: true,
+                    isChecked: _selectedInvoices.contains(invoice),
+                    onTap: () => setState(() {
+                      if (_selectedInvoices.contains(invoice)) {
+                        _selectedInvoices.remove(invoice);
+                      } else {
+                        _selectedInvoices.add(invoice);
+                      }
+                      updateInvoiceList();
+                    }),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        if (_selectedInvoices.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Text(
-              '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+          if (_selectedInvoices.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Text(
+                '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
-          ),
+        ],
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 16,
+            left: 20,
             bottom: 18,
-            right: 16,
+            right: 20,
           ),
-          child: AppButton(
-            label: localization.convertToPayment,
-            onPressed: _selectedInvoices.isEmpty || viewModel.state.isSaving
-                ? null
-                : () {
-                    final viewModel = widget.viewModel;
-                    viewModel.onConvertToPayment(
-                      context,
-                      _selectedInvoices.map((invoice) => invoice.id).toList(),
-                    );
-                  },
-            iconData: getEntityActionIcon(EntityAction.convertToPayment),
-          ),
+          child: _matchExisting
+              ? AppButton(
+                  label: localization.linkToPayment,
+                  onPressed:
+                      _selectedPayment == null || viewModel.state.isSaving
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onConvertToPayment(
+                                context,
+                                _selectedInvoices
+                                    .map((invoice) => invoice.id)
+                                    .toList(),
+                              );
+                            },
+                  iconData: Icons.link,
+                )
+              : AppButton(
+                  label: localization.convertToPayment,
+                  onPressed:
+                      _selectedInvoices.isEmpty || viewModel.state.isSaving
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onConvertToPayment(
+                                context,
+                                _selectedInvoices
+                                    .map((invoice) => invoice.id)
+                                    .toList(),
+                              );
+                            },
+                  iconData: Icons.add_circle_outline,
+                ),
         )
       ],
     );
@@ -476,15 +644,27 @@ class _MatchWithdrawals extends StatefulWidget {
 class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   final _vendorScrollController = ScrollController();
   final _categoryScrollController = ScrollController();
+  final _expenseScrollController = ScrollController();
+
+  bool _matchExisting = false;
+  bool _showFilter = false;
+  String _minAmount = '';
+  String _maxAmount = '';
+  String _startDate = '';
+  String _endDate = '';
 
   TextEditingController _vendorFilterController;
   TextEditingController _categoryFilterController;
+  TextEditingController _expenseFilterController;
   FocusNode _vendorFocusNode;
   FocusNode _categoryFocusNode;
+  FocusNode _expenseFocusNode;
   List<VendorEntity> _vendors;
   List<ExpenseCategoryEntity> _categories;
+  List<ExpenseEntity> _expenses;
   VendorEntity _selectedVendor;
   ExpenseCategoryEntity _selectedCategory;
+  ExpenseEntity _selectedExpense;
 
   @override
   void initState() {
@@ -492,9 +672,11 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendorFilterController = TextEditingController();
     _categoryFilterController = TextEditingController();
+    _expenseFilterController = TextEditingController();
 
     _vendorFocusNode = FocusNode();
     _categoryFocusNode = FocusNode();
+    _expenseFocusNode = FocusNode();
 
     final transactions = widget.viewModel.transactions;
     final state = widget.viewModel.state;
@@ -517,6 +699,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     updateVendorList();
     updateCategoryList();
+    updateExpenseList();
   }
 
   void updateCategoryList() {
@@ -581,14 +764,92 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     });
   }
 
+  void updateExpenseList() {
+    final state = widget.viewModel.state;
+    final expenseState = state.expenseState;
+
+    _expenses = expenseState.map.values.where((expense) {
+      if (_selectedExpense != null) {
+        if (expense.id != _selectedExpense.id) {
+          return false;
+        }
+      }
+
+      if (expense.transactionId.isNotEmpty || expense.isDeleted) {
+        return false;
+      }
+
+      final filter = _expenseFilterController.text;
+
+      if (filter.isNotEmpty) {
+        final client = state.clientState.get(expense.clientId);
+        final vendor = state.vendorState.get(expense.vendorId);
+        if (!expense.matchesFilter(filter) &&
+            !client.matchesNameOrEmail(filter) &&
+            !vendor.matchesNameOrEmail(filter)) {
+          return false;
+        }
+      }
+
+      if (_showFilter) {
+        if (_minAmount.isNotEmpty) {
+          if (expense.amount < parseDouble(_minAmount)) {
+            return false;
+          }
+        }
+
+        if (_maxAmount.isNotEmpty) {
+          if (expense.amount > parseDouble(_maxAmount)) {
+            return false;
+          }
+        }
+
+        if (_startDate.isNotEmpty) {
+          if (expense.date.compareTo(_startDate) == -1) {
+            return false;
+          }
+        }
+
+        if (_endDate.isNotEmpty) {
+          if (expense.date.compareTo(_endDate) == 1) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }).toList();
+    _expenses.sort((expenseA, expenseB) {
+      return expenseB.date.compareTo(expenseA.date);
+    });
+  }
+
+  bool get isFiltered {
+    if (_minAmount.isNotEmpty || _maxAmount.isNotEmpty) {
+      return true;
+    }
+
+    if (_startDate.isNotEmpty || _endDate.isNotEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
   @override
   void dispose() {
     _vendorFilterController.dispose();
     _categoryFilterController.dispose();
+    _expenseFilterController.dispose();
+
     _vendorFocusNode.dispose();
     _categoryFocusNode.dispose();
+    _expenseFocusNode.dispose();
+
     _vendorScrollController.dispose();
     _categoryScrollController.dispose();
+    _expenseScrollController.dispose();
+
     super.dispose();
   }
 
@@ -597,6 +858,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final transactions = viewModel.transactions;
     final transaction =
         transactions.isNotEmpty ? transactions.first : TransactionEntity();
@@ -605,213 +867,398 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(
+        if (viewModel.transactions.length == 1) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: AppToggleButtons(
+                padding: 0,
+                onTabChanged: (value) =>
+                    setState(() => _matchExisting = value == 1),
+                selectedIndex: _matchExisting ? 1 : 0,
+                tabLabels: [
+                  localization.createExpense,
+                  localization.matchExpense,
+                ],
+              ),
+            ),
+          ),
+        ],
+        ListDivider(),
+        if (_matchExisting) ...[
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, top: 12, right: 10, bottom: 12),
+                  child: SearchText(
+                    filterController: _expenseFilterController,
+                    focusNode: _expenseFocusNode,
+                    onChanged: (value) {
+                      setState(() {
+                        updateExpenseList();
+                      });
+                    },
+                    onCleared: () {
+                      setState(() {
+                        _expenseFilterController.text = '';
+                        updateExpenseList();
+                      });
+                    },
+                    placeholder:
+                        localization.searchExpenses.replaceFirst(':count ', ''),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() => _showFilter = !_showFilter);
+                },
+                color: _showFilter || isFiltered ? state.accentColor : null,
+                icon: Icon(Icons.filter_alt),
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
+              ),
+              SizedBox(width: 8),
+            ],
+          ),
+          ListDivider(),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            height: _showFilter ? 138 : 0,
             child: Column(
-          children: [
-            Row(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 18, top: 12, right: 10, bottom: 12),
-                    child: SearchText(
-                        filterController: _vendorFilterController,
-                        focusNode: _vendorFocusNode,
-                        onChanged: (value) {
-                          setState(() {
-                            updateVendorList();
-                          });
-                        },
-                        onCleared: () {
-                          setState(() {
-                            _vendorFilterController.text = '';
-                            updateVendorList();
-                          });
-                        },
-                        placeholder: localization.searchVendors
-                            .replaceFirst(':count ', '')),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    final completer = snackBarCompleter<VendorEntity>(
-                        context, localization.createdVendor);
-                    createEntity(
-                        context: context,
-                        entity: VendorEntity(state: viewModel.state),
-                        force: true,
-                        completer: completer,
-                        cancelCompleter: Completer<Null>()
-                          ..future.then((_) {
-                            store.dispatch(
-                                UpdateCurrentRoute(TransactionScreen.route));
-                          }));
-                    completer.future.then((SelectableEntity vendor) {
-                      store.dispatch(SaveTransactionSuccess(transaction
-                          .rebuild((b) => b..pendingVendorId = vendor.id)));
-                      store.dispatch(
-                          UpdateCurrentRoute(TransactionScreen.route));
-                    });
-                  },
-                  icon: Icon(Icons.add_circle_outline),
-                ),
-                SizedBox(width: 8),
-              ],
-            ),
-            ListDivider(),
-            Expanded(
-              child: Scrollbar(
-                thumbVisibility: true,
-                controller: _vendorScrollController,
-                child: ListView.separated(
-                  controller: _vendorScrollController,
-                  separatorBuilder: (context, index) => ListDivider(),
-                  itemCount: _vendors.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final vendor = _vendors[index];
-                    return VendorListItem(
-                      vendor: vendor,
-                      showCheck: true,
-                      isChecked: _selectedVendor?.id == vendor.id,
-                      onTap: () => setState(() {
-                        if (_selectedVendor?.id == vendor.id) {
-                          _selectedVendor = null;
-                        } else {
-                          _selectedVendor = vendor;
-                        }
-                        updateVendorList();
-                        store.dispatch(SaveTransactionSuccess(
-                            transaction.rebuild((b) =>
-                                b..pendingVendorId = _selectedVendor?.id)));
-                      }),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ],
-        )),
-        ListDivider(),
-        Expanded(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 18, top: 12, right: 10, bottom: 12),
-                      child: SearchText(
-                          filterController: _categoryFilterController,
-                          focusNode: _categoryFocusNode,
-                          onChanged: (value) {
-                            setState(() {
-                              updateCategoryList();
-                            });
-                          },
-                          onCleared: () {
-                            setState(() {
-                              _categoryFilterController.text = '';
-                              updateCategoryList();
-                            });
-                          },
-                          placeholder: localization.searchCategories
-                              .replaceFirst(':count ', '')),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                                child: DecoratedFormField(
+                              label: localization.minAmount,
+                              onChanged: (value) {
+                                setState(() {
+                                  _minAmount = value;
+                                  updateExpenseList();
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                            )),
+                            SizedBox(
+                              width: kTableColumnGap,
+                            ),
+                            Expanded(
+                                child: DecoratedFormField(
+                              label: localization.maxAmount,
+                              onChanged: (value) {
+                                setState(() {
+                                  _maxAmount = value;
+                                  updateExpenseList();
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                            )),
+                          ],
+                        ),
+                        Row(children: [
+                          Expanded(
+                            child: DatePicker(
+                              labelText: localization.startDate,
+                              onSelected: (date, _) {
+                                setState(() {
+                                  _startDate = date;
+                                  updateExpenseList();
+                                });
+                              },
+                              selectedDate: _startDate,
+                            ),
+                          ),
+                          SizedBox(width: kTableColumnGap),
+                          Expanded(
+                            child: DatePicker(
+                              labelText: localization.endDate,
+                              onSelected: (date, _) {
+                                setState(() {
+                                  _endDate = date;
+                                  updateExpenseList();
+                                });
+                              },
+                              selectedDate: _endDate,
+                            ),
+                          ),
+                        ]),
+                      ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      final completer =
-                          snackBarCompleter<ExpenseCategoryEntity>(
-                              context, localization.createdExpenseCategory);
-                      createEntity(
-                          context: context,
-                          entity: ExpenseCategoryEntity(state: viewModel.state),
-                          force: true,
-                          completer: completer,
-                          cancelCompleter: Completer<Null>()
-                            ..future.then((_) {
-                              store.dispatch(
-                                  UpdateCurrentRoute(TransactionScreen.route));
-                            }));
-                      completer.future.then((SelectableEntity category) {
-                        store.dispatch(SaveTransactionSuccess(
-                            transaction.rebuild(
-                                (b) => b..pendingCategoryId = category.id)));
-                        store.dispatch(
-                            UpdateCurrentRoute(TransactionScreen.route));
-                      });
-                    },
-                    icon: Icon(Icons.add_circle_outline),
-                  ),
-                  SizedBox(width: 8),
-                ],
-              ),
-              ListDivider(),
-              Expanded(
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  controller: _categoryScrollController,
-                  child: ListView.separated(
-                    controller: _categoryScrollController,
-                    separatorBuilder: (context, index) => ListDivider(),
-                    itemCount: _categories.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final category = _categories[index];
-                      return ExpenseCategoryListItem(
-                        expenseCategory: category,
-                        showCheck: true,
-                        isChecked: _selectedCategory?.id == category.id,
-                        onTap: () => setState(() {
-                          if (_selectedCategory?.id == category.id) {
-                            _selectedCategory = null;
-                          } else {
-                            _selectedCategory = category;
-                          }
-                          updateCategoryList();
-                          store.dispatch(SaveTransactionSuccess(
-                              transaction.rebuild((b) => b
-                                ..pendingCategoryId = _selectedCategory?.id)));
-                        }),
-                      );
-                    },
-                  ),
                 ),
-              ),
-              if (transaction.category.isNotEmpty && _selectedCategory == null)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Text(
-                    '${localization.defaultCategory}: ${transaction.category}',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-            ],
+                ListDivider(),
+              ],
+            ),
           ),
-        ),
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              controller: _expenseScrollController,
+              child: ListView.separated(
+                controller: _expenseScrollController,
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: _expenses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final expense = _expenses[index];
+                  return ExpenseListItem(
+                    expense: expense,
+                    showCheck: true,
+                    isChecked: _selectedExpense?.id == expense.id,
+                    onTap: () => setState(() {
+                      if (_selectedExpense?.id == expense.id) {
+                        _selectedExpense = null;
+                      } else {
+                        _selectedExpense = expense;
+                      }
+                      updateExpenseList();
+                      store.dispatch(SaveTransactionSuccess(transaction.rebuild(
+                          (b) => b..pendingExpenseId = _selectedExpense?.id)));
+                    }),
+                  );
+                },
+              ),
+            ),
+          ),
+        ] else
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 22, top: 12, right: 10, bottom: 12),
+                        child: SearchText(
+                            filterController: _vendorFilterController,
+                            focusNode: _vendorFocusNode,
+                            onChanged: (value) {
+                              setState(() {
+                                updateVendorList();
+                              });
+                            },
+                            onCleared: () {
+                              setState(() {
+                                _vendorFilterController.text = '';
+                                updateVendorList();
+                              });
+                            },
+                            placeholder: localization.searchVendors
+                                .replaceFirst(':count ', '')),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        final completer = snackBarCompleter<VendorEntity>(
+                            context, localization.createdVendor);
+                        createEntity(
+                            context: context,
+                            entity: VendorEntity(state: viewModel.state),
+                            force: true,
+                            completer: completer,
+                            cancelCompleter: Completer<Null>()
+                              ..future.then((_) {
+                                store.dispatch(UpdateCurrentRoute(
+                                    TransactionScreen.route));
+                              }));
+                        completer.future.then((SelectableEntity vendor) {
+                          store.dispatch(SaveTransactionSuccess(transaction
+                              .rebuild((b) => b..pendingVendorId = vendor.id)));
+                          store.dispatch(
+                              UpdateCurrentRoute(TransactionScreen.route));
+                        });
+                      },
+                      icon: Icon(Icons.add_circle_outline),
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+                ListDivider(),
+                Expanded(
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: _vendorScrollController,
+                    child: ListView.separated(
+                      controller: _vendorScrollController,
+                      separatorBuilder: (context, index) => ListDivider(),
+                      itemCount: _vendors.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final vendor = _vendors[index];
+                        return VendorListItem(
+                          vendor: vendor,
+                          showCheck: true,
+                          isChecked: _selectedVendor?.id == vendor.id,
+                          onTap: () => setState(() {
+                            if (_selectedVendor?.id == vendor.id) {
+                              _selectedVendor = null;
+                            } else {
+                              _selectedVendor = vendor;
+                            }
+                            updateVendorList();
+                            store.dispatch(SaveTransactionSuccess(
+                                transaction.rebuild((b) =>
+                                    b..pendingVendorId = _selectedVendor?.id)));
+                          }),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                ListDivider(),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 22, top: 12, right: 10, bottom: 12),
+                              child: SearchText(
+                                  filterController: _categoryFilterController,
+                                  focusNode: _categoryFocusNode,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      updateCategoryList();
+                                    });
+                                  },
+                                  onCleared: () {
+                                    setState(() {
+                                      _categoryFilterController.text = '';
+                                      updateCategoryList();
+                                    });
+                                  },
+                                  placeholder: localization.searchCategories
+                                      .replaceFirst(':count ', '')),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              final completer =
+                                  snackBarCompleter<ExpenseCategoryEntity>(
+                                      context,
+                                      localization.createdExpenseCategory);
+                              createEntity(
+                                  context: context,
+                                  entity: ExpenseCategoryEntity(
+                                      state: viewModel.state),
+                                  force: true,
+                                  completer: completer,
+                                  cancelCompleter: Completer<Null>()
+                                    ..future.then((_) {
+                                      store.dispatch(UpdateCurrentRoute(
+                                          TransactionScreen.route));
+                                    }));
+                              completer.future
+                                  .then((SelectableEntity category) {
+                                store.dispatch(SaveTransactionSuccess(
+                                    transaction.rebuild((b) =>
+                                        b..pendingCategoryId = category.id)));
+                                store.dispatch(UpdateCurrentRoute(
+                                    TransactionScreen.route));
+                              });
+                            },
+                            icon: Icon(Icons.add_circle_outline),
+                          ),
+                          SizedBox(width: 8),
+                        ],
+                      ),
+                      ListDivider(),
+                      Expanded(
+                        child: Scrollbar(
+                          thumbVisibility: true,
+                          controller: _categoryScrollController,
+                          child: ListView.separated(
+                            controller: _categoryScrollController,
+                            separatorBuilder: (context, index) => ListDivider(),
+                            itemCount: _categories.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final category = _categories[index];
+                              return ExpenseCategoryListItem(
+                                expenseCategory: category,
+                                showCheck: true,
+                                isChecked: _selectedCategory?.id == category.id,
+                                onTap: () => setState(() {
+                                  if (_selectedCategory?.id == category.id) {
+                                    _selectedCategory = null;
+                                  } else {
+                                    _selectedCategory = category;
+                                  }
+                                  updateCategoryList();
+                                  store.dispatch(SaveTransactionSuccess(
+                                      transaction.rebuild((b) => b
+                                        ..pendingCategoryId =
+                                            _selectedCategory?.id)));
+                                }),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      if (transaction.category.isNotEmpty &&
+                          _selectedCategory == null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          child: Text(
+                            '${localization.defaultCategory}: ${transaction.category}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ListDivider(),
         Padding(
           padding: const EdgeInsets.only(
-            left: 16,
+            left: 20,
             bottom: 16,
-            right: 16,
+            right: 20,
           ),
-          child: AppButton(
-            label: localization.convertToExpense,
-            onPressed: viewModel.state.isSaving
-                ? null
-                : () {
-                    final viewModel = widget.viewModel;
-                    viewModel.onConvertToExpense(
-                      context,
-                      _selectedVendor?.id ?? '',
-                      _selectedCategory?.id ?? '',
-                    );
-                  },
-            iconData: getEntityActionIcon(EntityAction.convertToExpense),
-          ),
+          child: _matchExisting
+              ? AppButton(
+                  label: localization.linkToExpense,
+                  onPressed:
+                      _selectedExpense == null || viewModel.state.isSaving
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onLinkToExpense(
+                                context,
+                                _selectedExpense?.id ?? '',
+                              );
+                            },
+                  iconData: Icons.link,
+                )
+              : AppButton(
+                  label: localization.convertToExpense,
+                  onPressed: viewModel.state.isSaving
+                      ? null
+                      : () {
+                          final viewModel = widget.viewModel;
+                          viewModel.onConvertToExpense(
+                            context,
+                            _selectedVendor?.id ?? '',
+                            _selectedCategory?.id ?? '',
+                          );
+                        },
+                  iconData: Icons.add_circle_outline,
+                ),
         )
       ],
     );

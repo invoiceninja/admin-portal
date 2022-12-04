@@ -77,6 +77,8 @@ class TaskFields {
   static const String status = 'status';
   static const String isInvoiced = 'is_invoiced';
   static const String date = 'date';
+  static const String assignedTo = 'assigned_to';
+  static const String createdBy = 'created_by';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
@@ -277,7 +279,6 @@ abstract class TaskEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      invoiceLock: false,
       assignedUserId: user?.id ?? '',
       createdAt: 0,
       createdUserId: '',
@@ -322,9 +323,6 @@ abstract class TaskEntity extends Object
   String get description;
 
   String get number;
-
-  @BuiltValueField(wireName: 'invoice_lock')
-  bool get invoiceLock;
 
   bool get areTimesValid {
     final times = getTaskTimes();
@@ -580,9 +578,12 @@ abstract class TaskEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
+    final isLocked = userCompany.company.invoiceTaskLock && isInvoiced;
+
     if (!isDeleted) {
       if (includeEdit &&
           userCompany.canEditEntity(this) &&
+          !isLocked &&
           !isDeleted &&
           !multiselect) {
         actions.add(EntityAction.edit);
@@ -719,6 +720,20 @@ abstract class TaskEntity extends Object
         response = compareNatural(
             taskA.number.toLowerCase(), taskB.number.toLowerCase());
         break;
+      case TaskFields.createdBy:
+        final userA = userMap[taskA.createdUserId] ?? UserEntity();
+        final userB = userMap[taskB.createdUserId] ?? UserEntity();
+        response = userA.fullName
+            .toLowerCase()
+            .compareTo(userB.fullName.toLowerCase());
+        break;
+      case TaskFields.assignedTo:
+        final userA = userMap[taskA.assignedUserId] ?? UserEntity();
+        final userB = userMap[taskB.assignedUserId] ?? UserEntity();
+        response = userA.fullName
+            .toLowerCase()
+            .compareTo(userB.fullName.toLowerCase());
+        break;
       case TaskFields.status:
         final taskAStatus = taskA.isRunning
             ? -1
@@ -818,8 +833,8 @@ abstract class TaskEntity extends Object
   bool get isStopped => !isRunning;
 
   // ignore: unused_element
-  static void _initializeBuilder(TaskEntityBuilder builder) =>
-      builder..invoiceLock = false;
+  //static void _initializeBuilder(TaskEntityBuilder builder) =>
+  //    builder..;
 
   static Serializer<TaskEntity> get serializer => _$taskEntitySerializer;
 }

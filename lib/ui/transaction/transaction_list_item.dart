@@ -117,7 +117,9 @@ class TransactionListItem extends StatelessWidget {
                               children: [
                                 Text(transaction.description, style: textStyle),
                                 Text(
-                                  filterMatch ?? transaction.category,
+                                  state.bankAccountState
+                                      .get(transaction.bankAccountId)
+                                      .name,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
@@ -141,6 +143,15 @@ class TransactionListItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 10),
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          transaction.isWithdrawal
+                              ? localization.withdrawal
+                              : localization.deposit,
+                        ),
+                      ),
+                      SizedBox(width: 30),
                       Text(
                         formatNumber(transaction.amount, context,
                             currencyId: transaction.currencyId),
@@ -195,7 +206,13 @@ class TransactionListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: filterMatch == null
-                              ? Text(transaction.category)
+                              ? Text(state.bankAccountState
+                                      .get(transaction.bankAccountId)
+                                      .name +
+                                  ' • ' +
+                                  (transaction.isDeposit
+                                      ? localization.deposit
+                                      : localization.withdrawal))
                               : Text(
                                   filterMatch,
                                   maxLines: 3,

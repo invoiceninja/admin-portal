@@ -1058,10 +1058,6 @@ class SidebarFooter extends StatelessWidget {
                         child: Text(localization.download.toUpperCase()),
                       ),
                       TextButton(
-                        onPressed: () => launchUrl(Uri.parse(kDocsPerformance)),
-                        child: Text(localization.learnMore.toUpperCase()),
-                      ),
-                      TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           store.dispatch(DismissNativeWarning());
@@ -1100,7 +1096,7 @@ class SidebarFooter extends StatelessWidget {
                     url += '/basic-settings/#$subRoute';
                   }
                 } else if (uiState.mainRoute == kDashboard) {
-                  url += '/introduction';
+                  url += '/user-guide';
                 } else if (uiState.mainRoute == kReports) {
                   url += '/$kReports';
                 } else {

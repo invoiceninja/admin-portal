@@ -11,9 +11,9 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class BoolDropdownButton extends StatelessWidget {
   const BoolDropdownButton({
-    @required this.label,
     @required this.value,
     @required this.onChanged,
+    this.label,
     this.showBlank,
     this.enabledLabel,
     this.helpLabel,
@@ -57,87 +57,92 @@ class BoolDropdownButton extends StatelessWidget {
       );
     }
 
+    final widget = _showBlank
+        ? DropdownButtonHideUnderline(
+            child: DropdownButton<bool>(
+              value: value,
+              isExpanded: true,
+              isDense: true,
+              onChanged: (value) => onChanged(value),
+              items: [
+                DropdownMenuItem(
+                  child: Text(''),
+                  value: null,
+                ),
+                DropdownMenuItem(
+                  child: Text(falseLabel),
+                  value: false,
+                ),
+                DropdownMenuItem(
+                  child: Text(trueLabel),
+                  value: true,
+                ),
+              ].toList(),
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Flex(
+              direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
+              children: <Widget>[
+                InkWell(
+                  onTap: () => onChanged(false),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minWidth: minWidth ?? 130, minHeight: 36),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: false,
+                            onChanged: (value) => null,
+                            groupValue: value,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                        Text(falseLabel),
+                        SizedBox(width: 16),
+                      ],
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () => onChanged(true),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                        minWidth: minWidth ?? 120, minHeight: 36),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: true,
+                            onChanged: (value) => null,
+                            groupValue: value,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                        Text(trueLabel),
+                        SizedBox(width: 16),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+
+    if (label == null) {
+      return widget;
+    }
+
     return InputDecorator(
         decoration: InputDecoration(
           border: _showBlank ? null : InputBorder.none,
           labelText: label,
         ),
         isEmpty: '${value ?? ''}'.isEmpty,
-        child: _showBlank
-            ? DropdownButtonHideUnderline(
-                child: DropdownButton<bool>(
-                  value: value,
-                  isExpanded: true,
-                  isDense: true,
-                  onChanged: (value) => onChanged(value),
-                  items: [
-                    DropdownMenuItem(
-                      child: Text(''),
-                      value: null,
-                    ),
-                    DropdownMenuItem(
-                      child: Text(falseLabel),
-                      value: false,
-                    ),
-                    DropdownMenuItem(
-                      child: Text(trueLabel),
-                      value: true,
-                    ),
-                  ].toList(),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Flex(
-                  direction:
-                      isDesktop(context) ? Axis.horizontal : Axis.vertical,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () => onChanged(false),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minWidth: minWidth ?? 130, minHeight: 36),
-                        child: Row(
-                          children: [
-                            IgnorePointer(
-                              child: Radio<bool>(
-                                value: false,
-                                onChanged: (value) => null,
-                                groupValue: value,
-                                activeColor:
-                                    Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                            Text(falseLabel),
-                            SizedBox(width: 16),
-                          ],
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => onChanged(true),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minWidth: minWidth ?? 120, minHeight: 36),
-                        child: Row(
-                          children: [
-                            IgnorePointer(
-                              child: Radio<bool>(
-                                value: true,
-                                onChanged: (value) => null,
-                                groupValue: value,
-                                activeColor:
-                                    Theme.of(context).colorScheme.secondary,
-                              ),
-                            ),
-                            Text(trueLabel),
-                            SizedBox(width: 16),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ));
+        child: widget);
   }
 }

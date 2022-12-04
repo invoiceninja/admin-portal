@@ -45,6 +45,8 @@ class TransactionViewVM {
     @required this.isLoading,
     @required this.onConvertToPayment,
     @required this.onConvertToExpense,
+    @required this.onLinkToPayment,
+    @required this.onLinkToExpense,
   });
 
   factory TransactionViewVM.fromStore(Store<AppState> store) {
@@ -82,6 +84,24 @@ class TransactionViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(transactions, action, autoPop: true),
+      onLinkToPayment: (context, paymentId) {
+        store.dispatch(
+          LinkTransactionToPaymentRequest(
+              snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).convertedTransaction),
+              transactionIds.first,
+              paymentId),
+        );
+      },
+      onLinkToExpense: (context, expenseId) {
+        store.dispatch(
+          LinkTransactionToExpenseRequest(
+              snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).convertedTransaction),
+              transactionIds.first,
+              expenseId),
+        );
+      },
       onConvertToPayment: (context, invoiceIds) {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
@@ -120,6 +140,8 @@ class TransactionViewVM {
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<String>) onConvertToPayment;
   final Function(BuildContext, String, String) onConvertToExpense;
+  final Function(BuildContext, String) onLinkToPayment;
+  final Function(BuildContext, String) onLinkToExpense;
   final bool isSaving;
   final bool isLoading;
 }

@@ -44,10 +44,13 @@ class PaymentListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final paymentId = viewModel.paymentList[index];
               final payment = state.paymentState.map[paymentId];
+              final paymentListState = viewModel.state.paymentListState;
 
               return PaymentListItem(
                 filter: viewModel.filter,
                 payment: payment,
+                showCheck: paymentListState.isInMultiselect(),
+                isChecked: paymentListState.isSelected(payment.id),
               );
             });
       },

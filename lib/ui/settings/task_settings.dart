@@ -170,15 +170,27 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
-                SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.addDocumentsToInvoice),
-                  value: company.invoiceTaskDocuments ?? false,
-                  subtitle: Text(localization.addDocumentsToInvoiceHelp),
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskDocuments = value)),
-                ),
               ],
+            ],
+          ),
+          FormCard(
+            children: [
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.lockInvoicedTasks),
+                value: company.invoiceTaskLock ?? false,
+                subtitle: Text(localization.lockInvoicedTasksHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..invoiceTaskLock = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.addDocumentsToInvoice),
+                value: company.invoiceTaskDocuments ?? false,
+                subtitle: Text(localization.addDocumentsToInvoiceHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..invoiceTaskDocuments = value)),
+              ),
             ],
           ),
           FormCard(

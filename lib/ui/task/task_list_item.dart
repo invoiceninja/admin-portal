@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/colors.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -58,6 +59,23 @@ class TaskListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
     final localization = AppLocalization.of(context);
+
+    final status = state.taskStatusState.get(task.statusId);
+    final statusLabel = task.isInvoiced
+        ? localization.invoiced
+        : task.isRunning
+            ? localization.running
+            : status.name.isNotEmpty
+                ? status.name
+                : localization.logged;
+    final statusColor = task.isInvoiced
+        ? state.prefState.colorThemeModel.colorSuccess
+        : task.isRunning
+            ? state.prefState.colorThemeModel.colorInfo
+            : status.color.isNotEmpty && status.color != '#fff'
+                ? convertHexStringToColor(status.color)
+                : TaskStatusColors(state.prefState.colorThemeModel)
+                    .colors[task.calculateStatusId];
 
     String subtitle = client.displayName;
     if (task.projectId.isNotEmpty) {
@@ -244,14 +262,8 @@ class TaskListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      localization
-                          .lookup(kTaskStatuses[task.calculateStatusId]),
-                      style: TextStyle(
-                          color: task.isInvoiced
-                              ? state.prefState.colorThemeModel.colorSuccess
-                              : convertHexStringToColor(state.taskStatusState
-                                  .get(task.calculateStatusId)
-                                  .color)),
+                      statusLabel,
+                      style: TextStyle(color: statusColor),
                     ),
                   ],
                 ),
