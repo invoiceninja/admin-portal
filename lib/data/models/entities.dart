@@ -898,8 +898,12 @@ abstract class ActivityEntity
     ClientContactEntity clientContact;
     VendorContactEntity vendorContact;
     if (client != null && contactId != null && contactId.isNotEmpty) {
-      vendorContact = vendor.getContact(vendorContactId);
       clientContact = client.getContact(contactId);
+    }
+    if (vendor != null &&
+        vendorContactId != null &&
+        vendorContactId.isNotEmpty) {
+      vendorContact = vendor.getContact(vendorContactId);
     }
 
     activity =
