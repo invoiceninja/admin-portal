@@ -54,6 +54,7 @@ class TransactionFields {
   static const String currency = 'currency';
   static const String vendor = 'vendor';
   static const String category = 'category';
+  static const String payment = 'payment';
   static const String bankAccountId = 'bank_account_id';
   static const String bankAccount = 'bank_account';
   static const String invoiceIds = 'invoice_ids';

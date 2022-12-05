@@ -359,6 +359,7 @@ class ReportsScreenVM {
           state.expenseCategoryState.map,
           state.invoiceState.map,
           state.bankAccountState.map,
+          state.paymentState.map,
           state.staticState,
         );
     }
