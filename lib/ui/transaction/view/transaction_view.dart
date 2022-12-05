@@ -598,11 +598,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                           ? null
                           : () {
                               final viewModel = widget.viewModel;
-                              viewModel.onConvertToPayment(
+                              viewModel.onLinkToPayment(
                                 context,
-                                _selectedInvoices
-                                    .map((invoice) => invoice.id)
-                                    .toList(),
+                                _selectedPayment.id,
                               );
                             },
                   iconData: Icons.link,
