@@ -92,13 +92,17 @@ class _TransactionViewState extends State<TransactionView> {
                         .get(transaction.transactionRuleId),
                     isFilter: false,
                   ),
-                  if (transaction.isDeposit)
+                  if (transaction.isDeposit) ...[
                     ...transaction.invoiceIds
                         .split(',')
                         .map((invoiceId) => state.invoiceState.get(invoiceId))
                         .map((invoice) =>
-                            EntityListTile(entity: invoice, isFilter: false))
-                  else ...[
+                            EntityListTile(entity: invoice, isFilter: false)),
+                    EntityListTile(
+                      entity: state.paymentState.get(transaction.paymentId),
+                      isFilter: false,
+                    ),
+                  ] else ...[
                     EntityListTile(
                       entity: state.vendorState.get(transaction.vendorId),
                       isFilter: false,
