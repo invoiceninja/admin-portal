@@ -118,6 +118,9 @@ List<String> filteredTransactionsSelector(
       } else if (filterEntityType == EntityType.transactionRule &&
           transaction.transactionRuleId != filterEntityId) {
         return false;
+      } else if (filterEntityType == EntityType.payment &&
+          transaction.paymentId != filterEntityId) {
+        return false;
       }
     }
 
