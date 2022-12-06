@@ -322,7 +322,7 @@ Middleware<AppState> _saveTransaction(TransactionRepository repository) {
       } else {
         store.dispatch(SaveTransactionSuccess(transaction));
       }
-
+      store.dispatch(RefreshData());
       action.completer.complete(transaction);
     }).catchError((Object error) {
       //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
