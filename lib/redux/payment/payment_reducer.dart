@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -215,7 +216,20 @@ final paymentsReducer = combineReducers<PaymentState>([
   TypedReducer<PaymentState, ArchivePaymentsSuccess>(_archivePaymentSuccess),
   TypedReducer<PaymentState, DeletePaymentsSuccess>(_deletePaymentSuccess),
   TypedReducer<PaymentState, RestorePaymentsSuccess>(_restorePaymentSuccess),
+  TypedReducer<PaymentState, PurgeClientSuccess>(_purgeClientSuccess),
 ]);
+
+PaymentState _purgeClientSuccess(
+    PaymentState paymentState, PurgeClientSuccess action) {
+  final ids = paymentState.map.values
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
+      .toList();
+
+  return paymentState.rebuild((b) => b
+    ..map.removeWhere((p0, p1) => ids.contains(p0))
+    ..list.removeWhere((p0) => ids.contains(p0)));
+}
 
 PaymentState _archivePaymentSuccess(
     PaymentState paymentState, ArchivePaymentsSuccess action) {

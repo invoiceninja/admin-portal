@@ -102,6 +102,7 @@ abstract class WebhookEntity extends Object
   static const EVENT_CREATE_CREDIT = '27';
   static const EVENT_UPDATE_CREDIT = '28';
   static const EVENT_DELETE_CREDIT = '29';
+  static const EVENT_DELETE_PROJECT = '30';
 
   static const EVENT_MAP = {
     EVENT_CREATE_CLIENT: 'create_client',
@@ -133,6 +134,7 @@ abstract class WebhookEntity extends Object
     EVENT_DELETE_TASK: 'delete_task',
     EVENT_CREATE_PROJECT: 'create_project',
     EVENT_UPDATE_PROJECT: 'update_project',
+    EVENT_DELETE_PROJECT: 'delete_project',
   };
 
   @override

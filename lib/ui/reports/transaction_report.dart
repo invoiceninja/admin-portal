@@ -21,6 +21,7 @@ enum TransactionReportFields {
   withdrawal,
   vendor,
   category,
+  payment,
   bankAccount,
   invoices,
   expenseNumber,
@@ -31,7 +32,7 @@ enum TransactionReportFields {
   updated_at,
 }
 
-var memoizedTransactionReport = memo9((
+var memoizedTransactionReport = memo10((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, TransactionEntity> transactionMap,
@@ -40,6 +41,7 @@ var memoizedTransactionReport = memo9((
   BuiltMap<String, ExpenseCategoryEntity> categoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, BankAccountEntity> bankAccountMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) =>
     transactionReport(
@@ -51,6 +53,7 @@ var memoizedTransactionReport = memo9((
       categoryMap,
       invoiceMap,
       bankAccountMap,
+      paymentMap,
       staticState,
     ));
 
@@ -63,6 +66,7 @@ ReportResult transactionReport(
   BuiltMap<String, ExpenseCategoryEntity> categoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, BankAccountEntity> bankAccountMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -141,6 +145,9 @@ ReportResult transactionReport(
           break;
         case TransactionReportFields.bankAccount:
           value = bankAccountMap[transaction.bankAccountId]?.name ?? '';
+          break;
+        case TransactionReportFields.payment:
+          value = paymentMap[transaction.paymentId]?.number ?? '';
           break;
         case TransactionReportFields.defaultCategory:
           value = transaction.category;

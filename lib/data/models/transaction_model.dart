@@ -54,6 +54,7 @@ class TransactionFields {
   static const String currency = 'currency';
   static const String vendor = 'vendor';
   static const String category = 'category';
+  static const String payment = 'payment';
   static const String bankAccountId = 'bank_account_id';
   static const String bankAccount = 'bank_account';
   static const String invoiceIds = 'invoice_ids';
@@ -69,6 +70,17 @@ abstract class TransactionEntity extends Object
     with BaseEntity
     implements Built<TransactionEntity, TransactionEntityBuilder> {
   factory TransactionEntity({String id, AppState state}) {
+    String bankAccountId = '';
+    if (state != null) {
+      final bankAccounts = state.bankAccountState.list
+          .map((bankAccountId) => state.bankAccountState.map[bankAccountId])
+          .where((bankAccount) => !bankAccount.isDeleted)
+          .toList();
+      if (bankAccounts.length == 1) {
+        bankAccountId = bankAccounts.first.id;
+      }
+    }
+
     return _$TransactionEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -79,7 +91,7 @@ abstract class TransactionEntity extends Object
       assignedUserId: '',
       archivedAt: 0,
       amount: 0,
-      bankAccountId: '',
+      bankAccountId: bankAccountId,
       category: '',
       currencyId: state?.company?.currencyId ?? kDefaultCurrencyId,
       date: convertDateTimeToSqlDate(),

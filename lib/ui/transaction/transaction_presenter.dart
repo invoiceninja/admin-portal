@@ -32,6 +32,7 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.amount,
       TransactionFields.vendor,
       TransactionFields.category,
+      TransactionFields.payment,
       TransactionFields.defaultCategory,
     ];
   }
@@ -83,6 +84,9 @@ class TransactionPresenter extends EntityPresenter {
             state.bankAccountState.get(transaction.bankAccountId);
         return LinkTextRelatedEntity(
             entity: bankAccount, relation: transaction);
+      case TransactionFields.payment:
+        final payment = state.paymentState.get(transaction.paymentId);
+        return LinkTextRelatedEntity(entity: payment, relation: transaction);
       case TransactionFields.invoices:
         return ConstrainedBox(
           constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
