@@ -188,6 +188,7 @@ class _AccountManagementState extends State<AccountManagement>
         children: <Widget>[
           _AccountOverview(viewModel: viewModel),
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(
                   children: kModules.keys.map((module) {
@@ -210,7 +211,7 @@ class _AccountManagementState extends State<AccountManagement>
               }).toList()),
             ],
           ),
-          ScrollableListView(children: [
+          ScrollableListView(primary: true, children: [
             FormCard(
               children: [
                 LearnMoreUrl(
@@ -225,6 +226,7 @@ class _AccountManagementState extends State<AccountManagement>
             )
           ]),
           ScrollableListView(
+            primary: true,
             children: [
               FormCard(
                 children: [
@@ -315,6 +317,7 @@ class _AccountOverview extends StatelessWidget {
     }
 
     return ScrollableListView(
+      primary: true,
       children: <Widget>[
         AppHeader(
           label: localization.plan,

@@ -127,6 +127,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           pdfColumns = [...pdfColumns, TaskItemFields.hours];
         }
       }
+
+      if (company.enableProductDiscount &&
+          !pdfColumns.contains(TaskItemFields.discount)) {
+        pdfColumns.add(TaskItemFields.discount);
+      }
     } else {
       if (pdfColumns.isEmpty) {
         pdfColumns = [
@@ -146,6 +151,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             company.enableProductQuantity) {
           pdfColumns = [...pdfColumns, ProductItemFields.quantity];
         }
+      }
+
+      if (company.enableProductDiscount &&
+          !pdfColumns.contains(ProductItemFields.discount)) {
+        pdfColumns.add(ProductItemFields.discount);
       }
     }
 

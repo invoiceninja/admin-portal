@@ -85,6 +85,7 @@ class _ImportExportState extends State<ImportExport> {
         formKey: _formKey,
         focusNode: _focusNode,
         child: ScrollableListView(
+          primary: true,
           children: [
             if (_response == null)
               _FileImport(

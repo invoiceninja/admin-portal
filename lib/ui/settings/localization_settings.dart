@@ -137,6 +137,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
         tabController: _controller,
         children: <Widget>[
           ScrollableListView(
+            primary: true,
             children: [
               FormCard(
                 children: <Widget>[
@@ -266,6 +267,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
             ],
           ),
           ScrollableListView(
+            primary: true,
             children: [
               FormCard(
                 isLast: true,

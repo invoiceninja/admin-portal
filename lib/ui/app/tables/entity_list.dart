@@ -64,13 +64,10 @@ class _EntityListState extends State<EntityList> {
   EntityDataTableSource dataTableSource;
 
   int _firstRowIndex = 0;
-  ScrollController _controller;
 
   @override
   void initState() {
     super.initState();
-
-    _controller = ScrollController();
 
     final entityType = widget.entityType;
     final state = widget.state;
@@ -111,12 +108,6 @@ class _EntityListState extends State<EntityList> {
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -238,7 +229,7 @@ class _EntityListState extends State<EntityList> {
               ),
             Expanded(
               child: SingleChildScrollView(
-                controller: _controller,
+                primary: true,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(

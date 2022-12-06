@@ -92,6 +92,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
           focusNode: _focusNode,
           children: <Widget>[
             ScrollableListView(
+              primary: true,
               children: <Widget>[
                 FormCard(children: <Widget>[
                   BoolDropdownButton(
@@ -155,6 +156,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
               ],
             ),
             ScrollableListView(
+              primary: true,
               children: <Widget>[
                 FormCard(
                   isLast: true,
