@@ -261,6 +261,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
         tabController: _controller,
         children: <Widget>[
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -385,6 +386,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           AutofillGroup(
             child: ScrollableListView(
+              primary: true,
               children: <Widget>[
                 FormCard(
                   isLast: true,
@@ -442,6 +444,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ScrollableListView(
+              primary: true,
               children: <Widget>[
                 Builder(
                   builder: (context) {
@@ -496,6 +499,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
             ),
           ),
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

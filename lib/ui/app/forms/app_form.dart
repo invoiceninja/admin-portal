@@ -29,6 +29,7 @@ class AppForm extends StatelessWidget {
         key: formKey,
         child: child ??
             ScrollableListView(
+              primary: true,
               children: children,
             ),
       ),

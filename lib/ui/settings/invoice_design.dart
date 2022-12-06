@@ -153,6 +153,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         focusNode: _focusNode,
         children: <Widget>[
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),

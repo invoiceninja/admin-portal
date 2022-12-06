@@ -109,6 +109,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
         focusNode: _focusNode,
         children: [
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(
                 children: <Widget>[
@@ -364,6 +365,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
             ],
           ),
           ScrollableListView(
+            primary: true,
             children: [
               FormCard(children: [
                 SwitchListTile(

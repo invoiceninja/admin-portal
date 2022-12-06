@@ -308,6 +308,7 @@ class _UserDetailsState extends State<UserDetails>
         tabController: _controller,
         children: <Widget>[
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(children: <Widget>[
                 DecoratedFormField(
@@ -482,6 +483,7 @@ class _UserDetailsState extends State<UserDetails>
             ],
           ),
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               NotificationSettings(
                 user: user,

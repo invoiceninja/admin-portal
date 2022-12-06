@@ -343,6 +343,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         focusNode: _focusNode,
         children: <Widget>[
           ScrollableListView(
+            primary: true,
             children: <Widget>[
               FormCard(children: <Widget>[
                 AppDropdownButton<EmailTemplate>(

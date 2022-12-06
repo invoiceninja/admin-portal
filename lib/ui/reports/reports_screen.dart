@@ -436,6 +436,7 @@ class ReportsScreen extends StatelessWidget {
                 ),
               )
             : ScrollableListView(
+                primary: true,
                 key: ValueKey(
                     '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
                 children: <Widget>[

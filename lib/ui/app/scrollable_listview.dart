@@ -69,6 +69,7 @@ class ScrollableListViewBuilder extends StatefulWidget {
     this.separatorBuilder,
     this.scrollController,
     this.padding,
+    this.primary = false,
   }) : super(key: key);
 
   final IndexedWidgetBuilder itemBuilder;
@@ -76,6 +77,7 @@ class ScrollableListViewBuilder extends StatefulWidget {
   final int itemCount;
   final ScrollController scrollController;
   final EdgeInsetsGeometry padding;
+  final bool primary;
 
   @override
   _ScrollableListViewBuilderState createState() =>
@@ -101,18 +103,24 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
   Widget build(BuildContext context) {
     return widget.separatorBuilder != null
         ? ListView.separated(
+            primary: widget.primary,
             separatorBuilder: widget.separatorBuilder,
             padding: widget.padding,
             itemBuilder: widget.itemBuilder,
             itemCount: widget.itemCount,
-            controller: widget.scrollController ?? _scrollController,
+            controller: widget.primary
+                ? null
+                : widget.scrollController ?? _scrollController,
             shrinkWrap: true,
           )
         : ListView.builder(
+            primary: widget.primary,
             padding: widget.padding,
             itemBuilder: widget.itemBuilder,
             itemCount: widget.itemCount,
-            controller: widget.scrollController ?? _scrollController,
+            controller: widget.primary
+                ? null
+                : widget.scrollController ?? _scrollController,
             shrinkWrap: true,
           );
   }
