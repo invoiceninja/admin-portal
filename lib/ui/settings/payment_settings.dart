@@ -214,7 +214,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                     settings.rebuild(
                         (b) => b..clientOnlinePaymentNotification = value)),
                 label: localization.onlinePaymentEmail,
-                helpLabel: localization.emailReceipt,
+                helpLabel: localization.onlinePaymentEmailHelp,
                 iconData: Icons.email,
               ),
               BoolDropdownButton(
@@ -223,7 +223,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                     settings.rebuild(
                         (b) => b..clientManualPaymentNotification = value)),
                 label: localization.manualPaymentEmail,
-                helpLabel: localization.emailReceipt,
+                helpLabel: localization.manualPaymentEmailHelp,
                 iconData: Icons.email,
               ),
               BoolDropdownButton(
@@ -232,7 +232,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                     settings.rebuild(
                         (b) => b..clientMarkPaidPaymentNotification = value)),
                 label: localization.markPaidPaymentEmail,
-                helpLabel: localization.emailReceipt,
+                helpLabel: localization.markPaidPaymentEmailHelp,
                 iconData: Icons.email,
               ),
             ],
