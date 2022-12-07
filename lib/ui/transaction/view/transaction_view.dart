@@ -360,7 +360,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 selectedIndex: _matchExisting ? 1 : 0,
                 tabLabels: [
                   localization.createPayment,
-                  localization.matchPayment,
+                  localization.linkPayment,
                 ],
               ),
             ),
@@ -596,7 +596,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
           ),
           child: _matchExisting
               ? AppButton(
-                  label: localization.linkToPayment,
+                  label: localization.linkPayment,
                   onPressed:
                       _selectedPayment == null || viewModel.state.isSaving
                           ? null
@@ -610,7 +610,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   iconData: Icons.link,
                 )
               : AppButton(
-                  label: localization.convertToPayment,
+                  label: localization.createPayment,
                   onPressed:
                       _selectedInvoices.isEmpty || viewModel.state.isSaving
                           ? null
@@ -623,7 +623,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                                     .toList(),
                               );
                             },
-                  iconData: Icons.add_circle_outline,
+                  iconData: Icons.add,
                 ),
         )
       ],
@@ -880,7 +880,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 selectedIndex: _matchExisting ? 1 : 0,
                 tabLabels: [
                   localization.createExpense,
-                  localization.matchExpense,
+                  localization.linkExpense,
                 ],
               ),
             ),
@@ -1081,7 +1081,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               UpdateCurrentRoute(TransactionScreen.route));
                         });
                       },
-                      icon: Icon(Icons.add_circle_outline),
+                      icon: Icon(Icons.add),
                     ),
                     SizedBox(width: 8),
                   ],
@@ -1171,7 +1171,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                                     TransactionScreen.route));
                               });
                             },
-                            icon: Icon(Icons.add_circle_outline),
+                            icon: Icon(Icons.add),
                           ),
                           SizedBox(width: 8),
                         ],
@@ -1234,7 +1234,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
           child: _matchExisting
               ? AppButton(
-                  label: localization.linkToExpense,
+                  label: localization.linkExpense,
                   onPressed:
                       _selectedExpense == null || viewModel.state.isSaving
                           ? null
@@ -1248,7 +1248,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   iconData: Icons.link,
                 )
               : AppButton(
-                  label: localization.convertToExpense,
+                  label: localization.createExpense,
                   onPressed: viewModel.state.isSaving
                       ? null
                       : () {
@@ -1259,7 +1259,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             _selectedCategory?.id ?? '',
                           );
                         },
-                  iconData: Icons.add_circle_outline,
+                  iconData: Icons.add,
                 ),
         )
       ],
