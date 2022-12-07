@@ -76,6 +76,8 @@ abstract class CompanyEntity extends Object
       defaultTaskIsDateBased: false,
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
+      matomoUrl: '',
+      matomoId: '',
       clientCanRegister: true,
       autoStartTasks: false,
       invoiceTaskTimelog: true,
@@ -380,6 +382,12 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'google_analytics_key')
   String get googleAnalyticsKey;
+
+  @BuiltValueField(wireName: 'matomo_url')
+  String get matomoUrl;
+
+  @BuiltValueField(wireName: 'matomo_id')
+  String get matomoId;
 
   @BuiltValueField(wireName: 'mark_expenses_invoiceable')
   bool get markExpensesInvoiceable;
@@ -696,6 +704,8 @@ abstract class CompanyEntity extends Object
     ..numberOfExpenseTaxRates = 0
     ..invoiceTaskProject = false
     ..invoiceTaskLock = false
+    ..matomoUrl = ''
+    ..matomoId = ''
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
