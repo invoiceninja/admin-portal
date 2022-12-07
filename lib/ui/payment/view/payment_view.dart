@@ -160,10 +160,6 @@ class _PaymentViewState extends State<PaymentView> {
                         EntityListTile(
                           isFilter: widget.isFilter,
                           entity: transaction,
-                          subtitle: formatNumber(transaction.amount, context,
-                                  currencyId: transaction.currencyId) +
-                              ' • ' +
-                              formatDate(transaction.date, context),
                         ),
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty
