@@ -43,6 +43,7 @@ class _PaymentViewState extends State<PaymentView> {
     final state = StoreProvider.of<AppState>(context).state;
     final client = state.clientState.map[payment.clientId] ??
         ClientEntity(id: payment.clientId);
+    final transaction = state.transactionState.get(payment.transactionId);
     final localization = AppLocalization.of(context);
 
     final companyGateway =
@@ -158,19 +159,11 @@ class _PaymentViewState extends State<PaymentView> {
                       if (payment.transactionId.isNotEmpty)
                         EntityListTile(
                           isFilter: widget.isFilter,
-                          entity:
-                              state.transactionState.get(payment.transactionId),
-                          subtitle: formatNumber(
-                                  state.transactionState
-                                      .get(payment.transactionId)
-                                      .amount,
-                                  context) +
+                          entity: transaction,
+                          subtitle: formatNumber(transaction.amount, context,
+                                  currencyId: transaction.currencyId) +
                               ' • ' +
-                              formatDate(
-                                  state.transactionState
-                                      .get(payment.transactionId)
-                                      .date,
-                                  context),
+                              formatDate(transaction.date, context),
                         ),
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty

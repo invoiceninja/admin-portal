@@ -196,7 +196,8 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(
           entity: invoice,
           isFilter: isFilter,
-          subtitle: formatNumber(invoice.amount, context) +
+          subtitle: formatNumber(invoice.amount, context,
+                  clientId: invoice.clientId) +
               ' • ' +
               formatDate(invoice.date, context),
         ),
@@ -204,7 +205,8 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(
           entity: transaction,
           isFilter: isFilter,
-          subtitle: formatNumber(transaction.amount, context) +
+          subtitle: formatNumber(transaction.amount, context,
+                  currencyId: transaction.currencyId) +
               ' • ' +
               formatDate(transaction.date, context),
         ),
