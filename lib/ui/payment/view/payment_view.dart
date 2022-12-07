@@ -160,6 +160,17 @@ class _PaymentViewState extends State<PaymentView> {
                           isFilter: widget.isFilter,
                           entity:
                               state.transactionState.get(payment.transactionId),
+                          subtitle: formatNumber(
+                                  state.transactionState
+                                      .get(payment.transactionId)
+                                      .amount,
+                                  context) +
+                              ' • ' +
+                              formatDate(
+                                  state.transactionState
+                                      .get(payment.transactionId)
+                                      .date,
+                                  context),
                         ),
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty
