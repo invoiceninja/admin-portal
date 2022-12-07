@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
@@ -82,6 +83,10 @@ class _TransactionViewState extends State<TransactionView> {
                   ListDivider(),
                 ],
                 if (transaction.isConverted) ...[
+                  if (transaction.description.isNotEmpty) ...[
+                    IconMessage(transaction.description),
+                    ListDivider(),
+                  ],
                   EntityListTile(
                     entity:
                         state.bankAccountState.get(transaction.bankAccountId),

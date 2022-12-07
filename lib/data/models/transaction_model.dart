@@ -364,7 +364,7 @@ abstract class TransactionEntity extends Object
   @override
   String get listDisplayName {
     if (description.isNotEmpty) {
-      return description;
+      return description.split('\n').first;
     } else {
       return AppLocalization.of(navigatorKey.currentContext).transaction;
     }
