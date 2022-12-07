@@ -543,7 +543,8 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.restore:
       final message = recurringInvoiceIds.length > 1
           ? localization.restoredRecurringInvoices
-              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization.restoredRecurringInvoice;
       store.dispatch(RestoreRecurringInvoicesRequest(
           snackBarCompleter<Null>(context, message), recurringInvoiceIds));
@@ -551,7 +552,8 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.archive:
       final message = recurringInvoiceIds.length > 1
           ? localization.archivedRecurringInvoices
-              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization.archivedRecurringInvoice;
       store.dispatch(ArchiveRecurringInvoicesRequest(
           snackBarCompleter<Null>(context, message), recurringInvoiceIds));
@@ -559,7 +561,8 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.delete:
       final message = recurringInvoiceIds.length > 1
           ? localization.deletedRecurringInvoices
-              .replaceFirst(':value', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization.deletedRecurringInvoice;
       store.dispatch(DeleteRecurringInvoicesRequest(
           snackBarCompleter<Null>(context, message), recurringInvoiceIds));

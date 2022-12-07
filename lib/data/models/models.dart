@@ -130,6 +130,10 @@ class EntityAction extends EnumClass {
 
   @override
   String toString() {
+    if (this == EntityAction.addToInvoice) {
+      return 'action_add_to_invoice';
+    }
+
     return toSnakeCase(super.toString());
   }
 

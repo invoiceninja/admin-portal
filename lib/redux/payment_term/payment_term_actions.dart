@@ -267,7 +267,8 @@ void handlePaymentTermAction(
     case EntityAction.restore:
       final message = paymentTermIds.length > 1
           ? localization.restoredPaymentTerms
-              .replaceFirst(':value', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization.restoredPaymentTerm;
       store.dispatch(RestorePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));
@@ -275,7 +276,8 @@ void handlePaymentTermAction(
     case EntityAction.archive:
       final message = paymentTermIds.length > 1
           ? localization.archivedPaymentTerms
-              .replaceFirst(':value', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization.archivedPaymentTerm;
       store.dispatch(ArchivePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));
@@ -283,7 +285,8 @@ void handlePaymentTermAction(
     case EntityAction.delete:
       final message = paymentTermIds.length > 1
           ? localization.deletedPaymentTerms
-              .replaceFirst(':value', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization.deletedPaymentTerm;
       store.dispatch(DeletePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));

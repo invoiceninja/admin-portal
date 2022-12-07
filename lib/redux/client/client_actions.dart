@@ -442,7 +442,8 @@ void handleClientAction(
     case EntityAction.restore:
       final message = clientIds.length > 1
           ? localization.restoredClients
-              .replaceFirst(':value', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization.restoredClient;
       store.dispatch(RestoreClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
@@ -450,7 +451,8 @@ void handleClientAction(
     case EntityAction.archive:
       final message = clientIds.length > 1
           ? localization.archivedClients
-              .replaceFirst(':value', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization.archivedClient;
       store.dispatch(ArchiveClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
@@ -458,7 +460,8 @@ void handleClientAction(
     case EntityAction.delete:
       final message = clientIds.length > 1
           ? localization.deletedClients
-              .replaceFirst(':value', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization.deletedClient;
       store.dispatch(DeleteClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));

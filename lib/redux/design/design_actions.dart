@@ -296,7 +296,8 @@ void handleDesignAction(
     case EntityAction.restore:
       final message = designIds.length > 1
           ? localization.restoredDesigns
-              .replaceFirst(':value', designIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', designIds.length.toString())
           : localization.restoredDesign;
       store.dispatch(RestoreDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));
@@ -304,7 +305,8 @@ void handleDesignAction(
     case EntityAction.archive:
       final message = designIds.length > 1
           ? localization.archivedDesigns
-              .replaceFirst(':value', designIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', designIds.length.toString())
           : localization.archivedDesign;
       store.dispatch(ArchiveDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));
@@ -312,7 +314,8 @@ void handleDesignAction(
     case EntityAction.delete:
       final message = designIds.length > 1
           ? localization.deletedDesigns
-              .replaceFirst(':value', designIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', designIds.length.toString())
           : localization.deletedDesign;
       store.dispatch(DeleteDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));

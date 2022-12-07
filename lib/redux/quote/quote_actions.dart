@@ -528,7 +528,8 @@ Future handleQuoteAction(
     case EntityAction.approve:
       final message = quoteIds.length > 1
           ? localization.approvedQuotes
-              .replaceFirst(':value', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization.approveQuote;
       store.dispatch(
           ApproveQuotes(snackBarCompleter<Null>(context, message), quoteIds));
@@ -649,7 +650,8 @@ Future handleQuoteAction(
     case EntityAction.restore:
       final message = quoteIds.length > 1
           ? localization.restoredQuotes
-              .replaceFirst(':value', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization.restoredQuote;
       store.dispatch(RestoreQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));
@@ -657,7 +659,8 @@ Future handleQuoteAction(
     case EntityAction.archive:
       final message = quoteIds.length > 1
           ? localization.archivedQuotes
-              .replaceFirst(':value', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization.archivedQuote;
       store.dispatch(ArchiveQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));
@@ -665,7 +668,8 @@ Future handleQuoteAction(
     case EntityAction.delete:
       final message = quoteIds.length > 1
           ? localization.deletedQuotes
-              .replaceFirst(':value', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization.deletedQuote;
       store.dispatch(DeleteQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));

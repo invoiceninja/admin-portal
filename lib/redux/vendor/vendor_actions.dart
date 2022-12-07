@@ -325,7 +325,8 @@ void handleVendorAction(
     case EntityAction.restore:
       final message = vendorIds.length > 1
           ? localization.restoredVendors
-              .replaceFirst(':value', vendorIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', vendorIds.length.toString())
           : localization.restoredVendor;
       store.dispatch(RestoreVendorRequest(
           snackBarCompleter<Null>(context, message), vendorIds));
@@ -333,7 +334,8 @@ void handleVendorAction(
     case EntityAction.archive:
       final message = vendorIds.length > 1
           ? localization.archivedVendors
-              .replaceFirst(':value', vendorIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', vendorIds.length.toString())
           : localization.archivedVendor;
       store.dispatch(ArchiveVendorRequest(
           snackBarCompleter<Null>(context, message), vendorIds));
@@ -341,7 +343,8 @@ void handleVendorAction(
     case EntityAction.delete:
       final message = vendorIds.length > 1
           ? localization.deletedVendors
-              .replaceFirst(':value', vendorIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', vendorIds.length.toString())
           : localization.deletedVendor;
       store.dispatch(DeleteVendorRequest(
           snackBarCompleter<Null>(context, message), vendorIds));
