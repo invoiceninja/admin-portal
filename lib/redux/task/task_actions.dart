@@ -367,7 +367,8 @@ void handleTaskAction(
     case EntityAction.resume:
       final message = taskIds.length > 1
           ? localization.startedTasks
-              .replaceFirst(':value', taskIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskIds.length.toString())
           : localization.startedTask;
       store.dispatch(StartTasksRequest(
           snackBarCompleter<Null>(context, message), taskIds));
@@ -375,7 +376,8 @@ void handleTaskAction(
     case EntityAction.stop:
       final message = taskIds.length > 1
           ? localization.stoppedTasks
-              .replaceFirst(':value', taskIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskIds.length.toString())
           : localization.stoppedTask;
       store.dispatch(
           StopTasksRequest(snackBarCompleter<Null>(context, message), taskIds));
@@ -472,7 +474,8 @@ void handleTaskAction(
     case EntityAction.restore:
       final message = taskIds.length > 1
           ? localization.restoredTasks
-              .replaceFirst(':value', taskIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskIds.length.toString())
           : localization.restoredTask;
       store.dispatch(RestoreTaskRequest(
           snackBarCompleter<Null>(context, message), taskIds));
@@ -480,7 +483,8 @@ void handleTaskAction(
     case EntityAction.archive:
       final message = taskIds.length > 1
           ? localization.archivedTasks
-              .replaceFirst(':value', taskIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskIds.length.toString())
           : localization.archivedTask;
       store.dispatch(ArchiveTaskRequest(
           snackBarCompleter<Null>(context, message), taskIds));
@@ -488,7 +492,8 @@ void handleTaskAction(
     case EntityAction.delete:
       final message = taskIds.length > 1
           ? localization.deletedTasks
-              .replaceFirst(':value', taskIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskIds.length.toString())
           : localization.deletedTask;
       store.dispatch(DeleteTaskRequest(
           snackBarCompleter<Null>(context, message), taskIds));

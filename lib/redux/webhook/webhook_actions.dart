@@ -270,7 +270,8 @@ void handleWebhookAction(
     case EntityAction.restore:
       final message = webhookIds.length > 1
           ? localization.restoredWebhooks
-              .replaceFirst(':value', webhookIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', webhookIds.length.toString())
           : localization.restoredWebhook;
       store.dispatch(RestoreWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));
@@ -278,7 +279,8 @@ void handleWebhookAction(
     case EntityAction.archive:
       final message = webhookIds.length > 1
           ? localization.archivedWebhooks
-              .replaceFirst(':value', webhookIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', webhookIds.length.toString())
           : localization.archivedWebhook;
       store.dispatch(ArchiveWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));
@@ -286,7 +288,8 @@ void handleWebhookAction(
     case EntityAction.delete:
       final message = webhookIds.length > 1
           ? localization.deletedWebhooks
-              .replaceFirst(':value', webhookIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', webhookIds.length.toString())
           : localization.deletedWebhook;
       store.dispatch(DeleteWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));

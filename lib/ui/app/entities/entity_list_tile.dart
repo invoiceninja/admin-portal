@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -97,6 +98,31 @@ class _EntityListTileState extends State<EntityListTile> {
             ),
           );
 
+    String defaultSubtitle = '';
+    final entity = widget.entity;
+
+    if (entity is InvoiceEntity) {
+      defaultSubtitle =
+          formatNumber(entity.amount, context, clientId: entity.clientId) +
+              ' • ' +
+              formatDate(entity.date, context);
+    } else if (entity is PaymentEntity) {
+      defaultSubtitle =
+          formatNumber(entity.amount, context, clientId: entity.clientId) +
+              ' • ' +
+              formatDate(entity.date, context);
+    } else if (entity is ExpenseEntity) {
+      defaultSubtitle =
+          formatNumber(entity.amount, context, clientId: entity.clientId) +
+              ' • ' +
+              formatDate(entity.date, context);
+    } else if (entity is TransactionEntity) {
+      defaultSubtitle =
+          formatNumber(entity.amount, context, currencyId: entity.currencyId) +
+              ' • ' +
+              formatDate(entity.date, context);
+    }
+
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),
@@ -121,18 +147,20 @@ class _EntityListTileState extends State<EntityListTile> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle:
-                  (widget.subtitle ?? '').isEmpty && widget.entity.isActive
-                      ? null
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if ((widget.subtitle ?? '').isNotEmpty)
-                              Text(widget.subtitle),
-                            if (!widget.entity.isActive)
-                              EntityStateLabel(widget.entity),
-                          ],
-                        ),
+              subtitle: ((widget.subtitle ?? '').isNotEmpty ||
+                      defaultSubtitle.isNotEmpty ||
+                      !entity.isActive)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if ((widget.subtitle ?? '').isNotEmpty)
+                          Text(widget.subtitle)
+                        else if (defaultSubtitle.isNotEmpty)
+                          Text(defaultSubtitle),
+                        if (!entity.isActive) EntityStateLabel(widget.entity),
+                      ],
+                    )
+                  : null,
               leading: leading,
               trailing: trailing,
               isThreeLine:

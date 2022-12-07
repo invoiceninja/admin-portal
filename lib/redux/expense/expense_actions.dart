@@ -329,7 +329,8 @@ void handleExpenseAction(
     case EntityAction.restore:
       final message = expenseIds.length > 1
           ? localization.restoredExpenses
-              .replaceFirst(':value', expenseIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', expenseIds.length.toString())
           : localization.restoredExpense;
       store.dispatch(RestoreExpenseRequest(
           snackBarCompleter<Null>(context, message), expenseIds));
@@ -337,7 +338,8 @@ void handleExpenseAction(
     case EntityAction.archive:
       final message = expenseIds.length > 1
           ? localization.archivedExpenses
-              .replaceFirst(':value', expenseIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', expenseIds.length.toString())
           : localization.archivedExpense;
       store.dispatch(ArchiveExpenseRequest(
           snackBarCompleter<Null>(context, message), expenseIds));
@@ -345,7 +347,8 @@ void handleExpenseAction(
     case EntityAction.delete:
       final message = expenseIds.length > 1
           ? localization.deletedExpenses
-              .replaceFirst(':value', expenseIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', expenseIds.length.toString())
           : localization.deletedExpense;
       store.dispatch(DeleteExpenseRequest(
           snackBarCompleter<Null>(context, message), expenseIds));

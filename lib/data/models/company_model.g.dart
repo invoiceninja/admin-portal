@@ -307,6 +307,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'google_analytics_key',
       serializers.serialize(object.googleAnalyticsKey,
           specifiedType: const FullType(String)),
+      'matomo_url',
+      serializers.serialize(object.matomoUrl,
+          specifiedType: const FullType(String)),
+      'matomo_id',
+      serializers.serialize(object.matomoId,
+          specifiedType: const FullType(String)),
       'mark_expenses_invoiceable',
       serializers.serialize(object.markExpensesInvoiceable,
           specifiedType: const FullType(bool)),
@@ -792,6 +798,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'google_analytics_key':
           result.googleAnalyticsKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'matomo_url':
+          result.matomoUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'matomo_id':
+          result.matomoId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'mark_expenses_invoiceable':
@@ -1717,6 +1731,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String googleAnalyticsKey;
   @override
+  final String matomoUrl;
+  @override
+  final String matomoId;
+  @override
   final bool markExpensesInvoiceable;
   @override
   final bool markExpensesPaid;
@@ -1846,6 +1864,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
+      this.matomoUrl,
+      this.matomoId,
       this.markExpensesInvoiceable,
       this.markExpensesPaid,
       this.invoiceExpenseDocuments,
@@ -2018,6 +2038,10 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(
         googleAnalyticsKey, 'CompanyEntity', 'googleAnalyticsKey');
     BuiltValueNullFieldError.checkNotNull(
+        matomoUrl, 'CompanyEntity', 'matomoUrl');
+    BuiltValueNullFieldError.checkNotNull(
+        matomoId, 'CompanyEntity', 'matomoId');
+    BuiltValueNullFieldError.checkNotNull(
         markExpensesInvoiceable, 'CompanyEntity', 'markExpensesInvoiceable');
     BuiltValueNullFieldError.checkNotNull(
         markExpensesPaid, 'CompanyEntity', 'markExpensesPaid');
@@ -2144,6 +2168,8 @@ class _$CompanyEntity extends CompanyEntity {
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
+        matomoUrl == other.matomoUrl &&
+        matomoId == other.matomoId &&
         markExpensesInvoiceable == other.markExpensesInvoiceable &&
         markExpensesPaid == other.markExpensesPaid &&
         invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
@@ -2190,7 +2216,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
                                                                                 invoiceTaskTimelog.hashCode),
                                                                             invoiceTaskDatelog.hashCode),
                                                                         invoiceTaskProject.hashCode),
@@ -2294,6 +2320,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
+          ..add('matomoUrl', matomoUrl)
+          ..add('matomoId', matomoId)
           ..add('markExpensesInvoiceable', markExpensesInvoiceable)
           ..add('markExpensesPaid', markExpensesPaid)
           ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
@@ -2737,6 +2765,14 @@ class CompanyEntityBuilder
   set googleAnalyticsKey(String googleAnalyticsKey) =>
       _$this._googleAnalyticsKey = googleAnalyticsKey;
 
+  String _matomoUrl;
+  String get matomoUrl => _$this._matomoUrl;
+  set matomoUrl(String matomoUrl) => _$this._matomoUrl = matomoUrl;
+
+  String _matomoId;
+  String get matomoId => _$this._matomoId;
+  set matomoId(String matomoId) => _$this._matomoId = matomoId;
+
   bool _markExpensesInvoiceable;
   bool get markExpensesInvoiceable => _$this._markExpensesInvoiceable;
   set markExpensesInvoiceable(bool markExpensesInvoiceable) =>
@@ -2931,6 +2967,8 @@ class CompanyEntityBuilder
       _customFields = $v.customFields.toBuilder();
       _slackWebhookUrl = $v.slackWebhookUrl;
       _googleAnalyticsKey = $v.googleAnalyticsKey;
+      _matomoUrl = $v.matomoUrl;
+      _matomoId = $v.matomoId;
       _markExpensesInvoiceable = $v.markExpensesInvoiceable;
       _markExpensesPaid = $v.markExpensesPaid;
       _invoiceExpenseDocuments = $v.invoiceExpenseDocuments;
@@ -3069,6 +3107,8 @@ class CompanyEntityBuilder
               customFields: customFields.build(),
               slackWebhookUrl: BuiltValueNullFieldError.checkNotNull(slackWebhookUrl, 'CompanyEntity', 'slackWebhookUrl'),
               googleAnalyticsKey: BuiltValueNullFieldError.checkNotNull(googleAnalyticsKey, 'CompanyEntity', 'googleAnalyticsKey'),
+              matomoUrl: BuiltValueNullFieldError.checkNotNull(matomoUrl, 'CompanyEntity', 'matomoUrl'),
+              matomoId: BuiltValueNullFieldError.checkNotNull(matomoId, 'CompanyEntity', 'matomoId'),
               markExpensesInvoiceable: BuiltValueNullFieldError.checkNotNull(markExpensesInvoiceable, 'CompanyEntity', 'markExpensesInvoiceable'),
               markExpensesPaid: BuiltValueNullFieldError.checkNotNull(markExpensesPaid, 'CompanyEntity', 'markExpensesPaid'),
               invoiceExpenseDocuments: BuiltValueNullFieldError.checkNotNull(invoiceExpenseDocuments, 'CompanyEntity', 'invoiceExpenseDocuments'),

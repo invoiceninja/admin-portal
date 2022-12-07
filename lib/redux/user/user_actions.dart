@@ -423,7 +423,8 @@ void handleUserAction(
     case EntityAction.restore:
       final message = userIds.length > 1
           ? localization.restoredUsers
-              .replaceFirst(':value', userIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', userIds.length.toString())
           : localization.restoredUser;
       final dispatch = ([String password, String idToken]) =>
           store.dispatch(RestoreUserRequest(
@@ -441,7 +442,8 @@ void handleUserAction(
     case EntityAction.archive:
       final message = userIds.length > 1
           ? localization.archivedUsers
-              .replaceFirst(':value', userIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', userIds.length.toString())
           : localization.archivedUser;
       final dispatch = ([String password, String idToken]) =>
           store.dispatch(ArchiveUserRequest(
@@ -459,7 +461,8 @@ void handleUserAction(
     case EntityAction.delete:
       final message = userIds.length > 1
           ? localization.deletedUsers
-              .replaceFirst(':value', userIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', userIds.length.toString())
           : localization.deletedUser;
       final dispatch = ([
         String password,
@@ -488,7 +491,8 @@ void handleUserAction(
     case EntityAction.remove:
       final message = userIds.length > 1
           ? localization.removedUsers
-              .replaceFirst(':value', userIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', userIds.length.toString())
           : localization.removedUser;
       final dispatch = ([
         String password,

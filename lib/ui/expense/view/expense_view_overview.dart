@@ -193,9 +193,15 @@ class ExpenseOverview extends StatelessWidget {
         EntityListTile(entity: project, isFilter: isFilter),
         EntityListTile(entity: category, isFilter: isFilter),
         EntityListTile(entity: user, isFilter: isFilter),
-        EntityListTile(entity: invoice, isFilter: isFilter),
+        EntityListTile(
+          entity: invoice,
+          isFilter: isFilter,
+        ),
         EntityListTile(entity: purchaseOrder, isFilter: isFilter),
-        EntityListTile(entity: transaction, isFilter: isFilter),
+        EntityListTile(
+          entity: transaction,
+          isFilter: isFilter,
+        ),
         if ((expense.recurringId ?? '').isNotEmpty)
           EntityListTile(entity: recurringExpense, isFilter: isFilter),
         if (expense.isRecurring)

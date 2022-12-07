@@ -56,6 +56,8 @@ class _AccountManagementState extends State<AccountManagement>
 
   final _debouncer = Debouncer();
   final _trackingIdController = TextEditingController();
+  final _matomoUrlController = TextEditingController();
+  final _matomoIdController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -79,14 +81,19 @@ class _AccountManagementState extends State<AccountManagement>
   void didChangeDependencies() {
     _controllers = [
       _trackingIdController,
+      _matomoIdController,
+      _matomoUrlController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final viewModel = widget.viewModel;
+    final company = viewModel.company;
 
-    _trackingIdController.text = viewModel.company.googleAnalyticsKey;
+    _trackingIdController.text = company.googleAnalyticsKey;
+    _matomoIdController.text = company.matomoId;
+    _matomoUrlController.text = company.matomoUrl;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -95,8 +102,10 @@ class _AccountManagementState extends State<AccountManagement>
   }
 
   void _onChanged() {
-    final company = widget.viewModel.company.rebuild(
-        (b) => b..googleAnalyticsKey = _trackingIdController.text.trim());
+    final company = widget.viewModel.company.rebuild((b) => b
+      ..googleAnalyticsKey = _trackingIdController.text.trim()
+      ..matomoId = _matomoIdController.text.trim()
+      ..matomoUrl = _matomoUrlController.text.trim());
     if (company != widget.viewModel.company) {
       _debouncer.run(() {
         widget.viewModel.onCompanyChanged(company);
@@ -223,7 +232,22 @@ class _AccountManagementState extends State<AccountManagement>
                   ),
                 ),
               ],
-            )
+            ),
+            FormCard(
+              isLast: true,
+              children: [
+                DecoratedFormField(
+                  label: localization.matomoUrl,
+                  controller: _matomoUrlController,
+                  keyboardType: TextInputType.text,
+                ),
+                DecoratedFormField(
+                  label: localization.matomoId,
+                  controller: _matomoIdController,
+                  keyboardType: TextInputType.text,
+                ),
+              ],
+            ),
           ]),
           ScrollableListView(
             primary: true,

@@ -285,7 +285,8 @@ void handleTaskStatusAction(
     case EntityAction.restore:
       final message = taskStatusIds.length > 1
           ? localization.restoredTaskStatuses
-              .replaceFirst(':value', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization.restoredTaskStatus;
       store.dispatch(RestoreTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));
@@ -293,7 +294,8 @@ void handleTaskStatusAction(
     case EntityAction.archive:
       final message = taskStatusIds.length > 1
           ? localization.archivedTaskStatuses
-              .replaceFirst(':value', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization.archivedTaskStatus;
       store.dispatch(ArchiveTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));
@@ -301,7 +303,8 @@ void handleTaskStatusAction(
     case EntityAction.delete:
       final message = taskStatusIds.length > 1
           ? localization.deletedTaskStatuses
-              .replaceFirst(':value', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization.deletedTaskStatus;
       store.dispatch(DeleteTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));

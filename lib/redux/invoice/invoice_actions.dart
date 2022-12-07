@@ -709,7 +709,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.restore:
       final message = invoiceIds.length > 1
           ? localization.restoredInvoices
-              .replaceFirst(':value', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization.restoredInvoice;
       store.dispatch(RestoreInvoicesRequest(
           snackBarCompleter<Null>(context, message), invoiceIds));
@@ -717,7 +718,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.archive:
       final message = invoiceIds.length > 1
           ? localization.archivedInvoices
-              .replaceFirst(':value', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization.archivedInvoice;
       store.dispatch(ArchiveInvoicesRequest(
           snackBarCompleter<Null>(context, message), invoiceIds));
@@ -725,7 +727,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.delete:
       final message = invoiceIds.length > 1
           ? localization.deletedInvoices
-              .replaceFirst(':value', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization.deletedInvoice;
       store.dispatch(DeleteInvoicesRequest(
           snackBarCompleter<Null>(context, message), invoiceIds));
