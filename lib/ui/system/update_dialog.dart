@@ -186,9 +186,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
           }).catchError((dynamic error) {
             var errorStr = '$error';
 
-            if (errorStr
-                .toLowerCase()
-                .contains('unexpected end of json input')) {
+            if (errorStr.toLowerCase().contains('unexpected end of')) {
               errorStr +=
                   '\n\nIt may help to increase the server PHP memory limit';
             }
