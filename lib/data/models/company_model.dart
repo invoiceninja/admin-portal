@@ -118,6 +118,8 @@ abstract class CompanyEntity extends Object
       stockNotificationThreshold: 0,
       stockNotification: true,
       invoiceTaskLock: false,
+      convertPaymentCurrency: false,
+      convertExpenseCurrency: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -295,6 +297,12 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'invoice_task_lock')
   bool get invoiceTaskLock;
+
+  @BuiltValueField(wireName: 'convert_payment_currency')
+  bool get convertPaymentCurrency;
+
+  @BuiltValueField(wireName: 'convert_expense_currency')
+  bool get convertExpenseCurrency;
 
   BuiltList<GroupEntity> get groups;
 
@@ -706,6 +714,8 @@ abstract class CompanyEntity extends Object
     ..invoiceTaskLock = false
     ..matomoUrl = ''
     ..matomoId = ''
+    ..convertPaymentCurrency = false
+    ..convertExpenseCurrency = false
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
