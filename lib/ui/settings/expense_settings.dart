@@ -72,7 +72,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.convertCurrencyHelp),
+                title: Text(localization.convertCurrency),
                 value: company.convertExpenseCurrency ?? false,
                 subtitle: Text(localization.convertExpenseCurrencyHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
