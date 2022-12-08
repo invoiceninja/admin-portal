@@ -79,6 +79,11 @@ class _PaymentEditState extends State<PaymentEdit> {
 
     _showConvertCurrency =
         payment.exchangeRate != 1 && payment.exchangeRate != 0;
+    final state = widget.viewModel.state;
+    if (state.company.convertExpenseCurrency) {
+      _showConvertCurrency = true;
+    }
+
     _amountController.text = formatNumber(payment.amount, context,
         formatNumberType: FormatNumberType.inputMoney);
     _numberController.text = payment.number;

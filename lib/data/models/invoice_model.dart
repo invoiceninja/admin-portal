@@ -253,6 +253,10 @@ abstract class InvoiceEntity extends Object
   @memoized
   int get hashCode;
 
+  @nullable
+  @BuiltValueField(wireName: 'idempotency_key')
+  String get idempotencyKey;
+
   InvoiceEntity moveLineItem(int oldIndex, int newIndex) {
     final lineItem = lineItems[oldIndex];
     InvoiceEntity invoice = rebuild((b) => b..lineItems.removeAt(oldIndex));

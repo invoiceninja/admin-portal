@@ -171,7 +171,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
           ),
           SizedBox(height: 8),
           FormCard(children: [
-            if (!state.uiState.settingsUIState.isFiltered)
+            if (!state.uiState.settingsUIState.isFiltered) ...[
               BoolDropdownButton(
                 label: localization.enableApplyingPaymentsLater,
                 value: company.enableApplyingPayments,
@@ -179,6 +179,14 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableApplyingPayments = value)),
               ),
+              BoolDropdownButton(
+                label: localization.convertCurrency,
+                value: company.convertPaymentCurrency,
+                helpLabel: localization.convertPaymentCurrencyHelp,
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..convertPaymentCurrency = value)),
+              ),
+            ],
             BoolDropdownButton(
               label: localization.allowOverPayment,
               value: settings.clientPortalAllowOverPayment,

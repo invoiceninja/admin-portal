@@ -292,6 +292,13 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object value;
+    value = object.idempotencyKey;
+    if (value != null) {
+      result
+        ..add('idempotency_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.autoBill;
     if (value != null) {
       result
@@ -432,6 +439,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       iterator.moveNext();
       final Object value = iterator.current;
       switch (key) {
+        case 'idempotency_key':
+          result.idempotencyKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'amount':
           result.amount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
@@ -1407,6 +1418,8 @@ class InvoiceItemResponseBuilder
 
 class _$InvoiceEntity extends InvoiceEntity {
   @override
+  final String idempotencyKey;
+  @override
   final double amount;
   @override
   final double balance;
@@ -1559,7 +1572,8 @@ class _$InvoiceEntity extends InvoiceEntity {
       (new InvoiceEntityBuilder()..update(updates)).build();
 
   _$InvoiceEntity._(
-      {this.amount,
+      {this.idempotencyKey,
+      this.amount,
       this.balance,
       this.paidToDate,
       this.clientId,
@@ -1750,6 +1764,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is InvoiceEntity &&
+        idempotencyKey == other.idempotencyKey &&
         amount == other.amount &&
         balance == other.balance &&
         paidToDate == other.paidToDate &&
@@ -1845,7 +1860,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, idempotencyKey.hashCode), amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
                                                                                 invoiceId.hashCode),
                                                                             recurringId.hashCode),
                                                                         autoBillEnabled.hashCode),
@@ -1870,6 +1885,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceEntity')
+          ..add('idempotencyKey', idempotencyKey)
           ..add('amount', amount)
           ..add('balance', balance)
           ..add('paidToDate', paidToDate)
@@ -1951,6 +1967,11 @@ class _$InvoiceEntity extends InvoiceEntity {
 class InvoiceEntityBuilder
     implements Builder<InvoiceEntity, InvoiceEntityBuilder> {
   _$InvoiceEntity _$v;
+
+  String _idempotencyKey;
+  String get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String idempotencyKey) =>
+      _$this._idempotencyKey = idempotencyKey;
 
   double _amount;
   double get amount => _$this._amount;
@@ -2283,6 +2304,7 @@ class InvoiceEntityBuilder
   InvoiceEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _idempotencyKey = $v.idempotencyKey;
       _amount = $v.amount;
       _balance = $v.balance;
       _paidToDate = $v.paidToDate;
@@ -2379,6 +2401,7 @@ class InvoiceEntityBuilder
     try {
       _$result = _$v ??
           new _$InvoiceEntity._(
+              idempotencyKey: idempotencyKey,
               amount: BuiltValueNullFieldError.checkNotNull(
                   amount, 'InvoiceEntity', 'amount'),
               balance: BuiltValueNullFieldError.checkNotNull(
