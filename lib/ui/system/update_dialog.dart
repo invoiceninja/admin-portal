@@ -184,7 +184,16 @@ class _UpdateDialogState extends State<UpdateDialog> {
               }
             }
           }).catchError((dynamic error) {
-            showErrorDialog(context: context, message: '$error');
+            var errorStr = '$error';
+
+            if (errorStr
+                .toLowerCase()
+                .contains('unexpected end of json input')) {
+              errorStr +=
+                  '\n\nIt may help to increase the server PHP memory limit';
+            }
+
+            showErrorDialog(context: context, message: errorStr);
             setState(() => updateState = UpdateState.initial);
           });
         });
