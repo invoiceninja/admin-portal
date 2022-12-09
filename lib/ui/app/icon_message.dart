@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 
 class IconMessage extends StatelessWidget {
   const IconMessage(
@@ -29,11 +30,14 @@ class IconMessage extends StatelessWidget {
             ),
             SizedBox(width: 16),
             Expanded(
-              child: Text(
-                text,
-                maxLines: null,
-                style: TextStyle(
-                  color: Colors.white,
+              child: CopyToClipboard(
+                value: text,
+                child: Text(
+                  text,
+                  maxLines: null,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
