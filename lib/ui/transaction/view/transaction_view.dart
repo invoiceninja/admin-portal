@@ -1123,110 +1123,102 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   ),
                 ),
                 ListDivider(),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 22, top: 12, right: 10, bottom: 12),
-                              child: SearchText(
-                                  filterController: _categoryFilterController,
-                                  focusNode: _categoryFocusNode,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      updateCategoryList();
-                                    });
-                                  },
-                                  onCleared: () {
-                                    setState(() {
-                                      _categoryFilterController.text = '';
-                                      updateCategoryList();
-                                    });
-                                  },
-                                  placeholder: localization.searchCategories
-                                      .replaceFirst(':count ', '')),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              final completer =
-                                  snackBarCompleter<ExpenseCategoryEntity>(
-                                      context,
-                                      localization.createdExpenseCategory);
-                              createEntity(
-                                  context: context,
-                                  entity: ExpenseCategoryEntity(
-                                      state: viewModel.state),
-                                  force: true,
-                                  completer: completer,
-                                  cancelCompleter: Completer<Null>()
-                                    ..future.then((_) {
-                                      store.dispatch(UpdateCurrentRoute(
-                                          TransactionScreen.route));
-                                    }));
-                              completer.future
-                                  .then((SelectableEntity category) {
-                                store.dispatch(SaveTransactionSuccess(
-                                    transaction.rebuild((b) =>
-                                        b..pendingCategoryId = category.id)));
-                                store.dispatch(UpdateCurrentRoute(
-                                    TransactionScreen.route));
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 22, top: 12, right: 10, bottom: 12),
+                        child: SearchText(
+                            filterController: _categoryFilterController,
+                            focusNode: _categoryFocusNode,
+                            onChanged: (value) {
+                              setState(() {
+                                updateCategoryList();
                               });
                             },
-                            icon: Icon(Icons.add),
-                          ),
-                          SizedBox(width: 8),
-                        ],
-                      ),
-                      ListDivider(),
-                      Expanded(
-                        child: Scrollbar(
-                          thumbVisibility: true,
-                          controller: _categoryScrollController,
-                          child: ListView.separated(
-                            controller: _categoryScrollController,
-                            separatorBuilder: (context, index) => ListDivider(),
-                            itemCount: _categories.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final category = _categories[index];
-                              return ExpenseCategoryListItem(
-                                expenseCategory: category,
-                                showCheck: true,
-                                isChecked: _selectedCategory?.id == category.id,
-                                onTap: () => setState(() {
-                                  if (_selectedCategory?.id == category.id) {
-                                    _selectedCategory = null;
-                                  } else {
-                                    _selectedCategory = category;
-                                  }
-                                  updateCategoryList();
-                                  store.dispatch(SaveTransactionSuccess(
-                                      transaction.rebuild((b) => b
-                                        ..pendingCategoryId =
-                                            _selectedCategory?.id)));
-                                }),
-                              );
+                            onCleared: () {
+                              setState(() {
+                                _categoryFilterController.text = '';
+                                updateCategoryList();
+                              });
                             },
-                          ),
-                        ),
+                            placeholder: localization.searchCategories
+                                .replaceFirst(':count ', '')),
                       ),
-                      if (transaction.category.isNotEmpty &&
-                          _selectedCategory == null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                          child: Text(
-                            '${localization.defaultCategory}: ${transaction.category}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                    ],
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        final completer =
+                            snackBarCompleter<ExpenseCategoryEntity>(
+                                context, localization.createdExpenseCategory);
+                        createEntity(
+                            context: context,
+                            entity:
+                                ExpenseCategoryEntity(state: viewModel.state),
+                            force: true,
+                            completer: completer,
+                            cancelCompleter: Completer<Null>()
+                              ..future.then((_) {
+                                store.dispatch(UpdateCurrentRoute(
+                                    TransactionScreen.route));
+                              }));
+                        completer.future.then((SelectableEntity category) {
+                          store.dispatch(SaveTransactionSuccess(
+                              transaction.rebuild(
+                                  (b) => b..pendingCategoryId = category.id)));
+                          store.dispatch(
+                              UpdateCurrentRoute(TransactionScreen.route));
+                        });
+                      },
+                      icon: Icon(Icons.add),
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+                ListDivider(),
+                Expanded(
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: _categoryScrollController,
+                    child: ListView.separated(
+                      controller: _categoryScrollController,
+                      separatorBuilder: (context, index) => ListDivider(),
+                      itemCount: _categories.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final category = _categories[index];
+                        return ExpenseCategoryListItem(
+                          expenseCategory: category,
+                          showCheck: true,
+                          isChecked: _selectedCategory?.id == category.id,
+                          onTap: () => setState(() {
+                            if (_selectedCategory?.id == category.id) {
+                              _selectedCategory = null;
+                            } else {
+                              _selectedCategory = category;
+                            }
+                            updateCategoryList();
+                            store.dispatch(SaveTransactionSuccess(
+                                transaction.rebuild((b) => b
+                                  ..pendingCategoryId =
+                                      _selectedCategory?.id)));
+                          }),
+                        );
+                      },
+                    ),
                   ),
                 ),
+                if (transaction.category.isNotEmpty &&
+                    _selectedCategory == null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    child: Text(
+                      '${localization.defaultCategory}: ${transaction.category}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
               ],
             ),
           ),
