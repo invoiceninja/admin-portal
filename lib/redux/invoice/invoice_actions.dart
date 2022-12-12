@@ -584,13 +584,18 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           invoiceIds));
       break;
     case EntityAction.autoBill:
-      store.dispatch(AutoBillInvoicesRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization.autoBilledInvoice
-                  : localization.autoBilledInvoices),
-          invoiceIds));
+      confirmCallback(
+          context: context,
+          message: localization.autoBill,
+          callback: (_) {
+            store.dispatch(AutoBillInvoicesRequest(
+                snackBarCompleter<Null>(
+                    context,
+                    invoiceIds.length == 1
+                        ? localization.autoBilledInvoice
+                        : localization.autoBilledInvoices),
+                invoiceIds));
+          });
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
