@@ -47,8 +47,6 @@ abstract class DateFormatItemResponse
 
 class DateFormatFields {
   static const String format = 'format';
-  static const String pickerFormat = 'picker_format';
-  static const String formatMoment = 'format_moment';
 }
 
 abstract class DateFormatEntity extends Object
