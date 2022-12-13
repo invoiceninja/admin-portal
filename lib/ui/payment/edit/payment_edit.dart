@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -190,22 +191,6 @@ class _PaymentEditState extends State<PaymentEdit> {
       creditTotal += credit.amount;
     });
 
-    String amountPlaceholder = localization.amount;
-
-    if (payment.invoices.length > 1) {
-      amountPlaceholder += ' • ' +
-          localization.total +
-          ' ' +
-          formatNumber(paymentTotal, context, clientId: payment.clientId);
-    }
-
-    if (payment.credits.length > 1) {
-      amountPlaceholder += ' • ' +
-          localization.credit +
-          ' ' +
-          formatNumber(creditTotal, context, clientId: payment.clientId);
-    }
-
     double limit;
     if (payment.amount != 0) {
       limit = payment.amount - payment.applied - paymentTotal;
@@ -249,7 +234,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     autocorrect: false,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),
-                    label: amountPlaceholder,
+                    label: localization.amount,
                     onSavePressed: _onSavePressed,
                   ),
               ] else
@@ -496,6 +481,9 @@ class _PaymentEditState extends State<PaymentEdit> {
         onSavePressed: _onSavePressed,
         body: ScrollableListView(
           children: [body],
+        ),
+        bottomNavigationBar: PaymentEditFooter(
+          payment: payment,
         ),
       );
     }
