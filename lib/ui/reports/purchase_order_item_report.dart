@@ -212,7 +212,7 @@ ReportResult lineItemReport(
               value: value,
               currencyId: column == PurchaseOrderItemReportFields.quantity
                   ? null
-                  : userCompany.company.currencyId));
+                  : vendor.currencyId));
         } else {
           row.add(invoice.getReportString(value: value));
         }

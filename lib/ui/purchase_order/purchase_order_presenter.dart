@@ -85,7 +85,8 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(purchaseOrder.amount, context)),
+          child: Text(formatNumber(purchaseOrder.amount, context,
+              vendorId: purchaseOrder.vendorId)),
         );
       case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
@@ -104,7 +105,8 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.discount:
         return Text(purchaseOrder.isAmountDiscount
             ? formatNumber(purchaseOrder.discount, context,
-                formatNumberType: FormatNumberType.money)
+                formatNumberType: FormatNumberType.money,
+                vendorId: purchaseOrder.vendorId)
             : formatNumber(purchaseOrder.discount, context,
                 formatNumberType: FormatNumberType.percent));
       case PurchaseOrderFields.poNumber:
@@ -113,7 +115,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return Text('${purchaseOrder.documents.length}');
       case PurchaseOrderFields.taxAmount:
         return Text(formatNumber(purchaseOrder.taxAmount, context,
-            clientId: purchaseOrder.clientId));
+            vendorId: purchaseOrder.vendorId));
       case PurchaseOrderFields.exchangeRate:
         return Text(formatNumber(purchaseOrder.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
@@ -150,7 +152,8 @@ class PurchaseOrderPresenter extends EntityPresenter {
           onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case PurchaseOrderFields.partial:
-        return Text(formatNumber(purchaseOrder.partial, context));
+        return Text(formatNumber(purchaseOrder.partial, context,
+            vendorId: purchaseOrder.vendorId));
       case PurchaseOrderFields.partialDueDate:
         return Text(formatDate(purchaseOrder.partialDueDate, context));
       case PurchaseOrderFields.expense:

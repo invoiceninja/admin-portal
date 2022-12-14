@@ -961,13 +961,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   key: ValueKey(
                                       '__invoice_subtotal_${invoice.calculateSubtotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
                                   initialValue: formatNumber(
-                                      invoice.calculateSubtotal(
-                                          precision: precisionForInvoice(
-                                              state, invoice)),
-                                      context,
-                                      clientId: invoice.isPurchaseOrder
-                                          ? null
-                                          : invoice.clientId),
+                                    invoice.calculateSubtotal(
+                                        precision: precisionForInvoice(
+                                            state, invoice)),
+                                    context,
+                                    clientId: invoice.isPurchaseOrder
+                                        ? null
+                                        : invoice.clientId,
+                                    vendorId: invoice.isPurchaseOrder
+                                        ? invoice.vendorId
+                                        : null,
+                                  ),
                                 ),
                                 if (invoice.isOld &&
                                     (invoice.isInvoice || invoice.isQuote))
@@ -980,10 +984,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     key: ValueKey(
                                         '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
                                     initialValue: formatNumber(
-                                        invoice.paidToDate, context,
-                                        clientId: invoice.isPurchaseOrder
-                                            ? null
-                                            : invoice.clientId),
+                                      invoice.paidToDate,
+                                      context,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ),
                                   ),
                                 if (company.hasCustomSurcharge)
                                   CustomSurcharges(
@@ -1058,14 +1067,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   key: ValueKey(
                                       '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
                                   initialValue: formatNumber(
-                                      invoice.calculateTotal(
-                                              precision: precisionForInvoice(
-                                                  state, invoice)) -
-                                          invoice.paidToDate,
-                                      context,
-                                      clientId: invoice.isPurchaseOrder
-                                          ? null
-                                          : invoice.clientId),
+                                    invoice.calculateTotal(
+                                            precision: precisionForInvoice(
+                                                state, invoice)) -
+                                        invoice.paidToDate,
+                                    context,
+                                    clientId: invoice.isPurchaseOrder
+                                        ? null
+                                        : invoice.clientId,
+                                    vendorId: invoice.isPurchaseOrder
+                                        ? invoice.vendorId
+                                        : null,
+                                  ),
                                 ),
                                 if (invoice.partial != 0)
                                   TextFormField(
@@ -1077,10 +1090,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     key: ValueKey(
                                         '__invoice_total_${invoice.partial}_${invoice.clientId}__'),
                                     initialValue: formatNumber(
-                                        invoice.partial, context,
-                                        clientId: invoice.isPurchaseOrder
-                                            ? null
-                                            : invoice.clientId),
+                                      invoice.partial,
+                                      context,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ),
                                   ),
                               ]),
                         ],

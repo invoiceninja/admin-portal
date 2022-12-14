@@ -56,6 +56,8 @@ class AuthRepository {
     @required String accessToken,
     @required String referralCode,
     @required String provider,
+    String firstName = '',
+    String lastName = '',
   }) async {
     final credentials = {
       'terms_of_service': true,
@@ -65,6 +67,8 @@ class AuthRepository {
       'access_token': accessToken,
       'provider': provider,
       'platform': getPlatformName(),
+      'first_name': firstName,
+      'last_name': lastName,
     };
 
     return sendRequest(

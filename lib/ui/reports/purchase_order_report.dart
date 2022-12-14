@@ -1,6 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -14,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/enums.dart';
 enum PurchaseOrderReportFields {
   id,
   amount,
-  //converted_amount,
+  converted_amount,
   vendor,
   vendor_number,
   //vendor_balance,
@@ -159,12 +160,10 @@ ReportResult purchaseOrderReport(
         case PurchaseOrderReportFields.amount:
           value = purchaseOrder.amount;
           break;
-        /*
         case PurchaseOrderReportFields.converted_amount:
           value =
               round(purchaseOrder.amount * 1 / purchaseOrder.exchangeRate, 2);
           break;
-          */
         case PurchaseOrderReportFields.number:
           value = purchaseOrder.number;
           break;
@@ -371,17 +370,15 @@ ReportResult purchaseOrderReport(
       if (value.runtimeType == bool) {
         row.add(purchaseOrder.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        /*
         String currencyId = vendor.currencyId;
         if ([
           PurchaseOrderReportFields.converted_amount,
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        */
         row.add(purchaseOrder.getReportDouble(
           value: value,
-          currencyId: userCompany.company.currencyId,
+          currencyId: currencyId,
           exchangeRate: purchaseOrder.exchangeRate,
         ));
       } else {

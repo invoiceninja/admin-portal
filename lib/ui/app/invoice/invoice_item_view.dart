@@ -28,9 +28,11 @@ class InvoiceItemListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String cost = formatNumber(invoiceItem.cost, context,
         clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+        vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
         roundToPrecision: false);
     final String qty = formatNumber(invoiceItem.quantity, context,
         clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+        vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
         formatNumberType: FormatNumberType.double);
     final localization = AppLocalization.of(context);
 
@@ -45,11 +47,16 @@ class InvoiceItemListTile extends StatelessWidget {
     if (invoiceItem.discount != 0) {
       subtitle += ' • ${localization.discount} ';
       if (invoice.isAmountDiscount) {
-        subtitle += formatNumber(invoiceItem.discount, context,
-            clientId: invoice.isPurchaseOrder ? null : invoice.clientId);
+        subtitle += formatNumber(
+          invoiceItem.discount,
+          context,
+          clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+        );
       } else {
         subtitle += formatNumber(invoiceItem.discount, context,
             clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+            vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
             formatNumberType: FormatNumberType.percent);
       }
     }
@@ -116,9 +123,11 @@ class InvoiceItemListTile extends StatelessWidget {
                 children: <Widget>[
                   Expanded(child: Text(invoiceItem.productKey)),
                   Text(formatNumber(
-                      invoiceItem.total(invoice, precision), context,
-                      clientId:
-                          invoice.isPurchaseOrder ? null : invoice.clientId)),
+                    invoiceItem.total(invoice, precision),
+                    context,
+                    clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+                    vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+                  )),
                 ],
               ),
               subtitle: Row(
