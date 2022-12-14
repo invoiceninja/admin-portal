@@ -332,6 +332,8 @@ class LoginVM {
             completer: completer,
             provider: UserEntity.OAUTH_PROVIDER_APPLE,
             idToken: credentials.identityToken,
+            firstName: credentials.givenName,
+            lastName: credentials.familyName,
           ));
           completer.future
               .then((_) => _handleLogin(context: context, isSignUp: true));

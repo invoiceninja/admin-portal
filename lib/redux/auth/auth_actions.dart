@@ -136,6 +136,8 @@ class OAuthSignUpRequest implements StartLoading {
     @required this.provider,
     @required this.idToken,
     this.accessToken,
+    this.firstName,
+    this.lastName,
   });
 
   final Completer completer;
@@ -143,6 +145,8 @@ class OAuthSignUpRequest implements StartLoading {
   final String url;
   final String accessToken;
   final String provider;
+  final String firstName;
+  final String lastName;
 }
 
 class UserVerifiedPassword {}
