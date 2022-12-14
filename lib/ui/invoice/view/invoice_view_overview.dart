@@ -102,8 +102,12 @@ class InvoiceOverview extends StatelessWidget {
                 : invoice.isQuote
                     ? localization.quoteAmount
                     : localization.invoiceAmount,
-        value: formatNumber(invoice.amount, context,
-            clientId: invoice.isPurchaseOrder ? null : invoice.clientId),
+        value: formatNumber(
+          invoice.amount,
+          context,
+          clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+        ),
         secondLabel: invoice.isCredit
             ? localization.creditRemaining
             : (invoice.isQuote || invoice.isRecurringInvoice)
@@ -111,8 +115,12 @@ class InvoiceOverview extends StatelessWidget {
                 : localization.balanceDue,
         secondValue:
             [EntityType.invoice, EntityType.credit].contains(invoice.entityType)
-                ? formatNumber(invoice.balanceOrAmount, context,
-                    clientId: invoice.isPurchaseOrder ? null : invoice.clientId)
+                ? formatNumber(
+                    invoice.balanceOrAmount,
+                    context,
+                    clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+                    vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+                  )
                 : null,
       ),
       ListDivider(),
@@ -159,11 +167,13 @@ class InvoiceOverview extends StatelessWidget {
         InvoiceFields.nextSendDate: formatDate(invoice.nextSendDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
           zeroIsNull: true),
       InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
       InvoiceFields.poNumber: invoice.poNumber,
       InvoiceFields.discount: formatNumber(invoice.discount, context,
           clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
           zeroIsNull: true,
           formatNumberType: invoice.isAmountDiscount
               ? FormatNumberType.money
@@ -307,12 +317,20 @@ class InvoiceOverview extends StatelessWidget {
       paymentMap.entries.forEach((entry) {
         final payment = entry.value;
         final paymentable = entry.key;
-        String amount = formatNumber(paymentable.amount, context,
-            clientId: invoice.isPurchaseOrder ? null : client.id);
+        String amount = formatNumber(
+          paymentable.amount,
+          context,
+          clientId: invoice.isPurchaseOrder ? null : client.id,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+        );
         if (paymentable.amount != payment.amount) {
           amount += '/' +
-              formatNumber(payment.amount, context,
-                  clientId: invoice.isPurchaseOrder ? null : client.id);
+              formatNumber(
+                payment.amount,
+                context,
+                clientId: invoice.isPurchaseOrder ? null : client.id,
+                vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+              );
         }
 
         widgets.add(
@@ -329,12 +347,20 @@ class InvoiceOverview extends StatelessWidget {
       creditMap.entries.forEach((entry) {
         final credit = entry.value;
         final paymentable = entry.key;
-        String amount = formatNumber(paymentable.amount, context,
-            clientId: invoice.isPurchaseOrder ? null : client.id);
+        String amount = formatNumber(
+          paymentable.amount,
+          context,
+          clientId: invoice.isPurchaseOrder ? null : client.id,
+          vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+        );
         if (paymentable.amount != credit.amount) {
           amount += '/' +
-              formatNumber(credit.amount, context,
-                  clientId: invoice.isPurchaseOrder ? null : client.id);
+              formatNumber(
+                credit.amount,
+                context,
+                clientId: invoice.isPurchaseOrder ? null : client.id,
+                vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+              );
         }
 
         widgets.add(
@@ -392,9 +418,14 @@ class InvoiceOverview extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    formatNumber(amount, context,
-                        clientId:
-                            invoice.isPurchaseOrder ? null : invoice.clientId),
+                    formatNumber(
+                      amount,
+                      context,
+                      clientId:
+                          invoice.isPurchaseOrder ? null : invoice.clientId,
+                      vendorId:
+                          invoice.isPurchaseOrder ? invoice.vendorId : null,
+                    ),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),

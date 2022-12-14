@@ -442,34 +442,52 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               return Text(item.taxName3 ?? '');
                             } else if (column == COLUMN_UNIT_COST) {
                               return Text(
-                                formatNumber(item.cost, context,
-                                        formatNumberType:
-                                            FormatNumberType.inputMoney,
-                                        clientId: invoice.isPurchaseOrder
-                                            ? null
-                                            : invoice.clientId) ??
+                                formatNumber(
+                                      item.cost,
+                                      context,
+                                      formatNumberType:
+                                          FormatNumberType.inputMoney,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
                             } else if (column == COLUMN_QUANTITY) {
                               return Text(
-                                formatNumber(item.quantity, context,
-                                        formatNumberType:
-                                            FormatNumberType.inputAmount,
-                                        clientId: invoice.isPurchaseOrder
-                                            ? null
-                                            : invoice.clientId) ??
+                                formatNumber(
+                                      item.quantity,
+                                      context,
+                                      formatNumberType:
+                                          FormatNumberType.inputAmount,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
                             } else if (column == COLUMN_DISCOUNT) {
                               return Text(
-                                formatNumber(item.discount, context,
-                                        formatNumberType:
-                                            FormatNumberType.inputAmount,
-                                        clientId: invoice.isPurchaseOrder
-                                            ? null
-                                            : invoice.clientId) ??
+                                formatNumber(
+                                      item.discount,
+                                      context,
+                                      formatNumberType:
+                                          FormatNumberType.inputAmount,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ) ??
                                     '',
                                 textAlign: TextAlign.right,
                               );
@@ -485,10 +503,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           .toList(),
                       Expanded(
                         child: Text(
-                          formatNumber(item.total(invoice, precision), context,
-                                  clientId: invoice.isPurchaseOrder
-                                      ? null
-                                      : invoice.clientId) ??
+                          formatNumber(
+                                item.total(invoice, precision),
+                                context,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ) ??
                               '',
                           textAlign: TextAlign.right,
                         ),
@@ -971,11 +995,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_cost__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                  lineItems[index].cost, context,
-                                  formatNumberType: FormatNumberType.inputMoney,
-                                  clientId: invoice.isPurchaseOrder
-                                      ? null
-                                      : invoice.clientId),
+                                lineItems[index].cost,
+                                context,
+                                formatNumberType: FormatNumberType.inputMoney,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ),
                               onChanged: (value) => _onChanged(
                                 lineItems[index].rebuild(
                                     (b) => b..cost = parseDouble(value)),
@@ -1000,12 +1029,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_quantity__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                  lineItems[index].quantity, context,
-                                  formatNumberType:
-                                      FormatNumberType.inputAmount,
-                                  clientId: invoice.isPurchaseOrder
-                                      ? null
-                                      : invoice.clientId),
+                                lineItems[index].quantity,
+                                context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ),
                               onChanged: (value) => _onChanged(
                                 lineItems[index].rebuild(
                                     (b) => b..quantity = parseDouble(value)),
@@ -1030,12 +1063,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_discount__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                  lineItems[index].discount, context,
-                                  formatNumberType:
-                                      FormatNumberType.inputAmount,
-                                  clientId: invoice.isPurchaseOrder
-                                      ? null
-                                      : invoice.clientId),
+                                lineItems[index].discount,
+                                context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ),
                               onChanged: (value) => _onChanged(
                                   lineItems[index].rebuild(
                                       (b) => b..discount = parseDouble(value)),
@@ -1057,10 +1094,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         readOnly: true,
                         enabled: false,
                         initialValue: formatNumber(
-                            lineItems[index].total(invoice, precision), context,
-                            clientId: invoice.isPurchaseOrder
-                                ? null
-                                : invoice.clientId),
+                          lineItems[index].total(invoice, precision),
+                          context,
+                          clientId:
+                              invoice.isPurchaseOrder ? null : invoice.clientId,
+                          vendorId:
+                              invoice.isPurchaseOrder ? invoice.vendorId : null,
+                        ),
                         textAlign: TextAlign.right,
                       ),
                     ),

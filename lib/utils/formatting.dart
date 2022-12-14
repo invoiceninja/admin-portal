@@ -81,6 +81,7 @@ String formatNumber(
   double value,
   BuildContext context, {
   String clientId,
+  String vendorId,
   String currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool showCurrencyCode,
@@ -103,12 +104,15 @@ String formatNumber(
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
   final ClientEntity client = state.clientState.map[clientId];
+  final VendorEntity vendor = state.vendorState.map[vendorId];
   final GroupEntity group = state.groupState.map[client?.groupId];
 
   String countryId;
 
   if ((client?.countryId ?? '').isNotEmpty && client.hasNameSet) {
     countryId = client.countryId;
+  } else if ((vendor?.countryId ?? '').isNotEmpty && vendor.hasNameSet) {
+    countryId = vendor.countryId;
   } else {
     countryId = company.settings.countryId;
   }
@@ -119,6 +123,8 @@ String formatNumber(
     // do nothing
   } else if (client != null && client.hasCurrency) {
     currencyId = client.currencyId;
+  } else if (vendor != null && vendor.hasCurrency) {
+    currencyId = vendor.currencyId;
   } else if (group != null && group.hasCurrency) {
     currencyId = group.currencyId;
   } else {
