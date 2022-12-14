@@ -77,7 +77,6 @@ class FieldGrid extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 mainAxisSpacing: 12,
                 shrinkWrap: true,
-                primary: true,
                 crossAxisCount: 2,
                 children: fieldWidgets,
                 childAspectRatio: ((constraints.maxWidth / 2) - 8) / 54,
