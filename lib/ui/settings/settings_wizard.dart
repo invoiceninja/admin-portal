@@ -299,6 +299,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
       ],
     );
 
+    var showNameFields = true;
+    if (state.companies.length > 1) {
+      showNameFields = false;
+    }
+    if (state.user.isConnectedToApple && state.user.fullName.isEmpty) {
+      showNameFields = false;
+    }
+
     return AlertDialog(
       content: AppForm(
         focusNode: _focusNode,
@@ -324,7 +332,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                             ),
                             companyName,
                             if (state.isHosted) subdomain,
-                            if (state.companies.length == 1) ...[
+                            if (showNameFields) ...[
                               firstName,
                               lastName,
                             ],
@@ -362,7 +370,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                         state.isHosted ? subdomain : darkMode),
                               ],
                             ),
-                            if (state.companies.length == 1)
+                            if (showNameFields)
                               Row(
                                 children: [
                                   Expanded(child: firstName),
