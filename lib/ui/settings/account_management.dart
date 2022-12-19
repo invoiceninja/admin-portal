@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -621,18 +623,42 @@ class _AccountOverview extends StatelessWidget {
                           message: message,
                           typeToConfirm: localization.delete.toLowerCase(),
                           askForReason: true,
-                          callback: (String reason) {
-                            passwordCallback(
-                                alwaysRequire: true,
-                                context: context,
-                                callback: (password, idToken) {
-                                  viewModel.onCompanyDelete(
-                                    context,
-                                    password,
-                                    idToken,
-                                    reason,
-                                  );
-                                });
+                          callback: (String reason) async {
+                            if (state.user.isConnectedToApple &&
+                                !state.user.hasPassword) {
+                              final credentials =
+                                  await SignInWithApple.getAppleIDCredential(
+                                scopes: [
+                                  AppleIDAuthorizationScopes.email,
+                                  AppleIDAuthorizationScopes.fullName,
+                                ],
+                                webAuthenticationOptions:
+                                    WebAuthenticationOptions(
+                                  clientId: kAppleOAuthClientId,
+                                  redirectUri:
+                                      Uri.parse(kAppleOAuthRedirectUrl),
+                                ),
+                              );
+
+                              viewModel.onCompanyDelete(
+                                navigatorKey.currentContext,
+                                '',
+                                credentials.identityToken,
+                                reason,
+                              );
+                            } else {
+                              passwordCallback(
+                                  alwaysRequire: true,
+                                  context: context,
+                                  callback: (password, idToken) {
+                                    viewModel.onCompanyDelete(
+                                      context,
+                                      password,
+                                      idToken,
+                                      reason,
+                                    );
+                                  });
+                            }
                           });
                     },
                   ),

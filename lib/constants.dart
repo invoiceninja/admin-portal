@@ -48,6 +48,9 @@ const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
+const String kAppleOAuthClientId = 'com.invoiceninja.client';
+const String kAppleOAuthRedirectUrl = 'https://invoicing.co/auth/apple';
+
 const String kReleaseNotesUrl =
     'https://github.com/invoiceninja/invoiceninja/releases';
 const String kDocsUrl = 'https://invoiceninja.github.io';
