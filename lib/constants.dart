@@ -351,15 +351,19 @@ const String kNotificationsPaymentFailure = 'payment_failure';
 const String kNotificationsInvoiceCreated = 'invoice_created';
 const String kNotificationsInvoiceSent = 'invoice_sent';
 const String kNotificationsInvoiceLate = 'invoice_late';
+const String kNotificationsInvoiceViewed = 'invoice_viewed';
 const String kNotificationsQuoteCreated = 'quote_created';
 const String kNotificationsQuoteSent = 'quote_sent';
-const String kNotificationsCreditCreated = 'credit_created';
-const String kNotificationsCreditSent = 'credit_sent';
 const String kNotificationsQuoteViewed = 'quote_viewed';
 const String kNotificationsQuoteExpired = 'quote_expired';
-const String kNotificationsInvoiceViewed = 'invoice_viewed';
-const String kNotificationsCreditViewed = 'credit_viewed';
 const String kNotificationsQuoteApproved = 'quote_approved';
+const String kNotificationsCreditCreated = 'credit_created';
+const String kNotificationsCreditSent = 'credit_sent';
+const String kNotificationsCreditViewed = 'credit_viewed';
+const String kNotificationsPurchaseOrderCreated = 'purchase_order_created';
+const String kNotificationsPurchaseOrderSent = 'purchase_order_sent';
+const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
+const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
@@ -376,6 +380,10 @@ const kNotificationEvents = [
   kNotificationsCreditCreated,
   kNotificationsCreditSent,
   kNotificationsCreditViewed,
+  kNotificationsPurchaseOrderCreated,
+  kNotificationsPurchaseOrderSent,
+  kNotificationsPurchaseOrderViewed,
+  kNotificationsPurchaseOrderAccepted,
 ];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
