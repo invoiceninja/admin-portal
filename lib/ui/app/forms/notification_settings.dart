@@ -81,17 +81,29 @@ class NotificationSettings extends StatelessWidget {
                   ]),
                   ...kNotificationEvents.where((eventType) {
                     if ([
+                          kNotificationsQuoteCreated,
                           kNotificationsQuoteSent,
                           kNotificationsQuoteViewed,
-                          kNotificationsQuoteApproved
+                          kNotificationsQuoteApproved,
+                          kNotificationsQuoteExpired,
                         ].contains(eventType) &&
                         !state.company.isModuleEnabled(EntityType.quote)) {
                       return false;
                     } else if ([
+                          kNotificationsCreditCreated,
                           kNotificationsCreditSent,
                           kNotificationsCreditViewed,
                         ].contains(eventType) &&
                         !state.company.isModuleEnabled(EntityType.credit)) {
+                      return false;
+                    } else if ([
+                          kNotificationsPurchaseOrderCreated,
+                          kNotificationsPurchaseOrderSent,
+                          kNotificationsPurchaseOrderViewed,
+                          kNotificationsPurchaseOrderAccepted,
+                        ].contains(eventType) &&
+                        !state.company
+                            .isModuleEnabled(EntityType.purchaseOrder)) {
                       return false;
                     }
 

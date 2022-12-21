@@ -291,8 +291,8 @@ class LoginVM {
               AppleIDAuthorizationScopes.fullName,
             ],
             webAuthenticationOptions: WebAuthenticationOptions(
-              clientId: 'com.invoiceninja.client',
-              redirectUri: Uri.parse('https://invoicing.co/auth/apple'),
+              clientId: kAppleOAuthClientId,
+              redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
             ),
           );
 
@@ -322,8 +322,8 @@ class LoginVM {
               AppleIDAuthorizationScopes.fullName,
             ],
             webAuthenticationOptions: WebAuthenticationOptions(
-              clientId: 'com.invoiceninja.client',
-              redirectUri: Uri.parse('https://invoicing.co/auth/apple'),
+              clientId: kAppleOAuthClientId,
+              redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
             ),
           );
 
