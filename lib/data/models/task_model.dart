@@ -7,10 +7,12 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -106,10 +108,26 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
-  List<dynamic> get asList => <dynamic>[
-        (startDate.millisecondsSinceEpoch / 1000).floor(),
-        endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0
-      ];
+  List<dynamic> get asList {
+    final startTime = (startDate.millisecondsSinceEpoch / 1000).floor();
+    var endTime =
+        endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0;
+
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final company = store.state.company;
+
+    // Handle the end time being before the start time
+    if (!company.showTaskEndDate && endTime != 0) {
+      const oneDay = 24 * 60 * 60;
+      if (endTime < startTime) {
+        endTime += oneDay;
+      } else if (endTime - startTime > oneDay) {
+        endTime -= oneDay;
+      }
+    }
+
+    return <dynamic>[startTime, endTime];
+  }
 
   TaskTime get stop => rebuild((b) => b..endDate = DateTime.now().toUtc());
 

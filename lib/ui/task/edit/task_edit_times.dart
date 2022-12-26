@@ -126,6 +126,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
     final company = viewModel.company;
     final showEndDate = company.showTaskEndDate;
 
+    // Handle the end time being before the start time
+    final times = _taskTime.asList;
+    final duration = Duration(seconds: times[1] - times[0]);
+
     return AlertDialog(
       content: SingleChildScrollView(
         child: Column(
@@ -203,7 +207,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               selectedDuration:
                   (_taskTime.startDate == null || _taskTime.endDate == null)
                       ? null
-                      : _taskTime.duration,
+                      : duration,
             ),
           ],
         ),
