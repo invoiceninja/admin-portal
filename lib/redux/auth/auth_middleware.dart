@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -257,6 +258,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       } else if (state.company.isLarge && !state.isLoaded) {
         print('## Skipping refresh request - not loaded');
         next(action);
+        store.dispatch(LoadClients());
         return;
       }
     }
