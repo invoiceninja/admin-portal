@@ -252,7 +252,7 @@ void _checkResponse(String url, http.Response response) {
 
   if (response.statusCode >= 500) {
     throw _parseError(response.statusCode, response.body);
-  } else if (serverVersion != null) {
+  } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
   } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
     throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
