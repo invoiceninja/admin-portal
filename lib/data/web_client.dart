@@ -54,7 +54,7 @@ class WebClient {
       return response;
     }
 
-    _checkResponse(response);
+    _checkResponse(url, response);
 
     final dynamic jsonResponse = json.decode(response.body);
 
@@ -116,7 +116,7 @@ class WebClient {
       return response;
     }
 
-    _checkResponse(response);
+    _checkResponse(url, response);
 
     return json.decode(response.body);
   }
@@ -160,7 +160,7 @@ class WebClient {
       client.close();
     }
 
-    _checkResponse(response);
+    _checkResponse(url, response);
 
     return json.decode(response.body);
   }
@@ -193,7 +193,7 @@ class WebClient {
     );
     client.close();
 
-    _checkResponse(response);
+    _checkResponse(url, response);
 
     return json.decode(response.body);
   }
@@ -231,7 +231,7 @@ Map<String, String> _getHeaders(
   return headers;
 }
 
-void _checkResponse(http.Response response) {
+void _checkResponse(String url, http.Response response) {
   /*
   debugPrint(
       'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
@@ -252,8 +252,8 @@ void _checkResponse(http.Response response) {
 
   if (response.statusCode >= 500) {
     throw _parseError(response.statusCode, response.body);
-  } else if (serverVersion == null) {
-    throw 'Error: please check that Invoice Ninja v5 is installed on the server';
+  } else if (serverVersion != null) {
+    throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
   } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
     throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
   } else if (Version.parse(serverVersion) < Version.parse(kMinServerVersion)) {
