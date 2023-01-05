@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -20,6 +21,7 @@ enum QuoteItemReportFields {
   cost,
   quantity,
   profit,
+  markup,
   total,
   discount,
   custom1,
@@ -122,8 +124,14 @@ ReportResult lineItemReport(
             value = productId == null ? 0.0 : productMap[productId].cost;
             break;
           case QuoteItemReportFields.profit:
-            value = lineItem.netTotal(invoice, precision) -
-                (productId == null ? 0.0 : productMap[productId].cost);
+          case QuoteItemReportFields.markup:
+            final cost = productId == null
+                ? 0.0
+                : (productMap[productId].cost * lineItem.quantity);
+            value = lineItem.netTotal(invoice, precision) - cost;
+            if (column == QuoteItemReportFields.markup && cost != 0) {
+              value = '${round(value / cost * 100, 2)}%';
+            }
             break;
           case QuoteItemReportFields.custom1:
             value = lineItem.customValue1;
