@@ -93,8 +93,9 @@ class _DashboardScreenState extends State<DashboardScreen>
         )
       ..addListener(onScrollListener);
 
+    final companyName = state.company.settings.name ?? '';
     if (!state.isDemo &&
-        (state.company.settings.name ?? '').isEmpty &&
+        (companyName.isEmpty || companyName == 'Untitled Company') &&
         state.company.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
