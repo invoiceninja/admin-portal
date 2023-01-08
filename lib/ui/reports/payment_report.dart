@@ -18,6 +18,7 @@ enum PaymentReportFields {
   amount,
   client,
   client_number,
+  client_email,
   client_balance,
   client_address1,
   client_address2,
@@ -219,6 +220,9 @@ ReportResult paymentReport(
           break;
         case PaymentReportFields.client_number:
           value = client.number;
+          break;
+        case PaymentReportFields.client_email:
+          value = client.primaryContact.email;
           break;
         case PaymentReportFields.transaction_reference:
           value = payment.transactionReference;
