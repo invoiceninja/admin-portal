@@ -157,7 +157,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   vendorState.list, state.userState.map, state.staticState),
               onSelected: (vendor) {
                 viewModel.onChanged(
-                    expense.rebuild((b) => b..vendorId = vendor?.id));
+                    expense.rebuild((b) => b..vendorId = vendor?.id ?? ''));
               },
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
