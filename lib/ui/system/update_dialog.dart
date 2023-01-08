@@ -84,7 +84,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                     if (account.isUpdateAvailable) ...[
                       SizedBox(height: 20),
                       Text(
-                          '• ${localization.currentVersion}: v${account.currentVersion}'),
+                          '• ${localization.installedVersion}: v${account.currentVersion}'),
                       SizedBox(height: 6),
                       Text(
                           '• ${localization.latestVersion}: v${account.latestVersion}'),
