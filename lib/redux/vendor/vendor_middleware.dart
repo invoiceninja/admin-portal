@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 // Package imports:
@@ -230,13 +231,19 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
     final action = dynamicAction as LoadVendors;
 
     store.dispatch(LoadVendorsRequest());
-    repository.loadList(store.state.credentials).then((data) {
+    repository.loadList(store.state.credentials, action.page).then((data) {
       store.dispatch(LoadVendorsSuccess(data));
-
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(LoadVendors(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+        store.dispatch(LoadPurchaseOrders());
       }
-      store.dispatch(LoadPurchaseOrders());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorsFailure(error));
