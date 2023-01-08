@@ -213,7 +213,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       ),
                       DecoratedFormField(
                         controller: _transactionReferenceController,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 3,
                         label: localization.transactionReference,
                         onSavePressed: viewModel.onSavePressed,
                       ),
