@@ -46,6 +46,7 @@ class TaskPresenter extends EntityPresenter {
       TaskFields.customValue4,
       TaskFields.documents,
       TaskFields.date,
+      TaskFields.amount,
     ];
   }
 
@@ -55,17 +56,16 @@ class TaskPresenter extends EntityPresenter {
     final task = entity as TaskEntity;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final client = state.clientState.get(task.clientId);
 
     switch (field) {
       case TaskFields.status:
         return EntityStatusChip(entity: task, showState: true);
       case TaskFields.client:
-        final client = state.clientState.get(task.clientId);
         return LinkTextRelatedEntity(entity: client, relation: task);
       case TaskFields.rate:
         return Text(formatNumber(task.rate, context, clientId: task.clientId));
       case TaskFields.calculatedRate:
-        final client = state.clientState.get(task.clientId);
         final rate = taskRateSelector(
           task: task,
           client: client,
@@ -119,6 +119,20 @@ class TaskPresenter extends EntityPresenter {
         return Text(presentCustomField(context, task.customValue4));
       case TaskFields.documents:
         return Text('${task.documents.length}');
+      case TaskFields.amount:
+        return Text(formatNumber(
+          task.calculateAmount(
+            taskRateSelector(
+              company: state.company,
+              project: state.projectState.map[task.projectId],
+              client: state.clientState.map[task.clientId],
+              task: task,
+              group: state.groupState.map[client?.groupId],
+            ),
+          ),
+          context,
+          clientId: client?.id,
+        ));
     }
 
     return super.getField(field: field, context: context);

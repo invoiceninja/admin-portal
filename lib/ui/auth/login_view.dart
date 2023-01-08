@@ -330,6 +330,7 @@ class _LoginState extends State<LoginView> {
 
     return SafeArea(
       child: ScrollableListView(
+        primary: true,
         children: <Widget>[
           if (isWindows()) AppTitleBar(),
           Container(
@@ -811,7 +812,8 @@ class _LoginState extends State<LoginView> {
                 ],
               ),
             ],
-          )
+          ),
+          SizedBox(height: 20),
         ],
       ),
     );
