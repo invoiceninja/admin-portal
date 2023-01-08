@@ -88,6 +88,16 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               ),
             ],
           ),
+          FormCard(children: <Widget>[
+            SwitchListTile(
+              activeColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.notifyVendorWhenPaid),
+              value: company.notifyVendorWhenPaid ?? false,
+              subtitle: Text(localization.notifyVendorWhenPaidHelp),
+              onChanged: (value) => viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..notifyVendorWhenPaid = value)),
+            ),
+          ]),
           if (company.numberOfItemTaxRates > 0)
             FormCard(
               children: [

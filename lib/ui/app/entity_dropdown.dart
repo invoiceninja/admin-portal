@@ -70,6 +70,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   final _focusNode = FocusNode();
   String _filter = '';
   BuiltMap<String, SelectableEntity> _entityMap;
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -168,6 +169,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     _textController.dispose();
     _focusNode.removeListener(_onFocusChanged);
     _focusNode.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -360,37 +362,42 @@ class _EntityDropdownState extends State<EntityDropdown> {
                     color: Theme.of(context).cardColor,
                     width: 250,
                     constraints: BoxConstraints(maxHeight: 270),
-                    child: ScrollableListViewBuilder(
-                      itemCount: options.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Builder(builder: (BuildContext context) {
-                          final highlightedIndex =
-                              AutocompleteHighlightedOption.of(context);
-                          if (highlightedIndex == index) {
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((timeStamp) {
-                              Scrollable.ensureVisible(context);
-                            });
-                          }
-                          return Container(
-                            color: highlightedIndex == index
-                                ? convertHexStringToColor(
-                                    state.prefState.enableDarkMode
-                                        ? kDefaultDarkSelectedColor
-                                        : kDefaultLightSelectedColor)
-                                : Theme.of(context).cardColor,
-                            child: EntityAutocompleteListTile(
-                              onTap: (entity) => onSelected(entity),
-                              entity: options.elementAt(index),
-                              filter: _filter,
-                              overrideSuggestedAmount:
-                                  widget.overrideSuggestedAmount,
-                              overrideSuggestedLabel:
-                                  widget.overrideSuggestedLabel,
-                            ),
-                          );
-                        });
-                      },
+                    child: Scrollbar(
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      child: ScrollableListViewBuilder(
+                        scrollController: _scrollController,
+                        itemCount: options.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Builder(builder: (BuildContext context) {
+                            final highlightedIndex =
+                                AutocompleteHighlightedOption.of(context);
+                            if (highlightedIndex == index) {
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((timeStamp) {
+                                Scrollable.ensureVisible(context);
+                              });
+                            }
+                            return Container(
+                              color: highlightedIndex == index
+                                  ? convertHexStringToColor(
+                                      state.prefState.enableDarkMode
+                                          ? kDefaultDarkSelectedColor
+                                          : kDefaultLightSelectedColor)
+                                  : Theme.of(context).cardColor,
+                              child: EntityAutocompleteListTile(
+                                onTap: (entity) => onSelected(entity),
+                                entity: options.elementAt(index),
+                                filter: _filter,
+                                overrideSuggestedAmount:
+                                    widget.overrideSuggestedAmount,
+                                overrideSuggestedLabel:
+                                    widget.overrideSuggestedLabel,
+                              ),
+                            );
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),

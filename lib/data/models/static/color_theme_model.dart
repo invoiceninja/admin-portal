@@ -11,7 +11,8 @@ class ColorTheme {
     this.colorSuccess,
     this.colorWarning,
     this.colorDanger,
-    this.colorGray = const Color(0xff888888),
+    this.colorLightGray = const Color(0xff888888),
+    this.colorDarkGray = const Color(0xff444444),
   });
 
   Color colorPrimary;
@@ -19,7 +20,8 @@ class ColorTheme {
   Color colorSuccess;
   Color colorWarning;
   Color colorDanger;
-  Color colorGray;
+  Color colorLightGray;
+  Color colorDarkGray;
 }
 
 Map<String, ColorTheme> colorThemesMap = {

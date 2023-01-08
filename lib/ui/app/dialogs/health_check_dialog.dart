@@ -19,6 +19,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+enum _HealthCheckLevel {
+  Info,
+  Warning,
+}
+
 class HealthCheckDialog extends StatefulWidget {
   @override
   _HealthCheckDialogState createState() => _HealthCheckDialogState();
@@ -188,13 +193,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: 'PHP memory limit is too low',
                     subtitle:
                         'Increase the limit to at least 512M to support the in-app update',
-                    isWarning: true,
+                    level: _HealthCheckLevel.Warning,
                   ),
                 if (_response.queue == 'sync')
                   _HealthListTile(
                     title: 'Queue not enabled',
                     subtitle: 'Enable the queue for improved performance',
-                    isWarning: true,
+                    level: _HealthCheckLevel.Info,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-installation/#final-setup-steps',
                   ),
@@ -202,7 +207,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   _HealthListTile(
                     title: 'SnapPDF not enabled',
                     subtitle: 'Use SnapPDF to generate PDF files locally',
-                    isWarning: true,
+                    level: _HealthCheckLevel.Info,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
                   ),
@@ -210,13 +215,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   _HealthListTile(
                     title: 'APP_URL has trailing slash',
                     subtitle: 'Remove the slash in the .env file',
-                    isWarning: true,
+                    level: _HealthCheckLevel.Warning,
                   ),
                 if (_response.exchangeRateApiNotConfigured)
                   _HealthListTile(
                     title: 'Exchange Rate API Not Enabled',
                     subtitle: 'Add an Open Exchange key to the .env file',
-                    isWarning: true,
+                    level: _HealthCheckLevel.Info,
                     url:
                         'https://invoiceninja.github.io/docs/self-host-installation/#currency-conversion',
                   ),
@@ -246,14 +251,14 @@ class _HealthListTile extends StatelessWidget {
   const _HealthListTile({
     @required this.title,
     this.isValid = true,
-    this.isWarning = false,
+    this.level,
     this.subtitle,
     this.url,
   });
 
   final String title;
   final bool isValid;
-  final bool isWarning;
+  final _HealthCheckLevel level;
   final String subtitle;
   final String url;
 
@@ -264,14 +269,21 @@ class _HealthListTile extends StatelessWidget {
       subtitle: Text(
         subtitle != null
             ? subtitle
-            : (isWarning ? 'Warning' : (isValid ? 'Passed' : 'Failed')),
+            : (level != null
+                ? level.toString()
+                : (isValid ? 'Passed' : 'Failed')),
       ),
       trailing: Icon(
-        isWarning
+        level == _HealthCheckLevel.Warning
             ? Icons.warning
-            : (isValid ? Icons.check_circle_outline : Icons.error_outline),
-        color:
-            isWarning ? Colors.orange : (isValid ? Colors.green : Colors.red),
+            : level == _HealthCheckLevel.Info
+                ? Icons.info_outline
+                : (isValid ? Icons.check_circle_outline : Icons.warning),
+        color: level == _HealthCheckLevel.Warning
+            ? Colors.orange
+            : level == _HealthCheckLevel.Info
+                ? Colors.blue
+                : (isValid ? Colors.green : Colors.red),
       ),
       onTap: url != null ? () => launchUrl(Uri.parse(url)) : null,
     );

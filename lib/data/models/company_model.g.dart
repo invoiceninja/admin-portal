@@ -173,6 +173,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'convert_expense_currency',
       serializers.serialize(object.convertExpenseCurrency,
           specifiedType: const FullType(bool)),
+      'notify_vendor_when_paid',
+      serializers.serialize(object.notifyVendorWhenPaid,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -606,6 +609,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'convert_expense_currency':
           result.convertExpenseCurrency = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'notify_vendor_when_paid':
+          result.notifyVendorWhenPaid = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1679,6 +1686,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool convertExpenseCurrency;
   @override
+  final bool notifyVendorWhenPaid;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1849,6 +1858,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.invoiceTaskLock,
       this.convertPaymentCurrency,
       this.convertExpenseCurrency,
+      this.notifyVendorWhenPaid,
       this.groups,
       this.activities,
       this.taxRates,
@@ -2000,6 +2010,8 @@ class _$CompanyEntity extends CompanyEntity {
         convertPaymentCurrency, 'CompanyEntity', 'convertPaymentCurrency');
     BuiltValueNullFieldError.checkNotNull(
         convertExpenseCurrency, 'CompanyEntity', 'convertExpenseCurrency');
+    BuiltValueNullFieldError.checkNotNull(
+        notifyVendorWhenPaid, 'CompanyEntity', 'notifyVendorWhenPaid');
     BuiltValueNullFieldError.checkNotNull(groups, 'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, 'CompanyEntity', 'activities');
@@ -2159,6 +2171,7 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskLock == other.invoiceTaskLock &&
         convertPaymentCurrency == other.convertPaymentCurrency &&
         convertExpenseCurrency == other.convertExpenseCurrency &&
+        notifyVendorWhenPaid == other.notifyVendorWhenPaid &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -2242,7 +2255,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), notifyVendorWhenPaid.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
                                                                                 invoiceTaskTimelog.hashCode),
                                                                             invoiceTaskDatelog.hashCode),
                                                                         invoiceTaskProject.hashCode),
@@ -2313,6 +2326,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('invoiceTaskLock', invoiceTaskLock)
           ..add('convertPaymentCurrency', convertPaymentCurrency)
           ..add('convertExpenseCurrency', convertExpenseCurrency)
+          ..add('notifyVendorWhenPaid', notifyVendorWhenPaid)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2601,6 +2615,11 @@ class CompanyEntityBuilder
   bool get convertExpenseCurrency => _$this._convertExpenseCurrency;
   set convertExpenseCurrency(bool convertExpenseCurrency) =>
       _$this._convertExpenseCurrency = convertExpenseCurrency;
+
+  bool _notifyVendorWhenPaid;
+  bool get notifyVendorWhenPaid => _$this._notifyVendorWhenPaid;
+  set notifyVendorWhenPaid(bool notifyVendorWhenPaid) =>
+      _$this._notifyVendorWhenPaid = notifyVendorWhenPaid;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2972,6 +2991,7 @@ class CompanyEntityBuilder
       _invoiceTaskLock = $v.invoiceTaskLock;
       _convertPaymentCurrency = $v.convertPaymentCurrency;
       _convertExpenseCurrency = $v.convertExpenseCurrency;
+      _notifyVendorWhenPaid = $v.notifyVendorWhenPaid;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -3114,6 +3134,7 @@ class CompanyEntityBuilder
               invoiceTaskLock: BuiltValueNullFieldError.checkNotNull(invoiceTaskLock, 'CompanyEntity', 'invoiceTaskLock'),
               convertPaymentCurrency: BuiltValueNullFieldError.checkNotNull(convertPaymentCurrency, 'CompanyEntity', 'convertPaymentCurrency'),
               convertExpenseCurrency: BuiltValueNullFieldError.checkNotNull(convertExpenseCurrency, 'CompanyEntity', 'convertExpenseCurrency'),
+              notifyVendorWhenPaid: BuiltValueNullFieldError.checkNotNull(notifyVendorWhenPaid, 'CompanyEntity', 'notifyVendorWhenPaid'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

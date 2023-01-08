@@ -37,8 +37,10 @@ class VendorRepository {
     return vendorResponse.data;
   }
 
-  Future<BuiltList<VendorEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/vendors';
+  Future<BuiltList<VendorEntity>> loadList(
+      Credentials credentials, int page) async {
+    final String url =
+        credentials.url + '/vendors?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
