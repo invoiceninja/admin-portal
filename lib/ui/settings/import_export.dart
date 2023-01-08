@@ -583,6 +583,7 @@ class __FileMapperState extends State<_FileMapper> {
           validator: (dynamic value) => (_bankAccountId ?? '').isEmpty
               ? localization.pleaseEnterAValue
               : null,
+          overrideSuggestedAmount: (entity) => '',
         ));
       }
     }
