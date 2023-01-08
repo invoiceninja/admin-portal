@@ -81,6 +81,7 @@ class TaskFields {
   static const String date = 'date';
   static const String assignedTo = 'assigned_to';
   static const String createdBy = 'created_by';
+  static const String amount = 'amount';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
@@ -668,6 +669,7 @@ abstract class TaskEntity extends Object
 
     switch (sortField) {
       case TaskFields.duration:
+      case TaskFields.amount:
         response =
             taskA.calculateDuration().compareTo(taskB.calculateDuration());
         break;

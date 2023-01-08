@@ -40,6 +40,7 @@ enum TaskReportFields {
   status,
   assigned_to,
   created_by,
+  amount,
 }
 
 var memoizedTaskReport = memo10((
@@ -230,6 +231,17 @@ ReportResult taskReport(
           break;
         case TaskReportFields.created_by:
           value = userMap[task.createdUserId]?.listDisplayName ?? '';
+          break;
+        case TaskReportFields.amount:
+          value = task.calculateAmount(
+            taskRateSelector(
+              company: userCompany.company,
+              project: project,
+              client: client,
+              task: task,
+              group: group,
+            ),
+          );
           break;
       }
 
