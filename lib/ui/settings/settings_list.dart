@@ -418,7 +418,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_start_tasks',
           'show_tasks_table',
           'client_portal',
-          'lock_tasks',
+          'lock_invoiced_tasks',
         ],
       ],
       kSettingsTaskStatuses: [
@@ -431,6 +431,8 @@ class SettingsSearch extends StatelessWidget {
           'should_be_invoiced',
           'mark_paid',
           'inclusive_taxes',
+          'convert_currency',
+          'notify_vendor_when_paid',
         ],
       ],
       kSettingsExpenseCategories: [
