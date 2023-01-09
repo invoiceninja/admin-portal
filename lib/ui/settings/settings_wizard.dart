@@ -66,15 +66,23 @@ class _SettingsWizardState extends State<SettingsWizard> {
   void initState() {
     super.initState();
 
-    _firstNameController.text = widget.user.firstName;
-    _lastNameController.text = widget.user.lastName;
-
     _controllers = [
       _nameController,
       _firstNameController,
       _lastNameController,
       _subdomainController,
     ];
+  }
+
+  @override
+  void didChangeDependencies() {
+    final store = StoreProvider.of<AppState>(context);
+
+    _firstNameController.text = widget.user.firstName;
+    _lastNameController.text = widget.user.lastName;
+    _subdomainController.text = store.state.company.subdomain;
+
+    super.didChangeDependencies();
   }
 
   @override
