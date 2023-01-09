@@ -150,9 +150,10 @@ class _ExpenseViewState extends State<ExpenseView>
                       ? EntityAction.stop
                       : EntityAction.start)
                   : EntityAction.invoiceExpense,
-              action1Enabled: !expense.isInvoiced ||
-                  (expense.isRecurring &&
-                      (expense.canBeStarted || expense.canBeStopped)),
+              action1Enabled:
+                  (!expense.isInvoiced && expense.shouldBeInvoiced) ||
+                      (expense.isRecurring &&
+                          (expense.canBeStarted || expense.canBeStopped)),
               action2: expense.isRecurring
                   ? EntityAction.cloneToRecurring
                   : EntityAction.cloneToExpense,
