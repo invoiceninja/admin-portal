@@ -203,6 +203,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enablePortalTasks = value)),
               ),
+              SizedBox(height: 20),
               AppDropdownButton<String>(
                 labelText: localization.tasksShownInPortal,
                 value: settings.clientPortalTasks,
