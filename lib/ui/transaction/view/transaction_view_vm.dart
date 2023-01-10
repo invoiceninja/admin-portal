@@ -26,6 +26,8 @@ class TransactionViewScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return TransactionView(
+          key: ValueKey(
+              vm.transactions.map((transaction) => transaction.id).join('|')),
           viewModel: vm,
           isFilter: isFilter,
         );
