@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -500,6 +501,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                         builder: (context) => _DesignImportDialog());
                     final viewModel = widget.viewModel;
                     final design = viewModel.design;
+
                     widget.onLoadDesign(design.rebuild((b) => b
                       ..design.replace(
                           BuiltMap<String, String>(jsonDecode(designStr)))));
@@ -750,7 +752,26 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
           child: Text(localization.cancel.toUpperCase()),
         ),
         TextButton(
-          onPressed: () => Navigator.of(context).pop(_design),
+          onPressed: () {
+            final value = _design.trim();
+            try {
+              final Map<String, dynamic> map = jsonDecode(value);
+              for (var field in [
+                kDesignBody,
+                kDesignFooter,
+                kDesignHeader,
+                kDesignIncludes
+              ]) {
+                if (!map.containsKey(field)) {
+                  throw localization.invalidDesign
+                      .replaceFirst(':value', field);
+                }
+              }
+              Navigator.of(context).pop(value);
+            } catch (error) {
+              showErrorDialog(context: context, message: '$error');
+            }
+          },
           child: Text(localization.done.toUpperCase()),
         ),
       ],
