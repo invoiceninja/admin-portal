@@ -498,7 +498,12 @@ class _DesignSettingsState extends State<DesignSettings> {
                     final designStr = await showDialog<String>(
                         context: context,
                         builder: (context) => _DesignImportDialog());
-                    print('## IMPORT: $designStr');
+                    final viewModel = widget.viewModel;
+                    final design = viewModel.design;
+                    widget.onLoadDesign(design.rebuild((b) => b
+                      ..design.replace(
+                          BuiltMap<String, String>(jsonDecode(designStr)))));
+                    showToast(localization.importedDesign);
                   },
                 ),
               ),
@@ -732,6 +737,8 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
     return AlertDialog(
       title: Text(localization.importDesign),
       content: DecoratedFormField(
+        autofocus: true,
+        autocorrect: false,
         label: localization.design,
         keyboardType: TextInputType.multiline,
         maxLines: 8,
