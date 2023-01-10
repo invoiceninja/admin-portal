@@ -79,6 +79,9 @@ String calculateStartDate({
     case DateRange.last30Days:
       final date = today.subtract(Duration(days: 30 * (1 + offset)));
       return convertDateTimeToSqlDate(date);
+    case DateRange.last365Days:
+      final date = today.subtract(Duration(days: 365 * (1 + offset)));
+      return convertDateTimeToSqlDate(date);
     case DateRange.thisMonth:
       final date = addMonths(firstDayOfMonth, offset * -1);
       return convertDateTimeToSqlDate(date);
@@ -131,6 +134,9 @@ String calculateEndDate({
       return convertDateTimeToSqlDate(date);
     case DateRange.last30Days:
       final date = today.subtract(Duration(days: 30 * offset));
+      return convertDateTimeToSqlDate(date);
+    case DateRange.last365Days:
+      final date = today.subtract(Duration(days: 365 * offset));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisMonth:
       final date = addMonths(firstDayOfMonth, (offset - 1) * -1)
