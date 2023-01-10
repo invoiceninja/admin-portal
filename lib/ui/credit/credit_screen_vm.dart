@@ -56,6 +56,7 @@ class CreditScreenVM {
           state.creditState.list,
           state.clientState.map,
           state.vendorState.map,
+          state.paymentState.map,
           state.creditListState,
           state.userState.map),
       userCompany: state.userCompany,

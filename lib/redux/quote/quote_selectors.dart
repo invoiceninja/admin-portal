@@ -74,6 +74,9 @@ List<String> filteredQuotesSelector(
     } else if (filterEntityType == EntityType.invoice &&
         quote.invoiceId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        quote.projectId != filterEntityId) {
+      return false;
     }
 
     if (!quote.matchesStates(quoteListState.stateFilters)) {

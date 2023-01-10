@@ -123,6 +123,14 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showTaskEndDate = value)),
               ),
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.showTasksTable),
+                value: company.showTasksTable,
+                subtitle: Text(localization.showTasksTableHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..showTasksTable = value)),
+              ),
             ]
           ]),
           if (!viewModel.state.settingsUIState.isFiltered)
@@ -138,14 +146,6 @@ class _TaskSettingsState extends State<TaskSettings> {
           FormCard(
             children: <Widget>[
               if (!viewModel.state.settingsUIState.isFiltered) ...[
-                SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.showTasksTable),
-                  value: company.showTasksTable,
-                  subtitle: Text(localization.showTasksTableHelp),
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..showTasksTable = value)),
-                ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskDatelog),
@@ -203,6 +203,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enablePortalTasks = value)),
               ),
+              SizedBox(height: 10),
               AppDropdownButton<String>(
                 labelText: localization.tasksShownInPortal,
                 value: settings.clientPortalTasks,

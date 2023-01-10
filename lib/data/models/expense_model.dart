@@ -556,6 +556,10 @@ abstract class ExpenseEntity extends Object
       case RecurringExpenseFields.nextSendDate:
         response = expenseA.nextSendDate.compareTo(expenseB.nextSendDate);
         break;
+      case ExpenseFields.status:
+        response =
+            expenseA.calculatedStatusId.compareTo(expenseB.calculatedStatusId);
+        break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');
         break;

@@ -9,7 +9,8 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,7 +24,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -477,15 +477,72 @@ class _DesignSettingsState extends State<DesignSettings> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-          child: OutlinedButton(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconText(
-                icon: MdiIcons.openInNew,
-                text: localization.viewDocs.toUpperCase(),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      localization.viewDocs.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+                ),
               ),
-            ),
-            onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      localization.import.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onPressed: () async {
+                    final designStr = await showDialog<String>(
+                        context: context,
+                        builder: (context) => _DesignImportDialog());
+                    final viewModel = widget.viewModel;
+                    final design = viewModel.design;
+
+                    widget.onLoadDesign(design.rebuild((b) => b
+                      ..design.replace(
+                          BuiltMap<String, String>(jsonDecode(designStr)))));
+                    showToast(localization.importedDesign);
+                  },
+                ),
+              ),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      localization.export.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onPressed: () {
+                    final design = widget.viewModel.design;
+                    final designMap = design.design.toMap();
+
+                    // TODO remove this code once it's supported
+                    designMap.remove(kDesignProducts);
+                    designMap.remove(kDesignTasks);
+
+                    final encoder = new JsonEncoder.withIndent('  ');
+                    final prettyprint = encoder.convert(designMap);
+
+                    Clipboard.setData(ClipboardData(text: prettyprint));
+                    showToast(localization.copiedToClipboard
+                        .replaceFirst(':value ', ''));
+                  },
+                ),
+              ),
+            ],
           ),
         ),
         if (widget.draftMode)
@@ -671,5 +728,62 @@ class InsertTabAction extends Action {
       );
     }
     return '';
+  }
+}
+
+class _DesignImportDialog extends StatefulWidget {
+  const _DesignImportDialog({Key key}) : super(key: key);
+
+  @override
+  State<_DesignImportDialog> createState() => __DesignImportDialogState();
+}
+
+class __DesignImportDialogState extends State<_DesignImportDialog> {
+  var _design = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localization.importDesign),
+      content: DecoratedFormField(
+        autofocus: true,
+        autocorrect: false,
+        label: localization.design,
+        keyboardType: TextInputType.multiline,
+        maxLines: 8,
+        onChanged: (value) => _design = value,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () {
+            final value = _design.trim();
+            try {
+              final Map<String, dynamic> map = jsonDecode(value);
+              for (var field in [
+                kDesignBody,
+                kDesignFooter,
+                kDesignHeader,
+                kDesignIncludes
+              ]) {
+                if (!map.containsKey(field)) {
+                  throw localization.invalidDesign
+                      .replaceFirst(':value', field);
+                }
+              }
+              Navigator.of(context).pop(value);
+            } catch (error) {
+              showErrorDialog(context: context, message: '$error');
+            }
+          },
+          child: Text(localization.done.toUpperCase()),
+        ),
+      ],
+    );
   }
 }

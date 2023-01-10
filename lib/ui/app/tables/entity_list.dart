@@ -164,6 +164,7 @@ class _EntityListState extends State<EntityList> {
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).clickPlusToAddItem)
                   : ScrollableListViewBuilder(
+                      primary: true,
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       separatorBuilder: (context, index) =>
                           (index == 0 || index == entityList.length)

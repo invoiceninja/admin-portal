@@ -85,15 +85,16 @@ ClientEntity creditClientSelector(
   return clientMap[credit.clientId];
 }
 
-var memoizedFilteredCreditList = memo7((SelectionState selectionState,
+var memoizedFilteredCreditList = memo8((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> creditMap,
         BuiltList<String> creditList,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, VendorEntity> vendorMap,
+        BuiltMap<String, PaymentEntity> paymentMap,
         ListUIState creditListState,
         BuiltMap<String, UserEntity> userMap) =>
     filteredCreditsSelector(selectionState, creditMap, creditList, clientMap,
-        vendorMap, creditListState, userMap));
+        vendorMap, paymentMap, creditListState, userMap));
 
 List<String> filteredCreditsSelector(
     SelectionState selectionState,
@@ -101,10 +102,23 @@ List<String> filteredCreditsSelector(
     BuiltList<String> creditList,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
     ListUIState creditListState,
     BuiltMap<String, UserEntity> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
+
+  final Map<String, List<String>> creditPaymentMap = {};
+  if (filterEntityType == EntityType.payment) {
+    paymentMap.forEach((paymentId, payment) {
+      payment.creditPaymentables.forEach((creditPaymentable) {
+        final List<String> paymentIds =
+            creditPaymentMap[creditPaymentable.creditId] ?? [];
+        paymentIds.add(payment.id);
+        creditPaymentMap[creditPaymentable.creditId] = paymentIds;
+      });
+    });
+  }
 
   final list = creditList.where((creditId) {
     final credit = creditMap[creditId];
@@ -131,6 +145,20 @@ List<String> filteredCreditsSelector(
     } else if (filterEntityType == EntityType.group &&
         client.groupId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        credit.projectId != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.payment) {
+      bool isMatch = false;
+      (creditPaymentMap[creditId] ?? []).forEach((paymentId) {
+        if (filterEntityId == paymentId) {
+          isMatch = true;
+        }
+      });
+
+      if (!isMatch) {
+        return false;
+      }
     }
 
     if (!credit.matchesStates(creditListState.stateFilters)) {
