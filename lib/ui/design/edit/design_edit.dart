@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,7 +23,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -477,15 +476,57 @@ class _DesignSettingsState extends State<DesignSettings> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-          child: OutlinedButton(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconText(
-                icon: MdiIcons.openInNew,
-                text: localization.viewDocs.toUpperCase(),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(localization.viewDocs.toUpperCase()),
+                  ),
+                  onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+                ),
               ),
-            ),
-            onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(localization.import.toUpperCase()),
+                  ),
+                  onPressed: () async {
+                    final designStr = await showDialog<String>(
+                        context: context,
+                        builder: (context) => _DesignImportDialog());
+                    print('## IMPORT: $designStr');
+                  },
+                ),
+              ),
+              SizedBox(width: kTableColumnGap),
+              Expanded(
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(localization.export.toUpperCase()),
+                  ),
+                  onPressed: () {
+                    final design = widget.viewModel.design;
+                    final designMap = design.design.toMap();
+
+                    // TODO remove this code once it's supported
+                    designMap.remove(kDesignProducts);
+                    designMap.remove(kDesignTasks);
+
+                    final encoder = new JsonEncoder.withIndent('  ');
+                    final prettyprint = encoder.convert(designMap);
+
+                    Clipboard.setData(ClipboardData(text: prettyprint));
+                    showToast(localization.copiedToClipboard
+                        .replaceFirst(':value ', ''));
+                  },
+                ),
+              ),
+            ],
           ),
         ),
         if (widget.draftMode)
@@ -671,5 +712,41 @@ class InsertTabAction extends Action {
       );
     }
     return '';
+  }
+}
+
+class _DesignImportDialog extends StatefulWidget {
+  const _DesignImportDialog({Key key}) : super(key: key);
+
+  @override
+  State<_DesignImportDialog> createState() => __DesignImportDialogState();
+}
+
+class __DesignImportDialogState extends State<_DesignImportDialog> {
+  var _design = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(localization.importDesign),
+      content: DecoratedFormField(
+        label: localization.design,
+        keyboardType: TextInputType.multiline,
+        maxLines: 8,
+        onChanged: (value) => _design = value,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(_design),
+          child: Text(localization.done.toUpperCase()),
+        ),
+      ],
+    );
   }
 }
