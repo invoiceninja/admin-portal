@@ -483,7 +483,10 @@ class _DesignSettingsState extends State<DesignSettings> {
                 child: OutlinedButton(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(localization.viewDocs.toUpperCase()),
+                    child: Text(
+                      localization.viewDocs.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
                 ),
@@ -493,7 +496,10 @@ class _DesignSettingsState extends State<DesignSettings> {
                 child: OutlinedButton(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(localization.import.toUpperCase()),
+                    child: Text(
+                      localization.import.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   onPressed: () async {
                     final designStr = await showDialog<String>(
@@ -514,7 +520,10 @@ class _DesignSettingsState extends State<DesignSettings> {
                 child: OutlinedButton(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(localization.export.toUpperCase()),
+                    child: Text(
+                      localization.export.toUpperCase(),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   onPressed: () {
                     final design = widget.viewModel.design;
