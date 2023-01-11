@@ -418,7 +418,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_start_tasks',
           'show_tasks_table',
           'client_portal',
-          'lock_invoiced_tasks',
+          'lock_invoiced_tasks#2022-11-30',
         ],
       ],
       kSettingsTaskStatuses: [
@@ -432,7 +432,7 @@ class SettingsSearch extends StatelessWidget {
           'mark_paid',
           'inclusive_taxes',
           'convert_currency',
-          'notify_vendor_when_paid',
+          'notify_vendor_when_paid#2023-01-08',
         ],
       ],
       kSettingsExpenseCategories: [
@@ -584,7 +584,7 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsTransactionRules: [
         [
-          'transaction_rules',
+          'transaction_rules#2022-11-21',
         ],
       ],
       kSettingsGroupSettings: [
@@ -610,11 +610,11 @@ class SettingsSearch extends StatelessWidget {
           for (int i = 0; i < map[section].length; i++)
             for (var field in map[section][i])
               if (localization
-                  .lookup(field)
+                  .lookup(field.split('#')[0])
                   .toLowerCase()
                   .contains(filter.toLowerCase()))
                 ListTile(
-                  title: Text(localization.lookup(field)),
+                  title: Text(localization.lookup(field.split('#')[0])),
                   leading: Padding(
                     padding: const EdgeInsets.only(left: 6, top: 10),
                     child: Icon(getSettingIcon(section), size: 22),

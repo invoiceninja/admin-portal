@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -112,6 +113,16 @@ class _ListFilterState extends State<ListFilter> {
 
     return Row(
       children: [
+        if (widget.entityType == EntityType.settings)
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: IconButton(
+                padding: const EdgeInsets.only(right: 10),
+                onPressed: () {
+                  //
+                },
+                icon: Icon(MdiIcons.newBox)),
+          ),
         Expanded(
           flex: 2,
           child: Padding(
