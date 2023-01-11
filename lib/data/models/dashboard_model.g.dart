@@ -8,6 +8,7 @@ part of 'dashboard_model.dart';
 
 const DateRange _$last7Days = const DateRange._('last7Days');
 const DateRange _$last30Days = const DateRange._('last30Days');
+const DateRange _$last365Days = const DateRange._('last365Days');
 const DateRange _$thisMonth = const DateRange._('thisMonth');
 const DateRange _$lastMonth = const DateRange._('lastMonth');
 const DateRange _$thisQuarter = const DateRange._('thisQuarter');
@@ -22,6 +23,8 @@ DateRange _$valueOf(String name) {
       return _$last7Days;
     case 'last30Days':
       return _$last30Days;
+    case 'last365Days':
+      return _$last365Days;
     case 'thisMonth':
       return _$thisMonth;
     case 'lastMonth':
@@ -44,6 +47,7 @@ DateRange _$valueOf(String name) {
 final BuiltSet<DateRange> _$values = new BuiltSet<DateRange>(const <DateRange>[
   _$last7Days,
   _$last30Days,
+  _$last365Days,
   _$thisMonth,
   _$lastMonth,
   _$thisQuarter,

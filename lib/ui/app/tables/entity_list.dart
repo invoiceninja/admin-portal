@@ -162,7 +162,8 @@ class _EntityListState extends State<EntityList> {
             Flexible(
               fit: FlexFit.loose,
               child: entityList.isEmpty
-                  ? HelpText(AppLocalization.of(context).clickPlusToAddItem)
+                  ? HelpText(
+                      AppLocalization.of(context).clickPlusToCreateRecord)
                   : ScrollableListViewBuilder(
                       primary: true,
                       padding: const EdgeInsets.symmetric(vertical: 20),

@@ -119,22 +119,30 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton<DateRangeComparison>(
-                                items: DateRangeComparison.values
-                                    .map((dateRange) =>
-                                        DropdownMenuItem<DateRangeComparison>(
-                                          child: Text(localization
-                                              .lookup(dateRange.toString())),
-                                          value: dateRange,
-                                        ))
-                                    .toList(),
-                                onChanged: (dateRange) {
-                                  setState(() =>
-                                      _settings.compareDateRange = dateRange);
-                                },
-                                value: _settings.compareDateRange,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  '${localization.compareTo}:  ',
+                                  style: Theme.of(context).textTheme.subtitle1,
+                                ),
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<DateRangeComparison>(
+                                    items: DateRangeComparison.values
+                                        .map((dateRange) => DropdownMenuItem<
+                                                DateRangeComparison>(
+                                              child: Text(localization.lookup(
+                                                  dateRange.toString())),
+                                              value: dateRange,
+                                            ))
+                                        .toList(),
+                                    onChanged: (dateRange) {
+                                      setState(() => _settings
+                                          .compareDateRange = dateRange);
+                                    },
+                                    value: _settings.compareDateRange,
+                                  ),
+                                ),
+                              ],
                             ),
                             _settings.compareDateRange !=
                                     DateRangeComparison.customRange
