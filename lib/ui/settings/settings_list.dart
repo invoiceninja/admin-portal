@@ -385,7 +385,7 @@ class SettingsSearch extends StatelessWidget {
           'online_payment_email',
           'manual_payment_email',
           'use_available_credits',
-          'enable_applying_payments_later',
+          'enable_applying_payments_later#2022-06-06',
           'allow_over_payment',
           'allow_under_payment',
         ]
@@ -462,8 +462,8 @@ class SettingsSearch extends StatelessWidget {
         [
           'long_press_multiselect',
           'biometric_authentication',
-          'enable_flexible_search',
-          'enable_tooltips',
+          'enable_flexible_search#2022-07-05',
+          'enable_tooltips#2022-07-05',
           'show_pdf_preview',
           'refresh_data',
         ],

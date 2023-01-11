@@ -200,6 +200,7 @@ abstract class SettingsUIState extends Object
       origCompany: origCompany ?? CompanyEntity(),
       origUser: origUser ?? UserEntity(),
       isChanged: false,
+      showNewFeatures: false,
       updatedAt: 0,
       filterClearedAt: 0,
       tabIndex: 0,
@@ -247,6 +248,8 @@ abstract class SettingsUIState extends Object
 
   int get filterClearedAt;
 
+  bool get showNewFeatures;
+
   bool get isFiltered => entityType != EntityType.company;
 
   SettingsEntity get settings {
@@ -260,8 +263,9 @@ abstract class SettingsUIState extends Object
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(SettingsUIStateBuilder builder) =>
-      builder..selectedTemplate = EmailTemplate.invoice;
+  static void _initializeBuilder(SettingsUIStateBuilder builder) => builder
+    ..selectedTemplate = EmailTemplate.invoice
+    ..showNewFeatures = false;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;
