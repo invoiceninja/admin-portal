@@ -73,7 +73,7 @@ class _SettingsListState extends State<SettingsList> {
           if (state.isLoading) LinearProgressIndicator(),
         ],
       );
-    else if (settingsUIState.filter != null)
+    else if (settingsUIState.filter != null || settingsUIState.showNewSettings)
       return SettingsSearch(
         viewModel: widget.viewModel,
         filter: settingsUIState.filter,
@@ -403,8 +403,8 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsProducts: [
         [
-          'track_inventory',
-          'stock_notifications',
+          'track_inventory#2022-06-03',
+          'stock_notifications#2022-06-03',
           'show_product_discount',
           'show_product_cost',
           'fill_products',
@@ -604,25 +604,29 @@ class SettingsSearch extends StatelessWidget {
       ]
     };
 
-    return ScrollableListView(
-      children: <Widget>[
-        for (var section in map.keys)
-          for (int i = 0; i < map[section].length; i++)
-            for (var field in map[section][i])
-              if (localization
-                  .lookup(field.split('#')[0])
-                  .toLowerCase()
-                  .contains(filter.toLowerCase()))
-                ListTile(
-                  title: Text(localization.lookup(field.split('#')[0])),
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 6, top: 10),
-                    child: Icon(getSettingIcon(section), size: 22),
+    if (store.state.settingsUIState.showNewSettings) {
+      return Placeholder();
+    } else {
+      return ScrollableListView(
+        children: [
+          for (var section in map.keys)
+            for (int i = 0; i < map[section].length; i++)
+              for (var field in map[section][i])
+                if (localization
+                    .lookup(field.split('#')[0])
+                    .toLowerCase()
+                    .contains(filter.toLowerCase()))
+                  ListTile(
+                    title: Text(localization.lookup(field.split('#')[0])),
+                    leading: Padding(
+                      padding: const EdgeInsets.only(left: 6, top: 10),
+                      child: Icon(getSettingIcon(section), size: 22),
+                    ),
+                    subtitle: Text(localization.lookup(section)),
+                    onTap: () => viewModel.loadSection(context, section, i),
                   ),
-                  subtitle: Text(localization.lookup(section)),
-                  onTap: () => viewModel.loadSection(context, section, i),
-                ),
-      ],
-    );
+        ],
+      );
+    }
   }
 }
