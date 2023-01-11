@@ -477,7 +477,7 @@ class SettingsSearch extends StatelessWidget {
           'activate_company',
           'enable_markdown',
           'include_drafts',
-          'include_deleted',
+          'include_deleted#2022-10-07',
           'api_tokens',
           'api_webhooks',
           'purge_data',
@@ -537,7 +537,7 @@ class SettingsSearch extends StatelessWidget {
           'subdomain',
           'domain',
           'client_document_upload',
-          'vendor_document_upload',
+          'vendor_document_upload#2022-07-06',
         ],
         [
           'client_registration',
@@ -579,7 +579,7 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsBankAccounts: [
         [
-          'bank_accounts',
+          'bank_accounts#2022-09-13',
         ],
       ],
       kSettingsTransactionRules: [
