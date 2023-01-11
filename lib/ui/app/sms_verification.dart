@@ -142,6 +142,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
                     ),
                   ] else
                     IntlPhoneField(
+                      disableLengthCheck: true,
                       autofocus: true,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
