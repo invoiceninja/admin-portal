@@ -134,7 +134,7 @@ ReportResult paymentReport(
       if (payment.isDeleted && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
-      for (var creditPaymentable in payment.invoicePaymentables) {
+      for (var creditPaymentable in payment.creditPaymentables) {
         final credit =
             creditMap[creditPaymentable.invoiceId] ?? InvoiceEntity();
         if (credit.isDeleted && !userCompany.company.reportIncludeDeleted) {
