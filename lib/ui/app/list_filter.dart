@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
 import 'package:invoiceninja_flutter/ui/app/search_text.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -119,7 +120,8 @@ class _ListFilterState extends State<ListFilter> {
             child: IconButton(
                 padding: const EdgeInsets.only(right: 8),
                 onPressed: () {
-                  //
+                  widget.onFilterChanged(null);
+                  store.dispatch(ToggleShowNewSettings());
                 },
                 icon: Icon(MdiIcons.newBox)),
           ),

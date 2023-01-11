@@ -121,4 +121,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return state
         .rebuild((b) => b..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
+  TypedReducer<SettingsUIState, ToggleShowNewSettings>((state, action) {
+    return state.rebuild((b) => b..showNewSettings = !state.showNewSettings);
+  }),
 ]);

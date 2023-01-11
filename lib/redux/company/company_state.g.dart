@@ -328,8 +328,8 @@ class _$SettingsUIStateSerializer
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
-      'showNewFeatures',
-      serializers.serialize(object.showNewFeatures,
+      'showNewSettings',
+      serializers.serialize(object.showNewSettings,
           specifiedType: const FullType(bool)),
     ];
     Object value;
@@ -419,8 +419,8 @@ class _$SettingsUIStateSerializer
           result.filterClearedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'showNewFeatures':
-          result.showNewFeatures = serializers.deserialize(value,
+        case 'showNewSettings':
+          result.showNewSettings = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -1088,7 +1088,7 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final int filterClearedAt;
   @override
-  final bool showNewFeatures;
+  final bool showNewSettings;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
@@ -1110,7 +1110,7 @@ class _$SettingsUIState extends SettingsUIState {
       this.selectedTemplate,
       this.filter,
       this.filterClearedAt,
-      this.showNewFeatures})
+      this.showNewSettings})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         company, 'SettingsUIState', 'company');
@@ -1140,7 +1140,7 @@ class _$SettingsUIState extends SettingsUIState {
     BuiltValueNullFieldError.checkNotNull(
         filterClearedAt, 'SettingsUIState', 'filterClearedAt');
     BuiltValueNullFieldError.checkNotNull(
-        showNewFeatures, 'SettingsUIState', 'showNewFeatures');
+        showNewSettings, 'SettingsUIState', 'showNewSettings');
   }
 
   @override
@@ -1171,7 +1171,7 @@ class _$SettingsUIState extends SettingsUIState {
         selectedTemplate == other.selectedTemplate &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
-        showNewFeatures == other.showNewFeatures;
+        showNewSettings == other.showNewSettings;
   }
 
   int __hashCode;
@@ -1215,7 +1215,7 @@ class _$SettingsUIState extends SettingsUIState {
                     selectedTemplate.hashCode),
                 filter.hashCode),
             filterClearedAt.hashCode),
-        showNewFeatures.hashCode));
+        showNewSettings.hashCode));
   }
 
   @override
@@ -1237,7 +1237,7 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('selectedTemplate', selectedTemplate)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
-          ..add('showNewFeatures', showNewFeatures))
+          ..add('showNewSettings', showNewSettings))
         .toString();
   }
 }
@@ -1320,10 +1320,10 @@ class SettingsUIStateBuilder
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  bool _showNewFeatures;
-  bool get showNewFeatures => _$this._showNewFeatures;
-  set showNewFeatures(bool showNewFeatures) =>
-      _$this._showNewFeatures = showNewFeatures;
+  bool _showNewSettings;
+  bool get showNewSettings => _$this._showNewSettings;
+  set showNewSettings(bool showNewSettings) =>
+      _$this._showNewSettings = showNewSettings;
 
   SettingsUIStateBuilder() {
     SettingsUIState._initializeBuilder(this);
@@ -1348,7 +1348,7 @@ class SettingsUIStateBuilder
       _selectedTemplate = $v.selectedTemplate;
       _filter = $v.filter;
       _filterClearedAt = $v.filterClearedAt;
-      _showNewFeatures = $v.showNewFeatures;
+      _showNewSettings = $v.showNewSettings;
       _$v = null;
     }
     return this;
@@ -1394,8 +1394,8 @@ class SettingsUIStateBuilder
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
                   filterClearedAt, 'SettingsUIState', 'filterClearedAt'),
-              showNewFeatures: BuiltValueNullFieldError.checkNotNull(
-                  showNewFeatures, 'SettingsUIState', 'showNewFeatures'));
+              showNewSettings: BuiltValueNullFieldError.checkNotNull(
+                  showNewSettings, 'SettingsUIState', 'showNewSettings'));
     } catch (_) {
       String _$failedField;
       try {
