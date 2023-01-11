@@ -47,6 +47,9 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _bccEmailController = TextEditingController();
   final _emailStyleCustomController = TextEditingController();
   final _emailSignatureController = TextEditingController();
+  final _postmarkSecretController = TextEditingController();
+  final _mailgunSecretController = TextEditingController();
+  final _mailgunDomainController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -76,6 +79,9 @@ class _EmailSettingsState extends State<EmailSettings> {
       _bccEmailController,
       _emailStyleCustomController,
       _emailSignatureController,
+      _postmarkSecretController,
+      _mailgunSecretController,
+      _mailgunDomainController,
     ];
 
     _controllers
@@ -88,6 +94,9 @@ class _EmailSettingsState extends State<EmailSettings> {
     _bccEmailController.text = settings.bccEmail;
     _emailStyleCustomController.text = settings.emailStyleCustom;
     _emailSignatureController.text = settings.emailSignature;
+    _postmarkSecretController.text = settings.postmarkSecret;
+    _mailgunSecretController.text = settings.mailgunSecret;
+    _mailgunDomainController.text = settings.mailgunDomain;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -102,7 +111,10 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..replyToName = _replyToNameController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
       ..emailStyleCustom = _emailStyleCustomController.text.trim()
-      ..emailSignature = _emailSignatureController.text.trim());
+      ..emailSignature = _emailSignatureController.text.trim()
+      ..postmarkSecret = _postmarkSecretController.text.trim()
+      ..mailgunSecret = _mailgunSecretController.text.trim()
+      ..mailgunDomain = _mailgunDomainController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -132,105 +144,131 @@ class _EmailSettingsState extends State<EmailSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          if (viewModel.state.isHosted) ...[
-            FormCard(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                AppDropdownButton<String>(
-                    showBlank: state.uiState.settingsUIState.isFiltered,
-                    labelText: localization.emailProvider,
-                    value: settings.emailSendingMethod,
-                    onChanged: (dynamic value) {
-                      viewModel.onSettingsChanged(settings
-                          .rebuild((b) => b..emailSendingMethod = value));
-                    },
-                    items: [
-                      DropdownMenuItem(
-                          child: Text(localization.defaultWord),
-                          value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
-                      DropdownMenuItem(
-                          child: Text('Gmail'),
-                          value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
-                      DropdownMenuItem(
-                          child: Text('Microsoft - Beta'),
-                          value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
-                    ]),
-                if (settings.emailSendingMethod ==
-                    SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
-                  if (gmailUserIds.isEmpty) ...[
-                    SizedBox(height: 16),
-                    if (isApple() || isDesktopOS())
-                      Text(
-                        localization.useWebAppToConnectGmail,
-                        textAlign: TextAlign.center,
-                      )
-                    else
-                      OutlinedButton(
-                        child: Text(localization.connectGmail.toUpperCase()),
-                        onPressed: () {
-                          final store = StoreProvider.of<AppState>(context);
-                          store.dispatch(ViewSettings(
-                            section: kSettingsUserDetails,
-                            force: true,
-                          ));
-                        },
-                      )
-                  ] else
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: DynamicSelector(
-                        onChanged: (userId) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..gmailSendingUserId = userId)),
-                        entityType: EntityType.user,
-                        entityId: settings.gmailSendingUserId,
-                        entityIds: gmailUserIds,
-                        overrideSuggestedLabel: (entity) {
-                          final user = entity as UserEntity;
-                          return '${user.fullName} • ${user.email}';
-                        },
-                      ),
+          FormCard(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              AppDropdownButton<String>(
+                showBlank: state.uiState.settingsUIState.isFiltered,
+                labelText: localization.emailProvider,
+                value: settings.emailSendingMethod,
+                onChanged: (dynamic value) {
+                  viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..emailSendingMethod = value));
+                },
+                items: [
+                  DropdownMenuItem(
+                      child: Text(localization.defaultWord),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
+                  if (viewModel.state.isHosted) ...[
+                    DropdownMenuItem(
+                        child: Text('Gmail'),
+                        value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
+                    DropdownMenuItem(
+                        child: Text('Microsoft'),
+                        value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
+                  ],
+                  DropdownMenuItem(
+                      child: Text('Postmark'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
+                  DropdownMenuItem(
+                      child: Text('Mailgun'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN),
+                ],
+              ),
+              if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
+                if (gmailUserIds.isEmpty) ...[
+                  SizedBox(height: 20),
+                  if (isApple() || isDesktopOS())
+                    Text(
+                      localization.useWebAppToConnectGmail,
+                      textAlign: TextAlign.center,
+                    )
+                  else
+                    OutlinedButton(
+                      child: Text(localization.connectGmail.toUpperCase()),
+                      onPressed: () {
+                        final store = StoreProvider.of<AppState>(context);
+                        store.dispatch(ViewSettings(
+                          section: kSettingsUserDetails,
+                          force: true,
+                        ));
+                      },
+                    )
+                ] else
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: DynamicSelector(
+                      onChanged: (userId) => viewModel.onSettingsChanged(
+                          settings
+                              .rebuild((b) => b..gmailSendingUserId = userId)),
+                      entityType: EntityType.user,
+                      entityId: settings.gmailSendingUserId,
+                      entityIds: gmailUserIds,
+                      overrideSuggestedLabel: (entity) {
+                        final user = entity as UserEntity;
+                        return '${user.fullName} • ${user.email}';
+                      },
                     ),
-                if (settings.emailSendingMethod ==
-                    SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT)
-                  if (microsoftUserIds.isEmpty) ...[
-                    SizedBox(height: 16),
-                    if (isApple() || !kIsWeb)
-                      Text(
-                        localization.useWebAppToConnectMicrosoft,
-                        textAlign: TextAlign.center,
-                      )
-                    else
-                      OutlinedButton(
-                        child:
-                            Text(localization.connectMicrosoft.toUpperCase()),
-                        onPressed: () {
-                          final store = StoreProvider.of<AppState>(context);
-                          store.dispatch(ViewSettings(
-                            section: kSettingsUserDetails,
-                            force: true,
-                          ));
-                        },
-                      )
-                  ] else
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: DynamicSelector(
-                        onChanged: (userId) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..gmailSendingUserId = userId)),
-                        entityType: EntityType.user,
-                        entityId: settings.gmailSendingUserId,
-                        entityIds: microsoftUserIds,
-                        overrideSuggestedLabel: (entity) {
-                          final user = entity as UserEntity;
-                          return '${user.fullName} • ${user.email}';
-                        },
-                      ),
+                  )
+              else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT)
+                if (microsoftUserIds.isEmpty) ...[
+                  SizedBox(height: 20),
+                  if (isApple() || !kIsWeb)
+                    Text(
+                      localization.useWebAppToConnectMicrosoft,
+                      textAlign: TextAlign.center,
+                    )
+                  else
+                    OutlinedButton(
+                      child: Text(localization.connectMicrosoft.toUpperCase()),
+                      onPressed: () {
+                        final store = StoreProvider.of<AppState>(context);
+                        store.dispatch(ViewSettings(
+                          section: kSettingsUserDetails,
+                          force: true,
+                        ));
+                      },
+                    )
+                ] else
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: DynamicSelector(
+                      onChanged: (userId) => viewModel.onSettingsChanged(
+                          settings
+                              .rebuild((b) => b..gmailSendingUserId = userId)),
+                      entityType: EntityType.user,
+                      entityId: settings.gmailSendingUserId,
+                      entityIds: microsoftUserIds,
+                      overrideSuggestedLabel: (entity) {
+                        final user = entity as UserEntity;
+                        return '${user.fullName} • ${user.email}';
+                      },
                     ),
-              ],
-            ),
-          ],
+                  )
+              else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK) ...[
+                DecoratedFormField(
+                  label: localization.secret,
+                  controller: _postmarkSecretController,
+                  keyboardType: TextInputType.text,
+                ),
+              ] else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN) ...[
+                DecoratedFormField(
+                  label: localization.secret,
+                  controller: _mailgunSecretController,
+                  keyboardType: TextInputType.text,
+                ),
+                DecoratedFormField(
+                  label: localization.domain,
+                  controller: _mailgunDomainController,
+                  keyboardType: TextInputType.text,
+                ),
+              ]
+            ],
+          ),
           FormCard(
             children: <Widget>[
               DecoratedFormField(

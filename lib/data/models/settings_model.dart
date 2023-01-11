@@ -107,6 +107,8 @@ abstract class SettingsEntity
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
+  static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';
+  static const EMAIL_SENDING_METHOD_MAILGUN = 'client_mailgun';
 
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_SENT = 'when_sent';
@@ -907,6 +909,18 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'besr_id')
   String get besrId;
+
+  @nullable
+  @BuiltValueField(wireName: 'postmark_secret')
+  String get postmarkSecret;
+
+  @nullable
+  @BuiltValueField(wireName: 'mailgun_secret')
+  String get mailgunSecret;
+
+  @nullable
+  @BuiltValueField(wireName: 'mailgun_domain')
+  String get mailgunDomain;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
