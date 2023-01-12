@@ -120,7 +120,7 @@ class _ListFilterState extends State<ListFilter> {
             child: IconButton(
                 padding: const EdgeInsets.only(right: 8),
                 onPressed: () {
-                  widget.onFilterChanged(null);
+                  //widget.onFilterChanged(null);
                   store.dispatch(ToggleShowNewSettings());
                 },
                 icon: Icon(MdiIcons.newBox)),

@@ -636,7 +636,7 @@ class SettingsSearch extends StatelessWidget {
       return ScrollableListView(children: [
         for (var parts
             in sections.map((section) => section.split('#').toList()))
-          if (filter.isEmpty ||
+          if ((filter ?? '').trim().isEmpty ||
               localization
                   .lookup(parts[1])
                   .toLowerCase()

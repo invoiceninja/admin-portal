@@ -28,6 +28,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..filterClearedAt = action.clearFilter
           ? DateTime.now().millisecondsSinceEpoch
           : state.filterClearedAt
+      ..showNewSettings = action.section != null ? state.showNewSettings : false
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null
