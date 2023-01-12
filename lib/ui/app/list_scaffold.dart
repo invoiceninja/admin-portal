@@ -178,24 +178,6 @@ class ListScaffold extends StatelessWidget {
                             color: state.headerTextColor,
                           )),
                     );
-                    return InkWell(
-                      onTap: () {
-                        if (isMobile(context) ||
-                            state.prefState.isHistoryFloated) {
-                          Scaffold.of(context).openEndDrawer();
-                        } else {
-                          store.dispatch(UpdateUserPreferences(
-                              sidebar: AppSidebar.history));
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20, left: 6),
-                        child: Icon(
-                          Icons.history,
-                          color: state.headerTextColor,
-                        ),
-                      ),
-                    );
                   })
                 /*
                   Builder(
