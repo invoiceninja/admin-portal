@@ -491,6 +491,7 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'google_analytics',
+          'matomo_id#2022-12-12',
         ],
         [
           'password_timeout',

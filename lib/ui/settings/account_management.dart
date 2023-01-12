@@ -239,14 +239,14 @@ class _AccountManagementState extends State<AccountManagement>
               isLast: true,
               children: [
                 DecoratedFormField(
-                  label: localization.matomoUrl,
-                  controller: _matomoUrl,
-                  keyboardType: TextInputType.url,
-                ),
-                DecoratedFormField(
                   label: localization.matomoId,
                   controller: _matomoId,
                   keyboardType: TextInputType.text,
+                ),
+                DecoratedFormField(
+                  label: localization.matomoUrl,
+                  controller: _matomoUrl,
+                  keyboardType: TextInputType.url,
                 ),
               ],
             ),
