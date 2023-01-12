@@ -621,7 +621,17 @@ class SettingsSearch extends StatelessWidget {
         }
       }
 
-      sections.sort((a, b) => b.compareTo(a));
+      sections.sort((a, b) {
+        if (a.startsWith('#') && b.startsWith('#')) {
+          return a.compareTo(b);
+        } else if (a.startsWith('#')) {
+          return 1;
+        } else if (b.startsWith('#')) {
+          return -1;
+        }
+
+        return b.compareTo(a);
+      });
 
       return ScrollableListView(children: [
         for (var parts
