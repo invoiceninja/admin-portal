@@ -328,6 +328,9 @@ class _$SettingsUIStateSerializer
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
+      'showNewSettings',
+      serializers.serialize(object.showNewSettings,
+          specifiedType: const FullType(bool)),
     ];
     Object value;
     value = object.filter;
@@ -415,6 +418,10 @@ class _$SettingsUIStateSerializer
         case 'filterClearedAt':
           result.filterClearedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'showNewSettings':
+          result.showNewSettings = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -1080,6 +1087,8 @@ class _$SettingsUIState extends SettingsUIState {
   final String filter;
   @override
   final int filterClearedAt;
+  @override
+  final bool showNewSettings;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
@@ -1100,7 +1109,8 @@ class _$SettingsUIState extends SettingsUIState {
       this.tabIndex,
       this.selectedTemplate,
       this.filter,
-      this.filterClearedAt})
+      this.filterClearedAt,
+      this.showNewSettings})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         company, 'SettingsUIState', 'company');
@@ -1129,6 +1139,8 @@ class _$SettingsUIState extends SettingsUIState {
         selectedTemplate, 'SettingsUIState', 'selectedTemplate');
     BuiltValueNullFieldError.checkNotNull(
         filterClearedAt, 'SettingsUIState', 'filterClearedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        showNewSettings, 'SettingsUIState', 'showNewSettings');
   }
 
   @override
@@ -1158,7 +1170,8 @@ class _$SettingsUIState extends SettingsUIState {
         tabIndex == other.tabIndex &&
         selectedTemplate == other.selectedTemplate &&
         filter == other.filter &&
-        filterClearedAt == other.filterClearedAt;
+        filterClearedAt == other.filterClearedAt &&
+        showNewSettings == other.showNewSettings;
   }
 
   int __hashCode;
@@ -1180,25 +1193,29 @@ class _$SettingsUIState extends SettingsUIState {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    company
+                                                                    $jc(
+                                                                        0,
+                                                                        company
+                                                                            .hashCode),
+                                                                    origCompany
                                                                         .hashCode),
-                                                                origCompany
+                                                                client
                                                                     .hashCode),
-                                                            client.hashCode),
-                                                        origClient.hashCode),
-                                                    group.hashCode),
-                                                origGroup.hashCode),
-                                            user.hashCode),
-                                        origUser.hashCode),
-                                    entityType.hashCode),
-                                isChanged.hashCode),
-                            updatedAt.hashCode),
-                        section.hashCode),
-                    tabIndex.hashCode),
-                selectedTemplate.hashCode),
-            filter.hashCode),
-        filterClearedAt.hashCode));
+                                                            origClient
+                                                                .hashCode),
+                                                        group.hashCode),
+                                                    origGroup.hashCode),
+                                                user.hashCode),
+                                            origUser.hashCode),
+                                        entityType.hashCode),
+                                    isChanged.hashCode),
+                                updatedAt.hashCode),
+                            section.hashCode),
+                        tabIndex.hashCode),
+                    selectedTemplate.hashCode),
+                filter.hashCode),
+            filterClearedAt.hashCode),
+        showNewSettings.hashCode));
   }
 
   @override
@@ -1219,7 +1236,8 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('tabIndex', tabIndex)
           ..add('selectedTemplate', selectedTemplate)
           ..add('filter', filter)
-          ..add('filterClearedAt', filterClearedAt))
+          ..add('filterClearedAt', filterClearedAt)
+          ..add('showNewSettings', showNewSettings))
         .toString();
   }
 }
@@ -1302,6 +1320,11 @@ class SettingsUIStateBuilder
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
+  bool _showNewSettings;
+  bool get showNewSettings => _$this._showNewSettings;
+  set showNewSettings(bool showNewSettings) =>
+      _$this._showNewSettings = showNewSettings;
+
   SettingsUIStateBuilder() {
     SettingsUIState._initializeBuilder(this);
   }
@@ -1325,6 +1348,7 @@ class SettingsUIStateBuilder
       _selectedTemplate = $v.selectedTemplate;
       _filter = $v.filter;
       _filterClearedAt = $v.filterClearedAt;
+      _showNewSettings = $v.showNewSettings;
       _$v = null;
     }
     return this;
@@ -1369,7 +1393,9 @@ class SettingsUIStateBuilder
                   selectedTemplate, 'SettingsUIState', 'selectedTemplate'),
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, 'SettingsUIState', 'filterClearedAt'));
+                  filterClearedAt, 'SettingsUIState', 'filterClearedAt'),
+              showNewSettings: BuiltValueNullFieldError.checkNotNull(
+                  showNewSettings, 'SettingsUIState', 'showNewSettings'));
     } catch (_) {
       String _$failedField;
       try {

@@ -152,11 +152,14 @@ class TransactionListItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 30),
-                      Text(
-                        formatNumber(transaction.amount, context,
-                            currencyId: transaction.currencyId),
-                        style: textStyle,
-                        textAlign: TextAlign.end,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(minWidth: 100),
+                        child: Text(
+                          formatNumber(transaction.amount, context,
+                              currencyId: transaction.currencyId),
+                          style: textStyle,
+                          textAlign: TextAlign.end,
+                        ),
                       ),
                       SizedBox(width: 25),
                       EntityStatusChip(entity: transaction),

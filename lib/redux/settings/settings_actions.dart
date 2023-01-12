@@ -214,3 +214,6 @@ class FilterSettings implements PersistUI {
 
   final String filter;
 }
+
+class ToggleShowNewSettings {}
+

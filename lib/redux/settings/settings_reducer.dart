@@ -28,6 +28,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..filterClearedAt = action.clearFilter
           ? DateTime.now().millisecondsSinceEpoch
           : state.filterClearedAt
+      ..showNewSettings = action.section != null ? state.showNewSettings : false
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null
@@ -120,5 +121,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, UpdatedSetting>((state, action) {
     return state
         .rebuild((b) => b..updatedAt = DateTime.now().millisecondsSinceEpoch);
+  }),
+  TypedReducer<SettingsUIState, ToggleShowNewSettings>((state, action) {
+    return state.rebuild((b) => b..showNewSettings = !state.showNewSettings);
   }),
 ]);
