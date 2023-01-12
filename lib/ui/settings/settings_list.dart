@@ -572,6 +572,9 @@ class SettingsSearch extends StatelessWidget {
           'attach_documents',
           'attach_ubl',
           'email_signature',
+          'microsoft',
+          'postmark#2023-01-11',
+          'mailgun#2023-01-11',
         ],
       ],
       kSettingsTemplatesAndReminders: [
