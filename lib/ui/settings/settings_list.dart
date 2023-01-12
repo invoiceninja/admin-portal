@@ -636,21 +636,26 @@ class SettingsSearch extends StatelessWidget {
       return ScrollableListView(children: [
         for (var parts
             in sections.map((section) => section.split('#').toList()))
-          ListTile(
-            title: Text(localization.lookup(parts[1])),
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 6, top: 10),
-              child: Icon(getSettingIcon(parts[2]), size: 22),
+          if (filter.isEmpty ||
+              localization
+                  .lookup(parts[1])
+                  .toLowerCase()
+                  .contains(filter.toLowerCase()))
+            ListTile(
+              title: Text(localization.lookup(parts[1])),
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 6, top: 10),
+                child: Icon(getSettingIcon(parts[2]), size: 22),
+              ),
+              trailing: parts[0].isEmpty
+                  ? null
+                  : Text(timeago.format(DateTime.parse(parts[0]),
+                      locale: localeSelector(store.state, twoLetter: true) +
+                          '_short')),
+              subtitle: Text(localization.lookup(parts[2])),
+              onTap: () =>
+                  viewModel.loadSection(context, parts[2], parseInt(parts[3])),
             ),
-            trailing: parts[0].isEmpty
-                ? null
-                : Text(timeago.format(DateTime.parse(parts[0]),
-                    locale: localeSelector(store.state, twoLetter: true) +
-                        '_short')),
-            subtitle: Text(localization.lookup(parts[2])),
-            onTap: () =>
-                viewModel.loadSection(context, parts[2], parseInt(parts[3])),
-          ),
       ]);
     } else {
       return ScrollableListView(
