@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -605,7 +608,40 @@ class SettingsSearch extends StatelessWidget {
     };
 
     if (store.state.settingsUIState.showNewSettings) {
-      return Placeholder();
+      final sections = <String>[];
+      for (var section in map.keys) {
+        for (var tab = 0; tab < map[section].length; tab++) {
+          final fields = map[section][tab];
+          for (var field in fields) {
+            final List<String> parts = field.split('#');
+            final dateAdded =
+                parts.length == 1 ? '' : convertSqlDateToDateTime(parts[1]);
+            sections.add('$dateAdded#${parts[0]}#$section#$tab');
+          }
+        }
+      }
+
+      sections.sort((a, b) => b.compareTo(a));
+
+      return ScrollableListView(children: [
+        for (var parts
+            in sections.map((section) => section.split('#').toList()))
+          ListTile(
+            title: Text(localization.lookup(parts[1])),
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 6, top: 10),
+              child: Icon(getSettingIcon(parts[2]), size: 22),
+            ),
+            trailing: parts[0].isEmpty
+                ? null
+                : Text(timeago.format(DateTime.parse(parts[0]),
+                    locale: localeSelector(store.state, twoLetter: true) +
+                        '_short')),
+            subtitle: Text(localization.lookup(parts[2])),
+            onTap: () =>
+                viewModel.loadSection(context, parts[2], parseInt(parts[3])),
+          ),
+      ]);
     } else {
       return ScrollableListView(
         children: [
