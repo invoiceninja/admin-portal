@@ -160,6 +160,24 @@ class ListScaffold extends StatelessWidget {
                 if (!isSettings &&
                     (isMobile(context) || !state.prefState.isHistoryVisible))
                   Builder(builder: (context) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                          padding: const EdgeInsets.only(right: 8),
+                          onPressed: () {
+                            if (isMobile(context) ||
+                                state.prefState.isHistoryFloated) {
+                              Scaffold.of(context).openEndDrawer();
+                            } else {
+                              store.dispatch(UpdateUserPreferences(
+                                  sidebar: AppSidebar.history));
+                            }
+                          },
+                          icon: Icon(
+                            Icons.history,
+                            color: state.headerTextColor,
+                          )),
+                    );
                     return InkWell(
                       onTap: () {
                         if (isMobile(context) ||
@@ -171,7 +189,7 @@ class ListScaffold extends StatelessWidget {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.only(right: 20, left: 6),
                         child: Icon(
                           Icons.history,
                           color: state.headerTextColor,

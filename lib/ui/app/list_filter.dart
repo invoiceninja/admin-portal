@@ -116,7 +116,7 @@ class _ListFilterState extends State<ListFilter> {
       children: [
         if (widget.entityType == EntityType.settings)
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 10),
             child: IconButton(
                 padding: const EdgeInsets.only(right: 8),
                 onPressed: () {
