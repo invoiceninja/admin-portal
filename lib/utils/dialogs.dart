@@ -392,11 +392,13 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
   String _field;
 
   void _submit() {
-    if ((_field ?? '').isEmpty) {
+    final value = (_field ?? '').trim();
+
+    if (value.isEmpty) {
       return;
     }
     Navigator.pop(context);
-    widget.callback(_field);
+    widget.callback(value);
   }
 
   @override
