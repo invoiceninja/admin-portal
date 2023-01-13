@@ -3,6 +3,9 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - in_app_review (0.2.0):
     - FlutterMacOS
   - package_info (0.0.1):
@@ -38,6 +41,7 @@ PODS:
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
+  - in_app_purchase_storekit (from `Flutter/ephemeral/.symlinks/plugins/in_app_purchase_storekit/macos`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - package_info (from `Flutter/ephemeral/.symlinks/plugins/package_info/macos`)
   - package_info_plus_macos (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus_macos/macos`)
@@ -60,6 +64,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   FlutterMacOS:
     :path: Flutter/ephemeral
+  in_app_purchase_storekit:
+    :path: Flutter/ephemeral/.symlinks/plugins/in_app_purchase_storekit/macos
   in_app_review:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
   package_info:
@@ -90,6 +96,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FlutterMacOS: ae6af50a8ea7d6103d888583d46bd8328a7e9811
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  in_app_purchase_storekit: 6b297e2b5eab9fa3251a492d57301722e4132a71
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   package_info: 6eba2fd8d3371dda2d85c8db6fe97488f24b74b2
   package_info_plus_macos: f010621b07802a241d96d01876d6705f15e77c1c
@@ -105,6 +112,6 @@ SPEC CHECKSUMS:
   url_launcher_macos: 597e05b8e514239626bcf4a850fcf9ef5c856ec3
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
 
-PODFILE CHECKSUM: a884f6dd3f7494f3892ee6c81feea3a3abbf9153
+PODFILE CHECKSUM: 0d3963a09fc94f580682bd88480486da345dc3f0
 
 COCOAPODS: 1.11.3
