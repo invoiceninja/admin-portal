@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
@@ -185,6 +186,10 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
@@ -210,6 +215,10 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       _lastNameController,
       _emailController,
       _phoneController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -220,6 +229,10 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
     _phoneController.text = contact.phone;
+    _custom1Controller.text = contact.customValue1;
+    _custom2Controller.text = contact.customValue2;
+    _custom3Controller.text = contact.customValue3;
+    _custom4Controller.text = contact.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -242,7 +255,11 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim());
+      ..phone = _phoneController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
     if (contact != widget.contact) {
       _debouncer.run(() {
         widget.viewModel.onChangedContact(contact, widget.index);
@@ -285,6 +302,30 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.phone,
           keyboardType: TextInputType.phone,
+        ),
+        CustomField(
+          controller: _custom1Controller,
+          field: CustomFieldType.vendorContact1,
+          value: widget.contact.customValue1,
+          onSavePressed: (_) => _onDoneContactPressed(),
+        ),
+        CustomField(
+          controller: _custom2Controller,
+          field: CustomFieldType.vendorContact2,
+          value: widget.contact.customValue2,
+          onSavePressed: (_) => _onDoneContactPressed(),
+        ),
+        CustomField(
+          controller: _custom3Controller,
+          field: CustomFieldType.vendorContact3,
+          value: widget.contact.customValue3,
+          onSavePressed: (_) => _onDoneContactPressed(),
+        ),
+        CustomField(
+          controller: _custom4Controller,
+          field: CustomFieldType.vendorContact4,
+          value: widget.contact.customValue4,
+          onSavePressed: (_) => _onDoneContactPressed(),
         ),
       ],
     );
