@@ -557,7 +557,12 @@ class SettingsSearch extends StatelessWidget {
           'messages',
         ],
         [
-          'custom_css',
+          'header',
+          'footer',
+          if (isSelfHosted(context)) ...[
+            'custom_css',
+            'custom_javascript',
+          ],
         ],
       ],
       kSettingsEmailSettings: [
