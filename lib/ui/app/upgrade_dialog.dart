@@ -231,6 +231,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 2),
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
