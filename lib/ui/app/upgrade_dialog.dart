@@ -228,38 +228,45 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
         return ListTile(
           title: Text(productDetails.description),
-          trailing: TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.green[800],
-              // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
-              // ignore: deprecated_member_use
-              primary: Colors.white,
-            ),
-            onPressed: () {
-              if (previousPurchase != null) {
-                confirmPriceChange(context);
-              } else {
-                PurchaseParam purchaseParam;
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 4),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.green[800],
+                  // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
+                  // ignore: deprecated_member_use
+                  primary: Colors.white,
+                ),
+                onPressed: () {
+                  if (previousPurchase != null) {
+                    confirmPriceChange(context);
+                  } else {
+                    PurchaseParam purchaseParam;
 
-                if (Platform.isAndroid) {
-                  purchaseParam = GooglePlayPurchaseParam(
-                      productDetails: productDetails,
-                      applicationUserName: account.id);
-                } else {
-                  purchaseParam = PurchaseParam(
-                    productDetails: productDetails,
-                    applicationUserName: account.id,
-                  );
-                }
+                    if (Platform.isAndroid) {
+                      purchaseParam = GooglePlayPurchaseParam(
+                          productDetails: productDetails,
+                          applicationUserName: account.id);
+                    } else {
+                      purchaseParam = PurchaseParam(
+                        productDetails: productDetails,
+                        applicationUserName: account.id,
+                      );
+                    }
 
-                _inAppPurchase.buyNonConsumable(
-                  purchaseParam: purchaseParam,
-                );
-              }
-            },
-            child: Text(previousPurchase != null
-                ? AppLocalization.of(context).activate
-                : productDetails.price),
+                    _inAppPurchase.buyNonConsumable(
+                      purchaseParam: purchaseParam,
+                    );
+                  }
+                },
+                child: Text(previousPurchase != null
+                    ? AppLocalization.of(context).activate
+                    : productDetails.price),
+              ),
+              SizedBox(height: 20),
+            ],
           ),
         );
       },
