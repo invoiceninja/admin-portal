@@ -259,8 +259,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               (kIsWeb &&
                   state.isSelfHosted &&
                   state.userCompany.isAdmin &&
-                  // TODO remove this
-                  !state.isDemo))
+                  !state.isDemo &&
+                  false)) // TODO remove this once it works again
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
