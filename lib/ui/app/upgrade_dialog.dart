@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
@@ -127,7 +128,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     if (_queryProductError == null) {
       stack.add(
         Container(
-          width: double.maxFinite,
+          width: isDesktopOS() ? 400 : double.maxFinite,
           child: Scrollbar(
             thumbVisibility: true,
             controller: _scrollController,
@@ -230,6 +231,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 4),
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
