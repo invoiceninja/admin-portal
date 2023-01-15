@@ -338,31 +338,30 @@ class _LoginState extends State<LoginView> {
             height: 16,
             color: state.accentColor,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 25),
-            child: Center(
-              child: InkWell(
-                // TODO correct this
-                child: Image.asset(
-                    state.prefState.enableDarkMode
-                        ? 'assets/images/logo_dark.png'
-                        : 'assets/images/logo_light.png',
-                    height: 50),
-                onTap: isApple()
-                    ? null
-                    : () {
-                        launchUrl(Uri.parse(kSiteUrl));
-                      },
-                onLongPress: () {
-                  if (kReleaseMode) {
-                    return;
-                  }
+          if (state.isWhiteLabeled)
+            SizedBox(height: 50)
+          else
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 25),
+              child: Center(
+                child: InkWell(
+                  // TODO correct this
+                  child: Image.asset(
+                      state.prefState.enableDarkMode
+                          ? 'assets/images/logo_dark.png'
+                          : 'assets/images/logo_light.png',
+                      height: 50),
+                  onTap: () => launchUrl(Uri.parse(kSiteUrl)),
+                  onLongPress: () {
+                    if (kReleaseMode) {
+                      return;
+                    }
 
-                  setState(() => _tokenLogin = !_tokenLogin);
-                },
+                    setState(() => _tokenLogin = !_tokenLogin);
+                  },
+                ),
               ),
             ),
-          ),
           if (_tokenLogin)
             FormCard(
               forceNarrow: true,

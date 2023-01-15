@@ -80,6 +80,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
     @required bool reportErrors,
+    @required bool isWhiteLabeled,
     String url,
     String referralCode,
     String currentRoute,
@@ -88,6 +89,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isLoading: false,
       isSaving: false,
       isTesting: false,
+      isWhiteLabeled: isWhiteLabeled,
       dismissedNativeWarning: false,
       lastError: '',
       authState: AuthState(
@@ -116,6 +118,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isSaving;
 
   bool get isTesting;
+
+  bool get isWhiteLabeled;
 
   bool get dismissedNativeWarning;
 
@@ -801,8 +805,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isDemo => cleanApiUrl(authState.url) == kAppDemoUrl;
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
-
-  bool get isWhiteLabeled => account.plan == kPlanWhiteLabel;
 
   bool get isProPlan => isEnterprisePlan || account.plan == kPlanPro;
 

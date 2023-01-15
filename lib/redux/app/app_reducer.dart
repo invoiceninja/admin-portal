@@ -45,6 +45,7 @@ AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState(
             prefState: state.prefState,
+            isWhiteLabeled: state.isWhiteLabeled,
             reportErrors: state.account.reportErrors)
         .rebuild((b) => b
           ..authState.replace(state.authState.rebuild((b) => b
