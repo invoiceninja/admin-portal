@@ -64,8 +64,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 // https://github.com/dart-lang/io/issues/83#issuecomment-940617222
-const isrgRootX1 =
-    '''-----BEGIN CERTIFICATE-----
+const isrgRootX1 = '''-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
 cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMTUwNjA0MTEwNDM4
@@ -252,9 +251,12 @@ Future<AppState> _initialState(bool isTesting) async {
   }
 
   bool reportErrors = false;
+  bool whiteLabeled = false;
   String referralCode = '';
+
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
+    whiteLabeled = WebUtils.getHtmlValue('white-label') == '1';
     referralCode = WebUtils.getHtmlValue('rc');
     if (reportErrors) {
       print('## Error reporting is enabled');
@@ -266,6 +268,7 @@ Future<AppState> _initialState(bool isTesting) async {
     url: Config.DEMO_MODE ? '' : url,
     referralCode: referralCode,
     reportErrors: reportErrors,
+    isWhiteLabeled: whiteLabeled,
     currentRoute: browserRoute,
   );
 }

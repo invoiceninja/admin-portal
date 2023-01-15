@@ -221,6 +221,7 @@ Middleware<AppState> _createLoadState(
 
       final AppState appState = AppState(
               prefState: prefState,
+              isWhiteLabeled: store.state.isWhiteLabeled,
               reportErrors: store.state.account.reportErrors)
           .rebuild((b) => b
             ..authState.replace(authState)
