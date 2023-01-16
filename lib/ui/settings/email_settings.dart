@@ -366,6 +366,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 ],
               ),
               AppDropdownButton<String>(
+                showBlank: true,
                 labelText: localization.emailAlignment,
                 value: viewModel.settings.emailAlignment,
                 onChanged: (dynamic value) => viewModel.onSettingsChanged(
