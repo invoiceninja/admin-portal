@@ -152,12 +152,13 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     bool isValid = true;
     values.forEach((value) {
       value ??= '';
-      final containsCounter = value.contains('{\$client_counter}') ||
+      final containsSubCounter = value.contains('{\$client_counter}') ||
           value.contains('{\$group_counter}');
-      final containsId = value.contains('{\$client_id_number}') ||
-          value.contains('{\$client_number}');
+      final containsCounterOrId = value.contains('{\$client_id_number}') ||
+          value.contains('{\$client_number}') ||
+          value.contains('{\$counter}');
 
-      if (containsCounter && !containsId) {
+      if (containsSubCounter && !containsCounterOrId) {
         isValid = false;
       }
     });
