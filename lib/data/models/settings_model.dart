@@ -922,6 +922,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'mailgun_domain')
   String get mailgunDomain;
 
+  @nullable
+  @BuiltValueField(wireName: 'email_alignment')
+  String get emailAlignment;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
