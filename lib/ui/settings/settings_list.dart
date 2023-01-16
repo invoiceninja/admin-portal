@@ -468,6 +468,7 @@ class SettingsSearch extends StatelessWidget {
           'enable_flexible_search#2022-07-05',
           'enable_tooltips#2022-07-05',
           'show_pdf_preview',
+          'pdf_preview_location#2022-10-24',
           'refresh_data',
         ],
         [
