@@ -21,7 +21,6 @@ import 'package:share/share.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -106,15 +105,18 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     });
   }
 
-  Future<Response> _loadPDF() async {
+  Future<Response> _loadPDF({bool sendEmail = false}) async {
     final client = widget.viewModel.client;
     http.Response response;
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final url = '${state.credentials.url}/client_statement';
     final webClient = WebClient();
+    String url = '${state.credentials.url}/client_statement';
+    if (sendEmail) {
+      url += '?send_email=true';
+    }
 
     String startDate = '';
     String endDate = '';
@@ -209,14 +211,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             ),
           ];
     */
-
-    bool showEmail = false; //isDesktop(context);
-
-    // TODO: remove this code
-    // hide email option on web to prevent dialog problem
-    if (kIsWeb && !client.hasEmailAddress) {
-      showEmail = false;
-    }
 
     final showPayments = Theme(
       data: ThemeData(
@@ -360,14 +354,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 ],
               ),
               actions: <Widget>[
-                if (showEmail)
-                  TextButton(
-                    child: Text(localization.email,
-                        style: TextStyle(color: state.headerTextColor)),
-                    onPressed: () {
-                      handleEntityAction(client, EntityAction.sendEmail);
-                    },
-                  ),
                 AppTextButton(
                   isInHeader: true,
                   label: localization.download,
@@ -405,6 +391,42 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               await Share.shareFiles([filePath]);
                             }
                           }
+                        },
+                ),
+                AppTextButton(
+                  isInHeader: true,
+                  label: localization.email,
+                  onPressed: _response == null
+                      ? null
+                      : () async {
+                          if (!client.hasEmailAddress) {
+                            showMessageDialog(
+                                context: context,
+                                message: localization.clientEmailNotSet,
+                                secondaryActions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        editEntity(
+                                            entity: state.clientState
+                                                .get(client.id));
+                                      },
+                                      child: Text(localization.editClient
+                                          .toUpperCase()))
+                                ]);
+                          }
+
+                          confirmCallback(
+                              message: localization.sendEmail,
+                              context: context,
+                              callback: (_) async {
+                                final response =
+                                    await _loadPDF(sendEmail: true);
+
+                                if (response.statusCode >= 200) {
+                                  showToast(localization.emailedStatement);
+                                }
+                              });
                         },
                 ),
                 if (isDesktop(context))
