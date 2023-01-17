@@ -343,6 +343,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_task_project',
       serializers.serialize(object.invoiceTaskProject,
           specifiedType: const FullType(bool)),
+      'invoice_task_hours',
+      serializers.serialize(object.invoiceTaskHours,
+          specifiedType: const FullType(bool)),
       'auto_start_tasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
@@ -855,6 +858,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_task_project':
           result.invoiceTaskProject = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_hours':
+          result.invoiceTaskHours = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'auto_start_tasks':
@@ -1776,6 +1783,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceTaskProject;
   @override
+  final bool invoiceTaskHours;
+  @override
   final bool autoStartTasks;
   @override
   final bool showTasksTable;
@@ -1903,6 +1912,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.invoiceTaskTimelog,
       this.invoiceTaskDatelog,
       this.invoiceTaskProject,
+      this.invoiceTaskHours,
       this.autoStartTasks,
       this.showTasksTable,
       this.showTaskEndDate,
@@ -2092,6 +2102,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(
         invoiceTaskProject, 'CompanyEntity', 'invoiceTaskProject');
     BuiltValueNullFieldError.checkNotNull(
+        invoiceTaskHours, 'CompanyEntity', 'invoiceTaskHours');
+    BuiltValueNullFieldError.checkNotNull(
         autoStartTasks, 'CompanyEntity', 'autoStartTasks');
     BuiltValueNullFieldError.checkNotNull(
         showTasksTable, 'CompanyEntity', 'showTasksTable');
@@ -2216,6 +2228,7 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskTimelog == other.invoiceTaskTimelog &&
         invoiceTaskDatelog == other.invoiceTaskDatelog &&
         invoiceTaskProject == other.invoiceTaskProject &&
+        invoiceTaskHours == other.invoiceTaskHours &&
         autoStartTasks == other.autoStartTasks &&
         showTasksTable == other.showTasksTable &&
         showTaskEndDate == other.showTaskEndDate &&
@@ -2255,10 +2268,10 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), notifyVendorWhenPaid.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode),
-                                                                                invoiceTaskTimelog.hashCode),
-                                                                            invoiceTaskDatelog.hashCode),
-                                                                        invoiceTaskProject.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), notifyVendorWhenPaid.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
+                                                                                invoiceTaskDatelog.hashCode),
+                                                                            invoiceTaskProject.hashCode),
+                                                                        invoiceTaskHours.hashCode),
                                                                     autoStartTasks.hashCode),
                                                                 showTasksTable.hashCode),
                                                             showTaskEndDate.hashCode),
@@ -2371,6 +2384,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('invoiceTaskTimelog', invoiceTaskTimelog)
           ..add('invoiceTaskDatelog', invoiceTaskDatelog)
           ..add('invoiceTaskProject', invoiceTaskProject)
+          ..add('invoiceTaskHours', invoiceTaskHours)
           ..add('autoStartTasks', autoStartTasks)
           ..add('showTasksTable', showTasksTable)
           ..add('showTaskEndDate', showTaskEndDate)
@@ -2865,6 +2879,11 @@ class CompanyEntityBuilder
   set invoiceTaskProject(bool invoiceTaskProject) =>
       _$this._invoiceTaskProject = invoiceTaskProject;
 
+  bool _invoiceTaskHours;
+  bool get invoiceTaskHours => _$this._invoiceTaskHours;
+  set invoiceTaskHours(bool invoiceTaskHours) =>
+      _$this._invoiceTaskHours = invoiceTaskHours;
+
   bool _autoStartTasks;
   bool get autoStartTasks => _$this._autoStartTasks;
   set autoStartTasks(bool autoStartTasks) =>
@@ -3036,6 +3055,7 @@ class CompanyEntityBuilder
       _invoiceTaskTimelog = $v.invoiceTaskTimelog;
       _invoiceTaskDatelog = $v.invoiceTaskDatelog;
       _invoiceTaskProject = $v.invoiceTaskProject;
+      _invoiceTaskHours = $v.invoiceTaskHours;
       _autoStartTasks = $v.autoStartTasks;
       _showTasksTable = $v.showTasksTable;
       _showTaskEndDate = $v.showTaskEndDate;
@@ -3179,6 +3199,7 @@ class CompanyEntityBuilder
               invoiceTaskTimelog: BuiltValueNullFieldError.checkNotNull(invoiceTaskTimelog, 'CompanyEntity', 'invoiceTaskTimelog'),
               invoiceTaskDatelog: BuiltValueNullFieldError.checkNotNull(invoiceTaskDatelog, 'CompanyEntity', 'invoiceTaskDatelog'),
               invoiceTaskProject: BuiltValueNullFieldError.checkNotNull(invoiceTaskProject, 'CompanyEntity', 'invoiceTaskProject'),
+              invoiceTaskHours: BuiltValueNullFieldError.checkNotNull(invoiceTaskHours, 'CompanyEntity', 'invoiceTaskHours'),
               autoStartTasks: BuiltValueNullFieldError.checkNotNull(autoStartTasks, 'CompanyEntity', 'autoStartTasks'),
               showTasksTable: BuiltValueNullFieldError.checkNotNull(showTasksTable, 'CompanyEntity', 'showTasksTable'),
               showTaskEndDate: BuiltValueNullFieldError.checkNotNull(showTaskEndDate, 'CompanyEntity', 'showTaskEndDate'),
