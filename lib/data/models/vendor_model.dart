@@ -466,8 +466,8 @@ abstract class VendorEntity extends Object
   }
 
   List<VendorContactEntity> get emailContacts {
-    //final list = contacts.where((contact) => contact.sendEmail).toList();
-    final list = contacts.where((contact) => true).toList();
+    final list = contacts.where((contact) => contact.sendEmail).toList();
+
     return list.isEmpty ? [primaryContact] : list;
   }
 
@@ -513,6 +513,7 @@ abstract class VendorContactEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      sendEmail: true,
       createdUserId: '',
       createdAt: 0,
       assignedUserId: '',
@@ -545,6 +546,9 @@ abstract class VendorContactEntity extends Object
 
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
+
+  @BuiltValueField(wireName: 'send_email')
+  bool get sendEmail;
 
   String get phone;
 
@@ -626,6 +630,7 @@ abstract class VendorContactEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static void _initializeBuilder(VendorContactEntityBuilder builder) => builder
+    ..sendEmail = true
     ..link = ''
     ..customValue1 = ''
     ..customValue2 = ''
