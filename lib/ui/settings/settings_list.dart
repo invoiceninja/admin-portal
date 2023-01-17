@@ -581,6 +581,7 @@ class SettingsSearch extends StatelessWidget {
           'microsoft',
           'postmark#2023-01-11',
           'mailgun#2023-01-11',
+          'email_alignment#2023-01-17',
         ],
       ],
       kSettingsTemplatesAndReminders: [
