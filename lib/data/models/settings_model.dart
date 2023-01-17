@@ -939,7 +939,7 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'show_email_footer')
-  String get showEmailFooter;
+  bool get showEmailFooter;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 

@@ -409,6 +409,15 @@ class _EmailSettingsState extends State<EmailSettings> {
             isLast: true,
             children: <Widget>[
               BoolDropdownButton(
+                label: localization.showEmailFooter,
+                value: state.settingsUIState.isFiltered
+                    ? settings.showEmailFooter
+                    : (settings.showEmailFooter ?? true),
+                iconData: MdiIcons.filePdfBox,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..pdfEmailAttachment = value)),
+              ),
+              BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
                 iconData: MdiIcons.filePdfBox,

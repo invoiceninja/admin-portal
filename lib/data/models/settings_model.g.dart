@@ -1431,8 +1431,8 @@ class _$SettingsEntitySerializer
     if (value != null) {
       result
         ..add('show_email_footer')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     return result;
   }
@@ -2268,7 +2268,7 @@ class _$SettingsEntitySerializer
           break;
         case 'show_email_footer':
           result.showEmailFooter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -2685,7 +2685,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String emailAlignment;
   @override
-  final String showEmailFooter;
+  final bool showEmailFooter;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates)).build();
@@ -4376,9 +4376,9 @@ class SettingsEntityBuilder
   set emailAlignment(String emailAlignment) =>
       _$this._emailAlignment = emailAlignment;
 
-  String _showEmailFooter;
-  String get showEmailFooter => _$this._showEmailFooter;
-  set showEmailFooter(String showEmailFooter) =>
+  bool _showEmailFooter;
+  bool get showEmailFooter => _$this._showEmailFooter;
+  set showEmailFooter(bool showEmailFooter) =>
       _$this._showEmailFooter = showEmailFooter;
 
   SettingsEntityBuilder();
