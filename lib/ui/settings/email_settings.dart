@@ -365,6 +365,27 @@ class _EmailSettingsState extends State<EmailSettings> {
                   ),
                 ],
               ),
+              AppDropdownButton<String>(
+                showBlank: true,
+                labelText: localization.emailAlignment,
+                value: viewModel.settings.emailAlignment,
+                onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..emailAlignment = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.left),
+                    value: SettingsEntity.EMAIL_ALIGNMENT_LEFT,
+                  ),
+                  DropdownMenuItem(
+                    child: Text(localization.center),
+                    value: SettingsEntity.EMAIL_ALIGNMENT_CENTER,
+                  ),
+                  DropdownMenuItem(
+                    child: Text(localization.right),
+                    value: SettingsEntity.EMAIL_ALIGNMENT_RIGHT,
+                  ),
+                ],
+              ),
               if (settings.emailStyle == kEmailDesignCustom) ...[
                 SizedBox(height: 10),
                 DecoratedFormField(

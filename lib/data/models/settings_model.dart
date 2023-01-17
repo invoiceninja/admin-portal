@@ -126,6 +126,10 @@ abstract class SettingsEntity
   static const PORTAL_TASKS_INVOICED = 'invoiced';
   static const PORTAL_TASKS_UNINVOICED = 'uninvoiced';
 
+  static const EMAIL_ALIGNMENT_CENTER = 'center';
+  static const EMAIL_ALIGNMENT_LEFT = 'left';
+  static const EMAIL_ALIGNMENT_RIGHT = 'right';
+
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
@@ -921,6 +925,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'mailgun_domain')
   String get mailgunDomain;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_alignment')
+  String get emailAlignment;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
