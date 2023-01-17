@@ -91,6 +91,9 @@ abstract class SettingsEntity
       defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
           groupSettings?.defaultPaymentTypeId ??
           companySettings?.defaultPaymentTypeId,
+      autoBillStandardInvoices: clientSettings?.autoBillStandardInvoices ??
+          groupSettings?.autoBillStandardInvoices ??
+          companySettings?.autoBillStandardInvoices,
     );
   }
 
