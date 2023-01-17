@@ -937,6 +937,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_alignment')
   String get emailAlignment;
 
+  @nullable
+  @BuiltValueField(wireName: 'show_email_footer')
+  String get showEmailFooter;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
