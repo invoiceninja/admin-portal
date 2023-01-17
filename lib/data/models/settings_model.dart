@@ -827,6 +827,10 @@ abstract class SettingsEntity
   String get autoBill;
 
   @nullable
+  @BuiltValueField(wireName: 'auto_bill_standard_invoices')
+  bool get autoBillStandardInvoices;
+
+  @nullable
   @BuiltValueField(wireName: 'client_portal_allow_under_payment')
   bool get clientPortalAllowUnderPayment;
 
