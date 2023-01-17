@@ -223,23 +223,26 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         unselectedWidgetColor: state.headerTextColor,
       ),
       child: Flexible(
-        child: CheckboxListTile(
-          title: Text(
-            localization.payments,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: state.headerTextColor,
+        child: Tooltip(
+          message: localization.payments,
+          child: CheckboxListTile(
+            title: Text(
+              localization.payments,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: state.headerTextColor,
+              ),
             ),
+            value: _showPayments,
+            onChanged: (value) {
+              setState(() {
+                _showPayments = !_showPayments;
+                loadPdf();
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: state.accentColor,
           ),
-          value: _showPayments,
-          onChanged: (value) {
-            setState(() {
-              _showPayments = !_showPayments;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
         ),
       ),
     );
@@ -249,23 +252,26 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         unselectedWidgetColor: state.headerTextColor,
       ),
       child: Flexible(
-        child: CheckboxListTile(
-          title: Text(
-            localization.aging,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: state.headerTextColor,
+        child: Tooltip(
+          message: localization.aging,
+          child: CheckboxListTile(
+            title: Text(
+              localization.aging,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: state.headerTextColor,
+              ),
             ),
+            value: _showAging,
+            onChanged: (value) {
+              setState(() {
+                _showAging = !_showAging;
+                loadPdf();
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: state.accentColor,
           ),
-          value: _showAging,
-          onChanged: (value) {
-            setState(() {
-              _showAging = !_showAging;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
         ),
       ),
     );
