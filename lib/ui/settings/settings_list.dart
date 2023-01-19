@@ -422,6 +422,7 @@ class SettingsSearch extends StatelessWidget {
           'show_tasks_table',
           'client_portal',
           'lock_invoiced_tasks#2022-11-30',
+          'invoice_task_hours#2023-01-19',
         ],
       ],
       kSettingsTaskStatuses: [
