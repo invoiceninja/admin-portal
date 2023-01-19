@@ -96,8 +96,24 @@ class _PaymentSettingsState extends State<PaymentSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
+              AppDropdownButton<bool>(
+                  blankValue: null,
+                  showBlank: true,
+                  labelText: localization.autoBillStandardInvoices,
+                  value: state.settingsUIState.isFiltered
+                      ? settings.autoBillStandardInvoices
+                      : settings.autoBillStandardInvoices ?? false,
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings
+                          .rebuild((b) => b..autoBillStandardInvoices = value)),
+                  items: [
+                    DropdownMenuItem<bool>(
+                        child: Text(localization.enabled), value: true),
+                    DropdownMenuItem<bool>(
+                        child: Text(localization.off), value: false),
+                  ]),
               AppDropdownButton<String>(
-                  labelText: localization.autoBill,
+                  labelText: localization.autoBillRecurringInvoices,
                   value: settings.autoBill,
                   onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..autoBill = value)),

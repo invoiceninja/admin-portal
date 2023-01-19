@@ -194,7 +194,10 @@ abstract class InvoiceEntity extends Object
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
-      autoBillEnabled: false,
+      autoBillEnabled:
+          ((entityType ?? EntityType.invoice) == EntityType.invoice)
+              ? settings.autoBillStandardInvoices ?? false
+              : false,
       customValue1: '',
       customValue2: '',
       customValue3: '',

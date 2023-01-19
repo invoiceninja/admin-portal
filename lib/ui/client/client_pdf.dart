@@ -21,7 +21,6 @@ import 'package:share/share.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -82,21 +81,30 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    loadPdf();
+    loadPDF();
   }
 
-  void loadPdf() {
+  void loadPDF({bool sendEmail = false}) {
     if (_isLoading) {
       return;
     }
+
+    final localization = AppLocalization.of(context);
 
     setState(() {
       _isLoading = true;
     });
 
-    _loadPDF().then((response) {
+    _loadPDF(sendEmail: sendEmail).then((response) {
       setState(() {
-        _response = response;
+        if (sendEmail) {
+          if (response.statusCode >= 200) {
+            showToast(localization.emailedStatement);
+          }
+        } else {
+          _response = response;
+        }
+
         _isLoading = false;
       });
     }).catchError((Object error) {
@@ -106,15 +114,18 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     });
   }
 
-  Future<Response> _loadPDF() async {
+  Future<Response> _loadPDF({bool sendEmail = false}) async {
     final client = widget.viewModel.client;
     http.Response response;
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final url = '${state.credentials.url}/client_statement';
     final webClient = WebClient();
+    String url = '${state.credentials.url}/client_statement';
+    if (sendEmail) {
+      url += '?send_email=true';
+    }
 
     String startDate = '';
     String endDate = '';
@@ -210,36 +221,31 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           ];
     */
 
-    bool showEmail = false; //isDesktop(context);
-
-    // TODO: remove this code
-    // hide email option on web to prevent dialog problem
-    if (kIsWeb && !client.hasEmailAddress) {
-      showEmail = false;
-    }
-
     final showPayments = Theme(
       data: ThemeData(
         unselectedWidgetColor: state.headerTextColor,
       ),
       child: Flexible(
-        child: CheckboxListTile(
-          title: Text(
-            localization.payments,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: state.headerTextColor,
+        child: Tooltip(
+          message: localization.payments,
+          child: CheckboxListTile(
+            title: Text(
+              localization.payments,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: state.headerTextColor,
+              ),
             ),
+            value: _showPayments,
+            onChanged: (value) {
+              setState(() {
+                _showPayments = !_showPayments;
+                loadPDF();
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: state.accentColor,
           ),
-          value: _showPayments,
-          onChanged: (value) {
-            setState(() {
-              _showPayments = !_showPayments;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
         ),
       ),
     );
@@ -249,23 +255,26 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         unselectedWidgetColor: state.headerTextColor,
       ),
       child: Flexible(
-        child: CheckboxListTile(
-          title: Text(
-            localization.aging,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: state.headerTextColor,
+        child: Tooltip(
+          message: localization.aging,
+          child: CheckboxListTile(
+            title: Text(
+              localization.aging,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: state.headerTextColor,
+              ),
             ),
+            value: _showAging,
+            onChanged: (value) {
+              setState(() {
+                _showAging = !_showAging;
+                loadPDF();
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+            activeColor: state.accentColor,
           ),
-          value: _showAging,
-          onChanged: (value) {
-            setState(() {
-              _showAging = !_showAging;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
         ),
       ),
     );
@@ -304,7 +313,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           });
 
                           if (value != DateRange.custom) {
-                            loadPdf();
+                            loadPDF();
                           }
                         },
                         items: DateRange.values
@@ -332,7 +341,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             setState(() {
                               _status = value;
                             });
-                            loadPdf();
+                            loadPDF();
                           },
                           items: [
                             STATUS_ALL,
@@ -354,14 +363,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 ],
               ),
               actions: <Widget>[
-                if (showEmail)
-                  TextButton(
-                    child: Text(localization.email,
-                        style: TextStyle(color: state.headerTextColor)),
-                    onPressed: () {
-                      handleEntityAction(client, EntityAction.sendEmail);
-                    },
-                  ),
                 AppTextButton(
                   isInHeader: true,
                   label: localization.download,
@@ -399,6 +400,36 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               await Share.shareFiles([filePath]);
                             }
                           }
+                        },
+                ),
+                AppTextButton(
+                  isInHeader: true,
+                  label: localization.email,
+                  onPressed: _response == null
+                      ? null
+                      : () async {
+                          if (!client.hasEmailAddress) {
+                            showMessageDialog(
+                                context: context,
+                                message: localization.clientEmailNotSet,
+                                secondaryActions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        editEntity(
+                                            entity: state.clientState
+                                                .get(client.id));
+                                      },
+                                      child: Text(localization.editClient
+                                          .toUpperCase()))
+                                ]);
+                            return;
+                          }
+
+                          confirmCallback(
+                              message: localization.sendEmail,
+                              context: context,
+                              callback: (_) => loadPDF(sendEmail: true));
                         },
                 ),
                 if (isDesktop(context))
@@ -453,7 +484,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: AppButton(
                       label: localization.loadPdf,
-                      onPressed: () => loadPdf(),
+                      onPressed: () => loadPDF(),
                     ),
                   )
                 ],

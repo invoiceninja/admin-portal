@@ -91,6 +91,9 @@ abstract class SettingsEntity
       defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
           groupSettings?.defaultPaymentTypeId ??
           companySettings?.defaultPaymentTypeId,
+      autoBillStandardInvoices: clientSettings?.autoBillStandardInvoices ??
+          groupSettings?.autoBillStandardInvoices ??
+          companySettings?.autoBillStandardInvoices,
     );
   }
 
@@ -827,6 +830,10 @@ abstract class SettingsEntity
   String get autoBill;
 
   @nullable
+  @BuiltValueField(wireName: 'auto_bill_standard_invoices')
+  bool get autoBillStandardInvoices;
+
+  @nullable
   @BuiltValueField(wireName: 'client_portal_allow_under_payment')
   bool get clientPortalAllowUnderPayment;
 
@@ -929,6 +936,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_alignment')
   String get emailAlignment;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_email_footer')
+  bool get showEmailFooter;
+
+  @nullable
+  @BuiltValueField(wireName: 'company_logo_size')
+  String get companyLogoSize;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 

@@ -193,6 +193,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
+  VendorContactEntity _contact;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
@@ -224,7 +225,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final contact = widget.contact;
+    final contact = _contact = widget.contact;
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
@@ -251,7 +252,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   }
 
   void _onChanged() {
-    final contact = widget.contact.rebuild((b) => b
+    final contact = _contact = widget.contact.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
@@ -327,6 +328,24 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
           value: widget.contact.customValue4,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
+        if (widget.isDialog)
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SwitchListTile(
+              activeColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.addToInvoices),
+              value: _contact.sendEmail,
+              onChanged: (value) {
+                setState(() =>
+                    _contact = _contact.rebuild((b) => b..sendEmail = value));
+
+                viewModel.onChangedContact(
+                  _contact.rebuild((b) => b..sendEmail = value),
+                  widget.index,
+                );
+              },
+            ),
+          )
       ],
     );
 

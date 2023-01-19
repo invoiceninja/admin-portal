@@ -422,6 +422,7 @@ class SettingsSearch extends StatelessWidget {
           'show_tasks_table',
           'client_portal',
           'lock_invoiced_tasks#2022-11-30',
+          'invoice_task_hours#2023-01-19',
         ],
       ],
       kSettingsTaskStatuses: [
@@ -581,6 +582,8 @@ class SettingsSearch extends StatelessWidget {
           'microsoft',
           'postmark#2023-01-11',
           'mailgun#2023-01-11',
+          'email_alignment#2023-01-17',
+          'show_email_footer#2023-01-17',
         ],
       ],
       kSettingsTemplatesAndReminders: [
