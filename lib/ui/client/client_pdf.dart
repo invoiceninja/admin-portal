@@ -81,21 +81,30 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    loadPdf();
+    loadPDF();
   }
 
-  void loadPdf() {
+  void loadPDF({bool sendEmail = false}) {
     if (_isLoading) {
       return;
     }
+
+    final localization = AppLocalization.of(context);
 
     setState(() {
       _isLoading = true;
     });
 
-    _loadPDF().then((response) {
+    _loadPDF(sendEmail: sendEmail).then((response) {
       setState(() {
-        _response = response;
+        if (sendEmail) {
+          if (response.statusCode >= 200) {
+            showToast(localization.emailedStatement);
+          }
+        } else {
+          _response = response;
+        }
+
         _isLoading = false;
       });
     }).catchError((Object error) {
@@ -231,7 +240,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             onChanged: (value) {
               setState(() {
                 _showPayments = !_showPayments;
-                loadPdf();
+                loadPDF();
               });
             },
             controlAffinity: ListTileControlAffinity.leading,
@@ -260,7 +269,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             onChanged: (value) {
               setState(() {
                 _showAging = !_showAging;
-                loadPdf();
+                loadPDF();
               });
             },
             controlAffinity: ListTileControlAffinity.leading,
@@ -304,7 +313,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           });
 
                           if (value != DateRange.custom) {
-                            loadPdf();
+                            loadPDF();
                           }
                         },
                         items: DateRange.values
@@ -332,7 +341,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             setState(() {
                               _status = value;
                             });
-                            loadPdf();
+                            loadPDF();
                           },
                           items: [
                             STATUS_ALL,
@@ -420,14 +429,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           confirmCallback(
                               message: localization.sendEmail,
                               context: context,
-                              callback: (_) async {
-                                final response =
-                                    await _loadPDF(sendEmail: true);
-
-                                if (response.statusCode >= 200) {
-                                  showToast(localization.emailedStatement);
-                                }
-                              });
+                              callback: (_) => loadPDF(sendEmail: true));
                         },
                 ),
                 if (isDesktop(context))
@@ -482,7 +484,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: AppButton(
                       label: localization.loadPdf,
-                      onPressed: () => loadPdf(),
+                      onPressed: () => loadPDF(),
                     ),
                   )
                 ],
