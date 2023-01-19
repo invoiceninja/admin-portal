@@ -941,6 +941,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_email_footer')
   bool get showEmailFooter;
 
+  @nullable
+  @BuiltValueField(wireName: 'company_logo_size')
+  String get companyLogoSize;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
