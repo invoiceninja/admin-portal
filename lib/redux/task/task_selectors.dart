@@ -27,7 +27,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   final company = state.company;
 
   var notes = '';
-  final dates = <String>{};
+  final dates = <String, double>{};
 
   if (project.isOld && includeProjectHeader) {
     if (state.company.markdownEnabled) {
@@ -39,7 +39,9 @@ InvoiceItemEntity convertTaskToInvoiceItem({
 
   notes += task.description;
 
-  if (state.company.invoiceTaskDatelog || state.company.invoiceTaskTimelog) {
+  if (company.invoiceTaskDatelog ||
+      company.invoiceTaskTimelog ||
+      company.invoiceTaskHours) {
     if (notes.trim().isNotEmpty) {
       notes += '\n';
     }
@@ -48,39 +50,68 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         .getTaskTimes()
         .where((time) => time.startDate != null && time.endDate != null)
         .forEach((time) {
-      if (state.company.invoiceTaskDatelog &&
-          state.company.invoiceTaskTimelog) {
+      final hours = round(time.duration.inSeconds / 3600, 3);
+      final hoursStr = hours == 1
+          ? ' • 1 ${localization.hour}'
+          : ' • $hours ${localization.hours}';
+
+      if (company.invoiceTaskDatelog && company.invoiceTaskTimelog) {
         final start = formatDate(time.startDate.toIso8601String(), context,
             showTime: true);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
         notes += '$start - $end';
-        if (state.company.markdownEnabled) {
+        if (company.invoiceTaskHours) {
+          notes += hoursStr;
+        }
+        if (company.markdownEnabled) {
           notes += '<br/>';
         }
         notes += '\n';
-      } else if (state.company.invoiceTaskDatelog) {
+      } else if (company.invoiceTaskDatelog) {
         final date = formatDate(time.startDate.toIso8601String(), context,
             showTime: false);
-        dates.add(date);
-      } else {
+        if (dates.containsKey(date)) {
+          dates[date] += hours;
+        } else {
+          dates[date] = hours;
+        }
+      } else if (company.invoiceTaskTimelog) {
         final start = formatDate(time.startDate.toIso8601String(), context,
             showTime: true, showDate: false);
         final end = formatDate(time.endDate.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
         notes += '$start - $end';
-        if (state.company.markdownEnabled) {
+        if (company.invoiceTaskHours) {
+          notes += hoursStr;
+        }
+        if (company.markdownEnabled) {
           notes += '<br/>';
         }
         notes += '\n';
       }
     });
 
-    if (state.company.invoiceTaskDatelog && !state.company.invoiceTaskTimelog) {
-      if (state.company.markdownEnabled) {
-        notes += dates.join('<br/>\n');
+    if (company.invoiceTaskDatelog && !company.invoiceTaskTimelog) {
+      final sortedDates = dates.keys.toList()..sort((a, b) => b.compareTo(a));
+      final datesStr = <String>[];
+      for (var date in sortedDates) {
+        if (company.invoiceTaskHours) {
+          final hours = round(dates[date], 3);
+          final hoursStr = hours == 1
+              ? ' • 1 ${localization.hour}'
+              : ' • $hours ${localization.hours}';
+
+          datesStr.add(date + hoursStr);
+        } else {
+          datesStr.add(date);
+        }
+      }
+
+      if (company.markdownEnabled) {
+        notes += datesStr.join('<br/>\n');
       } else {
-        notes += dates.join('\n');
+        notes += datesStr.join('\n');
       }
     }
 
@@ -124,7 +155,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     ..taskId = task.id
     ..notes = notes
     ..cost = taskRateSelector(
-      company: state.company,
+      company: company,
       project: project,
       client: client,
       task: task,
