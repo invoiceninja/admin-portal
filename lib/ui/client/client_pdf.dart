@@ -414,6 +414,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                       child: Text(localization.editClient
                                           .toUpperCase()))
                                 ]);
+                            return;
                           }
 
                           confirmCallback(
