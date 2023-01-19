@@ -162,15 +162,14 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskTimelog = value)),
                 ),
-                if (false)
-                  SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.invoiceTaskHours),
-                    value: company.invoiceTaskHours,
-                    subtitle: Text(localization.invoiceTaskHoursHelp),
-                    onChanged: (value) => viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..invoiceTaskHours = value)),
-                  ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.invoiceTaskHours),
+                  value: company.invoiceTaskHours,
+                  subtitle: Text(localization.invoiceTaskHoursHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskHours = value)),
+                ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskProject),
