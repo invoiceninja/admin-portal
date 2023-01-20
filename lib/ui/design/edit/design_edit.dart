@@ -488,7 +488,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+                  onPressed: () => launchUrl(Uri.parse(kDocsCustomDesignUrl)),
                 ),
               ),
               SizedBox(width: kTableColumnGap),
