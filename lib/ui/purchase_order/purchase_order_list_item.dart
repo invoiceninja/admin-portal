@@ -217,6 +217,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                               ? Text((((purchaseOrder.number ?? '').isEmpty
                                           ? localization.pending
                                           : purchaseOrder.number) +
+                                      ' • ' +
                                       formatDate(purchaseOrder.date, context) +
                                       (purchaseOrder.documents.isNotEmpty
                                           ? '  📎'
