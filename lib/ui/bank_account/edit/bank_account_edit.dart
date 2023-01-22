@@ -122,6 +122,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                     onSelected: (date, _) => viewModel.onChanged(
                         bankAccount.rebuild((b) => b..fromDate = date)),
                     selectedDate: bankAccount.fromDate,
+                    allowClearing: true,
                   ),
                   SizedBox(height: 16),
                   SwitchListTile(
