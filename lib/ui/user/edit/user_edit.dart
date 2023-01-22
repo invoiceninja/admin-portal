@@ -355,6 +355,7 @@ class _UserEditState extends State<UserEdit>
                           EntityType.purchaseOrder,
                           EntityType.expense,
                           EntityType.recurringExpense,
+                          EntityType.transaction,
                         ]
                             .where((entityType) =>
                                 state.company.isModuleEnabled(entityType))
