@@ -352,6 +352,7 @@ class _UserEditState extends State<UserEdit>
                           EntityType.project,
                           EntityType.task,
                           EntityType.vendor,
+                          EntityType.purchaseOrder,
                           EntityType.expense,
                         ]
                             .where((entityType) =>
