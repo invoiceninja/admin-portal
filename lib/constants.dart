@@ -169,8 +169,8 @@ const double kLighterOpacity = .6;
 
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
-const int kMaxPostSeconds = 60;
-const int kMaxRawPostSeconds = 300;
+const int kMaxPostSeconds = 120;
+const int kMaxRawPostSeconds = 600;
 const int kMaxEntitiesPerBulkAction = 100;
 const int kMaxRecordsPerPage = 5000;
 const int kMillisecondsToTimerRefreshData = 1000 * 60 * 5; // 5 minutes
