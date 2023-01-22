@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -27,6 +28,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({
@@ -514,6 +517,19 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .toList()),
                   ],
                 ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconText(
+                      text: localization.viewDocs.toUpperCase(),
+                      icon: MdiIcons.openInNew,
+                    ),
+                  ),
+                  onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+                ),
+              ),
               VariablesHelp(
                 showInvoiceAsQuote: template == EmailTemplate.quote,
                 showInvoiceAsInvoices: [

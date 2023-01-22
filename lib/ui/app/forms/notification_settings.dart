@@ -105,6 +105,11 @@ class NotificationSettings extends StatelessWidget {
                         !state.company
                             .isModuleEnabled(EntityType.purchaseOrder)) {
                       return false;
+                    } else if ([
+                          kNotificationsInventoryThreshold,
+                        ].contains(eventType) &&
+                        !state.company.stockNotification) {
+                      return false;
                     }
 
                     return true;

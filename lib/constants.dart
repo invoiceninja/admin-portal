@@ -56,8 +56,10 @@ const String kReleaseNotesUrl =
 const String kDocsUrl = 'https://invoiceninja.github.io';
 const String kDocsCustomDomainUrl =
     'https://invoiceninja.github.io/docs/hosted-custom-domain';
-const String kDocsCustomFieldsUrl =
+const String kDocsCustomDesignUrl =
     'https://invoiceninja.github.io/docs/custom-fields';
+const String kDocsCustomFieldsUrl =
+    'https://invoiceninja.github.io/docs/custom-fields/#custom-fields';
 const String kDocsStripeConnectUrl =
     'https://invoiceninja.github.io/docs/hosted-stripe';
 
@@ -364,6 +366,7 @@ const String kNotificationsPurchaseOrderCreated = 'purchase_order_created';
 const String kNotificationsPurchaseOrderSent = 'purchase_order_sent';
 const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
 const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
+const String kNotificationsInventoryThreshold = 'inventory_threshold';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
@@ -384,6 +387,7 @@ const kNotificationEvents = [
   kNotificationsPurchaseOrderSent,
   kNotificationsPurchaseOrderViewed,
   kNotificationsPurchaseOrderAccepted,
+  kNotificationsInventoryThreshold,
 ];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';

@@ -214,6 +214,7 @@ class CreditListItem extends StatelessWidget {
                               ? Text((((credit.number ?? '').isEmpty
                                           ? localization.pending
                                           : credit.number) +
+                                      ' • ' +
                                       formatDate(credit.date, context) +
                                       (credit.documents.isNotEmpty
                                           ? '  📎'

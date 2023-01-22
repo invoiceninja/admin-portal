@@ -49,9 +49,16 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     });
 
     final invoice = viewModel.invoice;
-    final credentials = viewModel.state.credentials;
+    final state = viewModel.state;
+    final credentials = state.credentials;
     final webClient = WebClient();
-    String url = '${credentials.url}/live_preview';
+
+    String url = '';
+    if (state.isHosted && !state.isStaging) {
+      url = 'https://preview.invoicing.co/api/v1/live_preview';
+    } else {
+      url = '${credentials.url}/live_preview';
+    }
 
     if (invoice.isPurchaseOrder) {
       url += '/purchase_order';
@@ -61,9 +68,6 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
 
     if (invoice.isOld) {
       url += '&entity_id=${invoice.id}';
-    }
-    if (viewModel.state.isHosted) {
-      url = url.replaceFirst('//', '//preview.');
     }
 
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
