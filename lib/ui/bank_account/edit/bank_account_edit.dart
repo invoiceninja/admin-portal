@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
@@ -116,6 +117,12 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   keyboardType: TextInputType.text,
                 ),
                 if (bankAccount.isConnected) ...[
+                  DatePicker(
+                    labelText: localization.syncFrom,
+                    onSelected: (date, _) => viewModel.onChanged(
+                        bankAccount.rebuild((b) => b..fromDate = date)),
+                    selectedDate: bankAccount.fromDate,
+                  ),
                   SizedBox(height: 16),
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,

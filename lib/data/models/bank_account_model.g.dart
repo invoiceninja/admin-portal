@@ -130,6 +130,9 @@ class _$BankAccountEntitySerializer
       'provider_name',
       serializers.serialize(object.provider,
           specifiedType: const FullType(String)),
+      'from_date',
+      serializers.serialize(object.fromDate,
+          specifiedType: const FullType(String)),
       'auto_sync',
       serializers.serialize(object.autoSync,
           specifiedType: const FullType(bool)),
@@ -212,6 +215,10 @@ class _$BankAccountEntitySerializer
           break;
         case 'provider_name':
           result.provider = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'from_date':
+          result.fromDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'auto_sync':
@@ -469,6 +476,8 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final String provider;
   @override
+  final String fromDate;
+  @override
   final bool autoSync;
   @override
   final bool disabledUpstream;
@@ -502,6 +511,7 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.status,
       this.type,
       this.provider,
+      this.fromDate,
       this.autoSync,
       this.disabledUpstream,
       this.balance,
@@ -521,6 +531,8 @@ class _$BankAccountEntity extends BankAccountEntity {
     BuiltValueNullFieldError.checkNotNull(type, 'BankAccountEntity', 'type');
     BuiltValueNullFieldError.checkNotNull(
         provider, 'BankAccountEntity', 'provider');
+    BuiltValueNullFieldError.checkNotNull(
+        fromDate, 'BankAccountEntity', 'fromDate');
     BuiltValueNullFieldError.checkNotNull(
         autoSync, 'BankAccountEntity', 'autoSync');
     BuiltValueNullFieldError.checkNotNull(
@@ -554,6 +566,7 @@ class _$BankAccountEntity extends BankAccountEntity {
         status == other.status &&
         type == other.type &&
         provider == other.provider &&
+        fromDate == other.fromDate &&
         autoSync == other.autoSync &&
         disabledUpstream == other.disabledUpstream &&
         balance == other.balance &&
@@ -587,13 +600,15 @@ class _$BankAccountEntity extends BankAccountEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    name
+                                                                    $jc(
+                                                                        0,
+                                                                        name
+                                                                            .hashCode),
+                                                                    status
                                                                         .hashCode),
-                                                                status
-                                                                    .hashCode),
-                                                            type.hashCode),
-                                                        provider.hashCode),
+                                                                type.hashCode),
+                                                            provider.hashCode),
+                                                        fromDate.hashCode),
                                                     autoSync.hashCode),
                                                 disabledUpstream.hashCode),
                                             balance.hashCode),
@@ -615,6 +630,7 @@ class _$BankAccountEntity extends BankAccountEntity {
           ..add('status', status)
           ..add('type', type)
           ..add('provider', provider)
+          ..add('fromDate', fromDate)
           ..add('autoSync', autoSync)
           ..add('disabledUpstream', disabledUpstream)
           ..add('balance', balance)
@@ -650,6 +666,10 @@ class BankAccountEntityBuilder
   String _provider;
   String get provider => _$this._provider;
   set provider(String provider) => _$this._provider = provider;
+
+  String _fromDate;
+  String get fromDate => _$this._fromDate;
+  set fromDate(String fromDate) => _$this._fromDate = fromDate;
 
   bool _autoSync;
   bool get autoSync => _$this._autoSync;
@@ -713,6 +733,7 @@ class BankAccountEntityBuilder
       _status = $v.status;
       _type = $v.type;
       _provider = $v.provider;
+      _fromDate = $v.fromDate;
       _autoSync = $v.autoSync;
       _disabledUpstream = $v.disabledUpstream;
       _balance = $v.balance;
@@ -753,6 +774,8 @@ class BankAccountEntityBuilder
                 type, 'BankAccountEntity', 'type'),
             provider: BuiltValueNullFieldError.checkNotNull(
                 provider, 'BankAccountEntity', 'provider'),
+            fromDate: BuiltValueNullFieldError.checkNotNull(
+                fromDate, 'BankAccountEntity', 'fromDate'),
             autoSync: BuiltValueNullFieldError.checkNotNull(
                 autoSync, 'BankAccountEntity', 'autoSync'),
             disabledUpstream: BuiltValueNullFieldError.checkNotNull(
@@ -762,10 +785,9 @@ class BankAccountEntityBuilder
             currency: BuiltValueNullFieldError.checkNotNull(
                 currency, 'BankAccountEntity', 'currency'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'BankAccountEntity', 'createdAt'),
-            updatedAt:
-                BuiltValueNullFieldError.checkNotNull(updatedAt, 'BankAccountEntity', 'updatedAt'),
+            createdAt:
+                BuiltValueNullFieldError.checkNotNull(createdAt, 'BankAccountEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'BankAccountEntity', 'updatedAt'),
             archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'BankAccountEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,

@@ -71,6 +71,7 @@ abstract class BankAccountEntity extends Object
       balance: 0,
       currency: '',
       disabledUpstream: false,
+      fromDate: '',
       autoSync: false,
     );
   }
@@ -92,6 +93,9 @@ abstract class BankAccountEntity extends Object
 
   @BuiltValueField(wireName: 'provider_name')
   String get provider;
+
+  @BuiltValueField(wireName: 'from_date')
+  String get fromDate;
 
   @BuiltValueField(wireName: 'auto_sync')
   bool get autoSync;
@@ -197,6 +201,7 @@ abstract class BankAccountEntity extends Object
 
 // ignore: unused_element
   static void _initializeBuilder(BankAccountEntityBuilder builder) => builder
+    ..fromDate = ''
     ..disabledUpstream = false
     ..autoSync = false;
 
