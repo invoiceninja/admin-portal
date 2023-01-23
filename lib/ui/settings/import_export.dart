@@ -68,7 +68,6 @@ class _ImportExportState extends State<ImportExport> {
   bool _isExporting = false;
 
   static const DATE_RANGES = [
-    'all',
     'last7',
     'last30',
     'this_month',
@@ -254,31 +253,32 @@ class _ImportExportState extends State<ImportExport> {
                                 child: Text(localization.lookup('$dateField'))))
                             .toList(),
                       ),
-                      AppDropdownButton<String>(
-                        labelText: localization.dateRange,
-                        value: _exportDateRange,
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _exportDateRange = value;
-                          });
-                        },
-                        items: DATE_RANGES.map(
-                          (dateRange) {
-                            var label = '';
-                            if (dateRange == 'last7') {
-                              label = localization.last7Days;
-                            } else if (dateRange == 'last30') {
-                              label = localization.last30Days;
-                            } else {
-                              label = localization.lookup('$dateRange');
-                            }
-                            return DropdownMenuItem<String>(
-                              value: dateRange,
-                              child: Text(label),
-                            );
+                      if (_exportDate.isNotEmpty)
+                        AppDropdownButton<String>(
+                          labelText: localization.dateRange,
+                          value: _exportDateRange,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportDateRange = value;
+                            });
                           },
-                        ).toList(),
-                      ),
+                          items: DATE_RANGES.map(
+                            (dateRange) {
+                              var label = '';
+                              if (dateRange == 'last7') {
+                                label = localization.last7Days;
+                              } else if (dateRange == 'last30') {
+                                label = localization.last30Days;
+                              } else {
+                                label = localization.lookup('$dateRange');
+                              }
+                              return DropdownMenuItem<String>(
+                                value: dateRange,
+                                child: Text(label),
+                              );
+                            },
+                          ).toList(),
+                        ),
                       if (_exportDateRange == 'custom') ...[
                         DatePicker(
                           labelText: localization.startDate,
