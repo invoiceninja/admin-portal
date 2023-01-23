@@ -80,6 +80,7 @@ class _VariablesHelpState extends State<VariablesHelp>
                   'payment_url',
                   'created_by_user',
                   'assigned_to_user',
+                  'invoice',
                   'invoices',
                   if (widget.showInvoiceAsInvoices) ...[
                     'invoice_references',
