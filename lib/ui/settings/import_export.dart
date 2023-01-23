@@ -324,6 +324,10 @@ class _ImportExportState extends State<ImportExport> {
                                 {
                                   'send_email': true,
                                   'report_keys': <String>[],
+                                  'date_key': _exportDate,
+                                  'date_range': _exportDateRange,
+                                  'start_date': _exportStartDate,
+                                  'end_date': _exportEndDate,
                                 },
                               ))
                           .then((dynamic result) {
