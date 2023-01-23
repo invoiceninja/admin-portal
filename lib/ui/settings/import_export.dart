@@ -60,8 +60,20 @@ class _ImportExportState extends State<ImportExport> {
   var _exportFormat = ImportType.csv;
   var _exportType = ExportType.clients;
   var _exportDate = '';
+  var _exportDateRange = '';
 
   bool _isExporting = false;
+
+  static const DATE_RANGES = [
+    'all',
+    'last7',
+    'last30',
+    'this_month',
+    'last_month',
+    'this_quarter',
+    'last_quarter',
+    'this_year',
+  ];
 
   static const DATE_FIELD_DATE = 'date';
   static const DATE_FIELD_DUE_DATE = 'due_date';
@@ -69,7 +81,7 @@ class _ImportExportState extends State<ImportExport> {
   static const DATE_FIELD_CREATED_AT = 'created_at';
   static const DATE_FIELD_PAYMENT_DATE = 'payment_date';
 
-  final _dateFields = <ExportType, List<String>>{
+  static const DATE_FIELDS = <ExportType, List<String>>{
     ExportType.invoices: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
@@ -222,7 +234,7 @@ class _ImportExportState extends State<ImportExport> {
                               child: Text(localization.lookup('$importType'))))
                           .toList(),
                     ),
-                    if (_dateFields.containsKey(_exportType))
+                    if (DATE_FIELDS.containsKey(_exportType)) ...[
                       AppDropdownButton<String>(
                         value: _exportDate,
                         labelText: localization.date,
@@ -232,12 +244,30 @@ class _ImportExportState extends State<ImportExport> {
                             _exportDate = value;
                           });
                         },
-                        items: _dateFields[_exportType]
+                        items: DATE_FIELDS[_exportType]
                             .map((dateField) => DropdownMenuItem<String>(
                                 value: dateField,
                                 child: Text(localization.lookup('$dateField'))))
                             .toList(),
                       ),
+                      AppDropdownButton<String>(
+                        labelText: localization.dateRange,
+                        value: _exportDateRange,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _exportDateRange = value;
+                          });
+                        },
+                        items: DATE_RANGES.map(
+                          (dateRange) => DropdownMenuItem<String>(
+                            value: dateRange,
+                            child: Text(
+                              localization.lookup('$dateRange'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ],
                   AppButton(
                     iconData: MdiIcons.export,
