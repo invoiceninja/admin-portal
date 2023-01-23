@@ -258,14 +258,16 @@ class _ImportExportState extends State<ImportExport> {
                             _exportDateRange = value;
                           });
                         },
-                        items: DATE_RANGES.map(
-                          (dateRange) => DropdownMenuItem<String>(
-                            value: dateRange,
-                            child: Text(
-                              localization.lookup('$dateRange'),
-                            ),
-                          ),
-                        ),
+                        items: DATE_RANGES
+                            .map(
+                              (dateRange) => DropdownMenuItem<String>(
+                                value: dateRange,
+                                child: Text(
+                                  localization.lookup('$dateRange'),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                   ],
