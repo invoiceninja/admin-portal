@@ -19,7 +19,6 @@ import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class UserEdit extends StatefulWidget {
   const UserEdit({
@@ -360,10 +359,9 @@ class _UserEditState extends State<UserEdit>
                             .where((entityType) =>
                                 state.company.isModuleEnabled(entityType))
                             .map((EntityType type) {
-                          final createPermission =
-                              'create_' + toSnakeCase('$type');
-                          final editPermission = 'edit_' + toSnakeCase('$type');
-                          final viewPermission = 'view_' + toSnakeCase('$type');
+                          final createPermission = 'create_' + type.apiValue;
+                          final editPermission = 'edit_' + type.apiValue;
+                          final viewPermission = 'view_' + type.apiValue;
                           return DataRow(cells: [
                             DataCell(Text(localization.lookup('$type')),
                                 onTap: () {
