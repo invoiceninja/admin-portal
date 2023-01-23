@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -141,28 +142,22 @@ class _ImportExportState extends State<ImportExport> {
                               .toList()),
                     ),
                   ),
-                  if (_exportFormat == ImportType.csv)
-                    InputDecorator(
-                      decoration:
-                          InputDecoration(labelText: localization.exportType),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<ExportType>(
-                            isDense: true,
-                            value: _exportType,
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _exportType = value;
-                              });
-                            },
-                            items: ExportType.values
-                                .map((importType) =>
-                                    DropdownMenuItem<ExportType>(
-                                        value: importType,
-                                        child: Text(localization
-                                            .lookup('$importType'))))
-                                .toList()),
-                      ),
+                  if (_exportFormat == ImportType.csv) ...[
+                    AppDropdownButton<ExportType>(
+                      value: _exportType,
+                      labelText: localization.exportType,
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _exportType = value;
+                        });
+                      },
+                      items: ExportType.values
+                          .map((importType) => DropdownMenuItem<ExportType>(
+                              value: importType,
+                              child: Text(localization.lookup('$importType'))))
+                          .toList(),
                     ),
+                  ],
                   AppButton(
                     iconData: MdiIcons.export,
                     label: localization.export.toUpperCase(),
