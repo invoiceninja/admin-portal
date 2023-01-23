@@ -61,6 +61,8 @@ class _ImportExportState extends State<ImportExport> {
   var _exportType = ExportType.clients;
   var _exportDate = '';
   var _exportDateRange = '';
+  var _exportStartDate = '';
+  var _exportEndDate = '';
 
   bool _isExporting = false;
 
@@ -73,6 +75,7 @@ class _ImportExportState extends State<ImportExport> {
     'this_quarter',
     'last_quarter',
     'this_year',
+    'custom',
   ];
 
   static const DATE_FIELD_DATE = 'date';
@@ -258,17 +261,24 @@ class _ImportExportState extends State<ImportExport> {
                             _exportDateRange = value;
                           });
                         },
-                        items: DATE_RANGES
-                            .map(
-                              (dateRange) => DropdownMenuItem<String>(
-                                value: dateRange,
-                                child: Text(
-                                  localization.lookup('$dateRange'),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                        items: DATE_RANGES.map(
+                          (dateRange) {
+                            var label = localization.lookup('$dateRange');
+                            if (dateRange == 'last7') {
+                              label = localization.last7Days;
+                            } else if (dateRange == 'last30') {
+                              label = localization.last30Days;
+                            }
+                            return DropdownMenuItem<String>(
+                              value: dateRange,
+                              child: Text(label),
+                            );
+                          },
+                        ).toList(),
                       ),
+                      if (_exportDateRange == 'custom') ...[
+                        //
+                      ]
                     ],
                   ],
                   AppButton(
