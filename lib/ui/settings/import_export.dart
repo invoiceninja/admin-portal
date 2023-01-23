@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dar
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -263,11 +264,13 @@ class _ImportExportState extends State<ImportExport> {
                         },
                         items: DATE_RANGES.map(
                           (dateRange) {
-                            var label = localization.lookup('$dateRange');
+                            var label = '';
                             if (dateRange == 'last7') {
                               label = localization.last7Days;
                             } else if (dateRange == 'last30') {
                               label = localization.last30Days;
+                            } else {
+                              label = localization.lookup('$dateRange');
                             }
                             return DropdownMenuItem<String>(
                               value: dateRange,
@@ -277,7 +280,24 @@ class _ImportExportState extends State<ImportExport> {
                         ).toList(),
                       ),
                       if (_exportDateRange == 'custom') ...[
-                        //
+                        DatePicker(
+                          labelText: localization.startDate,
+                          onSelected: (date, _) {
+                            setState(() {
+                              _exportStartDate = date;
+                            });
+                          },
+                          selectedDate: _exportStartDate,
+                        ),
+                        DatePicker(
+                          labelText: localization.endDate,
+                          onSelected: (date, _) {
+                            setState(() {
+                              _exportEndDate = date;
+                            });
+                          },
+                          selectedDate: _exportEndDate,
+                        ),
                       ]
                     ],
                   ],
