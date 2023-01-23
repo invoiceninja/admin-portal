@@ -51,13 +51,16 @@ class ImportExport extends StatefulWidget {
 class _ImportExportState extends State<ImportExport> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_importExport');
+
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
+
   var _importFormat = ImportType.csv;
   var _exportFormat = ImportType.csv;
   var _exportType = ExportType.clients;
   var _exportDate = '';
+
   bool _isExporting = false;
 
   static const DATE_FIELD_DATE = 'date';
@@ -219,20 +222,22 @@ class _ImportExportState extends State<ImportExport> {
                               child: Text(localization.lookup('$importType'))))
                           .toList(),
                     ),
-                    AppDropdownButton<String>(
-                      value: _exportDate,
-                      labelText: localization.date,
-                      onChanged: (dynamic value) {
-                        setState(() {
-                          _exportDate = value;
-                        });
-                      },
-                      items: _dateFields[_exportType]
-                          .map((dateField) => DropdownMenuItem<String>(
-                              value: dateField,
-                              child: Text(localization.lookup('$dateField'))))
-                          .toList(),
-                    ),
+                    if (_dateFields.containsKey(_exportType))
+                      AppDropdownButton<String>(
+                        value: _exportDate,
+                        labelText: localization.date,
+                        showBlank: true,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _exportDate = value;
+                          });
+                        },
+                        items: _dateFields[_exportType]
+                            .map((dateField) => DropdownMenuItem<String>(
+                                value: dateField,
+                                child: Text(localization.lookup('$dateField'))))
+                            .toList(),
+                      ),
                   ],
                   AppButton(
                     iconData: MdiIcons.export,
