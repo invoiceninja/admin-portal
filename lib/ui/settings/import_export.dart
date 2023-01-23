@@ -57,7 +57,69 @@ class _ImportExportState extends State<ImportExport> {
   var _importFormat = ImportType.csv;
   var _exportFormat = ImportType.csv;
   var _exportType = ExportType.clients;
+  var _exportDate = '';
   bool _isExporting = false;
+
+  static const DATE_FIELD_DATE = 'date';
+  static const DATE_FIELD_DUE_DATE = 'due_date';
+  static const DATE_FIELD_PARTIAL_DUE_DATE = 'partial_due_date';
+  static const DATE_FIELD_CREATED_AT = 'created_at';
+  static const DATE_FIELD_PAYMENT_DATE = 'payment_date';
+
+  final _dateFields = <ExportType, List<String>>{
+    ExportType.invoices: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.quotes: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.credits: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.invoice_items: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.quote_items: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.recurring_invoices: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.clients: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.client_contacts: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.documents: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.products: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.tasks: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.expenses: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_PAYMENT_DATE,
+    ],
+    ExportType.payments: [
+      DATE_FIELD_DATE,
+    ],
+  };
 
   @override
   void initState() {
@@ -155,6 +217,20 @@ class _ImportExportState extends State<ImportExport> {
                           .map((importType) => DropdownMenuItem<ExportType>(
                               value: importType,
                               child: Text(localization.lookup('$importType'))))
+                          .toList(),
+                    ),
+                    AppDropdownButton<String>(
+                      value: _exportDate,
+                      labelText: localization.date,
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _exportDate = value;
+                        });
+                      },
+                      items: _dateFields[_exportType]
+                          .map((dateField) => DropdownMenuItem<String>(
+                              value: dateField,
+                              child: Text(localization.lookup('$dateField'))))
                           .toList(),
                     ),
                   ],

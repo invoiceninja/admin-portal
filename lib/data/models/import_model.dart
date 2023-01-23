@@ -183,7 +183,7 @@ class ExportType extends EnumClass {
   static Serializer<ExportType> get serializer => _$exportTypeSerializer;
 
   static const ExportType clients = _$clients;
-  static const ExportType contacts = _$contacts;
+  static const ExportType client_contacts = _$client_contacts;
   static const ExportType credits = _$credits;
   static const ExportType documents = _$documents;
   static const ExportType expenses = _$expenses;
