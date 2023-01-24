@@ -50,6 +50,7 @@ enum ExpenseReportFields {
   tax_amount3,
   created_at,
   updated_at,
+  converted_amount,
 }
 
 var memoizedExpenseReport = memo10((
@@ -265,6 +266,9 @@ ReportResult expenseReport(
         case ExpenseReportFields.created_at:
           value = convertTimestampToDateString(expense.createdAt);
           break;
+        case ExpenseReportFields.converted_amount:
+          value = round(expense.convertedAmount, 2);
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -278,6 +282,9 @@ ReportResult expenseReport(
 
       if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
+      } else if (column == ExpenseReportFields.converted_amount) {
+        row.add(expense.getReportDouble(
+            value: value, currencyId: expense.invoiceCurrencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(expense.getReportDouble(
             value: value, currencyId: expense.currencyId));
