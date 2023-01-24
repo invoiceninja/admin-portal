@@ -110,6 +110,10 @@ List<String> filteredPaymentsSelector(
       return false;
     }
 
+    if (!payment.matchesStatuses(paymentListState.statusFilters)) {
+      return false;
+    }
+
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 

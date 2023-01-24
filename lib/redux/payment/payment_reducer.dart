@@ -55,6 +55,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SortPayments>((selectedId, action) => ''),
   TypedReducer<String, FilterPayments>((selectedId, action) => ''),
   TypedReducer<String, FilterPaymentsByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterPaymentsByStatus>((selectedId, action) => ''),
   TypedReducer<String, FilterPaymentsByCustom1>((selectedId, action) => ''),
   TypedReducer<String, FilterPaymentsByCustom2>((selectedId, action) => ''),
   TypedReducer<String, FilterPaymentsByCustom3>((selectedId, action) => ''),
@@ -100,6 +101,7 @@ PaymentEntity _updateEditing(PaymentEntity payment, dynamic action) {
 final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortPayments>(_sortPayments),
   TypedReducer<ListUIState, FilterPaymentsByState>(_filterPaymentsByState),
+  TypedReducer<ListUIState, FilterPaymentsByStatus>(_filterPaymentsByStatus),
   TypedReducer<ListUIState, FilterPayments>(_filterPayments),
   TypedReducer<ListUIState, FilterPaymentsByCustom1>(_filterPaymentsByCustom1),
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
@@ -168,6 +170,16 @@ ListUIState _filterPaymentsByState(
         .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return paymentListState.rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterPaymentsByStatus(
+    ListUIState paymentListState, FilterPaymentsByStatus action) {
+  if (paymentListState.statusFilters.contains(action.status)) {
+    return paymentListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return paymentListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 

@@ -38,13 +38,8 @@ class PaymentScreen extends StatelessWidget {
     final statuses = [
       PaymentStatusEntity().rebuild(
         (b) => b
-          ..id = kPaymentStatusPartiallyUnapplied
-          ..name = localization.partiallyUnapplied,
-      ),
-      PaymentStatusEntity().rebuild(
-        (b) => b
-          ..id = kPaymentStatusUnapplied
-          ..name = localization.unapplied,
+          ..id = kPaymentStatusCompleted
+          ..name = localization.completed,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
@@ -63,11 +58,6 @@ class PaymentScreen extends StatelessWidget {
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
-          ..id = kPaymentStatusCompleted
-          ..name = localization.completed,
-      ),
-      PaymentStatusEntity().rebuild(
-        (b) => b
           ..id = kPaymentStatusPartiallyRefunded
           ..name = localization.partiallyRefunded,
       ),
@@ -75,6 +65,16 @@ class PaymentScreen extends StatelessWidget {
         (b) => b
           ..id = kPaymentStatusRefunded
           ..name = localization.refunded,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusUnapplied
+          ..name = localization.unapplied,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusPartiallyUnapplied
+          ..name = localization.partiallyUnapplied,
       ),
     ];
 
