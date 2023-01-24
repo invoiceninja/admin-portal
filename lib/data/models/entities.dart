@@ -43,11 +43,8 @@ class EntityType extends EnumClass {
   static const EntityType design = _$design;
   // STARTER: entity type - do not remove comment
   static const EntityType transactionRule = _$transactionRule;
-
   static const EntityType transaction = _$transaction;
-
   static const EntityType bankAccount = _$bankAccount;
-
   static const EntityType recurringExpense = _$recurringExpense;
   static const EntityType recurringQuote = _$recurringQuote;
   static const EntityType subscription = _$subscription;
@@ -230,6 +227,14 @@ class EntityType extends EnumClass {
   }
 
   String get snakeCase => toSnakeCase(toString());
+
+  String get apiValue {
+    if (this == EntityType.transaction) {
+      return 'bank_transaction';
+    }
+
+    return snakeCase;
+  }
 
   bool get hasFullWidthViewer => [
         EntityType.client,

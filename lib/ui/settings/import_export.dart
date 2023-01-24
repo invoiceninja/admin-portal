@@ -15,6 +15,8 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -50,13 +52,92 @@ class ImportExport extends StatefulWidget {
 class _ImportExportState extends State<ImportExport> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_importExport');
+
   FocusScopeNode _focusNode;
   bool autoValidate = false;
   PreImportResponse _response;
+
   var _importFormat = ImportType.csv;
   var _exportFormat = ImportType.csv;
   var _exportType = ExportType.clients;
+  var _exportDate = '';
+  var _exportDateRange = '';
+  var _exportStartDate = '';
+  var _exportEndDate = '';
+
   bool _isExporting = false;
+
+  static const DATE_RANGES = [
+    'last7',
+    'last30',
+    'this_month',
+    'last_month',
+    'this_quarter',
+    'last_quarter',
+    'this_year',
+    'custom',
+  ];
+
+  static const DATE_FIELD_DATE = 'date';
+  static const DATE_FIELD_DUE_DATE = 'due_date';
+  static const DATE_FIELD_PARTIAL_DUE_DATE = 'partial_due_date';
+  static const DATE_FIELD_CREATED_AT = 'created_at';
+  static const DATE_FIELD_PAYMENT_DATE = 'payment_date';
+
+  static const DATE_FIELDS = <ExportType, List<String>>{
+    ExportType.invoices: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.quotes: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.credits: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.invoice_items: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.quote_items: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.recurring_invoices: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_DUE_DATE,
+      DATE_FIELD_PARTIAL_DUE_DATE
+    ],
+    ExportType.clients: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.client_contacts: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.documents: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.products: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.tasks: [
+      DATE_FIELD_CREATED_AT,
+    ],
+    ExportType.expenses: [
+      DATE_FIELD_DATE,
+      DATE_FIELD_PAYMENT_DATE,
+    ],
+    ExportType.payments: [
+      DATE_FIELD_DATE,
+    ],
+  };
 
   @override
   void initState() {
@@ -141,28 +222,85 @@ class _ImportExportState extends State<ImportExport> {
                               .toList()),
                     ),
                   ),
-                  if (_exportFormat == ImportType.csv)
-                    InputDecorator(
-                      decoration:
-                          InputDecoration(labelText: localization.exportType),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<ExportType>(
-                            isDense: true,
-                            value: _exportType,
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _exportType = value;
-                              });
-                            },
-                            items: ExportType.values
-                                .map((importType) =>
-                                    DropdownMenuItem<ExportType>(
-                                        value: importType,
-                                        child: Text(localization
-                                            .lookup('$importType'))))
-                                .toList()),
-                      ),
+                  if (_exportFormat == ImportType.csv) ...[
+                    AppDropdownButton<ExportType>(
+                      value: _exportType,
+                      labelText: localization.exportType,
+                      onChanged: (dynamic value) {
+                        setState(() {
+                          _exportType = value;
+                        });
+                      },
+                      items: ExportType.values
+                          .map((importType) => DropdownMenuItem<ExportType>(
+                              value: importType,
+                              child: Text(localization.lookup('$importType'))))
+                          .toList(),
                     ),
+                    if (DATE_FIELDS.containsKey(_exportType)) ...[
+                      AppDropdownButton<String>(
+                        value: _exportDate,
+                        labelText: localization.date,
+                        showBlank: true,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            _exportDate = value;
+                          });
+                        },
+                        items: DATE_FIELDS[_exportType]
+                            .map((dateField) => DropdownMenuItem<String>(
+                                value: dateField,
+                                child: Text(localization.lookup('$dateField'))))
+                            .toList(),
+                      ),
+                      if (_exportDate.isNotEmpty)
+                        AppDropdownButton<String>(
+                          labelText: localization.dateRange,
+                          value: _exportDateRange,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportDateRange = value;
+                            });
+                          },
+                          items: DATE_RANGES.map(
+                            (dateRange) {
+                              var label = '';
+                              if (dateRange == 'last7') {
+                                label = localization.last7Days;
+                              } else if (dateRange == 'last30') {
+                                label = localization.last30Days;
+                              } else {
+                                label = localization.lookup('$dateRange');
+                              }
+                              return DropdownMenuItem<String>(
+                                value: dateRange,
+                                child: Text(label),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      if (_exportDateRange == 'custom') ...[
+                        DatePicker(
+                          labelText: localization.startDate,
+                          onSelected: (date, _) {
+                            setState(() {
+                              _exportStartDate = date;
+                            });
+                          },
+                          selectedDate: _exportStartDate,
+                        ),
+                        DatePicker(
+                          labelText: localization.endDate,
+                          onSelected: (date, _) {
+                            setState(() {
+                              _exportEndDate = date;
+                            });
+                          },
+                          selectedDate: _exportEndDate,
+                        ),
+                      ]
+                    ],
+                  ],
                   AppButton(
                     iconData: MdiIcons.export,
                     label: localization.export.toUpperCase(),
@@ -180,14 +318,25 @@ class _ImportExportState extends State<ImportExport> {
 
                       setState(() => _isExporting = true);
 
+                      final data = {
+                        'send_email': true,
+                        'report_keys': <String>[],
+                        'date_key': _exportDate,
+                        'date_range': _exportDateRange,
+                        'start_date': _exportStartDate,
+                        'end_date': _exportEndDate,
+                      };
+
+                      if (_exportType == ExportType.profitloss) {
+                        data['is_income_billed'] = true;
+                        data['is_expense_billed'] = true;
+                        data['include_tax'] = true;
+                        data['date_range'] = 'all';
+                        data['date_key'] = 'date';
+                      }
+
                       webClient
-                          .post(url, credentials.token,
-                              data: json.encode(
-                                {
-                                  'send_email': true,
-                                  'report_keys': <String>[],
-                                },
-                              ))
+                          .post(url, credentials.token, data: json.encode(data))
                           .then((dynamic result) {
                         setState(() => _isExporting = false);
                         showMessageDialog(

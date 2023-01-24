@@ -47,7 +47,7 @@ final BuiltSet<ImportType> _$typeValues =
 ]);
 
 const ExportType _$clients = const ExportType._('clients');
-const ExportType _$contacts = const ExportType._('contacts');
+const ExportType _$client_contacts = const ExportType._('client_contacts');
 const ExportType _$credits = const ExportType._('credits');
 const ExportType _$documents = const ExportType._('documents');
 const ExportType _$expenses = const ExportType._('expenses');
@@ -66,8 +66,8 @@ ExportType _$exportValueOf(String name) {
   switch (name) {
     case 'clients':
       return _$clients;
-    case 'contacts':
-      return _$contacts;
+    case 'client_contacts':
+      return _$client_contacts;
     case 'credits':
       return _$credits;
     case 'documents':
@@ -100,7 +100,7 @@ ExportType _$exportValueOf(String name) {
 final BuiltSet<ExportType> _$exportValues =
     new BuiltSet<ExportType>(const <ExportType>[
   _$clients,
-  _$contacts,
+  _$client_contacts,
   _$credits,
   _$documents,
   _$expenses,

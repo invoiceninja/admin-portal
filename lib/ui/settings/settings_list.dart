@@ -391,6 +391,7 @@ class SettingsSearch extends StatelessWidget {
           'enable_applying_payments_later#2022-06-06',
           'allow_over_payment',
           'allow_under_payment',
+          'auto_bill_standard_invoices#2023-01-17',
         ]
       ],
       kSettingsTaxSettings: [
