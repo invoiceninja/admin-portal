@@ -599,7 +599,7 @@ class DashboardPanels extends StatelessWidget {
 
                   return Column(
                     children: [
-                      SizedBox(height: 12),
+                      SizedBox(height: 14),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
