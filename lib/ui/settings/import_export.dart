@@ -318,18 +318,25 @@ class _ImportExportState extends State<ImportExport> {
 
                       setState(() => _isExporting = true);
 
+                      final data = {
+                        'send_email': true,
+                        'report_keys': <String>[],
+                        'date_key': _exportDate,
+                        'date_range': _exportDateRange,
+                        'start_date': _exportStartDate,
+                        'end_date': _exportEndDate,
+                      };
+
+                      if (_exportType == ExportType.profitloss) {
+                        data['is_income_billed'] = true;
+                        data['is_expense_billed'] = true;
+                        data['include_tax'] = true;
+                        data['date_range'] = 'all';
+                        data['date_key'] = 'date';
+                      }
+
                       webClient
-                          .post(url, credentials.token,
-                              data: json.encode(
-                                {
-                                  'send_email': true,
-                                  'report_keys': <String>[],
-                                  'date_key': _exportDate,
-                                  'date_range': _exportDateRange,
-                                  'start_date': _exportStartDate,
-                                  'end_date': _exportEndDate,
-                                },
-                              ))
+                          .post(url, credentials.token, data: json.encode(data))
                           .then((dynamic result) {
                         setState(() => _isExporting = false);
                         showMessageDialog(
