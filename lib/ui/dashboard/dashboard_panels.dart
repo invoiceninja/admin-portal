@@ -273,7 +273,7 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 12),
+      padding: const EdgeInsets.only(top: 24, left: 12, right: 12),
       child: Wrap(
           spacing: 8,
           children: runningTasks.map((task) {
@@ -599,7 +599,7 @@ class DashboardPanels extends StatelessWidget {
 
                   return Column(
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: 12),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
