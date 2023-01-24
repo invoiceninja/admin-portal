@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/static/payment_status_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -33,6 +35,49 @@ class PaymentScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusPartiallyUnapplied
+          ..name = localization.partiallyUnapplied,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusUnapplied
+          ..name = localization.unapplied,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusPending
+          ..name = localization.pending,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusCancelled
+          ..name = localization.cancelled,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusFailed
+          ..name = localization.failed,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusCompleted
+          ..name = localization.completed,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusPartiallyRefunded
+          ..name = localization.partiallyRefunded,
+      ),
+      PaymentStatusEntity().rebuild(
+        (b) => b
+          ..id = kPaymentStatusRefunded
+          ..name = localization.refunded,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.payment,
       onHamburgerLongPress: () => store.dispatch(StartPaymentMultiselect()),
@@ -46,6 +91,10 @@ class PaymentScreen extends StatelessWidget {
         },
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPaymentsByState(state));
+        },
+        statuses: statuses,
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterPaymentsByStatus(status));
         },
       ),
       onCheckboxPressed: () {
@@ -86,6 +135,10 @@ class PaymentScreen extends StatelessWidget {
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPaymentsByState(state));
+        },
+        statuses: statuses,
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterPaymentsByStatus(status));
         },
         onCheckboxPressed: () {
           if (store.state.paymentListState.isInMultiselect()) {

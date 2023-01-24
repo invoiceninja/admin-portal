@@ -235,11 +235,7 @@ class _ListFilterState extends State<ListFilter> {
                   whenEmpty: localization.all,
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityStatus;
-                    return Text(
-                      localization.lookup(state.name),
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                    );
+                    return Text(localization.lookup(state.name));
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
