@@ -78,6 +78,7 @@ class VendorFields {
   static const String contacts = 'contacts';
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
+  static const String postalCity = 'postal_city';
 }
 
 abstract class VendorEntity extends Object

@@ -40,6 +40,7 @@ class CompanyFields {
   static const String custom4 = 'custom4';
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
+  static const String postalCity = 'postal_city';
 }
 
 abstract class CompanyEntity extends Object
