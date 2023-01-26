@@ -6,6 +6,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -50,6 +53,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   TabController _controller;
   FocusScopeNode _focusNode;
 
+  final _logoSizeController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
+
   bool _wasInvoiceDesignChanged = false;
   bool _wasQuoteDesignChanged = false;
   bool _wasCreditDesignChanged = false;
@@ -87,13 +95,51 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     _controller.addListener(_onTabChanged);
   }
 
+  @override
+  void didChangeDependencies() {
+    _controllers = [
+      _logoSizeController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final settings = widget.viewModel.settings;
+    _logoSizeController.text = parseInt(settings.companyLogoSize).toString();
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
     store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
   }
 
+  void _onChanged() {
+    final viewModel = widget.viewModel;
+    final logoSize = _logoSizeController.text.trim();
+
+    final settings = viewModel.settings.rebuild((b) => b
+      ..companyLogoSize = logoSize.isEmpty
+          ? null
+          : logoSize +
+              (viewModel.settings.companyLogoSize.contains('px') ? 'px' : '%'));
+    if (settings != viewModel.settings) {
+      _debouncer.run(() {
+        viewModel.onSettingsChanged(settings);
+      });
+    }
+  }
+
   @override
   void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
     _controller.removeListener(_onTabChanged);
     _controller.dispose();
     _focusNode.dispose();
@@ -109,6 +155,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final isFiltered = state.uiState.settingsUIState.isFiltered;
+
+    print('## LOGO SIZE: ${settings.companyLogoSize}');
 
     return EditScaffold(
       title: localization.invoiceDesign,
@@ -338,6 +386,43 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                   : Text('$fontSize'),
                             ))
                         .toList(),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localization.logoSize,
+                          controller: _logoSizeController,
+                          //onSavePressed: _onSavePressed,
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      SizedBox(
+                        width: 150,
+                        child: AppDropdownButton(
+                          value: (settings.companyLogoSize ?? '').contains('px')
+                              ? localization.pixels
+                              : localization.percent,
+                          onChanged: (dynamic value) => viewModel
+                              .onSettingsChanged(settings.rebuild((b) => b
+                                ..companyLogoSize = _logoSizeController.text +
+                                    (value == localization.pixels
+                                        ? 'px'
+                                        : '%'))),
+                          items: [
+                            DropdownMenuItem<String>(
+                              child: Text(localization.percent),
+                              value: localization.percent,
+                            ),
+                            DropdownMenuItem<String>(
+                              child: Text(localization.pixels),
+                              value: localization.pixels,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
