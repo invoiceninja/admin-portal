@@ -399,6 +399,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       SizedBox(
                         width: 150,
                         child: AppDropdownButton(
+                          labelText: '',
                           value: (settings.companyLogoSize ?? '').contains('px')
                               ? localization.pixels
                               : localization.percent,
