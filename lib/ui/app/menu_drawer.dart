@@ -343,341 +343,361 @@ class _MenuDrawerState extends State<MenuDrawer> {
                             : _expandedCompanySelector),
                 state.credentials.token.isEmpty
                     ? SizedBox()
-                    : Expanded(
-                        child: Container(
-                        color: inactiveColor.isNotEmpty
-                            ? convertHexStringToColor(inactiveColor)
-                            : Theme.of(context).cardColor,
-                        child: ScrollableListView(
-                          children: <Widget>[
-                            if (state.account.debugEnabled && kReleaseMode)
-                              if (state.isMenuCollapsed)
-                                Tooltip(
-                                  message: localization.debugModeIsEnabled,
-                                  child: ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 20),
-                                    onTap: () =>
-                                        launchUrl(Uri.parse(kDebugModeUrl)),
-                                    leading:
-                                        Icon(Icons.warning, color: Colors.red),
-                                  ),
-                                )
-                              else
-                                Material(
-                                  child: ListTile(
-                                    tileColor: Colors.red.shade800,
-                                    title: Padding(
-                                      padding: const EdgeInsets.only(bottom: 6),
-                                      child: IconText(
-                                        icon: Icons.warning,
-                                        text: localization.debugModeIsEnabled,
-                                        style: TextStyle(color: Colors.white),
+                    : Theme(
+                        data: state.prefState.enableDarkMode ||
+                                (state.prefState.customColors[PrefState
+                                            .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+                                        '')
+                                    .isNotEmpty
+                            ? ThemeData.dark()
+                            : ThemeData.light(),
+                        child: Expanded(
+                          child: Container(
+                            color: inactiveColor.isNotEmpty
+                                ? convertHexStringToColor(inactiveColor)
+                                : Theme.of(context).cardColor,
+                            child: ScrollableListView(
+                              children: <Widget>[
+                                if (state.account.debugEnabled && kReleaseMode)
+                                  if (state.isMenuCollapsed)
+                                    Tooltip(
+                                      message: localization.debugModeIsEnabled,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 20),
+                                        onTap: () =>
+                                            launchUrl(Uri.parse(kDebugModeUrl)),
+                                        leading: Icon(Icons.warning,
+                                            color: Colors.red),
                                       ),
-                                    ),
-                                    subtitle: Text(
-                                      localization.debugModeIsEnabledHelp,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () =>
-                                        launchUrl(Uri.parse(kDebugModeUrl)),
-                                  ),
-                                ),
-                            if (!state.account.accountSmsVerified &&
-                                state.isHosted)
-                              if (state.isMenuCollapsed)
-                                Tooltip(
-                                  message: localization.verifyPhoneNumberHelp,
-                                  child: ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
-                                    leading: IconButton(
-                                      onPressed: () {
-                                        showDialog<void>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              AccountSmsVerification(),
-                                        );
-                                      },
-                                      icon: Icon(Icons.warning,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                )
-                              else
-                                Material(
-                                  child: ListTile(
-                                    tileColor: Colors.orange.shade800,
-                                    subtitle: Text(
-                                      localization.verifyPhoneNumberHelp,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () {
-                                      showDialog<void>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AccountSmsVerification(),
-                                      );
-                                    },
-                                  ),
-                                )
-                            else if (state.user.isTwoFactorEnabled &&
-                                !state.user.phoneVerified &&
-                                state.isHosted)
-                              if (state.isMenuCollapsed)
-                                Tooltip(
-                                  message:
-                                      localization.verifyPhoneNumber2faHelp,
-                                  child: ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
-                                    leading: IconButton(
-                                      onPressed: () {
-                                        showDialog<void>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              UserSmsVerification(
-                                            showChangeNumber: true,
+                                    )
+                                  else
+                                    Material(
+                                      child: ListTile(
+                                        tileColor: Colors.red.shade800,
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: IconText(
+                                            icon: Icons.warning,
+                                            text:
+                                                localization.debugModeIsEnabled,
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
-                                        );
-                                      },
-                                      icon: Icon(Icons.warning,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                )
-                              else
-                                Material(
-                                  child: ListTile(
-                                    tileColor: Colors.orange.shade800,
-                                    subtitle: Text(
-                                      localization.verifyPhoneNumber2faHelp,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () {
-                                      showDialog<void>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            UserSmsVerification(),
-                                      );
-                                    },
-                                  ),
-                                )
-                            else if (state.company.isDisabled &&
-                                state.userCompany.isAdmin)
-                              if (state.isMenuCollapsed)
-                                Tooltip(
-                                  message: localization.companyDisabledWarning,
-                                  child: ListTile(
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
-                                    leading: IconButton(
-                                      onPressed: () =>
-                                          store.dispatch(ViewSettings(
-                                        section: kSettingsAccountManagement,
-                                        company: company,
-                                      )),
-                                      icon: Icon(Icons.warning,
-                                          color: Colors.orange),
-                                    ),
-                                  ),
-                                )
-                              else
-                                Material(
-                                  child: ListTile(
-                                    tileColor: Colors.orange.shade800,
-                                    title: Padding(
-                                      padding: const EdgeInsets.only(bottom: 6),
-                                      child: IconText(
-                                        icon: Icons.warning,
-                                        text: localization.warning,
-                                        style: TextStyle(color: Colors.white),
+                                        ),
+                                        subtitle: Text(
+                                          localization.debugModeIsEnabledHelp,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onTap: () =>
+                                            launchUrl(Uri.parse(kDebugModeUrl)),
                                       ),
                                     ),
-                                    subtitle: Text(
-                                      localization.companyDisabledWarning,
-                                      style: TextStyle(color: Colors.white),
+                                if (!state.account.accountSmsVerified &&
+                                    state.isHosted)
+                                  if (state.isMenuCollapsed)
+                                    Tooltip(
+                                      message:
+                                          localization.verifyPhoneNumberHelp,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 12),
+                                        leading: IconButton(
+                                          onPressed: () {
+                                            showDialog<void>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  AccountSmsVerification(),
+                                            );
+                                          },
+                                          icon: Icon(Icons.warning,
+                                              color: Colors.orange),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Material(
+                                      child: ListTile(
+                                        tileColor: Colors.orange.shade800,
+                                        subtitle: Text(
+                                          localization.verifyPhoneNumberHelp,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onTap: () {
+                                          showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                AccountSmsVerification(),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                else if (state.user.isTwoFactorEnabled &&
+                                    !state.user.phoneVerified &&
+                                    state.isHosted)
+                                  if (state.isMenuCollapsed)
+                                    Tooltip(
+                                      message:
+                                          localization.verifyPhoneNumber2faHelp,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 12),
+                                        leading: IconButton(
+                                          onPressed: () {
+                                            showDialog<void>(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  UserSmsVerification(
+                                                showChangeNumber: true,
+                                              ),
+                                            );
+                                          },
+                                          icon: Icon(Icons.warning,
+                                              color: Colors.orange),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Material(
+                                      child: ListTile(
+                                        tileColor: Colors.orange.shade800,
+                                        subtitle: Text(
+                                          localization.verifyPhoneNumber2faHelp,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onTap: () {
+                                          showDialog<void>(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                UserSmsVerification(),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                else if (state.company.isDisabled &&
+                                    state.userCompany.isAdmin)
+                                  if (state.isMenuCollapsed)
+                                    Tooltip(
+                                      message:
+                                          localization.companyDisabledWarning,
+                                      child: ListTile(
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 12),
+                                        leading: IconButton(
+                                          onPressed: () =>
+                                              store.dispatch(ViewSettings(
+                                            section: kSettingsAccountManagement,
+                                            company: company,
+                                          )),
+                                          icon: Icon(Icons.warning,
+                                              color: Colors.orange),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Material(
+                                      child: ListTile(
+                                        tileColor: Colors.orange.shade800,
+                                        title: Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: IconText(
+                                            icon: Icons.warning,
+                                            text: localization.warning,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          localization.companyDisabledWarning,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        onTap: () {
+                                          store.dispatch(ViewSettings(
+                                            section: kSettingsAccountManagement,
+                                            company: company,
+                                          ));
+                                        },
+                                      ),
                                     ),
-                                    onTap: () {
-                                      store.dispatch(ViewSettings(
-                                        section: kSettingsAccountManagement,
-                                        company: company,
-                                      ));
-                                    },
-                                  ),
-                                ),
-                            if (state.userCompany.isOwner &&
-                                state.isHosted &&
-                                !isPaidAccount(context) &&
-                                (!isApple() || supportsInAppPurchase()))
-                              Material(
-                                child: Tooltip(
-                                  message: state.isMenuCollapsed
-                                      ? localization.upgrade
-                                      : '',
-                                  child: ListTile(
-                                    dense: true,
-                                    contentPadding:
-                                        const EdgeInsets.only(left: 12),
-                                    tileColor: Colors.green,
-                                    leading: IconButton(
-                                      onPressed: () => store.dispatch(
-                                          ViewSettings(
+                                if (state.userCompany.isOwner &&
+                                    state.isHosted &&
+                                    !isPaidAccount(context) &&
+                                    (!isApple() || supportsInAppPurchase()))
+                                  Material(
+                                    child: Tooltip(
+                                      message: state.isMenuCollapsed
+                                          ? localization.upgrade
+                                          : '',
+                                      child: ListTile(
+                                        dense: true,
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 12),
+                                        tileColor: Colors.green,
+                                        leading: IconButton(
+                                          onPressed: () => store.dispatch(
+                                              ViewSettings(
+                                                  clearFilter: true,
+                                                  company: company,
+                                                  user: state.user,
+                                                  section:
+                                                      kSettingsAccountManagement)),
+                                          icon: Icon(
+                                            Icons.arrow_circle_up,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        title: state.isMenuCollapsed
+                                            ? SizedBox()
+                                            : Text(
+                                                localization.upgrade,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1
+                                                    .copyWith(
+                                                      fontSize: 14,
+                                                      color: Colors.white,
+                                                    ),
+                                              ),
+                                        onTap: () {
+                                          store.dispatch(ViewSettings(
                                               clearFilter: true,
                                               company: company,
                                               user: state.user,
                                               section:
-                                                  kSettingsAccountManagement)),
-                                      icon: Icon(
-                                        Icons.arrow_circle_up,
-                                        color: Colors.white,
+                                                  kSettingsAccountManagement));
+                                        },
                                       ),
                                     ),
-                                    title: state.isMenuCollapsed
-                                        ? SizedBox()
-                                        : Text(
-                                            localization.upgrade,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1
-                                                .copyWith(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                          ),
-                                    onTap: () {
-                                      store.dispatch(ViewSettings(
-                                          clearFilter: true,
-                                          company: company,
-                                          user: state.user,
-                                          section: kSettingsAccountManagement));
-                                    },
                                   ),
+                                DrawerTile(
+                                  company: company,
+                                  icon: getEntityIcon(EntityType.dashboard),
+                                  title: localization.dashboard,
+                                  onTap: () => viewEntitiesByType(
+                                      entityType: EntityType.dashboard),
+                                  onLongPress: () =>
+                                      store.dispatch(ViewDashboard(filter: '')),
                                 ),
-                              ),
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.dashboard),
-                              title: localization.dashboard,
-                              onTap: () => viewEntitiesByType(
-                                  entityType: EntityType.dashboard),
-                              onLongPress: () =>
-                                  store.dispatch(ViewDashboard(filter: '')),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.client,
+                                  icon: getEntityIcon(EntityType.client),
+                                  title: localization.clients,
+                                  iconTooltip: localization.newClient,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.product,
+                                  icon: getEntityIcon(EntityType.product),
+                                  title: localization.products,
+                                  iconTooltip: localization.newProduct,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.invoice,
+                                  icon: getEntityIcon(EntityType.invoice),
+                                  title: localization.invoices,
+                                  iconTooltip: localization.newInvoice,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.recurringInvoice,
+                                  icon: getEntityIcon(
+                                      EntityType.recurringInvoice),
+                                  title: localization.recurringInvoices,
+                                  iconTooltip: localization.newRecurringInvoice,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.payment,
+                                  icon: getEntityIcon(EntityType.payment),
+                                  title: localization.payments,
+                                  iconTooltip: localization.newPayment,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.quote,
+                                  icon: getEntityIcon(EntityType.quote),
+                                  title: localization.quotes,
+                                  iconTooltip: localization.newQuote,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.credit,
+                                  icon: getEntityIcon(EntityType.credit),
+                                  title: localization.credits,
+                                  iconTooltip: localization.newCredit,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.project,
+                                  icon: getEntityIcon(EntityType.project),
+                                  title: localization.projects,
+                                  iconTooltip: localization.newProject,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.task,
+                                  icon: getEntityIcon(EntityType.task),
+                                  title: localization.tasks,
+                                  iconTooltip: localization.newTask,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.vendor,
+                                  icon: getEntityIcon(EntityType.vendor),
+                                  title: localization.vendors,
+                                  iconTooltip: localization.newVendor,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.purchaseOrder,
+                                  icon: getEntityIcon(EntityType.purchaseOrder),
+                                  title: localization.purchaseOrders,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.expense,
+                                  icon: getEntityIcon(EntityType.expense),
+                                  title: localization.expenses,
+                                  iconTooltip: localization.newExpense,
+                                ),
+                                // STARTER: menu - do not remove comment
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.recurringExpense,
+                                  icon: getEntityIcon(
+                                      EntityType.recurringExpense),
+                                  title: localization.recurringExpenses,
+                                ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.transaction,
+                                  icon: getEntityIcon(EntityType.transaction),
+                                  title: localization.transactions,
+                                ),
+                                if (!isApple() || state.isProPlan)
+                                  DrawerTile(
+                                    company: company,
+                                    icon: getEntityIcon(EntityType.reports),
+                                    title: localization.reports,
+                                    onTap: () => viewEntitiesByType(
+                                        entityType: EntityType.reports),
+                                  ),
+                                DrawerTile(
+                                  company: company,
+                                  icon: getEntityIcon(EntityType.settings),
+                                  title: localization.settings,
+                                  onTap: () => viewEntitiesByType(
+                                      entityType: EntityType.settings),
+                                ),
+                              ],
                             ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.client,
-                              icon: getEntityIcon(EntityType.client),
-                              title: localization.clients,
-                              iconTooltip: localization.newClient,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.product,
-                              icon: getEntityIcon(EntityType.product),
-                              title: localization.products,
-                              iconTooltip: localization.newProduct,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.invoice,
-                              icon: getEntityIcon(EntityType.invoice),
-                              title: localization.invoices,
-                              iconTooltip: localization.newInvoice,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.recurringInvoice,
-                              icon: getEntityIcon(EntityType.recurringInvoice),
-                              title: localization.recurringInvoices,
-                              iconTooltip: localization.newRecurringInvoice,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.payment,
-                              icon: getEntityIcon(EntityType.payment),
-                              title: localization.payments,
-                              iconTooltip: localization.newPayment,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.quote,
-                              icon: getEntityIcon(EntityType.quote),
-                              title: localization.quotes,
-                              iconTooltip: localization.newQuote,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.credit,
-                              icon: getEntityIcon(EntityType.credit),
-                              title: localization.credits,
-                              iconTooltip: localization.newCredit,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.project,
-                              icon: getEntityIcon(EntityType.project),
-                              title: localization.projects,
-                              iconTooltip: localization.newProject,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.task,
-                              icon: getEntityIcon(EntityType.task),
-                              title: localization.tasks,
-                              iconTooltip: localization.newTask,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.vendor,
-                              icon: getEntityIcon(EntityType.vendor),
-                              title: localization.vendors,
-                              iconTooltip: localization.newVendor,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.purchaseOrder,
-                              icon: getEntityIcon(EntityType.purchaseOrder),
-                              title: localization.purchaseOrders,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.expense,
-                              icon: getEntityIcon(EntityType.expense),
-                              title: localization.expenses,
-                              iconTooltip: localization.newExpense,
-                            ),
-                            // STARTER: menu - do not remove comment
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.recurringExpense,
-                              icon: getEntityIcon(EntityType.recurringExpense),
-                              title: localization.recurringExpenses,
-                            ),
-                            DrawerTile(
-                              company: company,
-                              entityType: EntityType.transaction,
-                              icon: getEntityIcon(EntityType.transaction),
-                              title: localization.transactions,
-                            ),
-                            if (!isApple() || state.isProPlan)
-                              DrawerTile(
-                                company: company,
-                                icon: getEntityIcon(EntityType.reports),
-                                title: localization.reports,
-                                onTap: () => viewEntitiesByType(
-                                    entityType: EntityType.reports),
-                              ),
-                            DrawerTile(
-                              company: company,
-                              icon: getEntityIcon(EntityType.settings),
-                              title: localization.settings,
-                              onTap: () => viewEntitiesByType(
-                                  entityType: EntityType.settings),
-                            ),
-                          ],
+                          ),
                         ),
-                      )),
+                      ),
                 SizedBox(
                   height: kTopBottomBarHeight,
                   child: AppBorder(

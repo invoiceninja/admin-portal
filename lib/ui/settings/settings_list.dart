@@ -512,6 +512,7 @@ class SettingsSearch extends StatelessWidget {
           'primary_color',
           'secondary_color',
           'empty_columns',
+          'logo_size#2023-01-26',
         ],
       ],
       kSettingsCustomDesigns: [
