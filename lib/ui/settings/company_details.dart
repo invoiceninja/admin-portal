@@ -458,6 +458,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               label: localization.delete,
                               iconData: Icons.delete,
                               onPressed: () {
+                                if (state.settingsUIState.isChanged) {
+                                  showMessageDialog(
+                                      context: context,
+                                      message:
+                                          localization.errorUnsavedChanges);
+                                  return;
+                                }
+
                                 confirmCallback(
                                     context: context,
                                     callback: (_) =>
@@ -473,6 +481,13 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             label: localization.uploadLogo,
                             iconData: Icons.cloud_upload,
                             onPressed: () async {
+                              if (state.settingsUIState.isChanged) {
+                                showMessageDialog(
+                                    context: context,
+                                    message: localization.errorUnsavedChanges);
+                                return;
+                              }
+
                               final multipartFile = await pickFile(
                                 fileIndex: 'company_logo',
                                 fileType: FileType.image,
