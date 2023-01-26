@@ -156,8 +156,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final company = viewModel.company;
     final isFiltered = state.uiState.settingsUIState.isFiltered;
 
-    print('## LOGO SIZE: ${settings.companyLogoSize}');
-
     return EditScaffold(
       title: localization.invoiceDesign,
       onSavePressed: (context) {
