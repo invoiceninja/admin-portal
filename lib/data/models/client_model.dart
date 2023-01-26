@@ -92,6 +92,7 @@ class ClientFields {
   static const String createdById = 'created_by_id';
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
+  static const String postalCity = 'postal_city';
   static const String documents = 'documents';
   static const String postalCode = 'postal_code';
   static const String city = 'city';

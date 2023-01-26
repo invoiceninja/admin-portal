@@ -105,7 +105,10 @@ class EntityPresenter {
       ].contains(field);
 
   static bool isFieldAmount(String field) {
-    return ['quantity'].contains(field);
+    return [
+      'quantity',
+      'stock_quantity',
+    ].contains(field);
   }
 
   static bool isFieldNumeric(String field) {

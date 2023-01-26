@@ -1355,7 +1355,7 @@ class ReportResult {
         } else if (columnType == ReportColumnType.number) {
           final currencyId = values['${column}_currency_id'];
           value = formatNumber(values[column], context,
-              formatNumberType: column == 'quantity'
+              formatNumberType: column.toLowerCase().contains('quantity')
                   ? FormatNumberType.double
                   : FormatNumberType.money,
               currencyId:

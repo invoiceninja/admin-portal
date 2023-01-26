@@ -413,9 +413,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                 value: state.settingsUIState.isFiltered
                     ? settings.showEmailFooter
                     : (settings.showEmailFooter ?? true),
-                iconData: MdiIcons.filePdfBox,
+                iconData: MdiIcons.textBox,
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..pdfEmailAttachment = value)),
+                    settings.rebuild((b) => b..showEmailFooter = value)),
               ),
               BoolDropdownButton(
                 label: localization.attachPdf,
