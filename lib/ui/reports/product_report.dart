@@ -149,7 +149,7 @@ ReportResult productReport(
           );
           break;
         case ProductReportFields.stock_quantity:
-          value = product.stockQuantity;
+          value = product.stockQuantity.toDouble();
           break;
         case ProductReportFields.notification_threshold:
           value = productNotificationThreshold(
@@ -174,7 +174,10 @@ ReportResult productReport(
 
       if (value.runtimeType == bool) {
         row.add(product.getReportBool(value: value));
-      } else if (column == ProductReportFields.quantity) {
+      } else if ([
+        ProductReportFields.quantity,
+        ProductReportFields.stock_quantity
+      ].contains(column)) {
         row.add(product.getReportDouble(
           value: value,
           currencyId: userCompany.company.currencyId,
