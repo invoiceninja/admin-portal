@@ -105,7 +105,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    _logoSizeController.text = parseInt(settings.companyLogoSize).toString();
+    _logoSizeController.text = (settings.companyLogoSize ?? '').isEmpty
+        ? ''
+        : parseInt(settings.companyLogoSize).toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -124,7 +126,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     final settings = viewModel.settings.rebuild((b) => b
       ..companyLogoSize = logoSize.isEmpty
-          ? null
+          ? ''
           : logoSize +
               (viewModel.settings.companyLogoSize.contains('px') ? 'px' : '%'));
     if (settings != viewModel.settings) {
