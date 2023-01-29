@@ -945,6 +945,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'company_logo_size')
   String get companyLogoSize;
 
+  @nullable
+  @BuiltValueField(wireName: 'show_paid_stamp')
+  bool get showPaidStamp;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_shipping_address')
+  bool get showShippingAddress;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
