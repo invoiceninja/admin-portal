@@ -514,6 +514,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         .toList(),
                         */
                   ),
+                  BoolDropdownButton(
+                    label: localization.showPaidStamp,
+                    value: settings.showPaidStamp ?? false,
+                    iconData: Icons.paid,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showPaidStamp = value),
+                    ),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.showShippingAddress,
+                    value: settings.showShippingAddress ?? false,
+                    iconData: Icons.local_shipping,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showShippingAddress = value),
+                    ),
+                  ),
                 ],
               ),
             ],
