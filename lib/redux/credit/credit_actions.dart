@@ -674,15 +674,20 @@ Future handleCreditAction(
           documentIds.add(document.id);
         }
       }
-      store.dispatch(
-        DownloadDocumentsRequest(
-          documentIds: documentIds,
-          completer: snackBarCompleter<Null>(
-            context,
-            localization.exportedData,
+      if (documentIds.isEmpty) {
+        showMessageDialog(
+            context: context, message: localization.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              context,
+              localization.exportedData,
+            ),
           ),
-        ),
-      );
+        );
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in credit_actions');
