@@ -137,6 +137,9 @@ class _ImportExportState extends State<ImportExport> {
     ExportType.payments: [
       DATE_FIELD_DATE,
     ],
+    ExportType.profitloss: [
+      DATE_FIELD_DATE,
+    ],
   };
 
   @override
@@ -331,8 +334,6 @@ class _ImportExportState extends State<ImportExport> {
                         data['is_income_billed'] = true;
                         data['is_expense_billed'] = true;
                         data['include_tax'] = true;
-                        data['date_range'] = 'all';
-                        data['date_key'] = 'date';
                       }
 
                       webClient
