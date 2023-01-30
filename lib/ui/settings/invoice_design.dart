@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -1103,6 +1104,10 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
   @override
   Widget build(BuildContext context) {
+    if (_response == null) {
+      return LoadingIndicator();
+    }
+
     return PdfPreview(
       build: (format) => _response.bodyBytes,
       canChangeOrientation: false,
