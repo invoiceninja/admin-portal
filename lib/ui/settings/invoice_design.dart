@@ -6,11 +6,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:http/http.dart' as http;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -33,6 +35,7 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:printing/printing.dart';
 
 class InvoiceDesign extends StatefulWidget {
   const InvoiceDesign({
@@ -540,7 +543,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
             ],
           ),
-          _PdfPreview(),
+          _PdfPreview(
+            settings: viewModel.settings,
+            state: state,
+          ),
           /*
           ScrollableListView(
             padding: const EdgeInsets.all(10),
@@ -1052,11 +1058,57 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   }
 }
 
-class _PdfPreview extends StatelessWidget {
-  const _PdfPreview({Key key}) : super(key: key);
+class _PdfPreview extends StatefulWidget {
+  const _PdfPreview({
+    Key key,
+    this.settings,
+    this.state,
+  }) : super(key: key);
+
+  final SettingsEntity settings;
+  final AppState state;
+
+  @override
+  State<_PdfPreview> createState() => _PdfPreviewState();
+}
+
+class _PdfPreviewState extends State<_PdfPreview> {
+  http.Response _response;
+
+  @override
+  void initState() {
+    super.initState();
+
+    print('## INIT');
+    _loadPdf();
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.settings != widget.settings) {
+      print('## SETTINGS CHANGED');
+    }
+  }
+
+  void _loadPdf() async {
+    final state = widget.state;
+    final url = state.credentials.url + '/live_design';
+    _response = await WebClient().post(
+      url,
+      state.credentials.token,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return PdfPreview(
+      build: (format) => _response.bodyBytes,
+      canChangeOrientation: false,
+      canChangePageFormat: false,
+      canDebug: false,
+      maxPageWidth: 800,
+    );
   }
 }
