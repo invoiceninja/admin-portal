@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -76,6 +77,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     _focusNode = FocusScopeNode();
 
     int tabs = 6;
+
+    if (true || isMobile(context)) {
+      tabs++;
+    }
 
     [
       EntityType.invoice,
@@ -176,6 +181,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               isScrollable: true,
               tabs: [
                 Tab(text: localization.generalSettings),
+                Tab(text: localization.preview),
                 Tab(text: localization.clientDetails),
                 Tab(text: localization.companyDetails),
                 Tab(text: localization.companyAddress),
@@ -206,7 +212,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               Padding(
                 padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
                 child: AppButton(
-                  label: localization.customizeAndPreview.toUpperCase(),
+                  label: localization.customize.toUpperCase(),
                   iconData: Icons.settings,
                   onPressed: () => state.designState.customDesigns.isEmpty
                       ? createEntity(
@@ -534,6 +540,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
             ],
           ),
+          _PdfPreview(),
           /*
           ScrollableListView(
             padding: const EdgeInsets.all(10),
@@ -1042,5 +1049,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         ],
       ),
     );
+  }
+}
+
+class _PdfPreview extends StatelessWidget {
+  const _PdfPreview({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Placeholder();
   }
 }
