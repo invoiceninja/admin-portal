@@ -241,7 +241,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       ),
                       Expanded(
                           child: Padding(
-                        padding: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 18),
                         child: SwitchListTile(
                           title: Text(localization.showPdfPreview),
                           value: false,
@@ -464,7 +464,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ],
               ),
               FormCard(
-                  isLast: true,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     LearnMoreUrl(
@@ -500,6 +499,27 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ),
                   ]),
               FormCard(
+                children: [
+                  BoolDropdownButton(
+                    label: localization.showPaidStamp,
+                    value: settings.showPaidStamp ?? false,
+                    iconData: Icons.paid,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showPaidStamp = value),
+                    ),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.showShippingAddress,
+                    value: settings.showShippingAddress ?? false,
+                    iconData: Icons.local_shipping,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showShippingAddress = value),
+                    ),
+                  ),
+                ],
+              ),
+              FormCard(
+                isLast: true,
                 children: [
                   BoolDropdownButton(
                     label: localization.emptyColumns,
@@ -549,22 +569,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ))
                         .toList(),
                         */
-                  ),
-                  BoolDropdownButton(
-                    label: localization.showPaidStamp,
-                    value: settings.showPaidStamp ?? false,
-                    iconData: Icons.paid,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showPaidStamp = value),
-                    ),
-                  ),
-                  BoolDropdownButton(
-                    label: localization.showShippingAddress,
-                    value: settings.showShippingAddress ?? false,
-                    iconData: Icons.local_shipping,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showShippingAddress = value),
-                    ),
                   ),
                 ],
               ),
