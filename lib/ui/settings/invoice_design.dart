@@ -1109,6 +1109,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
       clientId: '',
     );
 
+    print('## URL: $url');
     _response = await WebClient()
         .post(
       url,
@@ -1145,6 +1146,8 @@ class _PdfPreviewState extends State<_PdfPreview> {
       canChangePageFormat: false,
       canDebug: false,
       maxPageWidth: 800,
+      allowPrinting: false,
+      allowSharing: false,
     );
   }
 }
