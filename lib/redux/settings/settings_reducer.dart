@@ -29,6 +29,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
           ? DateTime.now().millisecondsSinceEpoch
           : state.filterClearedAt
       ..showNewSettings = action.section != null ? state.showNewSettings : false
+      ..showPdfPreview = false
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null
