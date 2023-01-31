@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -85,7 +86,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     int tabs = 6;
 
-    if (true || isMobile(context)) {
+    if (state.prefState.isMobile) {
       tabs++;
     }
 
@@ -188,7 +189,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               isScrollable: true,
               tabs: [
                 Tab(text: localization.generalSettings),
-                Tab(text: localization.preview),
+                if (isMobile(context)) Tab(text: localization.preview),
                 Tab(text: localization.clientDetails),
                 Tab(text: localization.companyDetails),
                 Tab(text: localization.companyAddress),
@@ -218,17 +219,39 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
-                child: AppButton(
-                  label: localization.customize.toUpperCase(),
-                  iconData: Icons.settings,
-                  onPressed: () => state.designState.customDesigns.isEmpty
-                      ? createEntity(
-                          context: context,
-                          entity: DesignEntity(state: state),
-                        )
-                      : store.dispatch(ViewSettings(
-                          section: kSettingsCustomDesigns,
-                        )),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AppButton(
+                        label: localization.customize.toUpperCase(),
+                        iconData: Icons.settings,
+                        onPressed: () => state.designState.customDesigns.isEmpty
+                            ? createEntity(
+                                context: context,
+                                entity: DesignEntity(state: state),
+                              )
+                            : store.dispatch(ViewSettings(
+                                section: kSettingsCustomDesigns,
+                              )),
+                      ),
+                    ),
+                    if (isDesktop(context)) ...[
+                      SizedBox(
+                        width: kTableColumnGap,
+                      ),
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: SwitchListTile(
+                          title: Text(localization.showPdfPreview),
+                          value: false,
+                          onChanged: (value) {
+                            //
+                          },
+                        ),
+                      )),
+                    ]
+                  ],
                 ),
               ),
               FormCard(
@@ -547,10 +570,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
             ],
           ),
-          _PdfPreview(
-            settings: viewModel.settings,
-            state: state,
-          ),
+          if (isMobile(context))
+            _PdfPreview(
+              settings: viewModel.settings,
+              state: state,
+            ),
           /*
           ScrollableListView(
             padding: const EdgeInsets.all(10),
