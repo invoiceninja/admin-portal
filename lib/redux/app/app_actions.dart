@@ -528,7 +528,7 @@ void viewEntityById({
           viewEntitiesByType(
               entityType: filterEntity.entityType.relatedTypes
                   .where((entityType) =>
-                      state.userCompany.canViewOrCreate(entityType))
+                      state.userCompany.canViewCreateOrEdit(entityType))
                   .first,
               filterEntity: filterEntity);
           return;

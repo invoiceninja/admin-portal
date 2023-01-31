@@ -1044,8 +1044,8 @@ abstract class UserCompanyEntity
   bool canCreate(EntityType entityType) =>
       can(UserPermission.create, entityType);
 
-  bool canViewOrCreate(EntityType entityType) =>
-      canView(entityType) || canCreate(entityType);
+  bool canViewCreateOrEdit(EntityType entityType) =>
+      canView(entityType) || canCreate(entityType) || canEdit(entityType);
 
   bool canEditEntity(BaseEntity entity) {
     if (entity == null) {
