@@ -1168,7 +1168,8 @@ class _PdfPreview extends StatefulWidget {
 }
 
 class _PdfPreviewState extends State<_PdfPreview> {
-  http.Response _response;
+  http.Response response;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -1202,7 +1203,10 @@ class _PdfPreviewState extends State<_PdfPreview> {
     );
 
     print('## URL: $url');
-    _response = await WebClient()
+
+    setState(() => isLoading = true);
+
+    response = await WebClient()
         .post(
       url,
       state.credentials.token,
@@ -1219,27 +1223,30 @@ class _PdfPreviewState extends State<_PdfPreview> {
     });
 
     print(
-        '## Response - Status: ${_response.statusCode},  Length: ${_response.contentLength}');
+        '## Response - Status: ${response.statusCode},  Length: ${response.contentLength}');
 
-    if (_response.contentLength > 0) {
-      setState(() {});
-    }
+    setState(() => isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_response == null) {
+    if (response == null) {
       return LoadingIndicator();
     }
 
-    return PdfPreview(
-      build: (format) => _response.bodyBytes,
-      canChangeOrientation: false,
-      canChangePageFormat: false,
-      canDebug: false,
-      maxPageWidth: 800,
-      allowPrinting: false,
-      allowSharing: false,
+    return Stack(
+      children: [
+        PdfPreview(
+          build: (format) => response.bodyBytes,
+          canChangeOrientation: false,
+          canChangePageFormat: false,
+          canDebug: false,
+          maxPageWidth: 800,
+          allowPrinting: false,
+          allowSharing: false,
+        ),
+        if (isLoading) LinearProgressIndicator(),
+      ],
     );
   }
 }
