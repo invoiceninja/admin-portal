@@ -1184,6 +1184,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
     if (oldWidget.settings != widget.settings) {
       print('## SETTINGS CHANGED');
+      _loadPdf();
     }
   }
 
