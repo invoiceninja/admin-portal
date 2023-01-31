@@ -1175,7 +1175,6 @@ class _PdfPreviewState extends State<_PdfPreview> {
   void initState() {
     super.initState();
 
-    print('## INIT');
     _loadPdf();
   }
 
@@ -1184,7 +1183,6 @@ class _PdfPreviewState extends State<_PdfPreview> {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.settings != widget.settings) {
-      print('## SETTINGS CHANGED');
       _loadPdf();
     }
   }
@@ -1201,8 +1199,6 @@ class _PdfPreviewState extends State<_PdfPreview> {
       groupId: '',
       clientId: '',
     );
-
-    print('## URL: $url');
 
     setState(() => isLoading = true);
 
@@ -1221,9 +1217,6 @@ class _PdfPreviewState extends State<_PdfPreview> {
         .catchError((dynamic error) {
       print('## Error: $error');
     });
-
-    print(
-        '## Response - Status: ${response.statusCode},  Length: ${response.contentLength}');
 
     setState(() => isLoading = false);
   }
