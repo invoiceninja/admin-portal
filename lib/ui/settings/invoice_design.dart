@@ -1099,30 +1099,38 @@ class _PdfPreviewState extends State<_PdfPreview> {
   void _loadPdf() async {
     final state = widget.state;
     final url = state.credentials.url + '/live_design';
-    final data = {
-      'entity': EntityType.invoice,
-      'entity_id': state.invoiceState.list.last,
-      'settings_type': 'company', //'bail|required|in:company,group,client',
-      'settings':
-          serializers.serializeWith(SettingsEntity.serializer, widget.settings),
-      'group_id': '',
-      'client_id': '',
-    };
-    print('## url: $url');
-    print('## json: ${jsonEncode(data)}');
-    return;
+
+    final request = PdfPreviewRequest(
+      entity: EntityType.invoice,
+      entityId: state.invoiceState.list.last,
+      settingsType: 'company',
+      settings: widget.settings,
+      groupId: '',
+      clientId: '',
+    );
+
     _response = await WebClient()
         .post(
       url,
       state.credentials.token,
-      data: jsonEncode(data),
+      data: jsonEncode(
+        serializers.serializeWith(
+          PdfPreviewRequest.serializer,
+          request,
+        ),
+      ),
       rawResponse: true,
     )
         .catchError((dynamic error) {
       print('## Error: $error');
     });
 
-    print('## Response: $_response');
+    print(
+        '## Response - Status: ${_response.statusCode},  Length: ${_response.contentLength}');
+
+    if (_response.contentLength > 0) {
+      setState(() {});
+    }
   }
 
   @override

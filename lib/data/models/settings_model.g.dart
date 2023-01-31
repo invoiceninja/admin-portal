@@ -8,8 +8,8 @@ part of 'settings_model.dart';
 
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
-Serializer<PdfPreviewResponse> _$pdfPreviewResponseSerializer =
-    new _$PdfPreviewResponseSerializer();
+Serializer<PdfPreviewRequest> _$pdfPreviewRequestSerializer =
+    new _$PdfPreviewRequestSerializer();
 
 class _$SettingsEntitySerializer
     implements StructuredSerializer<SettingsEntity> {
@@ -2312,15 +2312,15 @@ class _$SettingsEntitySerializer
   }
 }
 
-class _$PdfPreviewResponseSerializer
-    implements StructuredSerializer<PdfPreviewResponse> {
+class _$PdfPreviewRequestSerializer
+    implements StructuredSerializer<PdfPreviewRequest> {
   @override
-  final Iterable<Type> types = const [PdfPreviewResponse, _$PdfPreviewResponse];
+  final Iterable<Type> types = const [PdfPreviewRequest, _$PdfPreviewRequest];
   @override
-  final String wireName = 'PdfPreviewResponse';
+  final String wireName = 'PdfPreviewRequest';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PdfPreviewResponse object,
+  Iterable<Object> serialize(Serializers serializers, PdfPreviewRequest object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'entity',
@@ -2347,10 +2347,10 @@ class _$PdfPreviewResponseSerializer
   }
 
   @override
-  PdfPreviewResponse deserialize(
+  PdfPreviewRequest deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PdfPreviewResponseBuilder();
+    final result = new PdfPreviewRequestBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -4984,7 +4984,7 @@ class SettingsEntityBuilder
   }
 }
 
-class _$PdfPreviewResponse extends PdfPreviewResponse {
+class _$PdfPreviewRequest extends PdfPreviewRequest {
   @override
   final EntityType entity;
   @override
@@ -4998,11 +4998,11 @@ class _$PdfPreviewResponse extends PdfPreviewResponse {
   @override
   final String clientId;
 
-  factory _$PdfPreviewResponse(
-          [void Function(PdfPreviewResponseBuilder) updates]) =>
-      (new PdfPreviewResponseBuilder()..update(updates)).build();
+  factory _$PdfPreviewRequest(
+          [void Function(PdfPreviewRequestBuilder) updates]) =>
+      (new PdfPreviewRequestBuilder()..update(updates)).build();
 
-  _$PdfPreviewResponse._(
+  _$PdfPreviewRequest._(
       {this.entity,
       this.entityId,
       this.settingsType,
@@ -5011,32 +5011,31 @@ class _$PdfPreviewResponse extends PdfPreviewResponse {
       this.clientId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        entity, 'PdfPreviewResponse', 'entity');
+        entity, 'PdfPreviewRequest', 'entity');
     BuiltValueNullFieldError.checkNotNull(
-        entityId, 'PdfPreviewResponse', 'entityId');
+        entityId, 'PdfPreviewRequest', 'entityId');
     BuiltValueNullFieldError.checkNotNull(
-        settingsType, 'PdfPreviewResponse', 'settingsType');
+        settingsType, 'PdfPreviewRequest', 'settingsType');
     BuiltValueNullFieldError.checkNotNull(
-        settings, 'PdfPreviewResponse', 'settings');
+        settings, 'PdfPreviewRequest', 'settings');
     BuiltValueNullFieldError.checkNotNull(
-        groupId, 'PdfPreviewResponse', 'groupId');
+        groupId, 'PdfPreviewRequest', 'groupId');
     BuiltValueNullFieldError.checkNotNull(
-        clientId, 'PdfPreviewResponse', 'clientId');
+        clientId, 'PdfPreviewRequest', 'clientId');
   }
 
   @override
-  PdfPreviewResponse rebuild(
-          void Function(PdfPreviewResponseBuilder) updates) =>
+  PdfPreviewRequest rebuild(void Function(PdfPreviewRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PdfPreviewResponseBuilder toBuilder() =>
-      new PdfPreviewResponseBuilder()..replace(this);
+  PdfPreviewRequestBuilder toBuilder() =>
+      new PdfPreviewRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PdfPreviewResponse &&
+    return other is PdfPreviewRequest &&
         entity == other.entity &&
         entityId == other.entityId &&
         settingsType == other.settingsType &&
@@ -5060,7 +5059,7 @@ class _$PdfPreviewResponse extends PdfPreviewResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PdfPreviewResponse')
+    return (newBuiltValueToStringHelper('PdfPreviewRequest')
           ..add('entity', entity)
           ..add('entityId', entityId)
           ..add('settingsType', settingsType)
@@ -5071,9 +5070,9 @@ class _$PdfPreviewResponse extends PdfPreviewResponse {
   }
 }
 
-class PdfPreviewResponseBuilder
-    implements Builder<PdfPreviewResponse, PdfPreviewResponseBuilder> {
-  _$PdfPreviewResponse _$v;
+class PdfPreviewRequestBuilder
+    implements Builder<PdfPreviewRequest, PdfPreviewRequestBuilder> {
+  _$PdfPreviewRequest _$v;
 
   EntityType _entity;
   EntityType get entity => _$this._entity;
@@ -5100,9 +5099,9 @@ class PdfPreviewResponseBuilder
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
 
-  PdfPreviewResponseBuilder();
+  PdfPreviewRequestBuilder();
 
-  PdfPreviewResponseBuilder get _$this {
+  PdfPreviewRequestBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _entity = $v.entity;
@@ -5117,33 +5116,33 @@ class PdfPreviewResponseBuilder
   }
 
   @override
-  void replace(PdfPreviewResponse other) {
+  void replace(PdfPreviewRequest other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$PdfPreviewResponse;
+    _$v = other as _$PdfPreviewRequest;
   }
 
   @override
-  void update(void Function(PdfPreviewResponseBuilder) updates) {
+  void update(void Function(PdfPreviewRequestBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$PdfPreviewResponse build() {
-    _$PdfPreviewResponse _$result;
+  _$PdfPreviewRequest build() {
+    _$PdfPreviewRequest _$result;
     try {
       _$result = _$v ??
-          new _$PdfPreviewResponse._(
+          new _$PdfPreviewRequest._(
               entity: BuiltValueNullFieldError.checkNotNull(
-                  entity, 'PdfPreviewResponse', 'entity'),
+                  entity, 'PdfPreviewRequest', 'entity'),
               entityId: BuiltValueNullFieldError.checkNotNull(
-                  entityId, 'PdfPreviewResponse', 'entityId'),
+                  entityId, 'PdfPreviewRequest', 'entityId'),
               settingsType: BuiltValueNullFieldError.checkNotNull(
-                  settingsType, 'PdfPreviewResponse', 'settingsType'),
+                  settingsType, 'PdfPreviewRequest', 'settingsType'),
               settings: settings.build(),
               groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, 'PdfPreviewResponse', 'groupId'),
+                  groupId, 'PdfPreviewRequest', 'groupId'),
               clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, 'PdfPreviewResponse', 'clientId'));
+                  clientId, 'PdfPreviewRequest', 'clientId'));
     } catch (_) {
       String _$failedField;
       try {
@@ -5151,7 +5150,7 @@ class PdfPreviewResponseBuilder
         settings.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PdfPreviewResponse', _$failedField, e.toString());
+            'PdfPreviewRequest', _$failedField, e.toString());
       }
       rethrow;
     }

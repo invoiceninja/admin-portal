@@ -1103,12 +1103,27 @@ abstract class SettingsEntity
       _$settingsEntitySerializer;
 }
 
-abstract class PdfPreviewResponse
-    implements Built<PdfPreviewResponse, PdfPreviewResponseBuilder> {
-  factory PdfPreviewResponse([void updates(PdfPreviewResponseBuilder b)]) =
-      _$PdfPreviewResponse;
+abstract class PdfPreviewRequest
+    implements Built<PdfPreviewRequest, PdfPreviewRequestBuilder> {
+  factory PdfPreviewRequest({
+    EntityType entity,
+    String entityId,
+    String settingsType,
+    SettingsEntity settings,
+    String groupId,
+    String clientId,
+  }) {
+    return _$PdfPreviewRequest._(
+      entity: entity,
+      entityId: entityId,
+      settingsType: settingsType,
+      settings: settings,
+      groupId: groupId,
+      clientId: clientId,
+    );
+  }
 
-  PdfPreviewResponse._();
+  PdfPreviewRequest._();
 
   @override
   @memoized
@@ -1130,6 +1145,6 @@ abstract class PdfPreviewResponse
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  static Serializer<PdfPreviewResponse> get serializer =>
-      _$pdfPreviewResponseSerializer;
+  static Serializer<PdfPreviewRequest> get serializer =>
+      _$pdfPreviewRequestSerializer;
 }

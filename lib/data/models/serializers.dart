@@ -170,6 +170,7 @@ part 'serializers.g.dart';
   ImportRequest,
   ImportRequestMapping,
   UserTwoFactorResponse,
+  PdfPreviewRequest,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
