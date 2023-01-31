@@ -1140,6 +1140,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
             ),
           ),
+          if (state.settingsUIState.showPdfPreview)
+            Expanded(
+              child: _PdfPreview(
+                settings: viewModel.settings,
+                state: state,
+              ),
+            ),
         ],
       ),
     );
