@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -441,12 +440,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: (settings.companyLogoSize ?? '').contains('px')
                               ? localization.pixels
                               : localization.percent,
-                          onChanged: (dynamic value) => viewModel
-                              .onSettingsChanged(settings.rebuild((b) => b
-                                ..companyLogoSize = _logoSizeController.text +
-                                    (value == localization.pixels
-                                        ? 'px'
-                                        : '%'))),
+                          onChanged: (dynamic value) =>
+                              viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b
+                              ..companyLogoSize = _logoSizeController.text +
+                                  (value == localization.pixels ? 'px' : '%')),
+                          ),
                           items: [
                             DropdownMenuItem<String>(
                               child: Text(localization.percent),
