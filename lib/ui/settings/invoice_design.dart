@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -6,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -1096,10 +1099,30 @@ class _PdfPreviewState extends State<_PdfPreview> {
   void _loadPdf() async {
     final state = widget.state;
     final url = state.credentials.url + '/live_design';
-    _response = await WebClient().post(
+    final data = {
+      'entity': EntityType.invoice,
+      'entity_id': state.invoiceState.list.last,
+      'settings_type': 'company', //'bail|required|in:company,group,client',
+      'settings':
+          serializers.serializeWith(SettingsEntity.serializer, widget.settings),
+      'group_id': '',
+      'client_id': '',
+    };
+    print('## url: $url');
+    print('## json: ${jsonEncode(data)}');
+    return;
+    _response = await WebClient()
+        .post(
       url,
       state.credentials.token,
-    );
+      data: jsonEncode(data),
+      rawResponse: true,
+    )
+        .catchError((dynamic error) {
+      print('## Error: $error');
+    });
+
+    print('## Response: $_response');
   }
 
   @override

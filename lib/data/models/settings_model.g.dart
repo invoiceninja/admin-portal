@@ -8,6 +8,8 @@ part of 'settings_model.dart';
 
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
+Serializer<PdfPreviewResponse> _$pdfPreviewResponseSerializer =
+    new _$PdfPreviewResponseSerializer();
 
 class _$SettingsEntitySerializer
     implements StructuredSerializer<SettingsEntity> {
@@ -2302,6 +2304,83 @@ class _$SettingsEntitySerializer
         case 'show_shipping_address':
           result.showShippingAddress = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PdfPreviewResponseSerializer
+    implements StructuredSerializer<PdfPreviewResponse> {
+  @override
+  final Iterable<Type> types = const [PdfPreviewResponse, _$PdfPreviewResponse];
+  @override
+  final String wireName = 'PdfPreviewResponse';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PdfPreviewResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'entity',
+      serializers.serialize(object.entity,
+          specifiedType: const FullType(EntityType)),
+      'entity_id',
+      serializers.serialize(object.entityId,
+          specifiedType: const FullType(String)),
+      'settings_type',
+      serializers.serialize(object.settingsType,
+          specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
+      'group_id',
+      serializers.serialize(object.groupId,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  PdfPreviewResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PdfPreviewResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'entity':
+          result.entity = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'entity_id':
+          result.entityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings_type':
+          result.settingsType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+          break;
+        case 'group_id':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'client_id':
+          result.clientId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -4897,6 +4976,182 @@ class SettingsEntityBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PdfPreviewResponse extends PdfPreviewResponse {
+  @override
+  final EntityType entity;
+  @override
+  final String entityId;
+  @override
+  final String settingsType;
+  @override
+  final SettingsEntity settings;
+  @override
+  final String groupId;
+  @override
+  final String clientId;
+
+  factory _$PdfPreviewResponse(
+          [void Function(PdfPreviewResponseBuilder) updates]) =>
+      (new PdfPreviewResponseBuilder()..update(updates)).build();
+
+  _$PdfPreviewResponse._(
+      {this.entity,
+      this.entityId,
+      this.settingsType,
+      this.settings,
+      this.groupId,
+      this.clientId})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        entity, 'PdfPreviewResponse', 'entity');
+    BuiltValueNullFieldError.checkNotNull(
+        entityId, 'PdfPreviewResponse', 'entityId');
+    BuiltValueNullFieldError.checkNotNull(
+        settingsType, 'PdfPreviewResponse', 'settingsType');
+    BuiltValueNullFieldError.checkNotNull(
+        settings, 'PdfPreviewResponse', 'settings');
+    BuiltValueNullFieldError.checkNotNull(
+        groupId, 'PdfPreviewResponse', 'groupId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, 'PdfPreviewResponse', 'clientId');
+  }
+
+  @override
+  PdfPreviewResponse rebuild(
+          void Function(PdfPreviewResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PdfPreviewResponseBuilder toBuilder() =>
+      new PdfPreviewResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PdfPreviewResponse &&
+        entity == other.entity &&
+        entityId == other.entityId &&
+        settingsType == other.settingsType &&
+        settings == other.settings &&
+        groupId == other.groupId &&
+        clientId == other.clientId;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc(0, entity.hashCode), entityId.hashCode),
+                    settingsType.hashCode),
+                settings.hashCode),
+            groupId.hashCode),
+        clientId.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PdfPreviewResponse')
+          ..add('entity', entity)
+          ..add('entityId', entityId)
+          ..add('settingsType', settingsType)
+          ..add('settings', settings)
+          ..add('groupId', groupId)
+          ..add('clientId', clientId))
+        .toString();
+  }
+}
+
+class PdfPreviewResponseBuilder
+    implements Builder<PdfPreviewResponse, PdfPreviewResponseBuilder> {
+  _$PdfPreviewResponse _$v;
+
+  EntityType _entity;
+  EntityType get entity => _$this._entity;
+  set entity(EntityType entity) => _$this._entity = entity;
+
+  String _entityId;
+  String get entityId => _$this._entityId;
+  set entityId(String entityId) => _$this._entityId = entityId;
+
+  String _settingsType;
+  String get settingsType => _$this._settingsType;
+  set settingsType(String settingsType) => _$this._settingsType = settingsType;
+
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
+
+  String _groupId;
+  String get groupId => _$this._groupId;
+  set groupId(String groupId) => _$this._groupId = groupId;
+
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
+
+  PdfPreviewResponseBuilder();
+
+  PdfPreviewResponseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _entity = $v.entity;
+      _entityId = $v.entityId;
+      _settingsType = $v.settingsType;
+      _settings = $v.settings.toBuilder();
+      _groupId = $v.groupId;
+      _clientId = $v.clientId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PdfPreviewResponse other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$PdfPreviewResponse;
+  }
+
+  @override
+  void update(void Function(PdfPreviewResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PdfPreviewResponse build() {
+    _$PdfPreviewResponse _$result;
+    try {
+      _$result = _$v ??
+          new _$PdfPreviewResponse._(
+              entity: BuiltValueNullFieldError.checkNotNull(
+                  entity, 'PdfPreviewResponse', 'entity'),
+              entityId: BuiltValueNullFieldError.checkNotNull(
+                  entityId, 'PdfPreviewResponse', 'entityId'),
+              settingsType: BuiltValueNullFieldError.checkNotNull(
+                  settingsType, 'PdfPreviewResponse', 'settingsType'),
+              settings: settings.build(),
+              groupId: BuiltValueNullFieldError.checkNotNull(
+                  groupId, 'PdfPreviewResponse', 'groupId'),
+              clientId: BuiltValueNullFieldError.checkNotNull(
+                  clientId, 'PdfPreviewResponse', 'clientId'));
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'settings';
+        settings.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'PdfPreviewResponse', _$failedField, e.toString());
       }
       rethrow;
     }
