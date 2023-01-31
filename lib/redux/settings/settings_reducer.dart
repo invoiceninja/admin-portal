@@ -125,4 +125,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ToggleShowNewSettings>((state, action) {
     return state.rebuild((b) => b..showNewSettings = !state.showNewSettings);
   }),
+  TypedReducer<SettingsUIState, ToggleShowPdfPreview>((state, action) {
+    return state.rebuild((b) => b..showPdfPreview = !state.showPdfPreview);
+  }),
 ]);

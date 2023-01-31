@@ -901,8 +901,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       }
     }
 
-    if (DesignEditScreen.route == uiState.currentRoute) {
+    if (uiState.currentRoute == DesignEditScreen.route) {
       isFullScreen = true;
+    } else if (uiState.currentRoute == InvoiceDesignScreen.route) {
+      isFullScreen = settingsUIState.showPdfPreview;
     }
 
     return isFullScreen;

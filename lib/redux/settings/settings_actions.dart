@@ -217,3 +217,4 @@ class FilterSettings implements PersistUI {
 
 class ToggleShowNewSettings {}
 
+class ToggleShowPdfPreview {}

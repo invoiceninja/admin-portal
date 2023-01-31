@@ -217,7 +217,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             primary: true,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
+                padding: EdgeInsets.only(
+                  right: 16,
+                  left: 16,
+                  bottom: isMobile(context) ? 10 : 4,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -242,10 +246,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           child: Padding(
                         padding: const EdgeInsets.only(top: 18),
                         child: SwitchListTile(
-                          title: Text(localization.showPdfPreview),
+                          title: Text(localization.showPreview),
                           value: false,
                           onChanged: (value) {
-                            //
+                            final store = StoreProvider.of<AppState>(context);
+                            store.dispatch(ToggleShowPdfPreview());
                           },
                         ),
                       )),
