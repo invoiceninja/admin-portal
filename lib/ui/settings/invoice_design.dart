@@ -1189,15 +1189,16 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
   void _loadPdf() async {
     final state = widget.state;
+    final settingsUIState = state.settingsUIState;
     final url = state.credentials.url + '/live_design';
 
     final request = PdfPreviewRequest(
       entity: EntityType.invoice,
       entityId: state.invoiceState.list.last,
-      settingsType: 'company',
+      settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings,
-      groupId: '',
-      clientId: '',
+      groupId: settingsUIState.group.id ?? '',
+      clientId: settingsUIState.client.id ?? '',
     );
 
     setState(() => isLoading = true);
