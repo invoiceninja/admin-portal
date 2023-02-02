@@ -406,14 +406,25 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
                               (b) => b..enableClientPortalUploads = value))),
-                  BoolDropdownButton(
-                      label: localization.vendorDocumentUpload,
-                      helpLabel: localization.vendorDocumentUploadHelp,
-                      value: settings.enableVendorPortalUploads,
-                      iconData: MdiIcons.upload,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..enableVendorPortalUploads = value))),
+                  if (company.isModuleEnabled(EntityType.vendor))
+                    BoolDropdownButton(
+                        label: localization.vendorDocumentUpload,
+                        helpLabel: localization.vendorDocumentUploadHelp,
+                        value: settings.enableVendorPortalUploads,
+                        iconData: MdiIcons.upload,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..enableVendorPortalUploads = value))),
+                  if (company.isModuleEnabled(EntityType.purchaseOrder) &&
+                      company.isModuleEnabled(EntityType.quote))
+                    BoolDropdownButton(
+                        label: localization.acceptPurchaseOrderNumber,
+                        helpLabel: localization.acceptPurchaseOrderNumberHelp,
+                        value: settings.acceptPurchaseOrderNumber,
+                        iconData: Icons.numbers,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..acceptPurchaseOrderNumber = value))),
                   if (!state.settingsUIState.isFiltered)
                     BoolDropdownButton(
                       label: localization.storefront,

@@ -478,7 +478,9 @@ void handleClientAction(
                   store.dispatch(
                     PurgeClientRequest(
                         completer: snackBarCompleter<Null>(
-                            context, localization.purgedClient),
+                            context, localization.purgedClient, callback: () {
+                          viewEntitiesByType(entityType: EntityType.client);
+                        }),
                         clientId: client.id,
                         password: password,
                         idToken: idToken),
@@ -515,15 +517,20 @@ void handleClientAction(
           documentIds.add(document.id);
         }
       }
-      store.dispatch(
-        DownloadDocumentsRequest(
-          documentIds: documentIds,
-          completer: snackBarCompleter<Null>(
-            context,
-            localization.exportedData,
+      if (documentIds.isEmpty) {
+        showMessageDialog(
+            context: context, message: localization.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              context,
+              localization.exportedData,
+            ),
           ),
-        ),
-      );
+        );
+      }
       break;
     case EntityAction.merge:
       showDialog<void>(

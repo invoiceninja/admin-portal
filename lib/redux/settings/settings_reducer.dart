@@ -1,11 +1,11 @@
 // Package imports:
+import 'package:invoiceninja_flutter/redux/settings/settings_state.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
@@ -29,6 +29,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
           ? DateTime.now().millisecondsSinceEpoch
           : state.filterClearedAt
       ..showNewSettings = action.section != null ? state.showNewSettings : false
+      ..showPdfPreview = false
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null
@@ -124,5 +125,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   }),
   TypedReducer<SettingsUIState, ToggleShowNewSettings>((state, action) {
     return state.rebuild((b) => b..showNewSettings = !state.showNewSettings);
+  }),
+  TypedReducer<SettingsUIState, ToggleShowPdfPreview>((state, action) {
+    return state.rebuild((b) => b..showPdfPreview = !state.showPdfPreview);
   }),
 ]);

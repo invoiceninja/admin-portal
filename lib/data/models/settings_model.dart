@@ -945,6 +945,22 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'company_logo_size')
   String get companyLogoSize;
 
+  @nullable
+  @BuiltValueField(wireName: 'show_paid_stamp')
+  bool get showPaidStamp;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_shipping_address')
+  bool get showShippingAddress;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_sending_email')
+  String get customSendingEmail;
+
+  @nullable
+  @BuiltValueField(wireName: 'accept_client_input_quote_approval')
+  bool get acceptPurchaseOrderNumber;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
@@ -1093,4 +1109,50 @@ abstract class SettingsEntity
 
   static Serializer<SettingsEntity> get serializer =>
       _$settingsEntitySerializer;
+}
+
+abstract class PdfPreviewRequest
+    implements Built<PdfPreviewRequest, PdfPreviewRequestBuilder> {
+  factory PdfPreviewRequest({
+    EntityType entity,
+    String entityId,
+    String settingsType,
+    SettingsEntity settings,
+    String groupId,
+    String clientId,
+  }) {
+    return _$PdfPreviewRequest._(
+      entity: entity,
+      entityId: entityId,
+      settingsType: settingsType,
+      settings: settings,
+      groupId: groupId,
+      clientId: clientId,
+    );
+  }
+
+  PdfPreviewRequest._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  EntityType get entity;
+
+  @BuiltValueField(wireName: 'entity_id')
+  String get entityId;
+
+  @BuiltValueField(wireName: 'settings_type')
+  String get settingsType;
+
+  SettingsEntity get settings;
+
+  @BuiltValueField(wireName: 'group_id')
+  String get groupId;
+
+  @BuiltValueField(wireName: 'client_id')
+  String get clientId;
+
+  static Serializer<PdfPreviewRequest> get serializer =>
+      _$pdfPreviewRequestSerializer;
 }

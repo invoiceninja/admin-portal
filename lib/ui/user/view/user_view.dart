@@ -59,7 +59,7 @@ class UserView extends StatelessWidget {
             secondLabel: localization.phone,
           ),
           ListDivider(),
-          if (userCompany.canViewOrCreate(EntityType.client))
+          if (userCompany.canViewCreateOrEdit(EntityType.client))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -69,7 +69,7 @@ class UserView extends StatelessWidget {
                   memoizedClientStatsForUser(user.id, state.clientState.map)
                       .present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.invoice))
+          if (userCompany.canViewCreateOrEdit(EntityType.invoice))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -79,7 +79,7 @@ class UserView extends StatelessWidget {
                   memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                       .present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.quote))
+          if (userCompany.canViewCreateOrEdit(EntityType.quote))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -90,7 +90,7 @@ class UserView extends StatelessWidget {
                 state.quoteState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.credit))
+          if (userCompany.canViewCreateOrEdit(EntityType.credit))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -101,7 +101,7 @@ class UserView extends StatelessWidget {
                 state.creditState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.task))
+          if (userCompany.canViewCreateOrEdit(EntityType.task))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -112,7 +112,7 @@ class UserView extends StatelessWidget {
                 state.taskState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.project))
+          if (userCompany.canViewCreateOrEdit(EntityType.project))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -123,7 +123,7 @@ class UserView extends StatelessWidget {
                 state.projectState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.expense))
+          if (userCompany.canViewCreateOrEdit(EntityType.expense))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -134,7 +134,7 @@ class UserView extends StatelessWidget {
                 state.expenseState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.vendor))
+          if (userCompany.canViewCreateOrEdit(EntityType.vendor))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -145,7 +145,7 @@ class UserView extends StatelessWidget {
                 state.vendorState.map,
               ).present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.recurringInvoice))
+          if (userCompany.canViewCreateOrEdit(EntityType.recurringInvoice))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,
@@ -155,7 +155,7 @@ class UserView extends StatelessWidget {
                       user.id, state.recurringInvoiceState.map)
                   .present(localization.active, localization.archived),
             ),
-          if (userCompany.canViewOrCreate(EntityType.recurringExpense))
+          if (userCompany.canViewCreateOrEdit(EntityType.recurringExpense))
             EntitiesListTile(
               entity: user,
               isFilter: isFilter,

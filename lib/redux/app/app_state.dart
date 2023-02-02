@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_state.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -900,8 +901,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       }
     }
 
-    if (DesignEditScreen.route == uiState.currentRoute) {
+    if (uiState.currentRoute == DesignEditScreen.route) {
       isFullScreen = true;
+    } else if (uiState.currentRoute == InvoiceDesignScreen.route) {
+      isFullScreen = settingsUIState.showPdfPreview;
     }
 
     return isFullScreen;
@@ -958,11 +961,20 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
     //return '## Logs: ${company.systemLogs}';
 
-    //var str = '\n\n';
-    //for (var userCompany in userCompanyStates) {
-    //  str += userCompany.company.id + ' => ' + userCompany.token.token + '\n';
-    //}
-    //return str;
+    /*
+    var str = '\n\n\n';
+    for (var userCompany in userCompanyStates) {
+      //str += userCompany.company.id + ' => ' + userCompany.token.token + '\n';
+      str += '## ' +
+          userCompany.company.displayName +
+          ' => ' +
+          userCompany.clientState.list.length.toString() +
+          ' ' +
+          userCompany.lastUpdated.toString() +
+          '\n';
+    }
+    return str;
+    */
 
     return '\n\nForce: ${clientUIState.forceSelected}'
         '\n\nURL: ${authState.url}'

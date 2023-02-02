@@ -758,7 +758,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     if (!Config.DEMO_MODE) {
       if (widget.entityType != null &&
-          !userCompany.canViewOrCreate(widget.entityType)) {
+          !userCompany.canViewCreateOrEdit(widget.entityType)) {
         return Container();
       }
     }

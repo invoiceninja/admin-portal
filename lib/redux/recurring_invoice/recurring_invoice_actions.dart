@@ -599,15 +599,20 @@ void handleRecurringInvoiceAction(BuildContext context,
           documentIds.add(document.id);
         }
       }
-      store.dispatch(
-        DownloadDocumentsRequest(
-          documentIds: documentIds,
-          completer: snackBarCompleter<Null>(
-            context,
-            localization.exportedData,
+      if (documentIds.isEmpty) {
+        showMessageDialog(
+            context: context, message: localization.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              context,
+              localization.exportedData,
+            ),
           ),
-        ),
-      );
+        );
+      }
       break;
     case EntityAction.sendNow:
       store.dispatch(SendNowRecurringInvoicesRequest(

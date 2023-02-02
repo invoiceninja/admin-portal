@@ -36,6 +36,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
@@ -169,6 +170,7 @@ part 'serializers.g.dart';
   ImportRequest,
   ImportRequestMapping,
   UserTwoFactorResponse,
+  PdfPreviewRequest,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

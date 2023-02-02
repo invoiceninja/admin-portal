@@ -8,6 +8,8 @@ part of 'settings_model.dart';
 
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
+Serializer<PdfPreviewRequest> _$pdfPreviewRequestSerializer =
+    new _$PdfPreviewRequestSerializer();
 
 class _$SettingsEntitySerializer
     implements StructuredSerializer<SettingsEntity> {
@@ -1441,6 +1443,34 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.showPaidStamp;
+    if (value != null) {
+      result
+        ..add('show_paid_stamp')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.showShippingAddress;
+    if (value != null) {
+      result
+        ..add('show_shipping_address')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.customSendingEmail;
+    if (value != null) {
+      result
+        ..add('custom_sending_email')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.acceptPurchaseOrderNumber;
+    if (value != null) {
+      result
+        ..add('accept_client_input_quote_approval')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2281,6 +2311,99 @@ class _$SettingsEntitySerializer
           result.companyLogoSize = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'show_paid_stamp':
+          result.showPaidStamp = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_shipping_address':
+          result.showShippingAddress = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_sending_email':
+          result.customSendingEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'accept_client_input_quote_approval':
+          result.acceptPurchaseOrderNumber = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$PdfPreviewRequestSerializer
+    implements StructuredSerializer<PdfPreviewRequest> {
+  @override
+  final Iterable<Type> types = const [PdfPreviewRequest, _$PdfPreviewRequest];
+  @override
+  final String wireName = 'PdfPreviewRequest';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, PdfPreviewRequest object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'entity',
+      serializers.serialize(object.entity,
+          specifiedType: const FullType(EntityType)),
+      'entity_id',
+      serializers.serialize(object.entityId,
+          specifiedType: const FullType(String)),
+      'settings_type',
+      serializers.serialize(object.settingsType,
+          specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
+      'group_id',
+      serializers.serialize(object.groupId,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  PdfPreviewRequest deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new PdfPreviewRequestBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object value = iterator.current;
+      switch (key) {
+        case 'entity':
+          result.entity = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'entity_id':
+          result.entityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings_type':
+          result.settingsType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+          break;
+        case 'group_id':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'client_id':
+          result.clientId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -2699,6 +2822,14 @@ class _$SettingsEntity extends SettingsEntity {
   final bool showEmailFooter;
   @override
   final String companyLogoSize;
+  @override
+  final bool showPaidStamp;
+  @override
+  final bool showShippingAddress;
+  @override
+  final String customSendingEmail;
+  @override
+  final bool acceptPurchaseOrderNumber;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates)).build();
@@ -2908,7 +3039,11 @@ class _$SettingsEntity extends SettingsEntity {
       this.mailgunDomain,
       this.emailAlignment,
       this.showEmailFooter,
-      this.companyLogoSize})
+      this.companyLogoSize,
+      this.showPaidStamp,
+      this.showShippingAddress,
+      this.customSendingEmail,
+      this.acceptPurchaseOrderNumber})
       : super._();
 
   @override
@@ -3131,7 +3266,11 @@ class _$SettingsEntity extends SettingsEntity {
         mailgunDomain == other.mailgunDomain &&
         emailAlignment == other.emailAlignment &&
         showEmailFooter == other.showEmailFooter &&
-        companyLogoSize == other.companyLogoSize;
+        companyLogoSize == other.companyLogoSize &&
+        showPaidStamp == other.showPaidStamp &&
+        showShippingAddress == other.showShippingAddress &&
+        customSendingEmail == other.customSendingEmail &&
+        acceptPurchaseOrderNumber == other.acceptPurchaseOrderNumber;
   }
 
   int __hashCode;
@@ -3155,26 +3294,26 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), defaultValidUntil.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enableClientPortalUploads.hashCode), enableVendorPortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), replyToName.hashCode), emailFromName.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveInvoiceCancelled.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), recurringExpenseNumberPattern.hashCode), recurringExpenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), sharedInvoiceCreditCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectCredit.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyCredit.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), emailSubjectPurchaseOrder.hashCode), emailBodyPurchaseOrder.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), pageLayout.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), clientMarkPaidPaymentNotification.hashCode), counterNumberApplied.hashCode), emailSendingMethod.hashCode), gmailSendingUserId.hashCode), clientPortalTerms.hashCode), clientPortalPrivacy.hashCode), lockInvoices.hashCode), autoBill.hashCode), autoBillStandardInvoices.hashCode), clientPortalAllowUnderPayment.hashCode), clientPortalAllowOverPayment.hashCode), autoBillDate.hashCode), clientPortalUnderPaymentMinimum.hashCode), useCreditsPayment.hashCode), clientPortalCustomHeader.hashCode), clientPortalCustomCss.hashCode), clientPortalCustomFooter.hashCode), clientPortalCustomJs.hashCode),
-                                                                                hideEmptyColumnsOnPdf.hashCode),
-                                                                            entitySendTime.hashCode),
-                                                                        clientPortalTasks.hashCode),
-                                                                    pageNumbering.hashCode),
-                                                                pageNumberingAlignment.hashCode),
-                                                            requirePurchaseOrderSignature.hashCode),
-                                                        defaultPurchaseOrderTerms.hashCode),
-                                                    defaultPurchaseOrderDesignId.hashCode),
-                                                defaultPurchaseOrderFooter.hashCode),
-                                            purchaseOrderNumberPattern.hashCode),
-                                        purchaseOrderNumberCounter.hashCode),
-                                    qrIban.hashCode),
-                                besrId.hashCode),
-                            postmarkSecret.hashCode),
-                        mailgunSecret.hashCode),
-                    mailgunDomain.hashCode),
-                emailAlignment.hashCode),
-            showEmailFooter.hashCode),
-        companyLogoSize.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), defaultValidUntil.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enableClientPortalUploads.hashCode), enableVendorPortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), replyToName.hashCode), emailFromName.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveInvoiceCancelled.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), recurringExpenseNumberPattern.hashCode), recurringExpenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), sharedInvoiceCreditCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectCredit.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyCredit.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), emailSubjectPurchaseOrder.hashCode), emailBodyPurchaseOrder.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), pageLayout.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), clientMarkPaidPaymentNotification.hashCode), counterNumberApplied.hashCode), emailSendingMethod.hashCode), gmailSendingUserId.hashCode), clientPortalTerms.hashCode), clientPortalPrivacy.hashCode), lockInvoices.hashCode), autoBill.hashCode), autoBillStandardInvoices.hashCode), clientPortalAllowUnderPayment.hashCode), clientPortalAllowOverPayment.hashCode), autoBillDate.hashCode), clientPortalUnderPaymentMinimum.hashCode), useCreditsPayment.hashCode), clientPortalCustomHeader.hashCode), clientPortalCustomCss.hashCode), clientPortalCustomFooter.hashCode), clientPortalCustomJs.hashCode), hideEmptyColumnsOnPdf.hashCode), entitySendTime.hashCode), clientPortalTasks.hashCode), pageNumbering.hashCode),
+                                                                                pageNumberingAlignment.hashCode),
+                                                                            requirePurchaseOrderSignature.hashCode),
+                                                                        defaultPurchaseOrderTerms.hashCode),
+                                                                    defaultPurchaseOrderDesignId.hashCode),
+                                                                defaultPurchaseOrderFooter.hashCode),
+                                                            purchaseOrderNumberPattern.hashCode),
+                                                        purchaseOrderNumberCounter.hashCode),
+                                                    qrIban.hashCode),
+                                                besrId.hashCode),
+                                            postmarkSecret.hashCode),
+                                        mailgunSecret.hashCode),
+                                    mailgunDomain.hashCode),
+                                emailAlignment.hashCode),
+                            showEmailFooter.hashCode),
+                        companyLogoSize.hashCode),
+                    showPaidStamp.hashCode),
+                showShippingAddress.hashCode),
+            customSendingEmail.hashCode),
+        acceptPurchaseOrderNumber.hashCode));
   }
 
   @override
@@ -3388,7 +3527,11 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('mailgunDomain', mailgunDomain)
           ..add('emailAlignment', emailAlignment)
           ..add('showEmailFooter', showEmailFooter)
-          ..add('companyLogoSize', companyLogoSize))
+          ..add('companyLogoSize', companyLogoSize)
+          ..add('showPaidStamp', showPaidStamp)
+          ..add('showShippingAddress', showShippingAddress)
+          ..add('customSendingEmail', customSendingEmail)
+          ..add('acceptPurchaseOrderNumber', acceptPurchaseOrderNumber))
         .toString();
   }
 }
@@ -4402,6 +4545,26 @@ class SettingsEntityBuilder
   set companyLogoSize(String companyLogoSize) =>
       _$this._companyLogoSize = companyLogoSize;
 
+  bool _showPaidStamp;
+  bool get showPaidStamp => _$this._showPaidStamp;
+  set showPaidStamp(bool showPaidStamp) =>
+      _$this._showPaidStamp = showPaidStamp;
+
+  bool _showShippingAddress;
+  bool get showShippingAddress => _$this._showShippingAddress;
+  set showShippingAddress(bool showShippingAddress) =>
+      _$this._showShippingAddress = showShippingAddress;
+
+  String _customSendingEmail;
+  String get customSendingEmail => _$this._customSendingEmail;
+  set customSendingEmail(String customSendingEmail) =>
+      _$this._customSendingEmail = customSendingEmail;
+
+  bool _acceptPurchaseOrderNumber;
+  bool get acceptPurchaseOrderNumber => _$this._acceptPurchaseOrderNumber;
+  set acceptPurchaseOrderNumber(bool acceptPurchaseOrderNumber) =>
+      _$this._acceptPurchaseOrderNumber = acceptPurchaseOrderNumber;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -4612,6 +4775,10 @@ class SettingsEntityBuilder
       _emailAlignment = $v.emailAlignment;
       _showEmailFooter = $v.showEmailFooter;
       _companyLogoSize = $v.companyLogoSize;
+      _showPaidStamp = $v.showPaidStamp;
+      _showShippingAddress = $v.showShippingAddress;
+      _customSendingEmail = $v.customSendingEmail;
+      _acceptPurchaseOrderNumber = $v.acceptPurchaseOrderNumber;
       _$v = null;
     }
     return this;
@@ -4839,7 +5006,11 @@ class SettingsEntityBuilder
               mailgunDomain: mailgunDomain,
               emailAlignment: emailAlignment,
               showEmailFooter: showEmailFooter,
-              companyLogoSize: companyLogoSize);
+              companyLogoSize: companyLogoSize,
+              showPaidStamp: showPaidStamp,
+              showShippingAddress: showShippingAddress,
+              customSendingEmail: customSendingEmail,
+              acceptPurchaseOrderNumber: acceptPurchaseOrderNumber);
     } catch (_) {
       String _$failedField;
       try {
@@ -4851,6 +5022,181 @@ class SettingsEntityBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$PdfPreviewRequest extends PdfPreviewRequest {
+  @override
+  final EntityType entity;
+  @override
+  final String entityId;
+  @override
+  final String settingsType;
+  @override
+  final SettingsEntity settings;
+  @override
+  final String groupId;
+  @override
+  final String clientId;
+
+  factory _$PdfPreviewRequest(
+          [void Function(PdfPreviewRequestBuilder) updates]) =>
+      (new PdfPreviewRequestBuilder()..update(updates)).build();
+
+  _$PdfPreviewRequest._(
+      {this.entity,
+      this.entityId,
+      this.settingsType,
+      this.settings,
+      this.groupId,
+      this.clientId})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        entity, 'PdfPreviewRequest', 'entity');
+    BuiltValueNullFieldError.checkNotNull(
+        entityId, 'PdfPreviewRequest', 'entityId');
+    BuiltValueNullFieldError.checkNotNull(
+        settingsType, 'PdfPreviewRequest', 'settingsType');
+    BuiltValueNullFieldError.checkNotNull(
+        settings, 'PdfPreviewRequest', 'settings');
+    BuiltValueNullFieldError.checkNotNull(
+        groupId, 'PdfPreviewRequest', 'groupId');
+    BuiltValueNullFieldError.checkNotNull(
+        clientId, 'PdfPreviewRequest', 'clientId');
+  }
+
+  @override
+  PdfPreviewRequest rebuild(void Function(PdfPreviewRequestBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  PdfPreviewRequestBuilder toBuilder() =>
+      new PdfPreviewRequestBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is PdfPreviewRequest &&
+        entity == other.entity &&
+        entityId == other.entityId &&
+        settingsType == other.settingsType &&
+        settings == other.settings &&
+        groupId == other.groupId &&
+        clientId == other.clientId;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc(0, entity.hashCode), entityId.hashCode),
+                    settingsType.hashCode),
+                settings.hashCode),
+            groupId.hashCode),
+        clientId.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('PdfPreviewRequest')
+          ..add('entity', entity)
+          ..add('entityId', entityId)
+          ..add('settingsType', settingsType)
+          ..add('settings', settings)
+          ..add('groupId', groupId)
+          ..add('clientId', clientId))
+        .toString();
+  }
+}
+
+class PdfPreviewRequestBuilder
+    implements Builder<PdfPreviewRequest, PdfPreviewRequestBuilder> {
+  _$PdfPreviewRequest _$v;
+
+  EntityType _entity;
+  EntityType get entity => _$this._entity;
+  set entity(EntityType entity) => _$this._entity = entity;
+
+  String _entityId;
+  String get entityId => _$this._entityId;
+  set entityId(String entityId) => _$this._entityId = entityId;
+
+  String _settingsType;
+  String get settingsType => _$this._settingsType;
+  set settingsType(String settingsType) => _$this._settingsType = settingsType;
+
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
+
+  String _groupId;
+  String get groupId => _$this._groupId;
+  set groupId(String groupId) => _$this._groupId = groupId;
+
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
+
+  PdfPreviewRequestBuilder();
+
+  PdfPreviewRequestBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _entity = $v.entity;
+      _entityId = $v.entityId;
+      _settingsType = $v.settingsType;
+      _settings = $v.settings.toBuilder();
+      _groupId = $v.groupId;
+      _clientId = $v.clientId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(PdfPreviewRequest other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$PdfPreviewRequest;
+  }
+
+  @override
+  void update(void Function(PdfPreviewRequestBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$PdfPreviewRequest build() {
+    _$PdfPreviewRequest _$result;
+    try {
+      _$result = _$v ??
+          new _$PdfPreviewRequest._(
+              entity: BuiltValueNullFieldError.checkNotNull(
+                  entity, 'PdfPreviewRequest', 'entity'),
+              entityId: BuiltValueNullFieldError.checkNotNull(
+                  entityId, 'PdfPreviewRequest', 'entityId'),
+              settingsType: BuiltValueNullFieldError.checkNotNull(
+                  settingsType, 'PdfPreviewRequest', 'settingsType'),
+              settings: settings.build(),
+              groupId: BuiltValueNullFieldError.checkNotNull(
+                  groupId, 'PdfPreviewRequest', 'groupId'),
+              clientId: BuiltValueNullFieldError.checkNotNull(
+                  clientId, 'PdfPreviewRequest', 'clientId'));
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'settings';
+        settings.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'PdfPreviewRequest', _$failedField, e.toString());
       }
       rethrow;
     }

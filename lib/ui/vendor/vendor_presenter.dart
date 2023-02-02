@@ -30,6 +30,7 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.postalCode,
       VendorFields.countryId,
       VendorFields.privateNotes,
+      VendorFields.publicNotes,
       VendorFields.website,
       VendorFields.vatNumber,
       VendorFields.idNumber,
@@ -73,7 +74,9 @@ class VendorPresenter extends EntityPresenter {
       case VendorFields.countryId:
         return Text(state.staticState.countryMap[vendor.countryId]?.name ?? '');
       case VendorFields.privateNotes:
-        return Text(vendor.privateNotes);
+        return TableTooltip(message: vendor.privateNotes);
+      case VendorFields.publicNotes:
+        return TableTooltip(message: vendor.publicNotes);
       case VendorFields.website:
         return Text(vendor.website);
       case VendorFields.vatNumber:

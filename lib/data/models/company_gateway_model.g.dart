@@ -150,6 +150,18 @@ class _$CompanyGatewayEntitySerializer
       'require_contact_email',
       serializers.serialize(object.requireContactEmail,
           specifiedType: const FullType(bool)),
+      'require_custom_value1',
+      serializers.serialize(object.requireCustomValue1,
+          specifiedType: const FullType(bool)),
+      'require_custom_value2',
+      serializers.serialize(object.requireCustomValue2,
+          specifiedType: const FullType(bool)),
+      'require_custom_value3',
+      serializers.serialize(object.requireCustomValue3,
+          specifiedType: const FullType(bool)),
+      'require_custom_value4',
+      serializers.serialize(object.requireCustomValue4,
+          specifiedType: const FullType(bool)),
       'require_cvv',
       serializers.serialize(object.requireCvv,
           specifiedType: const FullType(bool)),
@@ -297,6 +309,22 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'require_contact_email':
           result.requireContactEmail = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_custom_value1':
+          result.requireCustomValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_custom_value2':
+          result.requireCustomValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_custom_value3':
+          result.requireCustomValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'require_custom_value4':
+          result.requireCustomValue4 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'require_cvv':
@@ -733,6 +761,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final bool requireContactEmail;
   @override
+  final bool requireCustomValue1;
+  @override
+  final bool requireCustomValue2;
+  @override
+  final bool requireCustomValue3;
+  @override
+  final bool requireCustomValue4;
+  @override
   final bool requireCvv;
   @override
   final bool updateDetails;
@@ -788,6 +824,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.requireClientPhone,
       this.requireContactName,
       this.requireContactEmail,
+      this.requireCustomValue1,
+      this.requireCustomValue2,
+      this.requireCustomValue3,
+      this.requireCustomValue4,
       this.requireCvv,
       this.updateDetails,
       this.feesAndLimitsMap,
@@ -825,6 +865,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         requireContactName, 'CompanyGatewayEntity', 'requireContactName');
     BuiltValueNullFieldError.checkNotNull(
         requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail');
+    BuiltValueNullFieldError.checkNotNull(
+        requireCustomValue1, 'CompanyGatewayEntity', 'requireCustomValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        requireCustomValue2, 'CompanyGatewayEntity', 'requireCustomValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        requireCustomValue3, 'CompanyGatewayEntity', 'requireCustomValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        requireCustomValue4, 'CompanyGatewayEntity', 'requireCustomValue4');
     BuiltValueNullFieldError.checkNotNull(
         requireCvv, 'CompanyGatewayEntity', 'requireCvv');
     BuiltValueNullFieldError.checkNotNull(
@@ -880,6 +928,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         requireClientPhone == other.requireClientPhone &&
         requireContactName == other.requireContactName &&
         requireContactEmail == other.requireContactEmail &&
+        requireCustomValue1 == other.requireCustomValue1 &&
+        requireCustomValue2 == other.requireCustomValue2 &&
+        requireCustomValue3 == other.requireCustomValue3 &&
+        requireCustomValue4 == other.requireCustomValue4 &&
         requireCvv == other.requireCvv &&
         updateDetails == other.updateDetails &&
         feesAndLimitsMap == other.feesAndLimitsMap &&
@@ -923,7 +975,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCvv.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCustomValue1.hashCode), requireCustomValue2.hashCode), requireCustomValue3.hashCode), requireCustomValue4.hashCode), requireCvv.hashCode),
                                                                                 updateDetails.hashCode),
                                                                             feesAndLimitsMap.hashCode),
                                                                         systemLogs.hashCode),
@@ -958,6 +1010,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('requireClientPhone', requireClientPhone)
           ..add('requireContactName', requireContactName)
           ..add('requireContactEmail', requireContactEmail)
+          ..add('requireCustomValue1', requireCustomValue1)
+          ..add('requireCustomValue2', requireCustomValue2)
+          ..add('requireCustomValue3', requireCustomValue3)
+          ..add('requireCustomValue4', requireCustomValue4)
           ..add('requireCvv', requireCvv)
           ..add('updateDetails', updateDetails)
           ..add('feesAndLimitsMap', feesAndLimitsMap)
@@ -1033,6 +1089,26 @@ class CompanyGatewayEntityBuilder
   bool get requireContactEmail => _$this._requireContactEmail;
   set requireContactEmail(bool requireContactEmail) =>
       _$this._requireContactEmail = requireContactEmail;
+
+  bool _requireCustomValue1;
+  bool get requireCustomValue1 => _$this._requireCustomValue1;
+  set requireCustomValue1(bool requireCustomValue1) =>
+      _$this._requireCustomValue1 = requireCustomValue1;
+
+  bool _requireCustomValue2;
+  bool get requireCustomValue2 => _$this._requireCustomValue2;
+  set requireCustomValue2(bool requireCustomValue2) =>
+      _$this._requireCustomValue2 = requireCustomValue2;
+
+  bool _requireCustomValue3;
+  bool get requireCustomValue3 => _$this._requireCustomValue3;
+  set requireCustomValue3(bool requireCustomValue3) =>
+      _$this._requireCustomValue3 = requireCustomValue3;
+
+  bool _requireCustomValue4;
+  bool get requireCustomValue4 => _$this._requireCustomValue4;
+  set requireCustomValue4(bool requireCustomValue4) =>
+      _$this._requireCustomValue4 = requireCustomValue4;
 
   bool _requireCvv;
   bool get requireCvv => _$this._requireCvv;
@@ -1123,7 +1199,9 @@ class CompanyGatewayEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  CompanyGatewayEntityBuilder();
+  CompanyGatewayEntityBuilder() {
+    CompanyGatewayEntity._initializeBuilder(this);
+  }
 
   CompanyGatewayEntityBuilder get _$this {
     final $v = _$v;
@@ -1138,6 +1216,10 @@ class CompanyGatewayEntityBuilder
       _requireClientPhone = $v.requireClientPhone;
       _requireContactName = $v.requireContactName;
       _requireContactEmail = $v.requireContactEmail;
+      _requireCustomValue1 = $v.requireCustomValue1;
+      _requireCustomValue2 = $v.requireCustomValue2;
+      _requireCustomValue3 = $v.requireCustomValue3;
+      _requireCustomValue4 = $v.requireCustomValue4;
       _requireCvv = $v.requireCvv;
       _updateDetails = $v.updateDetails;
       _feesAndLimitsMap = $v.feesAndLimitsMap.toBuilder();
@@ -1197,6 +1279,10 @@ class CompanyGatewayEntityBuilder
               requireContactName: BuiltValueNullFieldError.checkNotNull(
                   requireContactName, 'CompanyGatewayEntity', 'requireContactName'),
               requireContactEmail: BuiltValueNullFieldError.checkNotNull(requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail'),
+              requireCustomValue1: BuiltValueNullFieldError.checkNotNull(requireCustomValue1, 'CompanyGatewayEntity', 'requireCustomValue1'),
+              requireCustomValue2: BuiltValueNullFieldError.checkNotNull(requireCustomValue2, 'CompanyGatewayEntity', 'requireCustomValue2'),
+              requireCustomValue3: BuiltValueNullFieldError.checkNotNull(requireCustomValue3, 'CompanyGatewayEntity', 'requireCustomValue3'),
+              requireCustomValue4: BuiltValueNullFieldError.checkNotNull(requireCustomValue4, 'CompanyGatewayEntity', 'requireCustomValue4'),
               requireCvv: BuiltValueNullFieldError.checkNotNull(requireCvv, 'CompanyGatewayEntity', 'requireCvv'),
               updateDetails: BuiltValueNullFieldError.checkNotNull(updateDetails, 'CompanyGatewayEntity', 'updateDetails'),
               feesAndLimitsMap: feesAndLimitsMap.build(),

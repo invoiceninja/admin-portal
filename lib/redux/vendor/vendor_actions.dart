@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -379,15 +380,20 @@ void handleVendorAction(
           documentIds.add(document.id);
         }
       }
-      store.dispatch(
-        DownloadDocumentsRequest(
-          documentIds: documentIds,
-          completer: snackBarCompleter<Null>(
-            context,
-            localization.exportedData,
+      if (documentIds.isEmpty) {
+        showMessageDialog(
+            context: context, message: localization.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              context,
+              localization.exportedData,
+            ),
           ),
-        ),
-      );
+        );
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in vendor_actions');
