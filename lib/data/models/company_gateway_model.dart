@@ -77,6 +77,10 @@ abstract class CompanyGatewayEntity extends Object
       requireContactEmail: true,
       requireContactName: false,
       requirePostalCode: true,
+      requireCustomValue1: false,
+      requireCustomValue2: false,
+      requireCustomValue3: false,
+      requireCustomValue4: false,
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
@@ -154,6 +158,18 @@ abstract class CompanyGatewayEntity extends Object
 
   @BuiltValueField(wireName: 'require_contact_email')
   bool get requireContactEmail;
+
+  @BuiltValueField(wireName: 'require_custom_value1')
+  bool get requireCustomValue1;
+
+  @BuiltValueField(wireName: 'require_custom_value2')
+  bool get requireCustomValue2;
+
+  @BuiltValueField(wireName: 'require_custom_value3')
+  bool get requireCustomValue3;
+
+  @BuiltValueField(wireName: 'require_custom_value4')
+  bool get requireCustomValue4;
 
   @BuiltValueField(wireName: 'require_cvv')
   bool get requireCvv;
@@ -292,6 +308,13 @@ abstract class CompanyGatewayEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+
+  // ignore: unused_element
+  static void _initializeBuilder(CompanyGatewayEntityBuilder builder) => builder
+    ..requireCustomValue1 = false
+    ..requireCustomValue2 = false
+    ..requireCustomValue3 = false
+    ..requireCustomValue4 = false;
 
   static Serializer<CompanyGatewayEntity> get serializer =>
       _$companyGatewayEntitySerializer;

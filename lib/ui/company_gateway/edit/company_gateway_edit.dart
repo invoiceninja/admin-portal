@@ -91,6 +91,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
@@ -310,6 +311,46 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .rebuild((b) => b..requireContactEmail = value)),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
+                    if (company.hasCustomField(CustomFieldType.client1))
+                      CheckboxListTile(
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        title: Text(company
+                            .getCustomFieldLabel(CustomFieldType.client1)),
+                        value: companyGateway.requireCustomValue1,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..requireCustomValue1 = value)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    if (company.hasCustomField(CustomFieldType.client2))
+                      CheckboxListTile(
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        title: Text(company
+                            .getCustomFieldLabel(CustomFieldType.client2)),
+                        value: companyGateway.requireCustomValue2,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..requireCustomValue2 = value)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    if (company.hasCustomField(CustomFieldType.client3))
+                      CheckboxListTile(
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        title: Text(company
+                            .getCustomFieldLabel(CustomFieldType.client3)),
+                        value: companyGateway.requireCustomValue3,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..requireCustomValue3 = value)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    if (company.hasCustomField(CustomFieldType.client4))
+                      CheckboxListTile(
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        title: Text(company
+                            .getCustomFieldLabel(CustomFieldType.client4)),
+                        value: companyGateway.requireCustomValue4,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..requireCustomValue4 = value)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.postalCode),
