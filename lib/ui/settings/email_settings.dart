@@ -50,6 +50,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _postmarkSecretController = TextEditingController();
   final _mailgunSecretController = TextEditingController();
   final _mailgunDomainController = TextEditingController();
+  final _customSendingEmailController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -82,6 +83,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       _postmarkSecretController,
       _mailgunSecretController,
       _mailgunDomainController,
+      _customSendingEmailController,
     ];
 
     _controllers
@@ -95,6 +97,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     _emailStyleCustomController.text = settings.emailStyleCustom;
     _emailSignatureController.text = settings.emailSignature;
     _postmarkSecretController.text = settings.postmarkSecret;
+    _customSendingEmailController.text = settings.customSendingEmail;
     _mailgunSecretController.text = settings.mailgunSecret;
     _mailgunDomainController.text = settings.mailgunDomain;
 
@@ -114,7 +117,8 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..emailSignature = _emailSignatureController.text.trim()
       ..postmarkSecret = _postmarkSecretController.text.trim()
       ..mailgunSecret = _mailgunSecretController.text.trim()
-      ..mailgunDomain = _mailgunDomainController.text.trim());
+      ..mailgunDomain = _mailgunDomainController.text.trim()
+      ..customSendingEmail = _customSendingEmailController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -266,20 +270,23 @@ class _EmailSettingsState extends State<EmailSettings> {
                   controller: _mailgunDomainController,
                   keyboardType: TextInputType.text,
                 ),
-              ]
+              ],
             ],
           ),
           FormCard(
             children: <Widget>[
+              if ([
+                SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN,
+                SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK
+              ].contains(settings.emailSendingMethod))
+                DecoratedFormField(
+                  label: localization.fromEmail,
+                  controller: _customSendingEmailController,
+                  keyboardType: TextInputType.text,
+                ),
               DecoratedFormField(
                 label: localization.fromName,
                 controller: _fromNameController,
-                onSavePressed: viewModel.onSavePressed,
-                keyboardType: TextInputType.name,
-              ),
-              DecoratedFormField(
-                label: localization.replyToName,
-                controller: _replyToNameController,
                 onSavePressed: viewModel.onSavePressed,
                 keyboardType: TextInputType.name,
               ),
@@ -288,6 +295,12 @@ class _EmailSettingsState extends State<EmailSettings> {
                 controller: _replyToEmailController,
                 keyboardType: TextInputType.emailAddress,
                 onSavePressed: viewModel.onSavePressed,
+              ),
+              DecoratedFormField(
+                label: localization.replyToName,
+                controller: _replyToNameController,
+                onSavePressed: viewModel.onSavePressed,
+                keyboardType: TextInputType.name,
               ),
               DecoratedFormField(
                 label: localization.bccEmail,

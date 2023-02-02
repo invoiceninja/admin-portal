@@ -953,6 +953,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_shipping_address')
   bool get showShippingAddress;
 
+  @nullable
+  @BuiltValueField(wireName: 'custom_sending_email')
+  String get customSendingEmail;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

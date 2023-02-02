@@ -1457,6 +1457,13 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.customSendingEmail;
+    if (value != null) {
+      result
+        ..add('custom_sending_email')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2305,6 +2312,10 @@ class _$SettingsEntitySerializer
           result.showShippingAddress = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'custom_sending_email':
+          result.customSendingEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -2804,6 +2815,8 @@ class _$SettingsEntity extends SettingsEntity {
   final bool showPaidStamp;
   @override
   final bool showShippingAddress;
+  @override
+  final String customSendingEmail;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates)).build();
@@ -3015,7 +3028,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.showEmailFooter,
       this.companyLogoSize,
       this.showPaidStamp,
-      this.showShippingAddress})
+      this.showShippingAddress,
+      this.customSendingEmail})
       : super._();
 
   @override
@@ -3240,7 +3254,8 @@ class _$SettingsEntity extends SettingsEntity {
         showEmailFooter == other.showEmailFooter &&
         companyLogoSize == other.companyLogoSize &&
         showPaidStamp == other.showPaidStamp &&
-        showShippingAddress == other.showShippingAddress;
+        showShippingAddress == other.showShippingAddress &&
+        customSendingEmail == other.customSendingEmail;
   }
 
   int __hashCode;
@@ -3264,26 +3279,26 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), defaultValidUntil.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enableClientPortalUploads.hashCode), enableVendorPortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), replyToName.hashCode), emailFromName.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveInvoiceCancelled.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), recurringExpenseNumberPattern.hashCode), recurringExpenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), sharedInvoiceCreditCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectCredit.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyCredit.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), emailSubjectPurchaseOrder.hashCode), emailBodyPurchaseOrder.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), pageLayout.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), clientMarkPaidPaymentNotification.hashCode), counterNumberApplied.hashCode), emailSendingMethod.hashCode), gmailSendingUserId.hashCode), clientPortalTerms.hashCode), clientPortalPrivacy.hashCode), lockInvoices.hashCode), autoBill.hashCode), autoBillStandardInvoices.hashCode), clientPortalAllowUnderPayment.hashCode), clientPortalAllowOverPayment.hashCode), autoBillDate.hashCode), clientPortalUnderPaymentMinimum.hashCode), useCreditsPayment.hashCode), clientPortalCustomHeader.hashCode), clientPortalCustomCss.hashCode), clientPortalCustomFooter.hashCode), clientPortalCustomJs.hashCode), hideEmptyColumnsOnPdf.hashCode), entitySendTime.hashCode),
-                                                                                clientPortalTasks.hashCode),
-                                                                            pageNumbering.hashCode),
-                                                                        pageNumberingAlignment.hashCode),
-                                                                    requirePurchaseOrderSignature.hashCode),
-                                                                defaultPurchaseOrderTerms.hashCode),
-                                                            defaultPurchaseOrderDesignId.hashCode),
-                                                        defaultPurchaseOrderFooter.hashCode),
-                                                    purchaseOrderNumberPattern.hashCode),
-                                                purchaseOrderNumberCounter.hashCode),
-                                            qrIban.hashCode),
-                                        besrId.hashCode),
-                                    postmarkSecret.hashCode),
-                                mailgunSecret.hashCode),
-                            mailgunDomain.hashCode),
-                        emailAlignment.hashCode),
-                    showEmailFooter.hashCode),
-                companyLogoSize.hashCode),
-            showPaidStamp.hashCode),
-        showShippingAddress.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), defaultValidUntil.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), enableClientPortalUploads.hashCode), enableVendorPortalUploads.hashCode), emailStyle.hashCode), replyToEmail.hashCode), replyToName.hashCode), emailFromName.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveInvoiceCancelled.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), recurringExpenseNumberPattern.hashCode), recurringExpenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), projectNumberPattern.hashCode), projectNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), sharedInvoiceCreditCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectCredit.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyCredit.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), emailSubjectPurchaseOrder.hashCode), emailBodyPurchaseOrder.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), pageLayout.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminderEndless.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode), emailSubjectReminderEndless.hashCode), emailBodyReminderEndless.hashCode), clientOnlinePaymentNotification.hashCode), clientManualPaymentNotification.hashCode), clientMarkPaidPaymentNotification.hashCode), counterNumberApplied.hashCode), emailSendingMethod.hashCode), gmailSendingUserId.hashCode), clientPortalTerms.hashCode), clientPortalPrivacy.hashCode), lockInvoices.hashCode), autoBill.hashCode), autoBillStandardInvoices.hashCode), clientPortalAllowUnderPayment.hashCode), clientPortalAllowOverPayment.hashCode), autoBillDate.hashCode), clientPortalUnderPaymentMinimum.hashCode), useCreditsPayment.hashCode), clientPortalCustomHeader.hashCode), clientPortalCustomCss.hashCode), clientPortalCustomFooter.hashCode), clientPortalCustomJs.hashCode), hideEmptyColumnsOnPdf.hashCode), entitySendTime.hashCode), clientPortalTasks.hashCode),
+                                                                                pageNumbering.hashCode),
+                                                                            pageNumberingAlignment.hashCode),
+                                                                        requirePurchaseOrderSignature.hashCode),
+                                                                    defaultPurchaseOrderTerms.hashCode),
+                                                                defaultPurchaseOrderDesignId.hashCode),
+                                                            defaultPurchaseOrderFooter.hashCode),
+                                                        purchaseOrderNumberPattern.hashCode),
+                                                    purchaseOrderNumberCounter.hashCode),
+                                                qrIban.hashCode),
+                                            besrId.hashCode),
+                                        postmarkSecret.hashCode),
+                                    mailgunSecret.hashCode),
+                                mailgunDomain.hashCode),
+                            emailAlignment.hashCode),
+                        showEmailFooter.hashCode),
+                    companyLogoSize.hashCode),
+                showPaidStamp.hashCode),
+            showShippingAddress.hashCode),
+        customSendingEmail.hashCode));
   }
 
   @override
@@ -3499,7 +3514,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showEmailFooter', showEmailFooter)
           ..add('companyLogoSize', companyLogoSize)
           ..add('showPaidStamp', showPaidStamp)
-          ..add('showShippingAddress', showShippingAddress))
+          ..add('showShippingAddress', showShippingAddress)
+          ..add('customSendingEmail', customSendingEmail))
         .toString();
   }
 }
@@ -4523,6 +4539,11 @@ class SettingsEntityBuilder
   set showShippingAddress(bool showShippingAddress) =>
       _$this._showShippingAddress = showShippingAddress;
 
+  String _customSendingEmail;
+  String get customSendingEmail => _$this._customSendingEmail;
+  set customSendingEmail(String customSendingEmail) =>
+      _$this._customSendingEmail = customSendingEmail;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -4735,6 +4756,7 @@ class SettingsEntityBuilder
       _companyLogoSize = $v.companyLogoSize;
       _showPaidStamp = $v.showPaidStamp;
       _showShippingAddress = $v.showShippingAddress;
+      _customSendingEmail = $v.customSendingEmail;
       _$v = null;
     }
     return this;
@@ -4964,7 +4986,8 @@ class SettingsEntityBuilder
               showEmailFooter: showEmailFooter,
               companyLogoSize: companyLogoSize,
               showPaidStamp: showPaidStamp,
-              showShippingAddress: showShippingAddress);
+              showShippingAddress: showShippingAddress,
+              customSendingEmail: customSendingEmail);
     } catch (_) {
       String _$failedField;
       try {
