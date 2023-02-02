@@ -957,6 +957,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'custom_sending_email')
   String get customSendingEmail;
 
+  @nullable
+  @BuiltValueField(wireName: 'accept_client_input_quote_approval')
+  bool get acceptPurchaseOrderNumber;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

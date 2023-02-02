@@ -548,6 +548,7 @@ class SettingsSearch extends StatelessWidget {
           'domain',
           'client_document_upload',
           'vendor_document_upload#2022-07-06',
+          'accept_purchase_order_number#2023-02-02',
         ],
         [
           'client_registration',
