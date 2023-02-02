@@ -478,7 +478,9 @@ void handleClientAction(
                   store.dispatch(
                     PurgeClientRequest(
                         completer: snackBarCompleter<Null>(
-                            context, localization.purgedClient),
+                            context, localization.purgedClient, callback: () {
+                          viewEntitiesByType(entityType: EntityType.client);
+                        }),
                         clientId: client.id,
                         password: password,
                         idToken: idToken),
