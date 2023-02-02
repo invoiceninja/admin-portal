@@ -12,6 +12,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share/share.dart';
@@ -93,7 +95,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         }
       });
     }).catchError((Object error) {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
+
+      showDialog<void>(
+          context: navigatorKey.currentContext,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          });
     });
   }
 

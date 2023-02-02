@@ -12,7 +12,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:path_provider/path_provider.dart';
@@ -111,6 +113,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       setState(() {
         _isLoading = false;
       });
+
+      showDialog<void>(
+          context: navigatorKey.currentContext,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          });
     });
   }
 
