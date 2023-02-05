@@ -1157,10 +1157,12 @@ class _PdfPreview extends StatefulWidget {
   const _PdfPreview({
     Key key,
     this.settings,
+    this.entityType = EntityType.invoice,
     this.state,
   }) : super(key: key);
 
   final SettingsEntity settings;
+  final EntityType entityType;
   final AppState state;
 
   @override
@@ -1193,7 +1195,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     final url = state.credentials.url + '/live_design';
 
     final request = PdfPreviewRequest(
-      entity: EntityType.invoice,
+      entity: widget.entityType,
       settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings,
       groupId: settingsUIState.group.id ?? '',
