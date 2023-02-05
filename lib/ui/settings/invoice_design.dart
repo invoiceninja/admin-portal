@@ -1194,7 +1194,6 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
     final request = PdfPreviewRequest(
       entity: EntityType.invoice,
-      entityId: state.invoiceState.list.last,
       settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings,
       groupId: settingsUIState.group.id ?? '',
