@@ -293,10 +293,10 @@ class _UserEditState extends State<UserEdit>
                           label: Text(localization.create),
                         ),
                         DataColumn(
-                          label: Text(localization.view),
+                          label: Text(localization.viewAll),
                         ),
                         DataColumn(
-                          label: Text(localization.edit),
+                          label: Text(localization.editAll),
                         ),
                       ],
                       rows: [
