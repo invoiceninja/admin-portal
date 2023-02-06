@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -170,6 +171,26 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final company = viewModel.company;
     final isFiltered = state.uiState.settingsUIState.isFiltered;
 
+    final tabs = [
+      localization.generalSettings,
+      if (false && isMobile(context)) localization.preview,
+      localization.clientDetails,
+      localization.companyDetails,
+      localization.companyAddress,
+      if (company.isModuleEnabled(EntityType.invoice))
+        localization.invoiceDetails,
+      if (company.isModuleEnabled(EntityType.quote)) localization.quoteDetails,
+      if (company.isModuleEnabled(EntityType.credit))
+        localization.creditDetails,
+      if (company.isModuleEnabled(EntityType.vendor))
+        localization.vendorDetails,
+      if (company.isModuleEnabled(EntityType.purchaseOrder))
+        localization.purchaseOrderDetails,
+      localization.productColumns,
+      if (company.isModuleEnabled(EntityType.task)) localization.taskColumns,
+      localization.totalFields,
+    ];
+
     return EditScaffold(
       title: localization.invoiceDesign,
       onSavePressed: (context) {
@@ -186,27 +207,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               key: ValueKey(state.settingsUIState.updatedAt),
               controller: _controller,
               isScrollable: true,
-              tabs: [
-                Tab(text: localization.generalSettings),
-                if (false && isMobile(context)) Tab(text: localization.preview),
-                Tab(text: localization.clientDetails),
-                Tab(text: localization.companyDetails),
-                Tab(text: localization.companyAddress),
-                if (company.isModuleEnabled(EntityType.invoice))
-                  Tab(text: localization.invoiceDetails),
-                if (company.isModuleEnabled(EntityType.quote))
-                  Tab(text: localization.quoteDetails),
-                if (company.isModuleEnabled(EntityType.credit))
-                  Tab(text: localization.creditDetails),
-                if (company.isModuleEnabled(EntityType.vendor))
-                  Tab(text: localization.vendorDetails),
-                if (company.isModuleEnabled(EntityType.purchaseOrder))
-                  Tab(text: localization.purchaseOrderDetails),
-                Tab(text: localization.productColumns),
-                if (company.isModuleEnabled(EntityType.task))
-                  Tab(text: localization.taskColumns),
-                Tab(text: localization.totalFields),
-              ],
+              tabs: tabs
+                  .map((tab) => Tab(
+                        child: Text(tab),
+                      ))
+                  .toList(),
             ),
       body: Row(
         children: [
@@ -1144,8 +1149,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           if (state.settingsUIState.showPdfPreview)
             Expanded(
               child: _PdfPreview(
-                settings: viewModel.settings,
                 state: state,
+                settings: viewModel.settings,
+                entityType: tabs[_controller.index] ==
+                            localization.vendorDetails ||
+                        tabs[_controller.index] ==
+                            localization.purchaseOrderDetails
+                    ? EntityType.purchaseOrder
+                    : tabs[_controller.index] == localization.quoteDetails
+                        ? EntityType.quote
+                        : tabs[_controller.index] == localization.creditDetails
+                            ? EntityType.credit
+                            : EntityType.invoice,
               ),
             ),
         ],
