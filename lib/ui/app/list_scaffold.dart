@@ -95,7 +95,9 @@ class ListScaffold extends StatelessWidget {
 
     double leadingWidth = 0;
     if (entityType == EntityType.settings) {
-      leadingWidth = isDesktop(context) ? 0 : kMinInteractiveDimension;
+      leadingWidth = isDesktop(context) && !state.prefState.isMenuFloated
+          ? 0
+          : kMinInteractiveDimension;
     } else {
       leadingWidth = (isDesktop(context) ? 100 : 10) +
           (kMinInteractiveDimension - 4) *
