@@ -1156,9 +1156,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 class _PdfPreview extends StatefulWidget {
   const _PdfPreview({
     Key key,
+    this.state,
     this.settings,
     this.entityType = EntityType.invoice,
-    this.state,
   }) : super(key: key);
 
   final SettingsEntity settings;
