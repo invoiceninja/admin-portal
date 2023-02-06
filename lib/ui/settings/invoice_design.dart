@@ -437,14 +437,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(settings.rebuild(
                                   (b) => b..fontSize = int.parse(value))),
-                          items: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-                              .map((fontSize) => DropdownMenuItem<String>(
-                                    value: '$fontSize',
-                                    child: fontSize == 0
-                                        ? SizedBox()
-                                        : Text('$fontSize'),
-                                  ))
-                              .toList(),
+                          items:
+                              List<int>.generate(18, (index) => (index * 2) + 6)
+                                  .map((fontSize) => DropdownMenuItem<String>(
+                                        value: '$fontSize',
+                                        child: fontSize == 0
+                                            ? SizedBox()
+                                            : Text('$fontSize'),
+                                      ))
+                                  .toList(),
                         ),
                         Row(
                           children: [
