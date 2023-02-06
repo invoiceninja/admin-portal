@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -56,9 +55,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:printing/printing.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
@@ -1147,7 +1143,6 @@ class __PdfPreviewState extends State<_PdfPreview> {
 
   int _pageCount = 1;
   int _currentPage = 1;
-  String _pdfString;
   http.Response _response;
   bool _isLoading = false;
   bool _pendingLoad = false;
@@ -1234,12 +1229,6 @@ class __PdfPreviewState extends State<_PdfPreview> {
           _currentPage = _pageCount;
         }
 
-        if (kIsWeb && !state.prefState.enableJSPDF) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
-
         if (_pendingLoad) {
           _pendingLoad = false;
           _loadPdf();
@@ -1266,7 +1255,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (_pageCount > 1 && (state.prefState.enableJSPDF || !kIsWeb))
+              if (_pageCount > 1)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
@@ -1303,16 +1292,16 @@ class __PdfPreviewState extends State<_PdfPreview> {
                     ? Container(
                         color: Colors.grey.shade300,
                       )
-                    : state.prefState.enableJSPDF || !kIsWeb
-                        ? PdfPreview(
-                            build: (format) => _response.bodyBytes,
-                            canChangeOrientation: false,
-                            canChangePageFormat: false,
-                            canDebug: false,
-                            pages: [_currentPage - 1],
-                            maxPageWidth: 800,
-                          )
-                        : HtmlElementView(viewType: _pdfString),
+                    : PdfPreview(
+                        build: (format) => _response.bodyBytes,
+                        canChangeOrientation: false,
+                        canChangePageFormat: false,
+                        allowPrinting: false,
+                        allowSharing: false,
+                        canDebug: false,
+                        pages: [_currentPage - 1],
+                        maxPageWidth: 800,
+                      ),
               ),
             ],
           ),

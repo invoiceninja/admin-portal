@@ -33,7 +33,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       colorTheme: kColorThemeLight,
       enableTouchEvents: true,
       enableTooltips: true,
-      enableJSPDF: true,
       isFilterVisible: false,
       textScaleFactor: 1,
       longPressSelectionIsDefault: true,
@@ -140,8 +139,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get tapSelectedToEdit;
 
-  bool get enableJSPDF;
-
   int get rowsPerPage;
 
   bool get enableTooltips;
@@ -244,7 +241,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showPdfPreviewSideBySide = false
     ..enableTouchEvents = true
     ..enableFlexibleSearch = false
-    ..enableJSPDF = true
     ..enableTooltips = true
     ..textScaleFactor = 1
     ..colorTheme =

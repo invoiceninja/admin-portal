@@ -196,16 +196,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.filePdfBox),
                     ),
-                    if (kIsWeb || !kReleaseMode)
-                      SwitchListTile(
-                        title: Text(localization.browserPdfViewer),
-                        subtitle: Text(localization.browserPdfViewerHelp),
-                        value: !prefState.enableJSPDF,
-                        onChanged: (value) =>
-                            viewModel.onEnableJSPDFChanged(context, !value),
-                        activeColor: Theme.of(context).colorScheme.secondary,
-                        secondary: Icon(MdiIcons.filePdfBox),
-                      ),
                     SizedBox(height: 10),
                     BoolDropdownButton(
                       label: localization.previewLocation,

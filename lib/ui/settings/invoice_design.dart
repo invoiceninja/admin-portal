@@ -1,10 +1,8 @@
 // Flutter imports:
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';

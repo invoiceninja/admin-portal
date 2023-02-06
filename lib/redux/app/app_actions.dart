@@ -160,7 +160,6 @@ class UpdateUserPreferences implements PersistPrefs {
     this.isFilterVisible,
     this.rowsPerPage,
     this.colorTheme,
-    this.enableJSPDF,
     this.customColors,
     this.persistData,
     this.persistUi,
@@ -193,7 +192,6 @@ class UpdateUserPreferences implements PersistPrefs {
   final double textScaleFactor;
   final bool showPdfPreview;
   final bool showPdfPreviewSideBySide;
-  final bool enableJSPDF;
   final BuiltMap<String, String> customColors;
   final bool editAfterSaving;
   final bool enableTouchEvents;
