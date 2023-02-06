@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
@@ -170,6 +169,26 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final company = viewModel.company;
     final isFiltered = state.uiState.settingsUIState.isFiltered;
 
+    final tabs = [
+      localization.generalSettings,
+      if (false && isMobile(context)) localization.preview,
+      localization.clientDetails,
+      localization.companyDetails,
+      localization.companyAddress,
+      if (company.isModuleEnabled(EntityType.invoice))
+        localization.invoiceDetails,
+      if (company.isModuleEnabled(EntityType.quote)) localization.quoteDetails,
+      if (company.isModuleEnabled(EntityType.credit))
+        localization.creditDetails,
+      if (company.isModuleEnabled(EntityType.vendor))
+        localization.vendorDetails,
+      if (company.isModuleEnabled(EntityType.purchaseOrder))
+        localization.purchaseOrderDetails,
+      localization.productColumns,
+      if (company.isModuleEnabled(EntityType.task)) localization.taskColumns,
+      localization.totalFields,
+    ];
+
     return EditScaffold(
       title: localization.invoiceDesign,
       onSavePressed: (context) {
@@ -186,27 +205,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               key: ValueKey(state.settingsUIState.updatedAt),
               controller: _controller,
               isScrollable: true,
-              tabs: [
-                Tab(text: localization.generalSettings),
-                if (false && isMobile(context)) Tab(text: localization.preview),
-                Tab(text: localization.clientDetails),
-                Tab(text: localization.companyDetails),
-                Tab(text: localization.companyAddress),
-                if (company.isModuleEnabled(EntityType.invoice))
-                  Tab(text: localization.invoiceDetails),
-                if (company.isModuleEnabled(EntityType.quote))
-                  Tab(text: localization.quoteDetails),
-                if (company.isModuleEnabled(EntityType.credit))
-                  Tab(text: localization.creditDetails),
-                if (company.isModuleEnabled(EntityType.vendor))
-                  Tab(text: localization.vendorDetails),
-                if (company.isModuleEnabled(EntityType.purchaseOrder))
-                  Tab(text: localization.purchaseOrderDetails),
-                Tab(text: localization.productColumns),
-                if (company.isModuleEnabled(EntityType.task))
-                  Tab(text: localization.taskColumns),
-                Tab(text: localization.totalFields),
-              ],
+              tabs: tabs
+                  .map((tab) => Tab(
+                        child: Text(tab),
+                      ))
+                  .toList(),
             ),
       body: Row(
         children: [
@@ -437,14 +440,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(settings.rebuild(
                                   (b) => b..fontSize = int.parse(value))),
-                          items: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-                              .map((fontSize) => DropdownMenuItem<String>(
-                                    value: '$fontSize',
-                                    child: fontSize == 0
-                                        ? SizedBox()
-                                        : Text('$fontSize'),
-                                  ))
-                              .toList(),
+                          items:
+                              List<int>.generate(18, (index) => (index * 2) + 6)
+                                  .map((fontSize) => DropdownMenuItem<String>(
+                                        value: '$fontSize',
+                                        child: fontSize == 0
+                                            ? SizedBox()
+                                            : Text('$fontSize'),
+                                      ))
+                                  .toList(),
                         ),
                         Row(
                           children: [
@@ -1143,8 +1147,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           if (state.settingsUIState.showPdfPreview)
             Expanded(
               child: _PdfPreview(
-                settings: viewModel.settings,
                 state: state,
+                settings: viewModel.settings,
+                entityType: tabs[_controller.index] ==
+                            localization.vendorDetails ||
+                        tabs[_controller.index] ==
+                            localization.purchaseOrderDetails
+                    ? EntityType.purchaseOrder
+                    : tabs[_controller.index] == localization.quoteDetails
+                        ? EntityType.quote
+                        : tabs[_controller.index] == localization.creditDetails
+                            ? EntityType.credit
+                            : EntityType.invoice,
               ),
             ),
         ],
@@ -1156,11 +1170,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 class _PdfPreview extends StatefulWidget {
   const _PdfPreview({
     Key key,
-    this.settings,
     this.state,
+    this.settings,
+    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final SettingsEntity settings;
+  final EntityType entityType;
   final AppState state;
 
   @override
@@ -1193,8 +1209,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     final url = state.credentials.url + '/live_design';
 
     final request = PdfPreviewRequest(
-      entity: EntityType.invoice,
-      entityId: state.invoiceState.list.last,
+      entity: widget.entityType,
       settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings,
       groupId: settingsUIState.group.id ?? '',

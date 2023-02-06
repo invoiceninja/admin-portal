@@ -55,7 +55,6 @@ class DeviceSettingsVM {
     @required this.onPersistUiChanged,
     @required this.onShowPdfChanged,
     @required this.onShowPdfSideBySideChanged,
-    @required this.onEnableJSPDFChanged,
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
     @required this.onEditAfterSavingChanged,
@@ -115,9 +114,6 @@ class DeviceSettingsVM {
       },
       onShowPdfSideBySideChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreviewSideBySide: value));
-      },
-      onEnableJSPDFChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(enableJSPDF: value));
       },
       onTextScaleFactorChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(textScaleFactor: value));
@@ -218,7 +214,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
   final Function(BuildContext, bool) onShowPdfSideBySideChanged;
-  final Function(BuildContext, bool) onEnableJSPDFChanged;
   final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, bool) onEnableTooltipsChanged;
   final Function(BuildContext, bool) onEnableFlexibleSearchChanged;

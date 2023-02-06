@@ -55,7 +55,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
   String _activityId;
-  String _pdfString;
   http.Response _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
@@ -87,12 +86,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       setState(() {
         _response = response;
         _isLoading = false;
-
-        if (kIsWeb) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
       });
     }).catchError((Object error) {
       setState(() {
@@ -301,15 +294,13 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             : null,
         body: _isLoading || _response == null
             ? LoadingIndicator()
-            : kIsWeb
-                ? HtmlElementView(viewType: _pdfString)
-                : PdfPreview(
-                    build: (format) => _response.bodyBytes,
-                    canChangeOrientation: false,
-                    canChangePageFormat: false,
-                    canDebug: false,
-                    maxPageWidth: 800,
-                  ));
+            : PdfPreview(
+                build: (format) => _response.bodyBytes,
+                canChangeOrientation: false,
+                canChangePageFormat: false,
+                canDebug: false,
+                maxPageWidth: 800,
+              ));
   }
 }
 

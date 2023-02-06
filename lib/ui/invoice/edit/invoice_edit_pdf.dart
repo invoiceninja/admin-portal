@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -13,9 +12,6 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:printing/printing.dart';
 
 class InvoiceEditPDF extends StatefulWidget {
@@ -32,7 +28,6 @@ class InvoiceEditPDF extends StatefulWidget {
 
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   bool _isLoading = false;
-  String _pdfString;
   http.Response _response;
 
   @override
@@ -78,12 +73,6 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       setState(() {
         _isLoading = false;
         _response = response;
-
-        if (kIsWeb) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -105,15 +94,15 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     }
 
     return Center(
-      child: kIsWeb
-          ? HtmlElementView(viewType: _pdfString)
-          : PdfPreview(
-              build: (format) => _response.bodyBytes,
-              canChangeOrientation: false,
-              canChangePageFormat: false,
-              canDebug: false,
-              maxPageWidth: 800,
-            ),
+      child: PdfPreview(
+        build: (format) => _response.bodyBytes,
+        canChangeOrientation: false,
+        canChangePageFormat: false,
+        allowPrinting: false,
+        allowSharing: false,
+        canDebug: false,
+        maxPageWidth: 800,
+      ),
     );
   }
 }
