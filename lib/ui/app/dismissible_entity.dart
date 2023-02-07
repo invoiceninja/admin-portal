@@ -19,7 +19,7 @@ class DismissibleEntity extends StatelessWidget {
     @required this.entity,
     @required this.child,
     @required this.isSelected,
-    this.showCheckbox = true,
+    this.showMultiselect = true,
     this.isDismissible = true,
   });
 
@@ -27,7 +27,7 @@ class DismissibleEntity extends StatelessWidget {
   final BaseEntity entity;
   final Widget child;
   final bool isSelected;
-  final bool showCheckbox;
+  final bool showMultiselect;
   final bool isDismissible;
 
   @override
@@ -44,7 +44,7 @@ class DismissibleEntity extends StatelessWidget {
     final widget = SelectedIndicator(
       isSelected: isDesktop(context) &&
           isSelected &&
-          showCheckbox &&
+          showMultiselect &&
           isDismissible &&
           !isMultiselect &&
           !entity.entityType.isSetting,
@@ -65,7 +65,7 @@ class DismissibleEntity extends StatelessWidget {
       startActionPane: ActionPane(
         motion: const DrawerMotion(),
         children: [
-          if (showCheckbox)
+          if (showMultiselect)
             SlidableAction(
               onPressed: (context) =>
                   handleEntityAction(entity, EntityAction.toggleMultiselect),

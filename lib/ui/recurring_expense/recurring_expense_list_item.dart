@@ -78,7 +78,7 @@ class RecurringExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      showCheckbox: this.showCheckbox,
+      showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           expense.id ==

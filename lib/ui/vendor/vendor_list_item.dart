@@ -53,7 +53,7 @@ class VendorListItem extends StatelessWidget {
               (uiState.isEditing
                   ? vendorUIState.editing.id
                   : vendorUIState.selectedId),
-      showCheckbox: showCheck,
+      showMultiselect: showCheck,
       userCompany: store.state.userCompany,
       entity: vendor,
       child: LayoutBuilder(

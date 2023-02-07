@@ -75,7 +75,7 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      showCheckbox: showCheck,
+      showMultiselect: showCheck,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           !showCheck &&

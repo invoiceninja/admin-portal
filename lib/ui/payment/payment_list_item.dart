@@ -67,7 +67,7 @@ class PaymentListItem extends StatelessWidget {
               (uiState.isEditing
                   ? paymentUIState.editing.id
                   : paymentUIState.selectedId),
-      showCheckbox: showCheck,
+      showMultiselect: showCheck,
       userCompany: state.userCompany,
       entity: payment,
       child: LayoutBuilder(
