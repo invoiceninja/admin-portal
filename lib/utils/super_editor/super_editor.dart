@@ -47,6 +47,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     // Fix for <p> tags cutting off text
     var markdown = widget.value;
     markdown = markdown.replaceAll('<p>', '\n');
+    markdown = markdown.replaceAll('</p>', '\n');
     markdown = markdown.replaceAll('<p/>', '\n');
 
     _doc = deserializeMarkdownToDocument(markdown)
