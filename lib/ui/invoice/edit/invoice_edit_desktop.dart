@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/autobill_dropdown_menu_item.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -541,6 +542,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             AppDropdownButton<String>(
                               labelText: localization.autoBill,
                               value: invoice.autoBill,
+                              selectedItemBuilder: (invoice.autoBill ?? '')
+                                      .isEmpty
+                                  ? null
+                                  : (context) => [
+                                        SettingsEntity.AUTO_BILL_ALWAYS,
+                                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                                        SettingsEntity.AUTO_BILL_OPT_IN,
+                                        SettingsEntity.AUTO_BILL_OFF,
+                                      ]
+                                          .map((type) =>
+                                              Text(localization.lookup(type)))
+                                          .toList(),
                               onChanged: (dynamic value) => viewModel.onChanged(
                                   invoice.rebuild((b) => b..autoBill = value)),
                               items: [
@@ -550,7 +563,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 SettingsEntity.AUTO_BILL_OFF,
                               ]
                                   .map((value) => DropdownMenuItem(
-                                        child: Text(localization.lookup(value)),
+                                        child: AutobillDropdownMenuItem(
+                                            type: value),
                                         value: value,
                                       ))
                                   .toList(),

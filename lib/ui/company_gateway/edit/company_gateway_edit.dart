@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
+import 'package:invoiceninja_flutter/ui/app/autobill_dropdown_menu_item.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -236,6 +237,18 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     AppDropdownButton<String>(
                       labelText: localization.captureCard,
                       value: companyGateway.tokenBilling,
+                      selectedItemBuilder: (companyGateway.tokenBilling ?? '')
+                              .isEmpty
+                          ? null
+                          : (context) => [
+                                SettingsEntity.AUTO_BILL_ALWAYS,
+                                SettingsEntity.AUTO_BILL_OPT_OUT,
+                                SettingsEntity.AUTO_BILL_OPT_IN,
+                                SettingsEntity.AUTO_BILL_OFF,
+                              ]
+                                  .map(
+                                      (type) => Text(localization.lookup(type)))
+                                  .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
                               .rebuild((b) => b..tokenBilling = value)),
@@ -246,7 +259,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         SettingsEntity.AUTO_BILL_OFF
                       ]
                           .map((value) => DropdownMenuItem(
-                                child: Text(localization.lookup(value)),
+                                child: AutobillDropdownMenuItem(type: value),
                                 value: value,
                               ))
                           .toList(),
