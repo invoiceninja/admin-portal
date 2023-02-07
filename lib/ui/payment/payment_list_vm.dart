@@ -49,7 +49,7 @@ class PaymentListBuilder extends StatelessWidget {
               return PaymentListItem(
                 filter: viewModel.filter,
                 payment: payment,
-                showCheck: paymentListState.isInMultiselect(),
+                showCheckbox: paymentListState.isInMultiselect(),
                 isChecked: paymentListState.isSelected(payment.id),
               );
             });
