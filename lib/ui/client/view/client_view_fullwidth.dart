@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -12,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_payment_methods.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -77,6 +81,32 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
         memoizedGetClientAvailableCredits(client.id, state.creditState.map);
     final unappliedPayments =
         memoizedGetClientUnappliedPayments(client.id, state.paymentState.map);
+
+    // Group gateway tokens by the customerReference
+    final tokenMap = <String, List<GatewayTokenEntity>>{};
+    final gatewayMap = <String, CompanyGatewayEntity>{};
+    final linkMap = <String, String>{};
+
+    client.gatewayTokens.forEach((gatewayToken) {
+      final companyGateway =
+          state.companyGatewayState.get(gatewayToken.companyGatewayId);
+      if (companyGateway.isOld && !companyGateway.isDeleted) {
+        final customerReference = gatewayToken.customerReference;
+        gatewayMap[customerReference] = companyGateway;
+        final clientUrl = GatewayEntity.getClientUrl(
+          gatewayId: companyGateway.gatewayId,
+          customerReference: customerReference,
+        );
+        if (clientUrl != null) {
+          linkMap[customerReference] = clientUrl;
+        }
+        if (tokenMap.containsKey(customerReference)) {
+          tokenMap[customerReference].add(gatewayToken);
+        } else {
+          tokenMap[customerReference] = [gatewayToken];
+        }
+      }
+    });
 
     return LayoutBuilder(builder: (context, layout) {
       final minHeight = layout.maxHeight - (kMobileDialogPadding * 2) - 43;
@@ -383,6 +413,11 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                   ? localization.documents
                                   : '${localization.documents} (${documents.length})',
                             ),
+                            if (tokenMap.keys.isNotEmpty)
+                              Tab(
+                                text:
+                                    '${localization.paymentMethods} (${tokenMap.keys.length})',
+                              ),
                             Tab(
                               text: localization.ledger,
                             ),
@@ -425,6 +460,18 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                   key: ValueKey(viewModel.client.id),
                                 ),
                               ),
+                              if (tokenMap.keys.isNotEmpty)
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewPaymentMethods(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                    gatewayMap: gatewayMap,
+                                    linkMap: linkMap,
+                                    tokenMap: tokenMap,
+                                  ),
+                                ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: ClientViewLedger(
