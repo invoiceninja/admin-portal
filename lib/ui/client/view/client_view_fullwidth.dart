@@ -408,16 +408,16 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             Tab(
                               child: Text(localization.standing),
                             ),
-                            Tab(
-                              text: documents.isEmpty
-                                  ? localization.documents
-                                  : '${localization.documents} (${documents.length})',
-                            ),
                             if (tokenMap.keys.isNotEmpty)
                               Tab(
                                 text:
                                     '${localization.paymentMethods} (${tokenMap.keys.length})',
                               ),
+                            Tab(
+                              text: documents.isEmpty
+                                  ? localization.documents
+                                  : '${localization.documents} (${documents.length})',
+                            ),
                             Tab(
                               text: localization.ledger,
                             ),
@@ -453,13 +453,6 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     )
                                 ],
                               ),
-                              RefreshIndicator(
-                                onRefresh: () => viewModel.onRefreshed(context),
-                                child: ClientViewDocuments(
-                                  viewModel: viewModel,
-                                  key: ValueKey(viewModel.client.id),
-                                ),
-                              ),
                               if (tokenMap.keys.isNotEmpty)
                                 RefreshIndicator(
                                   onRefresh: () =>
@@ -472,6 +465,13 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     tokenMap: tokenMap,
                                   ),
                                 ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewDocuments(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: ClientViewLedger(
