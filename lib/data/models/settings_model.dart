@@ -117,11 +117,11 @@ abstract class SettingsEntity
   static const LOCK_INVOICES_SENT = 'when_sent';
   static const LOCK_INVOICES_PAID = 'when_paid';
 
-  static const AUTO_BILL_OFF = 'off';
+  static const AUTO_BILL_ALWAYS = 'always';
   static const AUTO_BILL_OPT_IN = 'optin';
   static const AUTO_BILL_OPT_OUT = 'optout';
-  static const AUTO_BILL_ALWAYS = 'always';
-
+  static const AUTO_BILL_OFF = 'off';
+  
   static const AUTO_BILL_ON_SEND_DATE = 'on_send_date';
   static const AUTO_BILL_ON_DUE_DATE = 'on_due_date';
 

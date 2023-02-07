@@ -95,17 +95,12 @@ abstract class CompanyGatewayEntity extends Object
       assignedUserId: '',
       createdAt: 0,
       label: '',
-      tokenBilling: TOKEN_BILLING_ALWAYS,
+      tokenBilling: SettingsEntity.AUTO_BILL_ALWAYS,
       isTestMode: false,
     );
   }
 
   CompanyGatewayEntity._();
-
-  static const TOKEN_BILLING_ALWAYS = 'always';
-  static const TOKEN_BILLING_OPT_IN = 'optin';
-  static const TOKEN_BILLING_OPT_OUT = 'optout';
-  static const TOKEN_BILLING_OFF = 'off';
 
   @override
   @memoized

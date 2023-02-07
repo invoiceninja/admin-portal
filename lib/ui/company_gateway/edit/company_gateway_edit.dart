@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/settings_model.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -239,10 +240,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           companyGateway
                               .rebuild((b) => b..tokenBilling = value)),
                       items: [
-                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                        CompanyGatewayEntity.TOKEN_BILLING_OFF
+                        SettingsEntity.AUTO_BILL_ALWAYS,
+                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                        SettingsEntity.AUTO_BILL_OPT_IN,
+                        SettingsEntity.AUTO_BILL_OFF
                       ]
                           .map((value) => DropdownMenuItem(
                                 child: Text(localization.lookup(value)),

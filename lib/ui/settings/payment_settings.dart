@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -118,10 +117,10 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..autoBill = value)),
                   items: [
-                    CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                    CompanyGatewayEntity.TOKEN_BILLING_OFF
+                    SettingsEntity.AUTO_BILL_ALWAYS,
+                    SettingsEntity.AUTO_BILL_OPT_OUT,
+                    SettingsEntity.AUTO_BILL_OPT_IN,
+                    SettingsEntity.AUTO_BILL_OFF
                   ]
                       .map((value) => DropdownMenuItem(
                             child: Text(localization.lookup(value)),
