@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/autobill_dropdown_menu_item.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -117,14 +117,24 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   value: settings.autoBill,
                   onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..autoBill = value)),
+                  selectedItemBuilder: (settings.autoBill ?? '').isEmpty
+                      ? null
+                      : (context) => [
+                            SettingsEntity.AUTO_BILL_ALWAYS,
+                            SettingsEntity.AUTO_BILL_OPT_OUT,
+                            SettingsEntity.AUTO_BILL_OPT_IN,
+                            SettingsEntity.AUTO_BILL_OFF,
+                          ]
+                              .map((type) => Text(localization.lookup(type)))
+                              .toList(),
                   items: [
-                    CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                    CompanyGatewayEntity.TOKEN_BILLING_OFF
+                    SettingsEntity.AUTO_BILL_ALWAYS,
+                    SettingsEntity.AUTO_BILL_OPT_OUT,
+                    SettingsEntity.AUTO_BILL_OPT_IN,
+                    SettingsEntity.AUTO_BILL_OFF
                   ]
                       .map((value) => DropdownMenuItem(
-                            child: Text(localization.lookup(value)),
+                            child: AutobillDropdownMenuItem(type: value),
                             value: value,
                           ))
                       .toList()),

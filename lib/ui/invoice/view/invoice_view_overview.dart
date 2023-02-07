@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
@@ -189,10 +188,8 @@ class InvoiceOverview extends StatelessWidget {
             ? localization.endless
             : '${invoice.remainingCycles}',
         RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill) +
-            ([
-              CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-              CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT
-            ].contains(invoice.autoBill)
+            ([SettingsEntity.AUTO_BILL_OPT_IN, SettingsEntity.AUTO_BILL_OPT_OUT]
+                    .contains(invoice.autoBill)
                 ? (' - ' +
                     (invoice.autoBillEnabled
                         ? localization.yes
