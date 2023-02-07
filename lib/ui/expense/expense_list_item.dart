@@ -25,18 +25,20 @@ class ExpenseListItem extends StatelessWidget {
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
-    this.showCheck = false,
+    this.showCheckbox = false,
     this.isDismissible = true,
     this.isChecked = false,
+    this.showSelected = true,
   });
 
   final Function(bool) onCheckboxChanged;
   final GestureTapCallback onTap;
   final ExpenseEntity expense;
   final String filter;
-  final bool showCheck;
+  final bool showCheckbox;
   final bool isDismissible;
   final bool isChecked;
+  final bool showSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +77,10 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      showCheckbox: showCheck,
+      showMultiselect: showSelected,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
-          !showCheck &&
+          showSelected &&
           expense.id ==
               (uiState.isEditing
                   ? expenseUIState.editing.id
@@ -105,7 +107,7 @@ class ExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: showCheck
+                        child: showCheckbox
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IgnorePointer(
@@ -188,7 +190,7 @@ class ExpenseListItem extends StatelessWidget {
                 onLongPress: () => onTap != null
                     ? null
                     : selectEntity(entity: expense, longPress: true),
-                leading: showCheck
+                leading: showCheckbox
                     ? IgnorePointer(
                         child: Checkbox(
                           value: isChecked,

@@ -22,16 +22,18 @@ class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.invoice,
     this.filter,
-    this.showCheck = false,
-    this.isChecked = false,
     this.onTap,
+    this.isChecked = false,
+    this.showCheckbox = false,
+    this.showSelected = true,
   });
 
   final InvoiceEntity invoice;
   final String filter;
-  final bool showCheck;
+  final bool showCheckbox;
   final bool isChecked;
   final Function onTap;
+  final bool showSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +73,12 @@ class InvoiceListItem extends StatelessWidget {
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
-            !showCheck &&
+            showSelected &&
             invoice.id ==
                 (uiState.isEditing
                     ? invoiceUIState.editing.id
                     : invoiceUIState.selectedId),
-        showCheckbox: showCheck,
+        showMultiselect: showSelected,
         userCompany: state.userCompany,
         entity: invoice,
         child: LayoutBuilder(
@@ -87,7 +89,7 @@ class InvoiceListItem extends StatelessWidget {
                       ? onTap()
                       : selectEntity(
                           entity: invoice,
-                          forceView: !showCheck,
+                          forceView: !showCheckbox,
                         ),
                   onLongPress: () => onTap != null
                       ? null
@@ -103,7 +105,7 @@ class InvoiceListItem extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: showCheck
+                            child: showCheckbox
                                 ? IgnorePointer(
                                     child: Checkbox(
                                       value: isChecked,
@@ -188,11 +190,11 @@ class InvoiceListItem extends StatelessWidget {
               : ListTile(
                   onTap: () => onTap != null
                       ? onTap()
-                      : selectEntity(entity: invoice, forceView: !showCheck),
+                      : selectEntity(entity: invoice, forceView: !showCheckbox),
                   onLongPress: () => onTap != null
                       ? null
                       : selectEntity(entity: invoice, longPress: true),
-                  leading: showCheck
+                  leading: showCheckbox
                       ? IgnorePointer(
                           child: Checkbox(
                             value: isChecked,

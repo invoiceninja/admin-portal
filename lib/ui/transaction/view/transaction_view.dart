@@ -539,7 +539,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   final payment = _payments[index];
                   return PaymentListItem(
                     payment: payment,
-                    showCheck: true,
+                    showCheckbox: true,
+                    showSelected: false,
                     isChecked: (_selectedPayment?.id ?? '') == payment.id,
                     onTap: () => setState(() {
                       if ((_selectedPayment?.id ?? '') == payment.id) {
@@ -567,7 +568,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   final invoice = _invoices[index];
                   return InvoiceListItem(
                     invoice: invoice,
-                    showCheck: true,
+                    showCheckbox: true,
+                    showSelected: false,
                     isChecked: _selectedInvoices.contains(invoice),
                     onTap: () => setState(() {
                       if (_selectedInvoices.contains(invoice)) {
@@ -1020,7 +1022,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                   final expense = _expenses[index];
                   return ExpenseListItem(
                     expense: expense,
-                    showCheck: true,
+                    showCheckbox: true,
+                    showSelected: false,
                     isChecked: _selectedExpense?.id == expense.id,
                     onTap: () => setState(() {
                       if (_selectedExpense?.id == expense.id) {

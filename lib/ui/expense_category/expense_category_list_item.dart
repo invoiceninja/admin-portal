@@ -49,7 +49,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
               (uiState.isEditing
                   ? expenseCategoryUIState.editing.id
                   : expenseCategoryUIState.selectedId),
-      showCheckbox: showCheck,
+      showMultiselect: showCheck,
       child: ListTile(
         onTap: () =>
             onTap != null ? onTap() : selectEntity(entity: expenseCategory),

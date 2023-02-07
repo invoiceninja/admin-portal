@@ -49,7 +49,7 @@ class InvoiceListBuilder extends StatelessWidget {
               return InvoiceListItem(
                 filter: viewModel.filter,
                 invoice: invoice,
-                showCheck: invoiceListState.isInMultiselect(),
+                showCheckbox: invoiceListState.isInMultiselect(),
                 isChecked: invoiceListState.isSelected(invoice.id),
               );
             });

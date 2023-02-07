@@ -44,7 +44,13 @@ class _ExampleEditorState extends State<ExampleEditor> {
   void initState() {
     super.initState();
 
-    _doc = deserializeMarkdownToDocument(widget.value)
+    // Fix for <p> tags cutting off text
+    var markdown = widget.value;
+    markdown = markdown.replaceAll('<p>', '\n');
+    markdown = markdown.replaceAll('</p>', '\n');
+    markdown = markdown.replaceAll('<p/>', '\n');
+
+    _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_hideOrShowToolbar)
       ..addListener(_onChanged);
     _docEditor = DocumentEditor(document: _doc as MutableDocument);

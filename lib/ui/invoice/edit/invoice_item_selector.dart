@@ -237,6 +237,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
             isDismissible: false,
+            showSelected: false,
             onCheckboxChanged: (checked) => _toggleEntity(expense),
             isChecked: _selected.contains(expense),
             expense: expense,

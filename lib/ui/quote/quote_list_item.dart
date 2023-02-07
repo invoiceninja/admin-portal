@@ -62,7 +62,7 @@ class QuoteListItem extends StatelessWidget {
                 ? quoteUIState.editing.id
                 : quoteUIState.selectedId),
         userCompany: state.userCompany,
-        showCheckbox: showCheckbox,
+        showMultiselect: showCheckbox,
         entity: quote,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {

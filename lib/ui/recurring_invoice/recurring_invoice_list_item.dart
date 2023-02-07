@@ -68,7 +68,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                 (uiState.isEditing
                     ? invoiceUIState.editing.id
                     : invoiceUIState.selectedId),
-        showCheckbox: showCheckbox,
+        showMultiselect: showCheckbox,
         userCompany: state.userCompany,
         entity: invoice,
         child: LayoutBuilder(

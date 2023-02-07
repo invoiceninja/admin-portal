@@ -22,16 +22,18 @@ class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
     @required this.payment,
     this.filter,
-    this.showCheck = false,
+    this.showCheckbox = false,
     this.isChecked = false,
     this.onTap,
+    this.showSelected = true,
   });
 
   final PaymentEntity payment;
   final String filter;
-  final bool showCheck;
+  final bool showCheckbox;
   final bool isChecked;
   final Function onTap;
+  final bool showSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +64,12 @@ class PaymentListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
-          !showCheck &&
+          showSelected &&
           payment.id ==
               (uiState.isEditing
                   ? paymentUIState.editing.id
                   : paymentUIState.selectedId),
-      showCheckbox: showCheck,
+      showMultiselect: showSelected,
       userCompany: state.userCompany,
       entity: payment,
       child: LayoutBuilder(
@@ -76,7 +78,7 @@ class PaymentListItem extends StatelessWidget {
             ? InkWell(
                 onTap: () => onTap != null
                     ? onTap()
-                    : selectEntity(entity: payment, forceView: !showCheck),
+                    : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
                     : selectEntity(entity: payment, longPress: true),
@@ -91,7 +93,7 @@ class PaymentListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.only(right: 16),
-                          child: showCheck
+                          child: showCheckbox
                               ? IgnorePointer(
                                   child: Checkbox(
                                     value: isChecked,
@@ -164,11 +166,11 @@ class PaymentListItem extends StatelessWidget {
             : ListTile(
                 onTap: () => onTap != null
                     ? onTap()
-                    : selectEntity(entity: payment, forceView: !showCheck),
+                    : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
                     : selectEntity(entity: payment, longPress: true),
-                leading: showCheck
+                leading: showCheckbox
                     ? IgnorePointer(
                         child: Checkbox(
                           value: isChecked,

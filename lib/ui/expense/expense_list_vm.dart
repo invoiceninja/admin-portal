@@ -50,7 +50,7 @@ class ExpenseListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 expense: expense,
                 isChecked: listUIState.isSelected(expense.id),
-                showCheck: listUIState.isInMultiselect(),
+                showCheckbox: listUIState.isInMultiselect(),
               );
             });
       },

@@ -672,6 +672,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final state = widget.viewModel.state;
     final localization = AppLocalization.of(context);
 
     return Column(
@@ -685,7 +686,8 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             ),
             AppDropdownButton(
               showBlank: true,
-              blankLabel: localization.disabled,
+              blankLabel:
+                  state.settingsUIState.isFiltered ? '' : localization.disabled,
               value: widget.schedule,
               labelText: localization.schedule,
               onChanged: (dynamic value) {
