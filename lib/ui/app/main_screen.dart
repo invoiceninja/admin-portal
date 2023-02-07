@@ -738,7 +738,7 @@ class EntityScreens extends StatelessWidget {
                           if (prefState.isViewerFullScreen(
                               state.uiState.filterEntityType))
                             SizedBox(
-                              height: 360,
+                              height: 370,
                               child: topFilterChild,
                             )
                           else
