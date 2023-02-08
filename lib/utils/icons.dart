@@ -105,7 +105,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.fileImage;
     case EntityAction.changeStatus:
       return Icons.adjust;
-    case EntityAction.cancel:
+    case EntityAction.back:
       return Icons.cancel_outlined;
     case EntityAction.save:
       return Icons.cloud_upload;

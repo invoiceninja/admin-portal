@@ -366,8 +366,8 @@ Middleware<AppState> _cancelPurchaseOrders(PurchaseOrderRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as CancelPurchaseOrdersRequest;
     repository
-        .bulkAction(store.state.credentials, action.purchaseOrderIds,
-            EntityAction.cancel)
+        .bulkAction(
+            store.state.credentials, action.purchaseOrderIds, EntityAction.back)
         .then((purchaseOrders) {
       store.dispatch(CancelPurchaseOrderSuccess(purchaseOrders));
       if (action.completer != null) {
