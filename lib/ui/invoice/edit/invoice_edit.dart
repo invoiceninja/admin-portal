@@ -80,10 +80,13 @@ class _InvoiceEditState extends State<InvoiceEdit>
       return;
     }
 
-    if (action == EntityAction.cancelInvoice) {
+    if ([
+      EntityAction.cancelInvoice,
+      EntityAction.autoBill,
+    ].contains(action)) {
       confirmCallback(
           context: context,
-          message: AppLocalization.of(context).cancelInvoice,
+          message: AppLocalization.of(context).lookup(action.toString()),
           callback: (_) {
             widget.viewModel.onSavePressed(context, action);
           });
