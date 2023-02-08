@@ -337,7 +337,10 @@ class EditScaffold extends StatelessWidget {
                               constraints: BoxConstraints(minWidth: 60),
                               child: IconText(
                                 icon: getEntityActionIcon(EntityAction.back),
-                                text: localization.cancel,
+                                text: (entity != null &&
+                                        entity.entityType.isSetting)
+                                    ? localization.back
+                                    : localization.cancel,
                                 style: state.isSaving ? null : textStyle,
                               ),
                             ),
