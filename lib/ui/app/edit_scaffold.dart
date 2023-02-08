@@ -109,7 +109,7 @@ class EditScaffold extends StatelessWidget {
     final entityActions = <EntityAction>[
       if (isDesktop(context) &&
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
-        EntityAction.cancel,
+        EntityAction.back,
       EntityAction.save,
       ...(actions ?? []).where((action) => action != null),
     ];
@@ -234,7 +234,7 @@ class EditScaffold extends StatelessWidget {
                                   onPressed: state.isSaving
                                       ? null
                                       : () {
-                                          if (action == EntityAction.cancel) {
+                                          if (action == EntityAction.back) {
                                             if (onCancelPressed != null) {
                                               onCancelPressed(context);
                                             } else {
@@ -336,7 +336,7 @@ class EditScaffold extends StatelessWidget {
                             child: ConstrainedBox(
                               constraints: BoxConstraints(minWidth: 60),
                               child: IconText(
-                                icon: getEntityActionIcon(EntityAction.cancel),
+                                icon: getEntityActionIcon(EntityAction.back),
                                 text: localization.cancel,
                                 style: state.isSaving ? null : textStyle,
                               ),

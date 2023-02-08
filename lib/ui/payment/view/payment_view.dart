@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -183,7 +184,11 @@ class _PaymentViewState extends State<PaymentView> {
                       ? EntityAction.applyPayment
                       : EntityAction.sendEmail,
                   action1Enabled: state.company.enableApplyingPayments
-                      ? payment.applied < payment.amount
+                      ? payment.applied < payment.amount &&
+                          memoizedHasActiveUnpaidInvoices(
+                            payment.clientId,
+                            state.invoiceState.map,
+                          )
                       : true,
                   action2: EntityAction.refundPayment,
                   action2Enabled: payment.refunded < payment.amount,
