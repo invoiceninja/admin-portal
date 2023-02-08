@@ -20,6 +20,7 @@ const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kBankingURL = 'https://invoiceninja.com/banking/';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
+const String kWebhookSiteURL = 'https://webhook.site';
 const String kSourceCodeBackend =
     'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =

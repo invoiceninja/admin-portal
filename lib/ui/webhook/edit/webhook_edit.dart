@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
@@ -106,15 +107,19 @@ class _WebhookEditState extends State<WebhookEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    DecoratedFormField(
-                      autofocus: true,
-                      controller: _targetUrlController,
-                      label: localization.targetUrl,
-                      keyboardType: TextInputType.url,
-                      validator: (value) =>
-                          value.isEmpty || value.trim().isEmpty
-                              ? localization.pleaseEnterAValue
-                              : null,
+                    LearnMoreUrl(
+                      url: kWebhookSiteURL,
+                      label: localization.testUrl,
+                      child: DecoratedFormField(
+                        autofocus: true,
+                        controller: _targetUrlController,
+                        label: localization.targetUrl,
+                        keyboardType: TextInputType.url,
+                        validator: (value) =>
+                            value.isEmpty || value.trim().isEmpty
+                                ? localization.pleaseEnterAValue
+                                : null,
+                      ),
                     ),
                     AppDropdownButton<String>(
                       labelText: localization.eventType,
