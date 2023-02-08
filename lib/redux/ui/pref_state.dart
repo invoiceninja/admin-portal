@@ -31,7 +31,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       editAfterSaving: true,
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
-      enableTouchEvents: true,
+      enableTouchEvents: false,
       enableTooltips: true,
       isFilterVisible: false,
       textScaleFactor: 1,
@@ -239,7 +239,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..editAfterSaving = true
     ..showPdfPreview = true
     ..showPdfPreviewSideBySide = false
-    ..enableTouchEvents = true
+    ..enableTouchEvents = false
     ..enableFlexibleSearch = false
     ..enableTooltips = true
     ..textScaleFactor = 1
