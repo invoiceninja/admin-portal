@@ -872,7 +872,10 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     Widget iconWidget;
-    if (widget.title == localization.dashboard) {
+    if ([
+      localization.dashboard,
+      localization.settings,
+    ].contains(widget.title)) {
       iconWidget = IconButton(
         icon: Icon(
           Icons.search,
@@ -882,10 +885,15 @@ class _DrawerTileState extends State<DrawerTile> {
           if (isMobile(context)) {
             navigator.pop();
           }
-          store.dispatch(ViewDashboard(
-              filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
-                  ? null
-                  : ''));
+          if (widget.title == localization.dashboard) {
+            store.dispatch(ViewDashboard(
+                filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
+                    ? null
+                    : ''));
+          } else if (widget.title == localization.settings) {
+            store.dispatch(ViewSettings(company: state.company));
+            store.dispatch(FilterSettings(''));
+          }
         },
       );
     } else if (userCompany.canCreate(widget.entityType)) {

@@ -1319,10 +1319,11 @@ class __PdfPreviewState extends State<_PdfPreview> {
               ),
             ],
           ),
-          if (_isLoading)
+          if (_isLoading && _response == null)
             Center(
               child: CircularProgressIndicator(),
-            )
+            ),
+          if (_isLoading) LinearProgressIndicator(),
         ],
       ),
     );

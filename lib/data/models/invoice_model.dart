@@ -1075,7 +1075,8 @@ abstract class InvoiceEntity extends Object
             actions.addAll([
               EntityAction.newPayment,
               EntityAction.markPaid,
-              EntityAction.autoBill,
+              if (client != null && client.gatewayTokens.isNotEmpty)
+                EntityAction.autoBill,
             ]);
           } else if (isCredit) {
             if (balanceOrAmount < 0) {
