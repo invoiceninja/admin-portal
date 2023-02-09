@@ -171,6 +171,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'stock_notification',
       serializers.serialize(object.stockNotification,
           specifiedType: const FullType(bool)),
+      'product_image',
+      serializers.serialize(object.imageUrl,
+          specifiedType: const FullType(String)),
+      'max_quantity',
+      serializers.serialize(object.maxQuantity,
+          specifiedType: const FullType(int)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -302,6 +308,14 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'stock_notification':
           result.stockNotification = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'product_image':
+          result.imageUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'max_quantity':
+          result.maxQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -571,6 +585,10 @@ class _$ProductEntity extends ProductEntity {
   @override
   final bool stockNotification;
   @override
+  final String imageUrl;
+  @override
+  final int maxQuantity;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -611,6 +629,8 @@ class _$ProductEntity extends ProductEntity {
       this.stockQuantity,
       this.stockNotificationThreshold,
       this.stockNotification,
+      this.imageUrl,
+      this.maxQuantity,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -655,6 +675,10 @@ class _$ProductEntity extends ProductEntity {
     BuiltValueNullFieldError.checkNotNull(
         stockNotification, 'ProductEntity', 'stockNotification');
     BuiltValueNullFieldError.checkNotNull(
+        imageUrl, 'ProductEntity', 'imageUrl');
+    BuiltValueNullFieldError.checkNotNull(
+        maxQuantity, 'ProductEntity', 'maxQuantity');
+    BuiltValueNullFieldError.checkNotNull(
         documents, 'ProductEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, 'ProductEntity', 'createdAt');
@@ -694,6 +718,8 @@ class _$ProductEntity extends ProductEntity {
         stockQuantity == other.stockQuantity &&
         stockNotificationThreshold == other.stockNotificationThreshold &&
         stockNotification == other.stockNotification &&
+        imageUrl == other.imageUrl &&
+        maxQuantity == other.maxQuantity &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -726,17 +752,17 @@ class _$ProductEntity extends ProductEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode),
-                                                                                taxRate2.hashCode),
-                                                                            taxName3.hashCode),
-                                                                        taxRate3.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    stockQuantity.hashCode),
-                                                stockNotificationThreshold.hashCode),
-                                            stockNotification.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode),
+                                                                                taxRate3.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customValue3.hashCode),
+                                                                customValue4.hashCode),
+                                                            stockQuantity.hashCode),
+                                                        stockNotificationThreshold.hashCode),
+                                                    stockNotification.hashCode),
+                                                imageUrl.hashCode),
+                                            maxQuantity.hashCode),
                                         documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -769,6 +795,8 @@ class _$ProductEntity extends ProductEntity {
           ..add('stockQuantity', stockQuantity)
           ..add('stockNotificationThreshold', stockNotificationThreshold)
           ..add('stockNotification', stockNotification)
+          ..add('imageUrl', imageUrl)
+          ..add('maxQuantity', maxQuantity)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -860,6 +888,14 @@ class ProductEntityBuilder
   set stockNotification(bool stockNotification) =>
       _$this._stockNotification = stockNotification;
 
+  String _imageUrl;
+  String get imageUrl => _$this._imageUrl;
+  set imageUrl(String imageUrl) => _$this._imageUrl = imageUrl;
+
+  int _maxQuantity;
+  int get maxQuantity => _$this._maxQuantity;
+  set maxQuantity(int maxQuantity) => _$this._maxQuantity = maxQuantity;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -925,6 +961,8 @@ class ProductEntityBuilder
       _stockQuantity = $v.stockQuantity;
       _stockNotificationThreshold = $v.stockNotificationThreshold;
       _stockNotification = $v.stockNotification;
+      _imageUrl = $v.imageUrl;
+      _maxQuantity = $v.maxQuantity;
       _documents = $v.documents.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -984,6 +1022,8 @@ class ProductEntityBuilder
               stockQuantity: BuiltValueNullFieldError.checkNotNull(stockQuantity, 'ProductEntity', 'stockQuantity'),
               stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, 'ProductEntity', 'stockNotificationThreshold'),
               stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, 'ProductEntity', 'stockNotification'),
+              imageUrl: BuiltValueNullFieldError.checkNotNull(imageUrl, 'ProductEntity', 'imageUrl'),
+              maxQuantity: BuiltValueNullFieldError.checkNotNull(maxQuantity, 'ProductEntity', 'maxQuantity'),
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ProductEntity', 'createdAt'),

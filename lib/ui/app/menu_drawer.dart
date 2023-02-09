@@ -1035,6 +1035,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.isSelfHosted &&
                   !state.account.disableAutoUpdate &&
+                  state.userCompany.isAdmin &&
                   state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips

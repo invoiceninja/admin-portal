@@ -94,6 +94,16 @@ class _ProductOverviewState extends State<ProductOverview> {
       }
     }
 
+    if (product.maxQuantity > 0) {
+      fields[localization.maxQuantity] = formatNumber(
+          product.maxQuantity.toDouble(), context,
+          formatNumberType: FormatNumberType.int);
+    }
+
+    if (product.imageUrl.isNotEmpty) {
+      fields[localization.imageUrl] = product.imageUrl;
+    }
+
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(

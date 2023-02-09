@@ -44,6 +44,8 @@ class _ProductEditState extends State<ProductEdit> {
   final _custom4Controller = TextEditingController();
   final _stockQuantityController = TextEditingController();
   final _notificationThresholdController = TextEditingController();
+  final _imageUrlController = TextEditingController();
+  final _maxQuantityController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -62,6 +64,8 @@ class _ProductEditState extends State<ProductEdit> {
       _custom4Controller,
       _stockQuantityController,
       _notificationThresholdController,
+      _imageUrlController,
+      _maxQuantityController,
     ];
 
     _controllers
@@ -85,6 +89,12 @@ class _ProductEditState extends State<ProductEdit> {
       context,
       formatNumberType: FormatNumberType.int,
     );
+    _maxQuantityController.text = formatNumber(
+      product.maxQuantity.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.int,
+    );
+    _imageUrlController.text = product.imageUrl;
     _notificationThresholdController.text =
         product.stockNotificationThreshold == 0
             ? ''
@@ -124,7 +134,9 @@ class _ProductEditState extends State<ProductEdit> {
       ..customValue4 = _custom4Controller.text.trim()
       ..stockQuantity = parseInt(_stockQuantityController.text.trim())
       ..stockNotificationThreshold =
-          parseInt(_notificationThresholdController.text.trim()));
+          parseInt(_notificationThresholdController.text.trim())
+      ..maxQuantity = parseInt(_stockQuantityController.text.trim())
+      ..imageUrl = _imageUrlController.text.trim());
     if (product != widget.viewModel.product) {
       _debouncer.run(() {
         widget.viewModel.onChanged(product);
@@ -163,7 +175,6 @@ class _ProductEditState extends State<ProductEdit> {
           key: ValueKey('__product_${product.id}_${product.updatedAt}__'),
           children: <Widget>[
             FormCard(
-              isLast: true,
               children: <Widget>[
                 DecoratedFormField(
                   autofocus: true,
@@ -261,7 +272,11 @@ class _ProductEditState extends State<ProductEdit> {
                   value: product.customValue4,
                   onSavePressed: _onSavePressed,
                 ),
-                if (company.trackInventory) ...[
+              ],
+            ),
+            if (company.trackInventory)
+              FormCard(
+                children: [
                   DecoratedFormField(
                     keyboardType: TextInputType.number,
                     controller: _stockQuantityController,
@@ -290,8 +305,24 @@ class _ProductEditState extends State<ProductEdit> {
                       ),
                   ],
                 ],
+              ),
+            FormCard(
+              isLast: true,
+              children: [
+                DecoratedFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _maxQuantityController,
+                  label: localization.maxQuantity,
+                  onSavePressed: _onSavePressed,
+                ),
+                DecoratedFormField(
+                  keyboardType: TextInputType.url,
+                  controller: _imageUrlController,
+                  label: localization.imageUrl,
+                  onSavePressed: _onSavePressed,
+                ),
               ],
-            ),
+            )
           ],
         ),
       ),

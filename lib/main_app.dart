@@ -355,7 +355,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       child: child,
                     );
                   },
-                  scrollBehavior: state.prefState.enableTouchEvents
+                  scrollBehavior: state.prefState.enableTouchEvents &&
+                          state.prefState.isDesktop
                       ? MyCustomScrollBehavior()
                       : null,
                   navigatorKey: navigatorKey,
