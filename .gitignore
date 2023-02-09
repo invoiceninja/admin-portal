@@ -75,7 +75,6 @@
 #.android/
 #.ios/
 
-lib/generated_plugin_registrant.dart
 .flutter-plugins-dependencies
 .env.dart
 key.properties
