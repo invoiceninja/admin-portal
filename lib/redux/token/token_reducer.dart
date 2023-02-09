@@ -96,6 +96,10 @@ final tokenListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTokenMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTokenList>(_viewTokenList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewTokenList(ListUIState tokenListState, ViewTokenList action) {

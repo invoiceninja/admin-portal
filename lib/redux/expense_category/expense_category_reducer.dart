@@ -142,6 +142,10 @@ final expenseCategoryListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearExpenseCategoryMultiselect>(
       _clearListMultiselect),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _filterExpenseCategoriesByCustom1(

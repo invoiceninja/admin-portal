@@ -112,6 +112,10 @@ final bankAccountListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearBankAccountMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewBankAccountList>(_viewBankAccountList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewBankAccountList(

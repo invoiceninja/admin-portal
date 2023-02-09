@@ -132,6 +132,10 @@ final transactionRuleListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, ClearTransactionRuleMultiselect>(
       _clearListMultiselect),
   TypedReducer<ListUIState, ViewTransactionRuleList>(_viewTransactionRuleList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewTransactionRuleList(

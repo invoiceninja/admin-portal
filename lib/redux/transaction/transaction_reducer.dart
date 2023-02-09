@@ -115,6 +115,10 @@ final transactionListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTransactionMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTransactionList>(_viewTransactionList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewTransactionList(

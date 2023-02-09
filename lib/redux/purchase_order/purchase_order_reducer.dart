@@ -229,6 +229,10 @@ final purchaseOrderListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, ClearPurchaseOrderMultiselect>(
       _clearListMultiselect),
   TypedReducer<ListUIState, ViewPurchaseOrderList>(_viewPurchaseOrderList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewPurchaseOrderList(

@@ -111,6 +111,10 @@ final productListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProductMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewProductList>(_viewClientList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewClientList(
