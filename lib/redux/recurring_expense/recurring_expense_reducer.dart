@@ -135,6 +135,10 @@ final recurringExpenseListReducer = combineReducers<ListUIState>([
       _clearListMultiselect),
   TypedReducer<ListUIState, ViewRecurringExpenseList>(
       _viewRecurringExpenseList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewRecurringExpenseList(

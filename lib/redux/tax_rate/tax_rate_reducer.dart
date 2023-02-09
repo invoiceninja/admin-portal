@@ -80,6 +80,10 @@ final taxRateListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTaxRateMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTaxRateList>(_viewTaxRateList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewTaxRateList(

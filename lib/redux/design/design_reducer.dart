@@ -90,6 +90,10 @@ final designListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDesignMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewDesignList>(_viewDesignList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewDesignList(

@@ -121,6 +121,10 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearCompanyGatewayMultiselect>(
       _clearListMultiselect),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _filterCompanyGatewaysByCustom1(ListUIState companyGatewayListState,

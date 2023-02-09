@@ -96,6 +96,10 @@ final webhookListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearWebhookMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewWebhookList>(_viewWebhookList),
+  TypedReducer<ListUIState, FilterByEntity>(
+      (state, action) => state.rebuild((b) => b
+        ..filter = null
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
 ]);
 
 ListUIState _viewWebhookList(
