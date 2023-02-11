@@ -143,16 +143,6 @@ abstract class CalculateInvoiceTotal {
     lineItems.forEach((invoiceItem) {
       double lineTotal = invoiceItem.quantity * invoiceItem.cost;
 
-      if (discount != 0) {
-        if (isAmountDiscount) {
-          if (total != 0) {
-            lineTotal -= round(lineTotal / total * discount, precision);
-          }
-        } else {
-          lineTotal -= round(lineTotal * discount / 100, precision);
-        }
-      }
-
       if (invoiceItem.discount != 0) {
         if (isAmountDiscount) {
           lineTotal -= invoiceItem.discount;
@@ -164,7 +154,7 @@ abstract class CalculateInvoiceTotal {
       total += lineTotal;
     });
 
-    if (discount > 0) {
+    if (discount != 0) {
       if (isAmountDiscount) {
         total -= discount;
       } else {
