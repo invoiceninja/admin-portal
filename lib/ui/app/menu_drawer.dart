@@ -667,13 +667,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 // STARTER: menu - do not remove comment
                                 DrawerTile(
                                   company: company,
-                                  entityType: EntityType.schedule,
-                                  icon: getEntityIcon(EntityType.schedule),
-                                  title: localization.schedules,
-                                ),
-
-                                DrawerTile(
-                                  company: company,
                                   entityType: EntityType.recurringExpense,
                                   icon: getEntityIcon(
                                       EntityType.recurringExpense),

@@ -179,6 +179,8 @@ IconData getEntityIcon(EntityType entityType) {
       return MdiIcons.bank;
     case EntityType.transactionRule:
       return Icons.rule_folder;
+    case EntityType.schedule:
+      return Icons.schedule;
     default:
       return MdiIcons.crosshairsQuestion;
   }
@@ -260,6 +262,8 @@ IconData getSettingIcon(String section) {
       return getEntityIcon(EntityType.task);
     case kSettingsSubscriptions:
       return getEntityIcon(EntityType.subscription);
+    case kSettingsSchedules:
+      return getEntityIcon(EntityType.schedule);
     case kSettingsBankAccounts:
       return MdiIcons.bank;
     case kSettingsTransactionRules:

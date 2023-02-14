@@ -507,6 +507,7 @@ const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
 const String kSettingsDataVisualizations = 'data_visualizations';
 const String kSettingsApiTokens = 'api_tokens';
 const String kSettingsUserManagement = 'user_management';
+const String kSettingsSchedules = 'schedules';
 const String kSettingsUserManagementView = 'user_management/view';
 const String kSettingsUserManagementEdit = 'user_management/edit';
 const String kSettingsAccountManagement = 'account_management';
