@@ -24,7 +24,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
-  final _schedulesController = TextEditingController();
+  final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -32,14 +32,14 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   void didChangeDependencies() {
     _controllers = [
       // STARTER: array - do not remove comment
-      _schedulesController,
+      _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final schedule = widget.viewModel.schedule;
     // STARTER: read value - do not remove comment
-    _schedulesController.text = schedule.name;
+    _nameController.text = schedule.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -60,7 +60,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
     _debouncer.run(() {
       final schedule = widget.viewModel.schedule.rebuild((b) => b
         // STARTER: set value - do not remove comment
-        ..schedules = _schedulesController.text.trim());
+        ..name = _nameController.text.trim());
       if (schedule != widget.viewModel.schedule) {
         widget.viewModel.onChanged(schedule);
       }
@@ -95,7 +95,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                   children: <Widget>[
                     // STARTER: widgets - do not remove comment
                     TextFormField(
-                      controller: _schedulesController,
+                      controller: _nameController,
                       autocorrect: false,
                       decoration: InputDecoration(
                         labelText: 'Schedules',
