@@ -1136,12 +1136,12 @@ class SidebarFooter extends StatelessWidget {
               },
               tooltip: prefState.enableTooltips ? localization.userGuide : '',
             ),
-            IconButton(
-              icon: Icon(Icons.info_outline),
-              // prevent the modal from being stuck over the pdf
-              onPressed: () => _showAbout(context),
-              tooltip: prefState.enableTooltips ? localization.about : '',
-            ),
+            if (state.userCompany.isAdmin)
+              IconButton(
+                icon: Icon(Icons.info_outline),
+                onPressed: () => _showAbout(context),
+                tooltip: prefState.enableTooltips ? localization.about : '',
+              ),
             /*
             if (kDebugMode)
               IconButton(
