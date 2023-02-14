@@ -953,9 +953,11 @@ packages:
   pinput:
     dependency: "direct main"
     description:
-      name: pinput
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: dev
+      resolved-ref: "2c198e46e1fa18a15d4667aa2d939bcbb04c7c39"
+      url: "https://github.com/Tkko/Flutter_Pinput"
+    source: git
     version: "2.2.12"
   platform:
     dependency: transitive
