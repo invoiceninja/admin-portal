@@ -271,7 +271,6 @@ class FilterPaymentsByStatus implements PersistUI {
   final EntityStatus status;
 }
 
-
 class FilterPaymentsByCustom1 implements PersistUI {
   FilterPaymentsByCustom1(this.value);
 

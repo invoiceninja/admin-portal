@@ -282,6 +282,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
+      'schedules',
+      serializers.serialize(object.schedules,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ScheduleEntity)])),
       'tokens_hashed',
       serializers.serialize(object.tokens,
           specifiedType:
@@ -773,6 +777,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'schedules':
+          result.schedules.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ScheduleEntity)]))
               as BuiltList<Object>);
           break;
         case 'tokens_hashed':
@@ -1747,6 +1757,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final BuiltList<ScheduleEntity> schedules;
+  @override
   final BuiltList<TokenEntity> tokens;
   @override
   final BuiltList<WebhookEntity> webhooks;
@@ -1894,6 +1906,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.vendors,
       this.designs,
       this.documents,
+      this.schedules,
       this.tokens,
       this.webhooks,
       this.subscriptions,
@@ -2066,6 +2079,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(designs, 'CompanyEntity', 'designs');
     BuiltValueNullFieldError.checkNotNull(
         documents, 'CompanyEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        schedules, 'CompanyEntity', 'schedules');
     BuiltValueNullFieldError.checkNotNull(tokens, 'CompanyEntity', 'tokens');
     BuiltValueNullFieldError.checkNotNull(
         webhooks, 'CompanyEntity', 'webhooks');
@@ -2210,6 +2225,7 @@ class _$CompanyEntity extends CompanyEntity {
         vendors == other.vendors &&
         designs == other.designs &&
         documents == other.documents &&
+        schedules == other.schedules &&
         tokens == other.tokens &&
         webhooks == other.webhooks &&
         subscriptions == other.subscriptions &&
@@ -2268,7 +2284,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), notifyVendorWhenPaid.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), convertRateToClient.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableProductDiscount.hashCode), defaultTaskIsDateBased.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), isDisabled.hashCode), enableShopApi.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), numberOfExpenseTaxRates.hashCode), expenseInclusiveTaxes.hashCode), sessionTimeout.hashCode), passwordTimeout.hashCode), oauthPasswordRequired.hashCode), markdownEnabled.hashCode), markdownEmailEnabled.hashCode), useCommaAsDecimalPlace.hashCode), reportIncludeDrafts.hashCode), reportIncludeDeleted.hashCode), useQuoteTermsOnConversion.hashCode), enableApplyingPayments.hashCode), trackInventory.hashCode), stockNotificationThreshold.hashCode), stockNotification.hashCode), invoiceTaskLock.hashCode), convertPaymentCurrency.hashCode), convertExpenseCurrency.hashCode), notifyVendorWhenPaid.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), recurringExpenses.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), purchaseOrders.hashCode), bankAccounts.hashCode), transactions.hashCode), transactionRules.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), documents.hashCode), schedules.hashCode), tokens.hashCode), webhooks.hashCode), subscriptions.hashCode), paymentTerms.hashCode), systemLogs.hashCode), clientRegistrationFields.hashCode), customFields.hashCode), slackWebhookUrl.hashCode), googleAnalyticsKey.hashCode), matomoUrl.hashCode), matomoId.hashCode), markExpensesInvoiceable.hashCode), markExpensesPaid.hashCode), invoiceExpenseDocuments.hashCode), invoiceTaskDocuments.hashCode), invoiceTaskTimelog.hashCode),
                                                                                 invoiceTaskDatelog.hashCode),
                                                                             invoiceTaskProject.hashCode),
                                                                         invoiceTaskHours.hashCode),
@@ -2366,6 +2382,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('vendors', vendors)
           ..add('designs', designs)
           ..add('documents', documents)
+          ..add('schedules', schedules)
           ..add('tokens', tokens)
           ..add('webhooks', webhooks)
           ..add('subscriptions', subscriptions)
@@ -2783,6 +2800,12 @@ class CompanyEntityBuilder
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  ListBuilder<ScheduleEntity> _schedules;
+  ListBuilder<ScheduleEntity> get schedules =>
+      _$this._schedules ??= new ListBuilder<ScheduleEntity>();
+  set schedules(ListBuilder<ScheduleEntity> schedules) =>
+      _$this._schedules = schedules;
+
   ListBuilder<TokenEntity> _tokens;
   ListBuilder<TokenEntity> get tokens =>
       _$this._tokens ??= new ListBuilder<TokenEntity>();
@@ -3037,6 +3060,7 @@ class CompanyEntityBuilder
       _vendors = $v.vendors.toBuilder();
       _designs = $v.designs.toBuilder();
       _documents = $v.documents.toBuilder();
+      _schedules = $v.schedules.toBuilder();
       _tokens = $v.tokens.toBuilder();
       _webhooks = $v.webhooks.toBuilder();
       _subscriptions = $v.subscriptions.toBuilder();
@@ -3181,6 +3205,7 @@ class CompanyEntityBuilder
               vendors: vendors.build(),
               designs: designs.build(),
               documents: documents.build(),
+              schedules: schedules.build(),
               tokens: tokens.build(),
               webhooks: webhooks.build(),
               subscriptions: subscriptions.build(),
@@ -3271,6 +3296,8 @@ class CompanyEntityBuilder
         designs.build();
         _$failedField = 'documents';
         documents.build();
+        _$failedField = 'schedules';
+        schedules.build();
         _$failedField = 'tokens';
         tokens.build();
         _$failedField = 'webhooks';

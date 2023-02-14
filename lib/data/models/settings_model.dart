@@ -121,7 +121,7 @@ abstract class SettingsEntity
   static const AUTO_BILL_OPT_IN = 'optin';
   static const AUTO_BILL_OPT_OUT = 'optout';
   static const AUTO_BILL_OFF = 'off';
-  
+
   static const AUTO_BILL_ON_SEND_DATE = 'on_send_date';
   static const AUTO_BILL_ON_DUE_DATE = 'on_due_date';
 

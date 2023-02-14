@@ -156,6 +156,7 @@ abstract class CompanyEntity extends Object
       bankAccounts: BuiltList<BankAccountEntity>(),
       transactions: BuiltList<TransactionEntity>(),
       transactionRules: BuiltList<TransactionRuleEntity>(),
+      schedules: BuiltList<ScheduleEntity>(),
     );
   }
 
@@ -371,6 +372,8 @@ abstract class CompanyEntity extends Object
   BuiltList<DesignEntity> get designs;
 
   BuiltList<DocumentEntity> get documents;
+
+  BuiltList<ScheduleEntity> get schedules;
 
   @BuiltValueField(wireName: 'tokens_hashed')
   BuiltList<TokenEntity> get tokens;
@@ -734,7 +737,8 @@ abstract class CompanyEntity extends Object
     ..purchaseOrders.replace(BuiltList<InvoiceEntity>())
     ..bankAccounts.replace(BuiltList<BankAccountEntity>())
     ..transactions.replace(BuiltList<TransactionEntity>())
-    ..transactionRules.replace(BuiltList<TransactionRuleEntity>());
+    ..transactionRules.replace(BuiltList<TransactionRuleEntity>())
+    ..schedules.replace(BuiltList<ScheduleEntity>());
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
