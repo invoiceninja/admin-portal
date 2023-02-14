@@ -65,6 +65,7 @@ abstract class ScheduleEntity extends Object
       name: '',
       nextRun: '',
       template: '',
+      parameters: ScheduleParameters(),
     );
   }
 
@@ -175,8 +176,12 @@ abstract class ScheduleParameters
     implements Built<ScheduleParameters, ScheduleParametersBuilder> {
   factory ScheduleParameters({String id, bool isEnabled}) {
     return _$ScheduleParameters._(
-        //maxLimit: -1,
-        );
+      clients: BuiltList<String>(),
+      dateRange: '',
+      showAgingTable: false,
+      showPaymentsTable: false,
+      status: '',
+    );
   }
 
   ScheduleParameters._();
