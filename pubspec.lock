@@ -953,12 +953,10 @@ packages:
   pinput:
     dependency: "direct main"
     description:
-      path: "."
-      ref: dev
-      resolved-ref: "2c198e46e1fa18a15d4667aa2d939bcbb04c7c39"
-      url: "https://github.com/Tkko/Flutter_Pinput"
-    source: git
-    version: "2.2.12"
+      name: pinput
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.21"
   platform:
     dependency: transitive
     description:
@@ -1210,7 +1208,7 @@ packages:
       name: smart_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.8"
   source_gen:
     dependency: transitive
     description:
