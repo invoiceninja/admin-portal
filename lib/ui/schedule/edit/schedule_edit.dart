@@ -211,8 +211,10 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         clientId: null,
                         clientState: state.clientState,
                         onSelected: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.clients.add(value.id)));
+                          if (!parameters.clients.contains(value.id)) {
+                            viewModel.onChanged(schedule.rebuild(
+                                (b) => b..parameters.clients.add(value.id)));
+                          }
                           setState(() {
                             _clientClearedAt = DateTime.now().toIso8601String();
                           });
@@ -222,7 +224,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       HelpText(localization.allClients),
                     for (var clientId in parameters.clients)
                       ListTile(
-                        title: Text(clientId),
+                        title:
+                            Text(state.clientState.get(clientId).displayName),
                         trailing: IconButton(
                           icon: Icon(Icons.clear),
                           onPressed: () {
