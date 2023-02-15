@@ -4,12 +4,15 @@ import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
   const ScheduleEdit({
@@ -36,14 +39,12 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
       _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final schedule = widget.viewModel.schedule;
-    // STARTER: read value - do not remove comment
     _nameController.text = schedule.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -75,6 +76,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;
@@ -137,6 +139,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                   ],
                 ),
                 FormCard(
+                  isLast: true,
                   children: [
                     DatePicker(
                       labelText: localization.nextSendDate,
@@ -185,6 +188,35 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               ))
                           .toList(),
                     ),
+                    SizedBox(height: 20),
+                    BoolDropdownButton(
+                        label: localization.showAgingTable,
+                        value: parameters.showAgingTable,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.showAgingTable = value));
+                        }),
+                    BoolDropdownButton(
+                        label: localization.showPaymentsTable,
+                        value: parameters.showPaymentsTable,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.showPaymentsTable = value));
+                        }),
+                    SizedBox(height: 20),
+                    ClientPicker(
+                        isRequired: false,
+                        clientId: null,
+                        clientState: state.clientState,
+                        onSelected: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.clients.add(value.id)));
+                          print('## SELECTED: $value');
+                        }),
+                    for (var clientId in parameters.clients)
+                      ListTile(
+                        title: Text(clientId),
+                      ),
                   ],
                 )
               ],

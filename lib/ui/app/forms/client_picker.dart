@@ -23,6 +23,7 @@ class ClientPicker extends StatelessWidget {
     this.onAddPressed,
     this.autofocus,
     this.excludeIds = const [],
+    this.isRequired = true,
   });
 
   final String clientId;
@@ -31,6 +32,7 @@ class ClientPicker extends StatelessWidget {
   final Function(Completer<SelectableEntity> completer) onAddPressed;
   final bool autofocus;
   final List<String> excludeIds;
+  final bool isRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class ClientPicker extends StatelessWidget {
       entityList: memoizedDropdownClientList(clientState.map, clientState.list,
           state.userState.map, state.staticState),
       entityMap: clientState.map,
-      validator: (String val) => val.trim().isEmpty
+      validator: (String val) => isRequired && val.trim().isEmpty
           ? AppLocalization.of(context).pleaseSelectAClient
           : null,
       onSelected: onSelected,
