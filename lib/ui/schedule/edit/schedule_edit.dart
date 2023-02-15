@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -100,6 +103,30 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       label: localization.name,
                       validator: (value) =>
                           value.isEmpty ? localization.pleaseEnterAName : null,
+                    ),
+                    AppDropdownButton<String>(
+                        labelText: localization.frequency,
+                        showBlank: true,
+                        blankLabel: localization.once,
+                        value: schedule.frequencyId,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              schedule.rebuild((b) => b..frequencyId = value));
+                        },
+                        items: kFrequencies.entries
+                            .map((entry) => DropdownMenuItem(
+                                  value: entry.key,
+                                  child: Text(localization.lookup(entry.value)),
+                                ))
+                            .toList()),
+                    DatePicker(
+                      labelText: localization.nextSendDate,
+                      onSelected: (date, _) {
+                        viewModel.onChanged(
+                            schedule.rebuild((b) => b..nextRun = date));
+                      },
+                      selectedDate: schedule.nextRun,
+                      firstDate: DateTime.now(),
                     ),
                   ],
                 ),

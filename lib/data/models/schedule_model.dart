@@ -60,7 +60,7 @@ abstract class ScheduleEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      frequencyId: '5',
+      frequencyId: '',
       isPaused: false,
       name: '',
       nextRun: '',
