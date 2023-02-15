@@ -165,7 +165,26 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                 value: dateRange,
                               ))
                           .toList(),
-                    )
+                    ),
+                    AppDropdownButton<String>(
+                      labelText: localization.status,
+                      blankValue: null,
+                      value: parameters.status,
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(schedule
+                            .rebuild((b) => b..parameters.status = value));
+                      },
+                      items: [
+                        kStatementStatusAll,
+                        kStatementStatusPaid,
+                        kStatementStatusUnpaid,
+                      ]
+                          .map((value) => DropdownMenuItem<String>(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList(),
+                    ),
                   ],
                 )
               ],

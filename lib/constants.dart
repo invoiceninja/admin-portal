@@ -802,6 +802,11 @@ const kScheduleTemplates = {
 
 const kSchduleEmailStatement = 'client_statement';
 
+  const kStatementStatusAll = 'all';
+   const kStatementStatusPaid = 'paid';
+   const kStatementStatusUnpaid = 'unpaid';
+
+
 const kFrequencies = {
   '1': 'freq_daily',
   '2': 'freq_weekly',
