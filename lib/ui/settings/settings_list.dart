@@ -623,6 +623,11 @@ class SettingsSearch extends StatelessWidget {
           'subscriptions',
         ],
       ],
+      kSettingsSchedules: [
+        [
+          'schedules#2023-02-15',
+        ],
+      ],
       kSettingsUserManagement: [
         [
           'users',

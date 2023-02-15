@@ -507,7 +507,6 @@ const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
 const String kSettingsDataVisualizations = 'data_visualizations';
 const String kSettingsApiTokens = 'api_tokens';
 const String kSettingsUserManagement = 'user_management';
-const String kSettingsSchedules = 'schedules';
 const String kSettingsUserManagementView = 'user_management/view';
 const String kSettingsUserManagementEdit = 'user_management/edit';
 const String kSettingsAccountManagement = 'account_management';
@@ -529,6 +528,9 @@ const String kSettingsBankAccountsEdit = 'bank_accounts/edit';
 const String kSettingsTransactionRules = 'transaction_rules';
 const String kSettingsTransactionRulesView = 'transaction_rules/view';
 const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
+const String kSettingsSchedules = 'schedules';
+const String kSettingsSchedulesView = 'schedules/view';
+const String kSettingsSchedulesEdit = 'schedules/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,
