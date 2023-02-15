@@ -1,6 +1,8 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -177,10 +179,10 @@ abstract class ScheduleParameters
   factory ScheduleParameters({String id, bool isEnabled}) {
     return _$ScheduleParameters._(
       clients: BuiltList<String>(),
-      dateRange: '',
-      showAgingTable: false,
-      showPaymentsTable: false,
-      status: '',
+      dateRange: DateRange.thisQuarter.toString(),
+      showAgingTable: true,
+      showPaymentsTable: true,
+      status: kStatementStatusAll,
     );
   }
 
