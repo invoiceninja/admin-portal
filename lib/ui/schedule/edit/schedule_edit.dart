@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -76,6 +77,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
+    final parameters = schedule.parameters;
 
     return EditScaffold(
       title:
@@ -119,7 +121,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             .toList()),
                     AppDropdownButton<String>(
                         labelText: localization.frequency,
-                        value: schedule.template,
+                        value: schedule.frequencyId,
                         showBlank: true,
                         blankLabel: localization.once,
                         onChanged: (dynamic value) {
@@ -132,6 +134,10 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                   child: Text(localization.lookup(entry.value)),
                                 ))
                             .toList()),
+                  ],
+                ),
+                FormCard(
+                  children: [
                     DatePicker(
                       labelText: localization.nextSendDate,
                       onSelected: (date, _) {
@@ -141,8 +147,27 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       selectedDate: schedule.nextRun,
                       firstDate: DateTime.now(),
                     ),
+                    AppDropdownButton<DateRange>(
+                      labelText: localization.dateRange,
+                      blankValue: null,
+                      value: parameters.dateRange.isNotEmpty
+                          ? DateRange.valueOf(parameters.dateRange)
+                          : null,
+                      onChanged: (dynamic value) {
+                        final updated = schedule.rebuild(
+                            (b) => b..parameters.dateRange = value.toString());
+                        viewModel.onChanged(updated);
+                      },
+                      items: DateRange.values
+                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                                child: Text(
+                                    localization.lookup(dateRange.toString())),
+                                value: dateRange,
+                              ))
+                          .toList(),
+                    )
                   ],
-                ),
+                )
               ],
             );
           })),
