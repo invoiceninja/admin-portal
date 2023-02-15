@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -93,13 +94,12 @@ class _ScheduleEditState extends State<ScheduleEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                    TextFormField(
+                    DecoratedFormField(
+                      keyboardType: TextInputType.text,
                       controller: _nameController,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        labelText: 'Schedules',
-                      ),
+                      label: localization.name,
+                      validator: (value) =>
+                          value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
                   ],
                 ),
