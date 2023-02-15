@@ -744,7 +744,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: has changes - do not remove comment
       case ScheduleEditScreen.route:
         return scheduleUIState.editing.isChanged == true;
-
       case TransactionRuleEditScreen.route:
         return transactionRuleUIState.editing.isChanged == true;
       case TransactionEditScreen.route:
