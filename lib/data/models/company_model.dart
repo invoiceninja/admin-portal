@@ -373,6 +373,7 @@ abstract class CompanyEntity extends Object
 
   BuiltList<DocumentEntity> get documents;
 
+  @BuiltValueField(wireName: 'task_schedulers')
   BuiltList<ScheduleEntity> get schedules;
 
   @BuiltValueField(wireName: 'tokens_hashed')

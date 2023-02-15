@@ -17,7 +17,7 @@ class ScheduleRepository {
   Future<ScheduleEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/schedules/$entityId', credentials.token);
+        '${credentials.url}/task_schedulers/$entityId', credentials.token);
 
     final ScheduleItemResponse scheduleResponse =
         serializers.deserializeWith(ScheduleItemResponse.serializer, response);
@@ -26,7 +26,7 @@ class ScheduleRepository {
   }
 
   Future<BuiltList<ScheduleEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/schedules?';
+    final String url = credentials.url + '/task_schedulers?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ScheduleListResponse scheduleResponse =
@@ -41,8 +41,8 @@ class ScheduleRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url + '/schedules/bulk?per_page=$kMaxEntitiesPerBulkAction';
+    final url = credentials.url +
+        '/task_schedulers/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -59,10 +59,10 @@ class ScheduleRepository {
 
     if (schedule.isNew) {
       response = await webClient.post(
-          credentials.url + '/schedules', credentials.token,
+          credentials.url + '/task_schedulers', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/schedules/${schedule.id}';
+      final url = '${credentials.url}/task_schedulers/${schedule.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

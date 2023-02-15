@@ -282,7 +282,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
-      'schedules',
+      'task_schedulers',
       serializers.serialize(object.schedules,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ScheduleEntity)])),
@@ -779,7 +779,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
-        case 'schedules':
+        case 'task_schedulers':
           result.schedules.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ScheduleEntity)]))
