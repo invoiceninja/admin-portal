@@ -796,6 +796,12 @@ const kMonthsOfTheYear = {
 
 const kFrequencyMonthly = '5';
 
+const kScheduleTemplates = {
+  kSchduleEmailStatement: 'email_statement',
+};
+
+const kSchduleEmailStatement = 'client_statement';
+
 const kFrequencies = {
   '1': 'freq_daily',
   '2': 'freq_weekly',

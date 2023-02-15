@@ -105,10 +105,23 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
                     AppDropdownButton<String>(
+                        labelText: localization.template,
+                        value: schedule.template,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              schedule.rebuild((b) => b..template = value));
+                        },
+                        items: kScheduleTemplates.entries
+                            .map((entry) => DropdownMenuItem(
+                                  value: entry.key,
+                                  child: Text(localization.lookup(entry.value)),
+                                ))
+                            .toList()),
+                    AppDropdownButton<String>(
                         labelText: localization.frequency,
+                        value: schedule.template,
                         showBlank: true,
                         blankLabel: localization.once,
-                        value: schedule.frequencyId,
                         onChanged: (dynamic value) {
                           viewModel.onChanged(
                               schedule.rebuild((b) => b..frequencyId = value));
