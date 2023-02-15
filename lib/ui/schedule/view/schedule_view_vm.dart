@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -17,7 +18,8 @@ class ScheduleViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
-  static const String route = '/schedule/view';
+  static const String route = '/$kSettings/$kSettingsSchedulesView';
+
   final bool isFilter;
 
   @override

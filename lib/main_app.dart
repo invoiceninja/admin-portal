@@ -544,7 +544,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               ScheduleViewScreen(),
                           ScheduleEditScreen.route: (context) =>
                               ScheduleEditScreen(),
-
                           TransactionRuleScreen.route: (context) =>
                               TransactionRuleScreenBuilder(),
                           TransactionRuleViewScreen.route: (context) =>
