@@ -8,11 +8,11 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
   const ScheduleEdit({
@@ -30,6 +30,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_scheduleEdit');
   final _debouncer = Debouncer();
+  String _clientClearedAt = '';
 
   // STARTER: controllers - do not remove comment
   final _nameController = TextEditingController();
@@ -205,17 +206,30 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         }),
                     SizedBox(height: 20),
                     ClientPicker(
+                        key: ValueKey('__client_picker_${_clientClearedAt}__'),
                         isRequired: false,
                         clientId: null,
                         clientState: state.clientState,
                         onSelected: (value) {
                           viewModel.onChanged(schedule.rebuild(
                               (b) => b..parameters.clients.add(value.id)));
-                          print('## SELECTED: $value');
+                          setState(() {
+                            _clientClearedAt = DateTime.now().toIso8601String();
+                          });
                         }),
+                    SizedBox(height: 20),
+                    if (parameters.clients.isEmpty)
+                      HelpText(localization.allClients),
                     for (var clientId in parameters.clients)
                       ListTile(
                         title: Text(clientId),
+                        trailing: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            viewModel.onChanged(schedule.rebuild(
+                                (b) => b..parameters.clients.remove(clientId)));
+                          },
+                        ),
                       ),
                   ],
                 )

@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientPicker extends StatelessWidget {
   const ClientPicker({
+    Key key,
     @required this.clientId,
     @required this.clientState,
     @required this.onSelected,
@@ -24,7 +25,7 @@ class ClientPicker extends StatelessWidget {
     this.autofocus,
     this.excludeIds = const [],
     this.isRequired = true,
-  });
+  }) : super(key: key);
 
   final String clientId;
   final ClientState clientState;
