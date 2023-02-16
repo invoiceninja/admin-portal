@@ -106,6 +106,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                   isLast: schedule.template.isEmpty,
                   children: <Widget>[
                     DecoratedFormField(
+                      autofocus: true,
                       keyboardType: TextInputType.text,
                       controller: _nameController,
                       label: localization.name,
