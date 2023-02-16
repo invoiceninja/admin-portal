@@ -96,8 +96,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
         viewModel.onSavePressed(context);
       },
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -239,7 +240,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                 )
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }
