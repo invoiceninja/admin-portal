@@ -73,6 +73,12 @@ abstract class ScheduleEntity extends Object
 
   ScheduleEntity._();
 
+  static const TEMPLATE_EMAIL_STATEMENT = 'client_statement';
+
+  static const TEMPLATES = [
+    TEMPLATE_EMAIL_STATEMENT,
+  ];
+
   @override
   @memoized
   int get hashCode;
@@ -162,7 +168,7 @@ abstract class ScheduleEntity extends Object
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => name;
 
   @override
   double get listDisplayAmount => null;

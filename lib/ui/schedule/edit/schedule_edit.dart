@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -118,10 +119,10 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           viewModel.onChanged(
                               schedule.rebuild((b) => b..template = value));
                         },
-                        items: kScheduleTemplates.entries
+                        items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
-                                  value: entry.key,
-                                  child: Text(localization.lookup(entry.value)),
+                                  value: entry,
+                                  child: Text(localization.lookup(entry)),
                                 ))
                             .toList()),
                     DatePicker(
