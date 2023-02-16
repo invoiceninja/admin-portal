@@ -139,72 +139,73 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             .toList()),
                   ],
                 ),
+                FormCard(children: [
+                  DatePicker(
+                    labelText: localization.nextSendDate,
+                    onSelected: (date, _) {
+                      viewModel.onChanged(
+                          schedule.rebuild((b) => b..nextRun = date));
+                    },
+                    selectedDate: schedule.nextRun,
+                    firstDate: DateTime.now(),
+                  ),
+                  AppDropdownButton<DateRange>(
+                    labelText: localization.dateRange,
+                    blankValue: null,
+                    value: parameters.dateRange.isNotEmpty
+                        ? DateRange.valueOf(parameters.dateRange)
+                        : null,
+                    onChanged: (dynamic value) {
+                      final updated = schedule.rebuild(
+                          (b) => b..parameters.dateRange = value.toString());
+                      viewModel.onChanged(updated);
+                    },
+                    items: DateRange.values
+                        .map((dateRange) => DropdownMenuItem<DateRange>(
+                              child: Text(
+                                  localization.lookup(dateRange.toString())),
+                              value: dateRange,
+                            ))
+                        .toList(),
+                  ),
+                  AppDropdownButton<String>(
+                    labelText: localization.status,
+                    blankValue: null,
+                    value: parameters.status,
+                    onChanged: (dynamic value) {
+                      viewModel.onChanged(schedule
+                          .rebuild((b) => b..parameters.status = value));
+                    },
+                    items: [
+                      kStatementStatusAll,
+                      kStatementStatusPaid,
+                      kStatementStatusUnpaid,
+                    ]
+                        .map((value) => DropdownMenuItem<String>(
+                              child: Text(localization.lookup(value)),
+                              value: value,
+                            ))
+                        .toList(),
+                  ),
+                  SizedBox(height: 20),
+                  BoolDropdownButton(
+                      label: localization.showAgingTable,
+                      value: parameters.showAgingTable,
+                      onChanged: (value) {
+                        viewModel.onChanged(schedule.rebuild(
+                            (b) => b..parameters.showAgingTable = value));
+                      }),
+                  BoolDropdownButton(
+                      label: localization.showPaymentsTable,
+                      value: parameters.showPaymentsTable,
+                      onChanged: (value) {
+                        viewModel.onChanged(schedule.rebuild(
+                            (b) => b..parameters.showPaymentsTable = value));
+                      }),
+                ]),
                 FormCard(
                   isLast: true,
                   children: [
-                    DatePicker(
-                      labelText: localization.nextSendDate,
-                      onSelected: (date, _) {
-                        viewModel.onChanged(
-                            schedule.rebuild((b) => b..nextRun = date));
-                      },
-                      selectedDate: schedule.nextRun,
-                      firstDate: DateTime.now(),
-                    ),
-                    AppDropdownButton<DateRange>(
-                      labelText: localization.dateRange,
-                      blankValue: null,
-                      value: parameters.dateRange.isNotEmpty
-                          ? DateRange.valueOf(parameters.dateRange)
-                          : null,
-                      onChanged: (dynamic value) {
-                        final updated = schedule.rebuild(
-                            (b) => b..parameters.dateRange = value.toString());
-                        viewModel.onChanged(updated);
-                      },
-                      items: DateRange.values
-                          .map((dateRange) => DropdownMenuItem<DateRange>(
-                                child: Text(
-                                    localization.lookup(dateRange.toString())),
-                                value: dateRange,
-                              ))
-                          .toList(),
-                    ),
-                    AppDropdownButton<String>(
-                      labelText: localization.status,
-                      blankValue: null,
-                      value: parameters.status,
-                      onChanged: (dynamic value) {
-                        viewModel.onChanged(schedule
-                            .rebuild((b) => b..parameters.status = value));
-                      },
-                      items: [
-                        kStatementStatusAll,
-                        kStatementStatusPaid,
-                        kStatementStatusUnpaid,
-                      ]
-                          .map((value) => DropdownMenuItem<String>(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ))
-                          .toList(),
-                    ),
-                    SizedBox(height: 20),
-                    BoolDropdownButton(
-                        label: localization.showAgingTable,
-                        value: parameters.showAgingTable,
-                        onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.showAgingTable = value));
-                        }),
-                    BoolDropdownButton(
-                        label: localization.showPaymentsTable,
-                        value: parameters.showPaymentsTable,
-                        onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.showPaymentsTable = value));
-                        }),
-                    SizedBox(height: 20),
                     ClientPicker(
                         key: ValueKey('__client_picker_${_clientClearedAt}__'),
                         isRequired: false,
