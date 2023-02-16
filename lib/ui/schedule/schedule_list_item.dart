@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ScheduleListItem extends StatelessWidget {
   const ScheduleListItem({
@@ -35,10 +36,11 @@ class ScheduleListItem extends StatelessWidget {
     final listUIState = scheduleUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final localization = AppLocalization.of(context);
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? schedule.matchesFilterValue(filter)
-        : null;
+        : localization.lookup(schedule.template);
     final subtitle = filterMatch;
 
     return DismissibleEntity(
@@ -70,7 +72,7 @@ class ScheduleListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  '', // name
+                  schedule.name,
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
