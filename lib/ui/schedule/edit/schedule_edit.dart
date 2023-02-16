@@ -102,6 +102,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
+                  isLast: schedule.template.isEmpty,
                   children: <Widget>[
                     DecoratedFormField(
                       keyboardType: TextInputType.text,
@@ -123,6 +124,15 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                   child: Text(localization.lookup(entry.value)),
                                 ))
                             .toList()),
+                    DatePicker(
+                      labelText: localization.nextRun,
+                      onSelected: (date, _) {
+                        viewModel.onChanged(
+                            schedule.rebuild((b) => b..nextRun = date));
+                      },
+                      selectedDate: schedule.nextRun,
+                      firstDate: DateTime.now(),
+                    ),
                     AppDropdownButton<String>(
                         labelText: localization.frequency,
                         value: schedule.frequencyId,
@@ -140,104 +150,99 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             .toList()),
                   ],
                 ),
-                FormCard(children: [
-                  DatePicker(
-                    labelText: localization.nextSendDate,
-                    onSelected: (date, _) {
-                      viewModel.onChanged(
-                          schedule.rebuild((b) => b..nextRun = date));
-                    },
-                    selectedDate: schedule.nextRun,
-                    firstDate: DateTime.now(),
-                  ),
-                  AppDropdownButton<DateRange>(
-                    labelText: localization.dateRange,
-                    blankValue: null,
-                    value: parameters.dateRange.isNotEmpty
-                        ? DateRange.valueOf(parameters.dateRange)
-                        : null,
-                    onChanged: (dynamic value) {
-                      final updated = schedule.rebuild(
-                          (b) => b..parameters.dateRange = value.toString());
-                      viewModel.onChanged(updated);
-                    },
-                    items: DateRange.values
-                        .map((dateRange) => DropdownMenuItem<DateRange>(
-                              child: Text(
-                                  localization.lookup(dateRange.toString())),
-                              value: dateRange,
-                            ))
-                        .toList(),
-                  ),
-                  AppDropdownButton<String>(
-                    labelText: localization.status,
-                    blankValue: null,
-                    value: parameters.status,
-                    onChanged: (dynamic value) {
-                      viewModel.onChanged(schedule
-                          .rebuild((b) => b..parameters.status = value));
-                    },
-                    items: [
-                      kStatementStatusAll,
-                      kStatementStatusPaid,
-                      kStatementStatusUnpaid,
-                    ]
-                        .map((value) => DropdownMenuItem<String>(
-                              child: Text(localization.lookup(value)),
-                              value: value,
-                            ))
-                        .toList(),
-                  ),
-                  SizedBox(height: 20),
-                  BoolDropdownButton(
-                      label: localization.showAgingTable,
-                      value: parameters.showAgingTable,
-                      onChanged: (value) {
-                        viewModel.onChanged(schedule.rebuild(
-                            (b) => b..parameters.showAgingTable = value));
-                      }),
-                  BoolDropdownButton(
-                      label: localization.showPaymentsTable,
-                      value: parameters.showPaymentsTable,
-                      onChanged: (value) {
-                        viewModel.onChanged(schedule.rebuild(
-                            (b) => b..parameters.showPaymentsTable = value));
-                      }),
-                ]),
-                FormCard(
-                  isLast: true,
-                  children: [
-                    ClientPicker(
-                        key: ValueKey('__client_picker_${_clientClearedAt}__'),
-                        isRequired: false,
-                        clientId: null,
-                        clientState: state.clientState,
-                        onSelected: (value) {
-                          if (!parameters.clients.contains(value.id)) {
-                            viewModel.onChanged(schedule.rebuild(
-                                (b) => b..parameters.clients.add(value.id)));
-                          }
-                          setState(() {
-                            _clientClearedAt = DateTime.now().toIso8601String();
-                          });
-                        }),
+                if (schedule.template.isNotEmpty) ...[
+                  FormCard(children: [
+                    AppDropdownButton<DateRange>(
+                      labelText: localization.dateRange,
+                      blankValue: null,
+                      value: parameters.dateRange.isNotEmpty
+                          ? DateRange.valueOf(parameters.dateRange)
+                          : null,
+                      onChanged: (dynamic value) {
+                        final updated = schedule.rebuild(
+                            (b) => b..parameters.dateRange = value.toString());
+                        viewModel.onChanged(updated);
+                      },
+                      items: DateRange.values
+                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                                child: Text(
+                                    localization.lookup(dateRange.toString())),
+                                value: dateRange,
+                              ))
+                          .toList(),
+                    ),
+                    AppDropdownButton<String>(
+                      labelText: localization.status,
+                      blankValue: null,
+                      value: parameters.status,
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(schedule
+                            .rebuild((b) => b..parameters.status = value));
+                      },
+                      items: [
+                        kStatementStatusAll,
+                        kStatementStatusPaid,
+                        kStatementStatusUnpaid,
+                      ]
+                          .map((value) => DropdownMenuItem<String>(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList(),
+                    ),
                     SizedBox(height: 20),
-                    if (parameters.clients.isEmpty)
-                      HelpText(localization.allClients),
-                    for (var clientId in parameters.clients)
-                      ListTile(
-                        title:
-                            Text(state.clientState.get(clientId).displayName),
-                        trailing: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            viewModel.onChanged(schedule.rebuild(
-                                (b) => b..parameters.clients.remove(clientId)));
-                          },
+                    BoolDropdownButton(
+                        label: localization.showAgingTable,
+                        value: parameters.showAgingTable,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.showAgingTable = value));
+                        }),
+                    BoolDropdownButton(
+                        label: localization.showPaymentsTable,
+                        value: parameters.showPaymentsTable,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                              (b) => b..parameters.showPaymentsTable = value));
+                        }),
+                  ]),
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      ClientPicker(
+                          key:
+                              ValueKey('__client_picker_${_clientClearedAt}__'),
+                          isRequired: false,
+                          clientId: null,
+                          clientState: state.clientState,
+                          onSelected: (value) {
+                            if (!parameters.clients.contains(value.id)) {
+                              viewModel.onChanged(schedule.rebuild(
+                                  (b) => b..parameters.clients.add(value.id)));
+                            }
+                            setState(() {
+                              _clientClearedAt =
+                                  DateTime.now().toIso8601String();
+                            });
+                          }),
+                      SizedBox(height: 20),
+                      if (parameters.clients.isEmpty)
+                        HelpText(localization.allClients),
+                      for (var clientId in parameters.clients)
+                        ListTile(
+                          title:
+                              Text(state.clientState.get(clientId).displayName),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              viewModel.onChanged(schedule.rebuild((b) =>
+                                  b..parameters.clients.remove(clientId)));
+                            },
+                          ),
                         ),
-                      ),
-                  ],
-                )
+                    ],
+                  )
+                ],
               ],
             );
           },
