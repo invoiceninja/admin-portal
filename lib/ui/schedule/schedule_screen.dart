@@ -64,6 +64,7 @@ class ScheduleScreen extends StatelessWidget {
         },
         sortFields: [
           ScheduleFields.name,
+          ScheduleFields.template,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterSchedulesByState(state));
