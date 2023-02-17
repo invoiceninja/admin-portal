@@ -19,9 +19,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share/share.dart';
@@ -468,8 +466,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             ..parameters.showAgingTable = _showAging
                             ..parameters.showPaymentsTable = _showPayments
                             ..parameters.status = _status
-                            ..parameters.dateRange =
-                                toSnakeCase(_dateRange.toString())));
+                            ..parameters.dateRange = _dateRange.snakeCase));
                     },
                     child: Text(localization.schedule,
                         style: TextStyle(color: state.headerTextColor))),

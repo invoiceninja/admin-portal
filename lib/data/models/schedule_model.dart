@@ -192,7 +192,7 @@ abstract class ScheduleParameters
   factory ScheduleParameters({String id, bool isEnabled}) {
     return _$ScheduleParameters._(
       clients: BuiltList<String>(),
-      dateRange: DateRange.thisQuarter.toString(),
+      dateRange: DateRange.thisQuarter.snakeCase,
       showAgingTable: true,
       showPaymentsTable: true,
       status: kStatementStatusAll,

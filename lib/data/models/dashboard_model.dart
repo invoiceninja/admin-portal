@@ -27,6 +27,8 @@ class DateRange extends EnumClass {
 
   static BuiltSet<DateRange> get values => _$values;
 
+  String get snakeCase => toSnakeCase(toString());
+
   static DateRange valueOf(String name) => _$valueOf(name);
 }
 

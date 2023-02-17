@@ -193,11 +193,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           ? DateRange.valueOf(toCamelCase(parameters.dateRange))
                           : null,
                       onChanged: (dynamic value) {
-                        viewModel.onChanged(schedule.rebuild(
-                          (b) => b
-                            ..parameters.dateRange =
-                                toSnakeCase(value.toString()),
-                        ));
+                        viewModel.onChanged(schedule.rebuild((b) => b
+                          ..parameters.dateRange =
+                              (value as DateRange).snakeCase));
                       },
                       items: DateRange.values
                           .map((dateRange) => DropdownMenuItem<DateRange>(
