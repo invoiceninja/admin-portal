@@ -59,10 +59,11 @@ abstract class ScheduleEntity extends Object
       isDeleted: false,
       createdAt: 0,
       updatedAt: 0,
+      remainingCycles: -1,
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      frequencyId: '',
+      frequencyId: kFrequencyMonthly,
       isPaused: false,
       name: '',
       nextRun: '',
@@ -95,6 +96,9 @@ abstract class ScheduleEntity extends Object
 
   @BuiltValueField(wireName: 'is_paused')
   bool get isPaused;
+
+  @BuiltValueField(wireName: 'remaining_cycles')
+  int get remainingCycles;
 
   ScheduleParameters get parameters;
 

@@ -142,7 +142,14 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         blankLabel: localization.once,
                         onChanged: (dynamic value) {
                           viewModel.onChanged(
-                              schedule.rebuild((b) => b..frequencyId = value));
+                            schedule.rebuild((b) => b
+                              ..frequencyId = value
+                              ..remainingCycles = value.isEmpty
+                                  ? 1
+                                  : schedule.frequencyId.isEmpty
+                                      ? -1
+                                      : schedule.remainingCycles),
+                          );
                         },
                         items: kFrequencies.entries
                             .map((entry) => DropdownMenuItem(
@@ -150,6 +157,27 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                   child: Text(localization.lookup(entry.value)),
                                 ))
                             .toList()),
+                    if (schedule.frequencyId.isNotEmpty)
+                      AppDropdownButton<int>(
+                        labelText: localization.remainingCycles,
+                        value: schedule.remainingCycles,
+                        blankValue: null,
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                            schedule
+                                .rebuild((b) => b..remainingCycles = value)),
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.endless),
+                            value: -1,
+                          ),
+                          ...List<int>.generate(61, (i) => i)
+                              .map((value) => DropdownMenuItem(
+                                    child: Text('$value'),
+                                    value: value,
+                                  ))
+                              .toList()
+                        ],
+                      ),
                   ],
                 ),
                 if (schedule.template.isNotEmpty) ...[

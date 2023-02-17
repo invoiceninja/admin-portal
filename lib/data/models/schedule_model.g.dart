@@ -135,6 +135,9 @@ class _$ScheduleEntitySerializer
       'is_paused',
       serializers.serialize(object.isPaused,
           specifiedType: const FullType(bool)),
+      'remaining_cycles',
+      serializers.serialize(object.remainingCycles,
+          specifiedType: const FullType(int)),
       'parameters',
       serializers.serialize(object.parameters,
           specifiedType: const FullType(ScheduleParameters)),
@@ -213,6 +216,10 @@ class _$ScheduleEntitySerializer
         case 'is_paused':
           result.isPaused = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'remaining_cycles':
+          result.remainingCycles = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'parameters':
           result.parameters.replace(serializers.deserialize(value,
@@ -529,6 +536,8 @@ class _$ScheduleEntity extends ScheduleEntity {
   @override
   final bool isPaused;
   @override
+  final int remainingCycles;
+  @override
   final ScheduleParameters parameters;
   @override
   final bool isChanged;
@@ -556,6 +565,7 @@ class _$ScheduleEntity extends ScheduleEntity {
       this.nextRun,
       this.template,
       this.isPaused,
+      this.remainingCycles,
       this.parameters,
       this.isChanged,
       this.createdAt,
@@ -574,6 +584,8 @@ class _$ScheduleEntity extends ScheduleEntity {
         template, 'ScheduleEntity', 'template');
     BuiltValueNullFieldError.checkNotNull(
         isPaused, 'ScheduleEntity', 'isPaused');
+    BuiltValueNullFieldError.checkNotNull(
+        remainingCycles, 'ScheduleEntity', 'remainingCycles');
     BuiltValueNullFieldError.checkNotNull(
         parameters, 'ScheduleEntity', 'parameters');
     BuiltValueNullFieldError.checkNotNull(
@@ -602,6 +614,7 @@ class _$ScheduleEntity extends ScheduleEntity {
         nextRun == other.nextRun &&
         template == other.template &&
         isPaused == other.isPaused &&
+        remainingCycles == other.remainingCycles &&
         parameters == other.parameters &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -628,11 +641,16 @@ class _$ScheduleEntity extends ScheduleEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, name.hashCode),
-                                                        frequencyId.hashCode),
-                                                    nextRun.hashCode),
-                                                template.hashCode),
-                                            isPaused.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                name.hashCode),
+                                                            frequencyId
+                                                                .hashCode),
+                                                        nextRun.hashCode),
+                                                    template.hashCode),
+                                                isPaused.hashCode),
+                                            remainingCycles.hashCode),
                                         parameters.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -652,6 +670,7 @@ class _$ScheduleEntity extends ScheduleEntity {
           ..add('nextRun', nextRun)
           ..add('template', template)
           ..add('isPaused', isPaused)
+          ..add('remainingCycles', remainingCycles)
           ..add('parameters', parameters)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -688,6 +707,11 @@ class ScheduleEntityBuilder
   bool _isPaused;
   bool get isPaused => _$this._isPaused;
   set isPaused(bool isPaused) => _$this._isPaused = isPaused;
+
+  int _remainingCycles;
+  int get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int remainingCycles) =>
+      _$this._remainingCycles = remainingCycles;
 
   ScheduleParametersBuilder _parameters;
   ScheduleParametersBuilder get parameters =>
@@ -739,6 +763,7 @@ class ScheduleEntityBuilder
       _nextRun = $v.nextRun;
       _template = $v.template;
       _isPaused = $v.isPaused;
+      _remainingCycles = $v.remainingCycles;
       _parameters = $v.parameters.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -780,14 +805,16 @@ class ScheduleEntityBuilder
                   template, 'ScheduleEntity', 'template'),
               isPaused: BuiltValueNullFieldError.checkNotNull(
                   isPaused, 'ScheduleEntity', 'isPaused'),
+              remainingCycles: BuiltValueNullFieldError.checkNotNull(
+                  remainingCycles, 'ScheduleEntity', 'remainingCycles'),
               parameters: parameters.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(
                   createdAt, 'ScheduleEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(
                   updatedAt, 'ScheduleEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(
-                  archivedAt, 'ScheduleEntity', 'archivedAt'),
+              archivedAt:
+                  BuiltValueNullFieldError.checkNotNull(archivedAt, 'ScheduleEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
