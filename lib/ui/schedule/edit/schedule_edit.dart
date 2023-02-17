@@ -248,6 +248,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           isRequired: false,
                           clientId: null,
                           clientState: state.clientState,
+                          excludeIds: schedule.parameters.clients.toList(),
                           onSelected: (value) {
                             if (!parameters.clients.contains(value.id)) {
                               viewModel.onChanged(schedule.rebuild(
