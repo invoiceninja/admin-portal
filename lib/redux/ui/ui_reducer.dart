@@ -52,6 +52,8 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/schedule/schedule_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_reducer.dart';
 
 import 'package:invoiceninja_flutter/redux/transaction/transaction_reducer.dart';
@@ -85,6 +87,7 @@ UIState uiReducer(UIState state, dynamic action) {
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
+    ..scheduleUIState.replace(scheduleUIReducer(state.scheduleUIState, action))
     ..transactionRuleUIState
         .replace(transactionRuleUIReducer(state.transactionRuleUIState, action))
     ..transactionUIState

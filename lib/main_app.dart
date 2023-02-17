@@ -98,6 +98,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/schedule/schedule_screen.dart';
+import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/schedule/view/schedule_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/schedule/schedule_screen_vm.dart';
+
 import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/edit/transaction_rule_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/view/transaction_rule_view_vm.dart';
@@ -533,6 +538,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               QuoteEmailScreen(),
                           QuotePdfScreen.route: (context) => QuotePdfScreen(),
                           // STARTER: routes - do not remove comment
+                          ScheduleScreen.route: (context) =>
+                              ScheduleScreenBuilder(),
+                          ScheduleViewScreen.route: (context) =>
+                              ScheduleViewScreen(),
+                          ScheduleEditScreen.route: (context) =>
+                              ScheduleEditScreen(),
                           TransactionRuleScreen.route: (context) =>
                               TransactionRuleScreenBuilder(),
                           TransactionRuleViewScreen.route: (context) =>

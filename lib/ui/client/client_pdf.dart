@@ -12,7 +12,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -58,15 +61,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   //int _pageCount = 1;
   //int _currentPage = 1;
 
-  static const STATUS_ALL = 'all';
-  static const STATUS_PAID = 'paid';
-  static const STATUS_UNPAID = 'unpaid';
-
   DateRange _dateRange = DateRange.thisQuarter;
   String _startDate =
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
   String _endDate = convertDateTimeToSqlDate();
-  String _status = STATUS_ALL;
+  String _status = kStatementStatusAll;
   bool _showPayments = true;
   bool _showAging = true;
 
@@ -352,9 +351,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             loadPDF();
                           },
                           items: [
-                            STATUS_ALL,
-                            STATUS_PAID,
-                            STATUS_UNPAID,
+                            kStatementStatusAll,
+                            kStatementStatusPaid,
+                            kStatementStatusUnpaid,
                           ]
                               .map((value) => DropdownMenuItem<String>(
                                     child: Text(localization.lookup(value)),
@@ -440,6 +439,37 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               callback: (_) => loadPDF(sendEmail: true));
                         },
                 ),
+                TextButton(
+                    onPressed: () {
+                      if (!state.isProPlan) {
+                        showMessageDialog(
+                            context: context,
+                            message: localization.upgradeToPaidPlanToSchedule,
+                            secondaryActions: [
+                              TextButton(
+                                  onPressed: () {
+                                    store.dispatch(ViewSettings(
+                                        section: kSettingsAccountManagement));
+                                    Navigator.of(context).pop();
+                                  },
+                                  child:
+                                      Text(localization.upgrade.toUpperCase())),
+                            ]);
+                        return;
+                      }
+
+                      createEntity(
+                          context: context,
+                          entity: ScheduleEntity().rebuild((b) => b
+                            ..template = ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+                            ..parameters.clients.add(client.id)
+                            ..parameters.showAgingTable = _showAging
+                            ..parameters.showPaymentsTable = _showPayments
+                            ..parameters.status = _status
+                            ..parameters.dateRange = _dateRange.snakeCase));
+                    },
+                    child: Text(localization.schedule,
+                        style: TextStyle(color: state.headerTextColor))),
                 if (isDesktop(context))
                   TextButton(
                     child: Text(localization.close,

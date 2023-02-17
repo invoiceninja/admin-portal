@@ -13,6 +13,9 @@ import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dar
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/schedule/schedule_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/schedule/view/schedule_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/transaction/transaction_screen.dart';
@@ -962,6 +965,18 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsTransactionRulesEdit:
         screen = TransactionRuleEditScreen();
         break;
+      case kSettingsSchedules:
+        screen = ScheduleScreenBuilder();
+        break;
+      case kSettingsSchedulesView:
+        screen = ScheduleViewScreen();
+        break;
+      case kSettingsSchedulesEdit:
+        screen = ScheduleEditScreen();
+        break;
+      default:
+        print(
+            '## Error: main screen settings route ${uiState.subRoute} not defined');
     }
 
     return Row(children: <Widget>[

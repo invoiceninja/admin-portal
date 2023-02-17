@@ -65,6 +65,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/schedule/schedule_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
@@ -392,6 +394,10 @@ void viewEntitiesByType({
             action = ViewGroupList();
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.schedule:
+            action = ViewScheduleList();
+            break;
+
           case EntityType.transactionRule:
             action = ViewTransactionRuleList();
             break;
@@ -618,6 +624,13 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.schedule:
+            store.dispatch(ViewSchedule(
+              scheduleId: entityId,
+              force: force,
+            ));
+            break;
+
           case EntityType.transactionRule:
             store.dispatch(ViewTransactionRule(
               transactionRuleId: entityId,
@@ -871,6 +884,13 @@ void createEntityByType({
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.schedule:
+            store.dispatch(EditSchedule(
+              force: force,
+              schedule: ScheduleEntity(state: state),
+            ));
+            break;
+
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
               force: force,
@@ -1108,6 +1128,14 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.schedule:
+            store.dispatch(EditSchedule(
+              schedule: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
               transactionRule: entity,
@@ -1329,6 +1357,11 @@ void editEntity({
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.schedule:
+            store
+                .dispatch(EditSchedule(schedule: entity, completer: completer));
+            break;
+
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
                 transactionRule: entity, completer: completer));
@@ -1522,6 +1555,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.schedule:
+      handleScheduleAction(context, entities, action);
+      break;
+
     case EntityType.transactionRule:
       handleTransactionRuleAction(context, entities, action);
       break;

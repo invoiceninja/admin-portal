@@ -528,6 +528,9 @@ const String kSettingsBankAccountsEdit = 'bank_accounts/edit';
 const String kSettingsTransactionRules = 'transaction_rules';
 const String kSettingsTransactionRulesView = 'transaction_rules/view';
 const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
+const String kSettingsSchedules = 'schedules';
+const String kSettingsSchedulesView = 'schedules/view';
+const String kSettingsSchedulesEdit = 'schedules/edit';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,
@@ -792,6 +795,10 @@ const kMonthsOfTheYear = {
 };
 
 const kFrequencyMonthly = '5';
+
+const kStatementStatusAll = 'all';
+const kStatementStatusPaid = 'paid';
+const kStatementStatusUnpaid = 'unpaid';
 
 const kFrequencies = {
   '1': 'freq_daily',

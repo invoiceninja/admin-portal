@@ -156,6 +156,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(RegistrationFieldEntity.serializer)
       ..add(ReportSettingsEntity.serializer)
       ..add(ReportsUIState.serializer)
+      ..add(ScheduleEntity.serializer)
+      ..add(ScheduleItemResponse.serializer)
+      ..add(ScheduleListResponse.serializer)
+      ..add(ScheduleParameters.serializer)
+      ..add(ScheduleState.serializer)
+      ..add(ScheduleUIState.serializer)
       ..add(SettingsEntity.serializer)
       ..add(SettingsUIState.serializer)
       ..add(SizeEntity.serializer)
@@ -459,6 +465,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ScheduleEntity)]),
+          () => new ListBuilder<ScheduleEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TokenEntity)]),
           () => new ListBuilder<TokenEntity>())
       ..addBuilderFactory(
@@ -537,8 +546,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ProjectEntity)]),
           () => new ListBuilder<ProjectEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ScheduleEntity)]),
+          () => new ListBuilder<ScheduleEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SizeEntity)]),
           () => new ListBuilder<SizeEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
@@ -862,6 +877,13 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(ProjectEntity)]),
           () => new MapBuilder<String, ProjectEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ScheduleEntity)]),
+          () => new MapBuilder<String, ScheduleEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

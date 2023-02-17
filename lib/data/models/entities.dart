@@ -42,6 +42,7 @@ class EntityType extends EnumClass {
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
   // STARTER: entity type - do not remove comment
+  static const EntityType schedule = _$schedule;
   static const EntityType transactionRule = _$transactionRule;
   static const EntityType transaction = _$transaction;
   static const EntityType bankAccount = _$bankAccount;
@@ -90,6 +91,7 @@ class EntityType extends EnumClass {
         EntityType.subscription,
         EntityType.bankAccount,
         EntityType.transactionRule,
+        EntityType.schedule,
       ].contains(this);
 
   List<EntityType> get relatedTypes {

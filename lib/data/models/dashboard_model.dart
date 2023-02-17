@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'dashboard_model.g.dart';
 
@@ -25,6 +26,8 @@ class DateRange extends EnumClass {
   static const DateRange custom = _$custom;
 
   static BuiltSet<DateRange> get values => _$values;
+
+  String get snakeCase => toSnakeCase(toString());
 
   static DateRange valueOf(String name) => _$valueOf(name);
 }

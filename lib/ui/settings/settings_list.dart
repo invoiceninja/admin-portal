@@ -239,11 +239,16 @@ class _SettingsListState extends State<SettingsList> {
                 viewModel: viewModel,
               ),
                */
-            if (showAll)
+            if (showAll) ...[
+              SettingsListTile(
+                section: kSettingsSchedules,
+                viewModel: widget.viewModel,
+              ),
               SettingsListTile(
                 section: kSettingsUserManagement,
                 viewModel: widget.viewModel,
               ),
+            ],
           ],
         ),
         if (state.isLoading) LinearProgressIndicator(),
@@ -616,6 +621,11 @@ class SettingsSearch extends StatelessWidget {
       kSettingsSubscriptions: [
         [
           'subscriptions',
+        ],
+      ],
+      kSettingsSchedules: [
+        [
+          'schedules#2023-02-15',
         ],
       ],
       kSettingsUserManagement: [
