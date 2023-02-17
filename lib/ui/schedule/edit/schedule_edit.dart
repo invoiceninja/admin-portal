@@ -198,6 +198,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               (value as DateRange).snakeCase));
                       },
                       items: DateRange.values
+                          .where((value) => value != DateRange.custom)
                           .map((dateRange) => DropdownMenuItem<DateRange>(
                                 child: Text(
                                     localization.lookup(dateRange.toString())),
