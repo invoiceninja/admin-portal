@@ -75,6 +75,16 @@ class _ScheduleEditState extends State<ScheduleEdit> {
     });
   }
 
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -87,15 +97,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
       title:
           schedule.isNew ? localization.newSchedule : localization.editSchedule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
+      onSavePressed: (context) => _onSavePressed(),
       body: Form(
         key: _formKey,
         child: Builder(
@@ -110,7 +112,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       keyboardType: TextInputType.text,
                       controller: _nameController,
                       label: localization.name,
-                      onSavePressed: viewModel.onSavePressed,
+                      onSavePressed: (context) => _onSavePressed(),
                       validator: (value) =>
                           value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
