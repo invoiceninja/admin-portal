@@ -42,8 +42,12 @@ class _ScheduleViewState extends State<ScheduleView> {
             localization.nextRun: formatDate(schedule.nextRun, context),
             localization.frequency:
                 localization.lookup(kFrequencies[schedule.frequencyId]),
-            if (schedule.template ==
-                ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) ...{
+            localization.remainingCycles: schedule.remainingCycles == -1
+                ? localization.endless
+                : '${schedule.remainingCycles}',
+          }),
+          if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
+            FieldGrid({
               localization.clients: parameters.clients.isEmpty
                   ? localization.allClients
                   : parameters.clients.length == 1
@@ -52,15 +56,14 @@ class _ScheduleViewState extends State<ScheduleView> {
                           .displayName
                       : '${parameters.clients.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
-              localization.status: localization.lookup(parameters.status),
               localization.showAgingTable: parameters.showAgingTable
                   ? localization.yes
                   : localization.no,
               localization.showPaymentsTable: parameters.showPaymentsTable
                   ? localization.yes
                   : localization.no,
-            }
-          })
+              localization.status: localization.lookup(parameters.status),
+            })
         ],
       ),
     );

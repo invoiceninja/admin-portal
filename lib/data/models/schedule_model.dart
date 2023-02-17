@@ -74,7 +74,7 @@ abstract class ScheduleEntity extends Object
 
   ScheduleEntity._();
 
-  static const TEMPLATE_EMAIL_STATEMENT = 'client_statement';
+  static const TEMPLATE_EMAIL_STATEMENT = 'email_statement';
 
   static const TEMPLATES = [
     TEMPLATE_EMAIL_STATEMENT,

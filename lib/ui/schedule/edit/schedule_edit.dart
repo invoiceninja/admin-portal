@@ -110,6 +110,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       keyboardType: TextInputType.text,
                       controller: _nameController,
                       label: localization.name,
+                      onSavePressed: viewModel.onSavePressed,
                       validator: (value) =>
                           value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
