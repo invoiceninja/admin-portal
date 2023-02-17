@@ -153,7 +153,8 @@ abstract class ScheduleEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
-        //
+        name,
+        template,
       ],
       needle: filter,
     );
@@ -163,7 +164,7 @@ abstract class ScheduleEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        //
+        template,
       ],
       needle: filter,
     );
