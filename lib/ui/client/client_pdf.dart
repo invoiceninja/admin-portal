@@ -13,11 +13,15 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share/share.dart';
@@ -437,6 +441,38 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               callback: (_) => loadPDF(sendEmail: true));
                         },
                 ),
+                TextButton(
+                    onPressed: () {
+                      if (!state.isProPlan) {
+                        showMessageDialog(
+                            context: context,
+                            message: localization.upgradeToPaidPlanToSchedule,
+                            secondaryActions: [
+                              TextButton(
+                                  onPressed: () {
+                                    store.dispatch(ViewSettings(
+                                        section: kSettingsAccountManagement));
+                                    Navigator.of(context).pop();
+                                  },
+                                  child:
+                                      Text(localization.upgrade.toUpperCase())),
+                            ]);
+                        return;
+                      }
+
+                      createEntity(
+                          context: context,
+                          entity: ScheduleEntity().rebuild((b) => b
+                            ..template = ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+                            ..parameters.clients.add(client.id)
+                            ..parameters.showAgingTable = _showAging
+                            ..parameters.showPaymentsTable = _showPayments
+                            ..parameters.status = _status
+                            ..parameters.dateRange =
+                                toSnakeCase(_dateRange.toString())));
+                    },
+                    child: Text(localization.schedule,
+                        style: TextStyle(color: state.headerTextColor))),
                 if (isDesktop(context))
                   TextButton(
                     child: Text(localization.close,

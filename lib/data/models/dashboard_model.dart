@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'dashboard_model.g.dart';
 

@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
   const ScheduleEdit({
@@ -189,12 +190,14 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       labelText: localization.dateRange,
                       blankValue: null,
                       value: parameters.dateRange.isNotEmpty
-                          ? DateRange.valueOf(parameters.dateRange)
+                          ? DateRange.valueOf(toCamelCase(parameters.dateRange))
                           : null,
                       onChanged: (dynamic value) {
-                        final updated = schedule.rebuild(
-                            (b) => b..parameters.dateRange = value.toString());
-                        viewModel.onChanged(updated);
+                        viewModel.onChanged(schedule.rebuild(
+                          (b) => b
+                            ..parameters.dateRange =
+                                toSnakeCase(value.toString()),
+                        ));
                       },
                       items: DateRange.values
                           .map((dateRange) => DropdownMenuItem<DateRange>(
