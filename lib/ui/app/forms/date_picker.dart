@@ -30,7 +30,7 @@ class DatePicker extends StatefulWidget {
   final String labelText;
   final String selectedDate;
   final Function(String, bool) onSelected;
-  final Function validator;
+  final Function(String) validator;
   final bool autoValidate;
   final bool allowClearing;
   final String message;
