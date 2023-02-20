@@ -328,7 +328,9 @@ List<String> _getRoutes(AppState state) {
         }
       }
 
-      route += '/' + part;
+      if (part != 'pdf') {
+        route += '/' + part;
+      }
     }
 
     routes.add(route);
