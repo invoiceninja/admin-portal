@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/utils/enums.dart';
 
 enum ExpenseReportFields {
   id,
+  number,
   amount,
   net_amount,
   tax_amount,
@@ -139,6 +140,9 @@ ReportResult expenseReport(
       switch (column) {
         case ExpenseReportFields.id:
           value = expense.id;
+          break;
+        case ExpenseReportFields.number:
+          value = expense.number;
           break;
         case ExpenseReportFields.amount:
           value = expense.grossAmount;
