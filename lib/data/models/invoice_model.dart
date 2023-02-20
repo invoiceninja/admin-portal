@@ -227,7 +227,7 @@ abstract class InvoiceEntity extends Object
                   .map((contact) =>
                       InvitationEntity(vendorContactId: contact.id))
                   .toList())
-              : BuiltList<InvitationEntity>(),
+              : BuiltList(<InvitationEntity>[InvitationEntity()]),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
