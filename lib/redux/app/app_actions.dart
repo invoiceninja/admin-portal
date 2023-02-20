@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
+import 'package:invoiceninja_flutter/ui/schedule/schedule_screen.dart';
+import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -1503,9 +1505,15 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
         case EntityType.bankAccount:
           store.dispatch(UpdateCurrentRoute(BankAccountScreen.route));
           break;
+        case EntityType.transactionRule:
+          store.dispatch(UpdateCurrentRoute(TransactionRuleScreen.route));
+          break;
+        case EntityType.schedule:
+          store.dispatch(UpdateCurrentRoute(ScheduleScreen.route));
+          break;
         default:
           print(
-              'ERROR: ${entities.first.entityType} entity type not supported');
+              '## ERROR: ${entities.first.entityType} entity type not supported');
       }
     }
   }
