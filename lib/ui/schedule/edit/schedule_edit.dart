@@ -118,7 +118,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
                     AppDropdownButton<String>(
-                        labelText: localization.template,
+                        labelText: localization.action,
                         value: schedule.template,
                         onChanged: (dynamic value) {
                           viewModel.onChanged(

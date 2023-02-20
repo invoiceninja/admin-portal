@@ -67,7 +67,7 @@ abstract class ScheduleEntity extends Object
       isPaused: false,
       name: '',
       nextRun: '',
-      template: '',
+      template: TEMPLATE_EMAIL_STATEMENT,
       parameters: ScheduleParameters(),
     );
   }
