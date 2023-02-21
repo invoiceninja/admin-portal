@@ -1209,7 +1209,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     final url = state.credentials.url + '/live_design';
 
     final request = PdfPreviewRequest(
-      entity: widget.entityType,
+      entityType: widget.entityType.apiValue,
       settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings,
       groupId: settingsUIState.group.id ?? '',

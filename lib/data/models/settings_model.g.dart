@@ -2345,11 +2345,8 @@ class _$PdfPreviewRequestSerializer
   Iterable<Object> serialize(Serializers serializers, PdfPreviewRequest object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'entity',
-      serializers.serialize(object.entity,
-          specifiedType: const FullType(EntityType)),
-      'entity_id',
-      serializers.serialize(object.entityId,
+      'entity_type',
+      serializers.serialize(object.entityType,
           specifiedType: const FullType(String)),
       'settings_type',
       serializers.serialize(object.settingsType,
@@ -2380,12 +2377,8 @@ class _$PdfPreviewRequestSerializer
       iterator.moveNext();
       final Object value = iterator.current;
       switch (key) {
-        case 'entity':
-          result.entity = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'entity_id':
-          result.entityId = serializers.deserialize(value,
+        case 'entity_type':
+          result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'settings_type':
@@ -5032,9 +5025,7 @@ class SettingsEntityBuilder
 
 class _$PdfPreviewRequest extends PdfPreviewRequest {
   @override
-  final EntityType entity;
-  @override
-  final String entityId;
+  final String entityType;
   @override
   final String settingsType;
   @override
@@ -5049,17 +5040,14 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
       (new PdfPreviewRequestBuilder()..update(updates)).build();
 
   _$PdfPreviewRequest._(
-      {this.entity,
-      this.entityId,
+      {this.entityType,
       this.settingsType,
       this.settings,
       this.groupId,
       this.clientId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        entity, 'PdfPreviewRequest', 'entity');
-    BuiltValueNullFieldError.checkNotNull(
-        entityId, 'PdfPreviewRequest', 'entityId');
+        entityType, 'PdfPreviewRequest', 'entityType');
     BuiltValueNullFieldError.checkNotNull(
         settingsType, 'PdfPreviewRequest', 'settingsType');
     BuiltValueNullFieldError.checkNotNull(
@@ -5082,8 +5070,7 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is PdfPreviewRequest &&
-        entity == other.entity &&
-        entityId == other.entityId &&
+        entityType == other.entityType &&
         settingsType == other.settingsType &&
         settings == other.settings &&
         groupId == other.groupId &&
@@ -5095,9 +5082,7 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc(
-                $jc($jc($jc(0, entity.hashCode), entityId.hashCode),
-                    settingsType.hashCode),
+            $jc($jc($jc(0, entityType.hashCode), settingsType.hashCode),
                 settings.hashCode),
             groupId.hashCode),
         clientId.hashCode));
@@ -5106,8 +5091,7 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PdfPreviewRequest')
-          ..add('entity', entity)
-          ..add('entityId', entityId)
+          ..add('entityType', entityType)
           ..add('settingsType', settingsType)
           ..add('settings', settings)
           ..add('groupId', groupId)
@@ -5120,13 +5104,9 @@ class PdfPreviewRequestBuilder
     implements Builder<PdfPreviewRequest, PdfPreviewRequestBuilder> {
   _$PdfPreviewRequest _$v;
 
-  EntityType _entity;
-  EntityType get entity => _$this._entity;
-  set entity(EntityType entity) => _$this._entity = entity;
-
-  String _entityId;
-  String get entityId => _$this._entityId;
-  set entityId(String entityId) => _$this._entityId = entityId;
+  String _entityType;
+  String get entityType => _$this._entityType;
+  set entityType(String entityType) => _$this._entityType = entityType;
 
   String _settingsType;
   String get settingsType => _$this._settingsType;
@@ -5150,8 +5130,7 @@ class PdfPreviewRequestBuilder
   PdfPreviewRequestBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _entity = $v.entity;
-      _entityId = $v.entityId;
+      _entityType = $v.entityType;
       _settingsType = $v.settingsType;
       _settings = $v.settings.toBuilder();
       _groupId = $v.groupId;
@@ -5178,10 +5157,8 @@ class PdfPreviewRequestBuilder
     try {
       _$result = _$v ??
           new _$PdfPreviewRequest._(
-              entity: BuiltValueNullFieldError.checkNotNull(
-                  entity, 'PdfPreviewRequest', 'entity'),
-              entityId: BuiltValueNullFieldError.checkNotNull(
-                  entityId, 'PdfPreviewRequest', 'entityId'),
+              entityType: BuiltValueNullFieldError.checkNotNull(
+                  entityType, 'PdfPreviewRequest', 'entityType'),
               settingsType: BuiltValueNullFieldError.checkNotNull(
                   settingsType, 'PdfPreviewRequest', 'settingsType'),
               settings: settings.build(),

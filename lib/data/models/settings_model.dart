@@ -1114,16 +1114,14 @@ abstract class SettingsEntity
 abstract class PdfPreviewRequest
     implements Built<PdfPreviewRequest, PdfPreviewRequestBuilder> {
   factory PdfPreviewRequest({
-    EntityType entity,
-    String entityId,
+    String entityType,
     String settingsType,
     SettingsEntity settings,
     String groupId,
     String clientId,
   }) {
     return _$PdfPreviewRequest._(
-      entity: entity,
-      entityId: entityId,
+      entityType: entityType,
       settingsType: settingsType,
       settings: settings,
       groupId: groupId,
@@ -1137,10 +1135,8 @@ abstract class PdfPreviewRequest
   @memoized
   int get hashCode;
 
-  EntityType get entity;
-
-  @BuiltValueField(wireName: 'entity_id')
-  String get entityId;
+  @BuiltValueField(wireName: 'entity_type')
+  String get entityType;
 
   @BuiltValueField(wireName: 'settings_type')
   String get settingsType;
