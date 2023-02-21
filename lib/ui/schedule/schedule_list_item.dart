@@ -1,4 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
@@ -40,7 +41,9 @@ class ScheduleListItem extends StatelessWidget {
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? schedule.matchesFilterValue(filter)
-        : localization.lookup(schedule.template);
+        : localization.lookup(schedule.template) +
+            ' • ' +
+            localization.lookup(kFrequencies[schedule.frequencyId]);
     final subtitle = filterMatch;
 
     return DismissibleEntity(
