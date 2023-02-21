@@ -118,7 +118,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           value.isEmpty ? localization.pleaseEnterAName : null,
                     ),
                     AppDropdownButton<String>(
-                        labelText: localization.template,
+                        labelText: localization.action,
                         value: schedule.template,
                         onChanged: (dynamic value) {
                           viewModel.onChanged(
@@ -138,6 +138,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       },
                       selectedDate: schedule.nextRun,
                       firstDate: DateTime.now(),
+                      validator: (value) => value.trim().isEmpty
+                          ? localization.pleaseEnterAValue
+                          : null,
                     ),
                     AppDropdownButton<String>(
                         labelText: localization.frequency,
