@@ -76,7 +76,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   TabController _optionTabController;
   TabController _tableTabController;
 
-  bool _showTasksTable = false;
+  bool _selectTasksTable = false;
   bool _showSaveDefault = false;
   FocusNode _focusNode;
 
@@ -105,7 +105,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     super.initState();
 
     final invoice = widget.viewModel.invoice;
-    _showTasksTable = invoice.hasTasks && !invoice.hasProducts;
+    _selectTasksTable = invoice.hasTasks && !invoice.hasProducts;
     _showSaveDefault = invoice.isInvoice ||
         invoice.isQuote ||
         invoice.isCredit ||
@@ -114,7 +114,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _focusNode = FocusScopeNode();
     _optionTabController = TabController(vsync: this, length: 6);
     _tableTabController = TabController(
-        vsync: this, length: 2, initialIndex: _showTasksTable ? 1 : 0);
+        vsync: this, length: 2, initialIndex: _selectTasksTable ? 1 : 0);
   }
 
   @override
@@ -236,6 +236,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         .where((item) =>
             !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
+
+    final showTasksTable =
+        invoice.hasTasks || (company.showTasksTable ?? false);
 
     final settings = getClientSettings(state, client);
     final terms = entityType == EntityType.quote
@@ -586,15 +589,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                   ],
                 ),
-                if (invoice.isInvoice &&
-                    (invoice.hasTasks ||
-                        invoice.lineItems.any((item) => item.isTask) ||
-                        (company.showTasksTable ?? false)))
+                if (invoice.isInvoice && showTasksTable)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: AppTabBar(
                       onTap: (index) {
-                        setState(() => _showTasksTable = index == 1);
+                        setState(() => _selectTasksTable = index == 1);
                       },
                       controller: _tableTabController,
                       tabs: [
@@ -628,7 +628,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 if (entityType == EntityType.credit)
                   CreditEditItemsScreen(
                     viewModel: widget.entityViewModel,
-                    isTasks: _showTasksTable,
+                    isTasks: _selectTasksTable && showTasksTable,
                   )
                 else if (entityType == EntityType.quote)
                   QuoteEditItemsScreen(
@@ -637,12 +637,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 else if (entityType == EntityType.invoice)
                   InvoiceEditItemsScreen(
                     viewModel: widget.entityViewModel,
-                    isTasks: _showTasksTable,
+                    isTasks: _selectTasksTable && showTasksTable,
                   )
                 else if (entityType == EntityType.recurringInvoice)
                   RecurringInvoiceEditItemsScreen(
                     viewModel: widget.entityViewModel,
-                    isTasks: _showTasksTable,
+                    isTasks: _selectTasksTable,
                   )
                 else if (entityType == EntityType.purchaseOrder)
                   PurchaseOrderEditItemsScreen(
