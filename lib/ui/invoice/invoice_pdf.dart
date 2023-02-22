@@ -73,13 +73,20 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   }
 
   void loadPdf() {
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+
+    if (invoice.invitations.isEmpty) {
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
 
     _loadPDF(
       context,
-      widget.viewModel.invoice,
+      invoice,
       _isDeliveryNote,
       _activityId,
     ).then((response) async {
