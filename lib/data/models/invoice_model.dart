@@ -1671,7 +1671,10 @@ abstract class InvoiceItemEntity
 
     return calculateTaxAmount(taxRate1) +
         calculateTaxAmount(taxRate2) +
-        calculateTaxAmount(taxRate3);
+        calculateTaxAmount(taxRate3) +
+        calculateTaxAmount(invoice.taxRate1) +
+        calculateTaxAmount(invoice.taxRate2) +
+        calculateTaxAmount(invoice.taxRate3);
   }
 
   double netTotal(InvoiceEntity invoice, int precision) =>
