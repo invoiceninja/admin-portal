@@ -72,6 +72,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.initialFirstRowIndex = 0,
     this.onPageChanged,
     this.rowsPerPage = defaultRowsPerPage,
+    this.subtractOneFromCount = false,
     this.availableRowsPerPage = const <int>[
       defaultRowsPerPage,
       defaultRowsPerPage * 2,
@@ -213,6 +214,8 @@ class AppPaginatedDataTable extends StatefulWidget {
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
+
+  final bool subtractOneFromCount;
 
   @override
   AppPaginatedDataTableState createState() => AppPaginatedDataTableState();
@@ -410,7 +413,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         localizations.pageRowsInfoTitle(
           _firstRowIndex + 1,
           _firstRowIndex + widget.rowsPerPage,
-          _rowCount,
+          _rowCount - (widget.subtractOneFromCount ? 1 : 0),
           _rowCountApproximate,
         ),
       ),
