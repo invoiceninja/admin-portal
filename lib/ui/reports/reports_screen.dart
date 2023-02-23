@@ -677,6 +677,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
           padding: const EdgeInsets.all(12),
           child: AppPaginatedDataTable(
             //showFirstLastButtons: true,
+            subtractOneFromCount: true,
             header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
