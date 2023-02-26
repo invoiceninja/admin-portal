@@ -8,12 +8,13 @@ import Foundation
 import in_app_purchase_storekit
 import in_app_review
 import package_info
-import package_info_plus_macos
-import path_provider_macos
+import package_info_plus
+import path_provider_foundation
 import printing
 import screen_retriever
 import sentry_flutter
-import shared_preferences_macos
+import share_plus
+import shared_preferences_foundation
 import sign_in_with_apple
 import smart_auth
 import sqflite
@@ -29,6 +30,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   PrintingPlugin.register(with: registry.registrar(forPlugin: "PrintingPlugin"))
   ScreenRetrieverPlugin.register(with: registry.registrar(forPlugin: "ScreenRetrieverPlugin"))
   SentryFlutterPlugin.register(with: registry.registrar(forPlugin: "SentryFlutterPlugin"))
+  SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   SignInWithApplePlugin.register(with: registry.registrar(forPlugin: "SignInWithApplePlugin"))
   SmartAuthPlugin.register(with: registry.registrar(forPlugin: "SmartAuthPlugin"))

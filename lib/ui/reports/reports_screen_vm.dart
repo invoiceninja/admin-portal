@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-import 'package:share/share.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -51,6 +50,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:share_plus/share_plus.dart';
 import 'credit_report.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -515,7 +515,7 @@ class ReportsScreenVM {
             if (isDesktopOS()) {
               showToast(localization.fileSavedInDownloadsFolder);
             } else {
-              await Share.shareFiles([filePath]);
+              await Share.shareXFiles([XFile(filePath)]);
             }
           }
         });

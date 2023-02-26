@@ -152,10 +152,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
     try {
       authenticated = await LocalAuthentication().authenticate(
-          localizedReason: 'Please authenticate to access the app',
+        localizedReason: 'Please authenticate to access the app',
+        options: const AuthenticationOptions(
           biometricOnly: true,
           useErrorDialogs: true,
-          stickyAuth: false);
+          stickyAuth: false,
+        ),
+      );
     } catch (e) {
       print(e);
     }
@@ -384,6 +387,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       ? LockScreen(onAuthenticatePressed: _authenticate)
                       : InitScreen(),
                   locale: locale,
+                  /*
+                  theme: state.prefState.enableDarkMode
+                      ? ThemeData.dark(useMaterial3: true)
+                      : ThemeData.light(useMaterial3: true),
+                      */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
                           colorScheme: ColorScheme.dark().copyWith(

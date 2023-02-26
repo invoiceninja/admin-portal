@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -282,7 +282,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                     showToast(localization
                                         .fileSavedInDownloadsFolder);
                                   } else {
-                                    await Share.shareFiles([filePath]);
+                                    await Share.shareXFiles([XFile(filePath)]);
                                   }
                                 }
                               }

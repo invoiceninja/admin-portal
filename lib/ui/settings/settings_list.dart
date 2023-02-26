@@ -240,10 +240,11 @@ class _SettingsListState extends State<SettingsList> {
               ),
                */
             if (showAll) ...[
-              SettingsListTile(
-                section: kSettingsSchedules,
-                viewModel: widget.viewModel,
-              ),
+              if (supportsSchedules())
+                SettingsListTile(
+                  section: kSettingsSchedules,
+                  viewModel: widget.viewModel,
+                ),
               SettingsListTile(
                 section: kSettingsUserManagement,
                 viewModel: widget.viewModel,
@@ -623,11 +624,12 @@ class SettingsSearch extends StatelessWidget {
           'subscriptions',
         ],
       ],
-      kSettingsSchedules: [
-        [
-          'schedules#2023-02-15',
+      if (supportsSchedules())
+        kSettingsSchedules: [
+          [
+            'schedules#2023-02-15',
+          ],
         ],
-      ],
       kSettingsUserManagement: [
         [
           'users',

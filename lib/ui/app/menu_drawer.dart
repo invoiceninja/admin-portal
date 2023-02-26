@@ -1400,7 +1400,7 @@ void _showAbout(BuildContext context) async {
                       padding: const EdgeInsets.only(top: 4),
                       child: AppButton(
                         label: localization.appPlatforms.toUpperCase(),
-                        iconData: MdiIcons.desktopMac,
+                        iconData: MdiIcons.desktopClassic,
                         onPressed: () {
                           showDialog<AlertDialog>(
                               context: context,
