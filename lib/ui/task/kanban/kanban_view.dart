@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/task/kanban/kanban_status.dart';
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class KanbanView extends StatefulWidget {
   const KanbanView({
@@ -316,7 +317,7 @@ class KanbanViewState extends State<KanbanView> {
               boardViewController: _boardViewController,
               lists: boardList,
               dragDelay: 0,
-              scrollbar: true,
+              scrollbar: isDesktop(context),
               bottomPadding: 16,
             ),
           ),
