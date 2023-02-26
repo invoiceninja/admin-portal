@@ -310,10 +310,15 @@ class KanbanViewState extends State<KanbanView> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          BoardView(
-            boardViewController: _boardViewController,
-            lists: boardList,
-            dragDelay: 0,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: BoardView(
+              boardViewController: _boardViewController,
+              lists: boardList,
+              dragDelay: 0,
+              scrollbar: true,
+              bottomPadding: 16,
+            ),
           ),
           if (state.isLoading || state.isSaving) LinearProgressIndicator(),
         ],
