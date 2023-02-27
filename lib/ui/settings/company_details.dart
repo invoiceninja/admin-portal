@@ -266,7 +266,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
               FormCard(
                 children: <Widget>[
                   DecoratedFormField(
-                    label: localization.name,
+                    label: state.settingsUIState.isFiltered
+                        ? localization.companyName
+                        : localization.name,
                     controller: _nameController,
                     /*
                     validator: (val) => val.isEmpty || val.trim().isEmpty
