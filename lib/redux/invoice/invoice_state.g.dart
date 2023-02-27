@@ -154,11 +154,11 @@ class _$InvoiceState extends InvoiceState {
   final BuiltList<String> list;
 
   factory _$InvoiceState([void Function(InvoiceStateBuilder) updates]) =>
-      (new InvoiceStateBuilder()..update(updates)).build();
+      (new InvoiceStateBuilder()..update(updates))._build();
 
   _$InvoiceState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'InvoiceState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'InvoiceState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'InvoiceState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'InvoiceState', 'list');
   }
 
   @override
@@ -177,12 +177,17 @@ class _$InvoiceState extends InvoiceState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceState')
+    return (newBuiltValueToStringHelper(r'InvoiceState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -226,7 +231,9 @@ class InvoiceStateBuilder
   }
 
   @override
-  _$InvoiceState build() {
+  InvoiceState build() => _build();
+
+  _$InvoiceState _build() {
     _$InvoiceState _$result;
     try {
       _$result =
@@ -240,7 +247,7 @@ class InvoiceStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'InvoiceState', _$failedField, e.toString());
+            r'InvoiceState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -270,7 +277,7 @@ class _$InvoiceUIState extends InvoiceUIState {
   final Completer<Null> cancelCompleter;
 
   factory _$InvoiceUIState([void Function(InvoiceUIStateBuilder) updates]) =>
-      (new InvoiceUIStateBuilder()..update(updates)).build();
+      (new InvoiceUIStateBuilder()..update(updates))._build();
 
   _$InvoiceUIState._(
       {this.editing,
@@ -284,9 +291,9 @@ class _$InvoiceUIState extends InvoiceUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'InvoiceUIState', 'listUIState');
+        listUIState, r'InvoiceUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'InvoiceUIState', 'tabIndex');
+        tabIndex, r'InvoiceUIState', 'tabIndex');
   }
 
   @override
@@ -315,27 +322,24 @@ class _$InvoiceUIState extends InvoiceUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, editing.hashCode),
-                                    editingItemIndex.hashCode),
-                                historyActivityId.hashCode),
-                            listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, editingItemIndex.hashCode);
+    _$hash = $jc(_$hash, historyActivityId.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceUIState')
+    return (newBuiltValueToStringHelper(r'InvoiceUIState')
           ..add('editing', editing)
           ..add('editingItemIndex', editingItemIndex)
           ..add('historyActivityId', historyActivityId)
@@ -428,7 +432,9 @@ class InvoiceUIStateBuilder
   }
 
   @override
-  _$InvoiceUIState build() {
+  InvoiceUIState build() => _build();
+
+  _$InvoiceUIState _build() {
     _$InvoiceUIState _$result;
     try {
       _$result = _$v ??
@@ -440,7 +446,7 @@ class InvoiceUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'InvoiceUIState', 'tabIndex'),
+                  tabIndex, r'InvoiceUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -453,7 +459,7 @@ class InvoiceUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'InvoiceUIState', _$failedField, e.toString());
+            r'InvoiceUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -462,4 +468,4 @@ class InvoiceUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -124,7 +124,7 @@ class _$SystemLogEntity extends SystemLogEntity {
   final int createdAt;
 
   factory _$SystemLogEntity([void Function(SystemLogEntityBuilder) updates]) =>
-      (new SystemLogEntityBuilder()..update(updates)).build();
+      (new SystemLogEntityBuilder()..update(updates))._build();
 
   _$SystemLogEntity._(
       {this.id,
@@ -137,20 +137,20 @@ class _$SystemLogEntity extends SystemLogEntity {
       this.log,
       this.createdAt})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'SystemLogEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(id, r'SystemLogEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
-        companyId, 'SystemLogEntity', 'companyId');
-    BuiltValueNullFieldError.checkNotNull(userId, 'SystemLogEntity', 'userId');
+        companyId, r'SystemLogEntity', 'companyId');
+    BuiltValueNullFieldError.checkNotNull(userId, r'SystemLogEntity', 'userId');
     BuiltValueNullFieldError.checkNotNull(
-        clientId, 'SystemLogEntity', 'clientId');
+        clientId, r'SystemLogEntity', 'clientId');
     BuiltValueNullFieldError.checkNotNull(
-        eventId, 'SystemLogEntity', 'eventId');
+        eventId, r'SystemLogEntity', 'eventId');
     BuiltValueNullFieldError.checkNotNull(
-        categoryId, 'SystemLogEntity', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(typeId, 'SystemLogEntity', 'typeId');
-    BuiltValueNullFieldError.checkNotNull(log, 'SystemLogEntity', 'log');
+        categoryId, r'SystemLogEntity', 'categoryId');
+    BuiltValueNullFieldError.checkNotNull(typeId, r'SystemLogEntity', 'typeId');
+    BuiltValueNullFieldError.checkNotNull(log, r'SystemLogEntity', 'log');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'SystemLogEntity', 'createdAt');
+        createdAt, r'SystemLogEntity', 'createdAt');
   }
 
   @override
@@ -179,25 +179,24 @@ class _$SystemLogEntity extends SystemLogEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc($jc(0, id.hashCode), companyId.hashCode),
-                                userId.hashCode),
-                            clientId.hashCode),
-                        eventId.hashCode),
-                    categoryId.hashCode),
-                typeId.hashCode),
-            log.hashCode),
-        createdAt.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, companyId.hashCode);
+    _$hash = $jc(_$hash, userId.hashCode);
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, eventId.hashCode);
+    _$hash = $jc(_$hash, categoryId.hashCode);
+    _$hash = $jc(_$hash, typeId.hashCode);
+    _$hash = $jc(_$hash, log.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SystemLogEntity')
+    return (newBuiltValueToStringHelper(r'SystemLogEntity')
           ..add('id', id)
           ..add('companyId', companyId)
           ..add('userId', userId)
@@ -282,30 +281,32 @@ class SystemLogEntityBuilder
   }
 
   @override
-  _$SystemLogEntity build() {
+  SystemLogEntity build() => _build();
+
+  _$SystemLogEntity _build() {
     final _$result = _$v ??
         new _$SystemLogEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'SystemLogEntity', 'id'),
+                id, r'SystemLogEntity', 'id'),
             companyId: BuiltValueNullFieldError.checkNotNull(
-                companyId, 'SystemLogEntity', 'companyId'),
+                companyId, r'SystemLogEntity', 'companyId'),
             userId: BuiltValueNullFieldError.checkNotNull(
-                userId, 'SystemLogEntity', 'userId'),
+                userId, r'SystemLogEntity', 'userId'),
             clientId: BuiltValueNullFieldError.checkNotNull(
-                clientId, 'SystemLogEntity', 'clientId'),
+                clientId, r'SystemLogEntity', 'clientId'),
             eventId: BuiltValueNullFieldError.checkNotNull(
-                eventId, 'SystemLogEntity', 'eventId'),
+                eventId, r'SystemLogEntity', 'eventId'),
             categoryId: BuiltValueNullFieldError.checkNotNull(
-                categoryId, 'SystemLogEntity', 'categoryId'),
+                categoryId, r'SystemLogEntity', 'categoryId'),
             typeId: BuiltValueNullFieldError.checkNotNull(
-                typeId, 'SystemLogEntity', 'typeId'),
+                typeId, r'SystemLogEntity', 'typeId'),
             log: BuiltValueNullFieldError.checkNotNull(
-                log, 'SystemLogEntity', 'log'),
+                log, r'SystemLogEntity', 'log'),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'SystemLogEntity', 'createdAt'));
+                createdAt, r'SystemLogEntity', 'createdAt'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -263,7 +263,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder) updates]) =>
-      (new HealthCheckResponseBuilder()..update(updates)).build();
+      (new HealthCheckResponseBuilder()..update(updates))._build();
 
   _$HealthCheckResponse._(
       {this.systemHealth,
@@ -283,35 +283,35 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       this.queue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        systemHealth, 'HealthCheckResponse', 'systemHealth');
+        systemHealth, r'HealthCheckResponse', 'systemHealth');
     BuiltValueNullFieldError.checkNotNull(
-        phpVersion, 'HealthCheckResponse', 'phpVersion');
+        phpVersion, r'HealthCheckResponse', 'phpVersion');
     BuiltValueNullFieldError.checkNotNull(
-        envWritable, 'HealthCheckResponse', 'envWritable');
+        envWritable, r'HealthCheckResponse', 'envWritable');
     BuiltValueNullFieldError.checkNotNull(
-        dbCheck, 'HealthCheckResponse', 'dbCheck');
+        dbCheck, r'HealthCheckResponse', 'dbCheck');
     BuiltValueNullFieldError.checkNotNull(
-        cacheEnabled, 'HealthCheckResponse', 'cacheEnabled');
+        cacheEnabled, r'HealthCheckResponse', 'cacheEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        phantomEnabled, 'HealthCheckResponse', 'phantomEnabled');
+        phantomEnabled, r'HealthCheckResponse', 'phantomEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        openBasedir, 'HealthCheckResponse', 'openBasedir');
+        openBasedir, r'HealthCheckResponse', 'openBasedir');
     BuiltValueNullFieldError.checkNotNull(
-        filePermissions, 'HealthCheckResponse', 'filePermissions');
+        filePermissions, r'HealthCheckResponse', 'filePermissions');
     BuiltValueNullFieldError.checkNotNull(
-        execEnabled, 'HealthCheckResponse', 'execEnabled');
+        execEnabled, r'HealthCheckResponse', 'execEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        emailDriver, 'HealthCheckResponse', 'emailDriver');
+        emailDriver, r'HealthCheckResponse', 'emailDriver');
     BuiltValueNullFieldError.checkNotNull(
-        pendingJobs, 'HealthCheckResponse', 'pendingJobs');
+        pendingJobs, r'HealthCheckResponse', 'pendingJobs');
     BuiltValueNullFieldError.checkNotNull(
-        pdfEngine, 'HealthCheckResponse', 'pdfEngine');
+        pdfEngine, r'HealthCheckResponse', 'pdfEngine');
     BuiltValueNullFieldError.checkNotNull(
-        trailingSlash, 'HealthCheckResponse', 'trailingSlash');
+        trailingSlash, r'HealthCheckResponse', 'trailingSlash');
     BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured,
-        'HealthCheckResponse', 'exchangeRateApiNotConfigured');
+        r'HealthCheckResponse', 'exchangeRateApiNotConfigured');
     BuiltValueNullFieldError.checkNotNull(
-        queue, 'HealthCheckResponse', 'queue');
+        queue, r'HealthCheckResponse', 'queue');
   }
 
   @override
@@ -347,44 +347,30 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                0,
-                                                                systemHealth
-                                                                    .hashCode),
-                                                            phpVersion
-                                                                .hashCode),
-                                                        envWritable.hashCode),
-                                                    dbCheck.hashCode),
-                                                cacheEnabled.hashCode),
-                                            phantomEnabled.hashCode),
-                                        openBasedir.hashCode),
-                                    filePermissions.hashCode),
-                                execEnabled.hashCode),
-                            emailDriver.hashCode),
-                        pendingJobs.hashCode),
-                    pdfEngine.hashCode),
-                trailingSlash.hashCode),
-            exchangeRateApiNotConfigured.hashCode),
-        queue.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, systemHealth.hashCode);
+    _$hash = $jc(_$hash, phpVersion.hashCode);
+    _$hash = $jc(_$hash, envWritable.hashCode);
+    _$hash = $jc(_$hash, dbCheck.hashCode);
+    _$hash = $jc(_$hash, cacheEnabled.hashCode);
+    _$hash = $jc(_$hash, phantomEnabled.hashCode);
+    _$hash = $jc(_$hash, openBasedir.hashCode);
+    _$hash = $jc(_$hash, filePermissions.hashCode);
+    _$hash = $jc(_$hash, execEnabled.hashCode);
+    _$hash = $jc(_$hash, emailDriver.hashCode);
+    _$hash = $jc(_$hash, pendingJobs.hashCode);
+    _$hash = $jc(_$hash, pdfEngine.hashCode);
+    _$hash = $jc(_$hash, trailingSlash.hashCode);
+    _$hash = $jc(_$hash, exchangeRateApiNotConfigured.hashCode);
+    _$hash = $jc(_$hash, queue.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('HealthCheckResponse')
+    return (newBuiltValueToStringHelper(r'HealthCheckResponse')
           ..add('systemHealth', systemHealth)
           ..add('phpVersion', phpVersion)
           ..add('envWritable', envWritable)
@@ -513,34 +499,36 @@ class HealthCheckResponseBuilder
   }
 
   @override
-  _$HealthCheckResponse build() {
+  HealthCheckResponse build() => _build();
+
+  _$HealthCheckResponse _build() {
     _$HealthCheckResponse _$result;
     try {
       _$result = _$v ??
           new _$HealthCheckResponse._(
               systemHealth: BuiltValueNullFieldError.checkNotNull(
-                  systemHealth, 'HealthCheckResponse', 'systemHealth'),
+                  systemHealth, r'HealthCheckResponse', 'systemHealth'),
               phpVersion: phpVersion.build(),
               envWritable: BuiltValueNullFieldError.checkNotNull(
-                  envWritable, 'HealthCheckResponse', 'envWritable'),
+                  envWritable, r'HealthCheckResponse', 'envWritable'),
               dbCheck: BuiltValueNullFieldError.checkNotNull(
-                  dbCheck, 'HealthCheckResponse', 'dbCheck'),
+                  dbCheck, r'HealthCheckResponse', 'dbCheck'),
               cacheEnabled: BuiltValueNullFieldError.checkNotNull(
-                  cacheEnabled, 'HealthCheckResponse', 'cacheEnabled'),
+                  cacheEnabled, r'HealthCheckResponse', 'cacheEnabled'),
               phantomEnabled: BuiltValueNullFieldError.checkNotNull(
-                  phantomEnabled, 'HealthCheckResponse', 'phantomEnabled'),
+                  phantomEnabled, r'HealthCheckResponse', 'phantomEnabled'),
               openBasedir: BuiltValueNullFieldError.checkNotNull(
-                  openBasedir, 'HealthCheckResponse', 'openBasedir'),
+                  openBasedir, r'HealthCheckResponse', 'openBasedir'),
               filePermissions: BuiltValueNullFieldError.checkNotNull(
-                  filePermissions, 'HealthCheckResponse', 'filePermissions'),
+                  filePermissions, r'HealthCheckResponse', 'filePermissions'),
               execEnabled: BuiltValueNullFieldError.checkNotNull(
-                  execEnabled, 'HealthCheckResponse', 'execEnabled'),
-              emailDriver: BuiltValueNullFieldError.checkNotNull(emailDriver, 'HealthCheckResponse', 'emailDriver'),
-              pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, 'HealthCheckResponse', 'pendingJobs'),
-              pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, 'HealthCheckResponse', 'pdfEngine'),
-              trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, 'HealthCheckResponse', 'trailingSlash'),
-              exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, 'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
-              queue: BuiltValueNullFieldError.checkNotNull(queue, 'HealthCheckResponse', 'queue'));
+                  execEnabled, r'HealthCheckResponse', 'execEnabled'),
+              emailDriver: BuiltValueNullFieldError.checkNotNull(emailDriver, r'HealthCheckResponse', 'emailDriver'),
+              pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, r'HealthCheckResponse', 'pendingJobs'),
+              pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, r'HealthCheckResponse', 'pdfEngine'),
+              trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, r'HealthCheckResponse', 'trailingSlash'),
+              exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, r'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
+              queue: BuiltValueNullFieldError.checkNotNull(queue, r'HealthCheckResponse', 'queue'));
     } catch (_) {
       String _$failedField;
       try {
@@ -548,7 +536,7 @@ class HealthCheckResponseBuilder
         phpVersion.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'HealthCheckResponse', _$failedField, e.toString());
+            r'HealthCheckResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -571,7 +559,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
 
   factory _$HealthCheckPHPResponse(
           [void Function(HealthCheckPHPResponseBuilder) updates]) =>
-      (new HealthCheckPHPResponseBuilder()..update(updates)).build();
+      (new HealthCheckPHPResponseBuilder()..update(updates))._build();
 
   _$HealthCheckPHPResponse._(
       {this.minimumPHPVersion,
@@ -581,15 +569,15 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
       this.memoryLimit})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        minimumPHPVersion, 'HealthCheckPHPResponse', 'minimumPHPVersion');
+        minimumPHPVersion, r'HealthCheckPHPResponse', 'minimumPHPVersion');
     BuiltValueNullFieldError.checkNotNull(
-        currentPHPVersion, 'HealthCheckPHPResponse', 'currentPHPVersion');
+        currentPHPVersion, r'HealthCheckPHPResponse', 'currentPHPVersion');
+    BuiltValueNullFieldError.checkNotNull(currentPHPCLIVersion,
+        r'HealthCheckPHPResponse', 'currentPHPCLIVersion');
     BuiltValueNullFieldError.checkNotNull(
-        currentPHPCLIVersion, 'HealthCheckPHPResponse', 'currentPHPCLIVersion');
+        isOkay, r'HealthCheckPHPResponse', 'isOkay');
     BuiltValueNullFieldError.checkNotNull(
-        isOkay, 'HealthCheckPHPResponse', 'isOkay');
-    BuiltValueNullFieldError.checkNotNull(
-        memoryLimit, 'HealthCheckPHPResponse', 'memoryLimit');
+        memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit');
   }
 
   @override
@@ -615,19 +603,20 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc(0, minimumPHPVersion.hashCode),
-                    currentPHPVersion.hashCode),
-                currentPHPCLIVersion.hashCode),
-            isOkay.hashCode),
-        memoryLimit.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, minimumPHPVersion.hashCode);
+    _$hash = $jc(_$hash, currentPHPVersion.hashCode);
+    _$hash = $jc(_$hash, currentPHPCLIVersion.hashCode);
+    _$hash = $jc(_$hash, isOkay.hashCode);
+    _$hash = $jc(_$hash, memoryLimit.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('HealthCheckPHPResponse')
+    return (newBuiltValueToStringHelper(r'HealthCheckPHPResponse')
           ..add('minimumPHPVersion', minimumPHPVersion)
           ..add('currentPHPVersion', currentPHPVersion)
           ..add('currentPHPCLIVersion', currentPHPCLIVersion)
@@ -693,28 +682,30 @@ class HealthCheckPHPResponseBuilder
   }
 
   @override
-  _$HealthCheckPHPResponse build() {
+  HealthCheckPHPResponse build() => _build();
+
+  _$HealthCheckPHPResponse _build() {
     final _$result = _$v ??
         new _$HealthCheckPHPResponse._(
             minimumPHPVersion: BuiltValueNullFieldError.checkNotNull(
                 minimumPHPVersion,
-                'HealthCheckPHPResponse',
+                r'HealthCheckPHPResponse',
                 'minimumPHPVersion'),
             currentPHPVersion: BuiltValueNullFieldError.checkNotNull(
                 currentPHPVersion,
-                'HealthCheckPHPResponse',
+                r'HealthCheckPHPResponse',
                 'currentPHPVersion'),
-            currentPHPCLIVersion: BuiltValueNullFieldError.checkNotNull(
-                currentPHPCLIVersion,
-                'HealthCheckPHPResponse',
-                'currentPHPCLIVersion'),
+            currentPHPCLIVersion:
+                BuiltValueNullFieldError
+                    .checkNotNull(currentPHPCLIVersion,
+                        r'HealthCheckPHPResponse', 'currentPHPCLIVersion'),
             isOkay: BuiltValueNullFieldError.checkNotNull(
-                isOkay, 'HealthCheckPHPResponse', 'isOkay'),
+                isOkay, r'HealthCheckPHPResponse', 'isOkay'),
             memoryLimit: BuiltValueNullFieldError.checkNotNull(
-                memoryLimit, 'HealthCheckPHPResponse', 'memoryLimit'));
+                memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

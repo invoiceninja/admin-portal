@@ -25,7 +25,7 @@ class SubscriptionViewScreen extends StatelessWidget {
     Key key,
     this.isFilter = false,
   }) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsSubscriptionsView';
+  static const String route = '/$kSettings/$kSettingsPaymentLinksView';
   final bool isFilter;
 
   @override

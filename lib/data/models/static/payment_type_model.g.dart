@@ -162,11 +162,11 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
 
   factory _$PaymentTypeListResponse(
           [void Function(PaymentTypeListResponseBuilder) updates]) =>
-      (new PaymentTypeListResponseBuilder()..update(updates)).build();
+      (new PaymentTypeListResponseBuilder()..update(updates))._build();
 
   _$PaymentTypeListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'PaymentTypeListResponse', 'data');
+        data, r'PaymentTypeListResponse', 'data');
   }
 
   @override
@@ -187,12 +187,16 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentTypeListResponse')
+    return (newBuiltValueToStringHelper(r'PaymentTypeListResponse')
           ..add('data', data))
         .toString();
   }
@@ -231,7 +235,9 @@ class PaymentTypeListResponseBuilder
   }
 
   @override
-  _$PaymentTypeListResponse build() {
+  PaymentTypeListResponse build() => _build();
+
+  _$PaymentTypeListResponse _build() {
     _$PaymentTypeListResponse _$result;
     try {
       _$result = _$v ?? new _$PaymentTypeListResponse._(data: data.build());
@@ -242,7 +248,7 @@ class PaymentTypeListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PaymentTypeListResponse', _$failedField, e.toString());
+            r'PaymentTypeListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -257,11 +263,11 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
 
   factory _$PaymentTypeItemResponse(
           [void Function(PaymentTypeItemResponseBuilder) updates]) =>
-      (new PaymentTypeItemResponseBuilder()..update(updates)).build();
+      (new PaymentTypeItemResponseBuilder()..update(updates))._build();
 
   _$PaymentTypeItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'PaymentTypeItemResponse', 'data');
+        data, r'PaymentTypeItemResponse', 'data');
   }
 
   @override
@@ -282,12 +288,16 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentTypeItemResponse')
+    return (newBuiltValueToStringHelper(r'PaymentTypeItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -326,7 +336,9 @@ class PaymentTypeItemResponseBuilder
   }
 
   @override
-  _$PaymentTypeItemResponse build() {
+  PaymentTypeItemResponse build() => _build();
+
+  _$PaymentTypeItemResponse _build() {
     _$PaymentTypeItemResponse _$result;
     try {
       _$result = _$v ?? new _$PaymentTypeItemResponse._(data: data.build());
@@ -337,7 +349,7 @@ class PaymentTypeItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PaymentTypeItemResponse', _$failedField, e.toString());
+            r'PaymentTypeItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -354,11 +366,11 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
 
   factory _$PaymentTypeEntity(
           [void Function(PaymentTypeEntityBuilder) updates]) =>
-      (new PaymentTypeEntityBuilder()..update(updates)).build();
+      (new PaymentTypeEntityBuilder()..update(updates))._build();
 
   _$PaymentTypeEntity._({this.name, this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'PaymentTypeEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(id, 'PaymentTypeEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, r'PaymentTypeEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, r'PaymentTypeEntity', 'id');
   }
 
   @override
@@ -378,12 +390,17 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, name.hashCode), id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentTypeEntity')
+    return (newBuiltValueToStringHelper(r'PaymentTypeEntity')
           ..add('name', name)
           ..add('id', id))
         .toString();
@@ -426,16 +443,18 @@ class PaymentTypeEntityBuilder
   }
 
   @override
-  _$PaymentTypeEntity build() {
+  PaymentTypeEntity build() => _build();
+
+  _$PaymentTypeEntity _build() {
     final _$result = _$v ??
         new _$PaymentTypeEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'PaymentTypeEntity', 'name'),
+                name, r'PaymentTypeEntity', 'name'),
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'PaymentTypeEntity', 'id'));
+                id, r'PaymentTypeEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

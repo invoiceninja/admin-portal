@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class SubscriptionEditScreen extends StatelessWidget {
   const SubscriptionEditScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsSubscriptionsEdit';
+  static const String route = '/$kSettings/$kSettingsPaymentLinksEdit';
 
   @override
   Widget build(BuildContext context) {
@@ -101,8 +101,8 @@ class SubscriptionEditVM {
               completer: completer, subscription: subscription));
           return completer.future.then((savedSubscription) {
             showToast(subscription.isNew
-                ? localization.createdSubscription
-                : localization.updatedSubscription);
+                ? localization.createdPaymentLink
+                : localization.updatedPaymentLink);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
               if (subscription.isNew) {

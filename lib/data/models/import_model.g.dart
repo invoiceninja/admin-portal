@@ -405,12 +405,12 @@ class _$PreImportResponse extends PreImportResponse {
 
   factory _$PreImportResponse(
           [void Function(PreImportResponseBuilder) updates]) =>
-      (new PreImportResponseBuilder()..update(updates)).build();
+      (new PreImportResponseBuilder()..update(updates))._build();
 
   _$PreImportResponse._({this.hash, this.mappings}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, 'PreImportResponse', 'hash');
+    BuiltValueNullFieldError.checkNotNull(hash, r'PreImportResponse', 'hash');
     BuiltValueNullFieldError.checkNotNull(
-        mappings, 'PreImportResponse', 'mappings');
+        mappings, r'PreImportResponse', 'mappings');
   }
 
   @override
@@ -432,12 +432,17 @@ class _$PreImportResponse extends PreImportResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, hash.hashCode), mappings.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, hash.hashCode);
+    _$hash = $jc(_$hash, mappings.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PreImportResponse')
+    return (newBuiltValueToStringHelper(r'PreImportResponse')
           ..add('hash', hash)
           ..add('mappings', mappings))
         .toString();
@@ -483,13 +488,15 @@ class PreImportResponseBuilder
   }
 
   @override
-  _$PreImportResponse build() {
+  PreImportResponse build() => _build();
+
+  _$PreImportResponse _build() {
     _$PreImportResponse _$result;
     try {
       _$result = _$v ??
           new _$PreImportResponse._(
               hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, 'PreImportResponse', 'hash'),
+                  hash, r'PreImportResponse', 'hash'),
               mappings: mappings.build());
     } catch (_) {
       String _$failedField;
@@ -498,7 +505,7 @@ class PreImportResponseBuilder
         mappings.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PreImportResponse', _$failedField, e.toString());
+            r'PreImportResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -515,14 +522,14 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
 
   factory _$PreImportResponseEntityDetails(
           [void Function(PreImportResponseEntityDetailsBuilder) updates]) =>
-      (new PreImportResponseEntityDetailsBuilder()..update(updates)).build();
+      (new PreImportResponseEntityDetailsBuilder()..update(updates))._build();
 
   _$PreImportResponseEntityDetails._({this.available, this.headers})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        available, 'PreImportResponseEntityDetails', 'available');
+        available, r'PreImportResponseEntityDetails', 'available');
     BuiltValueNullFieldError.checkNotNull(
-        headers, 'PreImportResponseEntityDetails', 'headers');
+        headers, r'PreImportResponseEntityDetails', 'headers');
   }
 
   @override
@@ -545,13 +552,17 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??=
-        $jf($jc($jc(0, available.hashCode), headers.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, available.hashCode);
+    _$hash = $jc(_$hash, headers.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PreImportResponseEntityDetails')
+    return (newBuiltValueToStringHelper(r'PreImportResponseEntityDetails')
           ..add('available', available)
           ..add('headers', headers))
         .toString();
@@ -599,7 +610,9 @@ class PreImportResponseEntityDetailsBuilder
   }
 
   @override
-  _$PreImportResponseEntityDetails build() {
+  PreImportResponseEntityDetails build() => _build();
+
+  _$PreImportResponseEntityDetails _build() {
     _$PreImportResponseEntityDetails _$result;
     try {
       _$result = _$v ??
@@ -614,7 +627,7 @@ class PreImportResponseEntityDetailsBuilder
         headers.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'PreImportResponseEntityDetails', _$failedField, e.toString());
+            r'PreImportResponseEntityDetails', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -636,7 +649,7 @@ class _$ImportRequest extends ImportRequest {
   final BuiltMap<String, ImportRequestMapping> columnMap;
 
   factory _$ImportRequest([void Function(ImportRequestBuilder) updates]) =>
-      (new ImportRequestBuilder()..update(updates)).build();
+      (new ImportRequestBuilder()..update(updates))._build();
 
   _$ImportRequest._(
       {this.hash,
@@ -645,15 +658,15 @@ class _$ImportRequest extends ImportRequest {
       this.skipHeader,
       this.columnMap})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, 'ImportRequest', 'hash');
+    BuiltValueNullFieldError.checkNotNull(hash, r'ImportRequest', 'hash');
     BuiltValueNullFieldError.checkNotNull(
-        importType, 'ImportRequest', 'importType');
+        importType, r'ImportRequest', 'importType');
     BuiltValueNullFieldError.checkNotNull(
-        bankAccountId, 'ImportRequest', 'bankAccountId');
+        bankAccountId, r'ImportRequest', 'bankAccountId');
     BuiltValueNullFieldError.checkNotNull(
-        skipHeader, 'ImportRequest', 'skipHeader');
+        skipHeader, r'ImportRequest', 'skipHeader');
     BuiltValueNullFieldError.checkNotNull(
-        columnMap, 'ImportRequest', 'columnMap');
+        columnMap, r'ImportRequest', 'columnMap');
   }
 
   @override
@@ -677,17 +690,20 @@ class _$ImportRequest extends ImportRequest {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc($jc($jc(0, hash.hashCode), importType.hashCode),
-                bankAccountId.hashCode),
-            skipHeader.hashCode),
-        columnMap.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, hash.hashCode);
+    _$hash = $jc(_$hash, importType.hashCode);
+    _$hash = $jc(_$hash, bankAccountId.hashCode);
+    _$hash = $jc(_$hash, skipHeader.hashCode);
+    _$hash = $jc(_$hash, columnMap.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ImportRequest')
+    return (newBuiltValueToStringHelper(r'ImportRequest')
           ..add('hash', hash)
           ..add('importType', importType)
           ..add('bankAccountId', bankAccountId)
@@ -751,19 +767,21 @@ class ImportRequestBuilder
   }
 
   @override
-  _$ImportRequest build() {
+  ImportRequest build() => _build();
+
+  _$ImportRequest _build() {
     _$ImportRequest _$result;
     try {
       _$result = _$v ??
           new _$ImportRequest._(
               hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, 'ImportRequest', 'hash'),
+                  hash, r'ImportRequest', 'hash'),
               importType: BuiltValueNullFieldError.checkNotNull(
-                  importType, 'ImportRequest', 'importType'),
+                  importType, r'ImportRequest', 'importType'),
               bankAccountId: BuiltValueNullFieldError.checkNotNull(
-                  bankAccountId, 'ImportRequest', 'bankAccountId'),
+                  bankAccountId, r'ImportRequest', 'bankAccountId'),
               skipHeader: BuiltValueNullFieldError.checkNotNull(
-                  skipHeader, 'ImportRequest', 'skipHeader'),
+                  skipHeader, r'ImportRequest', 'skipHeader'),
               columnMap: columnMap.build());
     } catch (_) {
       String _$failedField;
@@ -772,7 +790,7 @@ class ImportRequestBuilder
         columnMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ImportRequest', _$failedField, e.toString());
+            r'ImportRequest', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -787,11 +805,11 @@ class _$ImportRequestMapping extends ImportRequestMapping {
 
   factory _$ImportRequestMapping(
           [void Function(ImportRequestMappingBuilder) updates]) =>
-      (new ImportRequestMappingBuilder()..update(updates)).build();
+      (new ImportRequestMappingBuilder()..update(updates))._build();
 
   _$ImportRequestMapping._({this.mapping}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        mapping, 'ImportRequestMapping', 'mapping');
+        mapping, r'ImportRequestMapping', 'mapping');
   }
 
   @override
@@ -812,12 +830,16 @@ class _$ImportRequestMapping extends ImportRequestMapping {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, mapping.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, mapping.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ImportRequestMapping')
+    return (newBuiltValueToStringHelper(r'ImportRequestMapping')
           ..add('mapping', mapping))
         .toString();
   }
@@ -855,7 +877,9 @@ class ImportRequestMappingBuilder
   }
 
   @override
-  _$ImportRequestMapping build() {
+  ImportRequestMapping build() => _build();
+
+  _$ImportRequestMapping _build() {
     _$ImportRequestMapping _$result;
     try {
       _$result = _$v ?? new _$ImportRequestMapping._(mapping: mapping.build());
@@ -866,7 +890,7 @@ class ImportRequestMappingBuilder
         mapping.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ImportRequestMapping', _$failedField, e.toString());
+            r'ImportRequestMapping', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -875,4 +899,4 @@ class ImportRequestMappingBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

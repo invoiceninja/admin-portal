@@ -194,8 +194,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     return EditScaffold(
       entity: subscription,
       title: subscription.isNew
-          ? localization.newSubscription
-          : localization.editSubscription,
+          ? localization.newPaymentLink
+          : localization.editPaymentLink,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       appBarBottom: TabBar(

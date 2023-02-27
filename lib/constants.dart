@@ -490,9 +490,9 @@ const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsGroupSettingsView = 'group_settings/view';
 const String kSettingsGroupSettingsEdit = 'group_settings/edit';
-const String kSettingsSubscriptions = 'subscriptions';
-const String kSettingsSubscriptionsView = 'subscriptions/view';
-const String kSettingsSubscriptionsEdit = 'subscriptions/edit';
+const String kSettingsPaymentLinks = 'payment_links';
+const String kSettingsPaymentLinksView = 'payment_links/view';
+const String kSettingsPaymentLinksEdit = 'payment_links/edit';
 const String kSettingsCustomFields = 'custom_fields';
 const String kSettingsCustomDesigns = 'custom_designs';
 const String kSettingsCustomDesignsView = 'custom_designs/view';
@@ -541,7 +541,7 @@ const List<String> kAdvancedSettings = [
   kSettingsGeneratedNumbers,
   kSettingsInvoiceDesign,
   kSettingsTemplatesAndReminders,
-  kSettingsSubscriptions,
+  kSettingsPaymentLinks,
   kSettingsUserManagement,
   kSettingsTransactionRules,
 ];

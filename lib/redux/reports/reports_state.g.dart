@@ -121,7 +121,7 @@ class _$ReportsUIState extends ReportsUIState {
   final BuiltMap<String, String> filters;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder) updates]) =>
-      (new ReportsUIStateBuilder()..update(updates)).build();
+      (new ReportsUIStateBuilder()..update(updates))._build();
 
   _$ReportsUIState._(
       {this.report,
@@ -133,18 +133,19 @@ class _$ReportsUIState extends ReportsUIState {
       this.customEndDate,
       this.filters})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(report, 'ReportsUIState', 'report');
-    BuiltValueNullFieldError.checkNotNull(group, 'ReportsUIState', 'group');
+    BuiltValueNullFieldError.checkNotNull(report, r'ReportsUIState', 'report');
+    BuiltValueNullFieldError.checkNotNull(group, r'ReportsUIState', 'group');
     BuiltValueNullFieldError.checkNotNull(
-        selectedGroup, 'ReportsUIState', 'selectedGroup');
-    BuiltValueNullFieldError.checkNotNull(chart, 'ReportsUIState', 'chart');
+        selectedGroup, r'ReportsUIState', 'selectedGroup');
+    BuiltValueNullFieldError.checkNotNull(chart, r'ReportsUIState', 'chart');
     BuiltValueNullFieldError.checkNotNull(
-        subgroup, 'ReportsUIState', 'subgroup');
+        subgroup, r'ReportsUIState', 'subgroup');
     BuiltValueNullFieldError.checkNotNull(
-        customStartDate, 'ReportsUIState', 'customStartDate');
+        customStartDate, r'ReportsUIState', 'customStartDate');
     BuiltValueNullFieldError.checkNotNull(
-        customEndDate, 'ReportsUIState', 'customEndDate');
-    BuiltValueNullFieldError.checkNotNull(filters, 'ReportsUIState', 'filters');
+        customEndDate, r'ReportsUIState', 'customEndDate');
+    BuiltValueNullFieldError.checkNotNull(
+        filters, r'ReportsUIState', 'filters');
   }
 
   @override
@@ -172,23 +173,23 @@ class _$ReportsUIState extends ReportsUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc($jc($jc(0, report.hashCode), group.hashCode),
-                            selectedGroup.hashCode),
-                        chart.hashCode),
-                    subgroup.hashCode),
-                customStartDate.hashCode),
-            customEndDate.hashCode),
-        filters.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, report.hashCode);
+    _$hash = $jc(_$hash, group.hashCode);
+    _$hash = $jc(_$hash, selectedGroup.hashCode);
+    _$hash = $jc(_$hash, chart.hashCode);
+    _$hash = $jc(_$hash, subgroup.hashCode);
+    _$hash = $jc(_$hash, customStartDate.hashCode);
+    _$hash = $jc(_$hash, customEndDate.hashCode);
+    _$hash = $jc(_$hash, filters.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ReportsUIState')
+    return (newBuiltValueToStringHelper(r'ReportsUIState')
           ..add('report', report)
           ..add('group', group)
           ..add('selectedGroup', selectedGroup)
@@ -271,25 +272,27 @@ class ReportsUIStateBuilder
   }
 
   @override
-  _$ReportsUIState build() {
+  ReportsUIState build() => _build();
+
+  _$ReportsUIState _build() {
     _$ReportsUIState _$result;
     try {
       _$result = _$v ??
           new _$ReportsUIState._(
               report: BuiltValueNullFieldError.checkNotNull(
-                  report, 'ReportsUIState', 'report'),
+                  report, r'ReportsUIState', 'report'),
               group: BuiltValueNullFieldError.checkNotNull(
-                  group, 'ReportsUIState', 'group'),
+                  group, r'ReportsUIState', 'group'),
               selectedGroup: BuiltValueNullFieldError.checkNotNull(
-                  selectedGroup, 'ReportsUIState', 'selectedGroup'),
+                  selectedGroup, r'ReportsUIState', 'selectedGroup'),
               chart: BuiltValueNullFieldError.checkNotNull(
-                  chart, 'ReportsUIState', 'chart'),
+                  chart, r'ReportsUIState', 'chart'),
               subgroup: BuiltValueNullFieldError.checkNotNull(
-                  subgroup, 'ReportsUIState', 'subgroup'),
+                  subgroup, r'ReportsUIState', 'subgroup'),
               customStartDate: BuiltValueNullFieldError.checkNotNull(
-                  customStartDate, 'ReportsUIState', 'customStartDate'),
+                  customStartDate, r'ReportsUIState', 'customStartDate'),
               customEndDate: BuiltValueNullFieldError.checkNotNull(
-                  customEndDate, 'ReportsUIState', 'customEndDate'),
+                  customEndDate, r'ReportsUIState', 'customEndDate'),
               filters: filters.build());
     } catch (_) {
       String _$failedField;
@@ -298,7 +301,7 @@ class ReportsUIStateBuilder
         filters.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ReportsUIState', _$failedField, e.toString());
+            r'ReportsUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -307,4 +310,4 @@ class ReportsUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

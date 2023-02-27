@@ -240,11 +240,11 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
 
   factory _$ExpenseCategoryListResponse(
           [void Function(ExpenseCategoryListResponseBuilder) updates]) =>
-      (new ExpenseCategoryListResponseBuilder()..update(updates)).build();
+      (new ExpenseCategoryListResponseBuilder()..update(updates))._build();
 
   _$ExpenseCategoryListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'ExpenseCategoryListResponse', 'data');
+        data, r'ExpenseCategoryListResponse', 'data');
   }
 
   @override
@@ -265,12 +265,16 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryListResponse')
+    return (newBuiltValueToStringHelper(r'ExpenseCategoryListResponse')
           ..add('data', data))
         .toString();
   }
@@ -310,7 +314,9 @@ class ExpenseCategoryListResponseBuilder
   }
 
   @override
-  _$ExpenseCategoryListResponse build() {
+  ExpenseCategoryListResponse build() => _build();
+
+  _$ExpenseCategoryListResponse _build() {
     _$ExpenseCategoryListResponse _$result;
     try {
       _$result = _$v ?? new _$ExpenseCategoryListResponse._(data: data.build());
@@ -321,7 +327,7 @@ class ExpenseCategoryListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ExpenseCategoryListResponse', _$failedField, e.toString());
+            r'ExpenseCategoryListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -336,11 +342,11 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
 
   factory _$ExpenseCategoryItemResponse(
           [void Function(ExpenseCategoryItemResponseBuilder) updates]) =>
-      (new ExpenseCategoryItemResponseBuilder()..update(updates)).build();
+      (new ExpenseCategoryItemResponseBuilder()..update(updates))._build();
 
   _$ExpenseCategoryItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'ExpenseCategoryItemResponse', 'data');
+        data, r'ExpenseCategoryItemResponse', 'data');
   }
 
   @override
@@ -361,12 +367,16 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryItemResponse')
+    return (newBuiltValueToStringHelper(r'ExpenseCategoryItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -406,7 +416,9 @@ class ExpenseCategoryItemResponseBuilder
   }
 
   @override
-  _$ExpenseCategoryItemResponse build() {
+  ExpenseCategoryItemResponse build() => _build();
+
+  _$ExpenseCategoryItemResponse _build() {
     _$ExpenseCategoryItemResponse _$result;
     try {
       _$result = _$v ?? new _$ExpenseCategoryItemResponse._(data: data.build());
@@ -417,7 +429,7 @@ class ExpenseCategoryItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ExpenseCategoryItemResponse', _$failedField, e.toString());
+            r'ExpenseCategoryItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -450,7 +462,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   factory _$ExpenseCategoryEntity(
           [void Function(ExpenseCategoryEntityBuilder) updates]) =>
-      (new ExpenseCategoryEntityBuilder()..update(updates)).build();
+      (new ExpenseCategoryEntityBuilder()..update(updates))._build();
 
   _$ExpenseCategoryEntity._(
       {this.name,
@@ -465,16 +477,16 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        name, 'ExpenseCategoryEntity', 'name');
+        name, r'ExpenseCategoryEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        color, 'ExpenseCategoryEntity', 'color');
+        color, r'ExpenseCategoryEntity', 'color');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ExpenseCategoryEntity', 'createdAt');
+        createdAt, r'ExpenseCategoryEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ExpenseCategoryEntity', 'updatedAt');
+        updatedAt, r'ExpenseCategoryEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ExpenseCategoryEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ExpenseCategoryEntity', 'id');
+        archivedAt, r'ExpenseCategoryEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'ExpenseCategoryEntity', 'id');
   }
 
   @override
@@ -505,27 +517,25 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc($jc(0, name.hashCode), color.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, color.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
+    return (newBuiltValueToStringHelper(r'ExpenseCategoryEntity')
           ..add('name', name)
           ..add('color', color)
           ..add('isChanged', isChanged)
@@ -620,28 +630,30 @@ class ExpenseCategoryEntityBuilder
   }
 
   @override
-  _$ExpenseCategoryEntity build() {
+  ExpenseCategoryEntity build() => _build();
+
+  _$ExpenseCategoryEntity _build() {
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'ExpenseCategoryEntity', 'name'),
+                name, r'ExpenseCategoryEntity', 'name'),
             color: BuiltValueNullFieldError.checkNotNull(
-                color, 'ExpenseCategoryEntity', 'color'),
+                color, r'ExpenseCategoryEntity', 'color'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'ExpenseCategoryEntity', 'createdAt'),
+                createdAt, r'ExpenseCategoryEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'ExpenseCategoryEntity', 'updatedAt'),
+                updatedAt, r'ExpenseCategoryEntity', 'updatedAt'),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, 'ExpenseCategoryEntity', 'archivedAt'),
+                archivedAt, r'ExpenseCategoryEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'ExpenseCategoryEntity', 'id'));
+                id, r'ExpenseCategoryEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

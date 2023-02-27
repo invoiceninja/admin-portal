@@ -321,11 +321,11 @@ class _$StaticDataListResponse extends StaticDataListResponse {
 
   factory _$StaticDataListResponse(
           [void Function(StaticDataListResponseBuilder) updates]) =>
-      (new StaticDataListResponseBuilder()..update(updates)).build();
+      (new StaticDataListResponseBuilder()..update(updates))._build();
 
   _$StaticDataListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'StaticDataListResponse', 'data');
+        data, r'StaticDataListResponse', 'data');
   }
 
   @override
@@ -346,12 +346,16 @@ class _$StaticDataListResponse extends StaticDataListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('StaticDataListResponse')
+    return (newBuiltValueToStringHelper(r'StaticDataListResponse')
           ..add('data', data))
         .toString();
   }
@@ -389,7 +393,9 @@ class StaticDataListResponseBuilder
   }
 
   @override
-  _$StaticDataListResponse build() {
+  StaticDataListResponse build() => _build();
+
+  _$StaticDataListResponse _build() {
     _$StaticDataListResponse _$result;
     try {
       _$result = _$v ?? new _$StaticDataListResponse._(data: data.build());
@@ -400,7 +406,7 @@ class StaticDataListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'StaticDataListResponse', _$failedField, e.toString());
+            r'StaticDataListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -415,11 +421,11 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
 
   factory _$StaticDataItemResponse(
           [void Function(StaticDataItemResponseBuilder) updates]) =>
-      (new StaticDataItemResponseBuilder()..update(updates)).build();
+      (new StaticDataItemResponseBuilder()..update(updates))._build();
 
   _$StaticDataItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'StaticDataItemResponse', 'data');
+        data, r'StaticDataItemResponse', 'data');
   }
 
   @override
@@ -440,12 +446,16 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('StaticDataItemResponse')
+    return (newBuiltValueToStringHelper(r'StaticDataItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -483,7 +493,9 @@ class StaticDataItemResponseBuilder
   }
 
   @override
-  _$StaticDataItemResponse build() {
+  StaticDataItemResponse build() => _build();
+
+  _$StaticDataItemResponse _build() {
     _$StaticDataItemResponse _$result;
     try {
       _$result = _$v ?? new _$StaticDataItemResponse._(data: data.build());
@@ -494,7 +506,7 @@ class StaticDataItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'StaticDataItemResponse', _$failedField, e.toString());
+            r'StaticDataItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -531,7 +543,7 @@ class _$StaticDataEntity extends StaticDataEntity {
 
   factory _$StaticDataEntity(
           [void Function(StaticDataEntityBuilder) updates]) =>
-      (new StaticDataEntityBuilder()..update(updates)).build();
+      (new StaticDataEntityBuilder()..update(updates))._build();
 
   _$StaticDataEntity._(
       {this.currencies,
@@ -548,28 +560,28 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.templates})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        currencies, 'StaticDataEntity', 'currencies');
-    BuiltValueNullFieldError.checkNotNull(sizes, 'StaticDataEntity', 'sizes');
+        currencies, r'StaticDataEntity', 'currencies');
+    BuiltValueNullFieldError.checkNotNull(sizes, r'StaticDataEntity', 'sizes');
     BuiltValueNullFieldError.checkNotNull(
-        industries, 'StaticDataEntity', 'industries');
+        industries, r'StaticDataEntity', 'industries');
     BuiltValueNullFieldError.checkNotNull(
-        timezones, 'StaticDataEntity', 'timezones');
+        timezones, r'StaticDataEntity', 'timezones');
     BuiltValueNullFieldError.checkNotNull(
-        gateways, 'StaticDataEntity', 'gateways');
+        gateways, r'StaticDataEntity', 'gateways');
     BuiltValueNullFieldError.checkNotNull(
-        dateFormats, 'StaticDataEntity', 'dateFormats');
+        dateFormats, r'StaticDataEntity', 'dateFormats');
     BuiltValueNullFieldError.checkNotNull(
-        datetimeFormats, 'StaticDataEntity', 'datetimeFormats');
+        datetimeFormats, r'StaticDataEntity', 'datetimeFormats');
     BuiltValueNullFieldError.checkNotNull(
-        languages, 'StaticDataEntity', 'languages');
+        languages, r'StaticDataEntity', 'languages');
     BuiltValueNullFieldError.checkNotNull(
-        paymentTypes, 'StaticDataEntity', 'paymentTypes');
+        paymentTypes, r'StaticDataEntity', 'paymentTypes');
     BuiltValueNullFieldError.checkNotNull(
-        countries, 'StaticDataEntity', 'countries');
+        countries, r'StaticDataEntity', 'countries');
     BuiltValueNullFieldError.checkNotNull(
-        invoiceStatus, 'StaticDataEntity', 'invoiceStatus');
+        invoiceStatus, r'StaticDataEntity', 'invoiceStatus');
     BuiltValueNullFieldError.checkNotNull(
-        templates, 'StaticDataEntity', 'templates');
+        templates, r'StaticDataEntity', 'templates');
   }
 
   @override
@@ -601,33 +613,27 @@ class _$StaticDataEntity extends StaticDataEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc($jc(0, currencies.hashCode),
-                                                sizes.hashCode),
-                                            industries.hashCode),
-                                        timezones.hashCode),
-                                    gateways.hashCode),
-                                dateFormats.hashCode),
-                            datetimeFormats.hashCode),
-                        languages.hashCode),
-                    paymentTypes.hashCode),
-                countries.hashCode),
-            invoiceStatus.hashCode),
-        templates.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, currencies.hashCode);
+    _$hash = $jc(_$hash, sizes.hashCode);
+    _$hash = $jc(_$hash, industries.hashCode);
+    _$hash = $jc(_$hash, timezones.hashCode);
+    _$hash = $jc(_$hash, gateways.hashCode);
+    _$hash = $jc(_$hash, dateFormats.hashCode);
+    _$hash = $jc(_$hash, datetimeFormats.hashCode);
+    _$hash = $jc(_$hash, languages.hashCode);
+    _$hash = $jc(_$hash, paymentTypes.hashCode);
+    _$hash = $jc(_$hash, countries.hashCode);
+    _$hash = $jc(_$hash, invoiceStatus.hashCode);
+    _$hash = $jc(_$hash, templates.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('StaticDataEntity')
+    return (newBuiltValueToStringHelper(r'StaticDataEntity')
           ..add('currencies', currencies)
           ..add('sizes', sizes)
           ..add('industries', industries)
@@ -753,7 +759,9 @@ class StaticDataEntityBuilder
   }
 
   @override
-  _$StaticDataEntity build() {
+  StaticDataEntity build() => _build();
+
+  _$StaticDataEntity _build() {
     _$StaticDataEntity _$result;
     try {
       _$result = _$v ??
@@ -799,7 +807,7 @@ class StaticDataEntityBuilder
         templates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'StaticDataEntity', _$failedField, e.toString());
+            r'StaticDataEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -815,11 +823,12 @@ class _$TemplateEntity extends TemplateEntity {
   final String body;
 
   factory _$TemplateEntity([void Function(TemplateEntityBuilder) updates]) =>
-      (new TemplateEntityBuilder()..update(updates)).build();
+      (new TemplateEntityBuilder()..update(updates))._build();
 
   _$TemplateEntity._({this.subject, this.body}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(subject, 'TemplateEntity', 'subject');
-    BuiltValueNullFieldError.checkNotNull(body, 'TemplateEntity', 'body');
+    BuiltValueNullFieldError.checkNotNull(
+        subject, r'TemplateEntity', 'subject');
+    BuiltValueNullFieldError.checkNotNull(body, r'TemplateEntity', 'body');
   }
 
   @override
@@ -841,12 +850,17 @@ class _$TemplateEntity extends TemplateEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, subject.hashCode), body.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, subject.hashCode);
+    _$hash = $jc(_$hash, body.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TemplateEntity')
+    return (newBuiltValueToStringHelper(r'TemplateEntity')
           ..add('subject', subject)
           ..add('body', body))
         .toString();
@@ -889,16 +903,18 @@ class TemplateEntityBuilder
   }
 
   @override
-  _$TemplateEntity build() {
+  TemplateEntity build() => _build();
+
+  _$TemplateEntity _build() {
     final _$result = _$v ??
         new _$TemplateEntity._(
             subject: BuiltValueNullFieldError.checkNotNull(
-                subject, 'TemplateEntity', 'subject'),
+                subject, r'TemplateEntity', 'subject'),
             body: BuiltValueNullFieldError.checkNotNull(
-                body, 'TemplateEntity', 'body'));
+                body, r'TemplateEntity', 'body'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

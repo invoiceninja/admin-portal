@@ -378,11 +378,11 @@ class _$TransactionListResponse extends TransactionListResponse {
 
   factory _$TransactionListResponse(
           [void Function(TransactionListResponseBuilder) updates]) =>
-      (new TransactionListResponseBuilder()..update(updates)).build();
+      (new TransactionListResponseBuilder()..update(updates))._build();
 
   _$TransactionListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TransactionListResponse', 'data');
+        data, r'TransactionListResponse', 'data');
   }
 
   @override
@@ -403,12 +403,16 @@ class _$TransactionListResponse extends TransactionListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionListResponse')
+    return (newBuiltValueToStringHelper(r'TransactionListResponse')
           ..add('data', data))
         .toString();
   }
@@ -447,7 +451,9 @@ class TransactionListResponseBuilder
   }
 
   @override
-  _$TransactionListResponse build() {
+  TransactionListResponse build() => _build();
+
+  _$TransactionListResponse _build() {
     _$TransactionListResponse _$result;
     try {
       _$result = _$v ?? new _$TransactionListResponse._(data: data.build());
@@ -458,7 +464,7 @@ class TransactionListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionListResponse', _$failedField, e.toString());
+            r'TransactionListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -473,11 +479,11 @@ class _$TransactionItemResponse extends TransactionItemResponse {
 
   factory _$TransactionItemResponse(
           [void Function(TransactionItemResponseBuilder) updates]) =>
-      (new TransactionItemResponseBuilder()..update(updates)).build();
+      (new TransactionItemResponseBuilder()..update(updates))._build();
 
   _$TransactionItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TransactionItemResponse', 'data');
+        data, r'TransactionItemResponse', 'data');
   }
 
   @override
@@ -498,12 +504,16 @@ class _$TransactionItemResponse extends TransactionItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionItemResponse')
+    return (newBuiltValueToStringHelper(r'TransactionItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -542,7 +552,9 @@ class TransactionItemResponseBuilder
   }
 
   @override
-  _$TransactionItemResponse build() {
+  TransactionItemResponse build() => _build();
+
+  _$TransactionItemResponse _build() {
     _$TransactionItemResponse _$result;
     try {
       _$result = _$v ?? new _$TransactionItemResponse._(data: data.build());
@@ -553,7 +565,7 @@ class TransactionItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionItemResponse', _$failedField, e.toString());
+            r'TransactionItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -618,7 +630,7 @@ class _$TransactionEntity extends TransactionEntity {
 
   factory _$TransactionEntity(
           [void Function(TransactionEntityBuilder) updates]) =>
-      (new TransactionEntityBuilder()..update(updates)).build();
+      (new TransactionEntityBuilder()..update(updates))._build();
 
   _$TransactionEntity._(
       {this.amount,
@@ -649,41 +661,41 @@ class _$TransactionEntity extends TransactionEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        amount, 'TransactionEntity', 'amount');
+        amount, r'TransactionEntity', 'amount');
     BuiltValueNullFieldError.checkNotNull(
-        currencyId, 'TransactionEntity', 'currencyId');
+        currencyId, r'TransactionEntity', 'currencyId');
     BuiltValueNullFieldError.checkNotNull(
-        category, 'TransactionEntity', 'category');
+        category, r'TransactionEntity', 'category');
     BuiltValueNullFieldError.checkNotNull(
-        baseType, 'TransactionEntity', 'baseType');
-    BuiltValueNullFieldError.checkNotNull(date, 'TransactionEntity', 'date');
+        baseType, r'TransactionEntity', 'baseType');
+    BuiltValueNullFieldError.checkNotNull(date, r'TransactionEntity', 'date');
     BuiltValueNullFieldError.checkNotNull(
-        bankAccountId, 'TransactionEntity', 'bankAccountId');
+        bankAccountId, r'TransactionEntity', 'bankAccountId');
     BuiltValueNullFieldError.checkNotNull(
-        description, 'TransactionEntity', 'description');
+        description, r'TransactionEntity', 'description');
     BuiltValueNullFieldError.checkNotNull(
-        statusId, 'TransactionEntity', 'statusId');
+        statusId, r'TransactionEntity', 'statusId');
     BuiltValueNullFieldError.checkNotNull(
-        categoryId, 'TransactionEntity', 'categoryId');
+        categoryId, r'TransactionEntity', 'categoryId');
     BuiltValueNullFieldError.checkNotNull(
-        invoiceIds, 'TransactionEntity', 'invoiceIds');
+        invoiceIds, r'TransactionEntity', 'invoiceIds');
     BuiltValueNullFieldError.checkNotNull(
-        paymentId, 'TransactionEntity', 'paymentId');
+        paymentId, r'TransactionEntity', 'paymentId');
     BuiltValueNullFieldError.checkNotNull(
-        expenseId, 'TransactionEntity', 'expenseId');
+        expenseId, r'TransactionEntity', 'expenseId');
     BuiltValueNullFieldError.checkNotNull(
-        vendorId, 'TransactionEntity', 'vendorId');
+        vendorId, r'TransactionEntity', 'vendorId');
     BuiltValueNullFieldError.checkNotNull(
-        transactionId, 'TransactionEntity', 'transactionId');
+        transactionId, r'TransactionEntity', 'transactionId');
     BuiltValueNullFieldError.checkNotNull(
-        transactionRuleId, 'TransactionEntity', 'transactionRuleId');
+        transactionRuleId, r'TransactionEntity', 'transactionRuleId');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'TransactionEntity', 'createdAt');
+        createdAt, r'TransactionEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'TransactionEntity', 'updatedAt');
+        updatedAt, r'TransactionEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'TransactionEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'TransactionEntity', 'id');
+        archivedAt, r'TransactionEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'TransactionEntity', 'id');
   }
 
   @override
@@ -729,49 +741,41 @@ class _$TransactionEntity extends TransactionEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), currencyId.hashCode), category.hashCode), baseType.hashCode), date.hashCode), bankAccountId.hashCode), description.hashCode),
-                                                                                statusId.hashCode),
-                                                                            categoryId.hashCode),
-                                                                        invoiceIds.hashCode),
-                                                                    paymentId.hashCode),
-                                                                expenseId.hashCode),
-                                                            vendorId.hashCode),
-                                                        transactionId.hashCode),
-                                                    transactionRuleId.hashCode),
-                                                pendingVendorId.hashCode),
-                                            pendingCategoryId.hashCode),
-                                        pendingExpenseId.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, amount.hashCode);
+    _$hash = $jc(_$hash, currencyId.hashCode);
+    _$hash = $jc(_$hash, category.hashCode);
+    _$hash = $jc(_$hash, baseType.hashCode);
+    _$hash = $jc(_$hash, date.hashCode);
+    _$hash = $jc(_$hash, bankAccountId.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, statusId.hashCode);
+    _$hash = $jc(_$hash, categoryId.hashCode);
+    _$hash = $jc(_$hash, invoiceIds.hashCode);
+    _$hash = $jc(_$hash, paymentId.hashCode);
+    _$hash = $jc(_$hash, expenseId.hashCode);
+    _$hash = $jc(_$hash, vendorId.hashCode);
+    _$hash = $jc(_$hash, transactionId.hashCode);
+    _$hash = $jc(_$hash, transactionRuleId.hashCode);
+    _$hash = $jc(_$hash, pendingVendorId.hashCode);
+    _$hash = $jc(_$hash, pendingCategoryId.hashCode);
+    _$hash = $jc(_$hash, pendingExpenseId.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionEntity')
+    return (newBuiltValueToStringHelper(r'TransactionEntity')
           ..add('amount', amount)
           ..add('currencyId', currencyId)
           ..add('category', category)
@@ -967,44 +971,46 @@ class TransactionEntityBuilder
   }
 
   @override
-  _$TransactionEntity build() {
+  TransactionEntity build() => _build();
+
+  _$TransactionEntity _build() {
     final _$result = _$v ??
         new _$TransactionEntity._(
             amount: BuiltValueNullFieldError.checkNotNull(
-                amount, 'TransactionEntity', 'amount'),
+                amount, r'TransactionEntity', 'amount'),
             currencyId: BuiltValueNullFieldError.checkNotNull(
-                currencyId, 'TransactionEntity', 'currencyId'),
+                currencyId, r'TransactionEntity', 'currencyId'),
             category: BuiltValueNullFieldError.checkNotNull(
-                category, 'TransactionEntity', 'category'),
+                category, r'TransactionEntity', 'category'),
             baseType: BuiltValueNullFieldError.checkNotNull(
-                baseType, 'TransactionEntity', 'baseType'),
+                baseType, r'TransactionEntity', 'baseType'),
             date: BuiltValueNullFieldError.checkNotNull(
-                date, 'TransactionEntity', 'date'),
+                date, r'TransactionEntity', 'date'),
             bankAccountId: BuiltValueNullFieldError.checkNotNull(
-                bankAccountId, 'TransactionEntity', 'bankAccountId'),
+                bankAccountId, r'TransactionEntity', 'bankAccountId'),
             description: BuiltValueNullFieldError.checkNotNull(
-                description, 'TransactionEntity', 'description'),
+                description, r'TransactionEntity', 'description'),
             statusId: BuiltValueNullFieldError.checkNotNull(
-                statusId, 'TransactionEntity', 'statusId'),
+                statusId, r'TransactionEntity', 'statusId'),
             categoryId:
-                BuiltValueNullFieldError.checkNotNull(categoryId, 'TransactionEntity', 'categoryId'),
-            invoiceIds: BuiltValueNullFieldError.checkNotNull(invoiceIds, 'TransactionEntity', 'invoiceIds'),
-            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, 'TransactionEntity', 'paymentId'),
-            expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, 'TransactionEntity', 'expenseId'),
-            vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, 'TransactionEntity', 'vendorId'),
-            transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, 'TransactionEntity', 'transactionId'),
-            transactionRuleId: BuiltValueNullFieldError.checkNotNull(transactionRuleId, 'TransactionEntity', 'transactionRuleId'),
+                BuiltValueNullFieldError.checkNotNull(categoryId, r'TransactionEntity', 'categoryId'),
+            invoiceIds: BuiltValueNullFieldError.checkNotNull(invoiceIds, r'TransactionEntity', 'invoiceIds'),
+            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'TransactionEntity', 'paymentId'),
+            expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, r'TransactionEntity', 'expenseId'),
+            vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, r'TransactionEntity', 'vendorId'),
+            transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, r'TransactionEntity', 'transactionId'),
+            transactionRuleId: BuiltValueNullFieldError.checkNotNull(transactionRuleId, r'TransactionEntity', 'transactionRuleId'),
             pendingVendorId: pendingVendorId,
             pendingCategoryId: pendingCategoryId,
             pendingExpenseId: pendingExpenseId,
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'TransactionEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'TransactionEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TransactionEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'TransactionEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'TransactionEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'TransactionEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'TransactionEntity', 'id'));
     replace(_$result);
     return _$result;
   }
@@ -1018,12 +1024,12 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
 
   factory _$TransactionStatusEntity(
           [void Function(TransactionStatusEntityBuilder) updates]) =>
-      (new TransactionStatusEntityBuilder()..update(updates)).build();
+      (new TransactionStatusEntityBuilder()..update(updates))._build();
 
   _$TransactionStatusEntity._({this.id, this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'TransactionStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(id, r'TransactionStatusEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
-        name, 'TransactionStatusEntity', 'name');
+        name, r'TransactionStatusEntity', 'name');
   }
 
   @override
@@ -1046,12 +1052,17 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionStatusEntity')
+    return (newBuiltValueToStringHelper(r'TransactionStatusEntity')
           ..add('id', id)
           ..add('name', name))
         .toString();
@@ -1095,16 +1106,18 @@ class TransactionStatusEntityBuilder
   }
 
   @override
-  _$TransactionStatusEntity build() {
+  TransactionStatusEntity build() => _build();
+
+  _$TransactionStatusEntity _build() {
     final _$result = _$v ??
         new _$TransactionStatusEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'TransactionStatusEntity', 'id'),
+                id, r'TransactionStatusEntity', 'id'),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'TransactionStatusEntity', 'name'));
+                name, r'TransactionStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

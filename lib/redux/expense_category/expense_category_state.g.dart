@@ -168,11 +168,12 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
 
   factory _$ExpenseCategoryState(
           [void Function(ExpenseCategoryStateBuilder) updates]) =>
-      (new ExpenseCategoryStateBuilder()..update(updates)).build();
+      (new ExpenseCategoryStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'ExpenseCategoryState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'ExpenseCategoryState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'ExpenseCategoryState', 'map');
+    BuiltValueNullFieldError.checkNotNull(
+        list, r'ExpenseCategoryState', 'list');
   }
 
   @override
@@ -195,12 +196,17 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryState')
+    return (newBuiltValueToStringHelper(r'ExpenseCategoryState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -244,7 +250,9 @@ class ExpenseCategoryStateBuilder
   }
 
   @override
-  _$ExpenseCategoryState build() {
+  ExpenseCategoryState build() => _build();
+
+  _$ExpenseCategoryState _build() {
     _$ExpenseCategoryState _$result;
     try {
       _$result = _$v ??
@@ -258,7 +266,7 @@ class ExpenseCategoryStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ExpenseCategoryState', _$failedField, e.toString());
+            r'ExpenseCategoryState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -285,7 +293,7 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
 
   factory _$ExpenseCategoryUIState(
           [void Function(ExpenseCategoryUIStateBuilder) updates]) =>
-      (new ExpenseCategoryUIStateBuilder()..update(updates)).build();
+      (new ExpenseCategoryUIStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryUIState._(
       {this.editing,
@@ -297,9 +305,9 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'ExpenseCategoryUIState', 'listUIState');
+        listUIState, r'ExpenseCategoryUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'ExpenseCategoryUIState', 'tabIndex');
+        tabIndex, r'ExpenseCategoryUIState', 'tabIndex');
   }
 
   @override
@@ -327,21 +335,22 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ExpenseCategoryUIState')
+    return (newBuiltValueToStringHelper(r'ExpenseCategoryUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -421,7 +430,9 @@ class ExpenseCategoryUIStateBuilder
   }
 
   @override
-  _$ExpenseCategoryUIState build() {
+  ExpenseCategoryUIState build() => _build();
+
+  _$ExpenseCategoryUIState _build() {
     _$ExpenseCategoryUIState _$result;
     try {
       _$result = _$v ??
@@ -431,7 +442,7 @@ class ExpenseCategoryUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'ExpenseCategoryUIState', 'tabIndex'),
+                  tabIndex, r'ExpenseCategoryUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -443,7 +454,7 @@ class ExpenseCategoryUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ExpenseCategoryUIState', _$failedField, e.toString());
+            r'ExpenseCategoryUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -452,4 +463,4 @@ class ExpenseCategoryUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

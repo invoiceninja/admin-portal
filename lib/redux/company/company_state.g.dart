@@ -343,7 +343,7 @@ class _$UserCompanyState extends UserCompanyState {
 
   factory _$UserCompanyState(
           [void Function(UserCompanyStateBuilder) updates]) =>
-      (new UserCompanyStateBuilder()..update(updates)).build();
+      (new UserCompanyStateBuilder()..update(updates))._build();
 
   _$UserCompanyState._(
       {this.lastUpdated,
@@ -379,65 +379,65 @@ class _$UserCompanyState extends UserCompanyState {
       this.groupState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        lastUpdated, 'UserCompanyState', 'lastUpdated');
+        lastUpdated, r'UserCompanyState', 'lastUpdated');
     BuiltValueNullFieldError.checkNotNull(
-        documentState, 'UserCompanyState', 'documentState');
+        documentState, r'UserCompanyState', 'documentState');
     BuiltValueNullFieldError.checkNotNull(
-        productState, 'UserCompanyState', 'productState');
+        productState, r'UserCompanyState', 'productState');
     BuiltValueNullFieldError.checkNotNull(
-        clientState, 'UserCompanyState', 'clientState');
+        clientState, r'UserCompanyState', 'clientState');
     BuiltValueNullFieldError.checkNotNull(
-        invoiceState, 'UserCompanyState', 'invoiceState');
+        invoiceState, r'UserCompanyState', 'invoiceState');
     BuiltValueNullFieldError.checkNotNull(
-        expenseState, 'UserCompanyState', 'expenseState');
+        expenseState, r'UserCompanyState', 'expenseState');
     BuiltValueNullFieldError.checkNotNull(
-        vendorState, 'UserCompanyState', 'vendorState');
+        vendorState, r'UserCompanyState', 'vendorState');
     BuiltValueNullFieldError.checkNotNull(
-        taskState, 'UserCompanyState', 'taskState');
+        taskState, r'UserCompanyState', 'taskState');
     BuiltValueNullFieldError.checkNotNull(
-        projectState, 'UserCompanyState', 'projectState');
+        projectState, r'UserCompanyState', 'projectState');
     BuiltValueNullFieldError.checkNotNull(
-        paymentState, 'UserCompanyState', 'paymentState');
+        paymentState, r'UserCompanyState', 'paymentState');
     BuiltValueNullFieldError.checkNotNull(
-        quoteState, 'UserCompanyState', 'quoteState');
+        quoteState, r'UserCompanyState', 'quoteState');
     BuiltValueNullFieldError.checkNotNull(
-        scheduleState, 'UserCompanyState', 'scheduleState');
+        scheduleState, r'UserCompanyState', 'scheduleState');
     BuiltValueNullFieldError.checkNotNull(
-        transactionRuleState, 'UserCompanyState', 'transactionRuleState');
+        transactionRuleState, r'UserCompanyState', 'transactionRuleState');
     BuiltValueNullFieldError.checkNotNull(
-        transactionState, 'UserCompanyState', 'transactionState');
+        transactionState, r'UserCompanyState', 'transactionState');
     BuiltValueNullFieldError.checkNotNull(
-        bankAccountState, 'UserCompanyState', 'bankAccountState');
+        bankAccountState, r'UserCompanyState', 'bankAccountState');
     BuiltValueNullFieldError.checkNotNull(
-        purchaseOrderState, 'UserCompanyState', 'purchaseOrderState');
+        purchaseOrderState, r'UserCompanyState', 'purchaseOrderState');
     BuiltValueNullFieldError.checkNotNull(
-        recurringExpenseState, 'UserCompanyState', 'recurringExpenseState');
+        recurringExpenseState, r'UserCompanyState', 'recurringExpenseState');
     BuiltValueNullFieldError.checkNotNull(
-        subscriptionState, 'UserCompanyState', 'subscriptionState');
+        subscriptionState, r'UserCompanyState', 'subscriptionState');
     BuiltValueNullFieldError.checkNotNull(
-        taskStatusState, 'UserCompanyState', 'taskStatusState');
+        taskStatusState, r'UserCompanyState', 'taskStatusState');
     BuiltValueNullFieldError.checkNotNull(
-        expenseCategoryState, 'UserCompanyState', 'expenseCategoryState');
+        expenseCategoryState, r'UserCompanyState', 'expenseCategoryState');
     BuiltValueNullFieldError.checkNotNull(
-        recurringInvoiceState, 'UserCompanyState', 'recurringInvoiceState');
+        recurringInvoiceState, r'UserCompanyState', 'recurringInvoiceState');
     BuiltValueNullFieldError.checkNotNull(
-        webhookState, 'UserCompanyState', 'webhookState');
+        webhookState, r'UserCompanyState', 'webhookState');
     BuiltValueNullFieldError.checkNotNull(
-        tokenState, 'UserCompanyState', 'tokenState');
+        tokenState, r'UserCompanyState', 'tokenState');
     BuiltValueNullFieldError.checkNotNull(
-        paymentTermState, 'UserCompanyState', 'paymentTermState');
+        paymentTermState, r'UserCompanyState', 'paymentTermState');
     BuiltValueNullFieldError.checkNotNull(
-        designState, 'UserCompanyState', 'designState');
+        designState, r'UserCompanyState', 'designState');
     BuiltValueNullFieldError.checkNotNull(
-        creditState, 'UserCompanyState', 'creditState');
+        creditState, r'UserCompanyState', 'creditState');
     BuiltValueNullFieldError.checkNotNull(
-        userState, 'UserCompanyState', 'userState');
+        userState, r'UserCompanyState', 'userState');
     BuiltValueNullFieldError.checkNotNull(
-        taxRateState, 'UserCompanyState', 'taxRateState');
+        taxRateState, r'UserCompanyState', 'taxRateState');
     BuiltValueNullFieldError.checkNotNull(
-        companyGatewayState, 'UserCompanyState', 'companyGatewayState');
+        companyGatewayState, r'UserCompanyState', 'companyGatewayState');
     BuiltValueNullFieldError.checkNotNull(
-        groupState, 'UserCompanyState', 'groupState');
+        groupState, r'UserCompanyState', 'groupState');
   }
 
   @override
@@ -488,49 +488,46 @@ class _$UserCompanyState extends UserCompanyState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdated.hashCode), userCompany.hashCode), documentState.hashCode), productState.hashCode), clientState.hashCode), invoiceState.hashCode), expenseState.hashCode), vendorState.hashCode), taskState.hashCode), projectState.hashCode), paymentState.hashCode), quoteState.hashCode),
-                                                                                scheduleState.hashCode),
-                                                                            transactionRuleState.hashCode),
-                                                                        transactionState.hashCode),
-                                                                    bankAccountState.hashCode),
-                                                                purchaseOrderState.hashCode),
-                                                            recurringExpenseState.hashCode),
-                                                        subscriptionState.hashCode),
-                                                    taskStatusState.hashCode),
-                                                expenseCategoryState.hashCode),
-                                            recurringInvoiceState.hashCode),
-                                        webhookState.hashCode),
-                                    tokenState.hashCode),
-                                paymentTermState.hashCode),
-                            designState.hashCode),
-                        creditState.hashCode),
-                    userState.hashCode),
-                taxRateState.hashCode),
-            companyGatewayState.hashCode),
-        groupState.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, lastUpdated.hashCode);
+    _$hash = $jc(_$hash, userCompany.hashCode);
+    _$hash = $jc(_$hash, documentState.hashCode);
+    _$hash = $jc(_$hash, productState.hashCode);
+    _$hash = $jc(_$hash, clientState.hashCode);
+    _$hash = $jc(_$hash, invoiceState.hashCode);
+    _$hash = $jc(_$hash, expenseState.hashCode);
+    _$hash = $jc(_$hash, vendorState.hashCode);
+    _$hash = $jc(_$hash, taskState.hashCode);
+    _$hash = $jc(_$hash, projectState.hashCode);
+    _$hash = $jc(_$hash, paymentState.hashCode);
+    _$hash = $jc(_$hash, quoteState.hashCode);
+    _$hash = $jc(_$hash, scheduleState.hashCode);
+    _$hash = $jc(_$hash, transactionRuleState.hashCode);
+    _$hash = $jc(_$hash, transactionState.hashCode);
+    _$hash = $jc(_$hash, bankAccountState.hashCode);
+    _$hash = $jc(_$hash, purchaseOrderState.hashCode);
+    _$hash = $jc(_$hash, recurringExpenseState.hashCode);
+    _$hash = $jc(_$hash, subscriptionState.hashCode);
+    _$hash = $jc(_$hash, taskStatusState.hashCode);
+    _$hash = $jc(_$hash, expenseCategoryState.hashCode);
+    _$hash = $jc(_$hash, recurringInvoiceState.hashCode);
+    _$hash = $jc(_$hash, webhookState.hashCode);
+    _$hash = $jc(_$hash, tokenState.hashCode);
+    _$hash = $jc(_$hash, paymentTermState.hashCode);
+    _$hash = $jc(_$hash, designState.hashCode);
+    _$hash = $jc(_$hash, creditState.hashCode);
+    _$hash = $jc(_$hash, userState.hashCode);
+    _$hash = $jc(_$hash, taxRateState.hashCode);
+    _$hash = $jc(_$hash, companyGatewayState.hashCode);
+    _$hash = $jc(_$hash, groupState.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserCompanyState')
+    return (newBuiltValueToStringHelper(r'UserCompanyState')
           ..add('lastUpdated', lastUpdated)
           ..add('userCompany', userCompany)
           ..add('documentState', documentState)
@@ -807,13 +804,15 @@ class UserCompanyStateBuilder
   }
 
   @override
-  _$UserCompanyState build() {
+  UserCompanyState build() => _build();
+
+  _$UserCompanyState _build() {
     _$UserCompanyState _$result;
     try {
       _$result = _$v ??
           new _$UserCompanyState._(
               lastUpdated: BuiltValueNullFieldError.checkNotNull(
-                  lastUpdated, 'UserCompanyState', 'lastUpdated'),
+                  lastUpdated, r'UserCompanyState', 'lastUpdated'),
               userCompany: _userCompany?.build(),
               documentState: documentState.build(),
               productState: productState.build(),
@@ -909,7 +908,7 @@ class UserCompanyStateBuilder
         groupState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserCompanyState', _$failedField, e.toString());
+            r'UserCompanyState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -918,4 +917,4 @@ class UserCompanyStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

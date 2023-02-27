@@ -164,11 +164,11 @@ class _$VendorState extends VendorState {
   final BuiltList<String> list;
 
   factory _$VendorState([void Function(VendorStateBuilder) updates]) =>
-      (new VendorStateBuilder()..update(updates)).build();
+      (new VendorStateBuilder()..update(updates))._build();
 
   _$VendorState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'VendorState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'VendorState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'VendorState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'VendorState', 'list');
   }
 
   @override
@@ -187,12 +187,17 @@ class _$VendorState extends VendorState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorState')
+    return (newBuiltValueToStringHelper(r'VendorState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -235,7 +240,9 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   }
 
   @override
-  _$VendorState build() {
+  VendorState build() => _build();
+
+  _$VendorState _build() {
     _$VendorState _$result;
     try {
       _$result =
@@ -249,7 +256,7 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VendorState', _$failedField, e.toString());
+            r'VendorState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -277,7 +284,7 @@ class _$VendorUIState extends VendorUIState {
   final Completer<Null> cancelCompleter;
 
   factory _$VendorUIState([void Function(VendorUIStateBuilder) updates]) =>
-      (new VendorUIStateBuilder()..update(updates)).build();
+      (new VendorUIStateBuilder()..update(updates))._build();
 
   _$VendorUIState._(
       {this.editing,
@@ -290,9 +297,9 @@ class _$VendorUIState extends VendorUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'VendorUIState', 'listUIState');
+        listUIState, r'VendorUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'VendorUIState', 'tabIndex');
+        tabIndex, r'VendorUIState', 'tabIndex');
   }
 
   @override
@@ -319,25 +326,23 @@ class _$VendorUIState extends VendorUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc(0, editing.hashCode),
-                                editingContact.hashCode),
-                            listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, editingContact.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorUIState')
+    return (newBuiltValueToStringHelper(r'VendorUIState')
           ..add('editing', editing)
           ..add('editingContact', editingContact)
           ..add('listUIState', listUIState)
@@ -424,7 +429,9 @@ class VendorUIStateBuilder
   }
 
   @override
-  _$VendorUIState build() {
+  VendorUIState build() => _build();
+
+  _$VendorUIState _build() {
     _$VendorUIState _$result;
     try {
       _$result = _$v ??
@@ -435,7 +442,7 @@ class VendorUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'VendorUIState', 'tabIndex'),
+                  tabIndex, r'VendorUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -449,7 +456,7 @@ class VendorUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VendorUIState', _$failedField, e.toString());
+            r'VendorUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -458,4 +465,4 @@ class VendorUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

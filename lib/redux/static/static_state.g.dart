@@ -188,7 +188,7 @@ class _$StaticState extends StaticState {
   final BuiltMap<String, TemplateEntity> templateMap;
 
   factory _$StaticState([void Function(StaticStateBuilder) updates]) =>
-      (new StaticStateBuilder()..update(updates)).build();
+      (new StaticStateBuilder()..update(updates))._build();
 
   _$StaticState._(
       {this.updatedAt,
@@ -204,24 +204,24 @@ class _$StaticState extends StaticState {
       this.templateMap})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        currencyMap, 'StaticState', 'currencyMap');
-    BuiltValueNullFieldError.checkNotNull(sizeMap, 'StaticState', 'sizeMap');
+        currencyMap, r'StaticState', 'currencyMap');
+    BuiltValueNullFieldError.checkNotNull(sizeMap, r'StaticState', 'sizeMap');
     BuiltValueNullFieldError.checkNotNull(
-        gatewayMap, 'StaticState', 'gatewayMap');
+        gatewayMap, r'StaticState', 'gatewayMap');
     BuiltValueNullFieldError.checkNotNull(
-        industryMap, 'StaticState', 'industryMap');
+        industryMap, r'StaticState', 'industryMap');
     BuiltValueNullFieldError.checkNotNull(
-        timezoneMap, 'StaticState', 'timezoneMap');
+        timezoneMap, r'StaticState', 'timezoneMap');
     BuiltValueNullFieldError.checkNotNull(
-        dateFormatMap, 'StaticState', 'dateFormatMap');
+        dateFormatMap, r'StaticState', 'dateFormatMap');
     BuiltValueNullFieldError.checkNotNull(
-        languageMap, 'StaticState', 'languageMap');
+        languageMap, r'StaticState', 'languageMap');
     BuiltValueNullFieldError.checkNotNull(
-        paymentTypeMap, 'StaticState', 'paymentTypeMap');
+        paymentTypeMap, r'StaticState', 'paymentTypeMap');
     BuiltValueNullFieldError.checkNotNull(
-        countryMap, 'StaticState', 'countryMap');
+        countryMap, r'StaticState', 'countryMap');
     BuiltValueNullFieldError.checkNotNull(
-        templateMap, 'StaticState', 'templateMap');
+        templateMap, r'StaticState', 'templateMap');
   }
 
   @override
@@ -251,31 +251,26 @@ class _$StaticState extends StaticState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, updatedAt.hashCode),
-                                            currencyMap.hashCode),
-                                        sizeMap.hashCode),
-                                    gatewayMap.hashCode),
-                                industryMap.hashCode),
-                            timezoneMap.hashCode),
-                        dateFormatMap.hashCode),
-                    languageMap.hashCode),
-                paymentTypeMap.hashCode),
-            countryMap.hashCode),
-        templateMap.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, currencyMap.hashCode);
+    _$hash = $jc(_$hash, sizeMap.hashCode);
+    _$hash = $jc(_$hash, gatewayMap.hashCode);
+    _$hash = $jc(_$hash, industryMap.hashCode);
+    _$hash = $jc(_$hash, timezoneMap.hashCode);
+    _$hash = $jc(_$hash, dateFormatMap.hashCode);
+    _$hash = $jc(_$hash, languageMap.hashCode);
+    _$hash = $jc(_$hash, paymentTypeMap.hashCode);
+    _$hash = $jc(_$hash, countryMap.hashCode);
+    _$hash = $jc(_$hash, templateMap.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('StaticState')
+    return (newBuiltValueToStringHelper(r'StaticState')
           ..add('updatedAt', updatedAt)
           ..add('currencyMap', currencyMap)
           ..add('sizeMap', sizeMap)
@@ -391,7 +386,9 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   }
 
   @override
-  _$StaticState build() {
+  StaticState build() => _build();
+
+  _$StaticState _build() {
     _$StaticState _$result;
     try {
       _$result = _$v ??
@@ -432,7 +429,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         templateMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'StaticState', _$failedField, e.toString());
+            r'StaticState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -441,4 +438,4 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

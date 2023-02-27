@@ -168,11 +168,12 @@ class _$TransactionRuleState extends TransactionRuleState {
 
   factory _$TransactionRuleState(
           [void Function(TransactionRuleStateBuilder) updates]) =>
-      (new TransactionRuleStateBuilder()..update(updates)).build();
+      (new TransactionRuleStateBuilder()..update(updates))._build();
 
   _$TransactionRuleState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'TransactionRuleState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'TransactionRuleState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'TransactionRuleState', 'map');
+    BuiltValueNullFieldError.checkNotNull(
+        list, r'TransactionRuleState', 'list');
   }
 
   @override
@@ -195,12 +196,17 @@ class _$TransactionRuleState extends TransactionRuleState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleState')
+    return (newBuiltValueToStringHelper(r'TransactionRuleState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -244,7 +250,9 @@ class TransactionRuleStateBuilder
   }
 
   @override
-  _$TransactionRuleState build() {
+  TransactionRuleState build() => _build();
+
+  _$TransactionRuleState _build() {
     _$TransactionRuleState _$result;
     try {
       _$result = _$v ??
@@ -258,7 +266,7 @@ class TransactionRuleStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionRuleState', _$failedField, e.toString());
+            r'TransactionRuleState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -285,7 +293,7 @@ class _$TransactionRuleUIState extends TransactionRuleUIState {
 
   factory _$TransactionRuleUIState(
           [void Function(TransactionRuleUIStateBuilder) updates]) =>
-      (new TransactionRuleUIStateBuilder()..update(updates)).build();
+      (new TransactionRuleUIStateBuilder()..update(updates))._build();
 
   _$TransactionRuleUIState._(
       {this.editing,
@@ -297,9 +305,9 @@ class _$TransactionRuleUIState extends TransactionRuleUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'TransactionRuleUIState', 'listUIState');
+        listUIState, r'TransactionRuleUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'TransactionRuleUIState', 'tabIndex');
+        tabIndex, r'TransactionRuleUIState', 'tabIndex');
   }
 
   @override
@@ -327,21 +335,22 @@ class _$TransactionRuleUIState extends TransactionRuleUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleUIState')
+    return (newBuiltValueToStringHelper(r'TransactionRuleUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -421,7 +430,9 @@ class TransactionRuleUIStateBuilder
   }
 
   @override
-  _$TransactionRuleUIState build() {
+  TransactionRuleUIState build() => _build();
+
+  _$TransactionRuleUIState _build() {
     _$TransactionRuleUIState _$result;
     try {
       _$result = _$v ??
@@ -431,7 +442,7 @@ class TransactionRuleUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'TransactionRuleUIState', 'tabIndex'),
+                  tabIndex, r'TransactionRuleUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -443,7 +454,7 @@ class TransactionRuleUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionRuleUIState', _$failedField, e.toString());
+            r'TransactionRuleUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -452,4 +463,4 @@ class TransactionRuleUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -260,7 +260,7 @@ IconData getSettingIcon(String section) {
     case kSettingsTasks:
     case kSettingsTaskStatuses:
       return getEntityIcon(EntityType.task);
-    case kSettingsSubscriptions:
+    case kSettingsPaymentLinks:
       return getEntityIcon(EntityType.subscription);
     case kSettingsSchedules:
       return getEntityIcon(EntityType.schedule);

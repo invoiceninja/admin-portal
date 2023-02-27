@@ -172,7 +172,7 @@ class _$ListUIState extends ListUIState {
   final BuiltList<String> selectedIds;
 
   factory _$ListUIState([void Function(ListUIStateBuilder) updates]) =>
-      (new ListUIStateBuilder()..update(updates)).build();
+      (new ListUIStateBuilder()..update(updates))._build();
 
   _$ListUIState._(
       {this.filter,
@@ -188,23 +188,23 @@ class _$ListUIState extends ListUIState {
       this.selectedIds})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, 'ListUIState', 'filterClearedAt');
+        filterClearedAt, r'ListUIState', 'filterClearedAt');
     BuiltValueNullFieldError.checkNotNull(
-        sortField, 'ListUIState', 'sortField');
+        sortField, r'ListUIState', 'sortField');
     BuiltValueNullFieldError.checkNotNull(
-        sortAscending, 'ListUIState', 'sortAscending');
+        sortAscending, r'ListUIState', 'sortAscending');
     BuiltValueNullFieldError.checkNotNull(
-        stateFilters, 'ListUIState', 'stateFilters');
+        stateFilters, r'ListUIState', 'stateFilters');
     BuiltValueNullFieldError.checkNotNull(
-        statusFilters, 'ListUIState', 'statusFilters');
+        statusFilters, r'ListUIState', 'statusFilters');
     BuiltValueNullFieldError.checkNotNull(
-        custom1Filters, 'ListUIState', 'custom1Filters');
+        custom1Filters, r'ListUIState', 'custom1Filters');
     BuiltValueNullFieldError.checkNotNull(
-        custom2Filters, 'ListUIState', 'custom2Filters');
+        custom2Filters, r'ListUIState', 'custom2Filters');
     BuiltValueNullFieldError.checkNotNull(
-        custom3Filters, 'ListUIState', 'custom3Filters');
+        custom3Filters, r'ListUIState', 'custom3Filters');
     BuiltValueNullFieldError.checkNotNull(
-        custom4Filters, 'ListUIState', 'custom4Filters');
+        custom4Filters, r'ListUIState', 'custom4Filters');
   }
 
   @override
@@ -234,31 +234,26 @@ class _$ListUIState extends ListUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, filter.hashCode),
-                                            filterClearedAt.hashCode),
-                                        sortField.hashCode),
-                                    sortAscending.hashCode),
-                                stateFilters.hashCode),
-                            statusFilters.hashCode),
-                        custom1Filters.hashCode),
-                    custom2Filters.hashCode),
-                custom3Filters.hashCode),
-            custom4Filters.hashCode),
-        selectedIds.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, filter.hashCode);
+    _$hash = $jc(_$hash, filterClearedAt.hashCode);
+    _$hash = $jc(_$hash, sortField.hashCode);
+    _$hash = $jc(_$hash, sortAscending.hashCode);
+    _$hash = $jc(_$hash, stateFilters.hashCode);
+    _$hash = $jc(_$hash, statusFilters.hashCode);
+    _$hash = $jc(_$hash, custom1Filters.hashCode);
+    _$hash = $jc(_$hash, custom2Filters.hashCode);
+    _$hash = $jc(_$hash, custom3Filters.hashCode);
+    _$hash = $jc(_$hash, custom4Filters.hashCode);
+    _$hash = $jc(_$hash, selectedIds.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ListUIState')
+    return (newBuiltValueToStringHelper(r'ListUIState')
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
           ..add('sortField', sortField)
@@ -370,18 +365,20 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   }
 
   @override
-  _$ListUIState build() {
+  ListUIState build() => _build();
+
+  _$ListUIState _build() {
     _$ListUIState _$result;
     try {
       _$result = _$v ??
           new _$ListUIState._(
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, 'ListUIState', 'filterClearedAt'),
+                  filterClearedAt, r'ListUIState', 'filterClearedAt'),
               sortField: BuiltValueNullFieldError.checkNotNull(
-                  sortField, 'ListUIState', 'sortField'),
+                  sortField, r'ListUIState', 'sortField'),
               sortAscending: BuiltValueNullFieldError.checkNotNull(
-                  sortAscending, 'ListUIState', 'sortAscending'),
+                  sortAscending, r'ListUIState', 'sortAscending'),
               stateFilters: stateFilters.build(),
               statusFilters: statusFilters.build(),
               custom1Filters: custom1Filters.build(),
@@ -408,7 +405,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
         _selectedIds?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ListUIState', _$failedField, e.toString());
+            r'ListUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -417,4 +414,4 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

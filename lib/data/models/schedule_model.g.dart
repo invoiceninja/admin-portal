@@ -344,10 +344,11 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
   factory _$ScheduleListResponse(
           [void Function(ScheduleListResponseBuilder) updates]) =>
-      (new ScheduleListResponseBuilder()..update(updates)).build();
+      (new ScheduleListResponseBuilder()..update(updates))._build();
 
   _$ScheduleListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ScheduleListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(
+        data, r'ScheduleListResponse', 'data');
   }
 
   @override
@@ -368,12 +369,16 @@ class _$ScheduleListResponse extends ScheduleListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ScheduleListResponse')
+    return (newBuiltValueToStringHelper(r'ScheduleListResponse')
           ..add('data', data))
         .toString();
   }
@@ -411,7 +416,9 @@ class ScheduleListResponseBuilder
   }
 
   @override
-  _$ScheduleListResponse build() {
+  ScheduleListResponse build() => _build();
+
+  _$ScheduleListResponse _build() {
     _$ScheduleListResponse _$result;
     try {
       _$result = _$v ?? new _$ScheduleListResponse._(data: data.build());
@@ -422,7 +429,7 @@ class ScheduleListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ScheduleListResponse', _$failedField, e.toString());
+            r'ScheduleListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -437,10 +444,11 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
   factory _$ScheduleItemResponse(
           [void Function(ScheduleItemResponseBuilder) updates]) =>
-      (new ScheduleItemResponseBuilder()..update(updates)).build();
+      (new ScheduleItemResponseBuilder()..update(updates))._build();
 
   _$ScheduleItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ScheduleItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(
+        data, r'ScheduleItemResponse', 'data');
   }
 
   @override
@@ -461,12 +469,16 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ScheduleItemResponse')
+    return (newBuiltValueToStringHelper(r'ScheduleItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -504,7 +516,9 @@ class ScheduleItemResponseBuilder
   }
 
   @override
-  _$ScheduleItemResponse build() {
+  ScheduleItemResponse build() => _build();
+
+  _$ScheduleItemResponse _build() {
     _$ScheduleItemResponse _$result;
     try {
       _$result = _$v ?? new _$ScheduleItemResponse._(data: data.build());
@@ -515,7 +529,7 @@ class ScheduleItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ScheduleItemResponse', _$failedField, e.toString());
+            r'ScheduleItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -557,7 +571,7 @@ class _$ScheduleEntity extends ScheduleEntity {
   final String id;
 
   factory _$ScheduleEntity([void Function(ScheduleEntityBuilder) updates]) =>
-      (new ScheduleEntityBuilder()..update(updates)).build();
+      (new ScheduleEntityBuilder()..update(updates))._build();
 
   _$ScheduleEntity._(
       {this.name,
@@ -576,25 +590,26 @@ class _$ScheduleEntity extends ScheduleEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'ScheduleEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(name, r'ScheduleEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        frequencyId, 'ScheduleEntity', 'frequencyId');
-    BuiltValueNullFieldError.checkNotNull(nextRun, 'ScheduleEntity', 'nextRun');
+        frequencyId, r'ScheduleEntity', 'frequencyId');
     BuiltValueNullFieldError.checkNotNull(
-        template, 'ScheduleEntity', 'template');
+        nextRun, r'ScheduleEntity', 'nextRun');
     BuiltValueNullFieldError.checkNotNull(
-        isPaused, 'ScheduleEntity', 'isPaused');
+        template, r'ScheduleEntity', 'template');
     BuiltValueNullFieldError.checkNotNull(
-        remainingCycles, 'ScheduleEntity', 'remainingCycles');
+        isPaused, r'ScheduleEntity', 'isPaused');
     BuiltValueNullFieldError.checkNotNull(
-        parameters, 'ScheduleEntity', 'parameters');
+        remainingCycles, r'ScheduleEntity', 'remainingCycles');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ScheduleEntity', 'createdAt');
+        parameters, r'ScheduleEntity', 'parameters');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ScheduleEntity', 'updatedAt');
+        createdAt, r'ScheduleEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ScheduleEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ScheduleEntity', 'id');
+        updatedAt, r'ScheduleEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, r'ScheduleEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'ScheduleEntity', 'id');
   }
 
   @override
@@ -629,42 +644,30 @@ class _$ScheduleEntity extends ScheduleEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(0,
-                                                                name.hashCode),
-                                                            frequencyId
-                                                                .hashCode),
-                                                        nextRun.hashCode),
-                                                    template.hashCode),
-                                                isPaused.hashCode),
-                                            remainingCycles.hashCode),
-                                        parameters.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, frequencyId.hashCode);
+    _$hash = $jc(_$hash, nextRun.hashCode);
+    _$hash = $jc(_$hash, template.hashCode);
+    _$hash = $jc(_$hash, isPaused.hashCode);
+    _$hash = $jc(_$hash, remainingCycles.hashCode);
+    _$hash = $jc(_$hash, parameters.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ScheduleEntity')
+    return (newBuiltValueToStringHelper(r'ScheduleEntity')
           ..add('name', name)
           ..add('frequencyId', frequencyId)
           ..add('nextRun', nextRun)
@@ -790,35 +793,37 @@ class ScheduleEntityBuilder
   }
 
   @override
-  _$ScheduleEntity build() {
+  ScheduleEntity build() => _build();
+
+  _$ScheduleEntity _build() {
     _$ScheduleEntity _$result;
     try {
       _$result = _$v ??
           new _$ScheduleEntity._(
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'ScheduleEntity', 'name'),
+                  name, r'ScheduleEntity', 'name'),
               frequencyId: BuiltValueNullFieldError.checkNotNull(
-                  frequencyId, 'ScheduleEntity', 'frequencyId'),
+                  frequencyId, r'ScheduleEntity', 'frequencyId'),
               nextRun: BuiltValueNullFieldError.checkNotNull(
-                  nextRun, 'ScheduleEntity', 'nextRun'),
+                  nextRun, r'ScheduleEntity', 'nextRun'),
               template: BuiltValueNullFieldError.checkNotNull(
-                  template, 'ScheduleEntity', 'template'),
+                  template, r'ScheduleEntity', 'template'),
               isPaused: BuiltValueNullFieldError.checkNotNull(
-                  isPaused, 'ScheduleEntity', 'isPaused'),
+                  isPaused, r'ScheduleEntity', 'isPaused'),
               remainingCycles: BuiltValueNullFieldError.checkNotNull(
-                  remainingCycles, 'ScheduleEntity', 'remainingCycles'),
+                  remainingCycles, r'ScheduleEntity', 'remainingCycles'),
               parameters: parameters.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, 'ScheduleEntity', 'createdAt'),
+                  createdAt, r'ScheduleEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, 'ScheduleEntity', 'updatedAt'),
+                  updatedAt, r'ScheduleEntity', 'updatedAt'),
               archivedAt:
-                  BuiltValueNullFieldError.checkNotNull(archivedAt, 'ScheduleEntity', 'archivedAt'),
+                  BuiltValueNullFieldError.checkNotNull(archivedAt, r'ScheduleEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'ScheduleEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'ScheduleEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -826,7 +831,7 @@ class ScheduleEntityBuilder
         parameters.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ScheduleEntity', _$failedField, e.toString());
+            r'ScheduleEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -849,7 +854,7 @@ class _$ScheduleParameters extends ScheduleParameters {
 
   factory _$ScheduleParameters(
           [void Function(ScheduleParametersBuilder) updates]) =>
-      (new ScheduleParametersBuilder()..update(updates)).build();
+      (new ScheduleParametersBuilder()..update(updates))._build();
 
   _$ScheduleParameters._(
       {this.dateRange,
@@ -859,15 +864,15 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.clients})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        dateRange, 'ScheduleParameters', 'dateRange');
+        dateRange, r'ScheduleParameters', 'dateRange');
     BuiltValueNullFieldError.checkNotNull(
-        showPaymentsTable, 'ScheduleParameters', 'showPaymentsTable');
+        showPaymentsTable, r'ScheduleParameters', 'showPaymentsTable');
     BuiltValueNullFieldError.checkNotNull(
-        showAgingTable, 'ScheduleParameters', 'showAgingTable');
+        showAgingTable, r'ScheduleParameters', 'showAgingTable');
     BuiltValueNullFieldError.checkNotNull(
-        status, 'ScheduleParameters', 'status');
+        status, r'ScheduleParameters', 'status');
     BuiltValueNullFieldError.checkNotNull(
-        clients, 'ScheduleParameters', 'clients');
+        clients, r'ScheduleParameters', 'clients');
   }
 
   @override
@@ -893,17 +898,20 @@ class _$ScheduleParameters extends ScheduleParameters {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc($jc($jc(0, dateRange.hashCode), showPaymentsTable.hashCode),
-                showAgingTable.hashCode),
-            status.hashCode),
-        clients.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, dateRange.hashCode);
+    _$hash = $jc(_$hash, showPaymentsTable.hashCode);
+    _$hash = $jc(_$hash, showAgingTable.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, clients.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ScheduleParameters')
+    return (newBuiltValueToStringHelper(r'ScheduleParameters')
           ..add('dateRange', dateRange)
           ..add('showPaymentsTable', showPaymentsTable)
           ..add('showAgingTable', showAgingTable)
@@ -967,19 +975,23 @@ class ScheduleParametersBuilder
   }
 
   @override
-  _$ScheduleParameters build() {
+  ScheduleParameters build() => _build();
+
+  _$ScheduleParameters _build() {
     _$ScheduleParameters _$result;
     try {
       _$result = _$v ??
           new _$ScheduleParameters._(
               dateRange: BuiltValueNullFieldError.checkNotNull(
-                  dateRange, 'ScheduleParameters', 'dateRange'),
+                  dateRange, r'ScheduleParameters', 'dateRange'),
               showPaymentsTable: BuiltValueNullFieldError.checkNotNull(
-                  showPaymentsTable, 'ScheduleParameters', 'showPaymentsTable'),
+                  showPaymentsTable,
+                  r'ScheduleParameters',
+                  'showPaymentsTable'),
               showAgingTable: BuiltValueNullFieldError.checkNotNull(
-                  showAgingTable, 'ScheduleParameters', 'showAgingTable'),
+                  showAgingTable, r'ScheduleParameters', 'showAgingTable'),
               status: BuiltValueNullFieldError.checkNotNull(
-                  status, 'ScheduleParameters', 'status'),
+                  status, r'ScheduleParameters', 'status'),
               clients: clients.build());
     } catch (_) {
       String _$failedField;
@@ -988,7 +1000,7 @@ class ScheduleParametersBuilder
         clients.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ScheduleParameters', _$failedField, e.toString());
+            r'ScheduleParameters', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -997,4 +1009,4 @@ class ScheduleParametersBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

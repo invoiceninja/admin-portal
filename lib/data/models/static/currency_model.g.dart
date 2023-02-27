@@ -209,10 +209,11 @@ class _$CurrencyListResponse extends CurrencyListResponse {
 
   factory _$CurrencyListResponse(
           [void Function(CurrencyListResponseBuilder) updates]) =>
-      (new CurrencyListResponseBuilder()..update(updates)).build();
+      (new CurrencyListResponseBuilder()..update(updates))._build();
 
   _$CurrencyListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'CurrencyListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(
+        data, r'CurrencyListResponse', 'data');
   }
 
   @override
@@ -233,12 +234,16 @@ class _$CurrencyListResponse extends CurrencyListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CurrencyListResponse')
+    return (newBuiltValueToStringHelper(r'CurrencyListResponse')
           ..add('data', data))
         .toString();
   }
@@ -276,7 +281,9 @@ class CurrencyListResponseBuilder
   }
 
   @override
-  _$CurrencyListResponse build() {
+  CurrencyListResponse build() => _build();
+
+  _$CurrencyListResponse _build() {
     _$CurrencyListResponse _$result;
     try {
       _$result = _$v ?? new _$CurrencyListResponse._(data: data.build());
@@ -287,7 +294,7 @@ class CurrencyListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CurrencyListResponse', _$failedField, e.toString());
+            r'CurrencyListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -302,10 +309,11 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
 
   factory _$CurrencyItemResponse(
           [void Function(CurrencyItemResponseBuilder) updates]) =>
-      (new CurrencyItemResponseBuilder()..update(updates)).build();
+      (new CurrencyItemResponseBuilder()..update(updates))._build();
 
   _$CurrencyItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'CurrencyItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(
+        data, r'CurrencyItemResponse', 'data');
   }
 
   @override
@@ -326,12 +334,16 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CurrencyItemResponse')
+    return (newBuiltValueToStringHelper(r'CurrencyItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -369,7 +381,9 @@ class CurrencyItemResponseBuilder
   }
 
   @override
-  _$CurrencyItemResponse build() {
+  CurrencyItemResponse build() => _build();
+
+  _$CurrencyItemResponse _build() {
     _$CurrencyItemResponse _$result;
     try {
       _$result = _$v ?? new _$CurrencyItemResponse._(data: data.build());
@@ -380,7 +394,7 @@ class CurrencyItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CurrencyItemResponse', _$failedField, e.toString());
+            r'CurrencyItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -410,7 +424,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   final String id;
 
   factory _$CurrencyEntity([void Function(CurrencyEntityBuilder) updates]) =>
-      (new CurrencyEntityBuilder()..update(updates)).build();
+      (new CurrencyEntityBuilder()..update(updates))._build();
 
   _$CurrencyEntity._(
       {this.name,
@@ -423,20 +437,20 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.exchangeRate,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'CurrencyEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(symbol, 'CurrencyEntity', 'symbol');
+    BuiltValueNullFieldError.checkNotNull(name, r'CurrencyEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(symbol, r'CurrencyEntity', 'symbol');
     BuiltValueNullFieldError.checkNotNull(
-        precision, 'CurrencyEntity', 'precision');
+        precision, r'CurrencyEntity', 'precision');
     BuiltValueNullFieldError.checkNotNull(
-        thousandSeparator, 'CurrencyEntity', 'thousandSeparator');
+        thousandSeparator, r'CurrencyEntity', 'thousandSeparator');
     BuiltValueNullFieldError.checkNotNull(
-        decimalSeparator, 'CurrencyEntity', 'decimalSeparator');
-    BuiltValueNullFieldError.checkNotNull(code, 'CurrencyEntity', 'code');
+        decimalSeparator, r'CurrencyEntity', 'decimalSeparator');
+    BuiltValueNullFieldError.checkNotNull(code, r'CurrencyEntity', 'code');
     BuiltValueNullFieldError.checkNotNull(
-        swapCurrencySymbol, 'CurrencyEntity', 'swapCurrencySymbol');
+        swapCurrencySymbol, r'CurrencyEntity', 'swapCurrencySymbol');
     BuiltValueNullFieldError.checkNotNull(
-        exchangeRate, 'CurrencyEntity', 'exchangeRate');
-    BuiltValueNullFieldError.checkNotNull(id, 'CurrencyEntity', 'id');
+        exchangeRate, r'CurrencyEntity', 'exchangeRate');
+    BuiltValueNullFieldError.checkNotNull(id, r'CurrencyEntity', 'id');
   }
 
   @override
@@ -465,25 +479,24 @@ class _$CurrencyEntity extends CurrencyEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc($jc(0, name.hashCode), symbol.hashCode),
-                                precision.hashCode),
-                            thousandSeparator.hashCode),
-                        decimalSeparator.hashCode),
-                    code.hashCode),
-                swapCurrencySymbol.hashCode),
-            exchangeRate.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, symbol.hashCode);
+    _$hash = $jc(_$hash, precision.hashCode);
+    _$hash = $jc(_$hash, thousandSeparator.hashCode);
+    _$hash = $jc(_$hash, decimalSeparator.hashCode);
+    _$hash = $jc(_$hash, code.hashCode);
+    _$hash = $jc(_$hash, swapCurrencySymbol.hashCode);
+    _$hash = $jc(_$hash, exchangeRate.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CurrencyEntity')
+    return (newBuiltValueToStringHelper(r'CurrencyEntity')
           ..add('name', name)
           ..add('symbol', symbol)
           ..add('precision', precision)
@@ -571,29 +584,31 @@ class CurrencyEntityBuilder
   }
 
   @override
-  _$CurrencyEntity build() {
+  CurrencyEntity build() => _build();
+
+  _$CurrencyEntity _build() {
     final _$result = _$v ??
         new _$CurrencyEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'CurrencyEntity', 'name'),
+                name, r'CurrencyEntity', 'name'),
             symbol: BuiltValueNullFieldError.checkNotNull(
-                symbol, 'CurrencyEntity', 'symbol'),
+                symbol, r'CurrencyEntity', 'symbol'),
             precision: BuiltValueNullFieldError.checkNotNull(
-                precision, 'CurrencyEntity', 'precision'),
+                precision, r'CurrencyEntity', 'precision'),
             thousandSeparator: BuiltValueNullFieldError.checkNotNull(
-                thousandSeparator, 'CurrencyEntity', 'thousandSeparator'),
+                thousandSeparator, r'CurrencyEntity', 'thousandSeparator'),
             decimalSeparator: BuiltValueNullFieldError.checkNotNull(
-                decimalSeparator, 'CurrencyEntity', 'decimalSeparator'),
+                decimalSeparator, r'CurrencyEntity', 'decimalSeparator'),
             code: BuiltValueNullFieldError.checkNotNull(
-                code, 'CurrencyEntity', 'code'),
+                code, r'CurrencyEntity', 'code'),
             swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
-                swapCurrencySymbol, 'CurrencyEntity', 'swapCurrencySymbol'),
+                swapCurrencySymbol, r'CurrencyEntity', 'swapCurrencySymbol'),
             exchangeRate: BuiltValueNullFieldError.checkNotNull(
-                exchangeRate, 'CurrencyEntity', 'exchangeRate'),
-            id: BuiltValueNullFieldError.checkNotNull(id, 'CurrencyEntity', 'id'));
+                exchangeRate, r'CurrencyEntity', 'exchangeRate'),
+            id: BuiltValueNullFieldError.checkNotNull(id, r'CurrencyEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

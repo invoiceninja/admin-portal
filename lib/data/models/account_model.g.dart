@@ -232,7 +232,7 @@ class _$AccountEntity extends AccountEntity {
   final int trialDaysLeft;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
-      (new AccountEntityBuilder()..update(updates)).build();
+      (new AccountEntityBuilder()..update(updates))._build();
 
   _$AccountEntity._(
       {this.id,
@@ -257,45 +257,45 @@ class _$AccountEntity extends AccountEntity {
       this.accountSmsVerified,
       this.trialDaysLeft})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'AccountEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(key, 'AccountEntity', 'key');
+    BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
     BuiltValueNullFieldError.checkNotNull(
-        trialStarted, 'AccountEntity', 'trialStarted');
+        trialStarted, r'AccountEntity', 'trialStarted');
     BuiltValueNullFieldError.checkNotNull(
-        defaultUrl, 'AccountEntity', 'defaultUrl');
+        defaultUrl, r'AccountEntity', 'defaultUrl');
     BuiltValueNullFieldError.checkNotNull(
-        reportErrors, 'AccountEntity', 'reportErrors');
-    BuiltValueNullFieldError.checkNotNull(plan, 'AccountEntity', 'plan');
+        reportErrors, r'AccountEntity', 'reportErrors');
+    BuiltValueNullFieldError.checkNotNull(plan, r'AccountEntity', 'plan');
     BuiltValueNullFieldError.checkNotNull(
-        planExpires, 'AccountEntity', 'planExpires');
+        planExpires, r'AccountEntity', 'planExpires');
     BuiltValueNullFieldError.checkNotNull(
-        latestVersion, 'AccountEntity', 'latestVersion');
+        latestVersion, r'AccountEntity', 'latestVersion');
     BuiltValueNullFieldError.checkNotNull(
-        currentVersion, 'AccountEntity', 'currentVersion');
+        currentVersion, r'AccountEntity', 'currentVersion');
     BuiltValueNullFieldError.checkNotNull(
-        debugEnabled, 'AccountEntity', 'debugEnabled');
+        debugEnabled, r'AccountEntity', 'debugEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        isDocker, 'AccountEntity', 'isDocker');
+        isDocker, r'AccountEntity', 'isDocker');
     BuiltValueNullFieldError.checkNotNull(
-        isMigrated, 'AccountEntity', 'isMigrated');
+        isMigrated, r'AccountEntity', 'isMigrated');
     BuiltValueNullFieldError.checkNotNull(
-        isHosted, 'AccountEntity', 'isHosted');
+        isHosted, r'AccountEntity', 'isHosted');
     BuiltValueNullFieldError.checkNotNull(
-        isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning');
+        isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning');
     BuiltValueNullFieldError.checkNotNull(
-        disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate');
+        disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate');
     BuiltValueNullFieldError.checkNotNull(
-        defaultCompanyId, 'AccountEntity', 'defaultCompanyId');
+        defaultCompanyId, r'AccountEntity', 'defaultCompanyId');
     BuiltValueNullFieldError.checkNotNull(
-        hostedClientCount, 'AccountEntity', 'hostedClientCount');
+        hostedClientCount, r'AccountEntity', 'hostedClientCount');
     BuiltValueNullFieldError.checkNotNull(
-        hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount');
+        hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount');
     BuiltValueNullFieldError.checkNotNull(
-        setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP');
+        setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP');
     BuiltValueNullFieldError.checkNotNull(
-        accountSmsVerified, 'AccountEntity', 'accountSmsVerified');
+        accountSmsVerified, r'AccountEntity', 'accountSmsVerified');
     BuiltValueNullFieldError.checkNotNull(
-        trialDaysLeft, 'AccountEntity', 'trialDaysLeft');
+        trialDaysLeft, r'AccountEntity', 'trialDaysLeft');
   }
 
   @override
@@ -335,49 +335,36 @@ class _$AccountEntity extends AccountEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc(0, id.hashCode), key.hashCode),
-                                                                                trialStarted.hashCode),
-                                                                            defaultUrl.hashCode),
-                                                                        reportErrors.hashCode),
-                                                                    plan.hashCode),
-                                                                planExpires.hashCode),
-                                                            latestVersion.hashCode),
-                                                        currentVersion.hashCode),
-                                                    debugEnabled.hashCode),
-                                                isDocker.hashCode),
-                                            isMigrated.hashCode),
-                                        isHosted.hashCode),
-                                    isSchedulerRunning.hashCode),
-                                disableAutoUpdate.hashCode),
-                            defaultCompanyId.hashCode),
-                        hostedClientCount.hashCode),
-                    hostedCompanyCount.hashCode),
-                setReactAsDefaultAP.hashCode),
-            accountSmsVerified.hashCode),
-        trialDaysLeft.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, key.hashCode);
+    _$hash = $jc(_$hash, trialStarted.hashCode);
+    _$hash = $jc(_$hash, defaultUrl.hashCode);
+    _$hash = $jc(_$hash, reportErrors.hashCode);
+    _$hash = $jc(_$hash, plan.hashCode);
+    _$hash = $jc(_$hash, planExpires.hashCode);
+    _$hash = $jc(_$hash, latestVersion.hashCode);
+    _$hash = $jc(_$hash, currentVersion.hashCode);
+    _$hash = $jc(_$hash, debugEnabled.hashCode);
+    _$hash = $jc(_$hash, isDocker.hashCode);
+    _$hash = $jc(_$hash, isMigrated.hashCode);
+    _$hash = $jc(_$hash, isHosted.hashCode);
+    _$hash = $jc(_$hash, isSchedulerRunning.hashCode);
+    _$hash = $jc(_$hash, disableAutoUpdate.hashCode);
+    _$hash = $jc(_$hash, defaultCompanyId.hashCode);
+    _$hash = $jc(_$hash, hostedClientCount.hashCode);
+    _$hash = $jc(_$hash, hostedCompanyCount.hashCode);
+    _$hash = $jc(_$hash, setReactAsDefaultAP.hashCode);
+    _$hash = $jc(_$hash, accountSmsVerified.hashCode);
+    _$hash = $jc(_$hash, trialDaysLeft.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('AccountEntity')
+    return (newBuiltValueToStringHelper(r'AccountEntity')
           ..add('id', id)
           ..add('key', key)
           ..add('trialStarted', trialStarted)
@@ -545,43 +532,45 @@ class AccountEntityBuilder
   }
 
   @override
-  _$AccountEntity build() {
+  AccountEntity build() => _build();
+
+  _$AccountEntity _build() {
     final _$result = _$v ??
         new _$AccountEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'AccountEntity', 'id'),
+                id, r'AccountEntity', 'id'),
             key: BuiltValueNullFieldError.checkNotNull(
-                key, 'AccountEntity', 'key'),
+                key, r'AccountEntity', 'key'),
             trialStarted: BuiltValueNullFieldError.checkNotNull(
-                trialStarted, 'AccountEntity', 'trialStarted'),
+                trialStarted, r'AccountEntity', 'trialStarted'),
             defaultUrl: BuiltValueNullFieldError.checkNotNull(
-                defaultUrl, 'AccountEntity', 'defaultUrl'),
+                defaultUrl, r'AccountEntity', 'defaultUrl'),
             reportErrors: BuiltValueNullFieldError.checkNotNull(
-                reportErrors, 'AccountEntity', 'reportErrors'),
+                reportErrors, r'AccountEntity', 'reportErrors'),
             plan: BuiltValueNullFieldError.checkNotNull(
-                plan, 'AccountEntity', 'plan'),
+                plan, r'AccountEntity', 'plan'),
             planExpires: BuiltValueNullFieldError.checkNotNull(
-                planExpires, 'AccountEntity', 'planExpires'),
+                planExpires, r'AccountEntity', 'planExpires'),
             latestVersion: BuiltValueNullFieldError.checkNotNull(
-                latestVersion, 'AccountEntity', 'latestVersion'),
+                latestVersion, r'AccountEntity', 'latestVersion'),
             currentVersion: BuiltValueNullFieldError.checkNotNull(
-                currentVersion, 'AccountEntity', 'currentVersion'),
-            debugEnabled: BuiltValueNullFieldError.checkNotNull(
-                debugEnabled, 'AccountEntity', 'debugEnabled'),
-            isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, 'AccountEntity', 'isDocker'),
-            isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, 'AccountEntity', 'isMigrated'),
-            isHosted: BuiltValueNullFieldError.checkNotNull(isHosted, 'AccountEntity', 'isHosted'),
-            isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, 'AccountEntity', 'isSchedulerRunning'),
-            disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, 'AccountEntity', 'disableAutoUpdate'),
-            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, 'AccountEntity', 'defaultCompanyId'),
-            hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, 'AccountEntity', 'hostedClientCount'),
-            hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, 'AccountEntity', 'hostedCompanyCount'),
-            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, 'AccountEntity', 'setReactAsDefaultAP'),
-            accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, 'AccountEntity', 'accountSmsVerified'),
-            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, 'AccountEntity', 'trialDaysLeft'));
+                currentVersion, r'AccountEntity', 'currentVersion'),
+            debugEnabled:
+                BuiltValueNullFieldError.checkNotNull(debugEnabled, r'AccountEntity', 'debugEnabled'),
+            isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, r'AccountEntity', 'isDocker'),
+            isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, r'AccountEntity', 'isMigrated'),
+            isHosted: BuiltValueNullFieldError.checkNotNull(isHosted, r'AccountEntity', 'isHosted'),
+            isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning'),
+            disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate'),
+            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, r'AccountEntity', 'defaultCompanyId'),
+            hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, r'AccountEntity', 'hostedClientCount'),
+            hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount'),
+            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
+            accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
+            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

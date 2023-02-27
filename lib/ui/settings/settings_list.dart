@@ -219,7 +219,7 @@ class _SettingsListState extends State<SettingsList> {
               ),
             if (showAll)
               SettingsListTile(
-                section: kSettingsSubscriptions,
+                section: kSettingsPaymentLinks,
                 viewModel: widget.viewModel,
               ),
             /*
@@ -619,9 +619,9 @@ class SettingsSearch extends StatelessWidget {
           'groups',
         ],
       ],
-      kSettingsSubscriptions: [
+      kSettingsPaymentLinks: [
         [
-          'subscriptions',
+          'payment_links',
         ],
       ],
       if (supportsSchedules())

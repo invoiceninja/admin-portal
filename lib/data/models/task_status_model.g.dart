@@ -244,11 +244,11 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
 
   factory _$TaskStatusListResponse(
           [void Function(TaskStatusListResponseBuilder) updates]) =>
-      (new TaskStatusListResponseBuilder()..update(updates)).build();
+      (new TaskStatusListResponseBuilder()..update(updates))._build();
 
   _$TaskStatusListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TaskStatusListResponse', 'data');
+        data, r'TaskStatusListResponse', 'data');
   }
 
   @override
@@ -269,12 +269,16 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TaskStatusListResponse')
+    return (newBuiltValueToStringHelper(r'TaskStatusListResponse')
           ..add('data', data))
         .toString();
   }
@@ -312,7 +316,9 @@ class TaskStatusListResponseBuilder
   }
 
   @override
-  _$TaskStatusListResponse build() {
+  TaskStatusListResponse build() => _build();
+
+  _$TaskStatusListResponse _build() {
     _$TaskStatusListResponse _$result;
     try {
       _$result = _$v ?? new _$TaskStatusListResponse._(data: data.build());
@@ -323,7 +329,7 @@ class TaskStatusListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TaskStatusListResponse', _$failedField, e.toString());
+            r'TaskStatusListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -338,11 +344,11 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
 
   factory _$TaskStatusItemResponse(
           [void Function(TaskStatusItemResponseBuilder) updates]) =>
-      (new TaskStatusItemResponseBuilder()..update(updates)).build();
+      (new TaskStatusItemResponseBuilder()..update(updates))._build();
 
   _$TaskStatusItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TaskStatusItemResponse', 'data');
+        data, r'TaskStatusItemResponse', 'data');
   }
 
   @override
@@ -363,12 +369,16 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TaskStatusItemResponse')
+    return (newBuiltValueToStringHelper(r'TaskStatusItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -406,7 +416,9 @@ class TaskStatusItemResponseBuilder
   }
 
   @override
-  _$TaskStatusItemResponse build() {
+  TaskStatusItemResponse build() => _build();
+
+  _$TaskStatusItemResponse _build() {
     _$TaskStatusItemResponse _$result;
     try {
       _$result = _$v ?? new _$TaskStatusItemResponse._(data: data.build());
@@ -417,7 +429,7 @@ class TaskStatusItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TaskStatusItemResponse', _$failedField, e.toString());
+            r'TaskStatusItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -452,7 +464,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
 
   factory _$TaskStatusEntity(
           [void Function(TaskStatusEntityBuilder) updates]) =>
-      (new TaskStatusEntityBuilder()..update(updates)).build();
+      (new TaskStatusEntityBuilder()..update(updates))._build();
 
   _$TaskStatusEntity._(
       {this.name,
@@ -467,15 +479,15 @@ class _$TaskStatusEntity extends TaskStatusEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'TaskStatusEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(color, 'TaskStatusEntity', 'color');
+    BuiltValueNullFieldError.checkNotNull(name, r'TaskStatusEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(color, r'TaskStatusEntity', 'color');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'TaskStatusEntity', 'createdAt');
+        createdAt, r'TaskStatusEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'TaskStatusEntity', 'updatedAt');
+        updatedAt, r'TaskStatusEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'TaskStatusEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'TaskStatusEntity', 'id');
+        archivedAt, r'TaskStatusEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'TaskStatusEntity', 'id');
   }
 
   @override
@@ -506,31 +518,26 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            color.hashCode),
-                                        statusOrder.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, color.hashCode);
+    _$hash = $jc(_$hash, statusOrder.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TaskStatusEntity')
+    return (newBuiltValueToStringHelper(r'TaskStatusEntity')
           ..add('name', name)
           ..add('color', color)
           ..add('statusOrder', statusOrder)
@@ -631,29 +638,31 @@ class TaskStatusEntityBuilder
   }
 
   @override
-  _$TaskStatusEntity build() {
+  TaskStatusEntity build() => _build();
+
+  _$TaskStatusEntity _build() {
     final _$result = _$v ??
         new _$TaskStatusEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'TaskStatusEntity', 'name'),
+                name, r'TaskStatusEntity', 'name'),
             color: BuiltValueNullFieldError.checkNotNull(
-                color, 'TaskStatusEntity', 'color'),
+                color, r'TaskStatusEntity', 'color'),
             statusOrder: statusOrder,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'TaskStatusEntity', 'createdAt'),
+                createdAt, r'TaskStatusEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, 'TaskStatusEntity', 'updatedAt'),
+                updatedAt, r'TaskStatusEntity', 'updatedAt'),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, 'TaskStatusEntity', 'archivedAt'),
+                archivedAt, r'TaskStatusEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'TaskStatusEntity', 'id'));
+                id, r'TaskStatusEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

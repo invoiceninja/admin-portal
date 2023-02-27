@@ -319,10 +319,10 @@ class _$ProjectListResponse extends ProjectListResponse {
 
   factory _$ProjectListResponse(
           [void Function(ProjectListResponseBuilder) updates]) =>
-      (new ProjectListResponseBuilder()..update(updates)).build();
+      (new ProjectListResponseBuilder()..update(updates))._build();
 
   _$ProjectListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ProjectListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'ProjectListResponse', 'data');
   }
 
   @override
@@ -343,12 +343,16 @@ class _$ProjectListResponse extends ProjectListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProjectListResponse')
+    return (newBuiltValueToStringHelper(r'ProjectListResponse')
           ..add('data', data))
         .toString();
   }
@@ -386,7 +390,9 @@ class ProjectListResponseBuilder
   }
 
   @override
-  _$ProjectListResponse build() {
+  ProjectListResponse build() => _build();
+
+  _$ProjectListResponse _build() {
     _$ProjectListResponse _$result;
     try {
       _$result = _$v ?? new _$ProjectListResponse._(data: data.build());
@@ -397,7 +403,7 @@ class ProjectListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProjectListResponse', _$failedField, e.toString());
+            r'ProjectListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -412,10 +418,10 @@ class _$ProjectItemResponse extends ProjectItemResponse {
 
   factory _$ProjectItemResponse(
           [void Function(ProjectItemResponseBuilder) updates]) =>
-      (new ProjectItemResponseBuilder()..update(updates)).build();
+      (new ProjectItemResponseBuilder()..update(updates))._build();
 
   _$ProjectItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ProjectItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'ProjectItemResponse', 'data');
   }
 
   @override
@@ -436,12 +442,16 @@ class _$ProjectItemResponse extends ProjectItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProjectItemResponse')
+    return (newBuiltValueToStringHelper(r'ProjectItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -478,7 +488,9 @@ class ProjectItemResponseBuilder
   }
 
   @override
-  _$ProjectItemResponse build() {
+  ProjectItemResponse build() => _build();
+
+  _$ProjectItemResponse _build() {
     _$ProjectItemResponse _$result;
     try {
       _$result = _$v ?? new _$ProjectItemResponse._(data: data.build());
@@ -489,7 +501,7 @@ class ProjectItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProjectItemResponse', _$failedField, e.toString());
+            r'ProjectItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -545,7 +557,7 @@ class _$ProjectEntity extends ProjectEntity {
   final String id;
 
   factory _$ProjectEntity([void Function(ProjectEntityBuilder) updates]) =>
-      (new ProjectEntityBuilder()..update(updates)).build();
+      (new ProjectEntityBuilder()..update(updates))._build();
 
   _$ProjectEntity._(
       {this.name,
@@ -571,37 +583,37 @@ class _$ProjectEntity extends ProjectEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'ProjectEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(color, 'ProjectEntity', 'color');
+    BuiltValueNullFieldError.checkNotNull(name, r'ProjectEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(color, r'ProjectEntity', 'color');
     BuiltValueNullFieldError.checkNotNull(
-        clientId, 'ProjectEntity', 'clientId');
+        clientId, r'ProjectEntity', 'clientId');
     BuiltValueNullFieldError.checkNotNull(
-        taskRate, 'ProjectEntity', 'taskRate');
-    BuiltValueNullFieldError.checkNotNull(dueDate, 'ProjectEntity', 'dueDate');
+        taskRate, r'ProjectEntity', 'taskRate');
+    BuiltValueNullFieldError.checkNotNull(dueDate, r'ProjectEntity', 'dueDate');
     BuiltValueNullFieldError.checkNotNull(
-        privateNotes, 'ProjectEntity', 'privateNotes');
+        privateNotes, r'ProjectEntity', 'privateNotes');
     BuiltValueNullFieldError.checkNotNull(
-        publicNotes, 'ProjectEntity', 'publicNotes');
+        publicNotes, r'ProjectEntity', 'publicNotes');
     BuiltValueNullFieldError.checkNotNull(
-        budgetedHours, 'ProjectEntity', 'budgetedHours');
+        budgetedHours, r'ProjectEntity', 'budgetedHours');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'ProjectEntity', 'customValue1');
+        customValue1, r'ProjectEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'ProjectEntity', 'customValue2');
+        customValue2, r'ProjectEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'ProjectEntity', 'customValue3');
+        customValue3, r'ProjectEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'ProjectEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(number, 'ProjectEntity', 'number');
+        customValue4, r'ProjectEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number');
     BuiltValueNullFieldError.checkNotNull(
-        documents, 'ProjectEntity', 'documents');
+        documents, r'ProjectEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ProjectEntity', 'createdAt');
+        createdAt, r'ProjectEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ProjectEntity', 'updatedAt');
+        updatedAt, r'ProjectEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ProjectEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ProjectEntity', 'id');
+        archivedAt, r'ProjectEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'ProjectEntity', 'id');
   }
 
   @override
@@ -642,49 +654,37 @@ class _$ProjectEntity extends ProjectEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc(0, name.hashCode), color.hashCode), clientId.hashCode),
-                                                                                taskRate.hashCode),
-                                                                            dueDate.hashCode),
-                                                                        privateNotes.hashCode),
-                                                                    publicNotes.hashCode),
-                                                                budgetedHours.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            number.hashCode),
-                                        documents.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, color.hashCode);
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, taskRate.hashCode);
+    _$hash = $jc(_$hash, dueDate.hashCode);
+    _$hash = $jc(_$hash, privateNotes.hashCode);
+    _$hash = $jc(_$hash, publicNotes.hashCode);
+    _$hash = $jc(_$hash, budgetedHours.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, number.hashCode);
+    _$hash = $jc(_$hash, documents.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProjectEntity')
+    return (newBuiltValueToStringHelper(r'ProjectEntity')
           ..add('name', name)
           ..add('color', color)
           ..add('clientId', clientId)
@@ -854,42 +854,44 @@ class ProjectEntityBuilder
   }
 
   @override
-  _$ProjectEntity build() {
+  ProjectEntity build() => _build();
+
+  _$ProjectEntity _build() {
     _$ProjectEntity _$result;
     try {
       _$result = _$v ??
           new _$ProjectEntity._(
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'ProjectEntity', 'name'),
+                  name, r'ProjectEntity', 'name'),
               color: BuiltValueNullFieldError.checkNotNull(
-                  color, 'ProjectEntity', 'color'),
+                  color, r'ProjectEntity', 'color'),
               clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, 'ProjectEntity', 'clientId'),
+                  clientId, r'ProjectEntity', 'clientId'),
               taskRate: BuiltValueNullFieldError.checkNotNull(
-                  taskRate, 'ProjectEntity', 'taskRate'),
+                  taskRate, r'ProjectEntity', 'taskRate'),
               dueDate: BuiltValueNullFieldError.checkNotNull(
-                  dueDate, 'ProjectEntity', 'dueDate'),
+                  dueDate, r'ProjectEntity', 'dueDate'),
               privateNotes: BuiltValueNullFieldError.checkNotNull(
-                  privateNotes, 'ProjectEntity', 'privateNotes'),
+                  privateNotes, r'ProjectEntity', 'privateNotes'),
               publicNotes: BuiltValueNullFieldError.checkNotNull(
-                  publicNotes, 'ProjectEntity', 'publicNotes'),
+                  publicNotes, r'ProjectEntity', 'publicNotes'),
               budgetedHours: BuiltValueNullFieldError.checkNotNull(
-                  budgetedHours, 'ProjectEntity', 'budgetedHours'),
+                  budgetedHours, r'ProjectEntity', 'budgetedHours'),
               customValue1: BuiltValueNullFieldError.checkNotNull(
-                  customValue1, 'ProjectEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ProjectEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ProjectEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ProjectEntity', 'customValue4'),
-              number: BuiltValueNullFieldError.checkNotNull(number, 'ProjectEntity', 'number'),
+                  customValue1, r'ProjectEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ProjectEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ProjectEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ProjectEntity', 'customValue4'),
+              number: BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number'),
               documents: documents.build(),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ProjectEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ProjectEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ProjectEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ProjectEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ProjectEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ProjectEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'ProjectEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'ProjectEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -897,7 +899,7 @@ class ProjectEntityBuilder
         documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProjectEntity', _$failedField, e.toString());
+            r'ProjectEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -906,4 +908,4 @@ class ProjectEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

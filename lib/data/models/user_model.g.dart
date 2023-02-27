@@ -485,10 +485,10 @@ class _$UserListResponse extends UserListResponse {
 
   factory _$UserListResponse(
           [void Function(UserListResponseBuilder) updates]) =>
-      (new UserListResponseBuilder()..update(updates)).build();
+      (new UserListResponseBuilder()..update(updates))._build();
 
   _$UserListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'UserListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'UserListResponse', 'data');
   }
 
   @override
@@ -508,12 +508,16 @@ class _$UserListResponse extends UserListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserListResponse')..add('data', data))
+    return (newBuiltValueToStringHelper(r'UserListResponse')..add('data', data))
         .toString();
   }
 }
@@ -550,7 +554,9 @@ class UserListResponseBuilder
   }
 
   @override
-  _$UserListResponse build() {
+  UserListResponse build() => _build();
+
+  _$UserListResponse _build() {
     _$UserListResponse _$result;
     try {
       _$result = _$v ?? new _$UserListResponse._(data: data.build());
@@ -561,7 +567,7 @@ class UserListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserListResponse', _$failedField, e.toString());
+            r'UserListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -576,10 +582,10 @@ class _$UserItemResponse extends UserItemResponse {
 
   factory _$UserItemResponse(
           [void Function(UserItemResponseBuilder) updates]) =>
-      (new UserItemResponseBuilder()..update(updates)).build();
+      (new UserItemResponseBuilder()..update(updates))._build();
 
   _$UserItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'UserItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'UserItemResponse', 'data');
   }
 
   @override
@@ -599,12 +605,16 @@ class _$UserItemResponse extends UserItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserItemResponse')..add('data', data))
+    return (newBuiltValueToStringHelper(r'UserItemResponse')..add('data', data))
         .toString();
   }
 }
@@ -640,7 +650,9 @@ class UserItemResponseBuilder
   }
 
   @override
-  _$UserItemResponse build() {
+  UserItemResponse build() => _build();
+
+  _$UserItemResponse _build() {
     _$UserItemResponse _$result;
     try {
       _$result = _$v ?? new _$UserItemResponse._(data: data.build());
@@ -651,7 +663,7 @@ class UserItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserItemResponse', _$failedField, e.toString());
+            r'UserItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -666,11 +678,11 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
 
   factory _$UserTwoFactorResponse(
           [void Function(UserTwoFactorResponseBuilder) updates]) =>
-      (new UserTwoFactorResponseBuilder()..update(updates)).build();
+      (new UserTwoFactorResponseBuilder()..update(updates))._build();
 
   _$UserTwoFactorResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'UserTwoFactorResponse', 'data');
+        data, r'UserTwoFactorResponse', 'data');
   }
 
   @override
@@ -691,12 +703,16 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserTwoFactorResponse')
+    return (newBuiltValueToStringHelper(r'UserTwoFactorResponse')
           ..add('data', data))
         .toString();
   }
@@ -734,7 +750,9 @@ class UserTwoFactorResponseBuilder
   }
 
   @override
-  _$UserTwoFactorResponse build() {
+  UserTwoFactorResponse build() => _build();
+
+  _$UserTwoFactorResponse _build() {
     _$UserTwoFactorResponse _$result;
     try {
       _$result = _$v ?? new _$UserTwoFactorResponse._(data: data.build());
@@ -745,7 +763,7 @@ class UserTwoFactorResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserTwoFactorResponse', _$failedField, e.toString());
+            r'UserTwoFactorResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -762,13 +780,13 @@ class _$UserTwoFactorData extends UserTwoFactorData {
 
   factory _$UserTwoFactorData(
           [void Function(UserTwoFactorDataBuilder) updates]) =>
-      (new UserTwoFactorDataBuilder()..update(updates)).build();
+      (new UserTwoFactorDataBuilder()..update(updates))._build();
 
   _$UserTwoFactorData._({this.secret, this.qrCode}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        secret, 'UserTwoFactorData', 'secret');
+        secret, r'UserTwoFactorData', 'secret');
     BuiltValueNullFieldError.checkNotNull(
-        qrCode, 'UserTwoFactorData', 'qrCode');
+        qrCode, r'UserTwoFactorData', 'qrCode');
   }
 
   @override
@@ -790,12 +808,17 @@ class _$UserTwoFactorData extends UserTwoFactorData {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, secret.hashCode), qrCode.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, secret.hashCode);
+    _$hash = $jc(_$hash, qrCode.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserTwoFactorData')
+    return (newBuiltValueToStringHelper(r'UserTwoFactorData')
           ..add('secret', secret)
           ..add('qrCode', qrCode))
         .toString();
@@ -838,13 +861,15 @@ class UserTwoFactorDataBuilder
   }
 
   @override
-  _$UserTwoFactorData build() {
+  UserTwoFactorData build() => _build();
+
+  _$UserTwoFactorData _build() {
     final _$result = _$v ??
         new _$UserTwoFactorData._(
             secret: BuiltValueNullFieldError.checkNotNull(
-                secret, 'UserTwoFactorData', 'secret'),
+                secret, r'UserTwoFactorData', 'secret'),
             qrCode: BuiltValueNullFieldError.checkNotNull(
-                qrCode, 'UserTwoFactorData', 'qrCode'));
+                qrCode, r'UserTwoFactorData', 'qrCode'));
     replace(_$result);
     return _$result;
   }
@@ -856,11 +881,11 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
 
   factory _$UserCompanyItemResponse(
           [void Function(UserCompanyItemResponseBuilder) updates]) =>
-      (new UserCompanyItemResponseBuilder()..update(updates)).build();
+      (new UserCompanyItemResponseBuilder()..update(updates))._build();
 
   _$UserCompanyItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'UserCompanyItemResponse', 'data');
+        data, r'UserCompanyItemResponse', 'data');
   }
 
   @override
@@ -881,12 +906,16 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserCompanyItemResponse')
+    return (newBuiltValueToStringHelper(r'UserCompanyItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -925,7 +954,9 @@ class UserCompanyItemResponseBuilder
   }
 
   @override
-  _$UserCompanyItemResponse build() {
+  UserCompanyItemResponse build() => _build();
+
+  _$UserCompanyItemResponse _build() {
     _$UserCompanyItemResponse _$result;
     try {
       _$result = _$v ?? new _$UserCompanyItemResponse._(data: data.build());
@@ -936,7 +967,7 @@ class UserCompanyItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserCompanyItemResponse', _$failedField, e.toString());
+            r'UserCompanyItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -998,7 +1029,7 @@ class _$UserEntity extends UserEntity {
   final String id;
 
   factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
-      (new UserEntityBuilder()..update(updates)).build();
+      (new UserEntityBuilder()..update(updates))._build();
 
   _$UserEntity._(
       {this.firstName,
@@ -1027,36 +1058,39 @@ class _$UserEntity extends UserEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(firstName, 'UserEntity', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(lastName, 'UserEntity', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(email, 'UserEntity', 'email');
-    BuiltValueNullFieldError.checkNotNull(phone, 'UserEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(password, 'UserEntity', 'password');
     BuiltValueNullFieldError.checkNotNull(
-        phoneVerified, 'UserEntity', 'phoneVerified');
+        firstName, r'UserEntity', 'firstName');
+    BuiltValueNullFieldError.checkNotNull(lastName, r'UserEntity', 'lastName');
+    BuiltValueNullFieldError.checkNotNull(email, r'UserEntity', 'email');
+    BuiltValueNullFieldError.checkNotNull(phone, r'UserEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(password, r'UserEntity', 'password');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'UserEntity', 'customValue1');
+        phoneVerified, r'UserEntity', 'phoneVerified');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'UserEntity', 'customValue2');
+        customValue1, r'UserEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'UserEntity', 'customValue3');
+        customValue2, r'UserEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'UserEntity', 'customValue4');
+        customValue3, r'UserEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled');
+        customValue4, r'UserEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        hasPassword, 'UserEntity', 'hasPassword');
+        isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        lastEmailAddress, 'UserEntity', 'lastEmailAddress');
+        hasPassword, r'UserEntity', 'hasPassword');
     BuiltValueNullFieldError.checkNotNull(
-        oauthUserToken, 'UserEntity', 'oauthUserToken');
+        lastEmailAddress, r'UserEntity', 'lastEmailAddress');
     BuiltValueNullFieldError.checkNotNull(
-        oauthProvider, 'UserEntity', 'oauthProvider');
-    BuiltValueNullFieldError.checkNotNull(createdAt, 'UserEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(updatedAt, 'UserEntity', 'updatedAt');
+        oauthUserToken, r'UserEntity', 'oauthUserToken');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'UserEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'UserEntity', 'id');
+        oauthProvider, r'UserEntity', 'oauthProvider');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'UserEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'UserEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, r'UserEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id');
   }
 
   @override
@@ -1100,49 +1134,40 @@ class _$UserEntity extends UserEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode), phone.hashCode), password.hashCode), emailVerifiedAt.hashCode),
-                                                                                phoneVerified.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            isTwoFactorEnabled.hashCode),
-                                                        hasPassword.hashCode),
-                                                    lastEmailAddress.hashCode),
-                                                oauthUserToken.hashCode),
-                                            userCompany.hashCode),
-                                        oauthProvider.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, password.hashCode);
+    _$hash = $jc(_$hash, emailVerifiedAt.hashCode);
+    _$hash = $jc(_$hash, phoneVerified.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, isTwoFactorEnabled.hashCode);
+    _$hash = $jc(_$hash, hasPassword.hashCode);
+    _$hash = $jc(_$hash, lastEmailAddress.hashCode);
+    _$hash = $jc(_$hash, oauthUserToken.hashCode);
+    _$hash = $jc(_$hash, userCompany.hashCode);
+    _$hash = $jc(_$hash, oauthProvider.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserEntity')
+    return (newBuiltValueToStringHelper(r'UserEntity')
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
@@ -1334,46 +1359,48 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 
   @override
-  _$UserEntity build() {
+  UserEntity build() => _build();
+
+  _$UserEntity _build() {
     _$UserEntity _$result;
     try {
       _$result = _$v ??
           new _$UserEntity._(
               firstName: BuiltValueNullFieldError.checkNotNull(
-                  firstName, 'UserEntity', 'firstName'),
+                  firstName, r'UserEntity', 'firstName'),
               lastName: BuiltValueNullFieldError.checkNotNull(
-                  lastName, 'UserEntity', 'lastName'),
+                  lastName, r'UserEntity', 'lastName'),
               email: BuiltValueNullFieldError.checkNotNull(
-                  email, 'UserEntity', 'email'),
+                  email, r'UserEntity', 'email'),
               phone: BuiltValueNullFieldError.checkNotNull(
-                  phone, 'UserEntity', 'phone'),
+                  phone, r'UserEntity', 'phone'),
               password: BuiltValueNullFieldError.checkNotNull(
-                  password, 'UserEntity', 'password'),
+                  password, r'UserEntity', 'password'),
               emailVerifiedAt: emailVerifiedAt,
               phoneVerified: BuiltValueNullFieldError.checkNotNull(
-                  phoneVerified, 'UserEntity', 'phoneVerified'),
+                  phoneVerified, r'UserEntity', 'phoneVerified'),
               customValue1: BuiltValueNullFieldError.checkNotNull(
-                  customValue1, 'UserEntity', 'customValue1'),
+                  customValue1, r'UserEntity', 'customValue1'),
               customValue2: BuiltValueNullFieldError.checkNotNull(
-                  customValue2, 'UserEntity', 'customValue2'),
+                  customValue2, r'UserEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(
-                  customValue3, 'UserEntity', 'customValue3'),
+                  customValue3, r'UserEntity', 'customValue3'),
               customValue4:
-                  BuiltValueNullFieldError.checkNotNull(customValue4, 'UserEntity', 'customValue4'),
-              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, 'UserEntity', 'isTwoFactorEnabled'),
-              hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, 'UserEntity', 'hasPassword'),
-              lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, 'UserEntity', 'lastEmailAddress'),
-              oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, 'UserEntity', 'oauthUserToken'),
+                  BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
+              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
+              hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, r'UserEntity', 'hasPassword'),
+              lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
+              oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, r'UserEntity', 'oauthUserToken'),
               userCompany: _userCompany?.build(),
-              oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, 'UserEntity', 'oauthProvider'),
+              oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'UserEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'UserEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'UserEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'UserEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'UserEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'UserEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'UserEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1381,7 +1408,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
         _userCompany?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserEntity', _$failedField, e.toString());
+            r'UserEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1390,4 +1417,4 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

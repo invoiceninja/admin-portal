@@ -74,7 +74,7 @@ class EntityType extends EnumClass {
       return 'taskStatuses';
     }
 
-    return toString() + 's';
+    return readableValue + 's';
   }
 
   bool get isSetting => [
@@ -236,6 +236,14 @@ class EntityType extends EnumClass {
     }
 
     return snakeCase;
+  }
+
+  String get readableValue {
+    if (this == EntityType.subscription) {
+      return 'payment_link';
+    }
+
+    return toString();
   }
 
   bool get hasFullWidthViewer => [

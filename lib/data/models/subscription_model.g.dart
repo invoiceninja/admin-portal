@@ -467,11 +467,11 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
 
   factory _$SubscriptionListResponse(
           [void Function(SubscriptionListResponseBuilder) updates]) =>
-      (new SubscriptionListResponseBuilder()..update(updates)).build();
+      (new SubscriptionListResponseBuilder()..update(updates))._build();
 
   _$SubscriptionListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'SubscriptionListResponse', 'data');
+        data, r'SubscriptionListResponse', 'data');
   }
 
   @override
@@ -492,12 +492,16 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionListResponse')
+    return (newBuiltValueToStringHelper(r'SubscriptionListResponse')
           ..add('data', data))
         .toString();
   }
@@ -536,7 +540,9 @@ class SubscriptionListResponseBuilder
   }
 
   @override
-  _$SubscriptionListResponse build() {
+  SubscriptionListResponse build() => _build();
+
+  _$SubscriptionListResponse _build() {
     _$SubscriptionListResponse _$result;
     try {
       _$result = _$v ?? new _$SubscriptionListResponse._(data: data.build());
@@ -547,7 +553,7 @@ class SubscriptionListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionListResponse', _$failedField, e.toString());
+            r'SubscriptionListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -562,11 +568,11 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
 
   factory _$SubscriptionItemResponse(
           [void Function(SubscriptionItemResponseBuilder) updates]) =>
-      (new SubscriptionItemResponseBuilder()..update(updates)).build();
+      (new SubscriptionItemResponseBuilder()..update(updates))._build();
 
   _$SubscriptionItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'SubscriptionItemResponse', 'data');
+        data, r'SubscriptionItemResponse', 'data');
   }
 
   @override
@@ -587,12 +593,16 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionItemResponse')
+    return (newBuiltValueToStringHelper(r'SubscriptionItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -631,7 +641,9 @@ class SubscriptionItemResponseBuilder
   }
 
   @override
-  _$SubscriptionItemResponse build() {
+  SubscriptionItemResponse build() => _build();
+
+  _$SubscriptionItemResponse _build() {
     _$SubscriptionItemResponse _$result;
     try {
       _$result = _$v ?? new _$SubscriptionItemResponse._(data: data.build());
@@ -642,7 +654,7 @@ class SubscriptionItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionItemResponse', _$failedField, e.toString());
+            r'SubscriptionItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -719,7 +731,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 
   factory _$SubscriptionEntity(
           [void Function(SubscriptionEntityBuilder) updates]) =>
-      (new SubscriptionEntityBuilder()..update(updates)).build();
+      (new SubscriptionEntityBuilder()..update(updates))._build();
 
   _$SubscriptionEntity._(
       {this.name,
@@ -755,59 +767,60 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'SubscriptionEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(name, r'SubscriptionEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        groupId, 'SubscriptionEntity', 'groupId');
+        groupId, r'SubscriptionEntity', 'groupId');
     BuiltValueNullFieldError.checkNotNull(
-        productIds, 'SubscriptionEntity', 'productIds');
+        productIds, r'SubscriptionEntity', 'productIds');
     BuiltValueNullFieldError.checkNotNull(
-        recurringProductIds, 'SubscriptionEntity', 'recurringProductIds');
+        recurringProductIds, r'SubscriptionEntity', 'recurringProductIds');
     BuiltValueNullFieldError.checkNotNull(
-        optionalProductIds, 'SubscriptionEntity', 'optionalProductIds');
+        optionalProductIds, r'SubscriptionEntity', 'optionalProductIds');
     BuiltValueNullFieldError.checkNotNull(optionalRecurringProductIds,
-        'SubscriptionEntity', 'optionalRecurringProductIds');
+        r'SubscriptionEntity', 'optionalRecurringProductIds');
     BuiltValueNullFieldError.checkNotNull(
-        registrationRequired, 'SubscriptionEntity', 'registrationRequired');
+        registrationRequired, r'SubscriptionEntity', 'registrationRequired');
+    BuiltValueNullFieldError.checkNotNull(useInventoryManagement,
+        r'SubscriptionEntity', 'useInventoryManagement');
     BuiltValueNullFieldError.checkNotNull(
-        useInventoryManagement, 'SubscriptionEntity', 'useInventoryManagement');
+        frequencyId, r'SubscriptionEntity', 'frequencyId');
     BuiltValueNullFieldError.checkNotNull(
-        frequencyId, 'SubscriptionEntity', 'frequencyId');
+        autoBill, r'SubscriptionEntity', 'autoBill');
     BuiltValueNullFieldError.checkNotNull(
-        autoBill, 'SubscriptionEntity', 'autoBill');
+        promoCode, r'SubscriptionEntity', 'promoCode');
     BuiltValueNullFieldError.checkNotNull(
-        promoCode, 'SubscriptionEntity', 'promoCode');
+        promoDiscount, r'SubscriptionEntity', 'promoDiscount');
     BuiltValueNullFieldError.checkNotNull(
-        promoDiscount, 'SubscriptionEntity', 'promoDiscount');
-    BuiltValueNullFieldError.checkNotNull(price, 'SubscriptionEntity', 'price');
+        price, r'SubscriptionEntity', 'price');
     BuiltValueNullFieldError.checkNotNull(
-        isAmountDiscount, 'SubscriptionEntity', 'isAmountDiscount');
+        isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount');
     BuiltValueNullFieldError.checkNotNull(
-        allowCancellation, 'SubscriptionEntity', 'allowCancellation');
+        allowCancellation, r'SubscriptionEntity', 'allowCancellation');
     BuiltValueNullFieldError.checkNotNull(
-        perSeatEnabled, 'SubscriptionEntity', 'perSeatEnabled');
+        perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        maxSeatsLimit, 'SubscriptionEntity', 'maxSeatsLimit');
+        maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit');
     BuiltValueNullFieldError.checkNotNull(
-        trialEnabled, 'SubscriptionEntity', 'trialEnabled');
+        trialEnabled, r'SubscriptionEntity', 'trialEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        trialDuration, 'SubscriptionEntity', 'trialDuration');
+        trialDuration, r'SubscriptionEntity', 'trialDuration');
     BuiltValueNullFieldError.checkNotNull(
-        allowQueryOverrides, 'SubscriptionEntity', 'allowQueryOverrides');
+        allowQueryOverrides, r'SubscriptionEntity', 'allowQueryOverrides');
     BuiltValueNullFieldError.checkNotNull(
-        allowPlanChanges, 'SubscriptionEntity', 'allowPlanChanges');
+        allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges');
     BuiltValueNullFieldError.checkNotNull(
-        refundPeriod, 'SubscriptionEntity', 'refundPeriod');
+        refundPeriod, r'SubscriptionEntity', 'refundPeriod');
     BuiltValueNullFieldError.checkNotNull(
-        webhookConfiguration, 'SubscriptionEntity', 'webhookConfiguration');
+        webhookConfiguration, r'SubscriptionEntity', 'webhookConfiguration');
     BuiltValueNullFieldError.checkNotNull(
-        purchasePage, 'SubscriptionEntity', 'purchasePage');
+        purchasePage, r'SubscriptionEntity', 'purchasePage');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'SubscriptionEntity', 'createdAt');
+        createdAt, r'SubscriptionEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'SubscriptionEntity', 'updatedAt');
+        updatedAt, r'SubscriptionEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'SubscriptionEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'SubscriptionEntity', 'id');
+        archivedAt, r'SubscriptionEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'SubscriptionEntity', 'id');
   }
 
   @override
@@ -860,49 +873,47 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), groupId.hashCode), productIds.hashCode), recurringProductIds.hashCode), optionalProductIds.hashCode), optionalRecurringProductIds.hashCode), registrationRequired.hashCode), useInventoryManagement.hashCode), frequencyId.hashCode), autoBill.hashCode), promoCode.hashCode), promoDiscount.hashCode), price.hashCode),
-                                                                                isAmountDiscount.hashCode),
-                                                                            allowCancellation.hashCode),
-                                                                        perSeatEnabled.hashCode),
-                                                                    maxSeatsLimit.hashCode),
-                                                                trialEnabled.hashCode),
-                                                            trialDuration.hashCode),
-                                                        allowQueryOverrides.hashCode),
-                                                    allowPlanChanges.hashCode),
-                                                refundPeriod.hashCode),
-                                            webhookConfiguration.hashCode),
-                                        purchasePage.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, groupId.hashCode);
+    _$hash = $jc(_$hash, productIds.hashCode);
+    _$hash = $jc(_$hash, recurringProductIds.hashCode);
+    _$hash = $jc(_$hash, optionalProductIds.hashCode);
+    _$hash = $jc(_$hash, optionalRecurringProductIds.hashCode);
+    _$hash = $jc(_$hash, registrationRequired.hashCode);
+    _$hash = $jc(_$hash, useInventoryManagement.hashCode);
+    _$hash = $jc(_$hash, frequencyId.hashCode);
+    _$hash = $jc(_$hash, autoBill.hashCode);
+    _$hash = $jc(_$hash, promoCode.hashCode);
+    _$hash = $jc(_$hash, promoDiscount.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, isAmountDiscount.hashCode);
+    _$hash = $jc(_$hash, allowCancellation.hashCode);
+    _$hash = $jc(_$hash, perSeatEnabled.hashCode);
+    _$hash = $jc(_$hash, maxSeatsLimit.hashCode);
+    _$hash = $jc(_$hash, trialEnabled.hashCode);
+    _$hash = $jc(_$hash, trialDuration.hashCode);
+    _$hash = $jc(_$hash, allowQueryOverrides.hashCode);
+    _$hash = $jc(_$hash, allowPlanChanges.hashCode);
+    _$hash = $jc(_$hash, refundPeriod.hashCode);
+    _$hash = $jc(_$hash, webhookConfiguration.hashCode);
+    _$hash = $jc(_$hash, purchasePage.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionEntity')
+    return (newBuiltValueToStringHelper(r'SubscriptionEntity')
           ..add('name', name)
           ..add('groupId', groupId)
           ..add('productIds', productIds)
@@ -1143,51 +1154,54 @@ class SubscriptionEntityBuilder
   }
 
   @override
-  _$SubscriptionEntity build() {
+  SubscriptionEntity build() => _build();
+
+  _$SubscriptionEntity _build() {
     _$SubscriptionEntity _$result;
     try {
       _$result = _$v ??
           new _$SubscriptionEntity._(
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'SubscriptionEntity', 'name'),
+                  name, r'SubscriptionEntity', 'name'),
               groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, 'SubscriptionEntity', 'groupId'),
+                  groupId, r'SubscriptionEntity', 'groupId'),
               productIds: BuiltValueNullFieldError.checkNotNull(
-                  productIds, 'SubscriptionEntity', 'productIds'),
+                  productIds, r'SubscriptionEntity', 'productIds'),
               recurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                  recurringProductIds, 'SubscriptionEntity', 'recurringProductIds'),
+                  recurringProductIds, r'SubscriptionEntity', 'recurringProductIds'),
               optionalProductIds: BuiltValueNullFieldError.checkNotNull(
-                  optionalProductIds, 'SubscriptionEntity', 'optionalProductIds'),
+                  optionalProductIds, r'SubscriptionEntity', 'optionalProductIds'),
               optionalRecurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                  optionalRecurringProductIds, 'SubscriptionEntity', 'optionalRecurringProductIds'),
+                  optionalRecurringProductIds,
+                  r'SubscriptionEntity',
+                  'optionalRecurringProductIds'),
               registrationRequired: BuiltValueNullFieldError.checkNotNull(
-                  registrationRequired, 'SubscriptionEntity', 'registrationRequired'),
-              useInventoryManagement:
-                  BuiltValueNullFieldError.checkNotNull(useInventoryManagement, 'SubscriptionEntity', 'useInventoryManagement'),
-              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, 'SubscriptionEntity', 'frequencyId'),
-              autoBill: BuiltValueNullFieldError.checkNotNull(autoBill, 'SubscriptionEntity', 'autoBill'),
-              promoCode: BuiltValueNullFieldError.checkNotNull(promoCode, 'SubscriptionEntity', 'promoCode'),
-              promoDiscount: BuiltValueNullFieldError.checkNotNull(promoDiscount, 'SubscriptionEntity', 'promoDiscount'),
-              price: BuiltValueNullFieldError.checkNotNull(price, 'SubscriptionEntity', 'price'),
-              isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, 'SubscriptionEntity', 'isAmountDiscount'),
-              allowCancellation: BuiltValueNullFieldError.checkNotNull(allowCancellation, 'SubscriptionEntity', 'allowCancellation'),
-              perSeatEnabled: BuiltValueNullFieldError.checkNotNull(perSeatEnabled, 'SubscriptionEntity', 'perSeatEnabled'),
-              maxSeatsLimit: BuiltValueNullFieldError.checkNotNull(maxSeatsLimit, 'SubscriptionEntity', 'maxSeatsLimit'),
-              trialEnabled: BuiltValueNullFieldError.checkNotNull(trialEnabled, 'SubscriptionEntity', 'trialEnabled'),
-              trialDuration: BuiltValueNullFieldError.checkNotNull(trialDuration, 'SubscriptionEntity', 'trialDuration'),
-              allowQueryOverrides: BuiltValueNullFieldError.checkNotNull(allowQueryOverrides, 'SubscriptionEntity', 'allowQueryOverrides'),
-              allowPlanChanges: BuiltValueNullFieldError.checkNotNull(allowPlanChanges, 'SubscriptionEntity', 'allowPlanChanges'),
-              refundPeriod: BuiltValueNullFieldError.checkNotNull(refundPeriod, 'SubscriptionEntity', 'refundPeriod'),
+                  registrationRequired, r'SubscriptionEntity', 'registrationRequired'),
+              useInventoryManagement: BuiltValueNullFieldError.checkNotNull(useInventoryManagement, r'SubscriptionEntity', 'useInventoryManagement'),
+              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, r'SubscriptionEntity', 'frequencyId'),
+              autoBill: BuiltValueNullFieldError.checkNotNull(autoBill, r'SubscriptionEntity', 'autoBill'),
+              promoCode: BuiltValueNullFieldError.checkNotNull(promoCode, r'SubscriptionEntity', 'promoCode'),
+              promoDiscount: BuiltValueNullFieldError.checkNotNull(promoDiscount, r'SubscriptionEntity', 'promoDiscount'),
+              price: BuiltValueNullFieldError.checkNotNull(price, r'SubscriptionEntity', 'price'),
+              isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount'),
+              allowCancellation: BuiltValueNullFieldError.checkNotNull(allowCancellation, r'SubscriptionEntity', 'allowCancellation'),
+              perSeatEnabled: BuiltValueNullFieldError.checkNotNull(perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled'),
+              maxSeatsLimit: BuiltValueNullFieldError.checkNotNull(maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit'),
+              trialEnabled: BuiltValueNullFieldError.checkNotNull(trialEnabled, r'SubscriptionEntity', 'trialEnabled'),
+              trialDuration: BuiltValueNullFieldError.checkNotNull(trialDuration, r'SubscriptionEntity', 'trialDuration'),
+              allowQueryOverrides: BuiltValueNullFieldError.checkNotNull(allowQueryOverrides, r'SubscriptionEntity', 'allowQueryOverrides'),
+              allowPlanChanges: BuiltValueNullFieldError.checkNotNull(allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges'),
+              refundPeriod: BuiltValueNullFieldError.checkNotNull(refundPeriod, r'SubscriptionEntity', 'refundPeriod'),
               webhookConfiguration: webhookConfiguration.build(),
-              purchasePage: BuiltValueNullFieldError.checkNotNull(purchasePage, 'SubscriptionEntity', 'purchasePage'),
+              purchasePage: BuiltValueNullFieldError.checkNotNull(purchasePage, r'SubscriptionEntity', 'purchasePage'),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'SubscriptionEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'SubscriptionEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'SubscriptionEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'SubscriptionEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'SubscriptionEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'SubscriptionEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'SubscriptionEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'SubscriptionEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1195,7 +1209,7 @@ class SubscriptionEntityBuilder
         webhookConfiguration.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionEntity', _$failedField, e.toString());
+            r'SubscriptionEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1218,7 +1232,7 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
 
   factory _$WebhookConfigurationEntity(
           [void Function(WebhookConfigurationEntityBuilder) updates]) =>
-      (new WebhookConfigurationEntityBuilder()..update(updates)).build();
+      (new WebhookConfigurationEntityBuilder()..update(updates))._build();
 
   _$WebhookConfigurationEntity._(
       {this.returnUrl,
@@ -1228,15 +1242,15 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
       this.postPurchaseBody})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        returnUrl, 'WebhookConfigurationEntity', 'returnUrl');
+        returnUrl, r'WebhookConfigurationEntity', 'returnUrl');
     BuiltValueNullFieldError.checkNotNull(
-        postPurchaseUrl, 'WebhookConfigurationEntity', 'postPurchaseUrl');
+        postPurchaseUrl, r'WebhookConfigurationEntity', 'postPurchaseUrl');
     BuiltValueNullFieldError.checkNotNull(postPurchaseRestMethod,
-        'WebhookConfigurationEntity', 'postPurchaseRestMethod');
+        r'WebhookConfigurationEntity', 'postPurchaseRestMethod');
     BuiltValueNullFieldError.checkNotNull(postPurchaseHeaders,
-        'WebhookConfigurationEntity', 'postPurchaseHeaders');
+        r'WebhookConfigurationEntity', 'postPurchaseHeaders');
     BuiltValueNullFieldError.checkNotNull(
-        postPurchaseBody, 'WebhookConfigurationEntity', 'postPurchaseBody');
+        postPurchaseBody, r'WebhookConfigurationEntity', 'postPurchaseBody');
   }
 
   @override
@@ -1262,17 +1276,20 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc($jc($jc(0, returnUrl.hashCode), postPurchaseUrl.hashCode),
-                postPurchaseRestMethod.hashCode),
-            postPurchaseHeaders.hashCode),
-        postPurchaseBody.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, returnUrl.hashCode);
+    _$hash = $jc(_$hash, postPurchaseUrl.hashCode);
+    _$hash = $jc(_$hash, postPurchaseRestMethod.hashCode);
+    _$hash = $jc(_$hash, postPurchaseHeaders.hashCode);
+    _$hash = $jc(_$hash, postPurchaseBody.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('WebhookConfigurationEntity')
+    return (newBuiltValueToStringHelper(r'WebhookConfigurationEntity')
           ..add('returnUrl', returnUrl)
           ..add('postPurchaseUrl', postPurchaseUrl)
           ..add('postPurchaseRestMethod', postPurchaseRestMethod)
@@ -1341,25 +1358,27 @@ class WebhookConfigurationEntityBuilder
   }
 
   @override
-  _$WebhookConfigurationEntity build() {
+  WebhookConfigurationEntity build() => _build();
+
+  _$WebhookConfigurationEntity _build() {
     _$WebhookConfigurationEntity _$result;
     try {
       _$result = _$v ??
           new _$WebhookConfigurationEntity._(
               returnUrl: BuiltValueNullFieldError.checkNotNull(
-                  returnUrl, 'WebhookConfigurationEntity', 'returnUrl'),
+                  returnUrl, r'WebhookConfigurationEntity', 'returnUrl'),
               postPurchaseUrl: BuiltValueNullFieldError.checkNotNull(
                   postPurchaseUrl,
-                  'WebhookConfigurationEntity',
+                  r'WebhookConfigurationEntity',
                   'postPurchaseUrl'),
               postPurchaseRestMethod: BuiltValueNullFieldError.checkNotNull(
                   postPurchaseRestMethod,
-                  'WebhookConfigurationEntity',
+                  r'WebhookConfigurationEntity',
                   'postPurchaseRestMethod'),
               postPurchaseHeaders: postPurchaseHeaders.build(),
               postPurchaseBody: BuiltValueNullFieldError.checkNotNull(
                   postPurchaseBody,
-                  'WebhookConfigurationEntity',
+                  r'WebhookConfigurationEntity',
                   'postPurchaseBody'));
     } catch (_) {
       String _$failedField;
@@ -1368,7 +1387,7 @@ class WebhookConfigurationEntityBuilder
         postPurchaseHeaders.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'WebhookConfigurationEntity', _$failedField, e.toString());
+            r'WebhookConfigurationEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1377,4 +1396,4 @@ class WebhookConfigurationEntityBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

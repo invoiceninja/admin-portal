@@ -71,7 +71,7 @@ class _ListFilterState extends State<ListFilter> {
     final isSingle = count == 1 || isDashboardOrSettings;
 
     final key = toSnakeCase(
-        isSingle ? widget.entityType.toString() : widget.entityType.plural);
+        isSingle ? widget.entityType.readableValue : widget.entityType.plural);
     final placeholder = localization.lookup(
         widget.entityType == EntityType.dashboard
             ? 'search_company'
