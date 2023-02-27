@@ -225,6 +225,7 @@ void handleGroupAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final group = groups.first;
   final groupIds = groups.map((group) => group.id).toList();
@@ -234,6 +235,10 @@ void handleGroupAction(
       editEntity(entity: group);
       break;
     case EntityAction.settings:
+      // Add the settings list to the route stack to improve the back button
+      if (state.prefState.isMobile) {
+        viewEntitiesByType(entityType: EntityType.settings);
+      }
       store.dispatch(ViewSettings(
         group: group,
         section: kSettingsCompanyDetails,
