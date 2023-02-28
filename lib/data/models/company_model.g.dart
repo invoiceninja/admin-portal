@@ -368,7 +368,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'calculate_expense_tax_by_amount',
       serializers.serialize(object.calculateExpenseTaxByAmount,
           specifiedType: const FullType(bool)),
-      'stop_on_unpaid_recurring ',
+      'stop_on_unpaid_recurring',
       serializers.serialize(object.stopOnUnpaidRecurring,
           specifiedType: const FullType(bool)),
       'created_at',
@@ -898,7 +898,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.calculateExpenseTaxByAmount = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'stop_on_unpaid_recurring ':
+        case 'stop_on_unpaid_recurring':
           result.stopOnUnpaidRecurring = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
