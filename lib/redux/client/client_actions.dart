@@ -368,13 +368,12 @@ void handleClientAction(
       }
       break;
     case EntityAction.settings:
-      // Add the settings list to the route stack to improve the back button
-      if (state.prefState.isMobile) {
-        viewEntitiesByType(entityType: EntityType.settings);
-      }
       store.dispatch(ViewSettings(
+        company: store.state.company,
+        user: store.state.user,
         client: client,
-        section: kSettingsLocalization,
+        section: state.prefState.isDesktop ? kSettingsLocalization : null,
+        clearFilter: true,
       ));
       break;
     case EntityAction.newTask:
