@@ -819,7 +819,9 @@ class _DrawerTileState extends State<DrawerTile> {
         textColor = convertHexStringToColor(activeFontColor);
       }
     } else {
-      if (inactiveColor.isNotEmpty) {
+      if (_isHovered) {
+        color = convertHexStringToColor(activeColor);
+      } else if (inactiveColor.isNotEmpty) {
         color = convertHexStringToColor(inactiveColor);
       }
       if (inactiveFontColor.isNotEmpty) {

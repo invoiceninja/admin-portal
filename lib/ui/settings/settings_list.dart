@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -258,7 +260,7 @@ class _SettingsListState extends State<SettingsList> {
   }
 }
 
-class SettingsListTile extends StatelessWidget {
+class SettingsListTile extends StatefulWidget {
   const SettingsListTile({
     @required this.section,
     @required this.viewModel,
@@ -268,32 +270,55 @@ class SettingsListTile extends StatelessWidget {
   final SettingsListVM viewModel;
 
   @override
+  State<SettingsListTile> createState() => _SettingsListTileState();
+}
+
+class _SettingsListTileState extends State<SettingsListTile> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     IconData icon;
-    if (section == kSettingsDeviceSettings) {
+    if (widget.section == kSettingsDeviceSettings) {
       icon = isMobile(context) ? Icons.phone_android : MdiIcons.desktopClassic;
     } else {
-      icon = getSettingIcon(section);
+      icon = getSettingIcon(widget.section);
     }
 
-    return Container(
-      color: Theme.of(context).cardColor,
-      child: SelectedIndicator(
-        isSelected: viewModel.state.uiState.containsRoute('/$section') &&
-            isDesktop(context),
-        child: ListTile(
-          dense: isDesktop(context),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 6, top: 2),
-            child: Icon(icon ?? icon, size: 22),
+    final isSelected =
+        widget.viewModel.state.uiState.containsRoute('/${widget.section}') &&
+            isDesktop(context);
+
+    final hoverColor = convertHexStringToColor(state.prefState.enableDarkMode
+        ? kDefaultDarkSelectedColorMenu
+        : kDefaultLightSelectedColorMenu);
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Container(
+        color: Theme.of(context).cardColor,
+        child: SelectedIndicator(
+          isSelected: isSelected,
+          child: ListTile(
+            tileColor: _isHovered && !isSelected ? hoverColor : null,
+            dense: isDesktop(context),
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 6, top: 2),
+              child: Icon(icon ?? icon, size: 22),
+            ),
+            title: Text(
+              localization.lookup(widget.section),
+              style:
+                  Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
+            ),
+            onTap: () =>
+                widget.viewModel.loadSection(context, widget.section, 0),
           ),
-          title: Text(
-            localization.lookup(section),
-            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
-          ),
-          onTap: () => viewModel.loadSection(context, section, 0),
         ),
       ),
     );
