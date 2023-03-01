@@ -22,7 +22,6 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
-    this.floatingActionButton,
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
@@ -34,7 +33,6 @@ class ViewScaffold extends StatelessWidget {
   final BaseEntity entity;
   final Widget body;
   final Function onBackPressed;
-  final Widget floatingActionButton;
   final Widget appBarBottom;
   final String title;
   final bool isEditable;

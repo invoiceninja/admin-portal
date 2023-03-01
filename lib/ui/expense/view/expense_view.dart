@@ -161,44 +161,6 @@ class _ExpenseViewState extends State<ExpenseView>
           ],
         );
       }),
-      floatingActionButton: viewModel.state.isEnterprisePlan
-          ? Builder(builder: (BuildContext context) {
-              return FloatingActionButton(
-                heroTag: 'expense_fab',
-                backgroundColor: Theme.of(context).primaryColorDark,
-                onPressed: () async {
-                  MultipartFile multipartFile;
-                  if (kIsWeb) {
-                    multipartFile = await pickFile();
-                  } else {
-                    final status = await Permission.camera.request();
-                    if (status == PermissionStatus.granted) {
-                      final image = await ImagePicker()
-                          .pickImage(source: ImageSource.camera);
-                      if (image != null && image.path != null) {
-                        final croppedFile = await ImageCropper()
-                            .cropImage(sourcePath: image.path);
-                        final bytes = await croppedFile.readAsBytes();
-                        multipartFile = MultipartFile.fromBytes('file', bytes,
-                            filename: image.path.split('/').last);
-                      }
-                    } else {
-                      openAppSettings();
-                    }
-                  }
-                  if (multipartFile != null) {
-                    viewModel.onUploadDocument(
-                        navigatorKey.currentContext, multipartFile);
-                  }
-                },
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                ),
-                tooltip: localization.create,
-              );
-            })
-          : null,
     );
   }
 }
