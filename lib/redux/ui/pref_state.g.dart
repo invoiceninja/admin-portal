@@ -200,6 +200,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideReviewApp',
       serializers.serialize(object.hideReviewApp,
           specifiedType: const FullType(bool)),
+      'hideOneYearReviewApp',
+      serializers.serialize(object.hideOneYearReviewApp,
+          specifiedType: const FullType(bool)),
+      'hideTwoYearReviewApp',
+      serializers.serialize(object.hideTwoYearReviewApp,
+          specifiedType: const FullType(bool)),
       'editAfterSaving',
       serializers.serialize(object.editAfterSaving,
           specifiedType: const FullType(bool)),
@@ -347,6 +353,14 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'hideReviewApp':
           result.hideReviewApp = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'hideOneYearReviewApp':
+          result.hideOneYearReviewApp = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'hideTwoYearReviewApp':
+          result.hideTwoYearReviewApp = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'editAfterSaving':
@@ -658,6 +672,10 @@ class _$PrefState extends PrefState {
   @override
   final bool hideReviewApp;
   @override
+  final bool hideOneYearReviewApp;
+  @override
+  final bool hideTwoYearReviewApp;
+  @override
   final bool editAfterSaving;
   @override
   final double textScaleFactor;
@@ -698,6 +716,8 @@ class _$PrefState extends PrefState {
       this.hideDesktopWarning,
       this.hideGatewayWarning,
       this.hideReviewApp,
+      this.hideOneYearReviewApp,
+      this.hideTwoYearReviewApp,
       this.editAfterSaving,
       this.textScaleFactor,
       this.sortFields,
@@ -758,6 +778,10 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideReviewApp, r'PrefState', 'hideReviewApp');
     BuiltValueNullFieldError.checkNotNull(
+        hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp');
+    BuiltValueNullFieldError.checkNotNull(
+        hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp');
+    BuiltValueNullFieldError.checkNotNull(
         editAfterSaving, r'PrefState', 'editAfterSaving');
     BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, r'PrefState', 'textScaleFactor');
@@ -806,6 +830,8 @@ class _$PrefState extends PrefState {
         hideDesktopWarning == other.hideDesktopWarning &&
         hideGatewayWarning == other.hideGatewayWarning &&
         hideReviewApp == other.hideReviewApp &&
+        hideOneYearReviewApp == other.hideOneYearReviewApp &&
+        hideTwoYearReviewApp == other.hideTwoYearReviewApp &&
         editAfterSaving == other.editAfterSaving &&
         textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
@@ -845,6 +871,8 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, hideDesktopWarning.hashCode);
     _$hash = $jc(_$hash, hideGatewayWarning.hashCode);
     _$hash = $jc(_$hash, hideReviewApp.hashCode);
+    _$hash = $jc(_$hash, hideOneYearReviewApp.hashCode);
+    _$hash = $jc(_$hash, hideTwoYearReviewApp.hashCode);
     _$hash = $jc(_$hash, editAfterSaving.hashCode);
     _$hash = $jc(_$hash, textScaleFactor.hashCode);
     _$hash = $jc(_$hash, sortFields.hashCode);
@@ -884,6 +912,8 @@ class _$PrefState extends PrefState {
           ..add('hideDesktopWarning', hideDesktopWarning)
           ..add('hideGatewayWarning', hideGatewayWarning)
           ..add('hideReviewApp', hideReviewApp)
+          ..add('hideOneYearReviewApp', hideOneYearReviewApp)
+          ..add('hideTwoYearReviewApp', hideTwoYearReviewApp)
           ..add('editAfterSaving', editAfterSaving)
           ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
@@ -1032,6 +1062,16 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideReviewApp(bool hideReviewApp) =>
       _$this._hideReviewApp = hideReviewApp;
 
+  bool _hideOneYearReviewApp;
+  bool get hideOneYearReviewApp => _$this._hideOneYearReviewApp;
+  set hideOneYearReviewApp(bool hideOneYearReviewApp) =>
+      _$this._hideOneYearReviewApp = hideOneYearReviewApp;
+
+  bool _hideTwoYearReviewApp;
+  bool get hideTwoYearReviewApp => _$this._hideTwoYearReviewApp;
+  set hideTwoYearReviewApp(bool hideTwoYearReviewApp) =>
+      _$this._hideTwoYearReviewApp = hideTwoYearReviewApp;
+
   bool _editAfterSaving;
   bool get editAfterSaving => _$this._editAfterSaving;
   set editAfterSaving(bool editAfterSaving) =>
@@ -1089,6 +1129,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _hideDesktopWarning = $v.hideDesktopWarning;
       _hideGatewayWarning = $v.hideGatewayWarning;
       _hideReviewApp = $v.hideReviewApp;
+      _hideOneYearReviewApp = $v.hideOneYearReviewApp;
+      _hideTwoYearReviewApp = $v.hideTwoYearReviewApp;
       _editAfterSaving = $v.editAfterSaving;
       _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
@@ -1153,6 +1195,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, r'PrefState', 'hideDesktopWarning'),
               hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
               hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, r'PrefState', 'hideReviewApp'),
+              hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
+              hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, r'PrefState', 'editAfterSaving'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, r'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),

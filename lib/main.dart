@@ -233,7 +233,7 @@ Future<AppState> _initialState(bool isTesting) async {
       prefState = serializers.deserializeWith(
           PrefState.serializer, json.decode(prefString));
     } catch (e) {
-      print('Failed to load prefs: $e');
+      print('## Error: Failed to load prefs: $e');
     }
   }
 

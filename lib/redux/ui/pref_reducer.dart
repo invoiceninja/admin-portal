@@ -67,6 +67,10 @@ PrefState prefReducer(
     ..hideGatewayWarning =
         hideGatewayWarningReducer(state.hideGatewayWarning, action)
     ..hideReviewApp = hideReviewAppReducer(state.hideReviewApp, action)
+    ..hideOneYearReviewApp =
+        hideOneYearReviewAppReducer(state.hideOneYearReviewApp, action)
+    ..hideTwoYearReviewApp =
+        hideTwoYearReviewAppReducer(state.hideTwoYearReviewApp, action)
     ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
@@ -251,6 +255,27 @@ Reducer<bool> hideGatewayWarningReducer = combineReducers([
 
 Reducer<bool> hideReviewAppReducer = combineReducers([
   TypedReducer<bool, DismissReviewAppPermanently>((filter, action) {
+    return true;
+  }),
+  TypedReducer<bool, DismissOneYearReviewAppPermanently>((filter, action) {
+    return true;
+  }),
+  TypedReducer<bool, DismissTwoYearReviewAppPermanently>((filter, action) {
+    return true;
+  }),
+]);
+
+Reducer<bool> hideOneYearReviewAppReducer = combineReducers([
+  TypedReducer<bool, DismissOneYearReviewAppPermanently>((filter, action) {
+    return true;
+  }),
+  TypedReducer<bool, DismissTwoYearReviewAppPermanently>((filter, action) {
+    return true;
+  }),
+]);
+
+Reducer<bool> hideTwoYearReviewAppReducer = combineReducers([
+  TypedReducer<bool, DismissTwoYearReviewAppPermanently>((filter, action) {
     return true;
   }),
 ]);

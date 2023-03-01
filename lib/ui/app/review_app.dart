@@ -21,6 +21,7 @@ class _ReviewAppState extends State<ReviewApp> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     if (kIsWeb || isLinux()) {
       return SizedBox();
@@ -53,7 +54,13 @@ class _ReviewAppState extends State<ReviewApp> {
                     AppReview.openStoreListing();
                   }
 
-                  store.dispatch(DismissReviewAppPermanently());
+                  if (state.showTwoYearReviewApp) {
+                    store.dispatch(DismissTwoYearReviewAppPermanently());
+                  } else if (state.showOneYearReviewApp) {
+                    store.dispatch(DismissOneYearReviewAppPermanently());
+                  } else if (state.showReviewApp) {
+                    store.dispatch(DismissReviewAppPermanently());
+                  }
                 },
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 100),
@@ -68,7 +75,13 @@ class _ReviewAppState extends State<ReviewApp> {
               ),
               TextButton(
                 onPressed: () async {
-                  store.dispatch(DismissReviewAppPermanently());
+                  if (state.showTwoYearReviewApp) {
+                    store.dispatch(DismissTwoYearReviewAppPermanently());
+                  } else if (state.showOneYearReviewApp) {
+                    store.dispatch(DismissOneYearReviewAppPermanently());
+                  } else if (state.showReviewApp) {
+                    store.dispatch(DismissReviewAppPermanently());
+                  }
                 },
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(minWidth: 100),
