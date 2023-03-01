@@ -254,7 +254,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ? localization.upgrade
                       : null,
                   onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
-                  icon: Icon(Icons.arrow_circle_up)),
+                  icon: Icon(Icons.rocket_launch)),
             ),
           if (!kReleaseMode ||
               (kIsWeb &&
