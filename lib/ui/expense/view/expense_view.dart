@@ -1,14 +1,8 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -21,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_schedule.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
