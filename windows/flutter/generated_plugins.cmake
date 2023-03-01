@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   local_auth_windows
-  permission_handler_windows
   printing
   screen_retriever
   sentry_flutter

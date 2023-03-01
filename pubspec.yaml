@@ -61,7 +61,7 @@ dependencies:
   # flutter_launcher_icons: ^0.9.1
   overflow_view: ^0.3.1
   flutter_styled_toast: ^2.0.0
-  permission_handler: ^10.2.0
+  permission_handler: 9.1.0 # Disables Windows support to fix crash
   file_picker: ^5.2.5
   boardview: ^0.2.2
   pointer_interceptor: ^0.9.0
