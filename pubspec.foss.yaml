@@ -35,7 +35,7 @@ dependencies:
   memoize: ^3.0.0
   cached_network_image: 3.0.0 # imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
   url_launcher: ^6.0.20
-  share: ^2.0.4
+  share_plus: ^6.3.1
   intl: ^0.17.0
   flutter_slidable: ^2.0.0
   charts_flutter: ^0.12.0
@@ -56,7 +56,7 @@ dependencies:
   # flutter_launcher_icons: ^0.9.1
   overflow_view: ^0.3.1
   flutter_styled_toast: ^2.0.0
-  permission_handler: 9.1.0
+  permission_handler: 9.1.0 # Disables Windows support to fix crash
   file_picker: ^5.2.5
   boardview: ^0.2.2
   pointer_interceptor: ^0.9.0
@@ -69,7 +69,6 @@ dependencies:
     git:
       url: https://github.com/superlistapp/super_editor.git
       path: super_editor
-      ref: 1601fdce95ebfa34bddf80cab3e58e700b0edec3
   html2md: ^1.2.6
   printing: ^5.10.1
   image_cropper: ^3.0.1
@@ -81,6 +80,12 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.2
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
+
+dependency_overrides:
+  photo_view:
+    git:
+      url: https://github.com/bluefireteam/photo_view
+      ref: master
 
 dev_dependencies:
   flutter_driver:
