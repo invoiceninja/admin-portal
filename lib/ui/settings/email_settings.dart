@@ -124,6 +124,16 @@ class _EmailSettingsState extends State<EmailSettings> {
     }
   }
 
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -143,7 +153,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     return EditScaffold(
       title: localization.emailSettings,
-      onSavePressed: disableSave ? null : viewModel.onSavePressed,
+      onSavePressed: disableSave ? null : _onSavePressed,
       body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
@@ -257,6 +267,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                   label: localization.secret,
                   controller: _postmarkSecretController,
                   keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
                 ),
               ] else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN) ...[
@@ -264,11 +278,19 @@ class _EmailSettingsState extends State<EmailSettings> {
                   label: localization.secret,
                   controller: _mailgunSecretController,
                   keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
                 ),
                 DecoratedFormField(
                   label: localization.domain,
                   controller: _mailgunDomainController,
                   keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
                 ),
               ],
             ],
@@ -283,23 +305,24 @@ class _EmailSettingsState extends State<EmailSettings> {
                   label: localization.fromEmail,
                   controller: _customSendingEmailController,
                   keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
                 ),
               DecoratedFormField(
                 label: localization.fromName,
                 controller: _fromNameController,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
                 keyboardType: TextInputType.name,
               ),
               DecoratedFormField(
                 label: localization.replyToEmail,
                 controller: _replyToEmailController,
                 keyboardType: TextInputType.emailAddress,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               DecoratedFormField(
                 label: localization.replyToName,
                 controller: _replyToNameController,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
                 keyboardType: TextInputType.name,
               ),
               DecoratedFormField(
@@ -307,7 +330,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 controller: _bccEmailController,
                 keyboardType: TextInputType.emailAddress,
                 hint: localization.commaSeparatedList,
-                onSavePressed: viewModel.onSavePressed,
+                onSavePressed: _onSavePressed,
               ),
               AppDropdownButton<int>(
                   showBlank: true,
