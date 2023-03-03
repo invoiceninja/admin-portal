@@ -636,7 +636,13 @@ class DashboardPanels extends StatelessWidget {
                                     style: textTheme.subtitle1,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
-                                Text(formatNumber(value, context),
+                                Text(
+                                    formatNumber(
+                                      value,
+                                      context,
+                                      currencyId: state
+                                          .dashboardUIState.settings.currencyId,
+                                    ),
                                     style: textTheme.headline5,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
