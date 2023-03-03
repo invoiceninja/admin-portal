@@ -68,11 +68,11 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
 
   factory _$PaymentStatusEntity(
           [void Function(PaymentStatusEntityBuilder) updates]) =>
-      (new PaymentStatusEntityBuilder()..update(updates)).build();
+      (new PaymentStatusEntityBuilder()..update(updates))._build();
 
   _$PaymentStatusEntity._({this.id, this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'PaymentStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(name, 'PaymentStatusEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, r'PaymentStatusEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, r'PaymentStatusEntity', 'name');
   }
 
   @override
@@ -93,12 +93,17 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PaymentStatusEntity')
+    return (newBuiltValueToStringHelper(r'PaymentStatusEntity')
           ..add('id', id)
           ..add('name', name))
         .toString();
@@ -141,16 +146,18 @@ class PaymentStatusEntityBuilder
   }
 
   @override
-  _$PaymentStatusEntity build() {
+  PaymentStatusEntity build() => _build();
+
+  _$PaymentStatusEntity _build() {
     final _$result = _$v ??
         new _$PaymentStatusEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'PaymentStatusEntity', 'id'),
+                id, r'PaymentStatusEntity', 'id'),
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'PaymentStatusEntity', 'name'));
+                name, r'PaymentStatusEntity', 'name'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

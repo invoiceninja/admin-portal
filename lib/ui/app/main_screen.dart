@@ -863,13 +863,13 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsGroupSettingsEdit:
         screen = GroupEditScreen();
         break;
-      case kSettingsSubscriptions:
+      case kSettingsPaymentLinks:
         screen = SubscriptionScreenBuilder();
         break;
-      case kSettingsSubscriptionsView:
+      case kSettingsPaymentLinksView:
         screen = SubscriptionViewScreen();
         break;
-      case kSettingsSubscriptionsEdit:
+      case kSettingsPaymentLinksEdit:
         screen = SubscriptionEditScreen();
         break;
       case kSettingsGeneratedNumbers:

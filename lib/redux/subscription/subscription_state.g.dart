@@ -164,11 +164,11 @@ class _$SubscriptionState extends SubscriptionState {
 
   factory _$SubscriptionState(
           [void Function(SubscriptionStateBuilder) updates]) =>
-      (new SubscriptionStateBuilder()..update(updates)).build();
+      (new SubscriptionStateBuilder()..update(updates))._build();
 
   _$SubscriptionState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'SubscriptionState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'SubscriptionState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'SubscriptionState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'SubscriptionState', 'list');
   }
 
   @override
@@ -188,12 +188,17 @@ class _$SubscriptionState extends SubscriptionState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionState')
+    return (newBuiltValueToStringHelper(r'SubscriptionState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -237,7 +242,9 @@ class SubscriptionStateBuilder
   }
 
   @override
-  _$SubscriptionState build() {
+  SubscriptionState build() => _build();
+
+  _$SubscriptionState _build() {
     _$SubscriptionState _$result;
     try {
       _$result = _$v ??
@@ -251,7 +258,7 @@ class SubscriptionStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionState', _$failedField, e.toString());
+            r'SubscriptionState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -278,7 +285,7 @@ class _$SubscriptionUIState extends SubscriptionUIState {
 
   factory _$SubscriptionUIState(
           [void Function(SubscriptionUIStateBuilder) updates]) =>
-      (new SubscriptionUIStateBuilder()..update(updates)).build();
+      (new SubscriptionUIStateBuilder()..update(updates))._build();
 
   _$SubscriptionUIState._(
       {this.editing,
@@ -290,9 +297,9 @@ class _$SubscriptionUIState extends SubscriptionUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'SubscriptionUIState', 'listUIState');
+        listUIState, r'SubscriptionUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'SubscriptionUIState', 'tabIndex');
+        tabIndex, r'SubscriptionUIState', 'tabIndex');
   }
 
   @override
@@ -320,21 +327,22 @@ class _$SubscriptionUIState extends SubscriptionUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SubscriptionUIState')
+    return (newBuiltValueToStringHelper(r'SubscriptionUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -413,7 +421,9 @@ class SubscriptionUIStateBuilder
   }
 
   @override
-  _$SubscriptionUIState build() {
+  SubscriptionUIState build() => _build();
+
+  _$SubscriptionUIState _build() {
     _$SubscriptionUIState _$result;
     try {
       _$result = _$v ??
@@ -423,7 +433,7 @@ class SubscriptionUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'SubscriptionUIState', 'tabIndex'),
+                  tabIndex, r'SubscriptionUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -435,7 +445,7 @@ class SubscriptionUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SubscriptionUIState', _$failedField, e.toString());
+            r'SubscriptionUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -444,4 +454,4 @@ class SubscriptionUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

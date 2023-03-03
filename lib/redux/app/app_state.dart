@@ -192,6 +192,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return color.isNotEmpty;
   }
 
+  bool get showReviewApp => !prefState.hideReviewApp && company.daysActive > 60;
+
+  bool get showOneYearReviewApp =>
+      !prefState.hideOneYearReviewApp && company.daysActive > 365;
+
+  bool get showTwoYearReviewApp =>
+      !prefState.hideTwoYearReviewApp && company.daysActive > 730;
+
   Color get linkColor => prefState.enableDarkMode
       ? convertHexStringToColor('#FFFFFF')
       : accentColor;
@@ -832,7 +840,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isPaidAccount => isSelfHosted
-      ? isWhiteLabeled
+      ? (isWhiteLabeled || account.plan == kPlanWhiteLabel)
       : ((isProPlan || isEnterprisePlan) && !isTrial);
 
   bool get isUpdateAvailable =>

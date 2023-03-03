@@ -155,11 +155,11 @@ class _$DocumentState extends DocumentState {
   final BuiltList<String> list;
 
   factory _$DocumentState([void Function(DocumentStateBuilder) updates]) =>
-      (new DocumentStateBuilder()..update(updates)).build();
+      (new DocumentStateBuilder()..update(updates))._build();
 
   _$DocumentState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'DocumentState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'DocumentState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'DocumentState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'DocumentState', 'list');
   }
 
   @override
@@ -178,12 +178,17 @@ class _$DocumentState extends DocumentState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DocumentState')
+    return (newBuiltValueToStringHelper(r'DocumentState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -227,7 +232,9 @@ class DocumentStateBuilder
   }
 
   @override
-  _$DocumentState build() {
+  DocumentState build() => _build();
+
+  _$DocumentState _build() {
     _$DocumentState _$result;
     try {
       _$result =
@@ -241,7 +248,7 @@ class DocumentStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'DocumentState', _$failedField, e.toString());
+            r'DocumentState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -267,7 +274,7 @@ class _$DocumentUIState extends DocumentUIState {
   final Completer<Null> cancelCompleter;
 
   factory _$DocumentUIState([void Function(DocumentUIStateBuilder) updates]) =>
-      (new DocumentUIStateBuilder()..update(updates)).build();
+      (new DocumentUIStateBuilder()..update(updates))._build();
 
   _$DocumentUIState._(
       {this.editing,
@@ -279,9 +286,9 @@ class _$DocumentUIState extends DocumentUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'DocumentUIState', 'listUIState');
+        listUIState, r'DocumentUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'DocumentUIState', 'tabIndex');
+        tabIndex, r'DocumentUIState', 'tabIndex');
   }
 
   @override
@@ -308,21 +315,22 @@ class _$DocumentUIState extends DocumentUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DocumentUIState')
+    return (newBuiltValueToStringHelper(r'DocumentUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -401,7 +409,9 @@ class DocumentUIStateBuilder
   }
 
   @override
-  _$DocumentUIState build() {
+  DocumentUIState build() => _build();
+
+  _$DocumentUIState _build() {
     _$DocumentUIState _$result;
     try {
       _$result = _$v ??
@@ -411,7 +421,7 @@ class DocumentUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'DocumentUIState', 'tabIndex'),
+                  tabIndex, r'DocumentUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -423,7 +433,7 @@ class DocumentUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'DocumentUIState', _$failedField, e.toString());
+            r'DocumentUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -432,4 +442,4 @@ class DocumentUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

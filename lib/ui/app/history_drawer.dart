@@ -145,7 +145,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
               clientId: clientId)
           : entity.listDisplayName);
 
-      subtitle = Text(localization.lookup('${history.entityType}'));
+      subtitle = Text(
+        localization.lookup('${history.entityType}'),
+        style: Theme.of(context).textTheme.bodySmall,
+      );
     }
 
     return Container(
@@ -154,13 +157,25 @@ class _HistoryListTileState extends State<HistoryListTile> {
       child: ListTile(
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
-        title: title,
-        subtitle: subtitle,
-        // TODO this needs to be localized
-        trailing: LiveText(
-          () => timeago.format(history.dateTime,
-              locale: localeSelector(state, twoLetter: true) + '_short'),
-          duration: Duration(minutes: 1),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                title,
+                subtitle,
+              ],
+            )),
+            Flexible(
+                child: LiveText(
+              () => timeago.format(history.dateTime,
+                  locale: localeSelector(state, twoLetter: true) + '_short'),
+              duration: Duration(minutes: 1),
+              maxLines: 2,
+            ))
+          ],
         ),
         /*
         trailing: _isHovered

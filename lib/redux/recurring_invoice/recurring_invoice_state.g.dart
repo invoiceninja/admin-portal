@@ -165,12 +165,12 @@ class _$RecurringInvoiceState extends RecurringInvoiceState {
 
   factory _$RecurringInvoiceState(
           [void Function(RecurringInvoiceStateBuilder) updates]) =>
-      (new RecurringInvoiceStateBuilder()..update(updates)).build();
+      (new RecurringInvoiceStateBuilder()..update(updates))._build();
 
   _$RecurringInvoiceState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'RecurringInvoiceState', 'map');
+    BuiltValueNullFieldError.checkNotNull(map, r'RecurringInvoiceState', 'map');
     BuiltValueNullFieldError.checkNotNull(
-        list, 'RecurringInvoiceState', 'list');
+        list, r'RecurringInvoiceState', 'list');
   }
 
   @override
@@ -193,12 +193,17 @@ class _$RecurringInvoiceState extends RecurringInvoiceState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('RecurringInvoiceState')
+    return (newBuiltValueToStringHelper(r'RecurringInvoiceState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -242,7 +247,9 @@ class RecurringInvoiceStateBuilder
   }
 
   @override
-  _$RecurringInvoiceState build() {
+  RecurringInvoiceState build() => _build();
+
+  _$RecurringInvoiceState _build() {
     _$RecurringInvoiceState _$result;
     try {
       _$result = _$v ??
@@ -256,7 +263,7 @@ class RecurringInvoiceStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'RecurringInvoiceState', _$failedField, e.toString());
+            r'RecurringInvoiceState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -287,7 +294,7 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
 
   factory _$RecurringInvoiceUIState(
           [void Function(RecurringInvoiceUIStateBuilder) updates]) =>
-      (new RecurringInvoiceUIStateBuilder()..update(updates)).build();
+      (new RecurringInvoiceUIStateBuilder()..update(updates))._build();
 
   _$RecurringInvoiceUIState._(
       {this.editing,
@@ -301,9 +308,9 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'RecurringInvoiceUIState', 'listUIState');
+        listUIState, r'RecurringInvoiceUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'RecurringInvoiceUIState', 'tabIndex');
+        tabIndex, r'RecurringInvoiceUIState', 'tabIndex');
   }
 
   @override
@@ -333,27 +340,24 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, editing.hashCode),
-                                    editingItemIndex.hashCode),
-                                historyActivityId.hashCode),
-                            listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, editingItemIndex.hashCode);
+    _$hash = $jc(_$hash, historyActivityId.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('RecurringInvoiceUIState')
+    return (newBuiltValueToStringHelper(r'RecurringInvoiceUIState')
           ..add('editing', editing)
           ..add('editingItemIndex', editingItemIndex)
           ..add('historyActivityId', historyActivityId)
@@ -447,7 +451,9 @@ class RecurringInvoiceUIStateBuilder
   }
 
   @override
-  _$RecurringInvoiceUIState build() {
+  RecurringInvoiceUIState build() => _build();
+
+  _$RecurringInvoiceUIState _build() {
     _$RecurringInvoiceUIState _$result;
     try {
       _$result = _$v ??
@@ -459,7 +465,7 @@ class RecurringInvoiceUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'RecurringInvoiceUIState', 'tabIndex'),
+                  tabIndex, r'RecurringInvoiceUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -472,7 +478,7 @@ class RecurringInvoiceUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'RecurringInvoiceUIState', _$failedField, e.toString());
+            r'RecurringInvoiceUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -481,4 +487,4 @@ class RecurringInvoiceUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

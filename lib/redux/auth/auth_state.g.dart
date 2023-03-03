@@ -97,7 +97,7 @@ class _$AuthState extends AuthState {
   final String referralCode;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
-      (new AuthStateBuilder()..update(updates)).build();
+      (new AuthStateBuilder()..update(updates))._build();
 
   _$AuthState._(
       {this.email,
@@ -107,16 +107,16 @@ class _$AuthState extends AuthState {
       this.lastEnteredPasswordAt,
       this.referralCode})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(email, 'AuthState', 'email');
-    BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url');
+    BuiltValueNullFieldError.checkNotNull(email, r'AuthState', 'email');
+    BuiltValueNullFieldError.checkNotNull(url, r'AuthState', 'url');
     BuiltValueNullFieldError.checkNotNull(
-        isInitialized, 'AuthState', 'isInitialized');
+        isInitialized, r'AuthState', 'isInitialized');
     BuiltValueNullFieldError.checkNotNull(
-        isAuthenticated, 'AuthState', 'isAuthenticated');
+        isAuthenticated, r'AuthState', 'isAuthenticated');
     BuiltValueNullFieldError.checkNotNull(
-        lastEnteredPasswordAt, 'AuthState', 'lastEnteredPasswordAt');
+        lastEnteredPasswordAt, r'AuthState', 'lastEnteredPasswordAt');
     BuiltValueNullFieldError.checkNotNull(
-        referralCode, 'AuthState', 'referralCode');
+        referralCode, r'AuthState', 'referralCode');
   }
 
   @override
@@ -141,19 +141,21 @@ class _$AuthState extends AuthState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, email.hashCode), url.hashCode),
-                    isInitialized.hashCode),
-                isAuthenticated.hashCode),
-            lastEnteredPasswordAt.hashCode),
-        referralCode.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, url.hashCode);
+    _$hash = $jc(_$hash, isInitialized.hashCode);
+    _$hash = $jc(_$hash, isAuthenticated.hashCode);
+    _$hash = $jc(_$hash, lastEnteredPasswordAt.hashCode);
+    _$hash = $jc(_$hash, referralCode.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('AuthState')
+    return (newBuiltValueToStringHelper(r'AuthState')
           ..add('email', email)
           ..add('url', url)
           ..add('isInitialized', isInitialized)
@@ -224,23 +226,26 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   }
 
   @override
-  _$AuthState build() {
+  AuthState build() => _build();
+
+  _$AuthState _build() {
     final _$result = _$v ??
         new _$AuthState._(
             email: BuiltValueNullFieldError.checkNotNull(
-                email, 'AuthState', 'email'),
-            url: BuiltValueNullFieldError.checkNotNull(url, 'AuthState', 'url'),
+                email, r'AuthState', 'email'),
+            url:
+                BuiltValueNullFieldError.checkNotNull(url, r'AuthState', 'url'),
             isInitialized: BuiltValueNullFieldError.checkNotNull(
-                isInitialized, 'AuthState', 'isInitialized'),
+                isInitialized, r'AuthState', 'isInitialized'),
             isAuthenticated: BuiltValueNullFieldError.checkNotNull(
-                isAuthenticated, 'AuthState', 'isAuthenticated'),
+                isAuthenticated, r'AuthState', 'isAuthenticated'),
             lastEnteredPasswordAt: BuiltValueNullFieldError.checkNotNull(
-                lastEnteredPasswordAt, 'AuthState', 'lastEnteredPasswordAt'),
+                lastEnteredPasswordAt, r'AuthState', 'lastEnteredPasswordAt'),
             referralCode: BuiltValueNullFieldError.checkNotNull(
-                referralCode, 'AuthState', 'referralCode'));
+                referralCode, r'AuthState', 'referralCode'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

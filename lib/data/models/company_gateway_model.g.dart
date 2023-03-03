@@ -555,11 +555,11 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
 
   factory _$CompanyGatewayListResponse(
           [void Function(CompanyGatewayListResponseBuilder) updates]) =>
-      (new CompanyGatewayListResponseBuilder()..update(updates)).build();
+      (new CompanyGatewayListResponseBuilder()..update(updates))._build();
 
   _$CompanyGatewayListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'CompanyGatewayListResponse', 'data');
+        data, r'CompanyGatewayListResponse', 'data');
   }
 
   @override
@@ -580,12 +580,16 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CompanyGatewayListResponse')
+    return (newBuiltValueToStringHelper(r'CompanyGatewayListResponse')
           ..add('data', data))
         .toString();
   }
@@ -624,7 +628,9 @@ class CompanyGatewayListResponseBuilder
   }
 
   @override
-  _$CompanyGatewayListResponse build() {
+  CompanyGatewayListResponse build() => _build();
+
+  _$CompanyGatewayListResponse _build() {
     _$CompanyGatewayListResponse _$result;
     try {
       _$result = _$v ?? new _$CompanyGatewayListResponse._(data: data.build());
@@ -635,7 +641,7 @@ class CompanyGatewayListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CompanyGatewayListResponse', _$failedField, e.toString());
+            r'CompanyGatewayListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -650,11 +656,11 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
 
   factory _$CompanyGatewayItemResponse(
           [void Function(CompanyGatewayItemResponseBuilder) updates]) =>
-      (new CompanyGatewayItemResponseBuilder()..update(updates)).build();
+      (new CompanyGatewayItemResponseBuilder()..update(updates))._build();
 
   _$CompanyGatewayItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'CompanyGatewayItemResponse', 'data');
+        data, r'CompanyGatewayItemResponse', 'data');
   }
 
   @override
@@ -675,12 +681,16 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CompanyGatewayItemResponse')
+    return (newBuiltValueToStringHelper(r'CompanyGatewayItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -719,7 +729,9 @@ class CompanyGatewayItemResponseBuilder
   }
 
   @override
-  _$CompanyGatewayItemResponse build() {
+  CompanyGatewayItemResponse build() => _build();
+
+  _$CompanyGatewayItemResponse _build() {
     _$CompanyGatewayItemResponse _$result;
     try {
       _$result = _$v ?? new _$CompanyGatewayItemResponse._(data: data.build());
@@ -730,7 +742,7 @@ class CompanyGatewayItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CompanyGatewayItemResponse', _$failedField, e.toString());
+            r'CompanyGatewayItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -811,7 +823,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 
   factory _$CompanyGatewayEntity(
           [void Function(CompanyGatewayEntityBuilder) updates]) =>
-      (new CompanyGatewayEntityBuilder()..update(updates)).build();
+      (new CompanyGatewayEntityBuilder()..update(updates))._build();
 
   _$CompanyGatewayEntity._(
       {this.loadedAt,
@@ -850,60 +862,60 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        gatewayId, 'CompanyGatewayEntity', 'gatewayId');
+        gatewayId, r'CompanyGatewayEntity', 'gatewayId');
     BuiltValueNullFieldError.checkNotNull(
-        acceptedCreditCards, 'CompanyGatewayEntity', 'acceptedCreditCards');
+        acceptedCreditCards, r'CompanyGatewayEntity', 'acceptedCreditCards');
     BuiltValueNullFieldError.checkNotNull(requireShippingAddress,
-        'CompanyGatewayEntity', 'requireShippingAddress');
+        r'CompanyGatewayEntity', 'requireShippingAddress');
+    BuiltValueNullFieldError.checkNotNull(requireBillingAddress,
+        r'CompanyGatewayEntity', 'requireBillingAddress');
     BuiltValueNullFieldError.checkNotNull(
-        requireBillingAddress, 'CompanyGatewayEntity', 'requireBillingAddress');
+        requireClientName, r'CompanyGatewayEntity', 'requireClientName');
     BuiltValueNullFieldError.checkNotNull(
-        requireClientName, 'CompanyGatewayEntity', 'requireClientName');
+        requireClientPhone, r'CompanyGatewayEntity', 'requireClientPhone');
     BuiltValueNullFieldError.checkNotNull(
-        requireClientPhone, 'CompanyGatewayEntity', 'requireClientPhone');
+        requireContactName, r'CompanyGatewayEntity', 'requireContactName');
     BuiltValueNullFieldError.checkNotNull(
-        requireContactName, 'CompanyGatewayEntity', 'requireContactName');
+        requireContactEmail, r'CompanyGatewayEntity', 'requireContactEmail');
     BuiltValueNullFieldError.checkNotNull(
-        requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail');
+        requireCustomValue1, r'CompanyGatewayEntity', 'requireCustomValue1');
     BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue1, 'CompanyGatewayEntity', 'requireCustomValue1');
+        requireCustomValue2, r'CompanyGatewayEntity', 'requireCustomValue2');
     BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue2, 'CompanyGatewayEntity', 'requireCustomValue2');
+        requireCustomValue3, r'CompanyGatewayEntity', 'requireCustomValue3');
     BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue3, 'CompanyGatewayEntity', 'requireCustomValue3');
+        requireCustomValue4, r'CompanyGatewayEntity', 'requireCustomValue4');
     BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue4, 'CompanyGatewayEntity', 'requireCustomValue4');
+        requireCvv, r'CompanyGatewayEntity', 'requireCvv');
     BuiltValueNullFieldError.checkNotNull(
-        requireCvv, 'CompanyGatewayEntity', 'requireCvv');
+        updateDetails, r'CompanyGatewayEntity', 'updateDetails');
     BuiltValueNullFieldError.checkNotNull(
-        updateDetails, 'CompanyGatewayEntity', 'updateDetails');
+        feesAndLimitsMap, r'CompanyGatewayEntity', 'feesAndLimitsMap');
     BuiltValueNullFieldError.checkNotNull(
-        feesAndLimitsMap, 'CompanyGatewayEntity', 'feesAndLimitsMap');
+        systemLogs, r'CompanyGatewayEntity', 'systemLogs');
     BuiltValueNullFieldError.checkNotNull(
-        systemLogs, 'CompanyGatewayEntity', 'systemLogs');
+        customValue1, r'CompanyGatewayEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'CompanyGatewayEntity', 'customValue1');
+        customValue2, r'CompanyGatewayEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'CompanyGatewayEntity', 'customValue2');
+        customValue3, r'CompanyGatewayEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'CompanyGatewayEntity', 'customValue3');
+        customValue4, r'CompanyGatewayEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'CompanyGatewayEntity', 'customValue4');
+        config, r'CompanyGatewayEntity', 'config');
     BuiltValueNullFieldError.checkNotNull(
-        config, 'CompanyGatewayEntity', 'config');
+        tokenBilling, r'CompanyGatewayEntity', 'tokenBilling');
     BuiltValueNullFieldError.checkNotNull(
-        tokenBilling, 'CompanyGatewayEntity', 'tokenBilling');
+        isTestMode, r'CompanyGatewayEntity', 'isTestMode');
     BuiltValueNullFieldError.checkNotNull(
-        isTestMode, 'CompanyGatewayEntity', 'isTestMode');
+        label, r'CompanyGatewayEntity', 'label');
     BuiltValueNullFieldError.checkNotNull(
-        label, 'CompanyGatewayEntity', 'label');
+        createdAt, r'CompanyGatewayEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'CompanyGatewayEntity', 'createdAt');
+        updatedAt, r'CompanyGatewayEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'CompanyGatewayEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'CompanyGatewayEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'CompanyGatewayEntity', 'id');
+        archivedAt, r'CompanyGatewayEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'CompanyGatewayEntity', 'id');
   }
 
   @override
@@ -957,49 +969,48 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), requireShippingAddress.hashCode), requireBillingAddress.hashCode), requireClientName.hashCode), requirePostalCode.hashCode), requireClientPhone.hashCode), requireContactName.hashCode), requireContactEmail.hashCode), requireCustomValue1.hashCode), requireCustomValue2.hashCode), requireCustomValue3.hashCode), requireCustomValue4.hashCode), requireCvv.hashCode),
-                                                                                updateDetails.hashCode),
-                                                                            feesAndLimitsMap.hashCode),
-                                                                        systemLogs.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    config.hashCode),
-                                                tokenBilling.hashCode),
-                                            isTestMode.hashCode),
-                                        label.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, gatewayId.hashCode);
+    _$hash = $jc(_$hash, acceptedCreditCards.hashCode);
+    _$hash = $jc(_$hash, requireShippingAddress.hashCode);
+    _$hash = $jc(_$hash, requireBillingAddress.hashCode);
+    _$hash = $jc(_$hash, requireClientName.hashCode);
+    _$hash = $jc(_$hash, requirePostalCode.hashCode);
+    _$hash = $jc(_$hash, requireClientPhone.hashCode);
+    _$hash = $jc(_$hash, requireContactName.hashCode);
+    _$hash = $jc(_$hash, requireContactEmail.hashCode);
+    _$hash = $jc(_$hash, requireCustomValue1.hashCode);
+    _$hash = $jc(_$hash, requireCustomValue2.hashCode);
+    _$hash = $jc(_$hash, requireCustomValue3.hashCode);
+    _$hash = $jc(_$hash, requireCustomValue4.hashCode);
+    _$hash = $jc(_$hash, requireCvv.hashCode);
+    _$hash = $jc(_$hash, updateDetails.hashCode);
+    _$hash = $jc(_$hash, feesAndLimitsMap.hashCode);
+    _$hash = $jc(_$hash, systemLogs.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, config.hashCode);
+    _$hash = $jc(_$hash, tokenBilling.hashCode);
+    _$hash = $jc(_$hash, isTestMode.hashCode);
+    _$hash = $jc(_$hash, label.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CompanyGatewayEntity')
+    return (newBuiltValueToStringHelper(r'CompanyGatewayEntity')
           ..add('loadedAt', loadedAt)
           ..add('gatewayId', gatewayId)
           ..add('acceptedCreditCards', acceptedCreditCards)
@@ -1257,52 +1268,54 @@ class CompanyGatewayEntityBuilder
   }
 
   @override
-  _$CompanyGatewayEntity build() {
+  CompanyGatewayEntity build() => _build();
+
+  _$CompanyGatewayEntity _build() {
     _$CompanyGatewayEntity _$result;
     try {
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
               loadedAt: loadedAt,
               gatewayId: BuiltValueNullFieldError.checkNotNull(
-                  gatewayId, 'CompanyGatewayEntity', 'gatewayId'),
+                  gatewayId, r'CompanyGatewayEntity', 'gatewayId'),
               acceptedCreditCards: BuiltValueNullFieldError.checkNotNull(
-                  acceptedCreditCards, 'CompanyGatewayEntity', 'acceptedCreditCards'),
+                  acceptedCreditCards, r'CompanyGatewayEntity', 'acceptedCreditCards'),
               requireShippingAddress: BuiltValueNullFieldError.checkNotNull(
-                  requireShippingAddress, 'CompanyGatewayEntity', 'requireShippingAddress'),
+                  requireShippingAddress, r'CompanyGatewayEntity', 'requireShippingAddress'),
               requireBillingAddress: BuiltValueNullFieldError.checkNotNull(
-                  requireBillingAddress, 'CompanyGatewayEntity', 'requireBillingAddress'),
+                  requireBillingAddress, r'CompanyGatewayEntity', 'requireBillingAddress'),
               requireClientName: BuiltValueNullFieldError.checkNotNull(
-                  requireClientName, 'CompanyGatewayEntity', 'requireClientName'),
+                  requireClientName, r'CompanyGatewayEntity', 'requireClientName'),
               requirePostalCode: requirePostalCode,
               requireClientPhone: BuiltValueNullFieldError.checkNotNull(
-                  requireClientPhone, 'CompanyGatewayEntity', 'requireClientPhone'),
-              requireContactName: BuiltValueNullFieldError.checkNotNull(
-                  requireContactName, 'CompanyGatewayEntity', 'requireContactName'),
-              requireContactEmail: BuiltValueNullFieldError.checkNotNull(requireContactEmail, 'CompanyGatewayEntity', 'requireContactEmail'),
-              requireCustomValue1: BuiltValueNullFieldError.checkNotNull(requireCustomValue1, 'CompanyGatewayEntity', 'requireCustomValue1'),
-              requireCustomValue2: BuiltValueNullFieldError.checkNotNull(requireCustomValue2, 'CompanyGatewayEntity', 'requireCustomValue2'),
-              requireCustomValue3: BuiltValueNullFieldError.checkNotNull(requireCustomValue3, 'CompanyGatewayEntity', 'requireCustomValue3'),
-              requireCustomValue4: BuiltValueNullFieldError.checkNotNull(requireCustomValue4, 'CompanyGatewayEntity', 'requireCustomValue4'),
-              requireCvv: BuiltValueNullFieldError.checkNotNull(requireCvv, 'CompanyGatewayEntity', 'requireCvv'),
-              updateDetails: BuiltValueNullFieldError.checkNotNull(updateDetails, 'CompanyGatewayEntity', 'updateDetails'),
+                  requireClientPhone, r'CompanyGatewayEntity', 'requireClientPhone'),
+              requireContactName:
+                  BuiltValueNullFieldError.checkNotNull(requireContactName, r'CompanyGatewayEntity', 'requireContactName'),
+              requireContactEmail: BuiltValueNullFieldError.checkNotNull(requireContactEmail, r'CompanyGatewayEntity', 'requireContactEmail'),
+              requireCustomValue1: BuiltValueNullFieldError.checkNotNull(requireCustomValue1, r'CompanyGatewayEntity', 'requireCustomValue1'),
+              requireCustomValue2: BuiltValueNullFieldError.checkNotNull(requireCustomValue2, r'CompanyGatewayEntity', 'requireCustomValue2'),
+              requireCustomValue3: BuiltValueNullFieldError.checkNotNull(requireCustomValue3, r'CompanyGatewayEntity', 'requireCustomValue3'),
+              requireCustomValue4: BuiltValueNullFieldError.checkNotNull(requireCustomValue4, r'CompanyGatewayEntity', 'requireCustomValue4'),
+              requireCvv: BuiltValueNullFieldError.checkNotNull(requireCvv, r'CompanyGatewayEntity', 'requireCvv'),
+              updateDetails: BuiltValueNullFieldError.checkNotNull(updateDetails, r'CompanyGatewayEntity', 'updateDetails'),
               feesAndLimitsMap: feesAndLimitsMap.build(),
               systemLogs: systemLogs.build(),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'CompanyGatewayEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'CompanyGatewayEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'CompanyGatewayEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'CompanyGatewayEntity', 'customValue4'),
-              config: BuiltValueNullFieldError.checkNotNull(config, 'CompanyGatewayEntity', 'config'),
-              tokenBilling: BuiltValueNullFieldError.checkNotNull(tokenBilling, 'CompanyGatewayEntity', 'tokenBilling'),
-              isTestMode: BuiltValueNullFieldError.checkNotNull(isTestMode, 'CompanyGatewayEntity', 'isTestMode'),
-              label: BuiltValueNullFieldError.checkNotNull(label, 'CompanyGatewayEntity', 'label'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'CompanyGatewayEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'CompanyGatewayEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'CompanyGatewayEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'CompanyGatewayEntity', 'customValue4'),
+              config: BuiltValueNullFieldError.checkNotNull(config, r'CompanyGatewayEntity', 'config'),
+              tokenBilling: BuiltValueNullFieldError.checkNotNull(tokenBilling, r'CompanyGatewayEntity', 'tokenBilling'),
+              isTestMode: BuiltValueNullFieldError.checkNotNull(isTestMode, r'CompanyGatewayEntity', 'isTestMode'),
+              label: BuiltValueNullFieldError.checkNotNull(label, r'CompanyGatewayEntity', 'label'),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'CompanyGatewayEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'CompanyGatewayEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'CompanyGatewayEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyGatewayEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'CompanyGatewayEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'CompanyGatewayEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'CompanyGatewayEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'CompanyGatewayEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1312,7 +1325,7 @@ class CompanyGatewayEntityBuilder
         systemLogs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CompanyGatewayEntity', _$failedField, e.toString());
+            r'CompanyGatewayEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1351,7 +1364,7 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
 
   factory _$FeesAndLimitsSettings(
           [void Function(FeesAndLimitsSettingsBuilder) updates]) =>
-      (new FeesAndLimitsSettingsBuilder()..update(updates)).build();
+      (new FeesAndLimitsSettingsBuilder()..update(updates))._build();
 
   _$FeesAndLimitsSettings._(
       {this.minLimit,
@@ -1369,31 +1382,31 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.isEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        minLimit, 'FeesAndLimitsSettings', 'minLimit');
+        minLimit, r'FeesAndLimitsSettings', 'minLimit');
     BuiltValueNullFieldError.checkNotNull(
-        maxLimit, 'FeesAndLimitsSettings', 'maxLimit');
+        maxLimit, r'FeesAndLimitsSettings', 'maxLimit');
     BuiltValueNullFieldError.checkNotNull(
-        feeAmount, 'FeesAndLimitsSettings', 'feeAmount');
+        feeAmount, r'FeesAndLimitsSettings', 'feeAmount');
     BuiltValueNullFieldError.checkNotNull(
-        feePercent, 'FeesAndLimitsSettings', 'feePercent');
+        feePercent, r'FeesAndLimitsSettings', 'feePercent');
     BuiltValueNullFieldError.checkNotNull(
-        feeCap, 'FeesAndLimitsSettings', 'feeCap');
+        feeCap, r'FeesAndLimitsSettings', 'feeCap');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate1, 'FeesAndLimitsSettings', 'taxRate1');
+        taxRate1, r'FeesAndLimitsSettings', 'taxRate1');
     BuiltValueNullFieldError.checkNotNull(
-        taxName1, 'FeesAndLimitsSettings', 'taxName1');
+        taxName1, r'FeesAndLimitsSettings', 'taxName1');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate2, 'FeesAndLimitsSettings', 'taxRate2');
+        taxRate2, r'FeesAndLimitsSettings', 'taxRate2');
     BuiltValueNullFieldError.checkNotNull(
-        taxName2, 'FeesAndLimitsSettings', 'taxName2');
+        taxName2, r'FeesAndLimitsSettings', 'taxName2');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate3, 'FeesAndLimitsSettings', 'taxRate3');
+        taxRate3, r'FeesAndLimitsSettings', 'taxRate3');
     BuiltValueNullFieldError.checkNotNull(
-        taxName3, 'FeesAndLimitsSettings', 'taxName3');
+        taxName3, r'FeesAndLimitsSettings', 'taxName3');
     BuiltValueNullFieldError.checkNotNull(
-        adjustFeePercent, 'FeesAndLimitsSettings', 'adjustFeePercent');
+        adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent');
     BuiltValueNullFieldError.checkNotNull(
-        isEnabled, 'FeesAndLimitsSettings', 'isEnabled');
+        isEnabled, r'FeesAndLimitsSettings', 'isEnabled');
   }
 
   @override
@@ -1427,35 +1440,28 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc($jc(0, minLimit.hashCode),
-                                                    maxLimit.hashCode),
-                                                feeAmount.hashCode),
-                                            feePercent.hashCode),
-                                        feeCap.hashCode),
-                                    taxRate1.hashCode),
-                                taxName1.hashCode),
-                            taxRate2.hashCode),
-                        taxName2.hashCode),
-                    taxRate3.hashCode),
-                taxName3.hashCode),
-            adjustFeePercent.hashCode),
-        isEnabled.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, minLimit.hashCode);
+    _$hash = $jc(_$hash, maxLimit.hashCode);
+    _$hash = $jc(_$hash, feeAmount.hashCode);
+    _$hash = $jc(_$hash, feePercent.hashCode);
+    _$hash = $jc(_$hash, feeCap.hashCode);
+    _$hash = $jc(_$hash, taxRate1.hashCode);
+    _$hash = $jc(_$hash, taxName1.hashCode);
+    _$hash = $jc(_$hash, taxRate2.hashCode);
+    _$hash = $jc(_$hash, taxName2.hashCode);
+    _$hash = $jc(_$hash, taxRate3.hashCode);
+    _$hash = $jc(_$hash, taxName3.hashCode);
+    _$hash = $jc(_$hash, adjustFeePercent.hashCode);
+    _$hash = $jc(_$hash, isEnabled.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('FeesAndLimitsSettings')
+    return (newBuiltValueToStringHelper(r'FeesAndLimitsSettings')
           ..add('minLimit', minLimit)
           ..add('maxLimit', maxLimit)
           ..add('feeAmount', feeAmount)
@@ -1567,34 +1573,36 @@ class FeesAndLimitsSettingsBuilder
   }
 
   @override
-  _$FeesAndLimitsSettings build() {
+  FeesAndLimitsSettings build() => _build();
+
+  _$FeesAndLimitsSettings _build() {
     final _$result = _$v ??
         new _$FeesAndLimitsSettings._(
             minLimit: BuiltValueNullFieldError.checkNotNull(
-                minLimit, 'FeesAndLimitsSettings', 'minLimit'),
+                minLimit, r'FeesAndLimitsSettings', 'minLimit'),
             maxLimit: BuiltValueNullFieldError.checkNotNull(
-                maxLimit, 'FeesAndLimitsSettings', 'maxLimit'),
+                maxLimit, r'FeesAndLimitsSettings', 'maxLimit'),
             feeAmount: BuiltValueNullFieldError.checkNotNull(
-                feeAmount, 'FeesAndLimitsSettings', 'feeAmount'),
+                feeAmount, r'FeesAndLimitsSettings', 'feeAmount'),
             feePercent: BuiltValueNullFieldError.checkNotNull(
-                feePercent, 'FeesAndLimitsSettings', 'feePercent'),
+                feePercent, r'FeesAndLimitsSettings', 'feePercent'),
             feeCap: BuiltValueNullFieldError.checkNotNull(
-                feeCap, 'FeesAndLimitsSettings', 'feeCap'),
+                feeCap, r'FeesAndLimitsSettings', 'feeCap'),
             taxRate1: BuiltValueNullFieldError.checkNotNull(
-                taxRate1, 'FeesAndLimitsSettings', 'taxRate1'),
+                taxRate1, r'FeesAndLimitsSettings', 'taxRate1'),
             taxName1: BuiltValueNullFieldError.checkNotNull(
-                taxName1, 'FeesAndLimitsSettings', 'taxName1'),
+                taxName1, r'FeesAndLimitsSettings', 'taxName1'),
             taxRate2: BuiltValueNullFieldError.checkNotNull(
-                taxRate2, 'FeesAndLimitsSettings', 'taxRate2'),
+                taxRate2, r'FeesAndLimitsSettings', 'taxRate2'),
             taxName2:
-                BuiltValueNullFieldError.checkNotNull(taxName2, 'FeesAndLimitsSettings', 'taxName2'),
-            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'FeesAndLimitsSettings', 'taxRate3'),
-            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, 'FeesAndLimitsSettings', 'taxName3'),
-            adjustFeePercent: BuiltValueNullFieldError.checkNotNull(adjustFeePercent, 'FeesAndLimitsSettings', 'adjustFeePercent'),
-            isEnabled: BuiltValueNullFieldError.checkNotNull(isEnabled, 'FeesAndLimitsSettings', 'isEnabled'));
+                BuiltValueNullFieldError.checkNotNull(taxName2, r'FeesAndLimitsSettings', 'taxName2'),
+            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'FeesAndLimitsSettings', 'taxRate3'),
+            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'FeesAndLimitsSettings', 'taxName3'),
+            adjustFeePercent: BuiltValueNullFieldError.checkNotNull(adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent'),
+            isEnabled: BuiltValueNullFieldError.checkNotNull(isEnabled, r'FeesAndLimitsSettings', 'isEnabled'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

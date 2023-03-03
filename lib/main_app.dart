@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
@@ -152,10 +153,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
     try {
       authenticated = await LocalAuthentication().authenticate(
-          localizedReason: 'Please authenticate to access the app',
+        localizedReason: 'Please authenticate to access the app',
+        options: const AuthenticationOptions(
           biometricOnly: true,
           useErrorDialogs: true,
-          stickyAuth: false);
+          stickyAuth: false,
+        ),
+      );
     } catch (e) {
       print(e);
     }
@@ -384,6 +388,17 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       ? LockScreen(onAuthenticatePressed: _authenticate)
                       : InitScreen(),
                   locale: locale,
+                  /*
+                  theme: state.prefState.enableDarkMode
+                      ? ThemeData(
+                          brightness: Brightness.dark,
+                          colorSchemeSeed: accentColor,
+                          useMaterial3: true)
+                      : ThemeData(
+                          brightness: Brightness.light,
+                          colorSchemeSeed: accentColor,
+                          useMaterial3: true),
+                  */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
                           colorScheme: ColorScheme.dark().copyWith(

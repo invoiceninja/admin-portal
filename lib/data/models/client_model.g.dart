@@ -725,10 +725,10 @@ class _$ClientListResponse extends ClientListResponse {
 
   factory _$ClientListResponse(
           [void Function(ClientListResponseBuilder) updates]) =>
-      (new ClientListResponseBuilder()..update(updates)).build();
+      (new ClientListResponseBuilder()..update(updates))._build();
 
   _$ClientListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ClientListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'ClientListResponse', 'data');
   }
 
   @override
@@ -749,12 +749,16 @@ class _$ClientListResponse extends ClientListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientListResponse')
+    return (newBuiltValueToStringHelper(r'ClientListResponse')
           ..add('data', data))
         .toString();
   }
@@ -792,7 +796,9 @@ class ClientListResponseBuilder
   }
 
   @override
-  _$ClientListResponse build() {
+  ClientListResponse build() => _build();
+
+  _$ClientListResponse _build() {
     _$ClientListResponse _$result;
     try {
       _$result = _$v ?? new _$ClientListResponse._(data: data.build());
@@ -803,7 +809,7 @@ class ClientListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientListResponse', _$failedField, e.toString());
+            r'ClientListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -818,10 +824,10 @@ class _$ClientItemResponse extends ClientItemResponse {
 
   factory _$ClientItemResponse(
           [void Function(ClientItemResponseBuilder) updates]) =>
-      (new ClientItemResponseBuilder()..update(updates)).build();
+      (new ClientItemResponseBuilder()..update(updates))._build();
 
   _$ClientItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'ClientItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'ClientItemResponse', 'data');
   }
 
   @override
@@ -842,12 +848,16 @@ class _$ClientItemResponse extends ClientItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientItemResponse')
+    return (newBuiltValueToStringHelper(r'ClientItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -884,7 +894,9 @@ class ClientItemResponseBuilder
   }
 
   @override
-  _$ClientItemResponse build() {
+  ClientItemResponse build() => _build();
+
+  _$ClientItemResponse _build() {
     _$ClientItemResponse _$result;
     try {
       _$result = _$v ?? new _$ClientItemResponse._(data: data.build());
@@ -895,7 +907,7 @@ class ClientItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientItemResponse', _$failedField, e.toString());
+            r'ClientItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1005,7 +1017,7 @@ class _$ClientEntity extends ClientEntity {
   final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
-      (new ClientEntityBuilder()..update(updates)).build();
+      (new ClientEntityBuilder()..update(updates))._build();
 
   _$ClientEntity._(
       {this.groupId,
@@ -1058,78 +1070,83 @@ class _$ClientEntity extends ClientEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(groupId, 'ClientEntity', 'groupId');
-    BuiltValueNullFieldError.checkNotNull(name, 'ClientEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(groupId, r'ClientEntity', 'groupId');
+    BuiltValueNullFieldError.checkNotNull(name, r'ClientEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        displayName, 'ClientEntity', 'displayName');
-    BuiltValueNullFieldError.checkNotNull(balance, 'ClientEntity', 'balance');
+        displayName, r'ClientEntity', 'displayName');
+    BuiltValueNullFieldError.checkNotNull(balance, r'ClientEntity', 'balance');
     BuiltValueNullFieldError.checkNotNull(
-        creditBalance, 'ClientEntity', 'creditBalance');
+        creditBalance, r'ClientEntity', 'creditBalance');
     BuiltValueNullFieldError.checkNotNull(
-        paidToDate, 'ClientEntity', 'paidToDate');
+        paidToDate, r'ClientEntity', 'paidToDate');
     BuiltValueNullFieldError.checkNotNull(
-        clientHash, 'ClientEntity', 'clientHash');
-    BuiltValueNullFieldError.checkNotNull(address1, 'ClientEntity', 'address1');
-    BuiltValueNullFieldError.checkNotNull(address2, 'ClientEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(city, 'ClientEntity', 'city');
-    BuiltValueNullFieldError.checkNotNull(state, 'ClientEntity', 'state');
+        clientHash, r'ClientEntity', 'clientHash');
     BuiltValueNullFieldError.checkNotNull(
-        postalCode, 'ClientEntity', 'postalCode');
+        address1, r'ClientEntity', 'address1');
     BuiltValueNullFieldError.checkNotNull(
-        countryId, 'ClientEntity', 'countryId');
-    BuiltValueNullFieldError.checkNotNull(phone, 'ClientEntity', 'phone');
+        address2, r'ClientEntity', 'address2');
+    BuiltValueNullFieldError.checkNotNull(city, r'ClientEntity', 'city');
+    BuiltValueNullFieldError.checkNotNull(state, r'ClientEntity', 'state');
     BuiltValueNullFieldError.checkNotNull(
-        privateNotes, 'ClientEntity', 'privateNotes');
+        postalCode, r'ClientEntity', 'postalCode');
     BuiltValueNullFieldError.checkNotNull(
-        publicNotes, 'ClientEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(website, 'ClientEntity', 'website');
+        countryId, r'ClientEntity', 'countryId');
+    BuiltValueNullFieldError.checkNotNull(phone, r'ClientEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
-        industryId, 'ClientEntity', 'industryId');
-    BuiltValueNullFieldError.checkNotNull(sizeId, 'ClientEntity', 'sizeId');
+        privateNotes, r'ClientEntity', 'privateNotes');
     BuiltValueNullFieldError.checkNotNull(
-        vatNumber, 'ClientEntity', 'vatNumber');
-    BuiltValueNullFieldError.checkNotNull(idNumber, 'ClientEntity', 'idNumber');
-    BuiltValueNullFieldError.checkNotNull(number, 'ClientEntity', 'number');
+        publicNotes, r'ClientEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(website, r'ClientEntity', 'website');
     BuiltValueNullFieldError.checkNotNull(
-        shippingAddress1, 'ClientEntity', 'shippingAddress1');
+        industryId, r'ClientEntity', 'industryId');
+    BuiltValueNullFieldError.checkNotNull(sizeId, r'ClientEntity', 'sizeId');
     BuiltValueNullFieldError.checkNotNull(
-        shippingAddress2, 'ClientEntity', 'shippingAddress2');
+        vatNumber, r'ClientEntity', 'vatNumber');
     BuiltValueNullFieldError.checkNotNull(
-        shippingCity, 'ClientEntity', 'shippingCity');
+        idNumber, r'ClientEntity', 'idNumber');
+    BuiltValueNullFieldError.checkNotNull(number, r'ClientEntity', 'number');
     BuiltValueNullFieldError.checkNotNull(
-        shippingState, 'ClientEntity', 'shippingState');
+        shippingAddress1, r'ClientEntity', 'shippingAddress1');
     BuiltValueNullFieldError.checkNotNull(
-        shippingPostalCode, 'ClientEntity', 'shippingPostalCode');
+        shippingAddress2, r'ClientEntity', 'shippingAddress2');
     BuiltValueNullFieldError.checkNotNull(
-        shippingCountryId, 'ClientEntity', 'shippingCountryId');
-    BuiltValueNullFieldError.checkNotNull(settings, 'ClientEntity', 'settings');
+        shippingCity, r'ClientEntity', 'shippingCity');
     BuiltValueNullFieldError.checkNotNull(
-        lastLogin, 'ClientEntity', 'lastLogin');
+        shippingState, r'ClientEntity', 'shippingState');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'ClientEntity', 'customValue1');
+        shippingPostalCode, r'ClientEntity', 'shippingPostalCode');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'ClientEntity', 'customValue2');
+        shippingCountryId, r'ClientEntity', 'shippingCountryId');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'ClientEntity', 'customValue3');
+        settings, r'ClientEntity', 'settings');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'ClientEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(contacts, 'ClientEntity', 'contacts');
+        lastLogin, r'ClientEntity', 'lastLogin');
     BuiltValueNullFieldError.checkNotNull(
-        activities, 'ClientEntity', 'activities');
-    BuiltValueNullFieldError.checkNotNull(ledger, 'ClientEntity', 'ledger');
+        customValue1, r'ClientEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        gatewayTokens, 'ClientEntity', 'gatewayTokens');
+        customValue2, r'ClientEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        documents, 'ClientEntity', 'documents');
+        customValue3, r'ClientEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        systemLogs, 'ClientEntity', 'systemLogs');
+        customValue4, r'ClientEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ClientEntity', 'createdAt');
+        contacts, r'ClientEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ClientEntity', 'updatedAt');
+        activities, r'ClientEntity', 'activities');
+    BuiltValueNullFieldError.checkNotNull(ledger, r'ClientEntity', 'ledger');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ClientEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ClientEntity', 'id');
+        gatewayTokens, r'ClientEntity', 'gatewayTokens');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, r'ClientEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        systemLogs, r'ClientEntity', 'systemLogs');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'ClientEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'ClientEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, r'ClientEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'ClientEntity', 'id');
   }
 
   @override
@@ -1196,49 +1213,63 @@ class _$ClientEntity extends ClientEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), number.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
-                                                                                lastLogin.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            contacts.hashCode),
-                                                        activities.hashCode),
-                                                    ledger.hashCode),
-                                                gatewayTokens.hashCode),
-                                            documents.hashCode),
-                                        systemLogs.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, groupId.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, displayName.hashCode);
+    _$hash = $jc(_$hash, balance.hashCode);
+    _$hash = $jc(_$hash, creditBalance.hashCode);
+    _$hash = $jc(_$hash, paidToDate.hashCode);
+    _$hash = $jc(_$hash, clientHash.hashCode);
+    _$hash = $jc(_$hash, address1.hashCode);
+    _$hash = $jc(_$hash, address2.hashCode);
+    _$hash = $jc(_$hash, city.hashCode);
+    _$hash = $jc(_$hash, state.hashCode);
+    _$hash = $jc(_$hash, postalCode.hashCode);
+    _$hash = $jc(_$hash, countryId.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, privateNotes.hashCode);
+    _$hash = $jc(_$hash, publicNotes.hashCode);
+    _$hash = $jc(_$hash, website.hashCode);
+    _$hash = $jc(_$hash, industryId.hashCode);
+    _$hash = $jc(_$hash, sizeId.hashCode);
+    _$hash = $jc(_$hash, vatNumber.hashCode);
+    _$hash = $jc(_$hash, idNumber.hashCode);
+    _$hash = $jc(_$hash, number.hashCode);
+    _$hash = $jc(_$hash, shippingAddress1.hashCode);
+    _$hash = $jc(_$hash, shippingAddress2.hashCode);
+    _$hash = $jc(_$hash, shippingCity.hashCode);
+    _$hash = $jc(_$hash, shippingState.hashCode);
+    _$hash = $jc(_$hash, shippingPostalCode.hashCode);
+    _$hash = $jc(_$hash, shippingCountryId.hashCode);
+    _$hash = $jc(_$hash, settings.hashCode);
+    _$hash = $jc(_$hash, lastLogin.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, contacts.hashCode);
+    _$hash = $jc(_$hash, activities.hashCode);
+    _$hash = $jc(_$hash, ledger.hashCode);
+    _$hash = $jc(_$hash, gatewayTokens.hashCode);
+    _$hash = $jc(_$hash, documents.hashCode);
+    _$hash = $jc(_$hash, systemLogs.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientEntity')
+    return (newBuiltValueToStringHelper(r'ClientEntity')
           ..add('groupId', groupId)
           ..add('loadedAt', loadedAt)
           ..add('name', name)
@@ -1585,55 +1616,57 @@ class ClientEntityBuilder
   }
 
   @override
-  _$ClientEntity build() {
+  ClientEntity build() => _build();
+
+  _$ClientEntity _build() {
     _$ClientEntity _$result;
     try {
       _$result = _$v ??
           new _$ClientEntity._(
               groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, 'ClientEntity', 'groupId'),
+                  groupId, r'ClientEntity', 'groupId'),
               loadedAt: loadedAt,
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'ClientEntity', 'name'),
+                  name, r'ClientEntity', 'name'),
               displayName: BuiltValueNullFieldError.checkNotNull(
-                  displayName, 'ClientEntity', 'displayName'),
+                  displayName, r'ClientEntity', 'displayName'),
               balance: BuiltValueNullFieldError.checkNotNull(
-                  balance, 'ClientEntity', 'balance'),
+                  balance, r'ClientEntity', 'balance'),
               creditBalance: BuiltValueNullFieldError.checkNotNull(
-                  creditBalance, 'ClientEntity', 'creditBalance'),
+                  creditBalance, r'ClientEntity', 'creditBalance'),
               paidToDate: BuiltValueNullFieldError.checkNotNull(
-                  paidToDate, 'ClientEntity', 'paidToDate'),
+                  paidToDate, r'ClientEntity', 'paidToDate'),
               clientHash: BuiltValueNullFieldError.checkNotNull(
-                  clientHash, 'ClientEntity', 'clientHash'),
+                  clientHash, r'ClientEntity', 'clientHash'),
               address1: BuiltValueNullFieldError.checkNotNull(
-                  address1, 'ClientEntity', 'address1'),
+                  address1, r'ClientEntity', 'address1'),
               address2:
-                  BuiltValueNullFieldError.checkNotNull(address2, 'ClientEntity', 'address2'),
-              city: BuiltValueNullFieldError.checkNotNull(city, 'ClientEntity', 'city'),
-              state: BuiltValueNullFieldError.checkNotNull(state, 'ClientEntity', 'state'),
-              postalCode: BuiltValueNullFieldError.checkNotNull(postalCode, 'ClientEntity', 'postalCode'),
-              countryId: BuiltValueNullFieldError.checkNotNull(countryId, 'ClientEntity', 'countryId'),
-              phone: BuiltValueNullFieldError.checkNotNull(phone, 'ClientEntity', 'phone'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, 'ClientEntity', 'privateNotes'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, 'ClientEntity', 'publicNotes'),
-              website: BuiltValueNullFieldError.checkNotNull(website, 'ClientEntity', 'website'),
-              industryId: BuiltValueNullFieldError.checkNotNull(industryId, 'ClientEntity', 'industryId'),
-              sizeId: BuiltValueNullFieldError.checkNotNull(sizeId, 'ClientEntity', 'sizeId'),
-              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, 'ClientEntity', 'vatNumber'),
-              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, 'ClientEntity', 'idNumber'),
-              number: BuiltValueNullFieldError.checkNotNull(number, 'ClientEntity', 'number'),
-              shippingAddress1: BuiltValueNullFieldError.checkNotNull(shippingAddress1, 'ClientEntity', 'shippingAddress1'),
-              shippingAddress2: BuiltValueNullFieldError.checkNotNull(shippingAddress2, 'ClientEntity', 'shippingAddress2'),
-              shippingCity: BuiltValueNullFieldError.checkNotNull(shippingCity, 'ClientEntity', 'shippingCity'),
-              shippingState: BuiltValueNullFieldError.checkNotNull(shippingState, 'ClientEntity', 'shippingState'),
-              shippingPostalCode: BuiltValueNullFieldError.checkNotNull(shippingPostalCode, 'ClientEntity', 'shippingPostalCode'),
-              shippingCountryId: BuiltValueNullFieldError.checkNotNull(shippingCountryId, 'ClientEntity', 'shippingCountryId'),
+                  BuiltValueNullFieldError.checkNotNull(address2, r'ClientEntity', 'address2'),
+              city: BuiltValueNullFieldError.checkNotNull(city, r'ClientEntity', 'city'),
+              state: BuiltValueNullFieldError.checkNotNull(state, r'ClientEntity', 'state'),
+              postalCode: BuiltValueNullFieldError.checkNotNull(postalCode, r'ClientEntity', 'postalCode'),
+              countryId: BuiltValueNullFieldError.checkNotNull(countryId, r'ClientEntity', 'countryId'),
+              phone: BuiltValueNullFieldError.checkNotNull(phone, r'ClientEntity', 'phone'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'ClientEntity', 'privateNotes'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'ClientEntity', 'publicNotes'),
+              website: BuiltValueNullFieldError.checkNotNull(website, r'ClientEntity', 'website'),
+              industryId: BuiltValueNullFieldError.checkNotNull(industryId, r'ClientEntity', 'industryId'),
+              sizeId: BuiltValueNullFieldError.checkNotNull(sizeId, r'ClientEntity', 'sizeId'),
+              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, r'ClientEntity', 'vatNumber'),
+              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, r'ClientEntity', 'idNumber'),
+              number: BuiltValueNullFieldError.checkNotNull(number, r'ClientEntity', 'number'),
+              shippingAddress1: BuiltValueNullFieldError.checkNotNull(shippingAddress1, r'ClientEntity', 'shippingAddress1'),
+              shippingAddress2: BuiltValueNullFieldError.checkNotNull(shippingAddress2, r'ClientEntity', 'shippingAddress2'),
+              shippingCity: BuiltValueNullFieldError.checkNotNull(shippingCity, r'ClientEntity', 'shippingCity'),
+              shippingState: BuiltValueNullFieldError.checkNotNull(shippingState, r'ClientEntity', 'shippingState'),
+              shippingPostalCode: BuiltValueNullFieldError.checkNotNull(shippingPostalCode, r'ClientEntity', 'shippingPostalCode'),
+              shippingCountryId: BuiltValueNullFieldError.checkNotNull(shippingCountryId, r'ClientEntity', 'shippingCountryId'),
               settings: settings.build(),
-              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ClientEntity', 'lastLogin'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'ClientEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ClientEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ClientEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ClientEntity', 'customValue4'),
+              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'ClientEntity', 'lastLogin'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'ClientEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ClientEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
               contacts: contacts.build(),
               activities: activities.build(),
               ledger: ledger.build(),
@@ -1641,13 +1674,13 @@ class ClientEntityBuilder
               documents: documents.build(),
               systemLogs: systemLogs.build(),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ClientEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ClientEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ClientEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ClientEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ClientEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ClientEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'ClientEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'ClientEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1668,7 +1701,7 @@ class ClientEntityBuilder
         systemLogs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ClientEntity', _$failedField, e.toString());
+            r'ClientEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1725,7 +1758,7 @@ class _$ClientContactEntity extends ClientContactEntity {
 
   factory _$ClientContactEntity(
           [void Function(ClientContactEntityBuilder) updates]) =>
-      (new ClientContactEntityBuilder()..update(updates)).build();
+      (new ClientContactEntityBuilder()..update(updates))._build();
 
   _$ClientContactEntity._(
       {this.firstName,
@@ -1752,39 +1785,39 @@ class _$ClientContactEntity extends ClientContactEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        firstName, 'ClientContactEntity', 'firstName');
+        firstName, r'ClientContactEntity', 'firstName');
     BuiltValueNullFieldError.checkNotNull(
-        lastName, 'ClientContactEntity', 'lastName');
+        lastName, r'ClientContactEntity', 'lastName');
     BuiltValueNullFieldError.checkNotNull(
-        email, 'ClientContactEntity', 'email');
+        email, r'ClientContactEntity', 'email');
     BuiltValueNullFieldError.checkNotNull(
-        password, 'ClientContactEntity', 'password');
+        password, r'ClientContactEntity', 'password');
     BuiltValueNullFieldError.checkNotNull(
-        phone, 'ClientContactEntity', 'phone');
+        phone, r'ClientContactEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
-        contactKey, 'ClientContactEntity', 'contactKey');
+        contactKey, r'ClientContactEntity', 'contactKey');
     BuiltValueNullFieldError.checkNotNull(
-        isPrimary, 'ClientContactEntity', 'isPrimary');
+        isPrimary, r'ClientContactEntity', 'isPrimary');
     BuiltValueNullFieldError.checkNotNull(
-        sendEmail, 'ClientContactEntity', 'sendEmail');
+        sendEmail, r'ClientContactEntity', 'sendEmail');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'ClientContactEntity', 'customValue1');
+        customValue1, r'ClientContactEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'ClientContactEntity', 'customValue2');
+        customValue2, r'ClientContactEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'ClientContactEntity', 'customValue3');
+        customValue3, r'ClientContactEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'ClientContactEntity', 'customValue4');
+        customValue4, r'ClientContactEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        lastLogin, 'ClientContactEntity', 'lastLogin');
-    BuiltValueNullFieldError.checkNotNull(link, 'ClientContactEntity', 'link');
+        lastLogin, r'ClientContactEntity', 'lastLogin');
+    BuiltValueNullFieldError.checkNotNull(link, r'ClientContactEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'ClientContactEntity', 'createdAt');
+        createdAt, r'ClientContactEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'ClientContactEntity', 'updatedAt');
+        updatedAt, r'ClientContactEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'ClientContactEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'ClientContactEntity', 'id');
+        archivedAt, r'ClientContactEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'ClientContactEntity', 'id');
   }
 
   @override
@@ -1827,49 +1860,37 @@ class _$ClientContactEntity extends ClientContactEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
-                                                                                password.hashCode),
-                                                                            phone.hashCode),
-                                                                        contactKey.hashCode),
-                                                                    isPrimary.hashCode),
-                                                                sendEmail.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            lastLogin.hashCode),
-                                        link.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, password.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, contactKey.hashCode);
+    _$hash = $jc(_$hash, isPrimary.hashCode);
+    _$hash = $jc(_$hash, sendEmail.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, lastLogin.hashCode);
+    _$hash = $jc(_$hash, link.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ClientContactEntity')
+    return (newBuiltValueToStringHelper(r'ClientContactEntity')
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
@@ -2034,43 +2055,45 @@ class ClientContactEntityBuilder
   }
 
   @override
-  _$ClientContactEntity build() {
+  ClientContactEntity build() => _build();
+
+  _$ClientContactEntity _build() {
     final _$result = _$v ??
         new _$ClientContactEntity._(
             firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, 'ClientContactEntity', 'firstName'),
+                firstName, r'ClientContactEntity', 'firstName'),
             lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, 'ClientContactEntity', 'lastName'),
+                lastName, r'ClientContactEntity', 'lastName'),
             email: BuiltValueNullFieldError.checkNotNull(
-                email, 'ClientContactEntity', 'email'),
+                email, r'ClientContactEntity', 'email'),
             password: BuiltValueNullFieldError.checkNotNull(
-                password, 'ClientContactEntity', 'password'),
+                password, r'ClientContactEntity', 'password'),
             phone: BuiltValueNullFieldError.checkNotNull(
-                phone, 'ClientContactEntity', 'phone'),
+                phone, r'ClientContactEntity', 'phone'),
             contactKey: BuiltValueNullFieldError.checkNotNull(
-                contactKey, 'ClientContactEntity', 'contactKey'),
+                contactKey, r'ClientContactEntity', 'contactKey'),
             isPrimary: BuiltValueNullFieldError.checkNotNull(
-                isPrimary, 'ClientContactEntity', 'isPrimary'),
+                isPrimary, r'ClientContactEntity', 'isPrimary'),
             sendEmail: BuiltValueNullFieldError.checkNotNull(
-                sendEmail, 'ClientContactEntity', 'sendEmail'),
+                sendEmail, r'ClientContactEntity', 'sendEmail'),
             customValue1:
-                BuiltValueNullFieldError.checkNotNull(customValue1, 'ClientContactEntity', 'customValue1'),
-            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'ClientContactEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'ClientContactEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'ClientContactEntity', 'customValue4'),
-            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, 'ClientContactEntity', 'lastLogin'),
-            link: BuiltValueNullFieldError.checkNotNull(link, 'ClientContactEntity', 'link'),
+                BuiltValueNullFieldError.checkNotNull(customValue1, r'ClientContactEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ClientContactEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientContactEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientContactEntity', 'customValue4'),
+            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'ClientContactEntity', 'lastLogin'),
+            link: BuiltValueNullFieldError.checkNotNull(link, r'ClientContactEntity', 'link'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'ClientContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'ClientContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'ClientContactEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ClientContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ClientContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ClientContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'ClientContactEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'ClientContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -369,8 +369,11 @@ void handleClientAction(
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
+        company: store.state.company,
+        user: store.state.user,
         client: client,
-        section: kSettingsLocalization,
+        section: state.prefState.isDesktop ? kSettingsLocalization : null,
+        clearFilter: true,
       ));
       break;
     case EntityAction.newTask:

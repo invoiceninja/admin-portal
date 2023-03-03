@@ -154,11 +154,11 @@ class _$TaxRateState extends TaxRateState {
   final BuiltList<String> list;
 
   factory _$TaxRateState([void Function(TaxRateStateBuilder) updates]) =>
-      (new TaxRateStateBuilder()..update(updates)).build();
+      (new TaxRateStateBuilder()..update(updates))._build();
 
   _$TaxRateState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'TaxRateState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'TaxRateState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'TaxRateState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'TaxRateState', 'list');
   }
 
   @override
@@ -177,12 +177,17 @@ class _$TaxRateState extends TaxRateState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TaxRateState')
+    return (newBuiltValueToStringHelper(r'TaxRateState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -226,7 +231,9 @@ class TaxRateStateBuilder
   }
 
   @override
-  _$TaxRateState build() {
+  TaxRateState build() => _build();
+
+  _$TaxRateState _build() {
     _$TaxRateState _$result;
     try {
       _$result =
@@ -240,7 +247,7 @@ class TaxRateStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TaxRateState', _$failedField, e.toString());
+            r'TaxRateState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -266,7 +273,7 @@ class _$TaxRateUIState extends TaxRateUIState {
   final Completer<Null> cancelCompleter;
 
   factory _$TaxRateUIState([void Function(TaxRateUIStateBuilder) updates]) =>
-      (new TaxRateUIStateBuilder()..update(updates)).build();
+      (new TaxRateUIStateBuilder()..update(updates))._build();
 
   _$TaxRateUIState._(
       {this.editing,
@@ -278,9 +285,9 @@ class _$TaxRateUIState extends TaxRateUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'TaxRateUIState', 'listUIState');
+        listUIState, r'TaxRateUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'TaxRateUIState', 'tabIndex');
+        tabIndex, r'TaxRateUIState', 'tabIndex');
   }
 
   @override
@@ -307,21 +314,22 @@ class _$TaxRateUIState extends TaxRateUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TaxRateUIState')
+    return (newBuiltValueToStringHelper(r'TaxRateUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -400,7 +408,9 @@ class TaxRateUIStateBuilder
   }
 
   @override
-  _$TaxRateUIState build() {
+  TaxRateUIState build() => _build();
+
+  _$TaxRateUIState _build() {
     _$TaxRateUIState _$result;
     try {
       _$result = _$v ??
@@ -410,7 +420,7 @@ class TaxRateUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'TaxRateUIState', 'tabIndex'),
+                  tabIndex, r'TaxRateUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -422,7 +432,7 @@ class TaxRateUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TaxRateUIState', _$failedField, e.toString());
+            r'TaxRateUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -431,4 +441,4 @@ class TaxRateUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

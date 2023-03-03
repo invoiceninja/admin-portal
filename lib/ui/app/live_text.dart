@@ -5,11 +5,17 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 
 class LiveText extends StatefulWidget {
-  const LiveText(this.value, {this.style, this.duration});
+  const LiveText(
+    this.value, {
+    this.style,
+    this.duration,
+    this.maxLines = 1,
+  });
 
   final Duration duration;
   final Function value;
   final TextStyle style;
+  final int maxLines;
 
   @override
   _LiveTextState createState() => _LiveTextState();
@@ -45,7 +51,7 @@ class _LiveTextState extends State<LiveText> {
     return Text(
       value,
       style: widget.style,
-      maxLines: 1,
+      maxLines: widget.maxLines,
       overflow: TextOverflow.ellipsis,
     );
   }

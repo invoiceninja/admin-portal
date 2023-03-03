@@ -105,6 +105,10 @@ class DismissGatewayWarningPermanently implements PersistUI, PersistPrefs {}
 
 class DismissReviewAppPermanently implements PersistUI, PersistPrefs {}
 
+class DismissOneYearReviewAppPermanently implements PersistUI, PersistPrefs {}
+
+class DismissTwoYearReviewAppPermanently implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
 

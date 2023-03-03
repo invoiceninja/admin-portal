@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:version/version.dart';
 
 // TODO remove this function
 bool supportsInlineBrowser() => !isDesktopOS();
@@ -30,6 +31,22 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 
 // TODO remove this function
 bool supportsMicrosoftOAuth() => kIsWeb;
+
+// TODO remove this
+bool supportsSchedules() {
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final state = store.state;
+
+  if (state.isSelfHosted) {
+    return true;
+  }
+
+  if (!kReleaseMode) {
+    return true;
+  }
+
+  return Version.parse(state.account.currentVersion) >= Version.parse('5.5.74');
+}
 
 bool supportsInAppPurchase() {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);

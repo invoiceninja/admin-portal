@@ -128,16 +128,6 @@ class _ProjectViewState extends State<ProjectView>
           ],
         );
       }),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'project_view_fab',
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () => viewModel.onAddTaskPressed(context),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        tooltip: localization.newTask,
-      ),
     );
   }
 }

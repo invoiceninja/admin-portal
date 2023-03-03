@@ -448,7 +448,7 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'calculate_expense_tax_by_amount')
   bool get calculateExpenseTaxByAmount;
 
-  @BuiltValueField(wireName: 'stop_on_unpaid_recurring ')
+  @BuiltValueField(wireName: 'stop_on_unpaid_recurring')
   bool get stopOnUnpaidRecurring;
 
   String get displayName => settings.name ?? '';

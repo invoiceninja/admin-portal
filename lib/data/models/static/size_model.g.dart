@@ -150,10 +150,10 @@ class _$SizeListResponse extends SizeListResponse {
 
   factory _$SizeListResponse(
           [void Function(SizeListResponseBuilder) updates]) =>
-      (new SizeListResponseBuilder()..update(updates)).build();
+      (new SizeListResponseBuilder()..update(updates))._build();
 
   _$SizeListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'SizeListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'SizeListResponse', 'data');
   }
 
   @override
@@ -173,12 +173,16 @@ class _$SizeListResponse extends SizeListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SizeListResponse')..add('data', data))
+    return (newBuiltValueToStringHelper(r'SizeListResponse')..add('data', data))
         .toString();
   }
 }
@@ -215,7 +219,9 @@ class SizeListResponseBuilder
   }
 
   @override
-  _$SizeListResponse build() {
+  SizeListResponse build() => _build();
+
+  _$SizeListResponse _build() {
     _$SizeListResponse _$result;
     try {
       _$result = _$v ?? new _$SizeListResponse._(data: data.build());
@@ -226,7 +232,7 @@ class SizeListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SizeListResponse', _$failedField, e.toString());
+            r'SizeListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -241,10 +247,10 @@ class _$SizeItemResponse extends SizeItemResponse {
 
   factory _$SizeItemResponse(
           [void Function(SizeItemResponseBuilder) updates]) =>
-      (new SizeItemResponseBuilder()..update(updates)).build();
+      (new SizeItemResponseBuilder()..update(updates))._build();
 
   _$SizeItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'SizeItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'SizeItemResponse', 'data');
   }
 
   @override
@@ -264,12 +270,16 @@ class _$SizeItemResponse extends SizeItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SizeItemResponse')..add('data', data))
+    return (newBuiltValueToStringHelper(r'SizeItemResponse')..add('data', data))
         .toString();
   }
 }
@@ -305,7 +315,9 @@ class SizeItemResponseBuilder
   }
 
   @override
-  _$SizeItemResponse build() {
+  SizeItemResponse build() => _build();
+
+  _$SizeItemResponse _build() {
     _$SizeItemResponse _$result;
     try {
       _$result = _$v ?? new _$SizeItemResponse._(data: data.build());
@@ -316,7 +328,7 @@ class SizeItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SizeItemResponse', _$failedField, e.toString());
+            r'SizeItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -332,11 +344,11 @@ class _$SizeEntity extends SizeEntity {
   final String id;
 
   factory _$SizeEntity([void Function(SizeEntityBuilder) updates]) =>
-      (new SizeEntityBuilder()..update(updates)).build();
+      (new SizeEntityBuilder()..update(updates))._build();
 
   _$SizeEntity._({this.name, this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'SizeEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(id, 'SizeEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, r'SizeEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(id, r'SizeEntity', 'id');
   }
 
   @override
@@ -355,12 +367,17 @@ class _$SizeEntity extends SizeEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, name.hashCode), id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SizeEntity')
+    return (newBuiltValueToStringHelper(r'SizeEntity')
           ..add('name', name)
           ..add('id', id))
         .toString();
@@ -402,15 +419,17 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   }
 
   @override
-  _$SizeEntity build() {
+  SizeEntity build() => _build();
+
+  _$SizeEntity _build() {
     final _$result = _$v ??
         new _$SizeEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'SizeEntity', 'name'),
-            id: BuiltValueNullFieldError.checkNotNull(id, 'SizeEntity', 'id'));
+                name, r'SizeEntity', 'name'),
+            id: BuiltValueNullFieldError.checkNotNull(id, r'SizeEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

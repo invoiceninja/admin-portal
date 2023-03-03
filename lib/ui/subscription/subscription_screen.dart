@@ -24,7 +24,7 @@ class SubscriptionScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/$kSettings/$kSettingsSubscriptions';
+  static const String route = '/$kSettings/$kSettingsPaymentLinks';
 
   final SubscriptionScreenVM viewModel;
 
@@ -104,7 +104,7 @@ class SubscriptionScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newSubscription,
+              tooltip: localization.newPaymentLink,
             )
           : null,
     );

@@ -213,7 +213,7 @@ class _$SettingsUIState extends SettingsUIState {
   final bool showPdfPreview;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
-      (new SettingsUIStateBuilder()..update(updates)).build();
+      (new SettingsUIStateBuilder()..update(updates))._build();
 
   _$SettingsUIState._(
       {this.company,
@@ -236,36 +236,36 @@ class _$SettingsUIState extends SettingsUIState {
       this.showPdfPreview})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        company, 'SettingsUIState', 'company');
+        company, r'SettingsUIState', 'company');
     BuiltValueNullFieldError.checkNotNull(
-        origCompany, 'SettingsUIState', 'origCompany');
-    BuiltValueNullFieldError.checkNotNull(client, 'SettingsUIState', 'client');
+        origCompany, r'SettingsUIState', 'origCompany');
+    BuiltValueNullFieldError.checkNotNull(client, r'SettingsUIState', 'client');
     BuiltValueNullFieldError.checkNotNull(
-        origClient, 'SettingsUIState', 'origClient');
-    BuiltValueNullFieldError.checkNotNull(group, 'SettingsUIState', 'group');
+        origClient, r'SettingsUIState', 'origClient');
+    BuiltValueNullFieldError.checkNotNull(group, r'SettingsUIState', 'group');
     BuiltValueNullFieldError.checkNotNull(
-        origGroup, 'SettingsUIState', 'origGroup');
-    BuiltValueNullFieldError.checkNotNull(user, 'SettingsUIState', 'user');
+        origGroup, r'SettingsUIState', 'origGroup');
+    BuiltValueNullFieldError.checkNotNull(user, r'SettingsUIState', 'user');
     BuiltValueNullFieldError.checkNotNull(
-        origUser, 'SettingsUIState', 'origUser');
+        origUser, r'SettingsUIState', 'origUser');
     BuiltValueNullFieldError.checkNotNull(
-        entityType, 'SettingsUIState', 'entityType');
+        entityType, r'SettingsUIState', 'entityType');
     BuiltValueNullFieldError.checkNotNull(
-        isChanged, 'SettingsUIState', 'isChanged');
+        isChanged, r'SettingsUIState', 'isChanged');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'SettingsUIState', 'updatedAt');
+        updatedAt, r'SettingsUIState', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        section, 'SettingsUIState', 'section');
+        section, r'SettingsUIState', 'section');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'SettingsUIState', 'tabIndex');
+        tabIndex, r'SettingsUIState', 'tabIndex');
     BuiltValueNullFieldError.checkNotNull(
-        selectedTemplate, 'SettingsUIState', 'selectedTemplate');
+        selectedTemplate, r'SettingsUIState', 'selectedTemplate');
     BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, 'SettingsUIState', 'filterClearedAt');
+        filterClearedAt, r'SettingsUIState', 'filterClearedAt');
     BuiltValueNullFieldError.checkNotNull(
-        showNewSettings, 'SettingsUIState', 'showNewSettings');
+        showNewSettings, r'SettingsUIState', 'showNewSettings');
     BuiltValueNullFieldError.checkNotNull(
-        showPdfPreview, 'SettingsUIState', 'showPdfPreview');
+        showPdfPreview, r'SettingsUIState', 'showPdfPreview');
   }
 
   @override
@@ -303,52 +303,33 @@ class _$SettingsUIState extends SettingsUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            0,
-                                                                            company
-                                                                                .hashCode),
-                                                                        origCompany
-                                                                            .hashCode),
-                                                                    client
-                                                                        .hashCode),
-                                                                origClient
-                                                                    .hashCode),
-                                                            group.hashCode),
-                                                        origGroup.hashCode),
-                                                    user.hashCode),
-                                                origUser.hashCode),
-                                            entityType.hashCode),
-                                        isChanged.hashCode),
-                                    updatedAt.hashCode),
-                                section.hashCode),
-                            tabIndex.hashCode),
-                        selectedTemplate.hashCode),
-                    filter.hashCode),
-                filterClearedAt.hashCode),
-            showNewSettings.hashCode),
-        showPdfPreview.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, company.hashCode);
+    _$hash = $jc(_$hash, origCompany.hashCode);
+    _$hash = $jc(_$hash, client.hashCode);
+    _$hash = $jc(_$hash, origClient.hashCode);
+    _$hash = $jc(_$hash, group.hashCode);
+    _$hash = $jc(_$hash, origGroup.hashCode);
+    _$hash = $jc(_$hash, user.hashCode);
+    _$hash = $jc(_$hash, origUser.hashCode);
+    _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, section.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, selectedTemplate.hashCode);
+    _$hash = $jc(_$hash, filter.hashCode);
+    _$hash = $jc(_$hash, filterClearedAt.hashCode);
+    _$hash = $jc(_$hash, showNewSettings.hashCode);
+    _$hash = $jc(_$hash, showPdfPreview.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SettingsUIState')
+    return (newBuiltValueToStringHelper(r'SettingsUIState')
           ..add('company', company)
           ..add('origCompany', origCompany)
           ..add('client', client)
@@ -501,7 +482,9 @@ class SettingsUIStateBuilder
   }
 
   @override
-  _$SettingsUIState build() {
+  SettingsUIState build() => _build();
+
+  _$SettingsUIState _build() {
     _$SettingsUIState _$result;
     try {
       _$result = _$v ??
@@ -515,24 +498,24 @@ class SettingsUIStateBuilder
               user: user.build(),
               origUser: origUser.build(),
               entityType: BuiltValueNullFieldError.checkNotNull(
-                  entityType, 'SettingsUIState', 'entityType'),
+                  entityType, r'SettingsUIState', 'entityType'),
               isChanged: BuiltValueNullFieldError.checkNotNull(
-                  isChanged, 'SettingsUIState', 'isChanged'),
+                  isChanged, r'SettingsUIState', 'isChanged'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, 'SettingsUIState', 'updatedAt'),
+                  updatedAt, r'SettingsUIState', 'updatedAt'),
               section: BuiltValueNullFieldError.checkNotNull(
-                  section, 'SettingsUIState', 'section'),
+                  section, r'SettingsUIState', 'section'),
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'SettingsUIState', 'tabIndex'),
+                  tabIndex, r'SettingsUIState', 'tabIndex'),
               selectedTemplate: BuiltValueNullFieldError.checkNotNull(
-                  selectedTemplate, 'SettingsUIState', 'selectedTemplate'),
+                  selectedTemplate, r'SettingsUIState', 'selectedTemplate'),
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, 'SettingsUIState', 'filterClearedAt'),
+                  filterClearedAt, r'SettingsUIState', 'filterClearedAt'),
               showNewSettings: BuiltValueNullFieldError.checkNotNull(
-                  showNewSettings, 'SettingsUIState', 'showNewSettings'),
+                  showNewSettings, r'SettingsUIState', 'showNewSettings'),
               showPdfPreview:
-                  BuiltValueNullFieldError.checkNotNull(showPdfPreview, 'SettingsUIState', 'showPdfPreview'));
+                  BuiltValueNullFieldError.checkNotNull(showPdfPreview, r'SettingsUIState', 'showPdfPreview'));
     } catch (_) {
       String _$failedField;
       try {
@@ -554,7 +537,7 @@ class SettingsUIStateBuilder
         origUser.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SettingsUIState', _$failedField, e.toString());
+            r'SettingsUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -563,4 +546,4 @@ class SettingsUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

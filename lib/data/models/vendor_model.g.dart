@@ -569,10 +569,10 @@ class _$VendorListResponse extends VendorListResponse {
 
   factory _$VendorListResponse(
           [void Function(VendorListResponseBuilder) updates]) =>
-      (new VendorListResponseBuilder()..update(updates)).build();
+      (new VendorListResponseBuilder()..update(updates))._build();
 
   _$VendorListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'VendorListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'VendorListResponse', 'data');
   }
 
   @override
@@ -593,12 +593,16 @@ class _$VendorListResponse extends VendorListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorListResponse')
+    return (newBuiltValueToStringHelper(r'VendorListResponse')
           ..add('data', data))
         .toString();
   }
@@ -636,7 +640,9 @@ class VendorListResponseBuilder
   }
 
   @override
-  _$VendorListResponse build() {
+  VendorListResponse build() => _build();
+
+  _$VendorListResponse _build() {
     _$VendorListResponse _$result;
     try {
       _$result = _$v ?? new _$VendorListResponse._(data: data.build());
@@ -647,7 +653,7 @@ class VendorListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VendorListResponse', _$failedField, e.toString());
+            r'VendorListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -662,10 +668,10 @@ class _$VendorItemResponse extends VendorItemResponse {
 
   factory _$VendorItemResponse(
           [void Function(VendorItemResponseBuilder) updates]) =>
-      (new VendorItemResponseBuilder()..update(updates)).build();
+      (new VendorItemResponseBuilder()..update(updates))._build();
 
   _$VendorItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'VendorItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'VendorItemResponse', 'data');
   }
 
   @override
@@ -686,12 +692,16 @@ class _$VendorItemResponse extends VendorItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorItemResponse')
+    return (newBuiltValueToStringHelper(r'VendorItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -728,7 +738,9 @@ class VendorItemResponseBuilder
   }
 
   @override
-  _$VendorItemResponse build() {
+  VendorItemResponse build() => _build();
+
+  _$VendorItemResponse _build() {
     _$VendorItemResponse _$result;
     try {
       _$result = _$v ?? new _$VendorItemResponse._(data: data.build());
@@ -739,7 +751,7 @@ class VendorItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VendorItemResponse', _$failedField, e.toString());
+            r'VendorItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -813,7 +825,7 @@ class _$VendorEntity extends VendorEntity {
   final String id;
 
   factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
-      (new VendorEntityBuilder()..update(updates)).build();
+      (new VendorEntityBuilder()..update(updates))._build();
 
   _$VendorEntity._(
       {this.loadedAt,
@@ -848,47 +860,51 @@ class _$VendorEntity extends VendorEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'VendorEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(address1, 'VendorEntity', 'address1');
-    BuiltValueNullFieldError.checkNotNull(address2, 'VendorEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(city, 'VendorEntity', 'city');
-    BuiltValueNullFieldError.checkNotNull(state, 'VendorEntity', 'state');
+    BuiltValueNullFieldError.checkNotNull(name, r'VendorEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        postalCode, 'VendorEntity', 'postalCode');
+        address1, r'VendorEntity', 'address1');
     BuiltValueNullFieldError.checkNotNull(
-        countryId, 'VendorEntity', 'countryId');
-    BuiltValueNullFieldError.checkNotNull(phone, 'VendorEntity', 'phone');
+        address2, r'VendorEntity', 'address2');
+    BuiltValueNullFieldError.checkNotNull(city, r'VendorEntity', 'city');
+    BuiltValueNullFieldError.checkNotNull(state, r'VendorEntity', 'state');
     BuiltValueNullFieldError.checkNotNull(
-        privateNotes, 'VendorEntity', 'privateNotes');
+        postalCode, r'VendorEntity', 'postalCode');
     BuiltValueNullFieldError.checkNotNull(
-        publicNotes, 'VendorEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(website, 'VendorEntity', 'website');
-    BuiltValueNullFieldError.checkNotNull(number, 'VendorEntity', 'number');
+        countryId, r'VendorEntity', 'countryId');
+    BuiltValueNullFieldError.checkNotNull(phone, r'VendorEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
-        vatNumber, 'VendorEntity', 'vatNumber');
-    BuiltValueNullFieldError.checkNotNull(idNumber, 'VendorEntity', 'idNumber');
+        privateNotes, r'VendorEntity', 'privateNotes');
     BuiltValueNullFieldError.checkNotNull(
-        currencyId, 'VendorEntity', 'currencyId');
+        publicNotes, r'VendorEntity', 'publicNotes');
+    BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website');
+    BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'VendorEntity', 'customValue1');
+        vatNumber, r'VendorEntity', 'vatNumber');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'VendorEntity', 'customValue2');
+        idNumber, r'VendorEntity', 'idNumber');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'VendorEntity', 'customValue3');
+        currencyId, r'VendorEntity', 'currencyId');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'VendorEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(contacts, 'VendorEntity', 'contacts');
+        customValue1, r'VendorEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        activities, 'VendorEntity', 'activities');
+        customValue2, r'VendorEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        documents, 'VendorEntity', 'documents');
+        customValue3, r'VendorEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'VendorEntity', 'createdAt');
+        customValue4, r'VendorEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'VendorEntity', 'updatedAt');
+        contacts, r'VendorEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'VendorEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'VendorEntity', 'id');
+        activities, r'VendorEntity', 'activities');
+    BuiltValueNullFieldError.checkNotNull(
+        documents, r'VendorEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'VendorEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'VendorEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, r'VendorEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'VendorEntity', 'id');
   }
 
   @override
@@ -937,49 +953,45 @@ class _$VendorEntity extends VendorEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode),
-                                                                                number.hashCode),
-                                                                            vatNumber.hashCode),
-                                                                        idNumber.hashCode),
-                                                                    currencyId.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                contacts.hashCode),
-                                            activities.hashCode),
-                                        documents.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, address1.hashCode);
+    _$hash = $jc(_$hash, address2.hashCode);
+    _$hash = $jc(_$hash, city.hashCode);
+    _$hash = $jc(_$hash, state.hashCode);
+    _$hash = $jc(_$hash, postalCode.hashCode);
+    _$hash = $jc(_$hash, countryId.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, privateNotes.hashCode);
+    _$hash = $jc(_$hash, publicNotes.hashCode);
+    _$hash = $jc(_$hash, website.hashCode);
+    _$hash = $jc(_$hash, number.hashCode);
+    _$hash = $jc(_$hash, vatNumber.hashCode);
+    _$hash = $jc(_$hash, idNumber.hashCode);
+    _$hash = $jc(_$hash, currencyId.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, contacts.hashCode);
+    _$hash = $jc(_$hash, activities.hashCode);
+    _$hash = $jc(_$hash, documents.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorEntity')
+    return (newBuiltValueToStringHelper(r'VendorEntity')
           ..add('loadedAt', loadedAt)
           ..add('name', name)
           ..add('address1', address1)
@@ -1206,52 +1218,54 @@ class VendorEntityBuilder
   }
 
   @override
-  _$VendorEntity build() {
+  VendorEntity build() => _build();
+
+  _$VendorEntity _build() {
     _$VendorEntity _$result;
     try {
       _$result = _$v ??
           new _$VendorEntity._(
               loadedAt: loadedAt,
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'VendorEntity', 'name'),
+                  name, r'VendorEntity', 'name'),
               address1: BuiltValueNullFieldError.checkNotNull(
-                  address1, 'VendorEntity', 'address1'),
+                  address1, r'VendorEntity', 'address1'),
               address2: BuiltValueNullFieldError.checkNotNull(
-                  address2, 'VendorEntity', 'address2'),
+                  address2, r'VendorEntity', 'address2'),
               city: BuiltValueNullFieldError.checkNotNull(
-                  city, 'VendorEntity', 'city'),
+                  city, r'VendorEntity', 'city'),
               state: BuiltValueNullFieldError.checkNotNull(
-                  state, 'VendorEntity', 'state'),
+                  state, r'VendorEntity', 'state'),
               postalCode: BuiltValueNullFieldError.checkNotNull(
-                  postalCode, 'VendorEntity', 'postalCode'),
+                  postalCode, r'VendorEntity', 'postalCode'),
               countryId: BuiltValueNullFieldError.checkNotNull(
-                  countryId, 'VendorEntity', 'countryId'),
+                  countryId, r'VendorEntity', 'countryId'),
               phone: BuiltValueNullFieldError.checkNotNull(
-                  phone, 'VendorEntity', 'phone'),
+                  phone, r'VendorEntity', 'phone'),
               privateNotes: BuiltValueNullFieldError.checkNotNull(
-                  privateNotes, 'VendorEntity', 'privateNotes'),
+                  privateNotes, r'VendorEntity', 'privateNotes'),
               publicNotes:
-                  BuiltValueNullFieldError.checkNotNull(publicNotes, 'VendorEntity', 'publicNotes'),
-              website: BuiltValueNullFieldError.checkNotNull(website, 'VendorEntity', 'website'),
-              number: BuiltValueNullFieldError.checkNotNull(number, 'VendorEntity', 'number'),
-              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, 'VendorEntity', 'vatNumber'),
-              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, 'VendorEntity', 'idNumber'),
-              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, 'VendorEntity', 'currencyId'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'VendorEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'VendorEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'VendorEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorEntity', 'customValue4'),
+                  BuiltValueNullFieldError.checkNotNull(publicNotes, r'VendorEntity', 'publicNotes'),
+              website: BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website'),
+              number: BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number'),
+              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, r'VendorEntity', 'vatNumber'),
+              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, r'VendorEntity', 'idNumber'),
+              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'VendorEntity', 'currencyId'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'VendorEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'VendorEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorEntity', 'customValue4'),
               contacts: contacts.build(),
               activities: activities.build(),
               documents: documents.build(),
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'VendorEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'VendorEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'VendorEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'VendorEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'VendorEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'VendorEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'VendorEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -1263,7 +1277,7 @@ class VendorEntityBuilder
         documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VendorEntity', _$failedField, e.toString());
+            r'VendorEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1314,7 +1328,7 @@ class _$VendorContactEntity extends VendorContactEntity {
 
   factory _$VendorContactEntity(
           [void Function(VendorContactEntityBuilder) updates]) =>
-      (new VendorContactEntityBuilder()..update(updates)).build();
+      (new VendorContactEntityBuilder()..update(updates))._build();
 
   _$VendorContactEntity._(
       {this.firstName,
@@ -1338,33 +1352,33 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        firstName, 'VendorContactEntity', 'firstName');
+        firstName, r'VendorContactEntity', 'firstName');
     BuiltValueNullFieldError.checkNotNull(
-        lastName, 'VendorContactEntity', 'lastName');
+        lastName, r'VendorContactEntity', 'lastName');
     BuiltValueNullFieldError.checkNotNull(
-        email, 'VendorContactEntity', 'email');
+        email, r'VendorContactEntity', 'email');
     BuiltValueNullFieldError.checkNotNull(
-        isPrimary, 'VendorContactEntity', 'isPrimary');
+        isPrimary, r'VendorContactEntity', 'isPrimary');
     BuiltValueNullFieldError.checkNotNull(
-        sendEmail, 'VendorContactEntity', 'sendEmail');
+        sendEmail, r'VendorContactEntity', 'sendEmail');
     BuiltValueNullFieldError.checkNotNull(
-        phone, 'VendorContactEntity', 'phone');
+        phone, r'VendorContactEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'VendorContactEntity', 'customValue1');
+        customValue1, r'VendorContactEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'VendorContactEntity', 'customValue2');
+        customValue2, r'VendorContactEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'VendorContactEntity', 'customValue3');
+        customValue3, r'VendorContactEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'VendorContactEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(link, 'VendorContactEntity', 'link');
+        customValue4, r'VendorContactEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(link, r'VendorContactEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'VendorContactEntity', 'createdAt');
+        createdAt, r'VendorContactEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'VendorContactEntity', 'updatedAt');
+        updatedAt, r'VendorContactEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'VendorContactEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'VendorContactEntity', 'id');
+        archivedAt, r'VendorContactEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'VendorContactEntity', 'id');
   }
 
   @override
@@ -1404,55 +1418,34 @@ class _$VendorContactEntity extends VendorContactEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                firstName
-                                                                                    .hashCode),
-                                                                            lastName
-                                                                                .hashCode),
-                                                                        email
-                                                                            .hashCode),
-                                                                    isPrimary
-                                                                        .hashCode),
-                                                                sendEmail
-                                                                    .hashCode),
-                                                            phone.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        link.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, isPrimary.hashCode);
+    _$hash = $jc(_$hash, sendEmail.hashCode);
+    _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, link.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VendorContactEntity')
+    return (newBuiltValueToStringHelper(r'VendorContactEntity')
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('email', email)
@@ -1601,40 +1594,42 @@ class VendorContactEntityBuilder
   }
 
   @override
-  _$VendorContactEntity build() {
+  VendorContactEntity build() => _build();
+
+  _$VendorContactEntity _build() {
     final _$result = _$v ??
         new _$VendorContactEntity._(
             firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, 'VendorContactEntity', 'firstName'),
+                firstName, r'VendorContactEntity', 'firstName'),
             lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, 'VendorContactEntity', 'lastName'),
+                lastName, r'VendorContactEntity', 'lastName'),
             email: BuiltValueNullFieldError.checkNotNull(
-                email, 'VendorContactEntity', 'email'),
+                email, r'VendorContactEntity', 'email'),
             isPrimary: BuiltValueNullFieldError.checkNotNull(
-                isPrimary, 'VendorContactEntity', 'isPrimary'),
+                isPrimary, r'VendorContactEntity', 'isPrimary'),
             sendEmail: BuiltValueNullFieldError.checkNotNull(
-                sendEmail, 'VendorContactEntity', 'sendEmail'),
+                sendEmail, r'VendorContactEntity', 'sendEmail'),
             phone: BuiltValueNullFieldError.checkNotNull(
-                phone, 'VendorContactEntity', 'phone'),
+                phone, r'VendorContactEntity', 'phone'),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, 'VendorContactEntity', 'customValue1'),
+                customValue1, r'VendorContactEntity', 'customValue1'),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, 'VendorContactEntity', 'customValue2'),
+                customValue2, r'VendorContactEntity', 'customValue2'),
             customValue3:
-                BuiltValueNullFieldError.checkNotNull(customValue3, 'VendorContactEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'VendorContactEntity', 'customValue4'),
-            link: BuiltValueNullFieldError.checkNotNull(link, 'VendorContactEntity', 'link'),
+                BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorContactEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorContactEntity', 'customValue4'),
+            link: BuiltValueNullFieldError.checkNotNull(link, r'VendorContactEntity', 'link'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'VendorContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'VendorContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'VendorContactEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'VendorContactEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'VendorContactEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'VendorContactEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'VendorContactEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'VendorContactEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

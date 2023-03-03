@@ -154,11 +154,11 @@ class _$ProductState extends ProductState {
   final BuiltList<String> list;
 
   factory _$ProductState([void Function(ProductStateBuilder) updates]) =>
-      (new ProductStateBuilder()..update(updates)).build();
+      (new ProductStateBuilder()..update(updates))._build();
 
   _$ProductState._({this.map, this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, 'ProductState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, 'ProductState', 'list');
+    BuiltValueNullFieldError.checkNotNull(map, r'ProductState', 'map');
+    BuiltValueNullFieldError.checkNotNull(list, r'ProductState', 'list');
   }
 
   @override
@@ -177,12 +177,17 @@ class _$ProductState extends ProductState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, map.hashCode);
+    _$hash = $jc(_$hash, list.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProductState')
+    return (newBuiltValueToStringHelper(r'ProductState')
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -226,7 +231,9 @@ class ProductStateBuilder
   }
 
   @override
-  _$ProductState build() {
+  ProductState build() => _build();
+
+  _$ProductState _build() {
     _$ProductState _$result;
     try {
       _$result =
@@ -240,7 +247,7 @@ class ProductStateBuilder
         list.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProductState', _$failedField, e.toString());
+            r'ProductState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -266,7 +273,7 @@ class _$ProductUIState extends ProductUIState {
   final Completer<Null> cancelCompleter;
 
   factory _$ProductUIState([void Function(ProductUIStateBuilder) updates]) =>
-      (new ProductUIStateBuilder()..update(updates)).build();
+      (new ProductUIStateBuilder()..update(updates))._build();
 
   _$ProductUIState._(
       {this.editing,
@@ -278,9 +285,9 @@ class _$ProductUIState extends ProductUIState {
       this.cancelCompleter})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        listUIState, 'ProductUIState', 'listUIState');
+        listUIState, r'ProductUIState', 'listUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tabIndex, 'ProductUIState', 'tabIndex');
+        tabIndex, r'ProductUIState', 'tabIndex');
   }
 
   @override
@@ -307,21 +314,22 @@ class _$ProductUIState extends ProductUIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
-                        selectedId.hashCode),
-                    forceSelected.hashCode),
-                tabIndex.hashCode),
-            saveCompleter.hashCode),
-        cancelCompleter.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, editing.hashCode);
+    _$hash = $jc(_$hash, listUIState.hashCode);
+    _$hash = $jc(_$hash, selectedId.hashCode);
+    _$hash = $jc(_$hash, forceSelected.hashCode);
+    _$hash = $jc(_$hash, tabIndex.hashCode);
+    _$hash = $jc(_$hash, saveCompleter.hashCode);
+    _$hash = $jc(_$hash, cancelCompleter.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ProductUIState')
+    return (newBuiltValueToStringHelper(r'ProductUIState')
           ..add('editing', editing)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
@@ -400,7 +408,9 @@ class ProductUIStateBuilder
   }
 
   @override
-  _$ProductUIState build() {
+  ProductUIState build() => _build();
+
+  _$ProductUIState _build() {
     _$ProductUIState _$result;
     try {
       _$result = _$v ??
@@ -410,7 +420,7 @@ class ProductUIStateBuilder
               selectedId: selectedId,
               forceSelected: forceSelected,
               tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, 'ProductUIState', 'tabIndex'),
+                  tabIndex, r'ProductUIState', 'tabIndex'),
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -422,7 +432,7 @@ class ProductUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ProductUIState', _$failedField, e.toString());
+            r'ProductUIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -431,4 +441,4 @@ class ProductUIStateBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

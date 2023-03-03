@@ -104,10 +104,10 @@ class _$CreditListResponse extends CreditListResponse {
 
   factory _$CreditListResponse(
           [void Function(CreditListResponseBuilder) updates]) =>
-      (new CreditListResponseBuilder()..update(updates)).build();
+      (new CreditListResponseBuilder()..update(updates))._build();
 
   _$CreditListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'CreditListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'CreditListResponse', 'data');
   }
 
   @override
@@ -128,12 +128,16 @@ class _$CreditListResponse extends CreditListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CreditListResponse')
+    return (newBuiltValueToStringHelper(r'CreditListResponse')
           ..add('data', data))
         .toString();
   }
@@ -171,7 +175,9 @@ class CreditListResponseBuilder
   }
 
   @override
-  _$CreditListResponse build() {
+  CreditListResponse build() => _build();
+
+  _$CreditListResponse _build() {
     _$CreditListResponse _$result;
     try {
       _$result = _$v ?? new _$CreditListResponse._(data: data.build());
@@ -182,7 +188,7 @@ class CreditListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CreditListResponse', _$failedField, e.toString());
+            r'CreditListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -197,10 +203,10 @@ class _$CreditItemResponse extends CreditItemResponse {
 
   factory _$CreditItemResponse(
           [void Function(CreditItemResponseBuilder) updates]) =>
-      (new CreditItemResponseBuilder()..update(updates)).build();
+      (new CreditItemResponseBuilder()..update(updates))._build();
 
   _$CreditItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'CreditItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'CreditItemResponse', 'data');
   }
 
   @override
@@ -221,12 +227,16 @@ class _$CreditItemResponse extends CreditItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CreditItemResponse')
+    return (newBuiltValueToStringHelper(r'CreditItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -263,7 +273,9 @@ class CreditItemResponseBuilder
   }
 
   @override
-  _$CreditItemResponse build() {
+  CreditItemResponse build() => _build();
+
+  _$CreditItemResponse _build() {
     _$CreditItemResponse _$result;
     try {
       _$result = _$v ?? new _$CreditItemResponse._(data: data.build());
@@ -274,7 +286,7 @@ class CreditItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CreditItemResponse', _$failedField, e.toString());
+            r'CreditItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -283,4 +295,4 @@ class CreditItemResponseBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -137,21 +137,6 @@ class _TaskViewState extends State<TaskView>
           ],
         );
       }),
-      floatingActionButton: Builder(builder: (BuildContext context) {
-        return task.isInvoiced || task.isDeleted
-            ? SizedBox()
-            : FloatingActionButton(
-                heroTag: 'task_view_fab',
-                backgroundColor: Theme.of(context).primaryColorDark,
-                onPressed: () => viewModel.onFabPressed(context),
-                child: Icon(
-                  task.isRunning ? Icons.stop : Icons.play_arrow,
-                  color: Colors.white,
-                ),
-                tooltip:
-                    task.isRunning ? localization.stop : localization.start,
-              );
-      }),
     );
   }
 }

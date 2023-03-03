@@ -163,11 +163,11 @@ class _$DateFormatListResponse extends DateFormatListResponse {
 
   factory _$DateFormatListResponse(
           [void Function(DateFormatListResponseBuilder) updates]) =>
-      (new DateFormatListResponseBuilder()..update(updates)).build();
+      (new DateFormatListResponseBuilder()..update(updates))._build();
 
   _$DateFormatListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'DateFormatListResponse', 'data');
+        data, r'DateFormatListResponse', 'data');
   }
 
   @override
@@ -188,12 +188,16 @@ class _$DateFormatListResponse extends DateFormatListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DateFormatListResponse')
+    return (newBuiltValueToStringHelper(r'DateFormatListResponse')
           ..add('data', data))
         .toString();
   }
@@ -231,7 +235,9 @@ class DateFormatListResponseBuilder
   }
 
   @override
-  _$DateFormatListResponse build() {
+  DateFormatListResponse build() => _build();
+
+  _$DateFormatListResponse _build() {
     _$DateFormatListResponse _$result;
     try {
       _$result = _$v ?? new _$DateFormatListResponse._(data: data.build());
@@ -242,7 +248,7 @@ class DateFormatListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'DateFormatListResponse', _$failedField, e.toString());
+            r'DateFormatListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -257,11 +263,11 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
 
   factory _$DateFormatItemResponse(
           [void Function(DateFormatItemResponseBuilder) updates]) =>
-      (new DateFormatItemResponseBuilder()..update(updates)).build();
+      (new DateFormatItemResponseBuilder()..update(updates))._build();
 
   _$DateFormatItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'DateFormatItemResponse', 'data');
+        data, r'DateFormatItemResponse', 'data');
   }
 
   @override
@@ -282,12 +288,16 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DateFormatItemResponse')
+    return (newBuiltValueToStringHelper(r'DateFormatItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -325,7 +335,9 @@ class DateFormatItemResponseBuilder
   }
 
   @override
-  _$DateFormatItemResponse build() {
+  DateFormatItemResponse build() => _build();
+
+  _$DateFormatItemResponse _build() {
     _$DateFormatItemResponse _$result;
     try {
       _$result = _$v ?? new _$DateFormatItemResponse._(data: data.build());
@@ -336,7 +348,7 @@ class DateFormatItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'DateFormatItemResponse', _$failedField, e.toString());
+            r'DateFormatItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -353,11 +365,12 @@ class _$DateFormatEntity extends DateFormatEntity {
 
   factory _$DateFormatEntity(
           [void Function(DateFormatEntityBuilder) updates]) =>
-      (new DateFormatEntityBuilder()..update(updates)).build();
+      (new DateFormatEntityBuilder()..update(updates))._build();
 
   _$DateFormatEntity._({this.format, this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(format, 'DateFormatEntity', 'format');
-    BuiltValueNullFieldError.checkNotNull(id, 'DateFormatEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        format, r'DateFormatEntity', 'format');
+    BuiltValueNullFieldError.checkNotNull(id, r'DateFormatEntity', 'id');
   }
 
   @override
@@ -379,12 +392,17 @@ class _$DateFormatEntity extends DateFormatEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, format.hashCode), id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, format.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DateFormatEntity')
+    return (newBuiltValueToStringHelper(r'DateFormatEntity')
           ..add('format', format)
           ..add('id', id))
         .toString();
@@ -427,16 +445,18 @@ class DateFormatEntityBuilder
   }
 
   @override
-  _$DateFormatEntity build() {
+  DateFormatEntity build() => _build();
+
+  _$DateFormatEntity _build() {
     final _$result = _$v ??
         new _$DateFormatEntity._(
             format: BuiltValueNullFieldError.checkNotNull(
-                format, 'DateFormatEntity', 'format'),
+                format, r'DateFormatEntity', 'format'),
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'DateFormatEntity', 'id'));
+                id, r'DateFormatEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

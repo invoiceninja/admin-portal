@@ -172,16 +172,6 @@ class _VendorViewState extends State<VendorView>
           ],
         );
       }),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'vendor_view_fab',
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () => viewModel.onAddExpensePressed(context),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        tooltip: localization.create,
-      ),
     );
   }
 }

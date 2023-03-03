@@ -1237,10 +1237,10 @@ class _$InvoiceListResponse extends InvoiceListResponse {
 
   factory _$InvoiceListResponse(
           [void Function(InvoiceListResponseBuilder) updates]) =>
-      (new InvoiceListResponseBuilder()..update(updates)).build();
+      (new InvoiceListResponseBuilder()..update(updates))._build();
 
   _$InvoiceListResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'InvoiceListResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'InvoiceListResponse', 'data');
   }
 
   @override
@@ -1261,12 +1261,16 @@ class _$InvoiceListResponse extends InvoiceListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceListResponse')
+    return (newBuiltValueToStringHelper(r'InvoiceListResponse')
           ..add('data', data))
         .toString();
   }
@@ -1304,7 +1308,9 @@ class InvoiceListResponseBuilder
   }
 
   @override
-  _$InvoiceListResponse build() {
+  InvoiceListResponse build() => _build();
+
+  _$InvoiceListResponse _build() {
     _$InvoiceListResponse _$result;
     try {
       _$result = _$v ?? new _$InvoiceListResponse._(data: data.build());
@@ -1315,7 +1321,7 @@ class InvoiceListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'InvoiceListResponse', _$failedField, e.toString());
+            r'InvoiceListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1330,10 +1336,10 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
 
   factory _$InvoiceItemResponse(
           [void Function(InvoiceItemResponseBuilder) updates]) =>
-      (new InvoiceItemResponseBuilder()..update(updates)).build();
+      (new InvoiceItemResponseBuilder()..update(updates))._build();
 
   _$InvoiceItemResponse._({this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, 'InvoiceItemResponse', 'data');
+    BuiltValueNullFieldError.checkNotNull(data, r'InvoiceItemResponse', 'data');
   }
 
   @override
@@ -1354,12 +1360,16 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceItemResponse')
+    return (newBuiltValueToStringHelper(r'InvoiceItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -1396,7 +1406,9 @@ class InvoiceItemResponseBuilder
   }
 
   @override
-  _$InvoiceItemResponse build() {
+  InvoiceItemResponse build() => _build();
+
+  _$InvoiceItemResponse _build() {
     _$InvoiceItemResponse _$result;
     try {
       _$result = _$v ?? new _$InvoiceItemResponse._(data: data.build());
@@ -1407,7 +1419,7 @@ class InvoiceItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'InvoiceItemResponse', _$failedField, e.toString());
+            r'InvoiceItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1569,7 +1581,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   final String id;
 
   factory _$InvoiceEntity([void Function(InvoiceEntityBuilder) updates]) =>
-      (new InvoiceEntityBuilder()..update(updates)).build();
+      (new InvoiceEntityBuilder()..update(updates))._build();
 
   _$InvoiceEntity._(
       {this.idempotencyKey,
@@ -1648,109 +1660,109 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.entityType,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(amount, 'InvoiceEntity', 'amount');
-    BuiltValueNullFieldError.checkNotNull(balance, 'InvoiceEntity', 'balance');
+    BuiltValueNullFieldError.checkNotNull(amount, r'InvoiceEntity', 'amount');
+    BuiltValueNullFieldError.checkNotNull(balance, r'InvoiceEntity', 'balance');
     BuiltValueNullFieldError.checkNotNull(
-        paidToDate, 'InvoiceEntity', 'paidToDate');
+        paidToDate, r'InvoiceEntity', 'paidToDate');
     BuiltValueNullFieldError.checkNotNull(
-        clientId, 'InvoiceEntity', 'clientId');
+        clientId, r'InvoiceEntity', 'clientId');
     BuiltValueNullFieldError.checkNotNull(
-        projectId, 'InvoiceEntity', 'projectId');
+        projectId, r'InvoiceEntity', 'projectId');
     BuiltValueNullFieldError.checkNotNull(
-        expenseId, 'InvoiceEntity', 'expenseId');
+        expenseId, r'InvoiceEntity', 'expenseId');
     BuiltValueNullFieldError.checkNotNull(
-        vendorId, 'InvoiceEntity', 'vendorId');
+        vendorId, r'InvoiceEntity', 'vendorId');
     BuiltValueNullFieldError.checkNotNull(
-        subscriptionId, 'InvoiceEntity', 'subscriptionId');
+        subscriptionId, r'InvoiceEntity', 'subscriptionId');
     BuiltValueNullFieldError.checkNotNull(
-        statusId, 'InvoiceEntity', 'statusId');
-    BuiltValueNullFieldError.checkNotNull(number, 'InvoiceEntity', 'number');
+        statusId, r'InvoiceEntity', 'statusId');
+    BuiltValueNullFieldError.checkNotNull(number, r'InvoiceEntity', 'number');
     BuiltValueNullFieldError.checkNotNull(
-        discount, 'InvoiceEntity', 'discount');
+        discount, r'InvoiceEntity', 'discount');
     BuiltValueNullFieldError.checkNotNull(
-        poNumber, 'InvoiceEntity', 'poNumber');
-    BuiltValueNullFieldError.checkNotNull(date, 'InvoiceEntity', 'date');
-    BuiltValueNullFieldError.checkNotNull(dueDate, 'InvoiceEntity', 'dueDate');
+        poNumber, r'InvoiceEntity', 'poNumber');
+    BuiltValueNullFieldError.checkNotNull(date, r'InvoiceEntity', 'date');
+    BuiltValueNullFieldError.checkNotNull(dueDate, r'InvoiceEntity', 'dueDate');
     BuiltValueNullFieldError.checkNotNull(
-        publicNotes, 'InvoiceEntity', 'publicNotes');
+        publicNotes, r'InvoiceEntity', 'publicNotes');
     BuiltValueNullFieldError.checkNotNull(
-        privateNotes, 'InvoiceEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(terms, 'InvoiceEntity', 'terms');
-    BuiltValueNullFieldError.checkNotNull(footer, 'InvoiceEntity', 'footer');
+        privateNotes, r'InvoiceEntity', 'privateNotes');
+    BuiltValueNullFieldError.checkNotNull(terms, r'InvoiceEntity', 'terms');
+    BuiltValueNullFieldError.checkNotNull(footer, r'InvoiceEntity', 'footer');
     BuiltValueNullFieldError.checkNotNull(
-        designId, 'InvoiceEntity', 'designId');
+        designId, r'InvoiceEntity', 'designId');
     BuiltValueNullFieldError.checkNotNull(
-        usesInclusiveTaxes, 'InvoiceEntity', 'usesInclusiveTaxes');
+        usesInclusiveTaxes, r'InvoiceEntity', 'usesInclusiveTaxes');
     BuiltValueNullFieldError.checkNotNull(
-        taxName1, 'InvoiceEntity', 'taxName1');
+        taxName1, r'InvoiceEntity', 'taxName1');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate1, 'InvoiceEntity', 'taxRate1');
+        taxRate1, r'InvoiceEntity', 'taxRate1');
     BuiltValueNullFieldError.checkNotNull(
-        taxName2, 'InvoiceEntity', 'taxName2');
+        taxName2, r'InvoiceEntity', 'taxName2');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate2, 'InvoiceEntity', 'taxRate2');
+        taxRate2, r'InvoiceEntity', 'taxRate2');
     BuiltValueNullFieldError.checkNotNull(
-        taxName3, 'InvoiceEntity', 'taxName3');
+        taxName3, r'InvoiceEntity', 'taxName3');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate3, 'InvoiceEntity', 'taxRate3');
+        taxRate3, r'InvoiceEntity', 'taxRate3');
     BuiltValueNullFieldError.checkNotNull(
-        isAmountDiscount, 'InvoiceEntity', 'isAmountDiscount');
-    BuiltValueNullFieldError.checkNotNull(partial, 'InvoiceEntity', 'partial');
+        isAmountDiscount, r'InvoiceEntity', 'isAmountDiscount');
+    BuiltValueNullFieldError.checkNotNull(partial, r'InvoiceEntity', 'partial');
     BuiltValueNullFieldError.checkNotNull(
-        taxAmount, 'InvoiceEntity', 'taxAmount');
+        taxAmount, r'InvoiceEntity', 'taxAmount');
     BuiltValueNullFieldError.checkNotNull(
-        partialDueDate, 'InvoiceEntity', 'partialDueDate');
+        partialDueDate, r'InvoiceEntity', 'partialDueDate');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'InvoiceEntity', 'customValue1');
+        customValue1, r'InvoiceEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'InvoiceEntity', 'customValue2');
+        customValue2, r'InvoiceEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'InvoiceEntity', 'customValue3');
+        customValue3, r'InvoiceEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'InvoiceEntity', 'customValue4');
+        customValue4, r'InvoiceEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        customSurcharge1, 'InvoiceEntity', 'customSurcharge1');
+        customSurcharge1, r'InvoiceEntity', 'customSurcharge1');
     BuiltValueNullFieldError.checkNotNull(
-        customSurcharge2, 'InvoiceEntity', 'customSurcharge2');
+        customSurcharge2, r'InvoiceEntity', 'customSurcharge2');
     BuiltValueNullFieldError.checkNotNull(
-        customSurcharge3, 'InvoiceEntity', 'customSurcharge3');
+        customSurcharge3, r'InvoiceEntity', 'customSurcharge3');
     BuiltValueNullFieldError.checkNotNull(
-        customSurcharge4, 'InvoiceEntity', 'customSurcharge4');
+        customSurcharge4, r'InvoiceEntity', 'customSurcharge4');
     BuiltValueNullFieldError.checkNotNull(
-        customTaxes1, 'InvoiceEntity', 'customTaxes1');
+        customTaxes1, r'InvoiceEntity', 'customTaxes1');
     BuiltValueNullFieldError.checkNotNull(
-        customTaxes2, 'InvoiceEntity', 'customTaxes2');
+        customTaxes2, r'InvoiceEntity', 'customTaxes2');
     BuiltValueNullFieldError.checkNotNull(
-        customTaxes3, 'InvoiceEntity', 'customTaxes3');
+        customTaxes3, r'InvoiceEntity', 'customTaxes3');
     BuiltValueNullFieldError.checkNotNull(
-        customTaxes4, 'InvoiceEntity', 'customTaxes4');
+        customTaxes4, r'InvoiceEntity', 'customTaxes4');
     BuiltValueNullFieldError.checkNotNull(
-        exchangeRate, 'InvoiceEntity', 'exchangeRate');
+        exchangeRate, r'InvoiceEntity', 'exchangeRate');
     BuiltValueNullFieldError.checkNotNull(
-        lastSentDate, 'InvoiceEntity', 'lastSentDate');
+        lastSentDate, r'InvoiceEntity', 'lastSentDate');
     BuiltValueNullFieldError.checkNotNull(
-        nextSendDate, 'InvoiceEntity', 'nextSendDate');
+        nextSendDate, r'InvoiceEntity', 'nextSendDate');
     BuiltValueNullFieldError.checkNotNull(
-        autoBillEnabled, 'InvoiceEntity', 'autoBillEnabled');
+        autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled');
     BuiltValueNullFieldError.checkNotNull(
-        lineItems, 'InvoiceEntity', 'lineItems');
+        lineItems, r'InvoiceEntity', 'lineItems');
     BuiltValueNullFieldError.checkNotNull(
-        invitations, 'InvoiceEntity', 'invitations');
+        invitations, r'InvoiceEntity', 'invitations');
     BuiltValueNullFieldError.checkNotNull(
-        documents, 'InvoiceEntity', 'documents');
+        documents, r'InvoiceEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
-        activities, 'InvoiceEntity', 'activities');
+        activities, r'InvoiceEntity', 'activities');
     BuiltValueNullFieldError.checkNotNull(
-        saveDefaultTerms, 'InvoiceEntity', 'saveDefaultTerms');
+        saveDefaultTerms, r'InvoiceEntity', 'saveDefaultTerms');
     BuiltValueNullFieldError.checkNotNull(
-        saveDefaultFooter, 'InvoiceEntity', 'saveDefaultFooter');
+        saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'InvoiceEntity', 'createdAt');
+        createdAt, r'InvoiceEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'InvoiceEntity', 'updatedAt');
+        updatedAt, r'InvoiceEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'InvoiceEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'InvoiceEntity', 'id');
+        archivedAt, r'InvoiceEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'InvoiceEntity', 'id');
   }
 
   @override
@@ -1842,49 +1854,88 @@ class _$InvoiceEntity extends InvoiceEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, idempotencyKey.hashCode), amount.hashCode), balance.hashCode), paidToDate.hashCode), clientId.hashCode), projectId.hashCode), expenseId.hashCode), vendorId.hashCode), subscriptionId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode), remainingCycles.hashCode), dueDateDays.hashCode),
-                                                                                invoiceId.hashCode),
-                                                                            recurringId.hashCode),
-                                                                        autoBillEnabled.hashCode),
-                                                                    filename.hashCode),
-                                                                recurringDates.hashCode),
-                                                            lineItems.hashCode),
-                                                        invitations.hashCode),
-                                                    documents.hashCode),
-                                                saveDefaultTerms.hashCode),
-                                            saveDefaultFooter.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            entityType.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, idempotencyKey.hashCode);
+    _$hash = $jc(_$hash, amount.hashCode);
+    _$hash = $jc(_$hash, balance.hashCode);
+    _$hash = $jc(_$hash, paidToDate.hashCode);
+    _$hash = $jc(_$hash, clientId.hashCode);
+    _$hash = $jc(_$hash, projectId.hashCode);
+    _$hash = $jc(_$hash, expenseId.hashCode);
+    _$hash = $jc(_$hash, vendorId.hashCode);
+    _$hash = $jc(_$hash, subscriptionId.hashCode);
+    _$hash = $jc(_$hash, statusId.hashCode);
+    _$hash = $jc(_$hash, number.hashCode);
+    _$hash = $jc(_$hash, discount.hashCode);
+    _$hash = $jc(_$hash, poNumber.hashCode);
+    _$hash = $jc(_$hash, date.hashCode);
+    _$hash = $jc(_$hash, dueDate.hashCode);
+    _$hash = $jc(_$hash, publicNotes.hashCode);
+    _$hash = $jc(_$hash, privateNotes.hashCode);
+    _$hash = $jc(_$hash, terms.hashCode);
+    _$hash = $jc(_$hash, footer.hashCode);
+    _$hash = $jc(_$hash, designId.hashCode);
+    _$hash = $jc(_$hash, usesInclusiveTaxes.hashCode);
+    _$hash = $jc(_$hash, taxName1.hashCode);
+    _$hash = $jc(_$hash, taxRate1.hashCode);
+    _$hash = $jc(_$hash, taxName2.hashCode);
+    _$hash = $jc(_$hash, taxRate2.hashCode);
+    _$hash = $jc(_$hash, taxName3.hashCode);
+    _$hash = $jc(_$hash, taxRate3.hashCode);
+    _$hash = $jc(_$hash, isAmountDiscount.hashCode);
+    _$hash = $jc(_$hash, partial.hashCode);
+    _$hash = $jc(_$hash, taxAmount.hashCode);
+    _$hash = $jc(_$hash, partialDueDate.hashCode);
+    _$hash = $jc(_$hash, autoBill.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, customSurcharge1.hashCode);
+    _$hash = $jc(_$hash, customSurcharge2.hashCode);
+    _$hash = $jc(_$hash, customSurcharge3.hashCode);
+    _$hash = $jc(_$hash, customSurcharge4.hashCode);
+    _$hash = $jc(_$hash, customTaxes1.hashCode);
+    _$hash = $jc(_$hash, customTaxes2.hashCode);
+    _$hash = $jc(_$hash, customTaxes3.hashCode);
+    _$hash = $jc(_$hash, customTaxes4.hashCode);
+    _$hash = $jc(_$hash, exchangeRate.hashCode);
+    _$hash = $jc(_$hash, reminder1Sent.hashCode);
+    _$hash = $jc(_$hash, reminder2Sent.hashCode);
+    _$hash = $jc(_$hash, reminder3Sent.hashCode);
+    _$hash = $jc(_$hash, reminderLastSent.hashCode);
+    _$hash = $jc(_$hash, frequencyId.hashCode);
+    _$hash = $jc(_$hash, lastSentDate.hashCode);
+    _$hash = $jc(_$hash, nextSendDate.hashCode);
+    _$hash = $jc(_$hash, remainingCycles.hashCode);
+    _$hash = $jc(_$hash, dueDateDays.hashCode);
+    _$hash = $jc(_$hash, invoiceId.hashCode);
+    _$hash = $jc(_$hash, recurringId.hashCode);
+    _$hash = $jc(_$hash, autoBillEnabled.hashCode);
+    _$hash = $jc(_$hash, filename.hashCode);
+    _$hash = $jc(_$hash, recurringDates.hashCode);
+    _$hash = $jc(_$hash, lineItems.hashCode);
+    _$hash = $jc(_$hash, invitations.hashCode);
+    _$hash = $jc(_$hash, documents.hashCode);
+    _$hash = $jc(_$hash, saveDefaultTerms.hashCode);
+    _$hash = $jc(_$hash, saveDefaultFooter.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceEntity')
+    return (newBuiltValueToStringHelper(r'InvoiceEntity')
           ..add('idempotencyKey', idempotencyKey)
           ..add('amount', amount)
           ..add('balance', balance)
@@ -2396,95 +2447,96 @@ class InvoiceEntityBuilder
   }
 
   @override
-  _$InvoiceEntity build() {
+  InvoiceEntity build() => _build();
+
+  _$InvoiceEntity _build() {
     _$InvoiceEntity _$result;
     try {
       _$result = _$v ??
           new _$InvoiceEntity._(
               idempotencyKey: idempotencyKey,
               amount: BuiltValueNullFieldError.checkNotNull(
-                  amount, 'InvoiceEntity', 'amount'),
+                  amount, r'InvoiceEntity', 'amount'),
               balance: BuiltValueNullFieldError.checkNotNull(
-                  balance, 'InvoiceEntity', 'balance'),
+                  balance, r'InvoiceEntity', 'balance'),
               paidToDate: BuiltValueNullFieldError.checkNotNull(
-                  paidToDate, 'InvoiceEntity', 'paidToDate'),
+                  paidToDate, r'InvoiceEntity', 'paidToDate'),
               clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, 'InvoiceEntity', 'clientId'),
+                  clientId, r'InvoiceEntity', 'clientId'),
               projectId: BuiltValueNullFieldError.checkNotNull(
-                  projectId, 'InvoiceEntity', 'projectId'),
+                  projectId, r'InvoiceEntity', 'projectId'),
               expenseId: BuiltValueNullFieldError.checkNotNull(
-                  expenseId, 'InvoiceEntity', 'expenseId'),
+                  expenseId, r'InvoiceEntity', 'expenseId'),
               vendorId: BuiltValueNullFieldError.checkNotNull(
-                  vendorId, 'InvoiceEntity', 'vendorId'),
+                  vendorId, r'InvoiceEntity', 'vendorId'),
               subscriptionId: BuiltValueNullFieldError.checkNotNull(
-                  subscriptionId, 'InvoiceEntity', 'subscriptionId'),
-              statusId:
-                  BuiltValueNullFieldError.checkNotNull(statusId, 'InvoiceEntity', 'statusId'),
-              number: BuiltValueNullFieldError.checkNotNull(number, 'InvoiceEntity', 'number'),
-              discount: BuiltValueNullFieldError.checkNotNull(discount, 'InvoiceEntity', 'discount'),
-              poNumber: BuiltValueNullFieldError.checkNotNull(poNumber, 'InvoiceEntity', 'poNumber'),
-              date: BuiltValueNullFieldError.checkNotNull(date, 'InvoiceEntity', 'date'),
-              dueDate: BuiltValueNullFieldError.checkNotNull(dueDate, 'InvoiceEntity', 'dueDate'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, 'InvoiceEntity', 'publicNotes'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, 'InvoiceEntity', 'privateNotes'),
-              terms: BuiltValueNullFieldError.checkNotNull(terms, 'InvoiceEntity', 'terms'),
-              footer: BuiltValueNullFieldError.checkNotNull(footer, 'InvoiceEntity', 'footer'),
-              designId: BuiltValueNullFieldError.checkNotNull(designId, 'InvoiceEntity', 'designId'),
-              usesInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(usesInclusiveTaxes, 'InvoiceEntity', 'usesInclusiveTaxes'),
-              taxName1: BuiltValueNullFieldError.checkNotNull(taxName1, 'InvoiceEntity', 'taxName1'),
-              taxRate1: BuiltValueNullFieldError.checkNotNull(taxRate1, 'InvoiceEntity', 'taxRate1'),
-              taxName2: BuiltValueNullFieldError.checkNotNull(taxName2, 'InvoiceEntity', 'taxName2'),
-              taxRate2: BuiltValueNullFieldError.checkNotNull(taxRate2, 'InvoiceEntity', 'taxRate2'),
-              taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, 'InvoiceEntity', 'taxName3'),
-              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'InvoiceEntity', 'taxRate3'),
-              isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, 'InvoiceEntity', 'isAmountDiscount'),
-              partial: BuiltValueNullFieldError.checkNotNull(partial, 'InvoiceEntity', 'partial'),
-              taxAmount: BuiltValueNullFieldError.checkNotNull(taxAmount, 'InvoiceEntity', 'taxAmount'),
-              partialDueDate: BuiltValueNullFieldError.checkNotNull(partialDueDate, 'InvoiceEntity', 'partialDueDate'),
+                  subscriptionId, r'InvoiceEntity', 'subscriptionId'),
+              statusId: BuiltValueNullFieldError.checkNotNull(statusId, r'InvoiceEntity', 'statusId'),
+              number: BuiltValueNullFieldError.checkNotNull(number, r'InvoiceEntity', 'number'),
+              discount: BuiltValueNullFieldError.checkNotNull(discount, r'InvoiceEntity', 'discount'),
+              poNumber: BuiltValueNullFieldError.checkNotNull(poNumber, r'InvoiceEntity', 'poNumber'),
+              date: BuiltValueNullFieldError.checkNotNull(date, r'InvoiceEntity', 'date'),
+              dueDate: BuiltValueNullFieldError.checkNotNull(dueDate, r'InvoiceEntity', 'dueDate'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'InvoiceEntity', 'publicNotes'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'InvoiceEntity', 'privateNotes'),
+              terms: BuiltValueNullFieldError.checkNotNull(terms, r'InvoiceEntity', 'terms'),
+              footer: BuiltValueNullFieldError.checkNotNull(footer, r'InvoiceEntity', 'footer'),
+              designId: BuiltValueNullFieldError.checkNotNull(designId, r'InvoiceEntity', 'designId'),
+              usesInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(usesInclusiveTaxes, r'InvoiceEntity', 'usesInclusiveTaxes'),
+              taxName1: BuiltValueNullFieldError.checkNotNull(taxName1, r'InvoiceEntity', 'taxName1'),
+              taxRate1: BuiltValueNullFieldError.checkNotNull(taxRate1, r'InvoiceEntity', 'taxRate1'),
+              taxName2: BuiltValueNullFieldError.checkNotNull(taxName2, r'InvoiceEntity', 'taxName2'),
+              taxRate2: BuiltValueNullFieldError.checkNotNull(taxRate2, r'InvoiceEntity', 'taxRate2'),
+              taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'InvoiceEntity', 'taxName3'),
+              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'InvoiceEntity', 'taxRate3'),
+              isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, r'InvoiceEntity', 'isAmountDiscount'),
+              partial: BuiltValueNullFieldError.checkNotNull(partial, r'InvoiceEntity', 'partial'),
+              taxAmount: BuiltValueNullFieldError.checkNotNull(taxAmount, r'InvoiceEntity', 'taxAmount'),
+              partialDueDate: BuiltValueNullFieldError.checkNotNull(partialDueDate, r'InvoiceEntity', 'partialDueDate'),
               autoBill: autoBill,
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'InvoiceEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'InvoiceEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'InvoiceEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'InvoiceEntity', 'customValue4'),
-              customSurcharge1: BuiltValueNullFieldError.checkNotNull(customSurcharge1, 'InvoiceEntity', 'customSurcharge1'),
-              customSurcharge2: BuiltValueNullFieldError.checkNotNull(customSurcharge2, 'InvoiceEntity', 'customSurcharge2'),
-              customSurcharge3: BuiltValueNullFieldError.checkNotNull(customSurcharge3, 'InvoiceEntity', 'customSurcharge3'),
-              customSurcharge4: BuiltValueNullFieldError.checkNotNull(customSurcharge4, 'InvoiceEntity', 'customSurcharge4'),
-              customTaxes1: BuiltValueNullFieldError.checkNotNull(customTaxes1, 'InvoiceEntity', 'customTaxes1'),
-              customTaxes2: BuiltValueNullFieldError.checkNotNull(customTaxes2, 'InvoiceEntity', 'customTaxes2'),
-              customTaxes3: BuiltValueNullFieldError.checkNotNull(customTaxes3, 'InvoiceEntity', 'customTaxes3'),
-              customTaxes4: BuiltValueNullFieldError.checkNotNull(customTaxes4, 'InvoiceEntity', 'customTaxes4'),
-              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, 'InvoiceEntity', 'exchangeRate'),
+              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'InvoiceEntity', 'customValue1'),
+              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'InvoiceEntity', 'customValue2'),
+              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'InvoiceEntity', 'customValue3'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'InvoiceEntity', 'customValue4'),
+              customSurcharge1: BuiltValueNullFieldError.checkNotNull(customSurcharge1, r'InvoiceEntity', 'customSurcharge1'),
+              customSurcharge2: BuiltValueNullFieldError.checkNotNull(customSurcharge2, r'InvoiceEntity', 'customSurcharge2'),
+              customSurcharge3: BuiltValueNullFieldError.checkNotNull(customSurcharge3, r'InvoiceEntity', 'customSurcharge3'),
+              customSurcharge4: BuiltValueNullFieldError.checkNotNull(customSurcharge4, r'InvoiceEntity', 'customSurcharge4'),
+              customTaxes1: BuiltValueNullFieldError.checkNotNull(customTaxes1, r'InvoiceEntity', 'customTaxes1'),
+              customTaxes2: BuiltValueNullFieldError.checkNotNull(customTaxes2, r'InvoiceEntity', 'customTaxes2'),
+              customTaxes3: BuiltValueNullFieldError.checkNotNull(customTaxes3, r'InvoiceEntity', 'customTaxes3'),
+              customTaxes4: BuiltValueNullFieldError.checkNotNull(customTaxes4, r'InvoiceEntity', 'customTaxes4'),
+              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, r'InvoiceEntity', 'exchangeRate'),
               reminder1Sent: reminder1Sent,
               reminder2Sent: reminder2Sent,
               reminder3Sent: reminder3Sent,
               reminderLastSent: reminderLastSent,
               frequencyId: frequencyId,
-              lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, 'InvoiceEntity', 'lastSentDate'),
-              nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, 'InvoiceEntity', 'nextSendDate'),
+              lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, r'InvoiceEntity', 'lastSentDate'),
+              nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, r'InvoiceEntity', 'nextSendDate'),
               remainingCycles: remainingCycles,
               dueDateDays: dueDateDays,
               invoiceId: invoiceId,
               recurringId: recurringId,
-              autoBillEnabled: BuiltValueNullFieldError.checkNotNull(autoBillEnabled, 'InvoiceEntity', 'autoBillEnabled'),
+              autoBillEnabled: BuiltValueNullFieldError.checkNotNull(autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled'),
               filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),
               invitations: invitations.build(),
               documents: documents.build(),
               activities: activities.build(),
-              saveDefaultTerms: BuiltValueNullFieldError.checkNotNull(saveDefaultTerms, 'InvoiceEntity', 'saveDefaultTerms'),
-              saveDefaultFooter: BuiltValueNullFieldError.checkNotNull(saveDefaultFooter, 'InvoiceEntity', 'saveDefaultFooter'),
+              saveDefaultTerms: BuiltValueNullFieldError.checkNotNull(saveDefaultTerms, r'InvoiceEntity', 'saveDefaultTerms'),
+              saveDefaultFooter: BuiltValueNullFieldError.checkNotNull(saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter'),
               loadedAt: loadedAt,
               isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, 'InvoiceEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'InvoiceEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'InvoiceEntity', 'archivedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'InvoiceEntity', 'createdAt'),
+              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'InvoiceEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'InvoiceEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
               entityType: entityType,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'InvoiceEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'InvoiceEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -2500,7 +2552,7 @@ class InvoiceEntityBuilder
         activities.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'InvoiceEntity', _$failedField, e.toString());
+            r'InvoiceEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -2553,7 +2605,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
 
   factory _$InvoiceItemEntity(
           [void Function(InvoiceItemEntityBuilder) updates]) =>
-      (new InvoiceItemEntityBuilder()..update(updates)).build();
+      (new InvoiceItemEntityBuilder()..update(updates))._build();
 
   _$InvoiceItemEntity._(
       {this.productKey,
@@ -2578,35 +2630,35 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.createdAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        productKey, 'InvoiceItemEntity', 'productKey');
-    BuiltValueNullFieldError.checkNotNull(notes, 'InvoiceItemEntity', 'notes');
-    BuiltValueNullFieldError.checkNotNull(cost, 'InvoiceItemEntity', 'cost');
+        productKey, r'InvoiceItemEntity', 'productKey');
+    BuiltValueNullFieldError.checkNotNull(notes, r'InvoiceItemEntity', 'notes');
+    BuiltValueNullFieldError.checkNotNull(cost, r'InvoiceItemEntity', 'cost');
     BuiltValueNullFieldError.checkNotNull(
-        productCost, 'InvoiceItemEntity', 'productCost');
+        productCost, r'InvoiceItemEntity', 'productCost');
     BuiltValueNullFieldError.checkNotNull(
-        quantity, 'InvoiceItemEntity', 'quantity');
+        quantity, r'InvoiceItemEntity', 'quantity');
     BuiltValueNullFieldError.checkNotNull(
-        taxName1, 'InvoiceItemEntity', 'taxName1');
+        taxName1, r'InvoiceItemEntity', 'taxName1');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate1, 'InvoiceItemEntity', 'taxRate1');
+        taxRate1, r'InvoiceItemEntity', 'taxRate1');
     BuiltValueNullFieldError.checkNotNull(
-        taxName2, 'InvoiceItemEntity', 'taxName2');
+        taxName2, r'InvoiceItemEntity', 'taxName2');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate2, 'InvoiceItemEntity', 'taxRate2');
+        taxRate2, r'InvoiceItemEntity', 'taxRate2');
     BuiltValueNullFieldError.checkNotNull(
-        taxName3, 'InvoiceItemEntity', 'taxName3');
+        taxName3, r'InvoiceItemEntity', 'taxName3');
     BuiltValueNullFieldError.checkNotNull(
-        taxRate3, 'InvoiceItemEntity', 'taxRate3');
+        taxRate3, r'InvoiceItemEntity', 'taxRate3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue1, 'InvoiceItemEntity', 'customValue1');
+        customValue1, r'InvoiceItemEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
-        customValue2, 'InvoiceItemEntity', 'customValue2');
+        customValue2, r'InvoiceItemEntity', 'customValue2');
     BuiltValueNullFieldError.checkNotNull(
-        customValue3, 'InvoiceItemEntity', 'customValue3');
+        customValue3, r'InvoiceItemEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
-        customValue4, 'InvoiceItemEntity', 'customValue4');
+        customValue4, r'InvoiceItemEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
-        discount, 'InvoiceItemEntity', 'discount');
+        discount, r'InvoiceItemEntity', 'discount');
   }
 
   @override
@@ -2646,49 +2698,35 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc(0, productKey.hashCode),
-                                                                                notes.hashCode),
-                                                                            cost.hashCode),
-                                                                        productCost.hashCode),
-                                                                    quantity.hashCode),
-                                                                taxName1.hashCode),
-                                                            taxRate1.hashCode),
-                                                        taxName2.hashCode),
-                                                    taxRate2.hashCode),
-                                                taxName3.hashCode),
-                                            taxRate3.hashCode),
-                                        typeId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            customValue3.hashCode),
-                        customValue4.hashCode),
-                    discount.hashCode),
-                taskId.hashCode),
-            expenseId.hashCode),
-        createdAt.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, productKey.hashCode);
+    _$hash = $jc(_$hash, notes.hashCode);
+    _$hash = $jc(_$hash, cost.hashCode);
+    _$hash = $jc(_$hash, productCost.hashCode);
+    _$hash = $jc(_$hash, quantity.hashCode);
+    _$hash = $jc(_$hash, taxName1.hashCode);
+    _$hash = $jc(_$hash, taxRate1.hashCode);
+    _$hash = $jc(_$hash, taxName2.hashCode);
+    _$hash = $jc(_$hash, taxRate2.hashCode);
+    _$hash = $jc(_$hash, taxName3.hashCode);
+    _$hash = $jc(_$hash, taxRate3.hashCode);
+    _$hash = $jc(_$hash, typeId.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, discount.hashCode);
+    _$hash = $jc(_$hash, taskId.hashCode);
+    _$hash = $jc(_$hash, expenseId.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceItemEntity')
+    return (newBuiltValueToStringHelper(r'InvoiceItemEntity')
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
@@ -2841,35 +2879,37 @@ class InvoiceItemEntityBuilder
   }
 
   @override
-  _$InvoiceItemEntity build() {
+  InvoiceItemEntity build() => _build();
+
+  _$InvoiceItemEntity _build() {
     final _$result = _$v ??
         new _$InvoiceItemEntity._(
             productKey: BuiltValueNullFieldError.checkNotNull(
-                productKey, 'InvoiceItemEntity', 'productKey'),
+                productKey, r'InvoiceItemEntity', 'productKey'),
             notes: BuiltValueNullFieldError.checkNotNull(
-                notes, 'InvoiceItemEntity', 'notes'),
+                notes, r'InvoiceItemEntity', 'notes'),
             cost: BuiltValueNullFieldError.checkNotNull(
-                cost, 'InvoiceItemEntity', 'cost'),
+                cost, r'InvoiceItemEntity', 'cost'),
             productCost: BuiltValueNullFieldError.checkNotNull(
-                productCost, 'InvoiceItemEntity', 'productCost'),
+                productCost, r'InvoiceItemEntity', 'productCost'),
             quantity: BuiltValueNullFieldError.checkNotNull(
-                quantity, 'InvoiceItemEntity', 'quantity'),
+                quantity, r'InvoiceItemEntity', 'quantity'),
             taxName1: BuiltValueNullFieldError.checkNotNull(
-                taxName1, 'InvoiceItemEntity', 'taxName1'),
+                taxName1, r'InvoiceItemEntity', 'taxName1'),
             taxRate1: BuiltValueNullFieldError.checkNotNull(
-                taxRate1, 'InvoiceItemEntity', 'taxRate1'),
+                taxRate1, r'InvoiceItemEntity', 'taxRate1'),
             taxName2: BuiltValueNullFieldError.checkNotNull(
-                taxName2, 'InvoiceItemEntity', 'taxName2'),
+                taxName2, r'InvoiceItemEntity', 'taxName2'),
             taxRate2:
-                BuiltValueNullFieldError.checkNotNull(taxRate2, 'InvoiceItemEntity', 'taxRate2'),
-            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, 'InvoiceItemEntity', 'taxName3'),
-            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, 'InvoiceItemEntity', 'taxRate3'),
+                BuiltValueNullFieldError.checkNotNull(taxRate2, r'InvoiceItemEntity', 'taxRate2'),
+            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'InvoiceItemEntity', 'taxName3'),
+            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'InvoiceItemEntity', 'taxRate3'),
             typeId: typeId,
-            customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, 'InvoiceItemEntity', 'customValue1'),
-            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, 'InvoiceItemEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, 'InvoiceItemEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, 'InvoiceItemEntity', 'customValue4'),
-            discount: BuiltValueNullFieldError.checkNotNull(discount, 'InvoiceItemEntity', 'discount'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'InvoiceItemEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'InvoiceItemEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'InvoiceItemEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'InvoiceItemEntity', 'customValue4'),
+            discount: BuiltValueNullFieldError.checkNotNull(discount, r'InvoiceItemEntity', 'discount'),
             taskId: taskId,
             expenseId: expenseId,
             createdAt: createdAt);
@@ -2916,7 +2956,7 @@ class _$InvitationEntity extends InvitationEntity {
 
   factory _$InvitationEntity(
           [void Function(InvitationEntityBuilder) updates]) =>
-      (new InvitationEntityBuilder()..update(updates)).build();
+      (new InvitationEntityBuilder()..update(updates))._build();
 
   _$InvitationEntity._(
       {this.key,
@@ -2937,25 +2977,25 @@ class _$InvitationEntity extends InvitationEntity {
       this.entityType,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(key, 'InvitationEntity', 'key');
-    BuiltValueNullFieldError.checkNotNull(link, 'InvitationEntity', 'link');
+    BuiltValueNullFieldError.checkNotNull(key, r'InvitationEntity', 'key');
+    BuiltValueNullFieldError.checkNotNull(link, r'InvitationEntity', 'link');
     BuiltValueNullFieldError.checkNotNull(
-        clientContactId, 'InvitationEntity', 'clientContactId');
+        clientContactId, r'InvitationEntity', 'clientContactId');
     BuiltValueNullFieldError.checkNotNull(
-        vendorContactId, 'InvitationEntity', 'vendorContactId');
+        vendorContactId, r'InvitationEntity', 'vendorContactId');
     BuiltValueNullFieldError.checkNotNull(
-        sentDate, 'InvitationEntity', 'sentDate');
+        sentDate, r'InvitationEntity', 'sentDate');
     BuiltValueNullFieldError.checkNotNull(
-        viewedDate, 'InvitationEntity', 'viewedDate');
+        viewedDate, r'InvitationEntity', 'viewedDate');
     BuiltValueNullFieldError.checkNotNull(
-        openedDate, 'InvitationEntity', 'openedDate');
+        openedDate, r'InvitationEntity', 'openedDate');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'InvitationEntity', 'createdAt');
+        createdAt, r'InvitationEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'InvitationEntity', 'updatedAt');
+        updatedAt, r'InvitationEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'InvitationEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'InvitationEntity', 'id');
+        archivedAt, r'InvitationEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'InvitationEntity', 'id');
   }
 
   @override
@@ -2988,35 +3028,28 @@ class _$InvitationEntity extends InvitationEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc($jc(0, key.hashCode),
-                                                    link.hashCode),
-                                                clientContactId.hashCode),
-                                            vendorContactId.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            entityType.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, key.hashCode);
+    _$hash = $jc(_$hash, link.hashCode);
+    _$hash = $jc(_$hash, clientContactId.hashCode);
+    _$hash = $jc(_$hash, vendorContactId.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvitationEntity')
+    return (newBuiltValueToStringHelper(r'InvitationEntity')
           ..add('key', key)
           ..add('link', link)
           ..add('clientContactId', clientContactId)
@@ -3155,35 +3188,37 @@ class InvitationEntityBuilder
   }
 
   @override
-  _$InvitationEntity build() {
+  InvitationEntity build() => _build();
+
+  _$InvitationEntity _build() {
     final _$result = _$v ??
         new _$InvitationEntity._(
             key: BuiltValueNullFieldError.checkNotNull(
-                key, 'InvitationEntity', 'key'),
+                key, r'InvitationEntity', 'key'),
             link: BuiltValueNullFieldError.checkNotNull(
-                link, 'InvitationEntity', 'link'),
+                link, r'InvitationEntity', 'link'),
             clientContactId: BuiltValueNullFieldError.checkNotNull(
-                clientContactId, 'InvitationEntity', 'clientContactId'),
+                clientContactId, r'InvitationEntity', 'clientContactId'),
             vendorContactId: BuiltValueNullFieldError.checkNotNull(
-                vendorContactId, 'InvitationEntity', 'vendorContactId'),
+                vendorContactId, r'InvitationEntity', 'vendorContactId'),
             sentDate: BuiltValueNullFieldError.checkNotNull(
-                sentDate, 'InvitationEntity', 'sentDate'),
+                sentDate, r'InvitationEntity', 'sentDate'),
             viewedDate: BuiltValueNullFieldError.checkNotNull(
-                viewedDate, 'InvitationEntity', 'viewedDate'),
+                viewedDate, r'InvitationEntity', 'viewedDate'),
             openedDate: BuiltValueNullFieldError.checkNotNull(
-                openedDate, 'InvitationEntity', 'openedDate'),
+                openedDate, r'InvitationEntity', 'openedDate'),
             emailStatus: emailStatus,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'InvitationEntity', 'createdAt'),
+                createdAt, r'InvitationEntity', 'createdAt'),
             updatedAt:
-                BuiltValueNullFieldError.checkNotNull(updatedAt, 'InvitationEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'InvitationEntity', 'archivedAt'),
+                BuiltValueNullFieldError.checkNotNull(updatedAt, r'InvitationEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'InvitationEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             entityType: entityType,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'InvitationEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'InvitationEntity', 'id'));
     replace(_$result);
     return _$result;
   }
@@ -3197,13 +3232,13 @@ class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
 
   factory _$InvoiceScheduleEntity(
           [void Function(InvoiceScheduleEntityBuilder) updates]) =>
-      (new InvoiceScheduleEntityBuilder()..update(updates)).build();
+      (new InvoiceScheduleEntityBuilder()..update(updates))._build();
 
   _$InvoiceScheduleEntity._({this.sendDate, this.dueDate}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        sendDate, 'InvoiceScheduleEntity', 'sendDate');
+        sendDate, r'InvoiceScheduleEntity', 'sendDate');
     BuiltValueNullFieldError.checkNotNull(
-        dueDate, 'InvoiceScheduleEntity', 'dueDate');
+        dueDate, r'InvoiceScheduleEntity', 'dueDate');
   }
 
   @override
@@ -3226,12 +3261,17 @@ class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, sendDate.hashCode), dueDate.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, sendDate.hashCode);
+    _$hash = $jc(_$hash, dueDate.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceScheduleEntity')
+    return (newBuiltValueToStringHelper(r'InvoiceScheduleEntity')
           ..add('sendDate', sendDate)
           ..add('dueDate', dueDate))
         .toString();
@@ -3274,13 +3314,15 @@ class InvoiceScheduleEntityBuilder
   }
 
   @override
-  _$InvoiceScheduleEntity build() {
+  InvoiceScheduleEntity build() => _build();
+
+  _$InvoiceScheduleEntity _build() {
     final _$result = _$v ??
         new _$InvoiceScheduleEntity._(
             sendDate: BuiltValueNullFieldError.checkNotNull(
-                sendDate, 'InvoiceScheduleEntity', 'sendDate'),
+                sendDate, r'InvoiceScheduleEntity', 'sendDate'),
             dueDate: BuiltValueNullFieldError.checkNotNull(
-                dueDate, 'InvoiceScheduleEntity', 'dueDate'));
+                dueDate, r'InvoiceScheduleEntity', 'dueDate'));
     replace(_$result);
     return _$result;
   }
@@ -3298,18 +3340,18 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
 
   factory _$InvoiceHistoryEntity(
           [void Function(InvoiceHistoryEntityBuilder) updates]) =>
-      (new InvoiceHistoryEntityBuilder()..update(updates)).build();
+      (new InvoiceHistoryEntityBuilder()..update(updates))._build();
 
   _$InvoiceHistoryEntity._(
       {this.id, this.activityId, this.createdAt, this.amount})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, 'InvoiceHistoryEntity', 'id');
+    BuiltValueNullFieldError.checkNotNull(id, r'InvoiceHistoryEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
-        activityId, 'InvoiceHistoryEntity', 'activityId');
+        activityId, r'InvoiceHistoryEntity', 'activityId');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'InvoiceHistoryEntity', 'createdAt');
+        createdAt, r'InvoiceHistoryEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        amount, 'InvoiceHistoryEntity', 'amount');
+        amount, r'InvoiceHistoryEntity', 'amount');
   }
 
   @override
@@ -3334,14 +3376,19 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, id.hashCode), activityId.hashCode), createdAt.hashCode),
-        amount.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, activityId.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, amount.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
+    return (newBuiltValueToStringHelper(r'InvoiceHistoryEntity')
           ..add('id', id)
           ..add('activityId', activityId)
           ..add('createdAt', createdAt)
@@ -3396,20 +3443,22 @@ class InvoiceHistoryEntityBuilder
   }
 
   @override
-  _$InvoiceHistoryEntity build() {
+  InvoiceHistoryEntity build() => _build();
+
+  _$InvoiceHistoryEntity _build() {
     final _$result = _$v ??
         new _$InvoiceHistoryEntity._(
             id: BuiltValueNullFieldError.checkNotNull(
-                id, 'InvoiceHistoryEntity', 'id'),
+                id, r'InvoiceHistoryEntity', 'id'),
             activityId: BuiltValueNullFieldError.checkNotNull(
-                activityId, 'InvoiceHistoryEntity', 'activityId'),
+                activityId, r'InvoiceHistoryEntity', 'activityId'),
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, 'InvoiceHistoryEntity', 'createdAt'),
+                createdAt, r'InvoiceHistoryEntity', 'createdAt'),
             amount: BuiltValueNullFieldError.checkNotNull(
-                amount, 'InvoiceHistoryEntity', 'amount'));
+                amount, r'InvoiceHistoryEntity', 'amount'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

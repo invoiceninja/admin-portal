@@ -819,7 +819,9 @@ class _DrawerTileState extends State<DrawerTile> {
         textColor = convertHexStringToColor(activeFontColor);
       }
     } else {
-      if (inactiveColor.isNotEmpty) {
+      if (_isHovered) {
+        color = convertHexStringToColor(activeColor);
+      } else if (inactiveColor.isNotEmpty) {
         color = convertHexStringToColor(inactiveColor);
       }
       if (inactiveFontColor.isNotEmpty) {
@@ -1400,7 +1402,7 @@ void _showAbout(BuildContext context) async {
                       padding: const EdgeInsets.only(top: 4),
                       child: AppButton(
                         label: localization.appPlatforms.toUpperCase(),
-                        iconData: MdiIcons.desktopMac,
+                        iconData: MdiIcons.desktopClassic,
                         onPressed: () {
                           showDialog<AlertDialog>(
                               context: context,

@@ -95,6 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final companyName = state.company.settings.name ?? '';
     if (!state.isDemo &&
+        state.userCompany.isAdmin &&
         (companyName.isEmpty || companyName == 'Untitled Company') &&
         state.company.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -253,7 +254,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                       ? localization.upgrade
                       : null,
                   onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
-                  icon: Icon(Icons.arrow_circle_up)),
+                  icon: Icon(Icons.rocket_launch)),
             ),
           if (!kReleaseMode ||
               (kIsWeb &&

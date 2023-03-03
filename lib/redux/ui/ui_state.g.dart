@@ -442,7 +442,7 @@ class _$UIState extends UIState {
   final ReportsUIState reportsUIState;
 
   factory _$UIState([void Function(UIStateBuilder) updates]) =>
-      (new UIStateBuilder()..update(updates)).build();
+      (new UIStateBuilder()..update(updates))._build();
 
   _$UIState._(
       {this.selectedCompanyIndex,
@@ -488,83 +488,83 @@ class _$UIState extends UIState {
       this.reportsUIState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        selectedCompanyIndex, 'UIState', 'selectedCompanyIndex');
+        selectedCompanyIndex, r'UIState', 'selectedCompanyIndex');
     BuiltValueNullFieldError.checkNotNull(
-        currentRoute, 'UIState', 'currentRoute');
+        currentRoute, r'UIState', 'currentRoute');
     BuiltValueNullFieldError.checkNotNull(
-        previousRoute, 'UIState', 'previousRoute');
+        previousRoute, r'UIState', 'previousRoute');
     BuiltValueNullFieldError.checkNotNull(
-        previewStack, 'UIState', 'previewStack');
+        previewStack, r'UIState', 'previewStack');
     BuiltValueNullFieldError.checkNotNull(
-        filterStack, 'UIState', 'filterStack');
+        filterStack, r'UIState', 'filterStack');
     BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, 'UIState', 'filterClearedAt');
+        filterClearedAt, r'UIState', 'filterClearedAt');
     BuiltValueNullFieldError.checkNotNull(
-        lastActivityAt, 'UIState', 'lastActivityAt');
+        lastActivityAt, r'UIState', 'lastActivityAt');
     BuiltValueNullFieldError.checkNotNull(
-        dashboardUIState, 'UIState', 'dashboardUIState');
+        dashboardUIState, r'UIState', 'dashboardUIState');
     BuiltValueNullFieldError.checkNotNull(
-        productUIState, 'UIState', 'productUIState');
+        productUIState, r'UIState', 'productUIState');
     BuiltValueNullFieldError.checkNotNull(
-        clientUIState, 'UIState', 'clientUIState');
+        clientUIState, r'UIState', 'clientUIState');
     BuiltValueNullFieldError.checkNotNull(
-        invoiceUIState, 'UIState', 'invoiceUIState');
+        invoiceUIState, r'UIState', 'invoiceUIState');
     BuiltValueNullFieldError.checkNotNull(
-        scheduleUIState, 'UIState', 'scheduleUIState');
+        scheduleUIState, r'UIState', 'scheduleUIState');
     BuiltValueNullFieldError.checkNotNull(
-        transactionRuleUIState, 'UIState', 'transactionRuleUIState');
+        transactionRuleUIState, r'UIState', 'transactionRuleUIState');
     BuiltValueNullFieldError.checkNotNull(
-        transactionUIState, 'UIState', 'transactionUIState');
+        transactionUIState, r'UIState', 'transactionUIState');
     BuiltValueNullFieldError.checkNotNull(
-        bankAccountUIState, 'UIState', 'bankAccountUIState');
+        bankAccountUIState, r'UIState', 'bankAccountUIState');
     BuiltValueNullFieldError.checkNotNull(
-        purchaseOrderUIState, 'UIState', 'purchaseOrderUIState');
+        purchaseOrderUIState, r'UIState', 'purchaseOrderUIState');
     BuiltValueNullFieldError.checkNotNull(
-        recurringExpenseUIState, 'UIState', 'recurringExpenseUIState');
+        recurringExpenseUIState, r'UIState', 'recurringExpenseUIState');
     BuiltValueNullFieldError.checkNotNull(
-        subscriptionUIState, 'UIState', 'subscriptionUIState');
+        subscriptionUIState, r'UIState', 'subscriptionUIState');
     BuiltValueNullFieldError.checkNotNull(
-        taskStatusUIState, 'UIState', 'taskStatusUIState');
+        taskStatusUIState, r'UIState', 'taskStatusUIState');
     BuiltValueNullFieldError.checkNotNull(
-        expenseCategoryUIState, 'UIState', 'expenseCategoryUIState');
+        expenseCategoryUIState, r'UIState', 'expenseCategoryUIState');
     BuiltValueNullFieldError.checkNotNull(
-        recurringInvoiceUIState, 'UIState', 'recurringInvoiceUIState');
+        recurringInvoiceUIState, r'UIState', 'recurringInvoiceUIState');
     BuiltValueNullFieldError.checkNotNull(
-        webhookUIState, 'UIState', 'webhookUIState');
+        webhookUIState, r'UIState', 'webhookUIState');
     BuiltValueNullFieldError.checkNotNull(
-        tokenUIState, 'UIState', 'tokenUIState');
+        tokenUIState, r'UIState', 'tokenUIState');
     BuiltValueNullFieldError.checkNotNull(
-        paymentTermUIState, 'UIState', 'paymentTermUIState');
+        paymentTermUIState, r'UIState', 'paymentTermUIState');
     BuiltValueNullFieldError.checkNotNull(
-        designUIState, 'UIState', 'designUIState');
+        designUIState, r'UIState', 'designUIState');
     BuiltValueNullFieldError.checkNotNull(
-        creditUIState, 'UIState', 'creditUIState');
+        creditUIState, r'UIState', 'creditUIState');
     BuiltValueNullFieldError.checkNotNull(
-        userUIState, 'UIState', 'userUIState');
+        userUIState, r'UIState', 'userUIState');
     BuiltValueNullFieldError.checkNotNull(
-        taxRateUIState, 'UIState', 'taxRateUIState');
+        taxRateUIState, r'UIState', 'taxRateUIState');
     BuiltValueNullFieldError.checkNotNull(
-        companyGatewayUIState, 'UIState', 'companyGatewayUIState');
+        companyGatewayUIState, r'UIState', 'companyGatewayUIState');
     BuiltValueNullFieldError.checkNotNull(
-        groupUIState, 'UIState', 'groupUIState');
+        groupUIState, r'UIState', 'groupUIState');
     BuiltValueNullFieldError.checkNotNull(
-        documentUIState, 'UIState', 'documentUIState');
+        documentUIState, r'UIState', 'documentUIState');
     BuiltValueNullFieldError.checkNotNull(
-        expenseUIState, 'UIState', 'expenseUIState');
+        expenseUIState, r'UIState', 'expenseUIState');
     BuiltValueNullFieldError.checkNotNull(
-        vendorUIState, 'UIState', 'vendorUIState');
+        vendorUIState, r'UIState', 'vendorUIState');
     BuiltValueNullFieldError.checkNotNull(
-        taskUIState, 'UIState', 'taskUIState');
+        taskUIState, r'UIState', 'taskUIState');
     BuiltValueNullFieldError.checkNotNull(
-        projectUIState, 'UIState', 'projectUIState');
+        projectUIState, r'UIState', 'projectUIState');
     BuiltValueNullFieldError.checkNotNull(
-        paymentUIState, 'UIState', 'paymentUIState');
+        paymentUIState, r'UIState', 'paymentUIState');
     BuiltValueNullFieldError.checkNotNull(
-        quoteUIState, 'UIState', 'quoteUIState');
+        quoteUIState, r'UIState', 'quoteUIState');
     BuiltValueNullFieldError.checkNotNull(
-        settingsUIState, 'UIState', 'settingsUIState');
+        settingsUIState, r'UIState', 'settingsUIState');
     BuiltValueNullFieldError.checkNotNull(
-        reportsUIState, 'UIState', 'reportsUIState');
+        reportsUIState, r'UIState', 'reportsUIState');
   }
 
   @override
@@ -624,49 +624,56 @@ class _$UIState extends UIState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), loadingEntityType.hashCode), previewStack.hashCode), filterStack.hashCode), filter.hashCode), filterClearedAt.hashCode), lastActivityAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode), invoiceUIState.hashCode), scheduleUIState.hashCode), transactionRuleUIState.hashCode), transactionUIState.hashCode), bankAccountUIState.hashCode), purchaseOrderUIState.hashCode), recurringExpenseUIState.hashCode), subscriptionUIState.hashCode), taskStatusUIState.hashCode), expenseCategoryUIState.hashCode),
-                                                                                recurringInvoiceUIState.hashCode),
-                                                                            webhookUIState.hashCode),
-                                                                        tokenUIState.hashCode),
-                                                                    paymentTermUIState.hashCode),
-                                                                designUIState.hashCode),
-                                                            creditUIState.hashCode),
-                                                        userUIState.hashCode),
-                                                    taxRateUIState.hashCode),
-                                                companyGatewayUIState.hashCode),
-                                            groupUIState.hashCode),
-                                        documentUIState.hashCode),
-                                    expenseUIState.hashCode),
-                                vendorUIState.hashCode),
-                            taskUIState.hashCode),
-                        projectUIState.hashCode),
-                    paymentUIState.hashCode),
-                quoteUIState.hashCode),
-            settingsUIState.hashCode),
-        reportsUIState.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, selectedCompanyIndex.hashCode);
+    _$hash = $jc(_$hash, currentRoute.hashCode);
+    _$hash = $jc(_$hash, previousRoute.hashCode);
+    _$hash = $jc(_$hash, loadingEntityType.hashCode);
+    _$hash = $jc(_$hash, previewStack.hashCode);
+    _$hash = $jc(_$hash, filterStack.hashCode);
+    _$hash = $jc(_$hash, filter.hashCode);
+    _$hash = $jc(_$hash, filterClearedAt.hashCode);
+    _$hash = $jc(_$hash, lastActivityAt.hashCode);
+    _$hash = $jc(_$hash, dashboardUIState.hashCode);
+    _$hash = $jc(_$hash, productUIState.hashCode);
+    _$hash = $jc(_$hash, clientUIState.hashCode);
+    _$hash = $jc(_$hash, invoiceUIState.hashCode);
+    _$hash = $jc(_$hash, scheduleUIState.hashCode);
+    _$hash = $jc(_$hash, transactionRuleUIState.hashCode);
+    _$hash = $jc(_$hash, transactionUIState.hashCode);
+    _$hash = $jc(_$hash, bankAccountUIState.hashCode);
+    _$hash = $jc(_$hash, purchaseOrderUIState.hashCode);
+    _$hash = $jc(_$hash, recurringExpenseUIState.hashCode);
+    _$hash = $jc(_$hash, subscriptionUIState.hashCode);
+    _$hash = $jc(_$hash, taskStatusUIState.hashCode);
+    _$hash = $jc(_$hash, expenseCategoryUIState.hashCode);
+    _$hash = $jc(_$hash, recurringInvoiceUIState.hashCode);
+    _$hash = $jc(_$hash, webhookUIState.hashCode);
+    _$hash = $jc(_$hash, tokenUIState.hashCode);
+    _$hash = $jc(_$hash, paymentTermUIState.hashCode);
+    _$hash = $jc(_$hash, designUIState.hashCode);
+    _$hash = $jc(_$hash, creditUIState.hashCode);
+    _$hash = $jc(_$hash, userUIState.hashCode);
+    _$hash = $jc(_$hash, taxRateUIState.hashCode);
+    _$hash = $jc(_$hash, companyGatewayUIState.hashCode);
+    _$hash = $jc(_$hash, groupUIState.hashCode);
+    _$hash = $jc(_$hash, documentUIState.hashCode);
+    _$hash = $jc(_$hash, expenseUIState.hashCode);
+    _$hash = $jc(_$hash, vendorUIState.hashCode);
+    _$hash = $jc(_$hash, taskUIState.hashCode);
+    _$hash = $jc(_$hash, projectUIState.hashCode);
+    _$hash = $jc(_$hash, paymentUIState.hashCode);
+    _$hash = $jc(_$hash, quoteUIState.hashCode);
+    _$hash = $jc(_$hash, settingsUIState.hashCode);
+    _$hash = $jc(_$hash, reportsUIState.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UIState')
+    return (newBuiltValueToStringHelper(r'UIState')
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
@@ -1022,25 +1029,27 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 
   @override
-  _$UIState build() {
+  UIState build() => _build();
+
+  _$UIState _build() {
     _$UIState _$result;
     try {
       _$result = _$v ??
           new _$UIState._(
               selectedCompanyIndex: BuiltValueNullFieldError.checkNotNull(
-                  selectedCompanyIndex, 'UIState', 'selectedCompanyIndex'),
+                  selectedCompanyIndex, r'UIState', 'selectedCompanyIndex'),
               currentRoute: BuiltValueNullFieldError.checkNotNull(
-                  currentRoute, 'UIState', 'currentRoute'),
+                  currentRoute, r'UIState', 'currentRoute'),
               previousRoute: BuiltValueNullFieldError.checkNotNull(
-                  previousRoute, 'UIState', 'previousRoute'),
+                  previousRoute, r'UIState', 'previousRoute'),
               loadingEntityType: loadingEntityType,
               previewStack: previewStack.build(),
               filterStack: filterStack.build(),
               filter: filter,
               filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, 'UIState', 'filterClearedAt'),
+                  filterClearedAt, r'UIState', 'filterClearedAt'),
               lastActivityAt: BuiltValueNullFieldError.checkNotNull(
-                  lastActivityAt, 'UIState', 'lastActivityAt'),
+                  lastActivityAt, r'UIState', 'lastActivityAt'),
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
@@ -1147,7 +1156,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         reportsUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UIState', _$failedField, e.toString());
+            r'UIState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -1156,4 +1165,4 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

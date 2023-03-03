@@ -459,8 +459,9 @@ class DashboardPanels extends StatelessWidget {
                 case DashboardSections.messages:
                   return Column(
                     children: [
-                      if (!state.prefState.hideReviewApp &&
-                          state.company.daysActive > (isMobileOS() ? 60 : 120))
+                      if (state.showReviewApp ||
+                          state.showOneYearReviewApp ||
+                          state.showTwoYearReviewApp)
                         ReviewApp(),
                       if (state.userCompany.isAdmin &&
                           state.company.daysActive < 30 &&
@@ -635,7 +636,13 @@ class DashboardPanels extends StatelessWidget {
                                     style: textTheme.subtitle1,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
-                                Text(formatNumber(value, context),
+                                Text(
+                                    formatNumber(
+                                      value,
+                                      context,
+                                      currencyId: state
+                                          .dashboardUIState.settings.currencyId,
+                                    ),
                                     style: textTheme.headline5,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),

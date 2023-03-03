@@ -225,6 +225,7 @@ void handleGroupAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final group = groups.first;
   final groupIds = groups.map((group) => group.id).toList();
@@ -235,8 +236,11 @@ void handleGroupAction(
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
+        company: store.state.company,
+        user: store.state.user,
         group: group,
-        section: kSettingsCompanyDetails,
+        section: state.prefState.isDesktop ? kSettingsLocalization : null,
+        clearFilter: true,
       ));
       break;
     case EntityAction.newClient:

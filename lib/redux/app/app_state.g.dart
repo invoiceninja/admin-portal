@@ -146,7 +146,7 @@ class _$AppState extends AppState {
   final BuiltList<UserCompanyState> userCompanyStates;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
-      (new AppStateBuilder()..update(updates)).build();
+      (new AppStateBuilder()..update(updates))._build();
 
   _$AppState._(
       {this.isLoading,
@@ -161,21 +161,21 @@ class _$AppState extends AppState {
       this.uiState,
       this.userCompanyStates})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(isLoading, 'AppState', 'isLoading');
-    BuiltValueNullFieldError.checkNotNull(isSaving, 'AppState', 'isSaving');
-    BuiltValueNullFieldError.checkNotNull(isTesting, 'AppState', 'isTesting');
+    BuiltValueNullFieldError.checkNotNull(isLoading, r'AppState', 'isLoading');
+    BuiltValueNullFieldError.checkNotNull(isSaving, r'AppState', 'isSaving');
+    BuiltValueNullFieldError.checkNotNull(isTesting, r'AppState', 'isTesting');
     BuiltValueNullFieldError.checkNotNull(
-        isWhiteLabeled, 'AppState', 'isWhiteLabeled');
+        isWhiteLabeled, r'AppState', 'isWhiteLabeled');
     BuiltValueNullFieldError.checkNotNull(
-        dismissedNativeWarning, 'AppState', 'dismissedNativeWarning');
-    BuiltValueNullFieldError.checkNotNull(lastError, 'AppState', 'lastError');
-    BuiltValueNullFieldError.checkNotNull(authState, 'AppState', 'authState');
+        dismissedNativeWarning, r'AppState', 'dismissedNativeWarning');
+    BuiltValueNullFieldError.checkNotNull(lastError, r'AppState', 'lastError');
+    BuiltValueNullFieldError.checkNotNull(authState, r'AppState', 'authState');
     BuiltValueNullFieldError.checkNotNull(
-        staticState, 'AppState', 'staticState');
-    BuiltValueNullFieldError.checkNotNull(prefState, 'AppState', 'prefState');
-    BuiltValueNullFieldError.checkNotNull(uiState, 'AppState', 'uiState');
+        staticState, r'AppState', 'staticState');
+    BuiltValueNullFieldError.checkNotNull(prefState, r'AppState', 'prefState');
+    BuiltValueNullFieldError.checkNotNull(uiState, r'AppState', 'uiState');
     BuiltValueNullFieldError.checkNotNull(
-        userCompanyStates, 'AppState', 'userCompanyStates');
+        userCompanyStates, r'AppState', 'userCompanyStates');
   }
 
   @override
@@ -205,26 +205,21 @@ class _$AppState extends AppState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, isLoading.hashCode),
-                                            isSaving.hashCode),
-                                        isTesting.hashCode),
-                                    isWhiteLabeled.hashCode),
-                                dismissedNativeWarning.hashCode),
-                            lastError.hashCode),
-                        authState.hashCode),
-                    staticState.hashCode),
-                prefState.hashCode),
-            uiState.hashCode),
-        userCompanyStates.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, isLoading.hashCode);
+    _$hash = $jc(_$hash, isSaving.hashCode);
+    _$hash = $jc(_$hash, isTesting.hashCode);
+    _$hash = $jc(_$hash, isWhiteLabeled.hashCode);
+    _$hash = $jc(_$hash, dismissedNativeWarning.hashCode);
+    _$hash = $jc(_$hash, lastError.hashCode);
+    _$hash = $jc(_$hash, authState.hashCode);
+    _$hash = $jc(_$hash, staticState.hashCode);
+    _$hash = $jc(_$hash, prefState.hashCode);
+    _$hash = $jc(_$hash, uiState.hashCode);
+    _$hash = $jc(_$hash, userCompanyStates.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 }
 
@@ -316,23 +311,27 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 
   @override
-  _$AppState build() {
+  AppState build() => _build();
+
+  _$AppState _build() {
     _$AppState _$result;
     try {
       _$result = _$v ??
           new _$AppState._(
               isLoading: BuiltValueNullFieldError.checkNotNull(
-                  isLoading, 'AppState', 'isLoading'),
+                  isLoading, r'AppState', 'isLoading'),
               isSaving: BuiltValueNullFieldError.checkNotNull(
-                  isSaving, 'AppState', 'isSaving'),
+                  isSaving, r'AppState', 'isSaving'),
               isTesting: BuiltValueNullFieldError.checkNotNull(
-                  isTesting, 'AppState', 'isTesting'),
+                  isTesting, r'AppState', 'isTesting'),
               isWhiteLabeled: BuiltValueNullFieldError.checkNotNull(
-                  isWhiteLabeled, 'AppState', 'isWhiteLabeled'),
+                  isWhiteLabeled, r'AppState', 'isWhiteLabeled'),
               dismissedNativeWarning: BuiltValueNullFieldError.checkNotNull(
-                  dismissedNativeWarning, 'AppState', 'dismissedNativeWarning'),
+                  dismissedNativeWarning,
+                  r'AppState',
+                  'dismissedNativeWarning'),
               lastError: BuiltValueNullFieldError.checkNotNull(
-                  lastError, 'AppState', 'lastError'),
+                  lastError, r'AppState', 'lastError'),
               authState: authState.build(),
               staticState: staticState.build(),
               prefState: prefState.build(),
@@ -353,7 +352,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         userCompanyStates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'AppState', _$failedField, e.toString());
+            r'AppState', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -362,4 +361,4 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

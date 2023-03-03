@@ -341,11 +341,11 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
 
   factory _$TransactionRuleListResponse(
           [void Function(TransactionRuleListResponseBuilder) updates]) =>
-      (new TransactionRuleListResponseBuilder()..update(updates)).build();
+      (new TransactionRuleListResponseBuilder()..update(updates))._build();
 
   _$TransactionRuleListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TransactionRuleListResponse', 'data');
+        data, r'TransactionRuleListResponse', 'data');
   }
 
   @override
@@ -366,12 +366,16 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleListResponse')
+    return (newBuiltValueToStringHelper(r'TransactionRuleListResponse')
           ..add('data', data))
         .toString();
   }
@@ -411,7 +415,9 @@ class TransactionRuleListResponseBuilder
   }
 
   @override
-  _$TransactionRuleListResponse build() {
+  TransactionRuleListResponse build() => _build();
+
+  _$TransactionRuleListResponse _build() {
     _$TransactionRuleListResponse _$result;
     try {
       _$result = _$v ?? new _$TransactionRuleListResponse._(data: data.build());
@@ -422,7 +428,7 @@ class TransactionRuleListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionRuleListResponse', _$failedField, e.toString());
+            r'TransactionRuleListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -437,11 +443,11 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
 
   factory _$TransactionRuleItemResponse(
           [void Function(TransactionRuleItemResponseBuilder) updates]) =>
-      (new TransactionRuleItemResponseBuilder()..update(updates)).build();
+      (new TransactionRuleItemResponseBuilder()..update(updates))._build();
 
   _$TransactionRuleItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'TransactionRuleItemResponse', 'data');
+        data, r'TransactionRuleItemResponse', 'data');
   }
 
   @override
@@ -462,12 +468,16 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleItemResponse')
+    return (newBuiltValueToStringHelper(r'TransactionRuleItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -507,7 +517,9 @@ class TransactionRuleItemResponseBuilder
   }
 
   @override
-  _$TransactionRuleItemResponse build() {
+  TransactionRuleItemResponse build() => _build();
+
+  _$TransactionRuleItemResponse _build() {
     _$TransactionRuleItemResponse _$result;
     try {
       _$result = _$v ?? new _$TransactionRuleItemResponse._(data: data.build());
@@ -518,7 +530,7 @@ class TransactionRuleItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionRuleItemResponse', _$failedField, e.toString());
+            r'TransactionRuleItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -561,7 +573,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
 
   factory _$TransactionRuleEntity(
           [void Function(TransactionRuleEntityBuilder) updates]) =>
-      (new TransactionRuleEntityBuilder()..update(updates)).build();
+      (new TransactionRuleEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleEntity._(
       {this.name,
@@ -581,26 +593,26 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
       this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        name, 'TransactionRuleEntity', 'name');
+        name, r'TransactionRuleEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        matchesOnAll, 'TransactionRuleEntity', 'matchesOnAll');
+        matchesOnAll, r'TransactionRuleEntity', 'matchesOnAll');
     BuiltValueNullFieldError.checkNotNull(
-        autoConvert, 'TransactionRuleEntity', 'autoConvert');
+        autoConvert, r'TransactionRuleEntity', 'autoConvert');
     BuiltValueNullFieldError.checkNotNull(
-        appliesTo, 'TransactionRuleEntity', 'appliesTo');
+        appliesTo, r'TransactionRuleEntity', 'appliesTo');
     BuiltValueNullFieldError.checkNotNull(
-        vendorId, 'TransactionRuleEntity', 'vendorId');
+        vendorId, r'TransactionRuleEntity', 'vendorId');
     BuiltValueNullFieldError.checkNotNull(
-        categoryId, 'TransactionRuleEntity', 'categoryId');
+        categoryId, r'TransactionRuleEntity', 'categoryId');
     BuiltValueNullFieldError.checkNotNull(
-        rules, 'TransactionRuleEntity', 'rules');
+        rules, r'TransactionRuleEntity', 'rules');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'TransactionRuleEntity', 'createdAt');
+        createdAt, r'TransactionRuleEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'TransactionRuleEntity', 'updatedAt');
+        updatedAt, r'TransactionRuleEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'TransactionRuleEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'TransactionRuleEntity', 'id');
+        archivedAt, r'TransactionRuleEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'TransactionRuleEntity', 'id');
   }
 
   @override
@@ -636,42 +648,30 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(0,
-                                                                name.hashCode),
-                                                            matchesOnAll
-                                                                .hashCode),
-                                                        autoConvert.hashCode),
-                                                    appliesTo.hashCode),
-                                                vendorId.hashCode),
-                                            categoryId.hashCode),
-                                        rules.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, matchesOnAll.hashCode);
+    _$hash = $jc(_$hash, autoConvert.hashCode);
+    _$hash = $jc(_$hash, appliesTo.hashCode);
+    _$hash = $jc(_$hash, vendorId.hashCode);
+    _$hash = $jc(_$hash, categoryId.hashCode);
+    _$hash = $jc(_$hash, rules.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleEntity')
+    return (newBuiltValueToStringHelper(r'TransactionRuleEntity')
           ..add('name', name)
           ..add('matchesOnAll', matchesOnAll)
           ..add('autoConvert', autoConvert)
@@ -796,34 +796,36 @@ class TransactionRuleEntityBuilder
   }
 
   @override
-  _$TransactionRuleEntity build() {
+  TransactionRuleEntity build() => _build();
+
+  _$TransactionRuleEntity _build() {
     _$TransactionRuleEntity _$result;
     try {
       _$result = _$v ??
           new _$TransactionRuleEntity._(
               name: BuiltValueNullFieldError.checkNotNull(
-                  name, 'TransactionRuleEntity', 'name'),
+                  name, r'TransactionRuleEntity', 'name'),
               matchesOnAll: BuiltValueNullFieldError.checkNotNull(
-                  matchesOnAll, 'TransactionRuleEntity', 'matchesOnAll'),
+                  matchesOnAll, r'TransactionRuleEntity', 'matchesOnAll'),
               autoConvert: BuiltValueNullFieldError.checkNotNull(
-                  autoConvert, 'TransactionRuleEntity', 'autoConvert'),
+                  autoConvert, r'TransactionRuleEntity', 'autoConvert'),
               appliesTo: BuiltValueNullFieldError.checkNotNull(
-                  appliesTo, 'TransactionRuleEntity', 'appliesTo'),
+                  appliesTo, r'TransactionRuleEntity', 'appliesTo'),
               vendorId: BuiltValueNullFieldError.checkNotNull(
-                  vendorId, 'TransactionRuleEntity', 'vendorId'),
+                  vendorId, r'TransactionRuleEntity', 'vendorId'),
               categoryId: BuiltValueNullFieldError.checkNotNull(
-                  categoryId, 'TransactionRuleEntity', 'categoryId'),
+                  categoryId, r'TransactionRuleEntity', 'categoryId'),
               rules: rules.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, 'TransactionRuleEntity', 'createdAt'),
+                  createdAt, r'TransactionRuleEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, 'TransactionRuleEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'TransactionRuleEntity', 'archivedAt'),
+                  updatedAt, r'TransactionRuleEntity', 'updatedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'TransactionRuleEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, 'TransactionRuleEntity', 'id'));
+              id: BuiltValueNullFieldError.checkNotNull(id, r'TransactionRuleEntity', 'id'));
     } catch (_) {
       String _$failedField;
       try {
@@ -831,7 +833,7 @@ class TransactionRuleEntityBuilder
         rules.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TransactionRuleEntity', _$failedField, e.toString());
+            r'TransactionRuleEntity', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -850,16 +852,16 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
 
   factory _$TransactionRuleCriteriaEntity(
           [void Function(TransactionRuleCriteriaEntityBuilder) updates]) =>
-      (new TransactionRuleCriteriaEntityBuilder()..update(updates)).build();
+      (new TransactionRuleCriteriaEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleCriteriaEntity._({this.searchKey, this.operator, this.value})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        searchKey, 'TransactionRuleCriteriaEntity', 'searchKey');
+        searchKey, r'TransactionRuleCriteriaEntity', 'searchKey');
     BuiltValueNullFieldError.checkNotNull(
-        operator, 'TransactionRuleCriteriaEntity', 'operator');
+        operator, r'TransactionRuleCriteriaEntity', 'operator');
     BuiltValueNullFieldError.checkNotNull(
-        value, 'TransactionRuleCriteriaEntity', 'value');
+        value, r'TransactionRuleCriteriaEntity', 'value');
   }
 
   @override
@@ -883,13 +885,18 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc($jc(0, searchKey.hashCode), operator.hashCode), value.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, searchKey.hashCode);
+    _$hash = $jc(_$hash, operator.hashCode);
+    _$hash = $jc(_$hash, value.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TransactionRuleCriteriaEntity')
+    return (newBuiltValueToStringHelper(r'TransactionRuleCriteriaEntity')
           ..add('searchKey', searchKey)
           ..add('operator', operator)
           ..add('value', value))
@@ -942,18 +949,20 @@ class TransactionRuleCriteriaEntityBuilder
   }
 
   @override
-  _$TransactionRuleCriteriaEntity build() {
+  TransactionRuleCriteriaEntity build() => _build();
+
+  _$TransactionRuleCriteriaEntity _build() {
     final _$result = _$v ??
         new _$TransactionRuleCriteriaEntity._(
             searchKey: BuiltValueNullFieldError.checkNotNull(
-                searchKey, 'TransactionRuleCriteriaEntity', 'searchKey'),
+                searchKey, r'TransactionRuleCriteriaEntity', 'searchKey'),
             operator: BuiltValueNullFieldError.checkNotNull(
-                operator, 'TransactionRuleCriteriaEntity', 'operator'),
+                operator, r'TransactionRuleCriteriaEntity', 'operator'),
             value: BuiltValueNullFieldError.checkNotNull(
-                value, 'TransactionRuleCriteriaEntity', 'value'));
+                value, r'TransactionRuleCriteriaEntity', 'value'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

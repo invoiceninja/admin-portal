@@ -282,11 +282,11 @@ class _$BankAccountListResponse extends BankAccountListResponse {
 
   factory _$BankAccountListResponse(
           [void Function(BankAccountListResponseBuilder) updates]) =>
-      (new BankAccountListResponseBuilder()..update(updates)).build();
+      (new BankAccountListResponseBuilder()..update(updates))._build();
 
   _$BankAccountListResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'BankAccountListResponse', 'data');
+        data, r'BankAccountListResponse', 'data');
   }
 
   @override
@@ -307,12 +307,16 @@ class _$BankAccountListResponse extends BankAccountListResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('BankAccountListResponse')
+    return (newBuiltValueToStringHelper(r'BankAccountListResponse')
           ..add('data', data))
         .toString();
   }
@@ -351,7 +355,9 @@ class BankAccountListResponseBuilder
   }
 
   @override
-  _$BankAccountListResponse build() {
+  BankAccountListResponse build() => _build();
+
+  _$BankAccountListResponse _build() {
     _$BankAccountListResponse _$result;
     try {
       _$result = _$v ?? new _$BankAccountListResponse._(data: data.build());
@@ -362,7 +368,7 @@ class BankAccountListResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'BankAccountListResponse', _$failedField, e.toString());
+            r'BankAccountListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -377,11 +383,11 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
 
   factory _$BankAccountItemResponse(
           [void Function(BankAccountItemResponseBuilder) updates]) =>
-      (new BankAccountItemResponseBuilder()..update(updates)).build();
+      (new BankAccountItemResponseBuilder()..update(updates))._build();
 
   _$BankAccountItemResponse._({this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, 'BankAccountItemResponse', 'data');
+        data, r'BankAccountItemResponse', 'data');
   }
 
   @override
@@ -402,12 +408,16 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(0, data.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, data.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('BankAccountItemResponse')
+    return (newBuiltValueToStringHelper(r'BankAccountItemResponse')
           ..add('data', data))
         .toString();
   }
@@ -446,7 +456,9 @@ class BankAccountItemResponseBuilder
   }
 
   @override
-  _$BankAccountItemResponse build() {
+  BankAccountItemResponse build() => _build();
+
+  _$BankAccountItemResponse _build() {
     _$BankAccountItemResponse _$result;
     try {
       _$result = _$v ?? new _$BankAccountItemResponse._(data: data.build());
@@ -457,7 +469,7 @@ class BankAccountItemResponseBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'BankAccountItemResponse', _$failedField, e.toString());
+            r'BankAccountItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -504,7 +516,7 @@ class _$BankAccountEntity extends BankAccountEntity {
 
   factory _$BankAccountEntity(
           [void Function(BankAccountEntityBuilder) updates]) =>
-      (new BankAccountEntityBuilder()..update(updates)).build();
+      (new BankAccountEntityBuilder()..update(updates))._build();
 
   _$BankAccountEntity._(
       {this.name,
@@ -525,29 +537,29 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, 'BankAccountEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(name, r'BankAccountEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
-        status, 'BankAccountEntity', 'status');
-    BuiltValueNullFieldError.checkNotNull(type, 'BankAccountEntity', 'type');
+        status, r'BankAccountEntity', 'status');
+    BuiltValueNullFieldError.checkNotNull(type, r'BankAccountEntity', 'type');
     BuiltValueNullFieldError.checkNotNull(
-        provider, 'BankAccountEntity', 'provider');
+        provider, r'BankAccountEntity', 'provider');
     BuiltValueNullFieldError.checkNotNull(
-        fromDate, 'BankAccountEntity', 'fromDate');
+        fromDate, r'BankAccountEntity', 'fromDate');
     BuiltValueNullFieldError.checkNotNull(
-        autoSync, 'BankAccountEntity', 'autoSync');
+        autoSync, r'BankAccountEntity', 'autoSync');
     BuiltValueNullFieldError.checkNotNull(
-        disabledUpstream, 'BankAccountEntity', 'disabledUpstream');
+        disabledUpstream, r'BankAccountEntity', 'disabledUpstream');
     BuiltValueNullFieldError.checkNotNull(
-        balance, 'BankAccountEntity', 'balance');
+        balance, r'BankAccountEntity', 'balance');
     BuiltValueNullFieldError.checkNotNull(
-        currency, 'BankAccountEntity', 'currency');
+        currency, r'BankAccountEntity', 'currency');
     BuiltValueNullFieldError.checkNotNull(
-        createdAt, 'BankAccountEntity', 'createdAt');
+        createdAt, r'BankAccountEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
-        updatedAt, 'BankAccountEntity', 'updatedAt');
+        updatedAt, r'BankAccountEntity', 'updatedAt');
     BuiltValueNullFieldError.checkNotNull(
-        archivedAt, 'BankAccountEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, 'BankAccountEntity', 'id');
+        archivedAt, r'BankAccountEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'BankAccountEntity', 'id');
   }
 
   @override
@@ -584,48 +596,32 @@ class _$BankAccountEntity extends BankAccountEntity {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        0,
-                                                                        name
-                                                                            .hashCode),
-                                                                    status
-                                                                        .hashCode),
-                                                                type.hashCode),
-                                                            provider.hashCode),
-                                                        fromDate.hashCode),
-                                                    autoSync.hashCode),
-                                                disabledUpstream.hashCode),
-                                            balance.hashCode),
-                                        currency.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+    if (__hashCode != null) return __hashCode;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, provider.hashCode);
+    _$hash = $jc(_$hash, fromDate.hashCode);
+    _$hash = $jc(_$hash, autoSync.hashCode);
+    _$hash = $jc(_$hash, disabledUpstream.hashCode);
+    _$hash = $jc(_$hash, balance.hashCode);
+    _$hash = $jc(_$hash, currency.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('BankAccountEntity')
+    return (newBuiltValueToStringHelper(r'BankAccountEntity')
           ..add('name', name)
           ..add('status', status)
           ..add('type', type)
@@ -763,39 +759,40 @@ class BankAccountEntityBuilder
   }
 
   @override
-  _$BankAccountEntity build() {
+  BankAccountEntity build() => _build();
+
+  _$BankAccountEntity _build() {
     final _$result = _$v ??
         new _$BankAccountEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, 'BankAccountEntity', 'name'),
+                name, r'BankAccountEntity', 'name'),
             status: BuiltValueNullFieldError.checkNotNull(
-                status, 'BankAccountEntity', 'status'),
+                status, r'BankAccountEntity', 'status'),
             type: BuiltValueNullFieldError.checkNotNull(
-                type, 'BankAccountEntity', 'type'),
+                type, r'BankAccountEntity', 'type'),
             provider: BuiltValueNullFieldError.checkNotNull(
-                provider, 'BankAccountEntity', 'provider'),
+                provider, r'BankAccountEntity', 'provider'),
             fromDate: BuiltValueNullFieldError.checkNotNull(
-                fromDate, 'BankAccountEntity', 'fromDate'),
+                fromDate, r'BankAccountEntity', 'fromDate'),
             autoSync: BuiltValueNullFieldError.checkNotNull(
-                autoSync, 'BankAccountEntity', 'autoSync'),
+                autoSync, r'BankAccountEntity', 'autoSync'),
             disabledUpstream: BuiltValueNullFieldError.checkNotNull(
-                disabledUpstream, 'BankAccountEntity', 'disabledUpstream'),
+                disabledUpstream, r'BankAccountEntity', 'disabledUpstream'),
             balance: BuiltValueNullFieldError.checkNotNull(
-                balance, 'BankAccountEntity', 'balance'),
+                balance, r'BankAccountEntity', 'balance'),
             currency: BuiltValueNullFieldError.checkNotNull(
-                currency, 'BankAccountEntity', 'currency'),
+                currency, r'BankAccountEntity', 'currency'),
             isChanged: isChanged,
-            createdAt:
-                BuiltValueNullFieldError.checkNotNull(createdAt, 'BankAccountEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, 'BankAccountEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, 'BankAccountEntity', 'archivedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'BankAccountEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'BankAccountEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'BankAccountEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, 'BankAccountEntity', 'id'));
+            id: BuiltValueNullFieldError.checkNotNull(id, r'BankAccountEntity', 'id'));
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

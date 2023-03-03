@@ -84,7 +84,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     int tabs = 6;
 
-    if (state.prefState.isMobile) {
+    if (state.prefState.isMobile && supportsSchedules()) {
       tabs++;
     }
 
@@ -171,7 +171,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     final tabs = [
       localization.generalSettings,
-      if (isMobile(context)) localization.preview,
+      if (isMobile(context) && supportsSchedules()) localization.preview,
       localization.clientDetails,
       localization.companyDetails,
       localization.companyAddress,
@@ -245,7 +245,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         )),
                             ),
                           ),
-                          if (isDesktop(context)) ...[
+                          if (isDesktop(context) && supportsSchedules()) ...[
                             SizedBox(
                               width: kTableColumnGap,
                             ),
@@ -610,7 +610,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ),
                   ],
                 ),
-                if (isMobile(context))
+                if (isMobile(context) && supportsSchedules())
                   _PdfPreview(
                     settings: viewModel.settings,
                     state: state,
