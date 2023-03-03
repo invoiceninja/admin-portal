@@ -95,7 +95,7 @@ List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
-    return user.isActive && user.isConnectedToEmail;
+    return user.isActive && user.mailerConnected && user.isConnectedToEmail;
   }).toList();
 }
 
@@ -106,7 +106,7 @@ List<String> microsoftUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
-    return user.isActive && user.isConnectedToMicrosoft;
+    return user.isActive && user.mailerConnected && user.isConnectedToMicrosoft;
   }).toList();
 }
 

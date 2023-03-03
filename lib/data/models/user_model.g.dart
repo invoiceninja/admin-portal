@@ -300,6 +300,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'oauth_user_token',
       serializers.serialize(object.oauthUserToken,
           specifiedType: const FullType(String)),
+      'mailer_connected',
+      serializers.serialize(object.mailerConnected,
+          specifiedType: const FullType(bool)),
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
@@ -430,6 +433,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'oauth_user_token':
           result.oauthUserToken = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'mailer_connected':
+          result.mailerConnected = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
@@ -1008,6 +1015,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String oauthUserToken;
   @override
+  final bool mailerConnected;
+  @override
   final UserCompanyEntity userCompany;
   @override
   final String oauthProvider;
@@ -1047,6 +1056,7 @@ class _$UserEntity extends UserEntity {
       this.hasPassword,
       this.lastEmailAddress,
       this.oauthUserToken,
+      this.mailerConnected,
       this.userCompany,
       this.oauthProvider,
       this.isChanged,
@@ -1082,6 +1092,8 @@ class _$UserEntity extends UserEntity {
         lastEmailAddress, r'UserEntity', 'lastEmailAddress');
     BuiltValueNullFieldError.checkNotNull(
         oauthUserToken, r'UserEntity', 'oauthUserToken');
+    BuiltValueNullFieldError.checkNotNull(
+        mailerConnected, r'UserEntity', 'mailerConnected');
     BuiltValueNullFieldError.checkNotNull(
         oauthProvider, r'UserEntity', 'oauthProvider');
     BuiltValueNullFieldError.checkNotNull(
@@ -1119,6 +1131,7 @@ class _$UserEntity extends UserEntity {
         hasPassword == other.hasPassword &&
         lastEmailAddress == other.lastEmailAddress &&
         oauthUserToken == other.oauthUserToken &&
+        mailerConnected == other.mailerConnected &&
         userCompany == other.userCompany &&
         oauthProvider == other.oauthProvider &&
         isChanged == other.isChanged &&
@@ -1151,6 +1164,7 @@ class _$UserEntity extends UserEntity {
     _$hash = $jc(_$hash, hasPassword.hashCode);
     _$hash = $jc(_$hash, lastEmailAddress.hashCode);
     _$hash = $jc(_$hash, oauthUserToken.hashCode);
+    _$hash = $jc(_$hash, mailerConnected.hashCode);
     _$hash = $jc(_$hash, userCompany.hashCode);
     _$hash = $jc(_$hash, oauthProvider.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
@@ -1183,6 +1197,7 @@ class _$UserEntity extends UserEntity {
           ..add('hasPassword', hasPassword)
           ..add('lastEmailAddress', lastEmailAddress)
           ..add('oauthUserToken', oauthUserToken)
+          ..add('mailerConnected', mailerConnected)
           ..add('userCompany', userCompany)
           ..add('oauthProvider', oauthProvider)
           ..add('isChanged', isChanged)
@@ -1265,6 +1280,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set oauthUserToken(String oauthUserToken) =>
       _$this._oauthUserToken = oauthUserToken;
 
+  bool _mailerConnected;
+  bool get mailerConnected => _$this._mailerConnected;
+  set mailerConnected(bool mailerConnected) =>
+      _$this._mailerConnected = mailerConnected;
+
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
       _$this._userCompany ??= new UserCompanyEntityBuilder();
@@ -1332,6 +1352,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _hasPassword = $v.hasPassword;
       _lastEmailAddress = $v.lastEmailAddress;
       _oauthUserToken = $v.oauthUserToken;
+      _mailerConnected = $v.mailerConnected;
       _userCompany = $v.userCompany?.toBuilder();
       _oauthProvider = $v.oauthProvider;
       _isChanged = $v.isChanged;
@@ -1385,12 +1406,12 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
                   customValue2, r'UserEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(
                   customValue3, r'UserEntity', 'customValue3'),
-              customValue4:
-                  BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
               isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
               hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, r'UserEntity', 'hasPassword'),
               lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
               oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, r'UserEntity', 'oauthUserToken'),
+              mailerConnected: BuiltValueNullFieldError.checkNotNull(mailerConnected, r'UserEntity', 'mailerConnected'),
               userCompany: _userCompany?.build(),
               oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
               isChanged: isChanged,

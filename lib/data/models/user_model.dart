@@ -141,6 +141,7 @@ abstract class UserEntity extends Object
       oauthUserToken: '',
       password: '',
       phoneVerified: false,
+      mailerConnected: false,
     );
   }
 
@@ -201,6 +202,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'oauth_user_token')
   String get oauthUserToken;
+
+  @BuiltValueField(wireName: 'mailer_connected')
+  bool get mailerConnected;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')
@@ -337,6 +341,7 @@ abstract class UserEntity extends Object
     ..isTwoFactorEnabled = false
     ..hasPassword = false
     ..phoneVerified = false
+    ..mailerConnected = false
     ..password = ''
     ..lastEmailAddress = ''
     ..oauthUserToken = '';
