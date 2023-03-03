@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 
 // Package imports:
@@ -118,6 +119,11 @@ class ClientOverview extends StatelessWidget {
           value: client.customValue4);
     }
 
+    final availableCredits =
+        memoizedGetClientAvailableCredits(client.id, state.creditState.map);
+    final unappliedPayments =
+        memoizedGetClientUnappliedPayments(client.id, state.paymentState.map);
+
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(
@@ -129,6 +135,25 @@ class ClientOverview extends StatelessWidget {
               formatNumber(client.balance, context, clientId: client.id),
         ),
         ListDivider(),
+        if (availableCredits != 0 || unappliedPayments != 0) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              if (availableCredits != 0)
+                Text(localization.credit +
+                    ': ' +
+                    formatNumber(availableCredits, context,
+                        clientId: client.id)),
+              if (unappliedPayments != 0)
+                Text(localization.payments +
+                    ': ' +
+                    formatNumber(unappliedPayments, context,
+                        clientId: client.id)),
+            ]),
+          ),
+          ListDivider(),
+        ],
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           child: PortalLinks(
