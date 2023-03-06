@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -511,19 +512,63 @@ class _ClientPortalState extends State<ClientPortal>
                 ),
                 FormCard(
                   isLast: true,
-                  children: company.clientRegistrationFields
-                      .map((field) => SwitchListTile(
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          title: Text(localization.lookup(field.key)),
-                          value: field.required,
-                          onChanged: (value) {
-                            final index =
-                                company.clientRegistrationFields.indexOf(field);
-                            viewModel.onCompanyChanged(company.rebuild((b) => b
-                              ..clientRegistrationFields[index] = field.rebuild(
-                                  (b) => b..required = !field.required)));
-                          }))
-                      .toList(),
+                  children: company.clientRegistrationFields.map((field) {
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: Text(localization.lookup(field.key)),
+                        ),
+                        Expanded(
+                          child: AppDropdownButton<String>(
+                            value: field.setting,
+                            onChanged: (dynamic value) {
+                              final index = company.clientRegistrationFields
+                                  .indexOf(field);
+                              viewModel.onCompanyChanged(company.rebuild((b) =>
+                                  b
+                                    ..clientRegistrationFields[index] =
+                                        field.rebuild((b) => b
+                                          ..required = value ==
+                                              RegistrationFieldEntity
+                                                  .SETTING_REQUIRED
+                                          ..visible = value ==
+                                                  RegistrationFieldEntity
+                                                      .SETTING_REQUIRED ||
+                                              value ==
+                                                  RegistrationFieldEntity
+                                                      .SETTING_OPTIONAL)));
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                value: RegistrationFieldEntity.SETTING_HIDDEN,
+                                child: Text(localization.hidden),
+                              ),
+                              DropdownMenuItem(
+                                value: RegistrationFieldEntity.SETTING_OPTIONAL,
+                                child: Text(localization.optional),
+                              ),
+                              DropdownMenuItem(
+                                value: RegistrationFieldEntity.SETTING_REQUIRED,
+                                child: Text(localization.requiredWord),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+
+                    return SwitchListTile(
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        title: Text(localization.lookup(field.key)),
+                        value: field.required,
+                        onChanged: (value) {
+                          final index =
+                              company.clientRegistrationFields.indexOf(field);
+                          viewModel.onCompanyChanged(company.rebuild((b) => b
+                            ..clientRegistrationFields[index] = field.rebuild(
+                                (b) => b..required = !field.required)));
+                        });
+                  }).toList(),
                 ),
               ],
             ),
