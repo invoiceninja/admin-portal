@@ -1250,10 +1250,15 @@ abstract class RegistrationFieldEntity
     return _$RegistrationFieldEntity._(
       key: '',
       required: false,
+      visible: false,
     );
   }
 
   RegistrationFieldEntity._();
+
+  static const SETTING_HIDDEN = 'hidden';
+  static const SETTING_OPTIONAL = 'optional';
+  static const SETTING_REQUIRED = 'required';
 
   @override
   @memoized
@@ -1262,6 +1267,22 @@ abstract class RegistrationFieldEntity
   String get key;
 
   bool get required;
+
+  bool get visible;
+
+  String get setting {
+    if (required) {
+      return SETTING_REQUIRED;
+    } else if (visible) {
+      return SETTING_OPTIONAL;
+    } else {
+      return SETTING_HIDDEN;
+    }
+  }
+
+  // ignore: unused_element
+  static void _initializeBuilder(RegistrationFieldEntityBuilder builder) =>
+      builder..visible = false;
 
   static Serializer<RegistrationFieldEntity> get serializer =>
       _$registrationFieldEntitySerializer;

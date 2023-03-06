@@ -1522,6 +1522,9 @@ class _$RegistrationFieldEntitySerializer
       'required',
       serializers.serialize(object.required,
           specifiedType: const FullType(bool)),
+      'visible',
+      serializers.serialize(object.visible,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -1545,6 +1548,10 @@ class _$RegistrationFieldEntitySerializer
           break;
         case 'required':
           result.required = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'visible':
+          result.visible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -4544,16 +4551,21 @@ class _$RegistrationFieldEntity extends RegistrationFieldEntity {
   final String key;
   @override
   final bool required;
+  @override
+  final bool visible;
 
   factory _$RegistrationFieldEntity(
           [void Function(RegistrationFieldEntityBuilder) updates]) =>
       (new RegistrationFieldEntityBuilder()..update(updates))._build();
 
-  _$RegistrationFieldEntity._({this.key, this.required}) : super._() {
+  _$RegistrationFieldEntity._({this.key, this.required, this.visible})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         key, r'RegistrationFieldEntity', 'key');
     BuiltValueNullFieldError.checkNotNull(
         required, r'RegistrationFieldEntity', 'required');
+    BuiltValueNullFieldError.checkNotNull(
+        visible, r'RegistrationFieldEntity', 'visible');
   }
 
   @override
@@ -4570,7 +4582,8 @@ class _$RegistrationFieldEntity extends RegistrationFieldEntity {
     if (identical(other, this)) return true;
     return other is RegistrationFieldEntity &&
         key == other.key &&
-        required == other.required;
+        required == other.required &&
+        visible == other.visible;
   }
 
   int __hashCode;
@@ -4580,6 +4593,7 @@ class _$RegistrationFieldEntity extends RegistrationFieldEntity {
     var _$hash = 0;
     _$hash = $jc(_$hash, key.hashCode);
     _$hash = $jc(_$hash, required.hashCode);
+    _$hash = $jc(_$hash, visible.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4588,7 +4602,8 @@ class _$RegistrationFieldEntity extends RegistrationFieldEntity {
   String toString() {
     return (newBuiltValueToStringHelper(r'RegistrationFieldEntity')
           ..add('key', key)
-          ..add('required', required))
+          ..add('required', required)
+          ..add('visible', visible))
         .toString();
   }
 }
@@ -4606,13 +4621,20 @@ class RegistrationFieldEntityBuilder
   bool get required => _$this._required;
   set required(bool required) => _$this._required = required;
 
-  RegistrationFieldEntityBuilder();
+  bool _visible;
+  bool get visible => _$this._visible;
+  set visible(bool visible) => _$this._visible = visible;
+
+  RegistrationFieldEntityBuilder() {
+    RegistrationFieldEntity._initializeBuilder(this);
+  }
 
   RegistrationFieldEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _key = $v.key;
       _required = $v.required;
+      _visible = $v.visible;
       _$v = null;
     }
     return this;
@@ -4638,7 +4660,9 @@ class RegistrationFieldEntityBuilder
             key: BuiltValueNullFieldError.checkNotNull(
                 key, r'RegistrationFieldEntity', 'key'),
             required: BuiltValueNullFieldError.checkNotNull(
-                required, r'RegistrationFieldEntity', 'required'));
+                required, r'RegistrationFieldEntity', 'required'),
+            visible: BuiltValueNullFieldError.checkNotNull(
+                visible, r'RegistrationFieldEntity', 'visible'));
     replace(_$result);
     return _$result;
   }
