@@ -110,8 +110,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
 
     final history = widget.history;
 
-    Widget title;
-    Widget subtitle;
+    Widget title = SizedBox();
+    Widget subtitle = SizedBox();
     String clientId;
     BaseEntity entity;
 
