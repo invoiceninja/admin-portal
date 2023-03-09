@@ -138,6 +138,10 @@ class EntityAction extends EnumClass {
     return toSnakeCase(super.toString());
   }
 
+  bool get applyMaxLimit => ![
+        EntityAction.bulkDownload,
+      ].contains(this);
+
   bool get isServerSide => [
         EntityAction.start,
         EntityAction.stop,
