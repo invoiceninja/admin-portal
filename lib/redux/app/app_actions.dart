@@ -535,13 +535,13 @@ void viewEntityById({
             store.dispatch(ToggleViewerLayout(entityType));
           final filterEntity =
               store.state.getEntityMap(entityType)[entityId] as BaseEntity;
-          viewEntitiesByType(
-              entityType: filterEntity.entityType.relatedTypes
-                  .where((entityType) =>
-                      state.userCompany.canViewCreateOrEdit(entityType))
-                  .first,
-              filterEntity: filterEntity);
-          return;
+          final entityTypes = filterEntity.entityType.relatedTypes
+              .where((entityType) => state.company.isModuleEnabled(entityType));
+          if (entityTypes.isNotEmpty) {
+            viewEntitiesByType(
+                entityType: entityTypes.first, filterEntity: filterEntity);
+            return;
+          }
         }
 
         switch (entityType) {
