@@ -105,6 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             builder: (BuildContext context) {
               return SettingsWizard(
                 user: state.user,
+                company: state.company,
               );
             });
       });

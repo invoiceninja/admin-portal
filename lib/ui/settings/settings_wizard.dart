@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +13,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -34,9 +36,11 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class SettingsWizard extends StatefulWidget {
   const SettingsWizard({
     @required this.user,
+    @required this.company,
   });
 
   final UserEntity user;
+  final CompanyEntity company;
 
   @override
   _SettingsWizardState createState() => _SettingsWizardState();
@@ -73,17 +77,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _lastNameController,
       _subdomainController,
     ];
-  }
-
-  @override
-  void didChangeDependencies() {
-    final store = StoreProvider.of<AppState>(context);
 
     _firstNameController.text = widget.user.firstName;
     _lastNameController.text = widget.user.lastName;
-    _subdomainController.text = store.state.company.subdomain;
-
-    super.didChangeDependencies();
+    _subdomainController.text = widget.company.subdomain;
   }
 
   @override
@@ -313,7 +310,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     );
 
     var showNameFields = true;
-    if (state.companies.length > 1) {
+    if (state.companies.length > 1 && kReleaseMode) {
       showNameFields = false;
     }
     if (state.user.isConnectedToApple && state.user.fullName.isEmpty) {
