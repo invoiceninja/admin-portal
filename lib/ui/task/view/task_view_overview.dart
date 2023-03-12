@@ -182,7 +182,7 @@ class _TaskOverviewState extends State<TaskOverview> {
 
       if (task.description.isNotEmpty) {
         widgets.addAll([
-          IconMessage(task.description),
+          IconMessage(task.description, copyToClipboard: true),
           ListDivider(),
         ]);
       }

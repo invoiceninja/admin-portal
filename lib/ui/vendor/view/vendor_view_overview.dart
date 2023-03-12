@@ -93,7 +93,8 @@ class VendorOverview extends StatelessWidget {
         ),
         ListDivider(),
         if ((vendor.privateNotes ?? '').isNotEmpty) ...[
-          IconMessage(vendor.privateNotes, iconData: Icons.lock),
+          IconMessage(vendor.privateNotes,
+              iconData: Icons.lock, copyToClipboard: true),
           ListDivider()
         ],
         if (vendor.hasUser)
@@ -143,7 +144,7 @@ class VendorOverview extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
         if ((vendor.publicNotes ?? '').isNotEmpty) ...[
-          IconMessage(vendor.publicNotes),
+          IconMessage(vendor.publicNotes, copyToClipboard: true),
           ListDivider()
         ],
       ],

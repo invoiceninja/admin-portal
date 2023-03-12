@@ -300,7 +300,7 @@ class ClientOverview extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
         if ((client.publicNotes ?? '').isNotEmpty) ...[
-          IconMessage(client.publicNotes),
+          IconMessage(client.publicNotes, copyToClipboard: true),
           ListDivider()
         ],
       ],

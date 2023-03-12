@@ -84,7 +84,7 @@ class _TransactionViewState extends State<TransactionView> {
                 ],
                 if (transaction.isConverted) ...[
                   if (transaction.description.isNotEmpty) ...[
-                    IconMessage(transaction.description),
+                    IconMessage(transaction.description, copyToClipboard: true),
                     ListDivider(),
                   ],
                   EntityListTile(
