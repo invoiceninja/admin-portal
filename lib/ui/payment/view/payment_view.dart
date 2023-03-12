@@ -166,7 +166,8 @@ class _PaymentViewState extends State<PaymentView> {
                               payment.privateNotes.isNotEmpty
                           ? Column(
                               children: <Widget>[
-                                IconMessage(payment.privateNotes),
+                                IconMessage(payment.privateNotes,
+                                    copyToClipboard: true),
                                 Container(
                                   color: Theme.of(context).cardColor,
                                   height: 12.0,

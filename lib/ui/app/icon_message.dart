@@ -8,12 +8,14 @@ class IconMessage extends StatelessWidget {
     this.iconData,
     this.color,
     this.trailing,
+    this.copyToClipboard = false,
   });
 
   final String text;
   final IconData iconData;
   final Color color;
   final Widget trailing;
+  final bool copyToClipboard;
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +32,24 @@ class IconMessage extends StatelessWidget {
             ),
             SizedBox(width: 16),
             Expanded(
-              child: CopyToClipboard(
-                value: text,
-                child: Text(
-                  text,
-                  maxLines: null,
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              child: copyToClipboard
+                  ? CopyToClipboard(
+                      value: text,
+                      child: Text(
+                        text,
+                        maxLines: null,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      text,
+                      maxLines: null,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
             ),
             if (trailing != null) ...[
               SizedBox(width: 16),

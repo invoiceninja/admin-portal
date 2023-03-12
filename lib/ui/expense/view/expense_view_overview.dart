@@ -184,7 +184,8 @@ class ExpenseOverview extends StatelessWidget {
               ),
         ListDivider(),
         if ((expense.privateNotes ?? '').isNotEmpty) ...[
-          IconMessage(expense.privateNotes, iconData: Icons.lock),
+          IconMessage(expense.privateNotes,
+              iconData: Icons.lock, copyToClipboard: true),
           ListDivider(),
         ],
         FieldGrid(fields),
@@ -217,7 +218,7 @@ class ExpenseOverview extends StatelessWidget {
           ),
         ..._buildDetailsList(),
         if ((expense.publicNotes ?? '').isNotEmpty) ...[
-          IconMessage(expense.publicNotes),
+          IconMessage(expense.publicNotes, copyToClipboard: true),
           ListDivider()
         ],
       ],

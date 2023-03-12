@@ -108,7 +108,8 @@ class _ProjectOverviewState extends State<ProjectOverview> {
         ),
         ListDivider(),
         if ((project.privateNotes ?? '').isNotEmpty) ...[
-          IconMessage(project.privateNotes, iconData: Icons.lock),
+          IconMessage(project.privateNotes,
+              iconData: Icons.lock, copyToClipboard: true),
           ListDivider()
         ],
         EntityListTile(
@@ -156,7 +157,10 @@ class _ProjectOverviewState extends State<ProjectOverview> {
       ]);
 
       if ((project.publicNotes ?? '').isNotEmpty) {
-        widgets.addAll([IconMessage(project.publicNotes), ListDivider()]);
+        widgets.addAll([
+          IconMessage(project.publicNotes, copyToClipboard: true),
+          ListDivider()
+        ]);
       }
 
       return widgets;
