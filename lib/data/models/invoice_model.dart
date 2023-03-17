@@ -630,6 +630,7 @@ abstract class InvoiceEntity extends Object
     if (isPurchaseOrder &&
         [
           kPurchaseOrderStatusAccepted,
+          kPurchaseOrderStatusReceived,
         ].contains(statusId)) {
       return true;
     }
