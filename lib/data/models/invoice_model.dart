@@ -630,6 +630,7 @@ abstract class InvoiceEntity extends Object
     if (isPurchaseOrder &&
         [
           kPurchaseOrderStatusAccepted,
+          kPurchaseOrderStatusReceived,
         ].contains(statusId)) {
       return true;
     }
@@ -929,6 +930,7 @@ abstract class InvoiceEntity extends Object
       if (status.id == statusId || status.id == calculatedStatusId) {
         return true;
       } else if (status.id == kInvoiceStatusUnpaid &&
+          isInvoice &&
           isUnpaid &&
           isSent &&
           !isCancelledOrReversed) {

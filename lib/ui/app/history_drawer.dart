@@ -122,11 +122,15 @@ class _HistoryListTileState extends State<HistoryListTile> {
     ].contains(history.entityType)) {
       title = Text(localization.lookup(history.entityType.toString()));
       if (history.entityType == EntityType.reports) {
-        subtitle =
-            Text(localization.lookup(state.uiState.reportsUIState.report));
+        subtitle = Text(
+          localization.lookup(state.uiState.reportsUIState.report),
+          style: Theme.of(context).textTheme.bodySmall,
+        );
       } else if (history.entityType == EntityType.settings) {
-        subtitle =
-            Text(localization.lookup(history.id ?? kSettingsCompanyDetails));
+        subtitle = Text(
+          localization.lookup(history.id ?? kSettingsCompanyDetails),
+          style: Theme.of(context).textTheme.bodySmall,
+        );
       }
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
@@ -158,7 +162,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
         title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
                 child: Column(
@@ -168,6 +172,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 subtitle,
               ],
             )),
+            SizedBox(width: 8),
             Flexible(
                 child: LiveText(
               () => timeago.format(history.dateTime,

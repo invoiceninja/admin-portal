@@ -374,23 +374,26 @@ class _ExampleEditorState extends State<ExampleEditor> {
                 if (_isMobile) _buildMountedToolbar(),
               ],
             ),
+            /*
             Align(
               alignment: Alignment.bottomRight,
               child: _buildCornerFabs(),
             ),
+            */
           ],
         );
       }),
     );
   }
 
+  /*
   Widget _buildCornerFabs() {
     return Padding(
       padding: const EdgeInsets.only(right: 16, bottom: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: [          
           _buildDebugVisualsToggle(),
           const SizedBox(height: 16),
           _buildLightAndDarkModeToggle(),
@@ -398,6 +401,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       ),
     );
   }
+  */
 
   Widget _buildDebugVisualsToggle() {
     return FloatingActionButton(

@@ -21,7 +21,22 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 import 'package:version/version.dart';
 
 // TODO remove this function
-bool supportsInlineBrowser() => !isDesktopOS();
+bool supportsInlineBrowser() {
+  if (isDesktopOS()) {
+    return false;
+  }
+
+  if (kIsWeb) {
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final state = store.state;
+
+    if (state.isHosted && !state.account.accountSmsVerified) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 // TODO remove this function
 bool supportsGoogleOAuth() => kIsWeb || isMobileOS();

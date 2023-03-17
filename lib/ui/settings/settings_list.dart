@@ -697,17 +697,34 @@ class SettingsSearch extends StatelessWidget {
                   .toLowerCase()
                   .contains(filter.toLowerCase()))
             ListTile(
-              title: Text(localization.lookup(parts[1])),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(localization.lookup(parts[1])),
+                        Text(
+                          localization.lookup(parts[2]),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  if (parts[0].isNotEmpty)
+                    Flexible(
+                        child: Text(timeago.format(DateTime.parse(parts[0]),
+                            locale:
+                                localeSelector(store.state, twoLetter: true) +
+                                    '_short'))),
+                ],
+              ),
               leading: Padding(
                 padding: const EdgeInsets.only(left: 6, top: 10),
                 child: Icon(getSettingIcon(parts[2]), size: 22),
               ),
-              trailing: parts[0].isEmpty
-                  ? null
-                  : Text(timeago.format(DateTime.parse(parts[0]),
-                      locale: localeSelector(store.state, twoLetter: true) +
-                          '_short')),
-              subtitle: Text(localization.lookup(parts[2])),
               onTap: () =>
                   viewModel.loadSection(context, parts[2], parseInt(parts[3])),
             ),
