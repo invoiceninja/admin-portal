@@ -330,10 +330,13 @@ class _SettingsWizardState extends State<SettingsWizard> {
                   )
                 : _showLogo
                     ? Center(
-                        child: Text(
-                          localization.setupWizardLogo,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline6,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: Text(
+                            localization.setupWizardLogo,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
                       )
                     : Column(
