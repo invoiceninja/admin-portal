@@ -282,10 +282,11 @@ class ReportsScreen extends StatelessWidget {
       ]
     ];
 
-    final entities = reportResult.entities ?? [];
-    final firstEntity = entities.isNotEmpty ? entities.first : null;
-    if (entities.length > kMaxEntitiesPerBulkAction) {
-      entities.removeRange(kMaxEntitiesPerBulkAction, entities.length);
+    final cappedEntities = [...reportResult.entities ?? []];
+    final firstEntity = cappedEntities.isNotEmpty ? cappedEntities.first : null;
+    if (cappedEntities.length > kMaxEntitiesPerBulkAction) {
+      cappedEntities.removeRange(
+          kMaxEntitiesPerBulkAction, cappedEntities.length);
     }
 
     final chartChildren = [
@@ -382,16 +383,18 @@ class ReportsScreen extends StatelessWidget {
                                 multiselect: true),
                         entity: firstEntity,
                         onSelected: (context, action) {
+                          final entities = action.applyMaxLimit
+                              ? cappedEntities
+                              : reportResult.entities;
                           confirmCallback(
                               context: context,
                               message: localization.lookup(action.toString()) +
                                   ' • ' +
-                                  (reportResult.entities.length == 1
+                                  (entities.length == 1
                                       ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
-                                      : '${reportResult.entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
+                                      : '${entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
                               callback: (_) {
-                                handleEntitiesActions(
-                                    reportResult.entities, action);
+                                handleEntitiesActions(entities, action);
                               });
                         }),
                   ),
