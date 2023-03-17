@@ -35,9 +35,10 @@ class TaskRepository {
     return taskResponse.data;
   }
 
-  Future<BuiltList<TaskEntity>> loadList(
-      Credentials credentials, int createdAt, bool filterDeleted) async {
-    final url = credentials.url + '/tasks?created_at=$createdAt';
+  Future<BuiltList<TaskEntity>> loadList(Credentials credentials, int page,
+      int createdAt, bool filterDeleted) async {
+    final url = credentials.url +
+        '/tasks?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /* Server is incorrect if client isn't set
     if (filterDeleted) {

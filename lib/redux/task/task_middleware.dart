@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -284,16 +285,24 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     repository
         .loadList(
       state.credentials,
+      action.page,
       state.createdAtLimit,
       state.filterDeletedClients,
     )
         .then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(LoadTasks(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+        store.dispatch(LoadVendors());
       }
-      store.dispatch(LoadVendors());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTasksFailure(error));
