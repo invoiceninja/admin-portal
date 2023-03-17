@@ -462,6 +462,7 @@ Future handleCreditAction(
   final localization = AppLocalization.of(context);
   final credit = credits.first as InvoiceEntity;
   final creditIds = credits.map((credit) => credit.id).toList();
+  final client = state.clientState.get(credit.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -497,7 +498,7 @@ Future handleCreditAction(
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: state.clientState.get(credit.clientId));
+                    editEntity(entity: client);
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);
@@ -587,13 +588,12 @@ Future handleCreditAction(
     case EntityAction.applyCredit:
       createEntity(
         context: context,
-        entity: PaymentEntity(
-                state: state, client: state.clientState.get(credit.clientId))
-            .rebuild((b) => b
-              ..typeId = kPaymentTypeCredit
-              ..credits.addAll(credits
-                  .map((credit) => PaymentableEntity.fromCredit(credit))
-                  .toList())),
+        entity: PaymentEntity(state: state, client: client).rebuild((b) => b
+          ..typeId = kPaymentTypeCredit
+          ..credits.addAll(credits
+              .map((credit) => PaymentableEntity.fromCredit(credit))
+              .toList())),
+        filterEntity: client,
       );
       break;
     case EntityAction.download:

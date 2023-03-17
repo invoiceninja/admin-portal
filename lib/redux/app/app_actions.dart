@@ -1016,6 +1016,7 @@ void createEntity({
   bool force = false,
   Completer completer,
   Completer cancelCompleter,
+  BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -1036,6 +1037,14 @@ void createEntity({
         if (state.prefState.isDesktop &&
             !state.prefState.isEditorFullScreen(entity.entityType)) {
           store.dispatch(ToggleEditorLayout(entity.entityType));
+        }
+
+        if (filterEntity != null) {
+          if (uiState.filterEntityType != filterEntity.entityType ||
+              uiState.filterEntityId != filterEntity.id) {
+            store.dispatch(ClearEntitySelection(entityType: entity.entityType));
+            store.dispatch(FilterByEntity(entity: filterEntity));
+          }
         }
 
         switch (entity.entityType) {

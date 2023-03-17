@@ -528,6 +528,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
   final invoiceIds = invoices.map((invoice) => invoice.id).toList();
+  final client = state.clientState.get(invoice.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -616,7 +617,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: state.clientState.get(invoice.clientId));
+                    editEntity(entity: client);
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);
@@ -694,13 +695,12 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.newPayment:
       createEntity(
         context: context,
-        entity: PaymentEntity(
-                state: state, client: state.clientState.get(invoice.clientId))
-            .rebuild((b) => b
-              ..invoices.addAll(invoices
-                  .where((invoice) => !(invoice as InvoiceEntity).isPaid)
-                  .map((invoice) => PaymentableEntity.fromInvoice(invoice))
-                  .toList())),
+        entity: PaymentEntity(state: state, client: client).rebuild((b) => b
+          ..invoices.addAll(invoices
+              .where((invoice) => !(invoice as InvoiceEntity).isPaid)
+              .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+              .toList())),
+        filterEntity: client,
       );
       break;
     case EntityAction.download:
