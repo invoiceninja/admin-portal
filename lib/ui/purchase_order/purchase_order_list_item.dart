@@ -155,7 +155,11 @@ class PurchaseOrderListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        formatNumber(purchaseOrder.amount, context),
+                        formatNumber(
+                          purchaseOrder.amount,
+                          context,
+                          vendorId: vendor.id,
+                        ),
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -198,10 +202,9 @@ class PurchaseOrderListItem extends StatelessWidget {
                       SizedBox(width: 4),
                       Text(
                           formatNumber(
-                            purchaseOrder.balance > 0
-                                ? purchaseOrder.balance
-                                : purchaseOrder.amount,
+                            purchaseOrder.amount,
                             context,
+                            vendorId: vendor.id,
                           ),
                           style: Theme.of(context).textTheme.subtitle1),
                     ],
