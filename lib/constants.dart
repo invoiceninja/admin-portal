@@ -925,3 +925,4 @@ const String kActivityRestorePurchaseOrder = '134';
 const String kActivityEmailPurchaseOrder = '135';
 const String kActivityViewPurchaseOrder = '136';
 const String kActivityAcceptPurchaseOrder = '137';
+const String kActivityEmailPayment = '138';
