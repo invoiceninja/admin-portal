@@ -179,7 +179,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
         builder: (BuildContext context) {
           return EntityDropdownDialog(
             entityMap: _entityMap,
-            entityList: widget.entityList ?? _entityMap.keys.toList(),
+            entityList: (widget.entityList ?? _entityMap.keys)
+                .where((elementId) => !widget.excludeIds.contains(elementId))
+                .toList(),
             onSelected: (entity, [update = true]) {
               if (entity?.id == widget.entityId) {
                 return;
