@@ -928,7 +928,8 @@ abstract class InvoiceEntity extends Object
     for (final status in statuses) {
       if (status.id == statusId || status.id == calculatedStatusId) {
         return true;
-      } else if (status.id == kInvoiceStatusUnpaid &&
+      } else if (isInvoice &&
+          status.id == kInvoiceStatusUnpaid &&
           isUnpaid &&
           isSent &&
           !isCancelledOrReversed) {
