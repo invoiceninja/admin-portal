@@ -421,9 +421,27 @@ abstract class TaskEntity extends Object
       return false;
     }
 
-    final date = convertDateTimeToSqlDate(taskTimes.first.startDate.toLocal());
+    final taskStartDate =
+        convertDateTimeToSqlDate(taskTimes.first.startDate.toLocal());
+    if (startDate.compareTo(taskStartDate) <= 0 &&
+        endDate.compareTo(taskStartDate) >= 0) {
+      return true;
+    }
 
-    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
+    final completedTimes = taskTimes.where((element) => !element.isRunning);
+
+    if (completedTimes.isNotEmpty) {
+      final lastTaskTime = completedTimes.last;
+      final taskEndDate =
+          convertDateTimeToSqlDate(lastTaskTime.endDate.toLocal());
+
+      if (startDate.compareTo(taskEndDate) <= 0 &&
+          endDate.compareTo(taskEndDate) >= 0) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   int get startTimestamp {
