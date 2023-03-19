@@ -9,6 +9,8 @@ workflows:
       cocoapods: default
       vars:
         SNAPCRAFT_BUILD_ENVIRONMENT: host
+      groups:
+        - snapcraft_credentials
     cache:
       cache_paths: []
     triggering:
@@ -26,7 +28,9 @@ workflows:
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
       #- flutter build linux --release
+      - export SNAPCRAFT_STORE_CREDENTIALS=$(echo $SNAPCRAFT_LOGIN_CREDENTIALS)
       - snapcraft snap --output invoiceninja.snap
+      - snapcraft upload invoiceninja.snap --release stable
     artifacts:
       - build/linux/release/bundle/**
       - flutter_drive.log
