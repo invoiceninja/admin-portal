@@ -336,18 +336,21 @@ class RestorePurchaseOrdersFailure implements StopSaving {
 }
 
 class EmailPurchaseOrderRequest implements StartSaving {
-  EmailPurchaseOrderRequest(
-      {this.completer,
-      this.purchaseOrderId,
-      this.template,
-      this.subject,
-      this.body});
+  EmailPurchaseOrderRequest({
+    @required this.completer,
+    @required this.purchaseOrderId,
+    @required this.template,
+    @required this.subject,
+    @required this.body,
+    @required this.ccEmail,
+  });
 
   final Completer completer;
   final String purchaseOrderId;
   final EmailTemplate template;
   final String subject;
   final String body;
+  final String ccEmail;
 }
 
 class EmailPurchaseOrderSuccess implements StopSaving, PersistData {

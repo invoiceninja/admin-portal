@@ -391,8 +391,14 @@ Middleware<AppState> _emailPurchaseOrder(PurchaseOrderRepository repository) {
     final origPurchaseOrder =
         store.state.purchaseOrderState.map[action.purchaseOrderId];
     repository
-        .emailPurchaseOrder(store.state.credentials, origPurchaseOrder,
-            action.template, action.subject, action.body)
+        .emailPurchaseOrder(
+      store.state.credentials,
+      origPurchaseOrder,
+      action.template,
+      action.subject,
+      action.body,
+      action.ccEmail,
+    )
         .then((purchaseOrder) {
       store.dispatch(EmailPurchaseOrderSuccess(purchaseOrder));
       if (action.completer != null) {

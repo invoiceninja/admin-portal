@@ -59,7 +59,8 @@ class EmailQuoteVM extends EmailEntityVM {
     @required ClientEntity client,
     @required VendorEntity vendor,
     @required
-        Function(BuildContext, EmailTemplate, String, String) onSendPressed,
+        Function(BuildContext, EmailTemplate, String, String, String)
+            onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -82,7 +83,7 @@ class EmailQuoteVM extends EmailEntityVM {
       invoice: quote,
       client: state.clientState.map[quote.clientId],
       vendor: state.vendorState.map[quote.vendorId],
-      onSendPressed: (context, template, subject, body) {
+      onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedQuote,
             shouldPop: isMobile(context));
@@ -97,6 +98,7 @@ class EmailQuoteVM extends EmailEntityVM {
           template: template,
           subject: subject,
           body: body,
+          ccEmail: ccEmail,
         ));
       },
     );

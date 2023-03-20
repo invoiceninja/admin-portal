@@ -228,14 +228,21 @@ class SaveInvoiceFailure implements StopSaving {
 }
 
 class EmailInvoiceRequest implements StartSaving {
-  EmailInvoiceRequest(
-      {this.completer, this.invoiceId, this.template, this.subject, this.body});
+  EmailInvoiceRequest({
+    @required this.completer,
+    @required this.invoiceId,
+    @required this.template,
+    @required this.subject,
+    @required this.body,
+    @required this.ccEmail,
+  });
 
   final Completer completer;
   final String invoiceId;
   final EmailTemplate template;
   final String subject;
   final String body;
+  final String ccEmail;
 }
 
 class EmailInvoiceSuccess implements StopSaving, PersistData {

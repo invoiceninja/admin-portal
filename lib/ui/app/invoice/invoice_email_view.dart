@@ -420,8 +420,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         saveLabel: localization.send,
         onSavePressed: (context) {
           if (state.account.accountSmsVerified || state.isSelfHosted) {
-            viewModel.onSendPressed(context, selectedTemplate,
-                _subjectController.text, _bodyController.text);
+            viewModel.onSendPressed(
+              context,
+              selectedTemplate,
+              _subjectController.text,
+              _bodyController.text,
+              '',
+            );
           } else {
             showMessageDialog(
                 context: context, message: localization.verifyPhoneNumberHelp);
@@ -506,8 +511,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         ),
         saveLabel: localization.send,
         onSavePressed: (context) {
-          viewModel.onSendPressed(context, selectedTemplate,
-              _subjectController.text, _bodyController.text);
+          viewModel.onSendPressed(
+            context,
+            selectedTemplate,
+            _subjectController.text,
+            _bodyController.text,
+            '',
+          );
         },
         body: TabBarView(
           controller: _controller,

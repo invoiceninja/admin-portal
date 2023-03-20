@@ -59,7 +59,7 @@ class EmailCreditVM extends EmailEntityVM {
     ClientEntity client,
     VendorEntity vendor,
     Function loadClient,
-    Function(BuildContext, EmailTemplate, String, String) onSendPressed,
+    Function(BuildContext, EmailTemplate, String, String, String) onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -84,7 +84,7 @@ class EmailCreditVM extends EmailEntityVM {
       loadClient: () {
         store.dispatch(LoadClient(clientId: credit.clientId));
       },
-      onSendPressed: (context, template, subject, body) {
+      onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedCredit,
             shouldPop: isMobile(context));
@@ -99,6 +99,7 @@ class EmailCreditVM extends EmailEntityVM {
           template: template,
           subject: subject,
           body: body,
+          ccEmail: ccEmail,
         ));
       },
     );
