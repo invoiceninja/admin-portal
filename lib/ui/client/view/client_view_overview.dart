@@ -119,11 +119,6 @@ class ClientOverview extends StatelessWidget {
           value: client.customValue4);
     }
 
-    final availableCredits =
-        memoizedGetClientAvailableCredits(client.id, state.creditState.map);
-    final unappliedPayments =
-        memoizedGetClientUnappliedPayments(client.id, state.paymentState.map);
-
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(
@@ -135,20 +130,20 @@ class ClientOverview extends StatelessWidget {
               formatNumber(client.balance, context, clientId: client.id),
         ),
         ListDivider(),
-        if (availableCredits != 0 || unappliedPayments != 0) ...[
+        if (client.creditBalance != 0 || client.paymentBalance != 0) ...[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              if (availableCredits != 0)
-                Text(localization.credit +
-                    ': ' +
-                    formatNumber(availableCredits, context,
-                        clientId: client.id)),
-              if (unappliedPayments != 0)
+              if (client.paymentBalance != 0)
                 Text(localization.payments +
                     ': ' +
-                    formatNumber(unappliedPayments, context,
+                    formatNumber(client.paymentBalance, context,
+                        clientId: client.id)),
+              if (client.creditBalance != 0)
+                Text(localization.credit +
+                    ': ' +
+                    formatNumber(client.creditBalance, context,
                         clientId: client.id)),
             ]),
           ),
