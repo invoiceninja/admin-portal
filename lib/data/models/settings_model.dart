@@ -970,10 +970,6 @@ abstract class SettingsEntity
   double get clientInitiatedPaymentsMinimum;
 
   @nullable
-  @BuiltValueField(wireName: 'client_initiated_payments_recurring')
-  bool get clientInitiatedPaymentsRecurring;
-
-  @nullable
   @BuiltValueField(wireName: 'sync_invoice_quote_columns')
   bool get syncInvoiceQuoteColumns;
 
