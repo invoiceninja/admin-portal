@@ -44,6 +44,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.publicNotes,
       ClientFields.privateNotes,
       ClientFields.creditBalance,
+      ClientFields.paymentBalance,
       ClientFields.custom1,
       ClientFields.custom2,
       ClientFields.custom3,
@@ -97,6 +98,11 @@ class ClientPresenter extends EntityPresenter {
         return Align(
             alignment: Alignment.centerRight,
             child: Text(formatNumber(client.creditBalance, context,
+                clientId: client.id)));
+      case ClientFields.paymentBalance:
+        return Align(
+            alignment: Alignment.centerRight,
+            child: Text(formatNumber(client.paymentBalance, context,
                 clientId: client.id)));
       case ClientFields.paidToDate:
         return Align(

@@ -133,6 +133,7 @@ class EntityPresenter {
       'invoice_balance',
       'client_balance',
       'credit_balance',
+      'payment_balance',
       'tax_rate',
       'tax_amount',
       'tax_amount1',
