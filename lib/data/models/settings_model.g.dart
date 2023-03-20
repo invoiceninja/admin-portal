@@ -1471,6 +1471,34 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.clientInitiatedPayments;
+    if (value != null) {
+      result
+        ..add('client_initiated_payments')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.clientInitiatedPaymentsMinimum;
+    if (value != null) {
+      result
+        ..add('client_initiated_payments_minimum')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.clientInitiatedPaymentsRecurring;
+    if (value != null) {
+      result
+        ..add('client_initiated_payments_recurring')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.syncInvoiceQuoteColumns;
+    if (value != null) {
+      result
+        ..add('sync_invoice_quote_columns')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2327,6 +2355,22 @@ class _$SettingsEntitySerializer
           result.acceptPurchaseOrderNumber = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'client_initiated_payments':
+          result.clientInitiatedPayments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'client_initiated_payments_minimum':
+          result.clientInitiatedPaymentsMinimum = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'client_initiated_payments_recurring':
+          result.clientInitiatedPaymentsRecurring = serializers
+              .deserialize(value, specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'sync_invoice_quote_columns':
+          result.syncInvoiceQuoteColumns = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -2823,6 +2867,14 @@ class _$SettingsEntity extends SettingsEntity {
   final String customSendingEmail;
   @override
   final bool acceptPurchaseOrderNumber;
+  @override
+  final bool clientInitiatedPayments;
+  @override
+  final double clientInitiatedPaymentsMinimum;
+  @override
+  final bool clientInitiatedPaymentsRecurring;
+  @override
+  final bool syncInvoiceQuoteColumns;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3036,7 +3088,11 @@ class _$SettingsEntity extends SettingsEntity {
       this.showPaidStamp,
       this.showShippingAddress,
       this.customSendingEmail,
-      this.acceptPurchaseOrderNumber})
+      this.acceptPurchaseOrderNumber,
+      this.clientInitiatedPayments,
+      this.clientInitiatedPaymentsMinimum,
+      this.clientInitiatedPaymentsRecurring,
+      this.syncInvoiceQuoteColumns})
       : super._();
 
   @override
@@ -3263,7 +3319,13 @@ class _$SettingsEntity extends SettingsEntity {
         showPaidStamp == other.showPaidStamp &&
         showShippingAddress == other.showShippingAddress &&
         customSendingEmail == other.customSendingEmail &&
-        acceptPurchaseOrderNumber == other.acceptPurchaseOrderNumber;
+        acceptPurchaseOrderNumber == other.acceptPurchaseOrderNumber &&
+        clientInitiatedPayments == other.clientInitiatedPayments &&
+        clientInitiatedPaymentsMinimum ==
+            other.clientInitiatedPaymentsMinimum &&
+        clientInitiatedPaymentsRecurring ==
+            other.clientInitiatedPaymentsRecurring &&
+        syncInvoiceQuoteColumns == other.syncInvoiceQuoteColumns;
   }
 
   int __hashCode;
@@ -3480,6 +3542,10 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, showShippingAddress.hashCode);
     _$hash = $jc(_$hash, customSendingEmail.hashCode);
     _$hash = $jc(_$hash, acceptPurchaseOrderNumber.hashCode);
+    _$hash = $jc(_$hash, clientInitiatedPayments.hashCode);
+    _$hash = $jc(_$hash, clientInitiatedPaymentsMinimum.hashCode);
+    _$hash = $jc(_$hash, clientInitiatedPaymentsRecurring.hashCode);
+    _$hash = $jc(_$hash, syncInvoiceQuoteColumns.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3699,7 +3765,13 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showPaidStamp', showPaidStamp)
           ..add('showShippingAddress', showShippingAddress)
           ..add('customSendingEmail', customSendingEmail)
-          ..add('acceptPurchaseOrderNumber', acceptPurchaseOrderNumber))
+          ..add('acceptPurchaseOrderNumber', acceptPurchaseOrderNumber)
+          ..add('clientInitiatedPayments', clientInitiatedPayments)
+          ..add(
+              'clientInitiatedPaymentsMinimum', clientInitiatedPaymentsMinimum)
+          ..add('clientInitiatedPaymentsRecurring',
+              clientInitiatedPaymentsRecurring)
+          ..add('syncInvoiceQuoteColumns', syncInvoiceQuoteColumns))
         .toString();
   }
 }
@@ -4733,6 +4805,29 @@ class SettingsEntityBuilder
   set acceptPurchaseOrderNumber(bool acceptPurchaseOrderNumber) =>
       _$this._acceptPurchaseOrderNumber = acceptPurchaseOrderNumber;
 
+  bool _clientInitiatedPayments;
+  bool get clientInitiatedPayments => _$this._clientInitiatedPayments;
+  set clientInitiatedPayments(bool clientInitiatedPayments) =>
+      _$this._clientInitiatedPayments = clientInitiatedPayments;
+
+  double _clientInitiatedPaymentsMinimum;
+  double get clientInitiatedPaymentsMinimum =>
+      _$this._clientInitiatedPaymentsMinimum;
+  set clientInitiatedPaymentsMinimum(double clientInitiatedPaymentsMinimum) =>
+      _$this._clientInitiatedPaymentsMinimum = clientInitiatedPaymentsMinimum;
+
+  bool _clientInitiatedPaymentsRecurring;
+  bool get clientInitiatedPaymentsRecurring =>
+      _$this._clientInitiatedPaymentsRecurring;
+  set clientInitiatedPaymentsRecurring(bool clientInitiatedPaymentsRecurring) =>
+      _$this._clientInitiatedPaymentsRecurring =
+          clientInitiatedPaymentsRecurring;
+
+  bool _syncInvoiceQuoteColumns;
+  bool get syncInvoiceQuoteColumns => _$this._syncInvoiceQuoteColumns;
+  set syncInvoiceQuoteColumns(bool syncInvoiceQuoteColumns) =>
+      _$this._syncInvoiceQuoteColumns = syncInvoiceQuoteColumns;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -4947,6 +5042,10 @@ class SettingsEntityBuilder
       _showShippingAddress = $v.showShippingAddress;
       _customSendingEmail = $v.customSendingEmail;
       _acceptPurchaseOrderNumber = $v.acceptPurchaseOrderNumber;
+      _clientInitiatedPayments = $v.clientInitiatedPayments;
+      _clientInitiatedPaymentsMinimum = $v.clientInitiatedPaymentsMinimum;
+      _clientInitiatedPaymentsRecurring = $v.clientInitiatedPaymentsRecurring;
+      _syncInvoiceQuoteColumns = $v.syncInvoiceQuoteColumns;
       _$v = null;
     }
     return this;
@@ -5180,7 +5279,12 @@ class SettingsEntityBuilder
               showPaidStamp: showPaidStamp,
               showShippingAddress: showShippingAddress,
               customSendingEmail: customSendingEmail,
-              acceptPurchaseOrderNumber: acceptPurchaseOrderNumber);
+              acceptPurchaseOrderNumber: acceptPurchaseOrderNumber,
+              clientInitiatedPayments: clientInitiatedPayments,
+              clientInitiatedPaymentsMinimum: clientInitiatedPaymentsMinimum,
+              clientInitiatedPaymentsRecurring:
+                  clientInitiatedPaymentsRecurring,
+              syncInvoiceQuoteColumns: syncInvoiceQuoteColumns);
     } catch (_) {
       String _$failedField;
       try {
