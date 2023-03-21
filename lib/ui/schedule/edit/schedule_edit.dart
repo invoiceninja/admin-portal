@@ -127,7 +127,11 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
-                                  child: Text(localization.lookup(entry)),
+                                  child: Text(entry ==
+                                          ScheduleEntity
+                                              .TEMPLATE_SCHEDULE_ENTITY
+                                      ? localization.emailRecord
+                                      : localization.lookup(entry)),
                                 ))
                             .toList()),
                     DatePicker(
