@@ -198,7 +198,7 @@ abstract class ScheduleParameters
       showAgingTable: true,
       showPaymentsTable: true,
       status: kStatementStatusAll,
-      entityType: '',
+      entityType: EntityType.invoice.toString(),
       entityId: '',
     );
   }

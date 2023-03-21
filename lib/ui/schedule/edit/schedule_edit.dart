@@ -90,6 +90,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;
@@ -288,6 +289,33 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             },
                           ),
                         ),
+                    ],
+                  )
+                ] else if (schedule.template ==
+                    ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY) ...[
+                  FormCard(
+                    children: [
+                      AppDropdownButton<String>(
+                          labelText: localization.type,
+                          value: parameters.entityType,
+                          onChanged: (dynamic value) {
+                            viewModel.onChanged(schedule.rebuild(
+                                (b) => b..parameters.entityType = value));
+                          },
+                          items: [
+                            EntityType.invoice,
+                            EntityType.quote,
+                            EntityType.credit,
+                            EntityType.purchaseOrder
+                          ]
+                              .map((entityType) => DropdownMenuItem<String>(
+                                    value: entityType.toString(),
+                                    child: Text(
+                                      localization
+                                          .lookup(entityType.toString()),
+                                    ),
+                                  ))
+                              .toList()),
                     ],
                   )
                 ],
