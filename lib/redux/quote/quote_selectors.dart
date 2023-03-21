@@ -24,6 +24,69 @@ ClientContactEntity quoteContactSelector(
       .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
 
+var memoizedDropdownQuoteList = memo7((
+  BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltList<String> quoteList,
+  String clientId,
+  BuiltMap<String, UserEntity> userMap,
+  List<String> excludedIds,
+) =>
+    dropdownQuoteSelector(
+      quoteMap,
+      clientMap,
+      vendorMap,
+      quoteList,
+      clientId,
+      userMap,
+      excludedIds,
+    ));
+
+List<String> dropdownQuoteSelector(
+  BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltList<String> quoteList,
+  String clientId,
+  BuiltMap<String, UserEntity> userMap,
+  List<String> excludedIds,
+) {
+  final list = quoteList.where((invoiceId) {
+    final invoice = quoteMap[invoiceId];
+    if (excludedIds.contains(invoiceId)) {
+      return false;
+    }
+    if (clientId != null &&
+        clientId.isNotEmpty &&
+        invoice.clientId != clientId) {
+      return false;
+    }
+    if (!clientMap.containsKey(invoice.clientId) ||
+        !clientMap[invoice.clientId].isActive) {
+      return false;
+    }
+    return invoice.isActive &&
+        !invoice.isApproved &&
+        !invoice.isCancelledOrReversed;
+  }).toList();
+
+  list.sort((invoiceAId, invoiceBId) {
+    final invoiceA = quoteMap[invoiceAId];
+    final invoiceB = quoteMap[invoiceBId];
+    return invoiceA.compareTo(
+      invoice: invoiceB,
+      clientMap: clientMap,
+      vendorMap: vendorMap,
+      sortAscending: false,
+      sortField: InvoiceFields.number,
+      userMap: userMap,
+    );
+  });
+
+  return list;
+}
+
 var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,

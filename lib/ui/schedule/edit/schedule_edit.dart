@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
@@ -94,6 +99,42 @@ class _ScheduleEditState extends State<ScheduleEdit> {
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;
+
+    final invoiceIds = memoizedDropdownInvoiceList(
+      state.invoiceState.map,
+      state.clientState.map,
+      state.vendorState.map,
+      state.invoiceState.list,
+      '',
+      state.userState.map,
+      [],
+      state.company.settings.recurringNumberPrefix,
+    );
+
+    final quoteIds = memoizedDropdownQuoteList(
+        state.quoteState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.quoteState.list,
+        '',
+        state.userState.map, []);
+
+    final creditIds = memoizedDropdownCreditList(
+        state.creditState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.creditState.list,
+        '',
+        state.userState.map, []);
+
+    final purchaseOrderIds = memoizedDropdownPurchaseOrderList(
+        state.purchaseOrderState.map,
+        state.purchaseOrderState.list,
+        state.staticState,
+        state.userState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        '');
 
     return EditScaffold(
       title:
@@ -299,8 +340,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           labelText: localization.type,
                           value: parameters.entityType,
                           onChanged: (dynamic value) {
-                            viewModel.onChanged(schedule.rebuild(
-                                (b) => b..parameters.entityType = value));
+                            viewModel.onChanged(schedule.rebuild((b) => b
+                              ..parameters.entityType = value
+                              ..parameters.entityId = ''));
                           },
                           items: [
                             EntityType.invoice,
@@ -316,8 +358,56 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                     ),
                                   ))
                               .toList()),
+                      if (parameters.entityType ==
+                          EntityType.invoice.toString())
+                        EntityDropdown(
+                          labelText: localization.invoice,
+                          entityType: EntityType.invoice,
+                          entityList: invoiceIds,
+                          entityId: parameters.entityId,
+                          onSelected: (value) {
+                            viewModel.onChanged(schedule.rebuild((b) =>
+                                b..parameters.entityId = value?.id ?? ''));
+                          },
+                        )
+                      else if (parameters.entityType ==
+                          EntityType.quote.toString())
+                        EntityDropdown(
+                          labelText: localization.quote,
+                          entityType: EntityType.quote,
+                          entityList: quoteIds,
+                          entityId: parameters.entityId,
+                          onSelected: (value) {
+                            viewModel.onChanged(schedule.rebuild((b) =>
+                                b..parameters.entityId = value?.id ?? ''));
+                          },
+                        )
+                      else if (parameters.entityType ==
+                          EntityType.credit.toString())
+                        EntityDropdown(
+                          labelText: localization.credit,
+                          entityType: EntityType.credit,
+                          entityList: creditIds,
+                          entityId: parameters.entityId,
+                          onSelected: (value) {
+                            viewModel.onChanged(schedule.rebuild((b) =>
+                                b..parameters.entityId = value?.id ?? ''));
+                          },
+                        )
+                      else if (parameters.entityType ==
+                          EntityType.purchaseOrder.toString())
+                        EntityDropdown(
+                          labelText: localization.purchaseOrder,
+                          entityType: EntityType.purchaseOrder,
+                          entityList: purchaseOrderIds,
+                          entityId: parameters.entityId,
+                          onSelected: (value) {
+                            viewModel.onChanged(schedule.rebuild((b) =>
+                                b..parameters.entityId = value?.id ?? ''));
+                          },
+                        )
                     ],
-                  )
+                  ),
                 ],
               ],
             );
