@@ -148,14 +148,7 @@ class _LoginState extends State<LoginView> {
     final isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final authState = viewModel.state.authState;
-    final url = _isSelfHosted
-        ? _urlController.text
-        : authState.isLargeTest
-            ? kAppLargeTestUrl
-            : authState.isStaging
-                ? kAppStagingUrl
-                : kAppProductionUrl;
+    final url = _getUrl();
 
     setState(() {
       _loginError = '';
@@ -254,14 +247,7 @@ class _LoginState extends State<LoginView> {
       });
     });
 
-    final authState = widget.viewModel.authState;
-    final url = _isSelfHosted
-        ? _urlController.text
-        : authState.isLargeTest
-            ? kAppLargeTestUrl
-            : authState.isStaging
-                ? kAppStagingUrl
-                : kAppProductionUrl;
+    final url = _getUrl();
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
       if (_recoverPassword) {
@@ -310,6 +296,25 @@ class _LoginState extends State<LoginView> {
           url: url,
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
+    }
+  }
+
+  String _getUrl() {
+    if (_isSelfHosted) {
+      return _urlController.text;
+    }
+
+    final state = widget.viewModel.state;
+    final authState = state.authState;
+
+    if (authState.isLargeTest) {
+      return kAppLargeTestUrl;
+    } else if (authState.isStaging) {
+      return kAppStagingUrl;
+    } else if (authState.isStagingNet) {
+      return kAppStagingNetUrl;
+    } else {
+      return kAppProductionUrl;
     }
   }
 

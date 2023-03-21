@@ -49,6 +49,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       kAppProductionUrl,
       kAppDemoUrl,
       kAppStagingUrl,
+      kAppStagingNetUrl,
     ].contains(cleanUrl)) {
       return true;
     }
@@ -64,6 +65,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   bool get isSelfHost => !isHosted;
 
   bool get isStaging => cleanApiUrl(url) == kAppStagingUrl;
+
+  bool get isStagingNet => cleanApiUrl(url) == kAppStagingNetUrl;
 
   bool get isLargeTest => cleanApiUrl(url) == kAppLargeTestUrl;
 
