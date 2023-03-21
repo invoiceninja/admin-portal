@@ -292,6 +292,12 @@ class _$ScheduleParametersSerializer
       serializers.serialize(object.clients,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
+      'entity',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(String)),
+      'entity_id',
+      serializers.serialize(object.entityId,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -330,6 +336,14 @@ class _$ScheduleParametersSerializer
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<Object>);
+          break;
+        case 'entity':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_id':
+          result.entityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -851,6 +865,10 @@ class _$ScheduleParameters extends ScheduleParameters {
   final String status;
   @override
   final BuiltList<String> clients;
+  @override
+  final String entityType;
+  @override
+  final String entityId;
 
   factory _$ScheduleParameters(
           [void Function(ScheduleParametersBuilder) updates]) =>
@@ -861,7 +879,9 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.showPaymentsTable,
       this.showAgingTable,
       this.status,
-      this.clients})
+      this.clients,
+      this.entityType,
+      this.entityId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         dateRange, r'ScheduleParameters', 'dateRange');
@@ -873,6 +893,10 @@ class _$ScheduleParameters extends ScheduleParameters {
         status, r'ScheduleParameters', 'status');
     BuiltValueNullFieldError.checkNotNull(
         clients, r'ScheduleParameters', 'clients');
+    BuiltValueNullFieldError.checkNotNull(
+        entityType, r'ScheduleParameters', 'entityType');
+    BuiltValueNullFieldError.checkNotNull(
+        entityId, r'ScheduleParameters', 'entityId');
   }
 
   @override
@@ -892,7 +916,9 @@ class _$ScheduleParameters extends ScheduleParameters {
         showPaymentsTable == other.showPaymentsTable &&
         showAgingTable == other.showAgingTable &&
         status == other.status &&
-        clients == other.clients;
+        clients == other.clients &&
+        entityType == other.entityType &&
+        entityId == other.entityId;
   }
 
   int __hashCode;
@@ -905,6 +931,8 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, showAgingTable.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, clients.hashCode);
+    _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, entityId.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -916,7 +944,9 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('showPaymentsTable', showPaymentsTable)
           ..add('showAgingTable', showAgingTable)
           ..add('status', status)
-          ..add('clients', clients))
+          ..add('clients', clients)
+          ..add('entityType', entityType)
+          ..add('entityId', entityId))
         .toString();
   }
 }
@@ -948,7 +978,17 @@ class ScheduleParametersBuilder
       _$this._clients ??= new ListBuilder<String>();
   set clients(ListBuilder<String> clients) => _$this._clients = clients;
 
-  ScheduleParametersBuilder();
+  String _entityType;
+  String get entityType => _$this._entityType;
+  set entityType(String entityType) => _$this._entityType = entityType;
+
+  String _entityId;
+  String get entityId => _$this._entityId;
+  set entityId(String entityId) => _$this._entityId = entityId;
+
+  ScheduleParametersBuilder() {
+    ScheduleParameters._initializeBuilder(this);
+  }
 
   ScheduleParametersBuilder get _$this {
     final $v = _$v;
@@ -958,6 +998,8 @@ class ScheduleParametersBuilder
       _showAgingTable = $v.showAgingTable;
       _status = $v.status;
       _clients = $v.clients.toBuilder();
+      _entityType = $v.entityType;
+      _entityId = $v.entityId;
       _$v = null;
     }
     return this;
@@ -992,7 +1034,11 @@ class ScheduleParametersBuilder
                   showAgingTable, r'ScheduleParameters', 'showAgingTable'),
               status: BuiltValueNullFieldError.checkNotNull(
                   status, r'ScheduleParameters', 'status'),
-              clients: clients.build());
+              clients: clients.build(),
+              entityType: BuiltValueNullFieldError.checkNotNull(
+                  entityType, r'ScheduleParameters', 'entityType'),
+              entityId: BuiltValueNullFieldError.checkNotNull(
+                  entityId, r'ScheduleParameters', 'entityId'));
     } catch (_) {
       String _$failedField;
       try {

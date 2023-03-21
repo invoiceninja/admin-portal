@@ -142,52 +142,57 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           ? localization.pleaseEnterAValue
                           : null,
                     ),
-                    AppDropdownButton<String>(
-                        labelText: localization.frequency,
-                        value: schedule.frequencyId,
-                        showBlank: true,
-                        blankLabel: localization.once,
-                        onChanged: (dynamic value) {
-                          viewModel.onChanged(
-                            schedule.rebuild((b) => b
-                              ..frequencyId = value
-                              ..remainingCycles = value.isEmpty
-                                  ? 1
-                                  : schedule.frequencyId.isEmpty
-                                      ? -1
-                                      : schedule.remainingCycles),
-                          );
-                        },
-                        items: kFrequencies.entries
-                            .map((entry) => DropdownMenuItem(
-                                  value: entry.key,
-                                  child: Text(localization.lookup(entry.value)),
-                                ))
-                            .toList()),
-                    if (schedule.frequencyId.isNotEmpty)
-                      AppDropdownButton<int>(
-                        labelText: localization.remainingCycles,
-                        value: schedule.remainingCycles,
-                        blankValue: null,
-                        onChanged: (dynamic value) => viewModel.onChanged(
-                            schedule
-                                .rebuild((b) => b..remainingCycles = value)),
-                        items: [
-                          DropdownMenuItem(
-                            child: Text(localization.endless),
-                            value: -1,
-                          ),
-                          ...List<int>.generate(61, (i) => i)
-                              .map((value) => DropdownMenuItem(
-                                    child: Text('$value'),
-                                    value: value,
+                    if (schedule.template !=
+                        ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY) ...[
+                      AppDropdownButton<String>(
+                          labelText: localization.frequency,
+                          value: schedule.frequencyId,
+                          showBlank: true,
+                          blankLabel: localization.once,
+                          onChanged: (dynamic value) {
+                            viewModel.onChanged(
+                              schedule.rebuild((b) => b
+                                ..frequencyId = value
+                                ..remainingCycles = value.isEmpty
+                                    ? 1
+                                    : schedule.frequencyId.isEmpty
+                                        ? -1
+                                        : schedule.remainingCycles),
+                            );
+                          },
+                          items: kFrequencies.entries
+                              .map((entry) => DropdownMenuItem(
+                                    value: entry.key,
+                                    child:
+                                        Text(localization.lookup(entry.value)),
                                   ))
-                              .toList()
-                        ],
-                      ),
+                              .toList()),
+                      if (schedule.frequencyId.isNotEmpty)
+                        AppDropdownButton<int>(
+                          labelText: localization.remainingCycles,
+                          value: schedule.remainingCycles,
+                          blankValue: null,
+                          onChanged: (dynamic value) => viewModel.onChanged(
+                              schedule
+                                  .rebuild((b) => b..remainingCycles = value)),
+                          items: [
+                            DropdownMenuItem(
+                              child: Text(localization.endless),
+                              value: -1,
+                            ),
+                            ...List<int>.generate(61, (i) => i)
+                                .map((value) => DropdownMenuItem(
+                                      child: Text('$value'),
+                                      value: value,
+                                    ))
+                                .toList()
+                          ],
+                        ),
+                    ],
                   ],
                 ),
-                if (schedule.template.isNotEmpty) ...[
+                if (schedule.template ==
+                    ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) ...[
                   FormCard(children: [
                     AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,

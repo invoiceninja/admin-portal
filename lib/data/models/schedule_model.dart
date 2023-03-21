@@ -75,9 +75,11 @@ abstract class ScheduleEntity extends Object
   ScheduleEntity._();
 
   static const TEMPLATE_EMAIL_STATEMENT = 'email_statement';
+  static const TEMPLATE_SCHEDULE_ENTITY = 'schedule_entity';
 
   static const TEMPLATES = [
     TEMPLATE_EMAIL_STATEMENT,
+    TEMPLATE_SCHEDULE_ENTITY,
   ];
 
   @override
@@ -196,6 +198,8 @@ abstract class ScheduleParameters
       showAgingTable: true,
       showPaymentsTable: true,
       status: kStatementStatusAll,
+      entityType: '',
+      entityId: '',
     );
   }
 
@@ -218,9 +222,21 @@ abstract class ScheduleParameters
 
   BuiltList<String> get clients;
 
+  @BuiltValueField(wireName: 'entity')
+  String get entityType;
+
+  @BuiltValueField(wireName: 'entity_id')
+  String get entityId;
+
   // ignore: unused_element
-  //static void _initializeBuilder(ScheduleParametersBuilder builder) =>
-  //    builder..isEnabled = false;
+  static void _initializeBuilder(ScheduleParametersBuilder builder) => builder
+    ..dateRange = ''
+    ..showPaymentsTable = false
+    ..showAgingTable = false
+    ..status = ''
+    ..clients.replace(BuiltList<String>())
+    ..entityType = ''
+    ..entityId = '';
 
   static Serializer<ScheduleParameters> get serializer =>
       _$scheduleParametersSerializer;
