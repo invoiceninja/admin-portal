@@ -1120,15 +1120,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ProductItemFields.lineTotal,
                         ].map((field) => '\$product.$field').toList(),
                         selected: settings
-                            .getFieldsForSection(kPdfFieldsProductColumns),
+                            .getFieldsForSection(kPdfFieldsProductQuoteColumns),
                         onSelected: (values) {
                           viewModel.onSettingsChanged(
                               settings.setFieldsForSection(
-                                  kPdfFieldsProductColumns, values));
+                                  kPdfFieldsProductQuoteColumns, values));
                         },
                         addTitle: localization.addField,
                         liveChanges: true,
-                        prefix: 'product_quote',
+                        prefix: 'product',
                       ),
                     ),
                   ),
