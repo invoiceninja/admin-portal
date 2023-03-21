@@ -961,6 +961,18 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'accept_client_input_quote_approval')
   bool get acceptPurchaseOrderNumber;
 
+  @nullable
+  @BuiltValueField(wireName: 'client_initiated_payments')
+  bool get clientInitiatedPayments;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_initiated_payments_minimum')
+  double get clientInitiatedPaymentsMinimum;
+
+  @nullable
+  @BuiltValueField(wireName: 'sync_invoice_quote_columns')
+  bool get syncInvoiceQuoteColumns;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

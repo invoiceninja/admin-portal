@@ -39,6 +39,7 @@ class _UserEditState extends State<UserEdit>
   final _debouncer = Debouncer();
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
+  bool _canViewReports = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -87,6 +88,9 @@ class _UserEditState extends State<UserEdit>
     _custom4Controller.text = user.customValue4;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    final userCompany = widget.viewModel.user.userCompany;
+    //_canViewReports = userCompany.permissions.contains();
 
     super.didChangeDependencies();
   }
@@ -278,6 +282,18 @@ class _UserEditState extends State<UserEdit>
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
                     activeColor: Theme.of(context).colorScheme.secondary,
                   ),
+                  /*
+                  SwitchListTile(
+                    title: Text(localization.reports),
+                    subtitle: Text(localization.viewReportPermission),
+                    value: userCompany.isAdmin ? true : false,
+                    onChanged: userCompany.isAdmin
+                        ? null
+                        : (value) => viewModel.onUserChanged(user
+                            .rebuild((b) => b..userCompany.isAdmin = value)),
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                  ),
+                  */
                 ],
               ),
               if (!userCompany.isAdmin)

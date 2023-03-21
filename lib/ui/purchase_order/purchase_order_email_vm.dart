@@ -59,7 +59,8 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
     @required ClientEntity client,
     @required VendorEntity vendor,
     @required
-        Function(BuildContext, EmailTemplate, String, String) onSendPressed,
+        Function(BuildContext, EmailTemplate, String, String, String)
+            onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -83,7 +84,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
       invoice: purchaseOrder,
       client: state.clientState.map[purchaseOrder.clientId],
       vendor: state.vendorState.map[purchaseOrder.vendorId],
-      onSendPressed: (context, template, subject, body) {
+      onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).emailedPurchaseOrder,
             shouldPop: isMobile(context));
@@ -98,6 +99,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
           template: template,
           subject: subject,
           body: body,
+          ccEmail: ccEmail,
         ));
       },
     );

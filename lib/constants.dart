@@ -11,6 +11,7 @@ const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
+const String kAppStagingNetUrl = 'https://invoiceninja.net';
 const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
 const String kWhiteLabelUrl =
@@ -584,6 +585,7 @@ const String kPdfFields = '';
 const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
+const String kPermissionViewReports = 'view_reports';
 
 const String kPaymentStatusPartiallyUnapplied = '-2';
 const String kPaymentStatusUnapplied = '-1';

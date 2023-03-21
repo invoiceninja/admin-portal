@@ -35,7 +35,8 @@ class _PaymentSettingsState extends State<PaymentSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_paymentSettings');
   FocusScopeNode _focusNode;
-  final _minimumAmountController = TextEditingController();
+  final _minimumUnderPaymentAmountController = TextEditingController();
+  final _minimumPaymentAmountController = TextEditingController();
   List<TextEditingController> _controllers = [];
 
   @override
@@ -47,14 +48,19 @@ class _PaymentSettingsState extends State<PaymentSettings> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      _minimumAmountController,
+      _minimumPaymentAmountController,
+      _minimumUnderPaymentAmountController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _minimumAmountController.text = formatNumber(
+    _minimumUnderPaymentAmountController.text = formatNumber(
         widget.viewModel.settings.clientPortalUnderPaymentMinimum, context,
+        formatNumberType: FormatNumberType.inputMoney);
+
+    _minimumPaymentAmountController.text = formatNumber(
+        widget.viewModel.settings.clientInitiatedPaymentsMinimum, context,
         formatNumberType: FormatNumberType.inputMoney);
 
     _controllers
@@ -73,7 +79,9 @@ class _PaymentSettingsState extends State<PaymentSettings> {
     final viewModel = widget.viewModel;
     final settings = viewModel.settings.rebuild((b) => b
       ..clientPortalUnderPaymentMinimum =
-          parseDouble(_minimumAmountController.text));
+          parseDouble(_minimumUnderPaymentAmountController.text)
+      ..clientInitiatedPaymentsMinimum =
+          parseDouble(_minimumPaymentAmountController.text));
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
@@ -232,7 +240,25 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 padding: const EdgeInsets.only(top: 16),
                 child: DecoratedFormField(
                   label: localization.minimumUnderPaymentAmount,
-                  controller: _minimumAmountController,
+                  controller: _minimumUnderPaymentAmountController,
+                  isMoney: true,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                ),
+              ),
+            BoolDropdownButton(
+              label: localization.clientInitiatedPayments,
+              value: settings.clientInitiatedPayments,
+              helpLabel: localization.clientInitiatedPaymentsHelp,
+              onChanged: (value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..clientInitiatedPayments = value)),
+            ),
+            if (settings.clientInitiatedPayments == true)
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: DecoratedFormField(
+                  label: localization.minimumPaymentAmount,
+                  controller: _minimumPaymentAmountController,
                   isMoney: true,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: true, signed: true),

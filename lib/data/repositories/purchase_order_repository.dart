@@ -115,17 +115,20 @@ class PurchaseOrderRepository {
   }
 
   Future<InvoiceEntity> emailPurchaseOrder(
-      Credentials credentials,
-      InvoiceEntity purchaseOrder,
-      EmailTemplate template,
-      String subject,
-      String body) async {
+    Credentials credentials,
+    InvoiceEntity purchaseOrder,
+    EmailTemplate template,
+    String subject,
+    String body,
+    String ccEmail,
+  ) async {
     final data = {
       'entity': '${purchaseOrder.entityType}',
       'entity_id': purchaseOrder.id,
       'template': 'email_template_$template',
       'body': body,
       'subject': subject,
+      'cc_email': ccEmail,
     };
 
     final dynamic response = await webClient.post(

@@ -273,8 +273,14 @@ Middleware<AppState> _emailCredit(CreditRepository repository) {
     final action = dynamicAction as EmailCreditRequest;
     final origCredit = store.state.creditState.map[action.creditId];
     repository
-        .emailCredit(store.state.credentials, origCredit, action.template,
-            action.subject, action.body)
+        .emailCredit(
+      store.state.credentials,
+      origCredit,
+      action.template,
+      action.subject,
+      action.body,
+      action.ccEmail,
+    )
         .then((void _) {
       store.dispatch(EmailCreditSuccess());
       if (action.completer != null) {

@@ -53,6 +53,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
+  final _ccEmailController = TextEditingController();
   final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   TabController _controller;
@@ -71,6 +72,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     _controllers = [
       _subjectController,
       _bodyController,
+      _ccEmailController,
     ];
 
     final viewModel = widget.viewModel;
@@ -193,74 +195,85 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         .toList();
 
     return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 18, top: 2),
-      child: Row(
+      padding: const EdgeInsets.only(left: 24, right: 10, top: 2),
+      child: Column(
         children: [
-          Expanded(
-              child: Text(localization.to +
-                  ': ' +
-                  contacts
-                      .where((contact) => contact != null)
-                      .map((contact) => invoice.isPurchaseOrder
-                          ? (contact as VendorContactEntity).fullNameOrEmail
-                          : (contact as ClientContactEntity).fullNameWithEmail)
-                      .join(', '))),
-          SizedBox(width: 4),
-          DropdownButtonHideUnderline(
-            child: DropdownButton<EmailTemplate>(
-              value: selectedTemplate,
-              onChanged: _isLoading
-                  ? null
-                  : (template) {
-                      setState(() {
-                        _subjectController.text = '';
-                        _bodyController.text = '';
-                        _rawBodyPreview = '';
-                        selectedTemplate = template;
-                        _loadTemplate();
-                      });
-                    },
-              items: [
-                DropdownMenuItem<EmailTemplate>(
-                  child: Text(localization.initialEmail),
-                  value: invoice.emailTemplate,
+          Row(
+            children: [
+              Expanded(
+                  child: Text(localization.to +
+                      ': ' +
+                      contacts
+                          .where((contact) => contact != null)
+                          .map((contact) => invoice.isPurchaseOrder
+                              ? (contact as VendorContactEntity).fullNameOrEmail
+                              : (contact as ClientContactEntity)
+                                  .fullNameWithEmail)
+                          .join(', '))),
+              SizedBox(width: 4),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<EmailTemplate>(
+                  value: selectedTemplate,
+                  onChanged: _isLoading
+                      ? null
+                      : (template) {
+                          setState(() {
+                            _subjectController.text = '';
+                            _bodyController.text = '';
+                            _rawBodyPreview = '';
+                            selectedTemplate = template;
+                            _loadTemplate();
+                          });
+                        },
+                  items: [
+                    DropdownMenuItem<EmailTemplate>(
+                      child: Text(localization.initialEmail),
+                      value: invoice.emailTemplate,
+                    ),
+                    if (invoice.isInvoice) ...[
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstReminder),
+                        value: EmailTemplate.reminder1,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondReminder),
+                        value: EmailTemplate.reminder2,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdReminder),
+                        value: EmailTemplate.reminder3,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.endlessReminder),
+                        value: EmailTemplate.reminder_endless,
+                      ),
+                    ],
+                    if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstCustom),
+                        value: EmailTemplate.custom1,
+                      ),
+                    if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondCustom),
+                        value: EmailTemplate.custom2,
+                      ),
+                    if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdCustom),
+                        value: EmailTemplate.custom3,
+                      ),
+                  ],
                 ),
-                if (invoice.isInvoice) ...[
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.firstReminder),
-                    value: EmailTemplate.reminder1,
-                  ),
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.secondReminder),
-                    value: EmailTemplate.reminder2,
-                  ),
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.thirdReminder),
-                    value: EmailTemplate.reminder3,
-                  ),
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.endlessReminder),
-                    value: EmailTemplate.reminder_endless,
-                  ),
-                ],
-                if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.firstCustom),
-                    value: EmailTemplate.custom1,
-                  ),
-                if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.secondCustom),
-                    value: EmailTemplate.custom2,
-                  ),
-                if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
-                  DropdownMenuItem<EmailTemplate>(
-                    child: Text(localization.thirdCustom),
-                    value: EmailTemplate.custom3,
-                  ),
-              ],
-            ),
+              ),
+              SizedBox(width: 8),
+            ],
           ),
+          DecoratedFormField(
+            controller: _ccEmailController,
+            label: localization.ccEmail,
+            keyboardType: TextInputType.emailAddress,
+          )
         ],
       ),
     );
@@ -420,8 +433,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         saveLabel: localization.send,
         onSavePressed: (context) {
           if (state.account.accountSmsVerified || state.isSelfHosted) {
-            viewModel.onSendPressed(context, selectedTemplate,
-                _subjectController.text, _bodyController.text);
+            viewModel.onSendPressed(
+              context,
+              selectedTemplate,
+              _subjectController.text.trim(),
+              _bodyController.text.trim(),
+              _ccEmailController.text.trim(),
+            );
           } else {
             showMessageDialog(
                 context: context, message: localization.verifyPhoneNumberHelp);
@@ -506,8 +524,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         ),
         saveLabel: localization.send,
         onSavePressed: (context) {
-          viewModel.onSendPressed(context, selectedTemplate,
-              _subjectController.text, _bodyController.text);
+          viewModel.onSendPressed(
+            context,
+            selectedTemplate,
+            _subjectController.text.trim(),
+            _bodyController.text.trim(),
+            _ccEmailController.text.trim(),
+          );
         },
         body: TabBarView(
           controller: _controller,

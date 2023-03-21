@@ -227,14 +227,21 @@ class SaveQuoteFailure implements StopSaving {
 }
 
 class EmailQuoteRequest implements StartSaving {
-  EmailQuoteRequest(
-      {this.completer, this.quoteId, this.template, this.subject, this.body});
+  EmailQuoteRequest({
+    @required this.completer,
+    @required this.quoteId,
+    @required this.template,
+    @required this.subject,
+    @required this.body,
+    @required this.ccEmail,
+  });
 
   final Completer completer;
   final String quoteId;
   final EmailTemplate template;
   final String subject;
   final String body;
+  final String ccEmail;
 }
 
 class EmailQuoteSuccess implements StopSaving, PersistData {

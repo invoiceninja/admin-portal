@@ -315,7 +315,7 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .emailQuote(store.state.credentials, origQuote, action.template,
-            action.subject, action.body)
+            action.subject, action.body, action.ccEmail,)
         .then((quote) {
       store.dispatch(EmailQuoteSuccess(quote));
       if (action.completer != null) {

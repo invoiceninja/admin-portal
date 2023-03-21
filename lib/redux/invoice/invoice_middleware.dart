@@ -353,8 +353,14 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     final action = dynamicAction as EmailInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .emailInvoice(store.state.credentials, origInvoice, action.template,
-            action.subject, action.body)
+        .emailInvoice(
+      store.state.credentials,
+      origInvoice,
+      action.template,
+      action.subject,
+      action.body,
+      action.ccEmail,
+    )
         .then((InvoiceEntity invoice) {
       store.dispatch(EmailInvoiceSuccess(invoice: invoice));
       store.dispatch(RefreshData());

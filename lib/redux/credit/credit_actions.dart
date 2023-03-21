@@ -227,14 +227,21 @@ class SaveCreditFailure implements StopSaving {
 }
 
 class EmailCreditRequest implements StartSaving {
-  EmailCreditRequest(
-      {this.completer, this.creditId, this.template, this.subject, this.body});
+  EmailCreditRequest({
+    @required this.completer,
+    @required this.creditId,
+    @required this.template,
+    @required this.subject,
+    @required this.body,
+    @required this.ccEmail,
+  });
 
   final Completer completer;
   final String creditId;
   final EmailTemplate template;
   final String subject;
   final String body;
+  final String ccEmail;
 }
 
 class EmailCreditSuccess implements StopSaving, PersistData {}

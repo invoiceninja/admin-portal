@@ -1,0 +1,41 @@
+workflows:
+  default-workflow:
+    name: Default Workflow
+    instance_type: linux
+    max_build_duration: 120
+    environment:
+      flutter: 3.7.5
+      xcode: latest
+      cocoapods: default
+      vars:
+        SNAPCRAFT_BUILD_ENVIRONMENT: host
+      groups:
+        - snapcraft_credentials
+    cache:
+      cache_paths: []
+    triggering:
+      branch_patterns:
+        - pattern: master
+          include: true
+          source: true
+    scripts:
+      - |
+        cp $FCI_BUILD_DIR/android/app/build.gradle.prod $FCI_BUILD_DIR/android/app/build.gradle
+        cp $FCI_BUILD_DIR/lib/.env.dart.example $FCI_BUILD_DIR/lib/.env.dart
+        echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart
+        flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
+        echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
+      - cd . && flutter packages pub get
+      - flutter config --enable-linux-desktop
+      #- flutter build linux --release
+      #- export SNAPCRAFT_STORE_CREDENTIALS=$(echo $SNAPCRAFT_LOGIN_CREDENTIALS)
+      - snapcraft whoami
+      - snapcraft snap --output invoiceninja.snap
+      - snapcraft upload invoiceninja.snap --release stable
+    artifacts:
+      - build/linux/release/bundle/**
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - hillelcoren@gmail.com

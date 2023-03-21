@@ -126,6 +126,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'credit_balance',
       serializers.serialize(object.creditBalance,
           specifiedType: const FullType(double)),
+      'payment_balance',
+      serializers.serialize(object.paymentBalance,
+          specifiedType: const FullType(double)),
       'paid_to_date',
       serializers.serialize(object.paidToDate,
           specifiedType: const FullType(double)),
@@ -319,6 +322,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'credit_balance':
           result.creditBalance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'payment_balance':
+          result.paymentBalance = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'paid_to_date':
@@ -930,6 +937,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final double creditBalance;
   @override
+  final double paymentBalance;
+  @override
   final double paidToDate;
   @override
   final String clientHash;
@@ -1026,6 +1035,7 @@ class _$ClientEntity extends ClientEntity {
       this.displayName,
       this.balance,
       this.creditBalance,
+      this.paymentBalance,
       this.paidToDate,
       this.clientHash,
       this.address1,
@@ -1077,6 +1087,8 @@ class _$ClientEntity extends ClientEntity {
     BuiltValueNullFieldError.checkNotNull(balance, r'ClientEntity', 'balance');
     BuiltValueNullFieldError.checkNotNull(
         creditBalance, r'ClientEntity', 'creditBalance');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentBalance, r'ClientEntity', 'paymentBalance');
     BuiltValueNullFieldError.checkNotNull(
         paidToDate, r'ClientEntity', 'paidToDate');
     BuiltValueNullFieldError.checkNotNull(
@@ -1165,6 +1177,7 @@ class _$ClientEntity extends ClientEntity {
         displayName == other.displayName &&
         balance == other.balance &&
         creditBalance == other.creditBalance &&
+        paymentBalance == other.paymentBalance &&
         paidToDate == other.paidToDate &&
         clientHash == other.clientHash &&
         address1 == other.address1 &&
@@ -1220,6 +1233,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, displayName.hashCode);
     _$hash = $jc(_$hash, balance.hashCode);
     _$hash = $jc(_$hash, creditBalance.hashCode);
+    _$hash = $jc(_$hash, paymentBalance.hashCode);
     _$hash = $jc(_$hash, paidToDate.hashCode);
     _$hash = $jc(_$hash, clientHash.hashCode);
     _$hash = $jc(_$hash, address1.hashCode);
@@ -1276,6 +1290,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('displayName', displayName)
           ..add('balance', balance)
           ..add('creditBalance', creditBalance)
+          ..add('paymentBalance', paymentBalance)
           ..add('paidToDate', paidToDate)
           ..add('clientHash', clientHash)
           ..add('address1', address1)
@@ -1351,6 +1366,11 @@ class ClientEntityBuilder
   double get creditBalance => _$this._creditBalance;
   set creditBalance(double creditBalance) =>
       _$this._creditBalance = creditBalance;
+
+  double _paymentBalance;
+  double get paymentBalance => _$this._paymentBalance;
+  set paymentBalance(double paymentBalance) =>
+      _$this._paymentBalance = paymentBalance;
 
   double _paidToDate;
   double get paidToDate => _$this._paidToDate;
@@ -1556,6 +1576,7 @@ class ClientEntityBuilder
       _displayName = $v.displayName;
       _balance = $v.balance;
       _creditBalance = $v.creditBalance;
+      _paymentBalance = $v.paymentBalance;
       _paidToDate = $v.paidToDate;
       _clientHash = $v.clientHash;
       _address1 = $v.address1;
@@ -1634,14 +1655,14 @@ class ClientEntityBuilder
                   balance, r'ClientEntity', 'balance'),
               creditBalance: BuiltValueNullFieldError.checkNotNull(
                   creditBalance, r'ClientEntity', 'creditBalance'),
+              paymentBalance: BuiltValueNullFieldError.checkNotNull(
+                  paymentBalance, r'ClientEntity', 'paymentBalance'),
               paidToDate: BuiltValueNullFieldError.checkNotNull(
                   paidToDate, r'ClientEntity', 'paidToDate'),
               clientHash: BuiltValueNullFieldError.checkNotNull(
                   clientHash, r'ClientEntity', 'clientHash'),
-              address1: BuiltValueNullFieldError.checkNotNull(
-                  address1, r'ClientEntity', 'address1'),
-              address2:
-                  BuiltValueNullFieldError.checkNotNull(address2, r'ClientEntity', 'address2'),
+              address1: BuiltValueNullFieldError.checkNotNull(address1, r'ClientEntity', 'address1'),
+              address2: BuiltValueNullFieldError.checkNotNull(address2, r'ClientEntity', 'address2'),
               city: BuiltValueNullFieldError.checkNotNull(city, r'ClientEntity', 'city'),
               state: BuiltValueNullFieldError.checkNotNull(state, r'ClientEntity', 'state'),
               postalCode: BuiltValueNullFieldError.checkNotNull(postalCode, r'ClientEntity', 'postalCode'),

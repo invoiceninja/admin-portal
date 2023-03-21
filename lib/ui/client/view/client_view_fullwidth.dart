@@ -77,11 +77,6 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
         !state.uiState.isEditing &&
         state.prefState.isModuleTable;
 
-    final availableCredits =
-        memoizedGetClientAvailableCredits(client.id, state.creditState.map);
-    final unappliedPayments =
-        memoizedGetClientUnappliedPayments(client.id, state.paymentState.map);
-
     // Group gateway tokens by the customerReference
     final tokenMap = <String, List<GatewayTokenEntity>>{};
     final gatewayMap = <String, CompanyGatewayEntity>{};
@@ -132,15 +127,15 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(height: 8),
-                  if (availableCredits != 0)
-                    Text(localization.credit +
-                        ': ' +
-                        formatNumber(availableCredits, context,
-                            clientId: client.id)),
-                  if (unappliedPayments != 0)
+                  if (client.paymentBalance != 0)
                     Text(localization.payments +
                         ': ' +
-                        formatNumber(unappliedPayments, context,
+                        formatNumber(client.paymentBalance, context,
+                            clientId: client.id)),
+                  if (client.creditBalance != 0)
+                    Text(localization.credit +
+                        ': ' +
+                        formatNumber(client.creditBalance, context,
                             clientId: client.id)),
                   if (client.idNumber.isNotEmpty)
                     Padding(

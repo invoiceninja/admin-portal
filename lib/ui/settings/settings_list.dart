@@ -423,6 +423,7 @@ class SettingsSearch extends StatelessWidget {
           'allow_over_payment',
           'allow_under_payment',
           'auto_bill_standard_invoices#2023-01-17',
+          'client_initiated_payments#2023-03-20',
         ]
       ],
       kSettingsTaxSettings: [
@@ -546,6 +547,7 @@ class SettingsSearch extends StatelessWidget {
           'logo_size#2023-01-26',
           'show_paid_stamp#2023-01-29',
           'show_shipping_address#2023-01-29',
+          'share_invoice_quote_columns#2023-03-20',
         ],
       ],
       kSettingsCustomDesigns: [
