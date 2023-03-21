@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -699,6 +701,7 @@ void handlePurchaseOrderAction(BuildContext context,
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
+    case EntityAction.schedule:
       bool emailValid = true;
       purchaseOrders.forEach((purchaseOrder) {
         final vendor = state.vendorState.get(
@@ -729,6 +732,29 @@ void handlePurchaseOrderAction(BuildContext context,
                 context, localization.emailedPurchaseOrder),
             purchaseOrder: purchaseOrder,
             context: context));
+      } else if (action == EntityAction.schedule) {
+        if (!state.isProPlan) {
+          showMessageDialog(
+              context: context,
+              message: localization.upgradeToPaidPlanToSchedule,
+              secondaryActions: [
+                TextButton(
+                    onPressed: () {
+                      store.dispatch(
+                          ViewSettings(section: kSettingsAccountManagement));
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(localization.upgrade.toUpperCase())),
+              ]);
+          return;
+        }
+
+        createEntity(
+            context: context,
+            entity: ScheduleEntity().rebuild((b) => b
+              ..template = ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
+              ..parameters.entityType = EntityType.purchaseOrder.apiValue
+              ..parameters.entityId = purchaseOrder.id));
       } else {
         confirmCallback(
             context: context,

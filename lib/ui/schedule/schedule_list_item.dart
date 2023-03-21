@@ -41,9 +41,13 @@ class ScheduleListItem extends StatelessWidget {
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? schedule.matchesFilterValue(filter)
-        : localization.lookup(schedule.template) +
-            ' • ' +
-            localization.lookup(kFrequencies[schedule.frequencyId]);
+        : (schedule.template == ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
+                ? localization.emailRecord
+                : localization.lookup(schedule.template)) +
+            (schedule.frequencyId.isEmpty
+                ? ''
+                : ' • ' +
+                    localization.lookup(kFrequencies[schedule.frequencyId]));
     final subtitle = filterMatch;
 
     return DismissibleEntity(

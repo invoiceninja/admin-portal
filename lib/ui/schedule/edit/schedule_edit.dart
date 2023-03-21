@@ -164,7 +164,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         value: schedule.template,
                         onChanged: (dynamic value) {
                           viewModel.onChanged(
-                              schedule.rebuild((b) => b..template = value));
+                            schedule.rebuild((b) => b..template = value),
+                          );
                         },
                         items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
@@ -351,15 +352,13 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             EntityType.purchaseOrder
                           ]
                               .map((entityType) => DropdownMenuItem<String>(
-                                    value: entityType.toString(),
+                                    value: entityType.apiValue,
                                     child: Text(
-                                      localization
-                                          .lookup(entityType.toString()),
+                                      localization.lookup(entityType.apiValue),
                                     ),
                                   ))
                               .toList()),
-                      if (parameters.entityType ==
-                          EntityType.invoice.toString())
+                      if (parameters.entityType == EntityType.invoice.apiValue)
                         EntityDropdown(
                           labelText: localization.invoice,
                           entityType: EntityType.invoice,
@@ -371,7 +370,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           },
                         )
                       else if (parameters.entityType ==
-                          EntityType.quote.toString())
+                          EntityType.quote.apiValue)
                         EntityDropdown(
                           labelText: localization.quote,
                           entityType: EntityType.quote,
@@ -383,7 +382,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           },
                         )
                       else if (parameters.entityType ==
-                          EntityType.credit.toString())
+                          EntityType.credit.apiValue)
                         EntityDropdown(
                           labelText: localization.credit,
                           entityType: EntityType.credit,
@@ -395,7 +394,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           },
                         )
                       else if (parameters.entityType ==
-                          EntityType.purchaseOrder.toString())
+                          EntityType.purchaseOrder.apiValue)
                         EntityDropdown(
                           labelText: localization.purchaseOrder,
                           entityType: EntityType.purchaseOrder,

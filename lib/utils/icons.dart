@@ -44,6 +44,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.resendInvite:
     case EntityAction.sendNow:
       return Icons.send;
+    case EntityAction.schedule:
+      return Icons.schedule;
     case EntityAction.archive:
       return Icons.archive;
     case EntityAction.delete:

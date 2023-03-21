@@ -93,6 +93,7 @@ const EntityAction _$convertToProject =
 const EntityAction _$merge = const EntityAction._('merge');
 const EntityAction _$bulkPrint = const EntityAction._('bulkPrint');
 const EntityAction _$autoBill = const EntityAction._('autoBill');
+const EntityAction _$schedule = const EntityAction._('schedule');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -248,6 +249,8 @@ EntityAction _$valueOf(String name) {
       return _$bulkPrint;
     case 'autoBill':
       return _$autoBill;
+    case 'schedule':
+      return _$schedule;
     default:
       throw new ArgumentError(name);
   }
@@ -331,6 +334,7 @@ final BuiltSet<EntityAction> _$values =
   _$merge,
   _$bulkPrint,
   _$autoBill,
+  _$schedule,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
