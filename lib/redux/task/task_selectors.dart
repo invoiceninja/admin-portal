@@ -29,6 +29,12 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   var notes = '';
   final dates = <String, double>{};
 
+  var lineBreak = '';
+  if (company.markdownEnabled) {
+    lineBreak += '<br/>';
+  }
+  lineBreak += '\n';
+
   if (project.isOld && includeProjectHeader) {
     if (state.company.markdownEnabled) {
       notes += '## ${project.name}\n';
@@ -46,9 +52,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       notes += '\n';
     }
     notes += '<div class="task-time-details">\n';
+
     task
         .getTaskTimes()
-        .where((time) => time.startDate != null && time.endDate != null)
+        .where((time) =>
+            time.startDate != null && time.endDate != null && time.isBillable)
         .forEach((time) {
       final hours = round(time.duration.inSeconds / 3600, 3);
       final hoursStr = hours == 1
@@ -64,10 +72,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         if (company.invoiceTaskHours) {
           notes += hoursStr;
         }
-        if (company.markdownEnabled) {
-          notes += '<br/>';
+        notes += lineBreak;
+        if (time.description.isNotEmpty) {
+          notes += time.description + lineBreak;
         }
-        notes += '\n';
       } else if (company.invoiceTaskDatelog) {
         final date = formatDate(time.startDate.toIso8601String(), context,
             showTime: false);
@@ -85,10 +93,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         if (company.invoiceTaskHours) {
           notes += hoursStr;
         }
-        if (company.markdownEnabled) {
-          notes += '<br/>';
+        notes += lineBreak;
+        if (time.description.isNotEmpty) {
+          notes += time.description + lineBreak;
         }
-        notes += '\n';
       }
     });
 
@@ -161,7 +169,8 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       task: task,
       group: group,
     )
-    ..quantity = round(task.calculateDuration().inSeconds / 3600, 3)
+    ..quantity =
+        round(task.calculateDuration(onlyBillable: true).inSeconds / 3600, 3)
     ..customValue1 = customValue1
     ..customValue2 = customValue2
     ..customValue3 = customValue3

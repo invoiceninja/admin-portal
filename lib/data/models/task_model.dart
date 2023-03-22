@@ -85,13 +85,20 @@ class TaskFields {
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
-  factory TaskTime({DateTime startDate, DateTime endDate}) {
+  factory TaskTime({
+    DateTime startDate,
+    DateTime endDate,
+    String description,
+    bool isBillable,
+  }) {
     return _$TaskTime._(
       startDate: startDate ??
           DateTime.fromMillisecondsSinceEpoch(
               (DateTime.now().millisecondsSinceEpoch / 1000).floor() * 1000,
               isUtc: true),
       endDate: endDate,
+      description: description ?? '',
+      isBillable: isBillable ?? true,
     );
   }
 
@@ -107,10 +114,16 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   @nullable
   DateTime get endDate;
 
+  String get description;
+
+  bool get isBillable;
+
   Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
   List<dynamic> get asList {
-    final startTime = (startDate.millisecondsSinceEpoch / 1000).floor();
+    final startTime = startDate != null
+        ? (startDate.millisecondsSinceEpoch / 1000).floor()
+        : 0;
     var endTime =
         endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0;
 
@@ -127,7 +140,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
       }
     }
 
-    return <dynamic>[startTime, endTime];
+    return <dynamic>[startTime, endTime, description, isBillable];
   }
 
   TaskTime get stop => rebuild((b) => b..endDate = DateTime.now().toUtc());
@@ -137,7 +150,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isRunning => endDate == null;
 
-  bool get isEmpty => startDate == null && endDate == null;
+  bool get isEmpty =>
+      startDate == null && endDate == null && description.isEmpty;
 
   Map<String, Duration> getParts() {
     final localStartDate = startDate.toLocal();
@@ -202,6 +216,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
               endDate.toLocal().second,
             )
           : endDate,
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -214,15 +230,18 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     final now = DateTime.now();
 
     return TaskTime(
-        startDate: startDate,
-        endDate: DateTime(
-          dateTime.toLocal()?.year,
-          dateTime.toLocal()?.month,
-          dateTime.toLocal()?.day,
-          endDate?.toLocal()?.hour ?? now.hour,
-          endDate?.toLocal()?.minute ?? now.minute,
-          endDate?.toLocal()?.second ?? now.second,
-        ).toUtc());
+      startDate: startDate,
+      endDate: DateTime(
+        dateTime.toLocal()?.year,
+        dateTime.toLocal()?.month,
+        dateTime.toLocal()?.day,
+        endDate?.toLocal()?.hour ?? now.hour,
+        endDate?.toLocal()?.minute ?? now.minute,
+        endDate?.toLocal()?.second ?? now.second,
+      ).toUtc(),
+      description: description,
+      isBillable: isBillable,
+    );
   }
 
   TaskTime copyWithStartTime(DateTime dateTime) {
@@ -238,6 +257,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.toLocal().second,
       ).toUtc(),
       endDate: endDate,
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -253,6 +274,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.toLocal().minute,
         dateTime.toLocal().second,
       ).toUtc(),
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -261,6 +284,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return TaskTime(
       startDate: start,
       endDate: start.add(duration),
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -492,28 +517,29 @@ abstract class TaskEntity extends Object
     log.forEach((dynamic detail) {
       int startDate;
       int endDate;
+      final taskItem = detail as List<dynamic>;
 
-      if ((detail as List)[0] == false || (detail as List)[0] == null) {
+      if (taskItem[0] == false || taskItem[0] == null) {
         startDate = 0;
       } else {
-        startDate = ((detail as List)[0]).round();
+        startDate = (taskItem[0]).round();
       }
 
-      if (startDate != 0) {
-        if ((detail as List)[1] == false || (detail as List)[1] == null) {
-          endDate = 0;
-        } else {
-          endDate = ((detail as List)[1]).round();
-        }
-
-        final taskTime = TaskTime(
-            startDate: convertTimestampToDate(startDate).toUtc(),
-            endDate: (endDate ?? 0) > 0
-                ? convertTimestampToDate(endDate).toUtc()
-                : null);
-
-        details.add(taskTime);
+      if (taskItem[1] == false || taskItem[1] == null) {
+        endDate = 0;
+      } else {
+        endDate = (taskItem[1]).round();
       }
+
+      final taskTime = TaskTime(
+        startDate: convertTimestampToDate(startDate).toUtc(),
+        endDate:
+            (endDate ?? 0) > 0 ? convertTimestampToDate(endDate).toUtc() : null,
+        description: taskItem.length >= 3 ? taskItem[2] : '',
+        isBillable: taskItem.length >= 4 ? taskItem[3] : true,
+      );
+
+      details.add(taskTime);
     });
 
     if (sort) {
@@ -560,11 +586,13 @@ abstract class TaskEntity extends Object
   double calculateAmount(double taskRate) =>
       taskRate * round(calculateDuration().inSeconds / 3600, 3);
 
-  Duration calculateDuration() {
+  Duration calculateDuration({bool onlyBillable = false}) {
     int seconds = 0;
 
     getTaskTimes().forEach((taskTime) {
-      seconds += taskTime.duration.inSeconds;
+      if (!onlyBillable || taskTime.isBillable) {
+        seconds += taskTime.duration.inSeconds;
+      }
     });
 
     return Duration(seconds: seconds);

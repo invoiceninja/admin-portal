@@ -206,8 +206,9 @@ class _BottomBar extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: LiveText(() {
-                      var title = localization.duration +
-                          ' ' +
+                      var title = (isDesktop(context) && !useSidebarEditor
+                              ? (localization.duration + ' ')
+                              : '') +
                           formatNumber(
                               task.calculateDuration().inSeconds.toDouble(),
                               context,

@@ -109,7 +109,14 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   @override
   Iterable<Object> serialize(Serializers serializers, TaskTime object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
+    final result = <Object>[
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'isBillable',
+      serializers.serialize(object.isBillable,
+          specifiedType: const FullType(bool)),
+    ];
     Object value;
     value = object.startDate;
     if (value != null) {
@@ -146,6 +153,14 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
         case 'endDate':
           result.endDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isBillable':
+          result.isBillable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -559,11 +574,22 @@ class _$TaskTime extends TaskTime {
   final DateTime startDate;
   @override
   final DateTime endDate;
+  @override
+  final String description;
+  @override
+  final bool isBillable;
 
   factory _$TaskTime([void Function(TaskTimeBuilder) updates]) =>
       (new TaskTimeBuilder()..update(updates))._build();
 
-  _$TaskTime._({this.startDate, this.endDate}) : super._();
+  _$TaskTime._(
+      {this.startDate, this.endDate, this.description, this.isBillable})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        description, r'TaskTime', 'description');
+    BuiltValueNullFieldError.checkNotNull(
+        isBillable, r'TaskTime', 'isBillable');
+  }
 
   @override
   TaskTime rebuild(void Function(TaskTimeBuilder) updates) =>
@@ -577,7 +603,9 @@ class _$TaskTime extends TaskTime {
     if (identical(other, this)) return true;
     return other is TaskTime &&
         startDate == other.startDate &&
-        endDate == other.endDate;
+        endDate == other.endDate &&
+        description == other.description &&
+        isBillable == other.isBillable;
   }
 
   int __hashCode;
@@ -587,6 +615,8 @@ class _$TaskTime extends TaskTime {
     var _$hash = 0;
     _$hash = $jc(_$hash, startDate.hashCode);
     _$hash = $jc(_$hash, endDate.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, isBillable.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -595,7 +625,9 @@ class _$TaskTime extends TaskTime {
   String toString() {
     return (newBuiltValueToStringHelper(r'TaskTime')
           ..add('startDate', startDate)
-          ..add('endDate', endDate))
+          ..add('endDate', endDate)
+          ..add('description', description)
+          ..add('isBillable', isBillable))
         .toString();
   }
 }
@@ -611,6 +643,14 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   DateTime get endDate => _$this._endDate;
   set endDate(DateTime endDate) => _$this._endDate = endDate;
 
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  bool _isBillable;
+  bool get isBillable => _$this._isBillable;
+  set isBillable(bool isBillable) => _$this._isBillable = isBillable;
+
   TaskTimeBuilder();
 
   TaskTimeBuilder get _$this {
@@ -618,6 +658,8 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
     if ($v != null) {
       _startDate = $v.startDate;
       _endDate = $v.endDate;
+      _description = $v.description;
+      _isBillable = $v.isBillable;
       _$v = null;
     }
     return this;
@@ -638,8 +680,14 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   TaskTime build() => _build();
 
   _$TaskTime _build() {
-    final _$result =
-        _$v ?? new _$TaskTime._(startDate: startDate, endDate: endDate);
+    final _$result = _$v ??
+        new _$TaskTime._(
+            startDate: startDate,
+            endDate: endDate,
+            description: BuiltValueNullFieldError.checkNotNull(
+                description, r'TaskTime', 'description'),
+            isBillable: BuiltValueNullFieldError.checkNotNull(
+                isBillable, r'TaskTime', 'isBillable'));
     replace(_$result);
     return _$result;
   }

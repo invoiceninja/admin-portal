@@ -85,11 +85,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     int tabs = 6;
 
-    if (state.prefState.isMobile && supportsSchedules()) {
+    if (state.prefState.isMobile) {
       tabs++;
     }
 
-    if (viewModel.settings.syncInvoiceQuoteColumns == false) {
+    if (viewModel.settings.shareInvoiceQuoteColumns == false) {
       tabs++;
     }
 
@@ -176,7 +176,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     final tabs = [
       localization.generalSettings,
-      if (isMobile(context) && supportsSchedules()) localization.preview,
+      if (isMobile(context)) localization.preview,
       localization.clientDetails,
       localization.companyDetails,
       localization.companyAddress,
@@ -189,7 +189,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         localization.vendorDetails,
       if (company.isModuleEnabled(EntityType.purchaseOrder))
         localization.purchaseOrderDetails,
-      if (settings.syncInvoiceQuoteColumns == false) ...[
+      if (settings.shareInvoiceQuoteColumns == false) ...[
         localization.invoiceProductColumns,
         localization.quoteProductColumns,
       ] else
@@ -254,7 +254,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         )),
                             ),
                           ),
-                          if (isDesktop(context) && supportsSchedules()) ...[
+                          if (isDesktop(context)) ...[
                             SizedBox(
                               width: kTableColumnGap,
                             ),
@@ -619,7 +619,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ),
                   ],
                 ),
-                if (isMobile(context) && supportsSchedules())
+                if (isMobile(context))
                   _PdfPreview(
                     settings: viewModel.settings,
                     state: state,
@@ -1075,17 +1075,17 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       isLast: true,
                       child: SwitchListTile(
                         title: Text(localization.shareInvoiceQuoteColumns),
-                        value: settings.syncInvoiceQuoteColumns ?? true,
+                        value: settings.shareInvoiceQuoteColumns ?? true,
                         activeColor: Theme.of(context).colorScheme.secondary,
                         onChanged: (value) {
                           viewModel.onSettingsChanged(settings.rebuild(
-                              (b) => b..syncInvoiceQuoteColumns = value));
+                              (b) => b..shareInvoiceQuoteColumns = value));
                         },
                       ),
                     )
                   ],
                 ),
-                if (settings.syncInvoiceQuoteColumns == false)
+                if (settings.shareInvoiceQuoteColumns == false)
                   Expanded(
                     child: FormCard(
                       child: MultiSelectList(

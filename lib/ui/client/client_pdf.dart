@@ -439,39 +439,37 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               callback: (_) => loadPDF(sendEmail: true));
                         },
                 ),
-                if (supportsSchedules())
-                  TextButton(
-                      onPressed: () {
-                        if (!state.isProPlan) {
-                          showMessageDialog(
-                              context: context,
-                              message: localization.upgradeToPaidPlanToSchedule,
-                              secondaryActions: [
-                                TextButton(
-                                    onPressed: () {
-                                      store.dispatch(ViewSettings(
-                                          section: kSettingsAccountManagement));
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                        localization.upgrade.toUpperCase())),
-                              ]);
-                          return;
-                        }
-
-                        createEntity(
+                TextButton(
+                    onPressed: () {
+                      if (!state.isProPlan) {
+                        showMessageDialog(
                             context: context,
-                            entity: ScheduleEntity().rebuild((b) => b
-                              ..template =
-                                  ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
-                              ..parameters.clients.add(client.id)
-                              ..parameters.showAgingTable = _showAging
-                              ..parameters.showPaymentsTable = _showPayments
-                              ..parameters.status = _status
-                              ..parameters.dateRange = _dateRange.snakeCase));
-                      },
-                      child: Text(localization.schedule,
-                          style: TextStyle(color: state.headerTextColor))),
+                            message: localization.upgradeToPaidPlanToSchedule,
+                            secondaryActions: [
+                              TextButton(
+                                  onPressed: () {
+                                    store.dispatch(ViewSettings(
+                                        section: kSettingsAccountManagement));
+                                    Navigator.of(context).pop();
+                                  },
+                                  child:
+                                      Text(localization.upgrade.toUpperCase())),
+                            ]);
+                        return;
+                      }
+
+                      createEntity(
+                          context: context,
+                          entity: ScheduleEntity().rebuild((b) => b
+                            ..template = ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+                            ..parameters.clients.add(client.id)
+                            ..parameters.showAgingTable = _showAging
+                            ..parameters.showPaymentsTable = _showPayments
+                            ..parameters.status = _status
+                            ..parameters.dateRange = _dateRange.snakeCase));
+                    },
+                    child: Text(localization.schedule,
+                        style: TextStyle(color: state.headerTextColor))),
                 if (isDesktop(context))
                   TextButton(
                     child: Text(localization.close,

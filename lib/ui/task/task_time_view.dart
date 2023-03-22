@@ -40,7 +40,10 @@ class TaskTimeListTile extends StatelessWidget {
     final title = DateFormat('EEE MMM d, yyy', localeSelector(state))
         .format(taskTime.startDate.toLocal());
 
-    final subtitle = '$startDateString - $endDateString';
+    var subtitle = '$startDateString - $endDateString';
+    if (taskTime.description.isNotEmpty) {
+      subtitle += '\n' + taskTime.description;
+    }
 
     return Column(
       children: <Widget>[

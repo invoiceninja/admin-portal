@@ -1485,10 +1485,24 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.syncInvoiceQuoteColumns;
+    value = object.shareInvoiceQuoteColumns;
     if (value != null) {
       result
         ..add('sync_invoice_quote_columns')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.allowBillableTaskItems;
+    if (value != null) {
+      result
+        ..add('allow_billable_task_items')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.showTaskItemDescription;
+    if (value != null) {
+      result
+        ..add('show_task_item_description')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
@@ -2357,7 +2371,15 @@ class _$SettingsEntitySerializer
               specifiedType: const FullType(double)) as double;
           break;
         case 'sync_invoice_quote_columns':
-          result.syncInvoiceQuoteColumns = serializers.deserialize(value,
+          result.shareInvoiceQuoteColumns = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'allow_billable_task_items':
+          result.allowBillableTaskItems = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_task_item_description':
+          result.showTaskItemDescription = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
       }
@@ -2861,7 +2883,11 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final double clientInitiatedPaymentsMinimum;
   @override
-  final bool syncInvoiceQuoteColumns;
+  final bool shareInvoiceQuoteColumns;
+  @override
+  final bool allowBillableTaskItems;
+  @override
+  final bool showTaskItemDescription;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3078,7 +3104,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.acceptPurchaseOrderNumber,
       this.clientInitiatedPayments,
       this.clientInitiatedPaymentsMinimum,
-      this.syncInvoiceQuoteColumns})
+      this.shareInvoiceQuoteColumns,
+      this.allowBillableTaskItems,
+      this.showTaskItemDescription})
       : super._();
 
   @override
@@ -3309,7 +3337,9 @@ class _$SettingsEntity extends SettingsEntity {
         clientInitiatedPayments == other.clientInitiatedPayments &&
         clientInitiatedPaymentsMinimum ==
             other.clientInitiatedPaymentsMinimum &&
-        syncInvoiceQuoteColumns == other.syncInvoiceQuoteColumns;
+        shareInvoiceQuoteColumns == other.shareInvoiceQuoteColumns &&
+        allowBillableTaskItems == other.allowBillableTaskItems &&
+        showTaskItemDescription == other.showTaskItemDescription;
   }
 
   int __hashCode;
@@ -3528,7 +3558,9 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, acceptPurchaseOrderNumber.hashCode);
     _$hash = $jc(_$hash, clientInitiatedPayments.hashCode);
     _$hash = $jc(_$hash, clientInitiatedPaymentsMinimum.hashCode);
-    _$hash = $jc(_$hash, syncInvoiceQuoteColumns.hashCode);
+    _$hash = $jc(_$hash, shareInvoiceQuoteColumns.hashCode);
+    _$hash = $jc(_$hash, allowBillableTaskItems.hashCode);
+    _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3752,7 +3784,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('clientInitiatedPayments', clientInitiatedPayments)
           ..add(
               'clientInitiatedPaymentsMinimum', clientInitiatedPaymentsMinimum)
-          ..add('syncInvoiceQuoteColumns', syncInvoiceQuoteColumns))
+          ..add('shareInvoiceQuoteColumns', shareInvoiceQuoteColumns)
+          ..add('allowBillableTaskItems', allowBillableTaskItems)
+          ..add('showTaskItemDescription', showTaskItemDescription))
         .toString();
   }
 }
@@ -4797,10 +4831,20 @@ class SettingsEntityBuilder
   set clientInitiatedPaymentsMinimum(double clientInitiatedPaymentsMinimum) =>
       _$this._clientInitiatedPaymentsMinimum = clientInitiatedPaymentsMinimum;
 
-  bool _syncInvoiceQuoteColumns;
-  bool get syncInvoiceQuoteColumns => _$this._syncInvoiceQuoteColumns;
-  set syncInvoiceQuoteColumns(bool syncInvoiceQuoteColumns) =>
-      _$this._syncInvoiceQuoteColumns = syncInvoiceQuoteColumns;
+  bool _shareInvoiceQuoteColumns;
+  bool get shareInvoiceQuoteColumns => _$this._shareInvoiceQuoteColumns;
+  set shareInvoiceQuoteColumns(bool shareInvoiceQuoteColumns) =>
+      _$this._shareInvoiceQuoteColumns = shareInvoiceQuoteColumns;
+
+  bool _allowBillableTaskItems;
+  bool get allowBillableTaskItems => _$this._allowBillableTaskItems;
+  set allowBillableTaskItems(bool allowBillableTaskItems) =>
+      _$this._allowBillableTaskItems = allowBillableTaskItems;
+
+  bool _showTaskItemDescription;
+  bool get showTaskItemDescription => _$this._showTaskItemDescription;
+  set showTaskItemDescription(bool showTaskItemDescription) =>
+      _$this._showTaskItemDescription = showTaskItemDescription;
 
   SettingsEntityBuilder();
 
@@ -5018,7 +5062,9 @@ class SettingsEntityBuilder
       _acceptPurchaseOrderNumber = $v.acceptPurchaseOrderNumber;
       _clientInitiatedPayments = $v.clientInitiatedPayments;
       _clientInitiatedPaymentsMinimum = $v.clientInitiatedPaymentsMinimum;
-      _syncInvoiceQuoteColumns = $v.syncInvoiceQuoteColumns;
+      _shareInvoiceQuoteColumns = $v.shareInvoiceQuoteColumns;
+      _allowBillableTaskItems = $v.allowBillableTaskItems;
+      _showTaskItemDescription = $v.showTaskItemDescription;
       _$v = null;
     }
     return this;
@@ -5255,7 +5301,9 @@ class SettingsEntityBuilder
               acceptPurchaseOrderNumber: acceptPurchaseOrderNumber,
               clientInitiatedPayments: clientInitiatedPayments,
               clientInitiatedPaymentsMinimum: clientInitiatedPaymentsMinimum,
-              syncInvoiceQuoteColumns: syncInvoiceQuoteColumns);
+              shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
+              allowBillableTaskItems: allowBillableTaskItems,
+              showTaskItemDescription: showTaskItemDescription);
     } catch (_) {
       String _$failedField;
       try {

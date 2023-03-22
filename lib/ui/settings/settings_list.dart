@@ -242,11 +242,10 @@ class _SettingsListState extends State<SettingsList> {
               ),
                */
             if (showAll) ...[
-              if (supportsSchedules())
-                SettingsListTile(
-                  section: kSettingsSchedules,
-                  viewModel: widget.viewModel,
-                ),
+              SettingsListTile(
+                section: kSettingsSchedules,
+                viewModel: widget.viewModel,
+              ),
               SettingsListTile(
                 section: kSettingsUserManagement,
                 viewModel: widget.viewModel,
@@ -456,6 +455,8 @@ class SettingsSearch extends StatelessWidget {
           'client_portal',
           'lock_invoiced_tasks#2022-11-30',
           'invoice_task_hours#2023-01-19',
+          'allow_billable_task_items#2023-03-22',
+          'show_task_item_description#2023-03-22',
         ],
       ],
       kSettingsTaskStatuses: [
@@ -651,12 +652,11 @@ class SettingsSearch extends StatelessWidget {
           'payment_links',
         ],
       ],
-      if (supportsSchedules())
-        kSettingsSchedules: [
-          [
-            'schedules#2023-02-15',
-          ],
+      kSettingsSchedules: [
+        [
+          'schedules#2023-02-15',
         ],
+      ],
       kSettingsUserManagement: [
         [
           'users',

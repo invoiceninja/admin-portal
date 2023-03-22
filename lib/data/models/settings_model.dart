@@ -971,7 +971,15 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'sync_invoice_quote_columns')
-  bool get syncInvoiceQuoteColumns;
+  bool get shareInvoiceQuoteColumns;
+
+  @nullable
+  @BuiltValueField(wireName: 'allow_billable_task_items')
+  bool get allowBillableTaskItems;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_task_item_description')
+  bool get showTaskItemDescription;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 

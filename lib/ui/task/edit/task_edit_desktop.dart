@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
@@ -26,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -125,6 +127,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final state = viewModel.state;
 
     final company = state.company;
+    final settings = company.settings;
     final client = state.clientState.get(task.clientId);
     final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
@@ -300,149 +303,230 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           ],
         ),
         FormCard(
+          key: ValueKey('__table_${_updatedAt}__'),
           padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
-          child: Table(
-            key: ValueKey('__table_${_updatedAt}__'),
-            columnWidths: {
-              showEndDate ? 5 : 4: FixedColumnWidth(kMinInteractiveDimension),
-            },
-            children: [
-              TableRow(
+          children: [
+            if (!settings.showTaskItemDescription)
+              Row(
                 children: [
-                  TableHeader(localization.startDate, isFirst: true),
-                  TableHeader(localization.startTime),
-                  if (showEndDate) TableHeader(localization.endDate),
-                  TableHeader(localization.endTime),
-                  TableHeader(localization.duration),
-                  TableHeader(''),
+                  Expanded(child: Text(localization.startDate)),
+                  Expanded(child: Text(localization.startTime)),
+                  if (showEndDate) Expanded(child: Text(localization.endDate)),
+                  Expanded(child: Text(localization.endTime)),
+                  Expanded(child: Text(localization.duration)),
+                  if (settings.allowBillableTaskItems) SizedBox(width: 50),
+                  SizedBox(width: 38),
                 ],
-                decoration: tableHeaderColor.isNotEmpty
-                    ? BoxDecoration(
-                        color: convertHexStringToColor(tableHeaderColor),
-                      )
-                    : null,
               ),
-              for (var index = 0; index < taskTimes.length; index++)
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DatePicker(
-                      key: ValueKey(
-                          '__${_startTimeUpdatedAt}_${_durationUpdateAt}_${index}__'),
-                      selectedDate: taskTimes[index].startDate == null
-                          ? null
-                          : convertDateTimeToSqlDate(
-                              taskTimes[index].startDate.toLocal()),
-                      onSelected: (date, _) {
-                        final taskTime = taskTimes[index]
-                            .copyWithStartDate(date, syncDates: !showEndDate);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _startDateUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
+            ...taskTimes.map((taskTime) {
+              final index = taskTimes.indexOf(taskTime);
+              return Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: kTableColumnGap),
+                                child: DatePicker(
+                                  key: ValueKey(
+                                      '__${_startTimeUpdatedAt}_${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.startDate
+                                      : null,
+                                  selectedDate: taskTimes[index].startDate ==
+                                          null
+                                      ? null
+                                      : convertDateTimeToSqlDate(
+                                          taskTimes[index].startDate.toLocal()),
+                                  onSelected: (date, _) {
+                                    final taskTime = taskTimes[index]
+                                        .copyWithStartDate(date,
+                                            syncDates: !showEndDate);
+                                    viewModel.onUpdatedTaskTime(
+                                        taskTime, index);
+                                    setState(() {
+                                      _startDateUpdatedAt =
+                                          DateTime.now().millisecondsSinceEpoch;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: kTableColumnGap),
+                                child: TimePicker(
+                                  key: ValueKey(
+                                      '__${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.startTime
+                                      : null,
+                                  selectedDateTime: taskTimes[index].startDate,
+                                  onSelected: (timeOfDay) {
+                                    final taskTime = taskTimes[index]
+                                        .copyWithStartTime(timeOfDay);
+                                    viewModel.onUpdatedTaskTime(
+                                        taskTime, index);
+                                    setState(() {
+                                      _startTimeUpdatedAt =
+                                          DateTime.now().millisecondsSinceEpoch;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            if (showEndDate)
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: kTableColumnGap),
+                                  child: DatePicker(
+                                    key: ValueKey(
+                                        '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
+                                    labelText: settings.showTaskItemDescription
+                                        ? localization.endDate
+                                        : null,
+                                    selectedDate: taskTimes[index].endDate ==
+                                            null
+                                        ? null
+                                        : convertDateTimeToSqlDate(
+                                            taskTimes[index].endDate.toLocal()),
+                                    onSelected: (date, _) {
+                                      final taskTime = taskTimes[index]
+                                          .copyWithEndDate(date);
+                                      viewModel.onUpdatedTaskTime(
+                                          taskTime, index);
+                                      setState(() {
+                                        _endDateUpdatedAt = DateTime.now()
+                                            .millisecondsSinceEpoch;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: kTableColumnGap),
+                                child: TimePicker(
+                                  key: ValueKey(
+                                      '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.endTime
+                                      : null,
+                                  selectedDateTime: taskTimes[index].endDate,
+                                  isEndTime: true,
+                                  onSelected: (timeOfDay) {
+                                    final taskTime = taskTimes[index]
+                                        .copyWithEndTime(timeOfDay);
+                                    viewModel.onUpdatedTaskTime(
+                                        taskTime, index);
+                                    setState(() {
+                                      _endTimeUpdatedAt =
+                                          DateTime.now().millisecondsSinceEpoch;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: kTableColumnGap),
+                                child: DurationPicker(
+                                  key: ValueKey(
+                                      '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.duration
+                                      : null,
+                                  onSelected: (Duration duration) {
+                                    final taskTime = taskTimes[index]
+                                        .copyWithDuration(duration);
+                                    viewModel.onUpdatedTaskTime(
+                                        taskTime, index);
+                                    setState(() {
+                                      _durationUpdateAt =
+                                          DateTime.now().millisecondsSinceEpoch;
+                                    });
+                                  },
+                                  selectedDuration:
+                                      (taskTimes[index].startDate == null ||
+                                              taskTimes[index].endDate == null)
+                                          ? null
+                                          : taskTimes[index].duration,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (settings.showTaskItemDescription)
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 16, right: 16),
+                            child: GrowableFormField(
+                              label: localization.description,
+                              initialValue: taskTime.description,
+                              onChanged: (value) {
+                                viewModel.onUpdatedTaskTime(
+                                    taskTime
+                                        .rebuild((b) => b..description = value),
+                                    index);
+                              },
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      key: ValueKey('__${_durationUpdateAt}_${index}__'),
-                      selectedDateTime: taskTimes[index].startDate,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithStartTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _startTimeUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  if (showEndDate)
+                  if (settings.allowBillableTaskItems)
                     Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: DatePicker(
-                        key: ValueKey(
-                            '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
-                        selectedDate: taskTimes[index].endDate == null
-                            ? null
-                            : convertDateTimeToSqlDate(
-                                taskTimes[index].endDate.toLocal()),
-                        onSelected: (date, _) {
-                          final taskTime =
-                              taskTimes[index].copyWithEndDate(date);
-                          viewModel.onUpdatedTaskTime(taskTime, index);
-                          setState(() {
-                            _endDateUpdatedAt =
-                                DateTime.now().millisecondsSinceEpoch;
-                          });
-                        },
-                      ),
+                      padding: const EdgeInsets.only(right: 8, left: 4),
+                      child: IconButton(
+                          tooltip: taskTime.isBillable
+                              ? localization.billable
+                              : localization.notBillable,
+                          onPressed: taskTime.isEmpty
+                              ? null
+                              : () => viewModel.onUpdatedTaskTime(
+                                  taskTime.rebuild((b) =>
+                                      b..isBillable = !taskTime.isBillable),
+                                  index),
+                          icon: Icon(taskTime.isBillable && !taskTime.isEmpty
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank)),
                     ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      key: ValueKey(
-                          '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
-                      selectedDateTime: taskTimes[index].endDate,
-                      isEndTime: true,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithEndTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _endTimeUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
+                  IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: overlapping.contains(index) ? Colors.red : null,
                     ),
+                    tooltip: overlapping.contains(index)
+                        ? localization.invalidTime
+                        : localization.remove,
+                    onPressed: taskTimes[index].isEmpty
+                        ? null
+                        : () {
+                            confirmCallback(
+                                context: context,
+                                callback: (_) {
+                                  viewModel.onRemoveTaskTime(index);
+                                  setState(() {
+                                    _updatedAt =
+                                        DateTime.now().millisecondsSinceEpoch;
+                                  });
+                                });
+                          },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DurationPicker(
-                      key: ValueKey(
-                          '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
-                      onSelected: (Duration duration) {
-                        final taskTime =
-                            taskTimes[index].copyWithDuration(duration);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _durationUpdateAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                      selectedDuration: (taskTimes[index].startDate == null ||
-                              taskTimes[index].endDate == null)
-                          ? null
-                          : taskTimes[index].duration,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: overlapping.contains(index) ? Colors.red : null,
-                      ),
-                      tooltip: overlapping.contains(index)
-                          ? localization.invalidTime
-                          : localization.remove,
-                      onPressed: taskTimes[index].isEmpty
-                          ? null
-                          : () {
-                              viewModel.onRemoveTaskTime(index);
-                              setState(() {
-                                _updatedAt =
-                                    DateTime.now().millisecondsSinceEpoch;
-                              });
-                            },
-                    ),
-                  ),
-                ]),
-            ],
-          ),
+                ],
+              );
+            }).toList(),
+          ],
         ),
         SizedBox(
           height: kMobileDialogPadding,
