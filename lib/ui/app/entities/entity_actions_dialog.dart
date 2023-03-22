@@ -26,6 +26,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/schedule/schedule_actions.dart';
 import 'package:invoiceninja_flutter/redux/subscription/subscription_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
@@ -192,9 +193,12 @@ class EntityActionListTile extends StatelessWidget {
           case EntityType.transactionRule:
             handleTransactionRuleAction(mainContext, entities, action);
             break;
+          case EntityType.schedule:
+            handleScheduleAction(mainContext, entities, action);
+            break;
           // TODO add to starter.sh
           default:
-            throw 'Error: unhandled entity type ${first.entityType}';
+            throw '## Error: unhandled entity action type ${first.entityType}';
         }
       },
     );

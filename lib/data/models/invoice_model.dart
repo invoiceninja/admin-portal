@@ -1034,6 +1034,9 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.bulkSendEmail);
             } else {
               actions.add(EntityAction.sendEmail);
+              if (isUnpaid) {
+                actions.add(EntityAction.schedule);
+              }
             }
           }
         }
@@ -1278,7 +1281,9 @@ abstract class InvoiceEntity extends Object
   bool get isApplied => isCredit && statusId == kCreditStatusApplied;
 
   bool get isUnpaid {
-    if (isQuote) {
+    if (isPurchaseOrder) {
+      return !isApproved;
+    } else if (isQuote) {
       return !isApproved;
     } else if (isCredit) {
       return !isApplied;

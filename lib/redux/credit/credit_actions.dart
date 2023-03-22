@@ -10,6 +10,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -488,6 +489,7 @@ Future handleCreditAction(
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
+    case EntityAction.schedule:
       bool emailValid = true;
       credits.forEach((credit) {
         final client = state.clientState.get(
@@ -517,6 +519,29 @@ Future handleCreditAction(
                 snackBarCompleter<Null>(context, localization.emailedCredit),
             credit: credit,
             context: context));
+      } else if (action == EntityAction.schedule) {
+        if (!state.isProPlan) {
+          showMessageDialog(
+              context: context,
+              message: localization.upgradeToPaidPlanToSchedule,
+              secondaryActions: [
+                TextButton(
+                    onPressed: () {
+                      store.dispatch(
+                          ViewSettings(section: kSettingsAccountManagement));
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(localization.upgrade.toUpperCase())),
+              ]);
+          return;
+        }
+
+        createEntity(
+            context: context,
+            entity: ScheduleEntity().rebuild((b) => b
+              ..template = ScheduleEntity.TEMPLATE_EMAIL_RECORD
+              ..parameters.entityType = EntityType.credit.apiValue
+              ..parameters.entityId = credit.id));
       } else {
         confirmCallback(
             context: context,

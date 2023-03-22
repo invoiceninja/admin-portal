@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/schedule/view/schedule_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ScheduleView extends StatefulWidget {
   const ScheduleView({
@@ -31,21 +34,42 @@ class _ScheduleViewState extends State<ScheduleView> {
     final parameters = schedule.parameters;
     final localization = AppLocalization.of(context);
 
+    BaseEntity entity;
+    if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
+      final entityType = EntityType.valueOf(schedule.parameters.entityType);
+      entity = state.getEntityMap(entityType)[schedule.parameters.entityId];
+    }
+
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: schedule,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[
-          FieldGrid({
-            localization.template: localization.lookup(schedule.template),
-            localization.nextRun: formatDate(schedule.nextRun, context),
-            localization.frequency:
-                localization.lookup(kFrequencies[schedule.frequencyId]),
-            localization.remainingCycles: schedule.remainingCycles == -1
-                ? localization.endless
-                : '${schedule.remainingCycles}',
-          }),
+          EntityHeader(
+            entity: schedule,
+            label: localization.nextRun,
+            value: formatDate(schedule.nextRun, context),
+            secondLabel: '',
+            secondValue: timeago.format(
+              convertSqlDateToDateTime(schedule.nextRun),
+              locale: localeSelector(state, twoLetter: true),
+              allowFromNow: true,
+            ),
+          ),
+          if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD)
+            FieldGrid({
+              localization.lookup(schedule.parameters.entityType):
+                  entity.listDisplayName
+            })
+          else
+            FieldGrid({
+              localization.frequency:
+                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.remainingCycles: schedule.remainingCycles == -1
+                  ? localization.endless
+                  : '${schedule.remainingCycles}',
+            }),
           if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
             FieldGrid({
               localization.clients: parameters.clients.isEmpty
