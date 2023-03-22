@@ -47,7 +47,7 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 // TODO remove this function
 bool supportsMicrosoftOAuth() => kIsWeb;
 
-// TODO remove this
+/*
 bool supportsSchedules() {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   final state = store.state;
@@ -62,6 +62,7 @@ bool supportsSchedules() {
 
   return Version.parse(state.account.currentVersion) >= Version.parse('5.5.74');
 }
+*/
 
 bool supportsInAppPurchase() {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);

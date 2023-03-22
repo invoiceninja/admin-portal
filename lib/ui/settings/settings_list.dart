@@ -242,11 +242,10 @@ class _SettingsListState extends State<SettingsList> {
               ),
                */
             if (showAll) ...[
-              if (supportsSchedules())
-                SettingsListTile(
-                  section: kSettingsSchedules,
-                  viewModel: widget.viewModel,
-                ),
+              SettingsListTile(
+                section: kSettingsSchedules,
+                viewModel: widget.viewModel,
+              ),
               SettingsListTile(
                 section: kSettingsUserManagement,
                 viewModel: widget.viewModel,
@@ -653,12 +652,11 @@ class SettingsSearch extends StatelessWidget {
           'payment_links',
         ],
       ],
-      if (supportsSchedules())
-        kSettingsSchedules: [
-          [
-            'schedules#2023-02-15',
-          ],
+      kSettingsSchedules: [
+        [
+          'schedules#2023-02-15',
         ],
+      ],
       kSettingsUserManagement: [
         [
           'users',
