@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
@@ -467,8 +468,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                           Padding(
                             padding:
                                 const EdgeInsets.only(bottom: 16, right: 16),
-                            child: DecoratedFormField(
-                              keyboardType: TextInputType.text,
+                            child: GrowableFormField(
                               label: localization.description,
                               initialValue: taskTime.description,
                               onChanged: (value) {

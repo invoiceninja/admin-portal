@@ -10,11 +10,13 @@ class GrowableFormField extends StatefulWidget {
     @required this.initialValue,
     @required this.onChanged,
     this.autofocus = false,
+    this.label,
   }) : super(key: key);
 
   final String initialValue;
   final ValueChanged<String> onChanged;
   final bool autofocus;
+  final String label;
 
   @override
   _GrowableFormFieldState createState() => _GrowableFormFieldState();
@@ -47,6 +49,7 @@ class _GrowableFormFieldState extends State<GrowableFormField> {
   @override
   Widget build(BuildContext context) {
     return DecoratedFormField(
+      label: widget.label,
       autofocus: widget.autofocus,
       focusNode: _focusNode,
       initialValue: widget.initialValue,
