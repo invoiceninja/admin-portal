@@ -121,8 +121,6 @@ class _$ScheduleEntitySerializer
   Iterable<Object> serialize(Serializers serializers, ScheduleEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
       'frequency_id',
       serializers.serialize(object.frequencyId,
           specifiedType: const FullType(String)),
@@ -197,10 +195,6 @@ class _$ScheduleEntitySerializer
       iterator.moveNext();
       final Object value = iterator.current;
       switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'frequency_id':
           result.frequencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -554,8 +548,6 @@ class ScheduleItemResponseBuilder
 
 class _$ScheduleEntity extends ScheduleEntity {
   @override
-  final String name;
-  @override
   final String frequencyId;
   @override
   final String nextRun;
@@ -588,8 +580,7 @@ class _$ScheduleEntity extends ScheduleEntity {
       (new ScheduleEntityBuilder()..update(updates))._build();
 
   _$ScheduleEntity._(
-      {this.name,
-      this.frequencyId,
+      {this.frequencyId,
       this.nextRun,
       this.template,
       this.isPaused,
@@ -604,7 +595,6 @@ class _$ScheduleEntity extends ScheduleEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'ScheduleEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
         frequencyId, r'ScheduleEntity', 'frequencyId');
     BuiltValueNullFieldError.checkNotNull(
@@ -638,7 +628,6 @@ class _$ScheduleEntity extends ScheduleEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ScheduleEntity &&
-        name == other.name &&
         frequencyId == other.frequencyId &&
         nextRun == other.nextRun &&
         template == other.template &&
@@ -660,7 +649,6 @@ class _$ScheduleEntity extends ScheduleEntity {
   int get hashCode {
     if (__hashCode != null) return __hashCode;
     var _$hash = 0;
-    _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, frequencyId.hashCode);
     _$hash = $jc(_$hash, nextRun.hashCode);
     _$hash = $jc(_$hash, template.hashCode);
@@ -682,7 +670,6 @@ class _$ScheduleEntity extends ScheduleEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ScheduleEntity')
-          ..add('name', name)
           ..add('frequencyId', frequencyId)
           ..add('nextRun', nextRun)
           ..add('template', template)
@@ -704,10 +691,6 @@ class _$ScheduleEntity extends ScheduleEntity {
 class ScheduleEntityBuilder
     implements Builder<ScheduleEntity, ScheduleEntityBuilder> {
   _$ScheduleEntity _$v;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
 
   String _frequencyId;
   String get frequencyId => _$this._frequencyId;
@@ -775,7 +758,6 @@ class ScheduleEntityBuilder
   ScheduleEntityBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _name = $v.name;
       _frequencyId = $v.frequencyId;
       _nextRun = $v.nextRun;
       _template = $v.template;
@@ -814,8 +796,6 @@ class ScheduleEntityBuilder
     try {
       _$result = _$v ??
           new _$ScheduleEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'ScheduleEntity', 'name'),
               frequencyId: BuiltValueNullFieldError.checkNotNull(
                   frequencyId, r'ScheduleEntity', 'frequencyId'),
               nextRun: BuiltValueNullFieldError.checkNotNull(
@@ -832,8 +812,8 @@ class ScheduleEntityBuilder
                   createdAt, r'ScheduleEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(
                   updatedAt, r'ScheduleEntity', 'updatedAt'),
-              archivedAt:
-                  BuiltValueNullFieldError.checkNotNull(archivedAt, r'ScheduleEntity', 'archivedAt'),
+              archivedAt: BuiltValueNullFieldError.checkNotNull(
+                  archivedAt, r'ScheduleEntity', 'archivedAt'),
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
