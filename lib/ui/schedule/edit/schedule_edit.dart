@@ -39,21 +39,17 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   final _debouncer = Debouncer();
   String _clientClearedAt = '';
 
-  // STARTER: controllers - do not remove comment
-  final _nameController = TextEditingController();
-
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
     _controllers = [
-      _nameController,
+      //
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final schedule = widget.viewModel.schedule;
-    _nameController.text = schedule.name;
+    //final schedule = widget.viewModel.schedule;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -72,9 +68,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final schedule = widget.viewModel.schedule.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        ..name = _nameController.text.trim());
+      final schedule = widget.viewModel.schedule.rebuild((b) => b);
       if (schedule != widget.viewModel.schedule) {
         widget.viewModel.onChanged(schedule);
       }
@@ -150,15 +144,6 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                 FormCard(
                   isLast: schedule.template.isEmpty,
                   children: <Widget>[
-                    DecoratedFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.text,
-                      controller: _nameController,
-                      label: localization.name,
-                      onSavePressed: (context) => _onSavePressed(),
-                      validator: (value) =>
-                          value.isEmpty ? localization.pleaseEnterAName : null,
-                    ),
                     AppDropdownButton<String>(
                         labelText: localization.action,
                         value: schedule.template,
@@ -174,6 +159,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                 ))
                             .toList()),
                     DatePicker(
+                      autofocus: true,
                       labelText: localization.nextRun,
                       onSelected: (date, _) {
                         viewModel.onChanged(
