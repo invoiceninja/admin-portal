@@ -425,20 +425,19 @@ class ReportsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     HelpText(localization.upgradeToViewReports),
-                    if (!isApple() || supportsInAppPurchase())
-                      AppButton(
-                          label: localization.upgrade.toUpperCase(),
-                          onPressed: () {
-                            if (supportsInAppPurchase()) {
-                              showDialog<void>(
-                                context: context,
-                                builder: (context) => UpgradeDialog(),
-                              );
-                            } else {
-                              launchUrl(
-                                  Uri.parse(state.userCompany.ninjaPortalUrl));
-                            }
-                          })
+                    AppButton(
+                        label: localization.upgrade.toUpperCase(),
+                        onPressed: () {
+                          if (supportsInAppPurchase()) {
+                            showDialog<void>(
+                              context: context,
+                              builder: (context) => UpgradeDialog(),
+                            );
+                          } else {
+                            launchUrl(
+                                Uri.parse(state.userCompany.ninjaPortalUrl));
+                          }
+                        })
                   ],
                 ),
               )

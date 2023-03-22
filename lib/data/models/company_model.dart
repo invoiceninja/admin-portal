@@ -1064,6 +1064,14 @@ abstract class UserCompanyEntity
     }
   }
 
+  bool get canViewReports {
+    if (isAdmin) {
+      return true;
+    }
+
+    return permissions.contains(kPermissionViewReports);
+  }
+
   // ignore: unused_element
   static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
     ..settings.replace(UserSettingsEntity())
