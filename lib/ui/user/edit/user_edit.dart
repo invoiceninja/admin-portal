@@ -275,8 +275,6 @@ class _UserEditState extends State<UserEdit>
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  if (!kReleaseMode)
-                    Text('Permissins: ' + userCompany.permissions),
                   SwitchListTile(
                     title: Text(localization.administrator),
                     subtitle: Text(localization.administratorHelp),
