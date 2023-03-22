@@ -33,7 +33,7 @@ List<String> dropdownSchedulesSelector(
   list.sort((scheduleAId, scheduleBId) {
     final scheduleA = scheduleMap[scheduleAId];
     final scheduleB = scheduleMap[scheduleBId];
-    return scheduleA.compareTo(scheduleB, ScheduleFields.name, true);
+    return scheduleA.compareTo(scheduleB, ScheduleFields.template, true);
   });
 
   return list;

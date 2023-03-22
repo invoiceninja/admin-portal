@@ -47,8 +47,8 @@ abstract class ScheduleItemResponse
 }
 
 class ScheduleFields {
-  static const String name = 'name';
   static const String template = 'template';
+  static const String nextRun = 'next_run';
 }
 
 abstract class ScheduleEntity extends Object
@@ -136,6 +136,9 @@ abstract class ScheduleEntity extends Object
     switch (sortField) {
       case ScheduleFields.template:
         response = scheduleA.template.compareTo(scheduleB.template);
+        break;
+      case ScheduleFields.nextRun:
+        response = scheduleA.nextRun.compareTo(scheduleB.nextRun);
         break;
 
       default:
