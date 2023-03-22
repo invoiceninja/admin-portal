@@ -75,11 +75,11 @@ abstract class ScheduleEntity extends Object
   ScheduleEntity._();
 
   static const TEMPLATE_EMAIL_STATEMENT = 'email_statement';
-  static const TEMPLATE_SCHEDULE_ENTITY = 'schedule_entity';
+  static const TEMPLATE_EMAIL_RECORD = 'email_record';
 
   static const TEMPLATES = [
     TEMPLATE_EMAIL_STATEMENT,
-    TEMPLATE_SCHEDULE_ENTITY,
+    TEMPLATE_EMAIL_RECORD,
   ];
 
   @override

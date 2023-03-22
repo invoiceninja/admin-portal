@@ -603,7 +603,7 @@ Future handleQuoteAction(
         createEntity(
             context: context,
             entity: ScheduleEntity().rebuild((b) => b
-              ..template = ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
+              ..template = ScheduleEntity.TEMPLATE_EMAIL_RECORD
               ..parameters.entityType = EntityType.quote.apiValue
               ..parameters.entityId = quote.id));
       } else {

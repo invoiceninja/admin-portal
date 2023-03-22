@@ -41,9 +41,7 @@ class ScheduleListItem extends StatelessWidget {
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? schedule.matchesFilterValue(filter)
-        : (schedule.template == ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
-                ? localization.emailRecord
-                : localization.lookup(schedule.template)) +
+        : localization.lookup(schedule.template) +
             (schedule.frequencyId.isEmpty
                 ? ''
                 : ' • ' +

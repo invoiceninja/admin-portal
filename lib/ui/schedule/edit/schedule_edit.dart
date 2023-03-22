@@ -170,11 +170,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
-                                  child: Text(entry ==
-                                          ScheduleEntity
-                                              .TEMPLATE_SCHEDULE_ENTITY
-                                      ? localization.emailRecord
-                                      : localization.lookup(entry)),
+                                  child: Text(localization.lookup(entry)),
                                 ))
                             .toList()),
                     DatePicker(
@@ -190,7 +186,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           : null,
                     ),
                     if (schedule.template !=
-                        ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY) ...[
+                        ScheduleEntity.TEMPLATE_EMAIL_RECORD) ...[
                       AppDropdownButton<String>(
                           labelText: localization.frequency,
                           value: schedule.frequencyId,
@@ -334,7 +330,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     ],
                   )
                 ] else if (schedule.template ==
-                    ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY) ...[
+                    ScheduleEntity.TEMPLATE_EMAIL_RECORD) ...[
                   FormCard(
                     children: [
                       AppDropdownButton<String>(

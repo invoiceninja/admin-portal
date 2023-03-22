@@ -659,7 +659,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
         createEntity(
             context: context,
             entity: ScheduleEntity().rebuild((b) => b
-              ..template = ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
+              ..template = ScheduleEntity.TEMPLATE_EMAIL_RECORD
               ..parameters.entityType = EntityType.invoice.apiValue
               ..parameters.entityId = invoice.id));
       } else {

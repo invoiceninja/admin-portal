@@ -539,7 +539,7 @@ Future handleCreditAction(
         createEntity(
             context: context,
             entity: ScheduleEntity().rebuild((b) => b
-              ..template = ScheduleEntity.TEMPLATE_SCHEDULE_ENTITY
+              ..template = ScheduleEntity.TEMPLATE_EMAIL_RECORD
               ..parameters.entityType = EntityType.credit.apiValue
               ..parameters.entityId = credit.id));
       } else {
