@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
@@ -209,6 +211,15 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                       ? null
                       : duration,
             ),
+            if (company.settings.showTaskItemDescription)
+              GrowableFormField(
+                label: localization.description,
+                initialValue: _taskTime.description,
+                onChanged: (value) {
+                  _taskTime = _taskTime.rebuild((b) => b..description = value);
+                  viewModel.onUpdatedTaskTime(_taskTime, widget.index);
+                },
+              ),
           ],
         ),
       ),
