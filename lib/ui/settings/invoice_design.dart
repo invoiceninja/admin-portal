@@ -89,7 +89,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       tabs++;
     }
 
-    if (viewModel.settings.syncInvoiceQuoteColumns == false) {
+    if (viewModel.settings.shareInvoiceQuoteColumns == false) {
       tabs++;
     }
 
@@ -189,7 +189,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         localization.vendorDetails,
       if (company.isModuleEnabled(EntityType.purchaseOrder))
         localization.purchaseOrderDetails,
-      if (settings.syncInvoiceQuoteColumns == false) ...[
+      if (settings.shareInvoiceQuoteColumns == false) ...[
         localization.invoiceProductColumns,
         localization.quoteProductColumns,
       ] else
@@ -1075,17 +1075,17 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       isLast: true,
                       child: SwitchListTile(
                         title: Text(localization.shareInvoiceQuoteColumns),
-                        value: settings.syncInvoiceQuoteColumns ?? true,
+                        value: settings.shareInvoiceQuoteColumns ?? true,
                         activeColor: Theme.of(context).colorScheme.secondary,
                         onChanged: (value) {
                           viewModel.onSettingsChanged(settings.rebuild(
-                              (b) => b..syncInvoiceQuoteColumns = value));
+                              (b) => b..shareInvoiceQuoteColumns = value));
                         },
                       ),
                     )
                   ],
                 ),
-                if (settings.syncInvoiceQuoteColumns == false)
+                if (settings.shareInvoiceQuoteColumns == false)
                   Expanded(
                     child: FormCard(
                       child: MultiSelectList(
