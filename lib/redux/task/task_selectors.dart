@@ -29,6 +29,12 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   var notes = '';
   final dates = <String, double>{};
 
+  var lineBreak = '';
+  if (company.markdownEnabled) {
+    lineBreak += '<br/>';
+  }
+  lineBreak += '\n';
+
   if (project.isOld && includeProjectHeader) {
     if (state.company.markdownEnabled) {
       notes += '## ${project.name}\n';
@@ -66,10 +72,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         if (company.invoiceTaskHours) {
           notes += hoursStr;
         }
-        if (company.markdownEnabled) {
-          notes += '<br/>';
+        notes += lineBreak;
+        if (time.description.isNotEmpty) {
+          notes += time.description + lineBreak;
         }
-        notes += '\n';
       } else if (company.invoiceTaskDatelog) {
         final date = formatDate(time.startDate.toIso8601String(), context,
             showTime: false);
@@ -87,10 +93,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         if (company.invoiceTaskHours) {
           notes += hoursStr;
         }
-        if (company.markdownEnabled) {
-          notes += '<br/>';
+        notes += lineBreak;
+        if (time.description.isNotEmpty) {
+          notes += time.description + lineBreak;
         }
-        notes += '\n';
       }
     });
 
