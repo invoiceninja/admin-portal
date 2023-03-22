@@ -121,7 +121,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
   List<dynamic> get asList {
-    final startTime = (startDate.millisecondsSinceEpoch / 1000).floor();
+    final startTime = startDate != null
+        ? (startDate.millisecondsSinceEpoch / 1000).floor()
+        : 0;
     var endTime =
         endDate != null ? (endDate.millisecondsSinceEpoch / 1000).floor() : 0;
 
@@ -148,7 +150,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   bool get isRunning => endDate == null;
 
-  bool get isEmpty => startDate == null && endDate == null;
+  bool get isEmpty =>
+      startDate == null && endDate == null && description.isEmpty;
 
   Map<String, Duration> getParts() {
     final localStartDate = startDate.toLocal();
@@ -522,24 +525,21 @@ abstract class TaskEntity extends Object
         startDate = (taskItem[0]).round();
       }
 
-      if (startDate != 0) {
-        if (taskItem[1] == false || taskItem[1] == null) {
-          endDate = 0;
-        } else {
-          endDate = (taskItem[1]).round();
-        }
-
-        final taskTime = TaskTime(
-          startDate: convertTimestampToDate(startDate).toUtc(),
-          endDate: (endDate ?? 0) > 0
-              ? convertTimestampToDate(endDate).toUtc()
-              : null,
-          description: taskItem.length >= 3 ? taskItem[2] : '',
-          isBillable: taskItem.length >= 4 ? taskItem[3] : true,
-        );
-
-        details.add(taskTime);
+      if (taskItem[1] == false || taskItem[1] == null) {
+        endDate = 0;
+      } else {
+        endDate = (taskItem[1]).round();
       }
+
+      final taskTime = TaskTime(
+        startDate: convertTimestampToDate(startDate).toUtc(),
+        endDate:
+            (endDate ?? 0) > 0 ? convertTimestampToDate(endDate).toUtc() : null,
+        description: taskItem.length >= 3 ? taskItem[2] : '',
+        isBillable: taskItem.length >= 4 ? taskItem[3] : true,
+      );
+
+      details.add(taskTime);
     });
 
     if (sort) {
