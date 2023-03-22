@@ -46,9 +46,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       notes += '\n';
     }
     notes += '<div class="task-time-details">\n';
+
     task
         .getTaskTimes()
-        .where((time) => time.startDate != null && time.endDate != null)
+        .where((time) =>
+            time.startDate != null && time.endDate != null && time.isBillable)
         .forEach((time) {
       final hours = round(time.duration.inSeconds / 3600, 3);
       final hoursStr = hours == 1
@@ -161,7 +163,8 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       task: task,
       group: group,
     )
-    ..quantity = round(task.calculateDuration().inSeconds / 3600, 3)
+    ..quantity =
+        round(task.calculateDuration(onlyBillable: true).inSeconds / 3600, 3)
     ..customValue1 = customValue1
     ..customValue2 = customValue2
     ..customValue3 = customValue3

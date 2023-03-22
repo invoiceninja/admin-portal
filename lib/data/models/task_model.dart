@@ -586,11 +586,13 @@ abstract class TaskEntity extends Object
   double calculateAmount(double taskRate) =>
       taskRate * round(calculateDuration().inSeconds / 3600, 3);
 
-  Duration calculateDuration() {
+  Duration calculateDuration({bool onlyBillable = false}) {
     int seconds = 0;
 
     getTaskTimes().forEach((taskTime) {
-      seconds += taskTime.duration.inSeconds;
+      if (!onlyBillable || taskTime.isBillable) {
+        seconds += taskTime.duration.inSeconds;
+      }
     });
 
     return Duration(seconds: seconds);
