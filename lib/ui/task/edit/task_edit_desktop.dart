@@ -470,6 +470,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                             child: DecoratedFormField(
                               keyboardType: TextInputType.text,
                               label: localization.description,
+                              initialValue: taskTime.description,
+                              onChanged: (value) {
+                                viewModel.onUpdatedTaskTime(
+                                    taskTime
+                                        .rebuild((b) => b..description = value),
+                                    index);
+                              },
                             ),
                           ),
                       ],

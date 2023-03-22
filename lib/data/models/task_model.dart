@@ -138,7 +138,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
       }
     }
 
-    return <dynamic>[startTime, endTime];
+    return <dynamic>[startTime, endTime, description, isBillable];
   }
 
   TaskTime get stop => rebuild((b) => b..endDate = DateTime.now().toUtc());
@@ -213,6 +213,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
               endDate.toLocal().second,
             )
           : endDate,
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -225,15 +227,18 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     final now = DateTime.now();
 
     return TaskTime(
-        startDate: startDate,
-        endDate: DateTime(
-          dateTime.toLocal()?.year,
-          dateTime.toLocal()?.month,
-          dateTime.toLocal()?.day,
-          endDate?.toLocal()?.hour ?? now.hour,
-          endDate?.toLocal()?.minute ?? now.minute,
-          endDate?.toLocal()?.second ?? now.second,
-        ).toUtc());
+      startDate: startDate,
+      endDate: DateTime(
+        dateTime.toLocal()?.year,
+        dateTime.toLocal()?.month,
+        dateTime.toLocal()?.day,
+        endDate?.toLocal()?.hour ?? now.hour,
+        endDate?.toLocal()?.minute ?? now.minute,
+        endDate?.toLocal()?.second ?? now.second,
+      ).toUtc(),
+      description: description,
+      isBillable: isBillable,
+    );
   }
 
   TaskTime copyWithStartTime(DateTime dateTime) {
@@ -249,6 +254,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.toLocal().second,
       ).toUtc(),
       endDate: endDate,
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -264,6 +271,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         dateTime.toLocal().minute,
         dateTime.toLocal().second,
       ).toUtc(),
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -272,6 +281,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     return TaskTime(
       startDate: start,
       endDate: start.add(duration),
+      description: description,
+      isBillable: isBillable,
     );
   }
 
@@ -503,25 +514,29 @@ abstract class TaskEntity extends Object
     log.forEach((dynamic detail) {
       int startDate;
       int endDate;
+      final taskItem = detail as List<dynamic>;
 
-      if ((detail as List)[0] == false || (detail as List)[0] == null) {
+      if (taskItem[0] == false || taskItem[0] == null) {
         startDate = 0;
       } else {
-        startDate = ((detail as List)[0]).round();
+        startDate = (taskItem[0]).round();
       }
 
       if (startDate != 0) {
-        if ((detail as List)[1] == false || (detail as List)[1] == null) {
+        if (taskItem[1] == false || taskItem[1] == null) {
           endDate = 0;
         } else {
-          endDate = ((detail as List)[1]).round();
+          endDate = (taskItem[1]).round();
         }
 
         final taskTime = TaskTime(
-            startDate: convertTimestampToDate(startDate).toUtc(),
-            endDate: (endDate ?? 0) > 0
-                ? convertTimestampToDate(endDate).toUtc()
-                : null);
+          startDate: convertTimestampToDate(startDate).toUtc(),
+          endDate: (endDate ?? 0) > 0
+              ? convertTimestampToDate(endDate).toUtc()
+              : null,
+          description: taskItem.length >= 3 ? taskItem[2] : '',
+          isBillable: taskItem.length >= 4 ? taskItem[3] : true,
+        );
 
         details.add(taskTime);
       }
