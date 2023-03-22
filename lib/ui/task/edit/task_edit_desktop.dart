@@ -125,6 +125,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final state = viewModel.state;
 
     final company = state.company;
+    final settings = company.settings;
     final client = state.clientState.get(task.clientId);
     final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
@@ -303,16 +304,17 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
           key: ValueKey('__table_${_updatedAt}__'),
           padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
           children: [
-            Row(
-              children: [
-                Expanded(child: Text(localization.startDate)),
-                Expanded(child: Text(localization.startTime)),
-                if (showEndDate) Expanded(child: Text(localization.endDate)),
-                Expanded(child: Text(localization.endTime)),
-                Expanded(child: Text(localization.duration)),
-                SizedBox(width: 40),
-              ],
-            ),
+            if (!settings.showTaskItemDescription)
+              Row(
+                children: [
+                  Expanded(child: Text(localization.startDate)),
+                  Expanded(child: Text(localization.startTime)),
+                  if (showEndDate) Expanded(child: Text(localization.endDate)),
+                  Expanded(child: Text(localization.endTime)),
+                  Expanded(child: Text(localization.duration)),
+                  SizedBox(width: 40),
+                ],
+              ),
             ...taskTimes.map((taskTime) {
               final index = taskTimes.indexOf(taskTime);
               return Row(
@@ -331,6 +333,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                 child: DatePicker(
                                   key: ValueKey(
                                       '__${_startTimeUpdatedAt}_${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.startDate
+                                      : null,
                                   selectedDate: taskTimes[index].startDate ==
                                           null
                                       ? null
@@ -357,6 +362,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                 child: TimePicker(
                                   key: ValueKey(
                                       '__${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.startTime
+                                      : null,
                                   selectedDateTime: taskTimes[index].startDate,
                                   onSelected: (timeOfDay) {
                                     final taskTime = taskTimes[index]
@@ -379,6 +387,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                   child: DatePicker(
                                     key: ValueKey(
                                         '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
+                                    labelText: settings.showTaskItemDescription
+                                        ? localization.endDate
+                                        : null,
                                     selectedDate: taskTimes[index].endDate ==
                                             null
                                         ? null
@@ -404,6 +415,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                 child: TimePicker(
                                   key: ValueKey(
                                       '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.endTime
+                                      : null,
                                   selectedDateTime: taskTimes[index].endDate,
                                   isEndTime: true,
                                   onSelected: (timeOfDay) {
@@ -426,6 +440,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                 child: DurationPicker(
                                   key: ValueKey(
                                       '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
+                                  labelText: settings.showTaskItemDescription
+                                      ? localization.duration
+                                      : null,
                                   onSelected: (Duration duration) {
                                     final taskTime = taskTimes[index]
                                         .copyWithDuration(duration);
@@ -446,7 +463,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                             ),
                           ],
                         ),
-                        if (company.settings.showTaskItemDescription)
+                        if (settings.showTaskItemDescription)
                           Padding(
                             padding:
                                 const EdgeInsets.only(bottom: 16, right: 16),
@@ -484,154 +501,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             }).toList(),
           ],
         ),
-        /*
-        FormCard(
-          padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
-          child: Table(
-            key: ValueKey('__table_old_${_updatedAt}__'),
-            columnWidths: {
-              showEndDate ? 5 : 4: FixedColumnWidth(kMinInteractiveDimension),
-            },
-            children: [
-              TableRow(
-                children: [
-                  TableHeader(localization.startDate, isFirst: true),
-                  TableHeader(localization.startTime),
-                  if (showEndDate) TableHeader(localization.endDate),
-                  TableHeader(localization.endTime),
-                  TableHeader(localization.duration),
-                  TableHeader(''),
-                ],
-                decoration: tableHeaderColor.isNotEmpty
-                    ? BoxDecoration(
-                        color: convertHexStringToColor(tableHeaderColor),
-                      )
-                    : null,
-              ),
-              for (var index = 0; index < taskTimes.length; index++) ...[
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DatePicker(
-                      key: ValueKey(
-                          '__${_startTimeUpdatedAt}_${_durationUpdateAt}_${index}__'),
-                      selectedDate: taskTimes[index].startDate == null
-                          ? null
-                          : convertDateTimeToSqlDate(
-                              taskTimes[index].startDate.toLocal()),
-                      onSelected: (date, _) {
-                        final taskTime = taskTimes[index]
-                            .copyWithStartDate(date, syncDates: !showEndDate);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _startDateUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      key: ValueKey('__${_durationUpdateAt}_${index}__'),
-                      selectedDateTime: taskTimes[index].startDate,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithStartTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _startTimeUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  if (showEndDate)
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: DatePicker(
-                        key: ValueKey(
-                            '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}_${index}__'),
-                        selectedDate: taskTimes[index].endDate == null
-                            ? null
-                            : convertDateTimeToSqlDate(
-                                taskTimes[index].endDate.toLocal()),
-                        onSelected: (date, _) {
-                          final taskTime =
-                              taskTimes[index].copyWithEndDate(date);
-                          viewModel.onUpdatedTaskTime(taskTime, index);
-                          setState(() {
-                            _endDateUpdatedAt =
-                                DateTime.now().millisecondsSinceEpoch;
-                          });
-                        },
-                      ),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TimePicker(
-                      key: ValueKey(
-                          '__${_endDateUpdatedAt}_${_durationUpdateAt}_${index}__'),
-                      selectedDateTime: taskTimes[index].endDate,
-                      isEndTime: true,
-                      onSelected: (timeOfDay) {
-                        final taskTime =
-                            taskTimes[index].copyWithEndTime(timeOfDay);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _endTimeUpdatedAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: DurationPicker(
-                      key: ValueKey(
-                          '__${_startTimeUpdatedAt}_${_endTimeUpdatedAt}_${_startDateUpdatedAt}_${_endDateUpdatedAt}_${index}__'),
-                      onSelected: (Duration duration) {
-                        final taskTime =
-                            taskTimes[index].copyWithDuration(duration);
-                        viewModel.onUpdatedTaskTime(taskTime, index);
-                        setState(() {
-                          _durationUpdateAt =
-                              DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                      selectedDuration: (taskTimes[index].startDate == null ||
-                              taskTimes[index].endDate == null)
-                          ? null
-                          : taskTimes[index].duration,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: overlapping.contains(index) ? Colors.red : null,
-                      ),
-                      tooltip: overlapping.contains(index)
-                          ? localization.invalidTime
-                          : localization.remove,
-                      onPressed: taskTimes[index].isEmpty
-                          ? null
-                          : () {
-                              viewModel.onRemoveTaskTime(index);
-                              setState(() {
-                                _updatedAt =
-                                    DateTime.now().millisecondsSinceEpoch;
-                              });
-                            },
-                    ),
-                  ),
-                ]),
-              ],
-            ],
-          ),
-        ),
-        */
         SizedBox(
           height: kMobileDialogPadding,
         ),

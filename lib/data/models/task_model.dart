@@ -85,13 +85,20 @@ class TaskFields {
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
-  factory TaskTime({DateTime startDate, DateTime endDate}) {
+  factory TaskTime({
+    DateTime startDate,
+    DateTime endDate,
+    String description,
+    bool isBillable,
+  }) {
     return _$TaskTime._(
       startDate: startDate ??
           DateTime.fromMillisecondsSinceEpoch(
               (DateTime.now().millisecondsSinceEpoch / 1000).floor() * 1000,
               isUtc: true),
       endDate: endDate,
+      description: description ?? '',
+      isBillable: isBillable ?? true,
     );
   }
 
@@ -106,6 +113,10 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 
   @nullable
   DateTime get endDate;
+
+  String get description;
+
+  bool get isBillable;
 
   Duration get duration => (endDate ?? DateTime.now()).difference(startDate);
 
