@@ -220,6 +220,19 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                 },
               ),
+            if (company.settings.allowBillableTaskItems)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: SwitchListTile(
+                    title: Text(localization.billable),
+                    value: _taskTime.isBillable,
+                    onChanged: (value) {
+                      _taskTime =
+                          _taskTime.rebuild((b) => b..isBillable = value);
+                      viewModel.onUpdatedTaskTime(_taskTime, widget.index);
+                      setState(() {});
+                    }),
+              )
           ],
         ),
       ),
