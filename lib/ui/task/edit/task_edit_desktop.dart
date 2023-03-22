@@ -314,7 +314,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                   if (showEndDate) Expanded(child: Text(localization.endDate)),
                   Expanded(child: Text(localization.endTime)),
                   Expanded(child: Text(localization.duration)),
-                  SizedBox(width: 40),
+                  if (settings.allowBillableTaskItems) SizedBox(width: 50),
+                  SizedBox(width: 38),
                 ],
               ),
             ...taskTimes.map((taskTime) {
