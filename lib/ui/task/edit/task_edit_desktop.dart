@@ -27,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -482,26 +483,41 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: overlapping.contains(index) ? Colors.red : null,
-                      ),
-                      tooltip: overlapping.contains(index)
-                          ? localization.invalidTime
-                          : localization.remove,
-                      onPressed: taskTimes[index].isEmpty
-                          ? null
-                          : () {
-                              viewModel.onRemoveTaskTime(index);
-                              setState(() {
-                                _updatedAt =
-                                    DateTime.now().millisecondsSinceEpoch;
-                              });
-                            },
+                  if (settings.allowBillableTaskItems)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8, left: 4),
+                      child: IconButton(
+                          onPressed: taskTimes[index].isEmpty
+                              ? null
+                              : () => viewModel.onUpdatedTaskTime(
+                                  taskTime.rebuild((b) =>
+                                      b..isBillable = !taskTime.isBillable),
+                                  index),
+                          icon: Icon(taskTime.isBillable
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank)),
                     ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: overlapping.contains(index) ? Colors.red : null,
+                    ),
+                    tooltip: overlapping.contains(index)
+                        ? localization.invalidTime
+                        : localization.remove,
+                    onPressed: taskTimes[index].isEmpty
+                        ? null
+                        : () {
+                            confirmCallback(
+                                context: context,
+                                callback: (_) {
+                                  viewModel.onRemoveTaskTime(index);
+                                  setState(() {
+                                    _updatedAt =
+                                        DateTime.now().millisecondsSinceEpoch;
+                                  });
+                                });
+                          },
                   ),
                 ],
               );
