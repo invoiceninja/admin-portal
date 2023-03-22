@@ -487,13 +487,16 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: 8, left: 4),
                       child: IconButton(
-                          onPressed: taskTimes[index].isEmpty
+                          tooltip: taskTime.isBillable
+                              ? localization.billable
+                              : localization.notBillable,
+                          onPressed: taskTime.isEmpty
                               ? null
                               : () => viewModel.onUpdatedTaskTime(
                                   taskTime.rebuild((b) =>
                                       b..isBillable = !taskTime.isBillable),
                                   index),
-                          icon: Icon(taskTime.isBillable
+                          icon: Icon(taskTime.isBillable && !taskTime.isEmpty
                               ? Icons.check_box_outlined
                               : Icons.check_box_outline_blank)),
                     ),
