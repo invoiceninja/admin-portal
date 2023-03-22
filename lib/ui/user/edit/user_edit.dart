@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -274,6 +275,8 @@ class _UserEditState extends State<UserEdit>
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  if (!kReleaseMode)
+                    Text('Permissins: ' + userCompany.permissions),
                   SwitchListTile(
                     title: Text(localization.administrator),
                     subtitle: Text(localization.administratorHelp),
@@ -282,18 +285,40 @@ class _UserEditState extends State<UserEdit>
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
                     activeColor: Theme.of(context).colorScheme.secondary,
                   ),
-                  /*
                   SwitchListTile(
                     title: Text(localization.reports),
                     subtitle: Text(localization.viewReportPermission),
-                    value: userCompany.isAdmin ? true : false,
+                    value: userCompany.isAdmin
+                        ? true
+                        : userCompany.permissions
+                            .contains(kPermissionViewReports),
                     onChanged: userCompany.isAdmin
                         ? null
-                        : (value) => viewModel.onUserChanged(user
-                            .rebuild((b) => b..userCompany.isAdmin = value)),
+                        : (value) {
+                            final permissions = userCompany.permissions
+                                .split(',')
+                                .where((element) => element.isNotEmpty)
+                                .toList();
+                            if (value) {
+                              if (!permissions
+                                  .contains(kPermissionViewReports)) {
+                                permissions.add(kPermissionViewReports);
+                              }
+                            } else {
+                              if (!value) {
+                                if (permissions
+                                    .contains(kPermissionViewReports)) {
+                                  permissions.remove(kPermissionViewReports);
+                                }
+                              }
+                            }
+
+                            viewModel.onUserChanged(user.rebuild((b) => b
+                              ..userCompany.permissions =
+                                  permissions.join(',')));
+                          },
                     activeColor: Theme.of(context).colorScheme.secondary,
                   ),
-                  */
                 ],
               ),
               if (!userCompany.isAdmin)
