@@ -178,6 +178,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableTouchEvents,
     this.enableTooltips,
     this.flexibleSearch,
+    this.enableNativeBrowser,
   });
 
   final AppLayout appLayout;
@@ -205,6 +206,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool enableTouchEvents;
   final bool enableTooltips;
   final bool flexibleSearch;
+  final bool enableNativeBrowser;
 }
 
 class LoadAccountSuccess implements StopLoading {
@@ -893,17 +895,16 @@ void createEntityByType({
           case EntityType.schedule:
             store.dispatch(EditSchedule(
               force: force,
-              schedule: ScheduleEntity(state: state),
+              schedule: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+                  state: state),
             ));
             break;
-
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
               force: force,
               transactionRule: TransactionRuleEntity(state: state),
             ));
             break;
-
           case EntityType.transaction:
             store.dispatch(EditTransaction(
               force: force,

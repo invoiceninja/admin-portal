@@ -460,13 +460,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
                       createEntity(
                           context: context,
-                          entity: ScheduleEntity().rebuild((b) => b
-                            ..template = ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
-                            ..parameters.clients.add(client.id)
-                            ..parameters.showAgingTable = _showAging
-                            ..parameters.showPaymentsTable = _showPayments
-                            ..parameters.status = _status
-                            ..parameters.dateRange = _dateRange.snakeCase));
+                          entity: ScheduleEntity(
+                                  ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
+                              .rebuild((b) => b
+                                ..parameters.clients.add(client.id)
+                                ..parameters.showAgingTable = _showAging
+                                ..parameters.showPaymentsTable = _showPayments
+                                ..parameters.status = _status
+                                ..parameters.dateRange = _dateRange.snakeCase));
                     },
                     child: Text(localization.schedule,
                         style: TextStyle(color: state.headerTextColor))),

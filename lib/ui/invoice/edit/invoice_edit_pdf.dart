@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -13,6 +14,8 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:printing/printing.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoiceEditPDF extends StatefulWidget {
   const InvoiceEditPDF({
@@ -28,6 +31,7 @@ class InvoiceEditPDF extends StatefulWidget {
 
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   bool _isLoading = false;
+  String _pdfString;
   http.Response _response;
 
   @override
@@ -73,6 +77,12 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       setState(() {
         _isLoading = false;
         _response = response;
+
+        if (kIsWeb && state.prefState.enableNativeBrowser) {
+          _pdfString =
+              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+          WebUtils.registerWebView(_pdfString);
+        }
       });
     }).catchError((dynamic error) {
       setState(() {
@@ -83,6 +93,8 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
 
   @override
   Widget build(BuildContext context) {
+    final state = widget.viewModel.state;
+
     if (!widget.viewModel.invoice.hasClient) {
       return HelpText(AppLocalization.of(context).noClientSelected);
     }
@@ -94,15 +106,17 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     }
 
     return Center(
-      child: PdfPreview(
-        build: (format) => _response.bodyBytes,
-        canChangeOrientation: false,
-        canChangePageFormat: false,
-        allowPrinting: false,
-        allowSharing: false,
-        canDebug: false,
-        maxPageWidth: 800,
-      ),
+      child: kIsWeb && state.prefState.enableNativeBrowser
+          ? HtmlElementView(viewType: _pdfString)
+          : PdfPreview(
+              build: (format) => _response.bodyBytes,
+              canChangeOrientation: false,
+              canChangePageFormat: false,
+              allowPrinting: false,
+              allowSharing: false,
+              canDebug: false,
+              maxPageWidth: 800,
+            ),
     );
   }
 }

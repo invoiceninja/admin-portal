@@ -41,14 +41,7 @@ class ScheduleListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final localization = AppLocalization.of(context);
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? schedule.matchesFilterValue(filter)
-        : formatDate(schedule.nextRun, context) +
-            (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD
-                ? ''
-                : ' • ' +
-                    localization.lookup(kFrequencies[schedule.frequencyId]));
-    final subtitle = filterMatch;
+    String subtitle = formatDate(schedule.nextRun, context);
 
     String title = localization.lookup(schedule.template);
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
@@ -56,7 +49,17 @@ class ScheduleListItem extends StatelessWidget {
       final entity =
           state.getEntityMap(entityType)[schedule.parameters.entityId];
 
-      title += ': ' +
+      if (entityType == EntityType.purchaseOrder) {
+        final vendor =
+            state.vendorState.get((entity as BelongsToVendor).vendorId);
+        title += ': ' + vendor.name;
+      } else {
+        final client =
+            state.clientState.get((entity as BelongsToClient).clientId);
+        title += ': ' + client.displayName;
+      }
+
+      subtitle += ' • ' +
           localization.lookup(schedule.parameters.entityType) +
           ' ' +
           (entity?.listDisplayName ?? '');
@@ -70,6 +73,8 @@ class ScheduleListItem extends StatelessWidget {
         title +=
             ': ${schedule.parameters.clients.length} ${localization.clients}';
       }
+      subtitle +=
+          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
     }
 
     return DismissibleEntity(
@@ -108,7 +113,7 @@ class ScheduleListItem extends StatelessWidget {
             children: <Widget>[
               subtitle != null && subtitle.isNotEmpty
                   ? Text(
-                      subtitle,
+                      (filter ?? '').isNotEmpty ? filter : subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     )

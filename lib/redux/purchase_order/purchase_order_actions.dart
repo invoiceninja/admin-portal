@@ -751,10 +751,10 @@ void handlePurchaseOrderAction(BuildContext context,
 
         createEntity(
             context: context,
-            entity: ScheduleEntity().rebuild((b) => b
-              ..template = ScheduleEntity.TEMPLATE_EMAIL_RECORD
-              ..parameters.entityType = EntityType.purchaseOrder.apiValue
-              ..parameters.entityId = purchaseOrder.id));
+            entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
+                .rebuild((b) => b
+                  ..parameters.entityType = EntityType.purchaseOrder.apiValue
+                  ..parameters.entityId = purchaseOrder.id));
       } else {
         confirmCallback(
             context: context,

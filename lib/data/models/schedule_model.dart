@@ -54,7 +54,7 @@ class ScheduleFields {
 abstract class ScheduleEntity extends Object
     with BaseEntity
     implements Built<ScheduleEntity, ScheduleEntityBuilder> {
-  factory ScheduleEntity({String id, AppState state}) {
+  factory ScheduleEntity(String template, {String id, AppState state}) {
     return _$ScheduleEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -68,8 +68,8 @@ abstract class ScheduleEntity extends Object
       frequencyId: kFrequencyMonthly,
       isPaused: false,
       nextRun: '',
-      template: TEMPLATE_EMAIL_STATEMENT,
-      parameters: ScheduleParameters(),
+      template: template,
+      parameters: ScheduleParameters(template),
     );
   }
 
@@ -134,15 +134,12 @@ abstract class ScheduleEntity extends Object
     final scheduleB = sortAscending ? schedule : this;
 
     switch (sortField) {
-      case ScheduleFields.template:
-        response = scheduleA.template.compareTo(scheduleB.template);
-        break;
       case ScheduleFields.nextRun:
         response = scheduleA.nextRun.compareTo(scheduleB.nextRun);
         break;
 
       default:
-        print('## ERROR: sort by schedule.$sortField is not implemented');
+        response = scheduleA.template.compareTo(scheduleB.template);
         break;
     }
 
@@ -192,15 +189,25 @@ abstract class ScheduleEntity extends Object
 
 abstract class ScheduleParameters
     implements Built<ScheduleParameters, ScheduleParametersBuilder> {
-  factory ScheduleParameters({String id, bool isEnabled}) {
+  factory ScheduleParameters(String action) {
     return _$ScheduleParameters._(
-      clients: BuiltList<String>(),
-      dateRange: DateRange.thisQuarter.snakeCase,
-      showAgingTable: true,
-      showPaymentsTable: true,
-      status: kStatementStatusAll,
-      entityType: EntityType.invoice.toString(),
-      entityId: '',
+      clients: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? BuiltList<String>()
+          : null,
+      dateRange: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD
+          ? null
+          : DateRange.thisQuarter.snakeCase,
+      showAgingTable:
+          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
+      showPaymentsTable:
+          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
+      status: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? kStatementStatusAll
+          : null,
+      entityType: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD
+          ? EntityType.invoice.toString()
+          : null,
+      entityId: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD ? '' : null,
     );
   }
 
@@ -210,34 +217,31 @@ abstract class ScheduleParameters
   @memoized
   int get hashCode;
 
+  @nullable
   @BuiltValueField(wireName: 'date_range')
   String get dateRange;
 
+  @nullable
   @BuiltValueField(wireName: 'show_payments_table')
   bool get showPaymentsTable;
 
+  @nullable
   @BuiltValueField(wireName: 'show_aging_table')
   bool get showAgingTable;
 
+  @nullable
   String get status;
 
+  @nullable
   BuiltList<String> get clients;
 
+  @nullable
   @BuiltValueField(wireName: 'entity')
   String get entityType;
 
+  @nullable
   @BuiltValueField(wireName: 'entity_id')
   String get entityId;
-
-  // ignore: unused_element
-  static void _initializeBuilder(ScheduleParametersBuilder builder) => builder
-    ..dateRange = ''
-    ..showPaymentsTable = false
-    ..showAgingTable = false
-    ..status = ''
-    ..clients.replace(BuiltList<String>())
-    ..entityType = ''
-    ..entityId = '';
 
   static Serializer<ScheduleParameters> get serializer =>
       _$scheduleParametersSerializer;

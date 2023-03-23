@@ -269,31 +269,58 @@ class _$ScheduleParametersSerializer
   @override
   Iterable<Object> serialize(Serializers serializers, ScheduleParameters object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'date_range',
-      serializers.serialize(object.dateRange,
-          specifiedType: const FullType(String)),
-      'show_payments_table',
-      serializers.serialize(object.showPaymentsTable,
-          specifiedType: const FullType(bool)),
-      'show_aging_table',
-      serializers.serialize(object.showAgingTable,
-          specifiedType: const FullType(bool)),
-      'status',
-      serializers.serialize(object.status,
-          specifiedType: const FullType(String)),
-      'clients',
-      serializers.serialize(object.clients,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
-      'entity',
-      serializers.serialize(object.entityType,
-          specifiedType: const FullType(String)),
-      'entity_id',
-      serializers.serialize(object.entityId,
-          specifiedType: const FullType(String)),
-    ];
-
+    final result = <Object>[];
+    Object value;
+    value = object.dateRange;
+    if (value != null) {
+      result
+        ..add('date_range')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.showPaymentsTable;
+    if (value != null) {
+      result
+        ..add('show_payments_table')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.showAgingTable;
+    if (value != null) {
+      result
+        ..add('show_aging_table')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.status;
+    if (value != null) {
+      result
+        ..add('status')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.clients;
+    if (value != null) {
+      result
+        ..add('clients')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.entityType;
+    if (value != null) {
+      result
+        ..add('entity')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.entityId;
+    if (value != null) {
+      result
+        ..add('entity_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -862,22 +889,7 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.clients,
       this.entityType,
       this.entityId})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        dateRange, r'ScheduleParameters', 'dateRange');
-    BuiltValueNullFieldError.checkNotNull(
-        showPaymentsTable, r'ScheduleParameters', 'showPaymentsTable');
-    BuiltValueNullFieldError.checkNotNull(
-        showAgingTable, r'ScheduleParameters', 'showAgingTable');
-    BuiltValueNullFieldError.checkNotNull(
-        status, r'ScheduleParameters', 'status');
-    BuiltValueNullFieldError.checkNotNull(
-        clients, r'ScheduleParameters', 'clients');
-    BuiltValueNullFieldError.checkNotNull(
-        entityType, r'ScheduleParameters', 'entityType');
-    BuiltValueNullFieldError.checkNotNull(
-        entityId, r'ScheduleParameters', 'entityId');
-  }
+      : super._();
 
   @override
   ScheduleParameters rebuild(
@@ -966,9 +978,7 @@ class ScheduleParametersBuilder
   String get entityId => _$this._entityId;
   set entityId(String entityId) => _$this._entityId = entityId;
 
-  ScheduleParametersBuilder() {
-    ScheduleParameters._initializeBuilder(this);
-  }
+  ScheduleParametersBuilder();
 
   ScheduleParametersBuilder get _$this {
     final $v = _$v;
@@ -977,7 +987,7 @@ class ScheduleParametersBuilder
       _showPaymentsTable = $v.showPaymentsTable;
       _showAgingTable = $v.showAgingTable;
       _status = $v.status;
-      _clients = $v.clients.toBuilder();
+      _clients = $v.clients?.toBuilder();
       _entityType = $v.entityType;
       _entityId = $v.entityId;
       _$v = null;
@@ -1004,26 +1014,18 @@ class ScheduleParametersBuilder
     try {
       _$result = _$v ??
           new _$ScheduleParameters._(
-              dateRange: BuiltValueNullFieldError.checkNotNull(
-                  dateRange, r'ScheduleParameters', 'dateRange'),
-              showPaymentsTable: BuiltValueNullFieldError.checkNotNull(
-                  showPaymentsTable,
-                  r'ScheduleParameters',
-                  'showPaymentsTable'),
-              showAgingTable: BuiltValueNullFieldError.checkNotNull(
-                  showAgingTable, r'ScheduleParameters', 'showAgingTable'),
-              status: BuiltValueNullFieldError.checkNotNull(
-                  status, r'ScheduleParameters', 'status'),
-              clients: clients.build(),
-              entityType: BuiltValueNullFieldError.checkNotNull(
-                  entityType, r'ScheduleParameters', 'entityType'),
-              entityId: BuiltValueNullFieldError.checkNotNull(
-                  entityId, r'ScheduleParameters', 'entityId'));
+              dateRange: dateRange,
+              showPaymentsTable: showPaymentsTable,
+              showAgingTable: showAgingTable,
+              status: status,
+              clients: _clients?.build(),
+              entityType: entityType,
+              entityId: entityId);
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'clients';
-        clients.build();
+        _clients?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ScheduleParameters', _$failedField, e.toString());

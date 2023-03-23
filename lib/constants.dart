@@ -312,6 +312,7 @@ const String kGatewayTypeBECS = '20';
 const String kGatewayTypeInstantBankPay = '21';
 const String kGatewayTypeFPX = '22';
 const String kGatewayTypeKlarna = '23';
+const String kGatewayTypeBacs = '24';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -337,6 +338,7 @@ const kGatewayTypes = {
   kGatewayTypeInstantBankPay: 'instant_bank_pay',
   kGatewayTypeFPX: 'fpx',
   kGatewayTypeKlarna: 'klarna',
+  kGatewayTypeBacs: 'bacs',
 };
 
 const String kNotificationChannelEmail = 'email';

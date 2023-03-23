@@ -117,6 +117,10 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.merge;
     case EntityAction.autoBill:
       return MdiIcons.contactlessPaymentCircle;
+    case EntityAction.updatePrices:
+      return MdiIcons.syncIcon;
+    case EntityAction.increasePrices:
+      return MdiIcons.arrowUpBoldBoxOutline;
     default:
       return null;
   }

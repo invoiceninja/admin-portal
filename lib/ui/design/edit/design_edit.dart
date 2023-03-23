@@ -9,7 +9,9 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +33,9 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -601,8 +606,32 @@ class PdfDesignPreview extends StatefulWidget {
 }
 
 class _PdfDesignPreviewState extends State<PdfDesignPreview> {
+  String get _pdfString {
+    if (widget.pdfBytes == null) {
+      return '';
+    }
+
+    return 'data:application/pdf;base64,' + base64Encode(widget.pdfBytes);
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.pdfBytes == widget.pdfBytes) {
+      return;
+    }
+
+    if (kIsWeb) {
+      WebUtils.registerWebView(_pdfString);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
     return Container(
       color: Colors.grey,
       alignment: Alignment.center,
@@ -611,6 +640,8 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
         children: <Widget>[
           if (widget.pdfBytes == null)
             SizedBox()
+          else if (kIsWeb && state.prefState.enableNativeBrowser)
+            HtmlElementView(viewType: _pdfString)
           else if (widget.pdfBytes != null)
             PdfPreview(
               build: (format) => widget.pdfBytes,

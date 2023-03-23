@@ -47,6 +47,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showPdfPreviewSideBySide: false,
       persistData: false,
       persistUI: true,
+      enableNativeBrowser: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
       customColors: BuiltMap<String, String>(CONTRAST_COLORS),
@@ -159,6 +160,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get editAfterSaving;
 
+  bool get enableNativeBrowser;
+
   double get textScaleFactor;
 
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
@@ -250,6 +253,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..enableTouchEvents = false
     ..enableFlexibleSearch = false
     ..enableTooltips = true
+    ..enableNativeBrowser = false
     ..textScaleFactor = 1
     ..colorTheme =
         builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;

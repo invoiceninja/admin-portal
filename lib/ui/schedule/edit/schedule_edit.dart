@@ -148,8 +148,14 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         labelText: localization.action,
                         value: schedule.template,
                         onChanged: (dynamic value) {
+                          if (schedule.template == value) {
+                            return;
+                          }
+
                           viewModel.onChanged(
-                            schedule.rebuild((b) => b..template = value),
+                            schedule.rebuild((b) => b
+                              ..template = value
+                              ..parameters.replace(ScheduleParameters(value))),
                           );
                         },
                         items: ScheduleEntity.TEMPLATES

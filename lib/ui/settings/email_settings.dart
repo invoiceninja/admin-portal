@@ -264,7 +264,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK) ...[
                 DecoratedFormField(
-                  label: localization.secret,
+                  label: localization.apiToken,
                   controller: _postmarkSecretController,
                   keyboardType: TextInputType.text,
                   onSavePressed: _onSavePressed,
@@ -275,7 +275,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               ] else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN) ...[
                 DecoratedFormField(
-                  label: localization.secret,
+                  label: localization.apiKey,
                   controller: _mailgunSecretController,
                   keyboardType: TextInputType.text,
                   onSavePressed: _onSavePressed,
@@ -292,6 +292,22 @@ class _EmailSettingsState extends State<EmailSettings> {
                       ? localization.pleaseEnterAValue
                       : null,
                 ),
+                AppDropdownButton<String>(
+                    labelText: localization.endpoint,
+                    value: settings.mailgunEndpoint,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..mailgunEndpoint = value));
+                    },
+                    items: [
+                      SettingsEntity.MAILGUN_ENDPOINT_US,
+                      SettingsEntity.MAILGUN_ENDPOINT_EU
+                    ]
+                        .map((endpoint) => DropdownMenuItem<String>(
+                              child: Text(endpoint),
+                              value: endpoint,
+                            ))
+                        .toList())
               ],
             ],
           ),

@@ -282,7 +282,7 @@ class ReportsScreen extends StatelessWidget {
       ]
     ];
 
-    final cappedEntities = [...reportResult.entities ?? []];
+    final cappedEntities = <BaseEntity>[...reportResult.entities ?? []];
     final firstEntity = cappedEntities.isNotEmpty ? cappedEntities.first : null;
     if (cappedEntities.length > kMaxEntitiesPerBulkAction) {
       cappedEntities.removeRange(

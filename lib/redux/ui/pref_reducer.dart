@@ -78,6 +78,8 @@ PrefState prefReducer(
     ..enableTooltips = enableTooltipsReducer(state.enableTooltips, action)
     ..enableFlexibleSearch =
         enableFlexibleSearchReducer(state.enableFlexibleSearch, action)
+    ..enableNativeBrowser =
+        enableNativeBrowserReducer(state.enableNativeBrowser, action)
     ..persistData = persistDataReducer(state.persistData, action)
     ..persistUI = persistUIReducer(state.persistUI, action)
     ..showKanban = showKanbanReducer(state.showKanban, action)
@@ -348,6 +350,12 @@ Reducer<bool> enableTooltipsReducer = combineReducers([
 Reducer<bool> enableFlexibleSearchReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableFlexibleSearch, action) {
     return action.flexibleSearch ?? enableFlexibleSearch;
+  }),
+]);
+
+Reducer<bool> enableNativeBrowserReducer = combineReducers([
+  TypedReducer<bool, UpdateUserPreferences>((enableNativeBrowser, action) {
+    return action.enableNativeBrowser ?? enableNativeBrowser;
   }),
 ]);
 

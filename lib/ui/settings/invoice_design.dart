@@ -1086,50 +1086,49 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   ],
                 ),
                 if (settings.shareInvoiceQuoteColumns == false)
-                  Expanded(
-                    child: FormCard(
-                      child: MultiSelectList(
-                        options: [
-                          ProductItemFields.item,
-                          ProductItemFields.description,
-                          if (company.enableProductQuantity)
-                            ProductItemFields.quantity,
-                          ProductItemFields.unitCost,
-                          if (company.hasItemTaxes) ...[
-                            ProductItemFields.tax,
-                            ProductItemFields.taxAmount,
-                          ],
-                          if (company.enableProductDiscount)
-                            ProductItemFields.discount,
-                          ProductItemFields.lineTotal,
-                          ProductItemFields.custom1,
-                          ProductItemFields.custom2,
-                          ProductItemFields.custom3,
-                          ProductItemFields.custom4,
-                          ProductItemFields.grossLineTotal,
-                        ].map((field) => '\$product.$field').toList(),
-                        defaultSelected: [
-                          ProductItemFields.item,
-                          ProductItemFields.description,
-                          ProductItemFields.unitCost,
-                          if (company.enableProductQuantity)
-                            ProductItemFields.quantity,
-                          if (company.enableProductDiscount)
-                            ProductItemFields.discount,
-                          if (company.hasItemTaxes) ProductItemFields.tax,
-                          ProductItemFields.lineTotal,
-                        ].map((field) => '\$product.$field').toList(),
-                        selected: settings
-                            .getFieldsForSection(kPdfFieldsProductQuoteColumns),
-                        onSelected: (values) {
-                          viewModel.onSettingsChanged(
-                              settings.setFieldsForSection(
-                                  kPdfFieldsProductQuoteColumns, values));
-                        },
-                        addTitle: localization.addField,
-                        liveChanges: true,
-                        prefix: 'product',
-                      ),
+                  FormCard(
+                    isLast: true,
+                    child: MultiSelectList(
+                      options: [
+                        ProductItemFields.item,
+                        ProductItemFields.description,
+                        if (company.enableProductQuantity)
+                          ProductItemFields.quantity,
+                        ProductItemFields.unitCost,
+                        if (company.hasItemTaxes) ...[
+                          ProductItemFields.tax,
+                          ProductItemFields.taxAmount,
+                        ],
+                        if (company.enableProductDiscount)
+                          ProductItemFields.discount,
+                        ProductItemFields.lineTotal,
+                        ProductItemFields.custom1,
+                        ProductItemFields.custom2,
+                        ProductItemFields.custom3,
+                        ProductItemFields.custom4,
+                        ProductItemFields.grossLineTotal,
+                      ].map((field) => '\$product.$field').toList(),
+                      defaultSelected: [
+                        ProductItemFields.item,
+                        ProductItemFields.description,
+                        ProductItemFields.unitCost,
+                        if (company.enableProductQuantity)
+                          ProductItemFields.quantity,
+                        if (company.enableProductDiscount)
+                          ProductItemFields.discount,
+                        if (company.hasItemTaxes) ProductItemFields.tax,
+                        ProductItemFields.lineTotal,
+                      ].map((field) => '\$product.$field').toList(),
+                      selected: settings
+                          .getFieldsForSection(kPdfFieldsProductQuoteColumns),
+                      onSelected: (values) {
+                        viewModel.onSettingsChanged(
+                            settings.setFieldsForSection(
+                                kPdfFieldsProductQuoteColumns, values));
+                      },
+                      addTitle: localization.addField,
+                      liveChanges: true,
+                      prefix: 'product',
                     ),
                   ),
                 if (company.isModuleEnabled(EntityType.task))

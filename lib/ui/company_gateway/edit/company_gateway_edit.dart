@@ -268,8 +268,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   for (var gatewayTypeId
                       in gateway?.options?.keys ?? <String>[])
                     SwitchListTile(
-                        title: Text(localization
-                            .lookup(kGatewayTypes[gatewayTypeId] ?? '')),
+                        title: Text(kGatewayTypes.containsKey(gatewayTypeId)
+                            ? localization
+                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')
+                            : '$gatewayTypeId'),
                         activeColor: Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)

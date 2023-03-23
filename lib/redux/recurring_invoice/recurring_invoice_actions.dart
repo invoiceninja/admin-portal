@@ -2,13 +2,17 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -296,6 +300,48 @@ class SendNowRecurringInvoicesFailure implements StopSaving {
   final List<InvoiceEntity> recurringInvoices;
 }
 
+class UpdatePricesRecurringInvoicesRequest implements StartSaving {
+  UpdatePricesRecurringInvoicesRequest(
+      {this.completer, this.recurringInvoiceIds});
+
+  final Completer completer;
+  final List<String> recurringInvoiceIds;
+}
+
+class UpdatePricesRecurringInvoicesSuccess implements StopSaving, PersistData {
+  UpdatePricesRecurringInvoicesSuccess(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class UpdatePricesRecurringInvoicesFailure implements StopSaving {
+  UpdatePricesRecurringInvoicesFailure(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class IncreasePricesRecurringInvoicesRequest implements StartSaving {
+  IncreasePricesRecurringInvoicesRequest(
+      {this.completer, this.recurringInvoiceIds, this.percentageIncrease});
+
+  final Completer completer;
+  final double percentageIncrease;
+  final List<String> recurringInvoiceIds;
+}
+
+class IncreasePricesRecurringInvoicesSuccess
+    implements StopSaving, PersistData {
+  IncreasePricesRecurringInvoicesSuccess(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class IncreasePricesRecurringInvoicesFailure implements StopSaving {
+  IncreasePricesRecurringInvoicesFailure(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
 class DeleteRecurringInvoicesRequest implements StartSaving {
   DeleteRecurringInvoicesRequest(this.completer, this.recurringInvoiceIds);
 
@@ -473,6 +519,53 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.viewPdf:
       store.dispatch(
           ShowPdfRecurringInvoice(invoice: recurringInvoice, context: context));
+      break;
+    case EntityAction.updatePrices:
+      confirmCallback(
+          context: context,
+          message: localization.updatePrices,
+          callback: (_) {
+            store.dispatch(UpdatePricesRecurringInvoicesRequest(
+              completer:
+                  snackBarCompleter<Null>(context, localization.updatedPrices),
+              recurringInvoiceIds: recurringInvoiceIds,
+            ));
+          });
+      break;
+    case EntityAction.increasePrices:
+      final amount = await showDialog<double>(
+          context: context,
+          builder: (context) {
+            var _amount = 0.0;
+            return AlertDialog(
+              title: Text(localization.increasePrices),
+              content: DecoratedFormField(
+                autofocus: true,
+                label: localization.percent,
+                onChanged: (value) => _amount = parseDouble(value),
+                initialValue: '',
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(0.0),
+                    child: Text(localization.cancel.toUpperCase())),
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(_amount),
+                    child: Text(localization.submit.toUpperCase())),
+              ],
+            );
+          });
+
+      if (amount != 0) {
+        store.dispatch(IncreasePricesRecurringInvoicesRequest(
+          completer: snackBarCompleter<Null>(
+              navigatorKey.currentContext, localization.updatedPrices),
+          recurringInvoiceIds: recurringInvoiceIds,
+          percentageIncrease: amount,
+        ));
+      }
       break;
     case EntityAction.clientPortal:
       launchUrl(Uri.parse(recurringInvoice.invitationSilentLink));
