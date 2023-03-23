@@ -264,7 +264,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK) ...[
                 DecoratedFormField(
-                  label: localization.secret,
+                  label: localization.apiToken,
                   controller: _postmarkSecretController,
                   keyboardType: TextInputType.text,
                   onSavePressed: _onSavePressed,
@@ -275,7 +275,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               ] else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN) ...[
                 DecoratedFormField(
-                  label: localization.secret,
+                  label: localization.apiKey,
                   controller: _mailgunSecretController,
                   keyboardType: TextInputType.text,
                   onSavePressed: _onSavePressed,
