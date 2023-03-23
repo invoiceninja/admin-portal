@@ -55,7 +55,7 @@ abstract class ScheduleUIState extends Object
     implements Built<ScheduleUIState, ScheduleUIStateBuilder> {
   factory ScheduleUIState(PrefStateSortField sortField) {
     return _$ScheduleUIState._(
-      listUIState: ListUIState(sortField?.field ?? ScheduleFields.template,
+      listUIState: ListUIState(sortField?.field ?? ScheduleFields.nextRun,
           sortAscending: sortField?.ascending),
       editing: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
       selectedId: '',
