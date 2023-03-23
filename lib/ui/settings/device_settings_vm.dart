@@ -54,6 +54,7 @@ class DeviceSettingsVM {
     @required this.onPersistDataChanged,
     @required this.onPersistUiChanged,
     @required this.onShowPdfChanged,
+    @required this.onEnableNativeBrowserChanged,
     @required this.onShowPdfSideBySideChanged,
     @required this.onTapSelectedChanged,
     @required this.onTextScaleFactorChanged,
@@ -111,6 +112,9 @@ class DeviceSettingsVM {
       },
       onShowPdfChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreview: value));
+      },
+      onEnableNativeBrowserChanged: (context, value) {
+        store.dispatch(UpdateUserPreferences(enableNativeBrowser: value));
       },
       onShowPdfSideBySideChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreviewSideBySide: value));
@@ -214,6 +218,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onPersistDataChanged;
   final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
+  final Function(BuildContext, bool) onEnableNativeBrowserChanged;
   final Function(BuildContext, bool) onShowPdfSideBySideChanged;
   final Function(BuildContext, bool) onEnableTouchEventsChanged;
   final Function(BuildContext, bool) onEnableTooltipsChanged;
