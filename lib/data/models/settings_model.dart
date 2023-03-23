@@ -133,6 +133,9 @@ abstract class SettingsEntity
   static const EMAIL_ALIGNMENT_LEFT = 'left';
   static const EMAIL_ALIGNMENT_RIGHT = 'right';
 
+  static const MAILGUN_ENDPOINT_US = 'api.mailgun.net';
+  static const MAILGUN_ENDPOINT_EU = 'api.eu.mailgun.net';
+
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
@@ -932,6 +935,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'mailgun_domain')
   String get mailgunDomain;
+
+  @nullable
+  @BuiltValueField(wireName: 'mailgun_endpoint')
+  String get mailgunEndpoint;
 
   @nullable
   @BuiltValueField(wireName: 'email_alignment')

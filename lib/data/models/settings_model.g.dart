@@ -1422,6 +1422,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.mailgunEndpoint;
+    if (value != null) {
+      result
+        ..add('mailgun_endpoint')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.emailAlignment;
     if (value != null) {
       result
@@ -2334,6 +2341,10 @@ class _$SettingsEntitySerializer
           result.mailgunDomain = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'mailgun_endpoint':
+          result.mailgunEndpoint = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'email_alignment':
           result.emailAlignment = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2865,6 +2876,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String mailgunDomain;
   @override
+  final String mailgunEndpoint;
+  @override
   final String emailAlignment;
   @override
   final bool showEmailFooter;
@@ -3095,6 +3108,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.postmarkSecret,
       this.mailgunSecret,
       this.mailgunDomain,
+      this.mailgunEndpoint,
       this.emailAlignment,
       this.showEmailFooter,
       this.companyLogoSize,
@@ -3327,6 +3341,7 @@ class _$SettingsEntity extends SettingsEntity {
         postmarkSecret == other.postmarkSecret &&
         mailgunSecret == other.mailgunSecret &&
         mailgunDomain == other.mailgunDomain &&
+        mailgunEndpoint == other.mailgunEndpoint &&
         emailAlignment == other.emailAlignment &&
         showEmailFooter == other.showEmailFooter &&
         companyLogoSize == other.companyLogoSize &&
@@ -3549,6 +3564,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, postmarkSecret.hashCode);
     _$hash = $jc(_$hash, mailgunSecret.hashCode);
     _$hash = $jc(_$hash, mailgunDomain.hashCode);
+    _$hash = $jc(_$hash, mailgunEndpoint.hashCode);
     _$hash = $jc(_$hash, emailAlignment.hashCode);
     _$hash = $jc(_$hash, showEmailFooter.hashCode);
     _$hash = $jc(_$hash, companyLogoSize.hashCode);
@@ -3774,6 +3790,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('postmarkSecret', postmarkSecret)
           ..add('mailgunSecret', mailgunSecret)
           ..add('mailgunDomain', mailgunDomain)
+          ..add('mailgunEndpoint', mailgunEndpoint)
           ..add('emailAlignment', emailAlignment)
           ..add('showEmailFooter', showEmailFooter)
           ..add('companyLogoSize', companyLogoSize)
@@ -4785,6 +4802,11 @@ class SettingsEntityBuilder
   set mailgunDomain(String mailgunDomain) =>
       _$this._mailgunDomain = mailgunDomain;
 
+  String _mailgunEndpoint;
+  String get mailgunEndpoint => _$this._mailgunEndpoint;
+  set mailgunEndpoint(String mailgunEndpoint) =>
+      _$this._mailgunEndpoint = mailgunEndpoint;
+
   String _emailAlignment;
   String get emailAlignment => _$this._emailAlignment;
   set emailAlignment(String emailAlignment) =>
@@ -5053,6 +5075,7 @@ class SettingsEntityBuilder
       _postmarkSecret = $v.postmarkSecret;
       _mailgunSecret = $v.mailgunSecret;
       _mailgunDomain = $v.mailgunDomain;
+      _mailgunEndpoint = $v.mailgunEndpoint;
       _emailAlignment = $v.emailAlignment;
       _showEmailFooter = $v.showEmailFooter;
       _companyLogoSize = $v.companyLogoSize;
@@ -5292,6 +5315,7 @@ class SettingsEntityBuilder
               postmarkSecret: postmarkSecret,
               mailgunSecret: mailgunSecret,
               mailgunDomain: mailgunDomain,
+              mailgunEndpoint: mailgunEndpoint,
               emailAlignment: emailAlignment,
               showEmailFooter: showEmailFooter,
               companyLogoSize: companyLogoSize,
