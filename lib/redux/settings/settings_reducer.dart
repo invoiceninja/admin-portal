@@ -119,7 +119,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, UpdateSettingsTemplate>((state, action) {
     return state.rebuild((b) => b..selectedTemplate = action.selectedTemplate);
   }),
-  TypedReducer<SettingsUIState, UpdatedSetting>((state, action) {
+  TypedReducer<SettingsUIState, UpdatedSettingUI>((state, action) {
     return state
         .rebuild((b) => b..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
