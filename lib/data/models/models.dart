@@ -129,6 +129,8 @@ class EntityAction extends EnumClass {
   static const EntityAction bulkPrint = _$bulkPrint;
   static const EntityAction autoBill = _$autoBill;
   static const EntityAction schedule = _$schedule;
+  static const EntityAction updatePrices = _$updatePrices;
+  static const EntityAction increasePrices = _$increasePrices;
 
   @override
   String toString() {

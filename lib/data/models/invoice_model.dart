@@ -1028,6 +1028,9 @@ abstract class InvoiceEntity extends Object
           ].contains(statusId)) {
             actions.add(EntityAction.stop);
           }
+
+          actions.add(EntityAction.updatePrices);
+          actions.add(EntityAction.increasePrices);
         } else {
           if (!isCancelledOrReversed) {
             if (multiselect) {

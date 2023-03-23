@@ -34,6 +34,10 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   final restoreRecurringInvoice = _restoreRecurringInvoice(repository);
   final startRecurringInvoice = _startRecurringInvoice(repository);
   final stopRecurringInvoice = _stopRecurringInvoice(repository);
+  final updatePricesRecurringInvoice =
+      _updatePricesRecurringInvoice(repository);
+  final increasePricesRecurringInvoice =
+      _increasePricesRecurringInvoice(repository);
   final sendNowRecurringInvoice = _sendNowRecurringInvoice(repository);
   final saveDocument = _saveDocument(repository);
 
@@ -57,6 +61,10 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
         startRecurringInvoice),
     TypedMiddleware<AppState, StopRecurringInvoicesRequest>(
         stopRecurringInvoice),
+    TypedMiddleware<AppState, UpdatePricesRecurringInvoicesRequest>(
+        updatePricesRecurringInvoice),
+    TypedMiddleware<AppState, IncreasePricesRecurringInvoicesRequest>(
+        increasePricesRecurringInvoice),
     TypedMiddleware<AppState, SendNowRecurringInvoicesRequest>(
         sendNowRecurringInvoice),
     TypedMiddleware<AppState, SaveRecurringInvoiceDocumentRequest>(
@@ -166,6 +174,54 @@ Middleware<AppState> _stopRecurringInvoice(
     }).catchError((Object error) {
       print(error);
       store.dispatch(StopRecurringInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _updatePricesRecurringInvoice(
+    RecurringInvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UpdatePricesRecurringInvoicesRequest;
+    repository
+        .bulkAction(store.state.credentials, action.recurringInvoiceIds,
+            EntityAction.updatePrices)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(UpdatePricesRecurringInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UpdatePricesRecurringInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _increasePricesRecurringInvoice(
+    RecurringInvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as IncreasePricesRecurringInvoicesRequest;
+    repository
+        .bulkAction(store.state.credentials, action.recurringInvoiceIds,
+            EntityAction.increasePrices)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(IncreasePricesRecurringInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(IncreasePricesRecurringInvoicesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

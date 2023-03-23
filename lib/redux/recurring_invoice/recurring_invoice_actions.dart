@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -296,6 +297,48 @@ class SendNowRecurringInvoicesFailure implements StopSaving {
   final List<InvoiceEntity> recurringInvoices;
 }
 
+class UpdatePricesRecurringInvoicesRequest implements StartSaving {
+  UpdatePricesRecurringInvoicesRequest(
+      {this.completer, this.recurringInvoiceIds});
+
+  final Completer completer;
+  final List<String> recurringInvoiceIds;
+}
+
+class UpdatePricesRecurringInvoicesSuccess implements StopSaving, PersistData {
+  UpdatePricesRecurringInvoicesSuccess(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class UpdatePricesRecurringInvoicesFailure implements StopSaving {
+  UpdatePricesRecurringInvoicesFailure(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class IncreasePricesRecurringInvoicesRequest implements StartSaving {
+  IncreasePricesRecurringInvoicesRequest(
+      {this.completer, this.recurringInvoiceIds, this.percentageIncrease});
+
+  final Completer completer;
+  final double percentageIncrease;
+  final List<String> recurringInvoiceIds;
+}
+
+class IncreasePricesRecurringInvoicesSuccess
+    implements StopSaving, PersistData {
+  IncreasePricesRecurringInvoicesSuccess(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
+class IncreasePricesRecurringInvoicesFailure implements StopSaving {
+  IncreasePricesRecurringInvoicesFailure(this.recurringInvoices);
+
+  final List<InvoiceEntity> recurringInvoices;
+}
+
 class DeleteRecurringInvoicesRequest implements StartSaving {
   DeleteRecurringInvoicesRequest(this.completer, this.recurringInvoiceIds);
 
@@ -473,6 +516,20 @@ void handleRecurringInvoiceAction(BuildContext context,
     case EntityAction.viewPdf:
       store.dispatch(
           ShowPdfRecurringInvoice(invoice: recurringInvoice, context: context));
+      break;
+    case EntityAction.updatePrices:
+      confirmCallback(
+          context: context,
+          message: localization.updatePrices,
+          callback: (_) {
+            store.dispatch(UpdatePricesRecurringInvoicesRequest(
+              completer:
+                  snackBarCompleter<Null>(context, localization.updatedPrices),
+              recurringInvoiceIds: recurringInvoiceIds,
+            ));
+          });
+      break;
+    case EntityAction.increasePrices:
       break;
     case EntityAction.clientPortal:
       launchUrl(Uri.parse(recurringInvoice.invitationSilentLink));
