@@ -549,7 +549,7 @@ void handleRecurringInvoiceAction(BuildContext context,
               ),
               actions: [
                 TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(0.0),
                     child: Text(localization.cancel.toUpperCase())),
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(_amount),
