@@ -202,7 +202,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         subtitle: Text(localization.browserPdfViewerHelp),
                         value: prefState.enableNativeBrowser,
                         onChanged: (value) => viewModel
-                            .onEnableNativeBrowserChanged(context, !value),
+                            .onEnableNativeBrowserChanged(context, value),
                         activeColor: Theme.of(context).colorScheme.secondary,
                         secondary: Icon(MdiIcons.filePdfBox),
                       ),
