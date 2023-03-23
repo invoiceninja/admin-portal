@@ -134,15 +134,12 @@ abstract class ScheduleEntity extends Object
     final scheduleB = sortAscending ? schedule : this;
 
     switch (sortField) {
-      case ScheduleFields.template:
-        response = scheduleA.template.compareTo(scheduleB.template);
-        break;
       case ScheduleFields.nextRun:
         response = scheduleA.nextRun.compareTo(scheduleB.nextRun);
         break;
 
       default:
-        print('## ERROR: sort by schedule.$sortField is not implemented');
+        response = scheduleA.template.compareTo(scheduleB.template);
         break;
     }
 

@@ -211,10 +211,11 @@ Middleware<AppState> _increasePricesRecurringInvoice(
     RecurringInvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as IncreasePricesRecurringInvoicesRequest;
-    repository
-        .bulkAction(store.state.credentials, action.recurringInvoiceIds,
-            EntityAction.increasePrices)
-        .then((List<InvoiceEntity> invoices) {
+    repository.bulkAction(store.state.credentials, action.recurringInvoiceIds,
+        EntityAction.increasePrices,
+        data: {
+          'percentage_increase': action.percentageIncrease,
+        }).then((List<InvoiceEntity> invoices) {
       store.dispatch(IncreasePricesRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
         action.completer.complete(null);

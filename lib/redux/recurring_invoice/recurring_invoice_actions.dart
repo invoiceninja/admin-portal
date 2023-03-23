@@ -9,7 +9,10 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -530,6 +533,39 @@ void handleRecurringInvoiceAction(BuildContext context,
           });
       break;
     case EntityAction.increasePrices:
+      final amount = await showDialog<double>(
+          context: context,
+          builder: (context) {
+            var _amount = 0.0;
+            return AlertDialog(
+              title: Text(localization.increasePrices),
+              content: DecoratedFormField(
+                autofocus: true,
+                label: localization.percent,
+                onChanged: (value) => _amount = parseDouble(value),
+                initialValue: '',
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text(localization.cancel.toUpperCase())),
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(_amount),
+                    child: Text(localization.submit.toUpperCase())),
+              ],
+            );
+          });
+
+      if (amount != 0) {
+        store.dispatch(IncreasePricesRecurringInvoicesRequest(
+          completer: snackBarCompleter<Null>(
+              navigatorKey.currentContext, localization.updatedPrices),
+          recurringInvoiceIds: recurringInvoiceIds,
+          percentageIncrease: amount,
+        ));
+      }
       break;
     case EntityAction.clientPortal:
       launchUrl(Uri.parse(recurringInvoice.invitationSilentLink));
