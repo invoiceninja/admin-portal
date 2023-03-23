@@ -209,6 +209,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'editAfterSaving',
       serializers.serialize(object.editAfterSaving,
           specifiedType: const FullType(bool)),
+      'enableNativeBrowser',
+      serializers.serialize(object.enableNativeBrowser,
+          specifiedType: const FullType(bool)),
       'textScaleFactor',
       serializers.serialize(object.textScaleFactor,
           specifiedType: const FullType(double)),
@@ -365,6 +368,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'editAfterSaving':
           result.editAfterSaving = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enableNativeBrowser':
+          result.enableNativeBrowser = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'textScaleFactor':
@@ -678,6 +685,8 @@ class _$PrefState extends PrefState {
   @override
   final bool editAfterSaving;
   @override
+  final bool enableNativeBrowser;
+  @override
   final double textScaleFactor;
   @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
@@ -719,6 +728,7 @@ class _$PrefState extends PrefState {
       this.hideOneYearReviewApp,
       this.hideTwoYearReviewApp,
       this.editAfterSaving,
+      this.enableNativeBrowser,
       this.textScaleFactor,
       this.sortFields,
       this.companyPrefs})
@@ -784,6 +794,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         editAfterSaving, r'PrefState', 'editAfterSaving');
     BuiltValueNullFieldError.checkNotNull(
+        enableNativeBrowser, r'PrefState', 'enableNativeBrowser');
+    BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, r'PrefState', 'textScaleFactor');
     BuiltValueNullFieldError.checkNotNull(
         sortFields, r'PrefState', 'sortFields');
@@ -833,6 +845,7 @@ class _$PrefState extends PrefState {
         hideOneYearReviewApp == other.hideOneYearReviewApp &&
         hideTwoYearReviewApp == other.hideTwoYearReviewApp &&
         editAfterSaving == other.editAfterSaving &&
+        enableNativeBrowser == other.enableNativeBrowser &&
         textScaleFactor == other.textScaleFactor &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
@@ -874,6 +887,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, hideOneYearReviewApp.hashCode);
     _$hash = $jc(_$hash, hideTwoYearReviewApp.hashCode);
     _$hash = $jc(_$hash, editAfterSaving.hashCode);
+    _$hash = $jc(_$hash, enableNativeBrowser.hashCode);
     _$hash = $jc(_$hash, textScaleFactor.hashCode);
     _$hash = $jc(_$hash, sortFields.hashCode);
     _$hash = $jc(_$hash, companyPrefs.hashCode);
@@ -915,6 +929,7 @@ class _$PrefState extends PrefState {
           ..add('hideOneYearReviewApp', hideOneYearReviewApp)
           ..add('hideTwoYearReviewApp', hideTwoYearReviewApp)
           ..add('editAfterSaving', editAfterSaving)
+          ..add('enableNativeBrowser', enableNativeBrowser)
           ..add('textScaleFactor', textScaleFactor)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
@@ -1077,6 +1092,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set editAfterSaving(bool editAfterSaving) =>
       _$this._editAfterSaving = editAfterSaving;
 
+  bool _enableNativeBrowser;
+  bool get enableNativeBrowser => _$this._enableNativeBrowser;
+  set enableNativeBrowser(bool enableNativeBrowser) =>
+      _$this._enableNativeBrowser = enableNativeBrowser;
+
   double _textScaleFactor;
   double get textScaleFactor => _$this._textScaleFactor;
   set textScaleFactor(double textScaleFactor) =>
@@ -1132,6 +1152,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _hideOneYearReviewApp = $v.hideOneYearReviewApp;
       _hideTwoYearReviewApp = $v.hideTwoYearReviewApp;
       _editAfterSaving = $v.editAfterSaving;
+      _enableNativeBrowser = $v.enableNativeBrowser;
       _textScaleFactor = $v.textScaleFactor;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
@@ -1198,6 +1219,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
               hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, r'PrefState', 'editAfterSaving'),
+              enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, r'PrefState', 'textScaleFactor'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
