@@ -84,7 +84,7 @@ final editingReducer = combineReducers<ScheduleEntity>([
 ]);
 
 ScheduleEntity _clearEditing(ScheduleEntity schedule, dynamic action) {
-  return ScheduleEntity();
+  return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT);
 }
 
 ScheduleEntity _updateEditing(ScheduleEntity schedule, dynamic action) {

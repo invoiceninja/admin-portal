@@ -893,17 +893,16 @@ void createEntityByType({
           case EntityType.schedule:
             store.dispatch(EditSchedule(
               force: force,
-              schedule: ScheduleEntity(state: state),
+              schedule: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+                  state: state),
             ));
             break;
-
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
               force: force,
               transactionRule: TransactionRuleEntity(state: state),
             ));
             break;
-
           case EntityType.transaction:
             store.dispatch(EditTransaction(
               force: force,

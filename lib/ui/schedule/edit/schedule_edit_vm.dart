@@ -63,7 +63,10 @@ class ScheduleEditVM {
         store.dispatch(UpdateSchedule(schedule));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ScheduleEntity(), force: true);
+        createEntity(
+            context: context,
+            entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
+            force: true);
         if (state.scheduleUIState.cancelCompleter != null) {
           state.scheduleUIState.cancelCompleter.complete();
         } else {

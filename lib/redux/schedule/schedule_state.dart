@@ -30,7 +30,8 @@ abstract class ScheduleState
     if (map.containsKey(scheduleId)) {
       return map[scheduleId];
     } else {
-      return ScheduleEntity(id: scheduleId);
+      return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+          id: scheduleId);
     }
   }
 
@@ -56,7 +57,7 @@ abstract class ScheduleUIState extends Object
     return _$ScheduleUIState._(
       listUIState: ListUIState(sortField?.field ?? ScheduleFields.template,
           sortAscending: sortField?.ascending),
-      editing: ScheduleEntity(),
+      editing: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
       selectedId: '',
       tabIndex: 0,
     );
