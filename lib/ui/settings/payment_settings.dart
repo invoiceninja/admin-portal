@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentSettings extends StatefulWidget {
   const PaymentSettings({
@@ -246,13 +247,14 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                       decimal: true, signed: true),
                 ),
               ),
-            BoolDropdownButton(
-              label: localization.clientInitiatedPayments,
-              value: settings.clientInitiatedPayments,
-              helpLabel: localization.clientInitiatedPaymentsHelp,
-              onChanged: (value) => viewModel.onSettingsChanged(
-                  settings.rebuild((b) => b..clientInitiatedPayments = value)),
-            ),
+            if (supportsLatestFeatures())
+              BoolDropdownButton(
+                label: localization.clientInitiatedPayments,
+                value: settings.clientInitiatedPayments,
+                helpLabel: localization.clientInitiatedPaymentsHelp,
+                onChanged: (value) => viewModel.onSettingsChanged(settings
+                    .rebuild((b) => b..clientInitiatedPayments = value)),
+              ),
             if (settings.clientInitiatedPayments == true)
               Padding(
                 padding: const EdgeInsets.only(top: 16),

@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskSettings extends StatefulWidget {
   const TaskSettings({
@@ -123,22 +124,24 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showTaskEndDate = value)),
               ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskItemDescription),
-                value: settings.showTaskItemDescription,
-                subtitle: Text(localization.showTaskItemDescriptionHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..showTaskItemDescription = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.allowBillableTaskItems),
-                value: settings.allowBillableTaskItems,
-                subtitle: Text(localization.allowBillableTaskItemsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..allowBillableTaskItems = value)),
-              ),
+              if (supportsLatestFeatures()) ...[
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.showTaskItemDescription),
+                  value: settings.showTaskItemDescription,
+                  subtitle: Text(localization.showTaskItemDescriptionHelp),
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..showTaskItemDescription = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.allowBillableTaskItems),
+                  value: settings.allowBillableTaskItems,
+                  subtitle: Text(localization.allowBillableTaskItemsHelp),
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..allowBillableTaskItems = value)),
+                ),
+              ],
             ]
           ]),
           if (!viewModel.state.settingsUIState.isFiltered)
