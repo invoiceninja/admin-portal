@@ -269,11 +269,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               SizedBox(width: 8),
             ],
           ),
-          DecoratedFormField(
-            controller: _ccEmailController,
-            label: localization.ccEmail,
-            keyboardType: TextInputType.emailAddress,
-          )
+          if (supportsLatestFeatures())
+            DecoratedFormField(
+              controller: _ccEmailController,
+              label: localization.ccEmail,
+              keyboardType: TextInputType.emailAddress,
+            )
         ],
       ),
     );
