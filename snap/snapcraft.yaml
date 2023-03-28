@@ -1,5 +1,5 @@
-name: Invoice Ninja
-version: '5.0.112'
+name: invoiceninja
+version: '5.0.113'
 summary: Create invoices, accept payments, track expenses & time-tasks
 description: "### Note: if the app fails to run using `snap run invoiceninja` it may help to run `/snap/invoiceninja/current/bin/invoiceninja` instead
 
