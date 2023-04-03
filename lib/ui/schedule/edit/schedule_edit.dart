@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';

@@ -231,7 +231,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20, left: 20),
           child: Text(
             localization.lookup(kGatewayTypes[entry.key]),
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         FieldGrid(entry.value),

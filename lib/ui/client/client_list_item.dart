@@ -131,7 +131,7 @@ class ClientListItem extends StatelessWidget {
                                 filterMatch,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                           ],
                         ),
@@ -173,13 +173,13 @@ class ClientListItem extends StatelessWidget {
                         child: Text(
                           client.displayName +
                               (client.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
                           formatNumber(client.balance, context,
                               clientId: client.id),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

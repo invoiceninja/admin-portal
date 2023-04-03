@@ -57,7 +57,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
               child: ScrollableListView(
                 children: <Widget>[
                   Text(localization.dateRange,
-                      style: Theme.of(context).textTheme.headline6),
+                      style: Theme.of(context).textTheme.titleLarge),
                   SizedBox(height: 16.0),
                   Row(
                     children: <Widget>[
@@ -123,7 +123,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                               children: [
                                 Text(
                                   '${localization.compareTo}:  ',
-                                  style: Theme.of(context).textTheme.subtitle1,
+                                  style: Theme.of(context).textTheme.titleMedium,
                                 ),
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton<DateRangeComparison>(

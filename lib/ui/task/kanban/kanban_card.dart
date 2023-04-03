@@ -67,7 +67,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final task = widget.task;
     final project = state.projectState.get(task.projectId);
     final client = state.clientState.get(task.clientId);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     var color = Colors.grey;
     if (task.projectId.isNotEmpty) {
@@ -160,7 +160,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                   width: 1),
               borderRadius: BorderRadius.circular(kBorderRadius),
             ),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -33,7 +33,7 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
     final textStyle = TextStyle(color: textColor.withOpacity(.65));
 
     final transactionStats = memoizedTransactionStatsForTransactionRule(

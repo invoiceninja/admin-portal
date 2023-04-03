@@ -73,11 +73,11 @@ class GroupListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   group.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Text(formatNumber(group.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+                  style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),

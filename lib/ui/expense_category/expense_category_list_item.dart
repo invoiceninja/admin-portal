@@ -73,11 +73,11 @@ class ExpenseCategoryListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   expenseCategory.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Text(formatNumber(expenseCategory.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+                  style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),

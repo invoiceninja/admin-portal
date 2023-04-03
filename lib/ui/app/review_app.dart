@@ -35,7 +35,7 @@ class _ReviewAppState extends State<ReviewApp> {
           SizedBox(height: 12),
           Text(
             localization.wouldYouRateTheApp,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 16),

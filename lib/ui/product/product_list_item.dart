@@ -133,7 +133,7 @@ class ProductListItem extends StatelessWidget {
                                 filterMatch,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                           ],
                         ),
@@ -176,14 +176,14 @@ class ProductListItem extends StatelessWidget {
                         child: Text(
                           product.productKey +
                               (product.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
                           formatNumber(
                               showCost ? product.cost : product.price, context,
                               roundToPrecision: false),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

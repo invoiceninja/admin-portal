@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -124,7 +123,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 children: [
                   Text(
                     localization.details,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   if (client.paymentBalance != 0)
@@ -217,7 +216,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               children: [
                 Text(
                   localization.address,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
@@ -314,7 +313,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         (hasMultipleContacts
                             ? ' (${client.contacts.length})'
                             : ''),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   ...client.contacts.map((contact) {
@@ -327,7 +326,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             children: [
                               Text(
                                 contact.fullName,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)
                                 Padding(

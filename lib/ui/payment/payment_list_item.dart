@@ -49,7 +49,7 @@ class PaymentListItem extends StatelessWidget {
         : null;
     final mobileSubtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     String desktopSubtitle = '';
     if (payment.date.isNotEmpty) {
@@ -141,7 +141,7 @@ class PaymentListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .titleSmall
                                   .copyWith(
                                     color:
                                         textColor.withOpacity(kLighterOpacity),
@@ -188,13 +188,13 @@ class PaymentListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           client.displayName,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
                           formatNumber(payment.amount, context,
                               clientId: payment.clientId),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

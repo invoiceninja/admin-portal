@@ -85,7 +85,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               child: ListView(controller: _scrollController1, children: [
                 Text(
                   localization.details,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (vendor.idNumber.isNotEmpty)
@@ -151,7 +151,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               children: [
                 Text(
                   localization.address,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
@@ -216,7 +216,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                         (vendor.contacts.length > 1
                             ? ' (${vendor.contacts.length})'
                             : ''),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   ...vendor.contacts.map((contact) {
@@ -225,7 +225,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       children: [
                         Text(
                           contact.fullName,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         if (contact.email.isNotEmpty)
                           Padding(

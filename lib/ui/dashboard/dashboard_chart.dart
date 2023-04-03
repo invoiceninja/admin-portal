@@ -128,7 +128,7 @@ class _DashboardChartState extends State<DashboardChart> {
               padding: EdgeInsets.only(bottom: 24, top: 8),
               child: Text(
                 widget.title,
-                style: theme.textTheme.headline5,
+                style: theme.textTheme.headlineSmall,
               ),
             ),
           ),
@@ -183,14 +183,14 @@ class _DashboardChartState extends State<DashboardChart> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(localization.lookup(dataGroup.name),
-                            style: theme.textTheme.headline6.copyWith(
+                            style: theme.textTheme.titleLarge.copyWith(
                               color: isSelected ? Colors.white : null,
                             )),
                         SizedBox(height: 4),
                         Text(
                             formatNumber(dataGroup.periodTotal, context,
                                 currencyId: widget.currencyId),
-                            style: theme.textTheme.headline5.copyWith(
+                            style: theme.textTheme.headlineSmall.copyWith(
                                 color: isSelected ? Colors.white : null)),
                         SizedBox(height: 4),
                         changeString.isNotEmpty
@@ -237,13 +237,13 @@ class _DashboardChartState extends State<DashboardChart> {
                         ': ' +
                         formatNumber(series.average, context,
                             currencyId: widget.currencyId),
-                    style: theme.textTheme.headline6,
+                    style: theme.textTheme.titleLarge,
                   ),
                 ),
                 _selected != null
                     ? Text(
                         _selected,
-                        style: theme.textTheme.headline6,
+                        style: theme.textTheme.titleLarge,
                       )
                     : SizedBox(),
               ],

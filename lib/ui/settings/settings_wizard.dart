@@ -349,7 +349,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                   child: Text(
                                     localization.welcomeToInvoiceNinja,
                                     style:
-                                        Theme.of(context).textTheme.headline6,
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
                                 ),
                                 companyName,
@@ -375,7 +375,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                         child: Text(
                                       localization.welcomeToInvoiceNinja,
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.titleLarge,
                                     )),
                                     if (state.isHosted) ...[
                                       SizedBox(width: kTableColumnGap),

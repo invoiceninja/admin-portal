@@ -51,7 +51,7 @@ class TransactionListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -124,7 +124,7 @@ class TransactionListItem extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .subtitle2
+                                      .titleSmall
                                       .copyWith(
                                         color: textColor
                                             .withOpacity(kLighterOpacity),
@@ -137,7 +137,7 @@ class TransactionListItem extends StatelessWidget {
                                 filterMatch,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle2,
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                           ],
                         ),
@@ -192,13 +192,13 @@ class TransactionListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           transaction.description,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
                           formatNumber(transaction.amount, context,
                               currencyId: transaction.currencyId),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

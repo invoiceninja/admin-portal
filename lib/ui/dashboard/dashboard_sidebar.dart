@@ -469,7 +469,7 @@ class _DashboardSidebar extends StatelessWidget {
             elevation: 4,
             color: Theme.of(context).scaffoldBackgroundColor,
             child: Container(
-              child: Text(label1, style: textTheme.bodyText2),
+              child: Text(label1, style: textTheme.bodyMedium),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               width: double.infinity,
             ),
@@ -484,7 +484,7 @@ class _DashboardSidebar extends StatelessWidget {
               elevation: 4,
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Container(
-                child: Text(label2, style: textTheme.bodyText2),
+                child: Text(label2, style: textTheme.bodyMedium),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 width: double.infinity,
@@ -513,7 +513,7 @@ class _DashboardSidebar extends StatelessWidget {
                       children: [
                         Expanded(
                             child:
-                                Text(label3 ?? '', style: textTheme.bodyText2)),
+                                Text(label3 ?? '', style: textTheme.bodyMedium)),
                         IconButton(
                           visualDensity: VisualDensity.compact,
                           icon: Icon(Icons.clear),

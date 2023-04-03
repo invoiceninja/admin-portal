@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -40,7 +39,7 @@ class _UserEditState extends State<UserEdit>
   final _debouncer = Debouncer();
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  bool _canViewReports = false;
+  final bool _canViewReports = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();

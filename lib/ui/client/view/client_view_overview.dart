@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 
 // Package imports:

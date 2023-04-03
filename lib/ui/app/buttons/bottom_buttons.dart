@@ -34,7 +34,7 @@ class BottomButtons extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final textColor = state.prefState.enableDarkMode || state.hasAccentColor
-        ? Theme.of(context).textTheme.bodyText1.color
+        ? Theme.of(context).textTheme.bodyLarge.color
         : state.accentColor;
 
     return SizedBox(

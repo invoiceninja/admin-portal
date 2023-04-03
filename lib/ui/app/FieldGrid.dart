@@ -16,7 +16,7 @@ class FieldGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {

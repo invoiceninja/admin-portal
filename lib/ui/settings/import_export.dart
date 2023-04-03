@@ -666,7 +666,7 @@ class __FileMapperState extends State<_FileMapper> {
         SizedBox(height: 25),
         Text(
           localization.lookup(entry.key),
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
           overflow: TextOverflow.clip,
           maxLines: 1,
         ),

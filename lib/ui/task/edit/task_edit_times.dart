@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/duration_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/growable_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';

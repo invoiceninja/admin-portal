@@ -542,7 +542,7 @@ final _darkModeStyles = [
     },
   ),
   StyleRule(
-    const BlockSelector("header1"),
+    const BlockSelector('header1'),
     (doc, docNode) {
       return <String, dynamic>{
         'textStyle': const TextStyle(
@@ -552,7 +552,7 @@ final _darkModeStyles = [
     },
   ),
   StyleRule(
-    const BlockSelector("header2"),
+    const BlockSelector('header2'),
     (doc, docNode) {
       return <String, dynamic>{
         'textStyle': const TextStyle(

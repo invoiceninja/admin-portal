@@ -116,7 +116,7 @@ class EditScaffold extends StatelessWidget {
 
     final textStyle = Theme.of(context)
         .textTheme
-        .bodyText2
+        .bodyMedium
         .copyWith(color: state.headerTextColor);
 
     final showOverflow = isDesktop(context) && state.isFullScreen;

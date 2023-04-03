@@ -487,7 +487,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           if (_dateRange == DateRange.custom)
             Container(
               width: double.infinity,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               child: Wrap(
                 alignment: WrapAlignment.center,
                 children: [

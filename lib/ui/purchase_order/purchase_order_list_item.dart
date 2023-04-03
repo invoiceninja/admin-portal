@@ -52,7 +52,7 @@ class PurchaseOrderListItem extends StatelessWidget {
         ? (purchaseOrder.matchesFilterValue(filter) ??
             vendor.matchesFilterValue(filter))
         : null;
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     String subtitle = '';
     if (purchaseOrder.date.isNotEmpty) {
@@ -144,7 +144,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .titleSmall
                                   .copyWith(
                                     color:
                                         textColor.withOpacity(kLighterOpacity),
@@ -195,7 +195,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           vendor.name,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -206,7 +206,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                             context,
                             vendorId: vendor.id,
                           ),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

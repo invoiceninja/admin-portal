@@ -93,11 +93,11 @@ class TransactionRuleListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   transactionRule.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Text(formatNumber(transactionRule.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+                  style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),
