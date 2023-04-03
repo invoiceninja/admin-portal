@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -420,7 +421,7 @@ class _UserDetailsState extends State<UserDetails>
 
                               if (phoneVerified == true) {
                                 showDialog<void>(
-                                  context: context,
+                                  context: navigatorKey.currentContext,
                                   builder: (BuildContext context) =>
                                       _EnableTwoFactor(state: viewModel.state),
                                 );
@@ -546,7 +547,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
       });
     }).catchError((dynamic error) {
       Navigator.of(context).pop();
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 
@@ -586,7 +587,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
       Navigator.of(context).pop();
     }).catchError((Object error) {
       setState(() => _isLoading = false);
-      showErrorDialog(context: context, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 

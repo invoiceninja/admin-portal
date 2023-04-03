@@ -102,9 +102,7 @@ class InvoiceDesignVM {
                             AppLocalization.of(navigatorKey.currentContext)
                                 .savedSettings);
                       }).catchError((dynamic error) {
-                        showErrorDialog(
-                            context: navigatorKey.currentContext,
-                            message: '$error');
+                        showErrorDialog(message: '$error');
                       });
                     });
                   });

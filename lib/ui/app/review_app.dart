@@ -44,12 +44,12 @@ class _ReviewAppState extends State<ReviewApp> {
               TextButton(
                 onPressed: () async {
                   // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
-                  if (isAndroid()) {
+                  if (kIsWeb || isLinux()) {
+                    launchUrl(Uri.parse(getRateAppURL(context)));
+                  } else if (isAndroid()) {
                     AppReview.openStoreListing();
                   } else if (await AppReview.isAvailable()) {
                     AppReview.requestReview();
-                  } else if (kIsWeb || isLinux()) {
-                    launchUrl(Uri.parse(getRateAppURL(context)));
                   } else {
                     AppReview.openStoreListing();
                   }

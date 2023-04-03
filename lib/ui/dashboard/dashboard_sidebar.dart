@@ -512,8 +512,8 @@ class _DashboardSidebar extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                            child:
-                                Text(label3 ?? '', style: textTheme.bodyMedium)),
+                            child: Text(label3 ?? '',
+                                style: textTheme.bodyMedium)),
                         IconButton(
                           visualDensity: VisualDensity.compact,
                           icon: Icon(Icons.clear),

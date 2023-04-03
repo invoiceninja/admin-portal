@@ -415,10 +415,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           textButtonTheme:
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme), colorScheme: ColorScheme.dark().copyWith(
+                              style: outlinedButtonTheme),
+                          colorScheme: ColorScheme.dark().copyWith(
                             secondary: accentColor,
                             primary: accentColor,
-                          ).copyWith(background: Colors.black), bottomAppBarTheme: BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
+                            background: Colors.black,
+                          ),
+                          bottomAppBarTheme:
+                              BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
                           tooltipTheme: TooltipThemeData(
@@ -465,9 +469,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           textButtonTheme:
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme), colorScheme: ColorScheme.fromSwatch().copyWith(
+                              style: outlinedButtonTheme),
+                          colorScheme: ColorScheme.fromSwatch().copyWith(
                             secondary: accentColor,
-                          ).copyWith(background: Colors.white), bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
+                            background: Colors.white,
+                          ),
+                          bottomAppBarTheme:
+                              BottomAppBarTheme(color: Colors.white),
                         ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,

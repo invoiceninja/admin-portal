@@ -84,11 +84,9 @@ class _ClientViewState extends State<ClientView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final documents = client.documents;
-    final userCompany = viewModel.state.userCompany;
 
     if (widget.isTopFilter) {
       return Material(

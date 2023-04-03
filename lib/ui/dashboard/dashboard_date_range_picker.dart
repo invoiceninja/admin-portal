@@ -123,7 +123,8 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                               children: [
                                 Text(
                                   '${localization.compareTo}:  ',
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                                 DropdownButtonHideUnderline(
                                   child: DropdownButton<DateRangeComparison>(

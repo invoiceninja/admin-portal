@@ -165,7 +165,6 @@ class UserDetailsVM {
       onDisconnectGooglePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              context: context,
               message: AppLocalization.of(context).pleaseFirstSetAPassword);
           return;
         }
@@ -206,7 +205,6 @@ class UserDetailsVM {
                   if (idToken.isEmpty || accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
-                        context: context,
                         message: AppLocalization.of(context)
                             .anErrorOccurredTryAgain);
                   } else {
@@ -223,19 +221,17 @@ class UserDetailsVM {
                 });
                 if (!signedIn) {
                   showErrorDialog(
-                      context: context,
                       message: AppLocalization.of(navigatorKey.currentContext)
                           .anErrorOccurredTryAgain);
                 }
               } catch (error) {
-                showErrorDialog(context: context, message: error);
+                showErrorDialog(message: error);
               }
             });
       },
       onDisconnectMicrosoftPressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              context: context,
               message: AppLocalization.of(context).pleaseFirstSetAPassword);
           return;
         }
@@ -266,7 +262,6 @@ class UserDetailsVM {
       onDisconnectApplePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              context: context,
               message: AppLocalization.of(context).pleaseFirstSetAPassword);
           return;
         }
@@ -313,10 +308,10 @@ class UserDetailsVM {
                     ),
                   );
                 }, (dynamic error) {
-                  showErrorDialog(context: context, message: error);
+                  showErrorDialog(message: error);
                 });
               } catch (error) {
-                showErrorDialog(context: context, message: error);
+                showErrorDialog(message: error);
               }
             });
       },

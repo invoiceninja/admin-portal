@@ -69,7 +69,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
       });
     }).catchError((dynamic error) {
       Navigator.of(context).pop();
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 
@@ -91,7 +91,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
               runCheck();
             })));
     }).catchError((dynamic error) {
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 

@@ -20,6 +20,7 @@ class SchedulePresenter extends EntityPresenter {
     //final schedule = entity as ScheduleEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

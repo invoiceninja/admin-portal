@@ -374,8 +374,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                     Expanded(
                                         child: Text(
                                       localization.welcomeToInvoiceNinja,
-                                      style:
-                                          Theme.of(context).textTheme.titleLarge,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
                                     )),
                                     if (state.isHosted) ...[
                                       SizedBox(width: kTableColumnGap),

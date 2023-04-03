@@ -32,7 +32,6 @@ export 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 export 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 export 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
 export 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
-export 'package:invoiceninja_flutter/ui/client/client_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 export 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';

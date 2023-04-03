@@ -500,8 +500,7 @@ class _AccountOverview extends StatelessWidget {
                               if (Navigator.of(context).canPop()) {
                                 Navigator.of(context).pop();
                               }
-                              showErrorDialog(
-                                  context: context, message: '$error');
+                              showErrorDialog(message: '$error');
                             });
                           });
                     },

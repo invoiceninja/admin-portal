@@ -39,7 +39,6 @@ class _UserEditState extends State<UserEdit>
   final _debouncer = Debouncer();
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  final bool _canViewReports = false;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -88,9 +87,6 @@ class _UserEditState extends State<UserEdit>
     _custom4Controller.text = user.customValue4;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
-
-    final userCompany = widget.viewModel.user.userCompany;
-    //_canViewReports = userCompany.permissions.contains();
 
     super.didChangeDependencies();
   }

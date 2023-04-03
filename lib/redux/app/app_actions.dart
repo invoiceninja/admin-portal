@@ -524,9 +524,7 @@ void viewEntityById({
           if (showError) {
             final localization =
                 AppLocalization.of(navigatorKey.currentContext);
-            showErrorDialog(
-                context: navigatorKey.currentContext,
-                message: localization.failedToFindRecord);
+            showErrorDialog(message: localization.failedToFindRecord);
           }
           return;
         }

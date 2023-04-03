@@ -191,7 +191,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                   '\n\nIt may help to increase the server PHP memory limit';
             }
 
-            showErrorDialog(context: context, message: errorStr);
+            showErrorDialog(message: errorStr);
             setState(() => updateState = UpdateState.initial);
           });
         });

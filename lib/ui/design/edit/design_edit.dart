@@ -786,7 +786,7 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
               }
               Navigator.of(context).pop(value);
             } catch (error) {
-              showErrorDialog(context: context, message: '$error');
+              showErrorDialog(message: '$error');
             }
           },
           child: Text(localization.done.toUpperCase()),

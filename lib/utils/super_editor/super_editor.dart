@@ -36,7 +36,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
   final _darkBackground = const Color(0xFF222222);
   final _lightBackground = Colors.white;
-  Brightness _brightness = Brightness.light;
+  //Brightness _brightness = Brightness.light;
 
   SuperEditorDebugVisualsConfig _debugConfig;
 
@@ -361,7 +361,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData(brightness: _brightness),
+      data: ThemeData(brightness: Brightness.light),
       child: Builder(builder: (themedContext) {
         // This builder captures the new theme
         return Stack(
@@ -403,6 +403,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
   }
   */
 
+  /*
   Widget _buildDebugVisualsToggle() {
     return FloatingActionButton(
       backgroundColor:
@@ -424,7 +425,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
         Icons.bug_report,
       ),
     );
-  }
+  }  
 
   Widget _buildLightAndDarkModeToggle() {
     return FloatingActionButton(
@@ -449,6 +450,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
             ),
     );
   }
+  */
 
   Widget _buildEditor(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;

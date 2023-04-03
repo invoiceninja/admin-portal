@@ -997,7 +997,7 @@ class SidebarFooter extends StatelessWidget {
     final account = state.userCompany.account;
 
     return Material(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1040,7 +1040,6 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.red,
                   ),
                   onPressed: () => showErrorDialog(
-                    context: context,
                     clearErrorOnDismiss: true,
                   ),
                 )
@@ -1650,7 +1649,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
     }).catchError((dynamic error) {
       print('## ERROR: $error');
       setState(() => _isSaving = false);
-      showErrorDialog(context: context, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 

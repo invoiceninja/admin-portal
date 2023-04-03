@@ -181,7 +181,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         errorMessage += response.body;
       }
 
-      showErrorDialog(context: context, message: errorMessage);
+      showErrorDialog(message: errorMessage);
       throw errorMessage;
     }
 

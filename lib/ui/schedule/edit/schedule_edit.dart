@@ -88,7 +88,6 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company;
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;

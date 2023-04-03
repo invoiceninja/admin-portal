@@ -23,6 +23,7 @@ class ExpenseCategoryPresenter extends EntityPresenter {
     //final expenseCategory = entity as InvoiceEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

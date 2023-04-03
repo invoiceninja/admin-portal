@@ -20,6 +20,7 @@ class TransactionRulePresenter extends EntityPresenter {
     //final transactionRule = entity as TransactionRuleEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

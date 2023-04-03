@@ -155,8 +155,7 @@ class CompanyGatewayEditVM {
             }
           }).catchError((dynamic error) {
             store.dispatch(StopSaving());
-            showErrorDialog(
-                context: navigatorKey.currentContext, message: '$error');
+            showErrorDialog(message: '$error');
           });
         });
   }

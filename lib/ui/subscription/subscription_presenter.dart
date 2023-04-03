@@ -23,6 +23,7 @@ class SubscriptionPresenter extends EntityPresenter {
     //final subscription = entity as InvoiceEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

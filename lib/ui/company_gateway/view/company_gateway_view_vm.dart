@@ -149,7 +149,7 @@ class CompanyGatewayViewVM {
                     });
               }).catchError((dynamic error) {
                 store.dispatch(StopSaving());
-                showErrorDialog(context: context, message: error);
+                showErrorDialog(message: error);
               });
             });
       },
@@ -172,7 +172,7 @@ class CompanyGatewayViewVM {
                     context: context, message: localization.importedCustomers);
               }).catchError((dynamic error) {
                 store.dispatch(StopSaving());
-                showErrorDialog(context: context, message: error);
+                showErrorDialog(message: error);
               });
             });
       },
