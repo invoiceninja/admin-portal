@@ -259,6 +259,22 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                   icon: Icons.phone, text: contact.phone),
                             ),
                           ),
+                        if (contact.customValue1.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact1,
+                              contact.customValue1)),
+                        if (contact.customValue2.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact2,
+                              contact.customValue2)),
+                        if (contact.customValue3.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact3,
+                              contact.customValue3)),
+                        if (contact.customValue4.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact4,
+                              contact.customValue4)),
                         SizedBox(height: 16),
                       ],
                     );

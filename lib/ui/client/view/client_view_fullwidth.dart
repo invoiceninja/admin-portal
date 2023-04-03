@@ -362,6 +362,22 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                         icon: Icons.phone, text: contact.phone),
                                   ),
                                 ),
+                              if (contact.customValue1.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact1,
+                                    contact.customValue1)),
+                              if (contact.customValue2.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact2,
+                                    contact.customValue2)),
+                              if (contact.customValue3.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact3,
+                                    contact.customValue3)),
+                              if (contact.customValue4.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact4,
+                                    contact.customValue4)),
                               SizedBox(height: 8),
                               if (!hasMultipleContacts) ...[
                                 PortalLinks(
