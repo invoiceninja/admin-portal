@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -57,6 +58,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final vendor = state.vendorState.get(state.uiState.filterEntityId);
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
@@ -133,6 +135,18 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                if (vendor.customValue1.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor1, vendor.customValue1)),
+                if (vendor.customValue2.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor2, vendor.customValue2)),
+                if (vendor.customValue3.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor3, vendor.customValue3)),
+                if (vendor.customValue4.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor4, vendor.customValue4)),
               ]),
             ),
           ),
