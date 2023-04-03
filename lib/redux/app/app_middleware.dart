@@ -328,7 +328,7 @@ List<String> _getRoutes(AppState state) {
         }
       }
 
-      if (part != 'pdf') {
+      if (part != 'pdf' && part != 'email') {
         route += '/' + part;
       }
     }
