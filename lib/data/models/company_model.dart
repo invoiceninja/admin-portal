@@ -607,6 +607,20 @@ abstract class CompanyEntity extends Object
     }
   }
 
+  String formatCustomFieldValue(String field, String value) {
+    final context = navigatorKey.currentContext;
+    final type = getCustomFieldType(field);
+    final localization = AppLocalization.of(context);
+
+    if (type == kFieldTypeDate) {
+      value = formatDate(value, context);
+    } else if (type == kFieldTypeSwitch) {
+      value = value == kSwitchValueYes ? localization.yes : localization.no;
+    }
+
+    return getCustomFieldLabel(field) + ': $value';
+  }
+
   List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
     final values = customFields[field];
 

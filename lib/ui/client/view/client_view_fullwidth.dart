@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -63,6 +64,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final client = state.clientState.get(state.uiState.filterEntityId);
     final documents = client.documents;
     final viewModel = widget.viewModel;
@@ -197,6 +199,18 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   if ((client.settings.defaultTaskRate ?? 0) != 0)
                     Text(
                         '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
+                  if (client.customValue1.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client1, client.customValue1)),
+                  if (client.customValue2.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client2, client.customValue2)),
+                  if (client.customValue3.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client3, client.customValue3)),
+                  if (client.customValue4.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client4, client.customValue4)),
                 ],
               ),
             ),
