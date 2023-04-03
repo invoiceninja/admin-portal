@@ -40,7 +40,7 @@ class MessageDialog extends StatelessWidget {
                     SizedBox(height: 20.0),
                     Text(
                       message,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(height: 40.0),
                     Row(

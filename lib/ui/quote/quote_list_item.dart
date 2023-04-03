@@ -39,7 +39,7 @@ class QuoteListItem extends StatelessWidget {
     final isChecked = isInMultiselect && listUIState.isSelected(quote.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
     final filterMatch = filter != null && filter.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
@@ -140,7 +140,7 @@ class QuoteListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .titleSmall
                                     .copyWith(
                                       color: textColor
                                           .withOpacity(kLighterOpacity),
@@ -187,7 +187,7 @@ class QuoteListItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             client.displayName,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -195,7 +195,7 @@ class QuoteListItem extends StatelessWidget {
                         Text(
                             formatNumber(quote.amount, context,
                                 clientId: quote.clientId),
-                            style: Theme.of(context).textTheme.subtitle1),
+                            style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
                   ),

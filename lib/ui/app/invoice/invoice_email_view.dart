@@ -350,7 +350,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         ColoredBox(
           color: state.company.markdownEmailEnabled && !isDarkMode(context)
               ? Colors.white
-              : Theme.of(context).backgroundColor,
+              : Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.only(left: 24, right: 10, bottom: 16),
             child: DecoratedFormField(

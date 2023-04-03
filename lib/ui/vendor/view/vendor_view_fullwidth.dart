@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
@@ -57,6 +58,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final vendor = state.vendorState.get(state.uiState.filterEntityId);
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
@@ -85,7 +87,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               child: ListView(controller: _scrollController1, children: [
                 Text(
                   localization.details,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (vendor.idNumber.isNotEmpty)
@@ -133,6 +135,18 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                if (vendor.customValue1.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor1, vendor.customValue1)),
+                if (vendor.customValue2.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor2, vendor.customValue2)),
+                if (vendor.customValue3.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor3, vendor.customValue3)),
+                if (vendor.customValue4.isNotEmpty)
+                  Text(company.formatCustomFieldValue(
+                      CustomFieldType.vendor4, vendor.customValue4)),
               ]),
             ),
           ),
@@ -151,7 +165,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
               children: [
                 Text(
                   localization.address,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
@@ -216,7 +230,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                         (vendor.contacts.length > 1
                             ? ' (${vendor.contacts.length})'
                             : ''),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   ...vendor.contacts.map((contact) {
@@ -225,7 +239,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       children: [
                         Text(
                           contact.fullName,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         if (contact.email.isNotEmpty)
                           Padding(
@@ -245,6 +259,22 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                   icon: Icons.phone, text: contact.phone),
                             ),
                           ),
+                        if (contact.customValue1.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact1,
+                              contact.customValue1)),
+                        if (contact.customValue2.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact2,
+                              contact.customValue2)),
+                        if (contact.customValue3.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact3,
+                              contact.customValue3)),
+                        if (contact.customValue4.isNotEmpty)
+                          Text(company.formatCustomFieldValue(
+                              CustomFieldType.vendorContact4,
+                              contact.customValue4)),
                         SizedBox(height: 16),
                       ],
                     );

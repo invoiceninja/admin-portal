@@ -23,6 +23,7 @@ class TokenPresenter extends EntityPresenter {
     //final token = entity as InvoiceEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

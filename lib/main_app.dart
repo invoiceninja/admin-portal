@@ -11,7 +11,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
-import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
@@ -401,10 +400,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
-                          colorScheme: ColorScheme.dark().copyWith(
-                            secondary: accentColor,
-                            primary: accentColor,
-                          ),
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
@@ -414,20 +409,22 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             selectionHandleColor: accentColor,
                           ),
                           fontFamily: fontFamily,
-                          backgroundColor: Colors.black,
                           canvasColor: Colors.black,
                           cardColor: const Color(0xFF1B1C1E),
-                          bottomAppBarColor: const Color(0xFF1B1C1E),
                           primaryColorDark: Colors.black,
                           textButtonTheme:
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
                               style: outlinedButtonTheme),
+                          colorScheme: ColorScheme.dark().copyWith(
+                            secondary: accentColor,
+                            primary: accentColor,
+                            background: Colors.black,
+                          ),
+                          bottomAppBarTheme:
+                              BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
-                          colorScheme: ColorScheme.fromSwatch().copyWith(
-                            secondary: accentColor,
-                          ),
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
@@ -438,10 +435,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             selectionColor: accentColor,
                           ),
                           fontFamily: fontFamily,
-                          backgroundColor: Colors.white,
                           canvasColor: Colors.white,
                           cardColor: Colors.white,
-                          bottomAppBarColor: Colors.white,
                           primaryColorDark: hasAccentColor
                               ? accentColor
                               : const Color(0xFF0D5D91),
@@ -475,6 +470,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
                               style: outlinedButtonTheme),
+                          colorScheme: ColorScheme.fromSwatch().copyWith(
+                            secondary: accentColor,
+                            background: Colors.white,
+                          ),
+                          bottomAppBarTheme:
+                              BottomAppBarTheme(color: Colors.white),
                         ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,

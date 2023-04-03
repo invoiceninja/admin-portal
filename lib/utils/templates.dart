@@ -63,7 +63,7 @@ void loadEmailTemplate({
       response['raw_body'],
     );
   }).catchError((dynamic error) {
-    showErrorDialog(context: context, message: '$error');
+    showErrorDialog(message: '$error');
     onComplete(subject, body, body, subject, body);
   });
 }

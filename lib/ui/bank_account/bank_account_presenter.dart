@@ -20,6 +20,7 @@ class BankAccountPresenter extends EntityPresenter {
     //final bankAccount = entity as InvoiceEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);

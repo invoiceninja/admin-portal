@@ -52,7 +52,7 @@ class CreditListItem extends StatelessWidget {
         ? (credit.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     String subtitle = '';
     if (credit.date.isNotEmpty) {
@@ -141,7 +141,7 @@ class CreditListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .titleSmall
                                   .copyWith(
                                     color:
                                         textColor.withOpacity(kLighterOpacity),
@@ -188,7 +188,7 @@ class CreditListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           client.displayName,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -200,7 +200,7 @@ class CreditListItem extends StatelessWidget {
                                   : credit.amount,
                               context,
                               clientId: credit.clientId),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

@@ -71,7 +71,7 @@ class TokenListItem extends StatelessWidget {
             : null,
         title: Text(
           token.name,
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

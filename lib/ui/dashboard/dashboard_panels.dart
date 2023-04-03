@@ -151,7 +151,7 @@ class DashboardPanels extends StatelessWidget {
                 child: Text(
                   formatDateRange(settings.startDate(company),
                       settings.endDate(company), context),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SizedBox(width: 6.0),
@@ -633,7 +633,7 @@ class DashboardPanels extends StatelessWidget {
                               padding: const EdgeInsets.all(0),
                               children: [
                                 Text(localization.lookup(dashboardField.field),
-                                    style: textTheme.subtitle1,
+                                    style: textTheme.titleMedium,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
@@ -643,11 +643,11 @@ class DashboardPanels extends StatelessWidget {
                                       currencyId: state
                                           .dashboardUIState.settings.currencyId,
                                     ),
-                                    style: textTheme.headline5,
+                                    style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(localization.lookup(dashboardField.period),
-                                    style: textTheme.caption,
+                                    style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
                             );

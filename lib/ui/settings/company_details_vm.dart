@@ -112,7 +112,6 @@ class CompanyDetailsVM {
           if (settingsUIState.entityType == EntityType.company &&
               settingsUIState.company.settings.countryId == null) {
             showErrorDialog(
-                context: context,
                 message: AppLocalization.of(context).pleaseSelectACountry);
             return;
           }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -105,11 +104,11 @@ class _SettingsListState extends State<SettingsList> {
                 ),
               ),
             Container(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
               child: Text(
                 localization.basicSettings,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             SettingsListTile(
@@ -176,11 +175,11 @@ class _SettingsListState extends State<SettingsList> {
                 viewModel: widget.viewModel,
               ),
             Container(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
               child: Text(
                 localization.advancedSettings,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
 
@@ -313,7 +312,7 @@ class _SettingsListTileState extends State<SettingsListTile> {
             title: Text(
               localization.lookup(widget.section),
               style:
-                  Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14),
+                  Theme.of(context).textTheme.bodyLarge.copyWith(fontSize: 14),
             ),
             onTap: () =>
                 widget.viewModel.loadSection(context, widget.section, 0),

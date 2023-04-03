@@ -77,11 +77,11 @@ class SubscriptionListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   subscription.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Text(formatNumber(subscription.price, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+                  style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),

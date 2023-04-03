@@ -70,12 +70,12 @@ class BankAccountListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   bankAccount.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               if (bankAccount.isConnected)
                 Text(formatNumber(bankAccount.balance, context),
-                    style: Theme.of(context).textTheme.subtitle1),
+                    style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),

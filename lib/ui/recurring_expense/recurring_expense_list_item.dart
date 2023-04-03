@@ -55,7 +55,7 @@ class RecurringExpenseListItem extends StatelessWidget {
         ? (isInMultiselect && listUIState.isSelected(expense.id))
         : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     String subtitle = '';
     if (filterMatch != null) {
@@ -163,7 +163,7 @@ class RecurringExpenseListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .titleSmall
                                     .copyWith(
                                       color: textColor
                                           .withOpacity(kLighterOpacity),
@@ -211,14 +211,14 @@ class RecurringExpenseListItem extends StatelessWidget {
                                   ? expense.number
                                   : expense.publicNotes) +
                               (expense.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                           maxLines: 1,
                         ),
                       ),
                       Text(
                           formatNumber(expense.convertedAmount, context,
                               currencyId: expense.currencyId),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),
@@ -228,7 +228,7 @@ class RecurringExpenseListItem extends StatelessWidget {
                     Text(filterMatch == null ? subtitle : filterMatch,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall.copyWith(
                               color: textColor.withOpacity(kLighterOpacity),
                             )),
                     EntityStateLabel(expense),

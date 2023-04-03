@@ -68,7 +68,6 @@ class EmailSettingsVM {
             if (settings.emailStyle == kEmailDesignCustom &&
                 !settings.emailStyleCustom.contains('\$body')) {
               showErrorDialog(
-                  context: context,
                   message: AppLocalization.of(context)
                       .bodyVariableMissing
                       .replaceFirst(':body', '\$body'));

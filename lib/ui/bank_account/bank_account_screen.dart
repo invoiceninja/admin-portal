@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
@@ -54,7 +53,7 @@ class BankAccountScreen extends StatelessWidget {
           '${cleanApiUrl(credentials.url)}/yodlee/onboard/${response['hash']}'));
     }).catchError((dynamic error) {
       store.dispatch(StopSaving());
-      showErrorDialog(context: navigatorKey.currentContext, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 

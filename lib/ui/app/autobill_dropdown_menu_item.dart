@@ -19,7 +19,7 @@ class AutobillDropdownMenuItem extends StatelessWidget {
         Text(localization.lookup(type)),
         Text(
           localization.lookup('auto_bill_help_' + type),
-          style: Theme.of(context).textTheme.caption,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

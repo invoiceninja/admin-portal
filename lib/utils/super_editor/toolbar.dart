@@ -69,6 +69,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     super.dispose();
   }
 
+  /*
   /// Returns true if the currently selected text node is capable of being
   /// transformed into a different type text node, returns false if
   /// multiple nodes are selected, no node is selected, or the selected
@@ -83,7 +84,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         widget.editor.document.getNodeById(selection.extent.nodeId);
     return selectedNode is ParagraphNode || selectedNode is ListItemNode;
   }
-
+  
   /// Returns the block type of the currently selected text node.
   ///
   /// Throws an exception if the currently selected node is not a text node.
@@ -113,7 +114,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
     }
   }
 
-  /*
   /// Returns the text alignment of the currently selected text node.
   ///
   /// Throws an exception if the currently selected node is not a text node.
@@ -152,7 +152,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
         widget.editor.document.getNodeById(selection.extent.nodeId);
     return selectedNode is ParagraphNode;
   }
-  */
 
   /// Converts the currently selected text node into a new type of
   /// text node, represented by [newType].
@@ -203,6 +202,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           'blockType', _getBlockTypeAttribution(newType));
     }
   }
+  
 
   /// Returns true if the given [_TextType] represents an
   /// ordered or unordered list item, returns false otherwise.
@@ -228,6 +228,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return null;
     }
   }
+  */
 
   /// Toggles bold styling for the current selected text.
   void _toggleBold() {
@@ -434,7 +435,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
         .getNodeById(widget.composer.selection.extent.nodeId) as ParagraphNode;
     selectedNode.putMetadataValue('textAlign', newAlignmentValue);
   }
-  */
 
   /// Returns the localized name for the given [_TextType], e.g.,
   /// "Paragraph" or "Header 1".
@@ -458,6 +458,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
     return '';
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -693,6 +694,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   Widget _buildVerticalDivider() {
     return Container(
       width: 1,
@@ -700,7 +702,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
-  /*
+  
   IconData _buildTextAlignIcon(TextAlign align) {
     switch (align) {
       case TextAlign.left:
@@ -720,6 +722,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
   */
 }
 
+/*
 enum _TextType {
   header1,
   header2,
@@ -729,6 +732,7 @@ enum _TextType {
   orderedListItem,
   unorderedListItem,
 }
+*/
 
 /// Small toolbar that is intended to display over an image and
 /// offer controls to expand or contract the size of the image.

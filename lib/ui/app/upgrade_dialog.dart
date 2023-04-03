@@ -353,7 +353,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         showToast(localization.priceChangeAccepted);
       } else {
         showErrorDialog(
-            context: context,
             message: priceChangeConfirmationResult.debugMessage ??
                 localization.priceChangeFailed +
                     ' ${priceChangeConfirmationResult.responseCode}');

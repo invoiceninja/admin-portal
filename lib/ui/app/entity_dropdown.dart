@@ -612,10 +612,10 @@ class EntityAutocompleteListTile extends StatelessWidget {
               ),
             ),
           Expanded(
-            child: Text(label, style: Theme.of(context).textTheme.subtitle1),
+            child: Text(label, style: Theme.of(context).textTheme.titleMedium),
           ),
           entity.listDisplayAmount != null
-              ? Text(amount, style: Theme.of(context).textTheme.subtitle1)
+              ? Text(amount, style: Theme.of(context).textTheme.titleMedium)
               : Container(),
         ],
       ),

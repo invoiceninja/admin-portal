@@ -52,12 +52,11 @@ void showRefreshDataDialog(
 }
 
 void showErrorDialog({
-  @required BuildContext context,
   String message,
   bool clearErrorOnDismiss = false,
 }) {
   showDialog<ErrorDialog>(
-      context: context,
+      context: navigatorKey.currentContext,
       builder: (BuildContext context) {
         return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
       });
@@ -273,11 +272,11 @@ void passwordCallback({
           );
         }
       }, (dynamic error) {
-        showErrorDialog(context: context, message: error);
+        showErrorDialog(message: error);
       });
     }
   } catch (error) {
-    showErrorDialog(context: context, message: '$error');
+    showErrorDialog(message: '$error');
   }
 
   print('## 8');

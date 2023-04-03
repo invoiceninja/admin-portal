@@ -358,7 +358,7 @@ Future<Response> _loadPDF(
       errorMessage += response.body;
     }
 
-    showErrorDialog(context: context, message: errorMessage);
+    showErrorDialog(message: errorMessage);
     throw errorMessage;
   }
 

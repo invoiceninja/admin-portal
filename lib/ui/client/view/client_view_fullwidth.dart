@@ -3,9 +3,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -64,6 +64,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final client = state.clientState.get(state.uiState.filterEntityId);
     final documents = client.documents;
     final viewModel = widget.viewModel;
@@ -124,7 +125,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 children: [
                   Text(
                     localization.details,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   if (client.paymentBalance != 0)
@@ -198,6 +199,18 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                   if ((client.settings.defaultTaskRate ?? 0) != 0)
                     Text(
                         '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
+                  if (client.customValue1.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client1, client.customValue1)),
+                  if (client.customValue2.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client2, client.customValue2)),
+                  if (client.customValue3.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client3, client.customValue3)),
+                  if (client.customValue4.isNotEmpty)
+                    Text(company.formatCustomFieldValue(
+                        CustomFieldType.client4, client.customValue4)),
                 ],
               ),
             ),
@@ -217,7 +230,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
               children: [
                 Text(
                   localization.address,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
                 if (billingAddress.isNotEmpty) ...[
@@ -314,7 +327,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         (hasMultipleContacts
                             ? ' (${client.contacts.length})'
                             : ''),
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   ...client.contacts.map((contact) {
@@ -327,7 +340,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             children: [
                               Text(
                                 contact.fullName,
-                                style: Theme.of(context).textTheme.subtitle1,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)
                                 Padding(
@@ -349,6 +362,22 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                         icon: Icons.phone, text: contact.phone),
                                   ),
                                 ),
+                              if (contact.customValue1.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact1,
+                                    contact.customValue1)),
+                              if (contact.customValue2.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact2,
+                                    contact.customValue2)),
+                              if (contact.customValue3.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact3,
+                                    contact.customValue3)),
+                              if (contact.customValue4.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.contact4,
+                                    contact.customValue4)),
                               SizedBox(height: 8),
                               if (!hasMultipleContacts) ...[
                                 PortalLinks(

@@ -66,7 +66,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
       setState(() {
         _isLoading = false;
       });
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 
@@ -102,7 +102,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
       setState(() {
         _isLoading = false;
       });
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 
@@ -246,7 +246,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
       setState(() {
         _isLoading = false;
       });
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 
@@ -294,7 +294,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
       setState(() {
         _isLoading = false;
       });
-      showErrorDialog(context: context, message: error);
+      showErrorDialog(message: error);
     });
   }
 

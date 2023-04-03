@@ -21,8 +21,8 @@ class HelpLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
-    final TextStyle linkStyle = themeData.textTheme.bodyText2
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyMedium;
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium
         .copyWith(color: themeData.colorScheme.secondary);
 
     return Padding(

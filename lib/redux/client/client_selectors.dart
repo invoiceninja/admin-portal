@@ -162,7 +162,6 @@ SettingsEntity getVendorSettings(AppState state, VendorEntity vendor) {
   );
 }
 
-
 bool hasClientChanges(
         ClientEntity client, BuiltMap<String, ClientEntity> clientMap) =>
     client.isNew ? client.isChanged : client != clientMap[client.id];

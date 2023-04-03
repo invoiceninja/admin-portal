@@ -26,7 +26,7 @@ class SearchText extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final isFilterSet = filterController.text.isNotEmpty;
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     Color color;
     if (enableDarkMode) {

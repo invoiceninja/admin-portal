@@ -345,7 +345,7 @@ class _ImportExportState extends State<ImportExport> {
                             message: localization.exportedData);
                       }).catchError((dynamic error) {
                         setState(() => _isExporting = false);
-                        showErrorDialog(context: context, message: '$error');
+                        showErrorDialog(message: '$error');
                       });
                     },
                   )
@@ -384,11 +384,10 @@ class _FileImportState extends State<_FileImport> {
     final localization = AppLocalization.of(context);
 
     if (!_multipartFiles.containsKey(ImportType.json.toString())) {
-      showErrorDialog(context: context, message: localization.jsonFileMissing);
+      showErrorDialog(message: localization.jsonFileMissing);
       return;
     } else if (!_importJsonData && !_importJsonSettings) {
-      showErrorDialog(
-          context: context, message: localization.jsonOptionMissing);
+      showErrorDialog(message: localization.jsonOptionMissing);
       return;
     }
 
@@ -420,7 +419,7 @@ class _FileImportState extends State<_FileImport> {
       showToast(localization.startedImport);
     }).catchError((dynamic error) {
       setState(() => _isLoading = false);
-      showErrorDialog(context: context, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 
@@ -431,8 +430,7 @@ class _FileImportState extends State<_FileImport> {
       for (MapEntry<String, String> uploadPart
           in widget.importType.uploadParts.entries) {
         if (!_multipartFiles.containsKey(uploadPart.key)) {
-          showErrorDialog(
-              context: context, message: localization.requiredFilesMissing);
+          showErrorDialog(message: localization.requiredFilesMissing);
           return;
         }
       }
@@ -466,7 +464,7 @@ class _FileImportState extends State<_FileImport> {
       }
     }).catchError((dynamic error) {
       setState(() => _isLoading = false);
-      showErrorDialog(context: context, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 
@@ -666,7 +664,7 @@ class __FileMapperState extends State<_FileMapper> {
         SizedBox(height: 25),
         Text(
           localization.lookup(entry.key),
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.titleMedium,
           overflow: TextOverflow.clip,
           maxLines: 1,
         ),
@@ -799,7 +797,7 @@ class __FileMapperState extends State<_FileMapper> {
                     showToast(localization.startedImport);
                   }).catchError((dynamic error) {
                     setState(() => _isLoading = false);
-                    showErrorDialog(context: context, message: '$error');
+                    showErrorDialog(message: '$error');
                   });
                 },
               ),

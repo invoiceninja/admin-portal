@@ -772,7 +772,7 @@ class EmailPreview extends StatelessWidget {
                   subject,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyLarge
                       .copyWith(color: Colors.black),
                 ),
               ),

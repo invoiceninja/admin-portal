@@ -183,14 +183,14 @@ class DocumentTile extends StatelessWidget {
                             message: document.name ?? '',
                             child: Text(
                               document.name ?? '',
-                              style: Theme.of(context).textTheme.headline6,
+                              style: Theme.of(context).textTheme.titleLarge,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                             ),
                           ),
                           Text(
                             '${formatDate(convertTimestampToDateString(document.createdAt), context)}\n${document.prettySize}',
-                            style: Theme.of(context).textTheme.caption,
+                            style: Theme.of(context).textTheme.bodySmall,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),

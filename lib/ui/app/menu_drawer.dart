@@ -150,7 +150,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 company.displayName.isEmpty
                     ? localization.newCompany
                     : company.displayName,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -197,7 +197,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 SizedBox(width: 15),
                 Text(
                   localization.addCompany,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -211,7 +211,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               SizedBox(width: 15),
               Text(
                 localization.logout,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -270,7 +270,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         SizedBox(width: 15),
                         Text(
                           localization.addCompany,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ],
                     ),
@@ -284,7 +284,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                       SizedBox(width: 15),
                       Text(
                         localization.logout,
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
                   ),
@@ -554,7 +554,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                 localization.upgrade,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText1
+                                                    .bodyLarge
                                                     .copyWith(
                                                       fontSize: 14,
                                                       color: Colors.white,
@@ -804,7 +804,7 @@ class _DrawerTileState extends State<DrawerTile> {
     Color color = Colors.transparent;
     Color textColor = Theme.of(context)
         .textTheme
-        .bodyText1
+        .bodyLarge
         .color
         .withOpacity(isSelected ? 1 : .7);
 
@@ -955,7 +955,7 @@ class _DrawerTileState extends State<DrawerTile> {
           title: Text(
             widget.title,
             key: ValueKey('menu_${widget.title}'),
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge.copyWith(
                   fontSize: 14,
                   color: textColor,
                 ),
@@ -997,7 +997,7 @@ class SidebarFooter extends StatelessWidget {
     final account = state.userCompany.account;
 
     return Material(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1040,7 +1040,6 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.red,
                   ),
                   onPressed: () => showErrorDialog(
-                    context: context,
                     clearErrorOnDismiss: true,
                   ),
                 )
@@ -1363,7 +1362,7 @@ void _showAbout(BuildContext context) async {
                     ),
                     title: Text(
                       'Invoice Ninja',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     subtitle: Text(state.appVersion),
                     onTap: () {
@@ -1650,7 +1649,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
     }).catchError((dynamic error) {
       print('## ERROR: $error');
       setState(() => _isSaving = false);
-      showErrorDialog(context: context, message: '$error');
+      showErrorDialog(message: '$error');
     });
   }
 

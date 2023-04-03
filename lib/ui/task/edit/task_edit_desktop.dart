@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -23,9 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -151,10 +148,6 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
             currencyId: (client.currencyId ?? '').isNotEmpty
                 ? client.currencyId
                 : company.currencyId);
-
-    final tableHeaderColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
-        '';
 
     return ScrollableListView(
       primary: true,

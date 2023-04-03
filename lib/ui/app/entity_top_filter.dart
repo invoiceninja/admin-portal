@@ -296,7 +296,7 @@ class EntityTopFilterHeader extends StatelessWidget {
         .where((action) => action != null);
     final textStyle = Theme.of(context)
         .textTheme
-        .bodyText2
+        .bodyMedium
         .copyWith(color: state.headerTextColor);
 
     return Material(

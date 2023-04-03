@@ -50,7 +50,7 @@ class ProjectListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -138,7 +138,7 @@ class ProjectListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .titleSmall
                                     .copyWith(
                                       color: textColor
                                           .withOpacity(kLighterOpacity),
@@ -185,7 +185,7 @@ class ProjectListItem extends StatelessWidget {
                         child: Text(
                           project.name +
                               (project.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
@@ -194,7 +194,7 @@ class ProjectListItem extends StatelessWidget {
                                   minutes:
                                       (project.budgetedHours * 60).toInt()),
                               showSeconds: false),
-                          style: Theme.of(context).textTheme.subtitle1),
+                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

@@ -291,8 +291,7 @@ void handleProjectAction(
         }
       });
       if (hasMultipleClients) {
-        showErrorDialog(
-            context: context, message: localization.multipleClientError);
+        showErrorDialog(message: localization.multipleClientError);
         return;
       }
 

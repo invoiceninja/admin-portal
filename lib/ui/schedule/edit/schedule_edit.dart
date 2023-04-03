@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -89,7 +88,6 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company;
     final localization = AppLocalization.of(context);
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;
@@ -166,6 +164,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             .toList()),
                     DatePicker(
                       autofocus: true,
+                      hint: localization.datePickerHint,
                       labelText: localization.nextRun,
                       onSelected: (date, _) {
                         viewModel.onChanged(

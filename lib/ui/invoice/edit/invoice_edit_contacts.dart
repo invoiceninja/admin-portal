@@ -160,12 +160,12 @@ class _ClientContactListTile extends StatelessWidget {
                   clientContact.fullName.isNotEmpty
                       ? clientContact.fullName
                       : AppLocalization.of(context).blankContact,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (clientContact.email != null)
                   Text(
                     clientContact.email,
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],
             ),
@@ -231,12 +231,12 @@ class _VendorContactListTile extends StatelessWidget {
                   vendorContact.fullName.isNotEmpty
                       ? vendorContact.fullName
                       : AppLocalization.of(context).blankContact,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (vendorContact.email != null)
                   Text(
                     vendorContact.email,
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],
             ),

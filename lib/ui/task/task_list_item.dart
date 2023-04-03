@@ -57,7 +57,7 @@ class TaskListItem extends StatelessWidget {
         ? (isInMultiselect && listUIState.isSelected(task.id))
         : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
     final localization = AppLocalization.of(context);
 
     final status = state.taskStatusState.get(task.statusId);
@@ -194,7 +194,7 @@ class TaskListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .titleSmall
                                   .copyWith(
                                     color:
                                         textColor.withOpacity(kLighterOpacity),
@@ -242,7 +242,7 @@ class TaskListItem extends StatelessWidget {
                               (task.documents.isNotEmpty ? '  📎' : ''),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       duration,

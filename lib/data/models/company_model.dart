@@ -607,6 +607,20 @@ abstract class CompanyEntity extends Object
     }
   }
 
+  String formatCustomFieldValue(String field, String value) {
+    final context = navigatorKey.currentContext;
+    final type = getCustomFieldType(field);
+    final localization = AppLocalization.of(context);
+
+    if (type == kFieldTypeDate) {
+      value = formatDate(value, context);
+    } else if (type == kFieldTypeSwitch) {
+      value = value == kSwitchValueYes ? localization.yes : localization.no;
+    }
+
+    return getCustomFieldLabel(field) + ': $value';
+  }
+
   List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
     final values = customFields[field];
 
@@ -1093,7 +1107,6 @@ abstract class UserSettingsEntity
       accentColor: kDefaultAccentColor,
       numberYearsActive: 3,
       tableColumns: BuiltMap<String, BuiltList<String>>(),
-      reactTableColumns: BuiltMap<String, BuiltList<String>>(),
       reportSettings: BuiltMap<String, ReportSettingsEntity>(),
       includeDeletedClients: false,
       dashboardFields: BuiltList<DashboardField>(<DashboardField>[
@@ -1128,9 +1141,6 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'table_columns')
   BuiltMap<String, BuiltList<String>> get tableColumns;
 
-  @BuiltValueField(wireName: 'react_table_column')
-  BuiltMap<String, BuiltList<String>> get reactTableColumns;
-
   @BuiltValueField(wireName: 'report_settings')
   BuiltMap<String, ReportSettingsEntity> get reportSettings;
 
@@ -1162,7 +1172,6 @@ abstract class UserSettingsEntity
     ..accentColor = kDefaultAccentColor
     ..numberYearsActive = 3
     ..tableColumns.replace(BuiltMap<String, BuiltList<String>>())
-    ..reactTableColumns.replace(BuiltMap<String, BuiltList<String>>())
     ..reportSettings.replace(BuiltMap<String, ReportSettingsEntity>())
     ..dashboardFields.replace(BuiltList<DashboardField>(<DashboardField>[
       DashboardField(

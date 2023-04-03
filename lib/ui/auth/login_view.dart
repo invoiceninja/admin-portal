@@ -326,8 +326,8 @@ class _LoginState extends State<LoginView> {
     final state = viewModel.state;
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
-    final TextStyle linkStyle = themeData.textTheme.bodyText2
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyMedium;
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
     final double horizontalPadding =

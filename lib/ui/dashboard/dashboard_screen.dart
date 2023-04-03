@@ -286,7 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     WebUtils.reloadBrowser();
                   }).catchError((Object error) {
                     store.dispatch(StopSaving());
-                    showErrorDialog(context: context, message: error);
+                    showErrorDialog(message: error);
                   });
                 },
                 icon: Icon(MdiIcons.react),

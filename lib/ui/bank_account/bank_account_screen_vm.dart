@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.d
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'bank_account_screen.dart';
@@ -78,8 +77,7 @@ class BankAccountScreenVM {
           showToast(localization.refreshComplete);
         }).catchError((dynamic error) {
           store.dispatch(StopSaving());
-          showErrorDialog(
-              context: navigatorKey.currentContext, message: '$error');
+          showErrorDialog(message: '$error');
         });
       },
     );

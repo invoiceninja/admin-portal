@@ -53,7 +53,7 @@ class InvoiceListItem extends StatelessWidget {
         localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
     final statusColor = InvoiceStatusColors(state.prefState.colorThemeModel)
         .colors[invoice.calculatedStatusId];
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge.color;
 
     String subtitle = '';
     if (invoice.date.isNotEmpty) {
@@ -161,7 +161,7 @@ class InvoiceListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .titleSmall
                                     .copyWith(
                                       color: textColor
                                           .withOpacity(kLighterOpacity),
@@ -213,7 +213,7 @@ class InvoiceListItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             client.displayName,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -225,7 +225,7 @@ class InvoiceListItem extends StatelessWidget {
                                     : invoice.amount,
                                 context,
                                 clientId: invoice.clientId),
-                            style: Theme.of(context).textTheme.subtitle1),
+                            style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
                   ),

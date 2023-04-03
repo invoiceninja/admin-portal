@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -85,11 +84,9 @@ class _ClientViewState extends State<ClientView>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final documents = client.documents;
-    final userCompany = viewModel.state.userCompany;
 
     if (widget.isTopFilter) {
       return Material(

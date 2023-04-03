@@ -76,11 +76,11 @@ class TaskStatusListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   taskStatus.name,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Text(formatNumber(taskStatus.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.subtitle1),
+                  style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
         ),

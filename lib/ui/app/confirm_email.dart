@@ -39,7 +39,7 @@ class ConfirmEmail extends StatelessWidget {
                   SizedBox(height: 60),
                   Text(
                     localization.confirmYourEmailAddress,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 80),

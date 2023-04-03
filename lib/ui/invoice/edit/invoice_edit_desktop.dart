@@ -325,7 +325,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                             context)
                                         .title(),
                                     style:
-                                        Theme.of(context).textTheme.headline6,
+                                        Theme.of(context).textTheme.titleLarge,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),

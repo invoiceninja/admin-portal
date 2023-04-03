@@ -35,7 +35,7 @@ class _ReviewAppState extends State<ReviewApp> {
           SizedBox(height: 12),
           Text(
             localization.wouldYouRateTheApp,
-            style: Theme.of(context).textTheme.subtitle1,
+            style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 16),
@@ -44,12 +44,12 @@ class _ReviewAppState extends State<ReviewApp> {
               TextButton(
                 onPressed: () async {
                   // TODO remove this code: https://github.com/britannio/in_app_review/issues/56
-                  if (isAndroid()) {
+                  if (kIsWeb || isLinux()) {
+                    launchUrl(Uri.parse(getRateAppURL(context)));
+                  } else if (isAndroid()) {
                     AppReview.openStoreListing();
                   } else if (await AppReview.isAvailable()) {
                     AppReview.requestReview();
-                  } else if (kIsWeb || isLinux()) {
-                    launchUrl(Uri.parse(getRateAppURL(context)));
                   } else {
                     AppReview.openStoreListing();
                   }

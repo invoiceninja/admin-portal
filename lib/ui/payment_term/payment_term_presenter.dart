@@ -22,6 +22,7 @@ class PaymentTermPresenter extends EntityPresenter {
     //final paymentTerm = entity as InvoiceEntity;
 
     switch (field) {
+      
     }
 
     return super.getField(field: field, context: context);
