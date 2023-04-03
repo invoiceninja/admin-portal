@@ -166,6 +166,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             .toList()),
                     DatePicker(
                       autofocus: true,
+                      hint: localization.datePickerHint,
                       labelText: localization.nextRun,
                       onSelected: (date, _) {
                         viewModel.onChanged(
