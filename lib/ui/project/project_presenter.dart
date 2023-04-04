@@ -18,9 +18,10 @@ class ProjectPresenter extends EntityPresenter {
       ProjectFields.client,
       ProjectFields.taskRate,
       ProjectFields.dueDate,
+      ProjectFields.budgetedHours,
+      ProjectFields.totalHours,
       ProjectFields.publicNotes,
       ProjectFields.privateNotes,
-      ProjectFields.budgetedHours,
       EntityFields.state,
     ];
   }
@@ -79,6 +80,9 @@ class ProjectPresenter extends EntityPresenter {
         return Text(presentCustomField(context, project.customValue4));
       case ProjectFields.documents:
         return Text('${project.documents.length}');
+      case ProjectFields.totalHours:
+        return Text(formatNumber(project.totalHours, context,
+            formatNumberType: FormatNumberType.double));
     }
 
     return super.getField(field: field, context: context);

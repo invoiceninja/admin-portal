@@ -66,6 +66,7 @@ class ProjectFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
+  static const String totalHours = 'total_hours';
 }
 
 abstract class ProjectEntity extends Object
@@ -99,6 +100,7 @@ abstract class ProjectEntity extends Object
       createdUserId: '',
       createdAt: 0,
       assignedUserId: user?.id ?? '',
+      totalHours: 0.0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -157,6 +159,9 @@ abstract class ProjectEntity extends Object
   String get customValue4;
 
   String get number;
+
+  @BuiltValueField(wireName: 'current_hours')
+  double get totalHours;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -253,6 +258,9 @@ abstract class ProjectEntity extends Object
         break;
       case ProjectFields.budgetedHours:
         response = projectA.budgetedHours.compareTo(projectB.budgetedHours);
+        break;
+      case ProjectFields.totalHours:
+        response = projectA.totalHours.compareTo(projectB.totalHours);
         break;
       case EntityFields.state:
         final stateA =
@@ -367,8 +375,9 @@ abstract class ProjectEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   // ignore: unused_element
-  static void _initializeBuilder(ProjectEntityBuilder builder) =>
-      builder..color = '';
+  static void _initializeBuilder(ProjectEntityBuilder builder) => builder
+    ..color = ''
+    ..totalHours = 0;
 
   static Serializer<ProjectEntity> get serializer => _$projectEntitySerializer;
 }

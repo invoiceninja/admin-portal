@@ -194,11 +194,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     orElse: () => null))
         .toList();
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 24, right: 10, top: 2),
-      child: Column(
-        children: [
-          Row(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 24, right: 10, top: 2),
+          child: Row(
             children: [
               Expanded(
                   child: Text(localization.to +
@@ -269,14 +269,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               SizedBox(width: 8),
             ],
           ),
-          if (supportsLatestFeatures())
-            DecoratedFormField(
-              controller: _ccEmailController,
-              label: localization.ccEmail,
-              keyboardType: TextInputType.emailAddress,
-            )
-        ],
-      ),
+        ),
+        ColoredBox(
+          color: Theme.of(context).canvasColor,
+          child: Padding(
+              padding: const EdgeInsets.only(left: 24, right: 10),
+              child: DecoratedFormField(
+                controller: _ccEmailController,
+                label: localization.ccEmail,
+                keyboardType: TextInputType.emailAddress,
+              )),
+        )
+      ],
     );
   }
 
