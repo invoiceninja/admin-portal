@@ -156,6 +156,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'number',
       serializers.serialize(object.number,
           specifiedType: const FullType(String)),
+      'current_hours',
+      serializers.serialize(object.totalHours,
+          specifiedType: const FullType(double)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -267,6 +270,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         case 'number':
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'current_hours':
+          result.totalHours = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -538,6 +545,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String number;
   @override
+  final double totalHours;
+  @override
   final BuiltList<DocumentEntity> documents;
   @override
   final bool isChanged;
@@ -573,6 +582,7 @@ class _$ProjectEntity extends ProjectEntity {
       this.customValue3,
       this.customValue4,
       this.number,
+      this.totalHours,
       this.documents,
       this.isChanged,
       this.createdAt,
@@ -605,6 +615,8 @@ class _$ProjectEntity extends ProjectEntity {
     BuiltValueNullFieldError.checkNotNull(
         customValue4, r'ProjectEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number');
+    BuiltValueNullFieldError.checkNotNull(
+        totalHours, r'ProjectEntity', 'totalHours');
     BuiltValueNullFieldError.checkNotNull(
         documents, r'ProjectEntity', 'documents');
     BuiltValueNullFieldError.checkNotNull(
@@ -640,6 +652,7 @@ class _$ProjectEntity extends ProjectEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         number == other.number &&
+        totalHours == other.totalHours &&
         documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -669,6 +682,7 @@ class _$ProjectEntity extends ProjectEntity {
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, number.hashCode);
+    _$hash = $jc(_$hash, totalHours.hashCode);
     _$hash = $jc(_$hash, documents.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -698,6 +712,7 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('number', number)
+          ..add('totalHours', totalHours)
           ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -768,6 +783,10 @@ class ProjectEntityBuilder
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
+  double _totalHours;
+  double get totalHours => _$this._totalHours;
+  set totalHours(double totalHours) => _$this._totalHours = totalHours;
+
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
@@ -828,6 +847,7 @@ class ProjectEntityBuilder
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
       _number = $v.number;
+      _totalHours = $v.totalHours;
       _documents = $v.documents.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -883,6 +903,7 @@ class ProjectEntityBuilder
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ProjectEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ProjectEntity', 'customValue4'),
               number: BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number'),
+              totalHours: BuiltValueNullFieldError.checkNotNull(totalHours, r'ProjectEntity', 'totalHours'),
               documents: documents.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ProjectEntity', 'createdAt'),
