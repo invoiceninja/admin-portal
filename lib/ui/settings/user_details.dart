@@ -148,8 +148,8 @@ class _UserDetailsState extends State<UserDetails>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final user = viewModel.user;
     final state = viewModel.state;
+    final user = viewModel.user;
 
     final googleButton = Expanded(
       child: OutlinedButton(
@@ -160,9 +160,9 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: user.isConnectedToEmail ||
-                user.isConnectedToApple ||
-                user.isConnectedToMicrosoft
+        onPressed: state.user.isConnectedToEmail ||
+                state.user.isConnectedToApple ||
+                state.user.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -184,7 +184,7 @@ class _UserDetailsState extends State<UserDetails>
     final gmailButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (user.isConnectedToEmail
+          (state.user.isConnectedToEmail
                   ? localization.disconnectGmail
                   : localization.connectGmail)
               .toUpperCase(),
@@ -218,9 +218,9 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: user.isConnectedToEmail ||
-                user.isConnectedToGoogle ||
-                user.isConnectedToApple
+        onPressed: state.user.isConnectedToEmail ||
+                state.user.isConnectedToGoogle ||
+                state.user.isConnectedToApple
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -242,7 +242,7 @@ class _UserDetailsState extends State<UserDetails>
     final office365Button = Expanded(
       child: OutlinedButton(
         child: Text(
-          (user.isConnectedToEmail
+          (state.user.isConnectedToEmail
                   ? localization.disconnectEmail
                   : localization.connectEmail)
               .toUpperCase(),
@@ -277,22 +277,23 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: user.isConnectedToGoogle || user.isConnectedToMicrosoft
-            ? null
-            : () {
-                if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
-                  return;
-                }
+        onPressed:
+            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
+                ? null
+                : () {
+                    if (state.settingsUIState.isChanged) {
+                      showMessageDialog(
+                          context: context,
+                          message: localization.errorUnsavedChanges);
+                      return;
+                    }
 
-                if (state.user.isConnectedToApple) {
-                  viewModel.onDisconnectApplePressed(context);
-                } else {
-                  // do nothing
-                }
-              },
+                    if (state.user.isConnectedToApple) {
+                      viewModel.onDisconnectApplePressed(context);
+                    } else {
+                      // do nothing
+                    }
+                  },
       ),
     );
 
