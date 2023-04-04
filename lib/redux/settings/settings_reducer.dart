@@ -98,6 +98,12 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origUser.replace(action.user)
       ..isChanged = false);
   }),
+  TypedReducer<SettingsUIState, ConnecOAuthUserSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..user.replace(action.user)
+      ..origUser.replace(action.user)
+      ..isChanged = false);
+  }),
   TypedReducer<SettingsUIState, FilterSettings>((state, action) {
     return state.rebuild((b) => b
       ..filter = action.filter
