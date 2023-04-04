@@ -666,12 +666,6 @@ abstract class TaskEntity extends Object
         }
       }
 
-      if (!multiselect && isOld) {
-        if (userCompany.canEditEntity(this)) {
-          actions.add(EntityAction.changeStatus);
-        }
-      }
-
       if (!isInvoiced && !isRunning) {
         if (userCompany.canCreate(EntityType.invoice)) {
           actions.add(EntityAction.invoiceTask);
@@ -685,6 +679,12 @@ abstract class TaskEntity extends Object
     if (!multiselect && isOld) {
       if (userCompany.canCreate(EntityType.task)) {
         actions.add(EntityAction.clone);
+      }
+    }
+
+    if (!isDeleted && !multiselect && isOld) {
+      if (userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.changeStatus);
       }
     }
 
