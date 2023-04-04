@@ -67,9 +67,10 @@ class LoadExpenseActivity {
 }
 
 class LoadExpenses {
-  LoadExpenses({this.completer});
+  LoadExpenses({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadExpenseRequest implements StartLoading {}
