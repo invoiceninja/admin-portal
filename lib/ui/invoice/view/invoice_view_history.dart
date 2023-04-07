@@ -57,6 +57,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       itemBuilder: (BuildContext context, index) {
         final activity = activityList[index];
         final history = activity.history;
+        final activityId = history.activityId ?? '';
 
         final state = viewModel.state;
         final client = state.clientState.get(activity.clientId);
@@ -89,9 +90,10 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
               ' • ' +
               timeago.format(convertTimestampToDate(activity.updatedAt),
                   locale: localeSelector(state, twoLetter: true))),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () =>
-              viewModel.onViewPdf(context, invoice, history.activityId),
+          trailing: activityId.isNotEmpty ? Icon(Icons.chevron_right) : null,
+          onTap: activityId.isNotEmpty
+              ? () => viewModel.onViewPdf(context, invoice, history.activityId)
+              : null,
         );
       },
       separatorBuilder: (context, index) => ListDivider(),
