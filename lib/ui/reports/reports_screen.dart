@@ -733,7 +733,7 @@ enum ReportColumnType {
 }
 
 bool canTotalColumn(String column) {
-  if (column == 'notification_threshold') {
+  if (['notification_threshold', 'age'].contains(column)) {
     return false;
   }
 
@@ -1488,11 +1488,11 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        final canTotal = (cell is ReportNumberValue ||
+        final canTotal = (cell is ReportIntValue ||
+                cell is ReportNumberValue ||
                 cell is ReportDurationValue ||
                 cell is ReportAgeValue) &&
             canTotalColumn(column);
-
         String currencyId = '';
         if (canTotal) {
           if (!allColumns.contains(column)) {
