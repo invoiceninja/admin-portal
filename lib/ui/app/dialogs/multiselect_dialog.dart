@@ -157,6 +157,7 @@ class MultiSelectListState extends State<MultiSelectList> {
               thumbVisibility: true,
               child: ReorderableListView(
                 scrollController: _controller,
+                padding: const EdgeInsets.only(right: 12),
                 children: selected.asMap().entries.map((entry) {
                   final option = entry.value;
                   final columnTitle = state.company.getCustomFieldLabel(option);
