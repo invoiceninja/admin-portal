@@ -70,6 +70,7 @@ enum ClientReportFields {
   is_active,
   created_at,
   updated_at,
+  documents,
 }
 
 var memoizedClientReport = memo6((
@@ -343,6 +344,8 @@ ReportResult clientReport(
         case ClientReportFields.created_at:
           value = convertTimestampToDateString(client.createdAt);
           break;
+        case ClientReportFields.documents:
+          value = client.documents.length;
       }
 
       if (!ReportResult.matchField(
@@ -356,6 +359,8 @@ ReportResult clientReport(
 
       if (value.runtimeType == bool) {
         row.add(client.getReportBool(value: value));
+      } else if (column == ClientReportFields.documents) {
+        row.add(client.getReportInt(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         String currencyId = client.currencyId;
         if ([

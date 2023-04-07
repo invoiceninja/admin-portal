@@ -49,6 +49,7 @@ enum VendorReportFields {
   is_active,
   created_at,
   updated_at,
+  documents,
   /*
   contact_last_login,
   shipping_address1,
@@ -303,6 +304,8 @@ ReportResult vendorReport(
         case VendorReportFields.created_at:
           value = convertTimestampToDateString(vendor.createdAt);
           break;
+        case VendorReportFields.documents:
+          value = vendor.documents.length;
       }
 
       if (!ReportResult.matchField(
@@ -316,6 +319,8 @@ ReportResult vendorReport(
 
       if (value.runtimeType == bool) {
         row.add(vendor.getReportBool(value: value));
+      } else if (column == VendorReportFields.documents) {
+        row.add(vendor.getReportInt(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(vendor.getReportDouble(
           value: value,
