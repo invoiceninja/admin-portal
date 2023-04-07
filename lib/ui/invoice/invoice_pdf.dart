@@ -334,7 +334,7 @@ Future<Response> _loadPDF(
 ) async {
   http.Response response;
 
-  if (activityId != null || isDeliveryNote) {
+  if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
     final store = StoreProvider.of<AppState>(context);
     final credential = store.state.credentials;
     final url = isDeliveryNote
