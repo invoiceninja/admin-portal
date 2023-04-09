@@ -270,8 +270,8 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedMicrosoft);
+                    final completer = snackBarCompleter<Null>(
+                        context, AppLocalization.of(context).disconnectedApple);
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
