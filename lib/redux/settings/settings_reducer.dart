@@ -98,7 +98,13 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origUser.replace(action.user)
       ..isChanged = false);
   }),
-  TypedReducer<SettingsUIState, ConnecOAuthUserSuccess>((state, action) {
+  TypedReducer<SettingsUIState, ConnectOAuthUserSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..user.replace(action.user)
+      ..origUser.replace(action.user)
+      ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, DisconnectOAuthMailerSuccess>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..origUser.replace(action.user)

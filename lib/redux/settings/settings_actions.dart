@@ -150,9 +150,9 @@ class ConnecOAuthUserRequest implements StartSaving {
   final String accessToken;
 }
 
-class ConnecOAuthUserSuccess
+class ConnectOAuthUserSuccess
     implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
-  ConnecOAuthUserSuccess(this.user);
+  ConnectOAuthUserSuccess(this.user);
 
   final UserEntity user;
 }

@@ -87,6 +87,28 @@ class SettingsRepository {
     return userResponse.data;
   }
 
+  Future<UserEntity> disconnectOAuthMailer(
+    Credentials credentials,
+    String password,
+    String idToken,
+    String userId,
+  ) async {
+    dynamic response;
+
+    final url = credentials.url +
+        '/users/$userId/disconnect_mailer?include=company_user';
+    response = await webClient.post(
+      url,
+      credentials.token,
+      password: password,
+    );
+
+    final UserItemResponse userResponse =
+        serializers.deserializeWith(UserItemResponse.serializer, response);
+
+    return userResponse.data;
+  }
+
   Future<UserEntity> connectGmailUser(
     Credentials credentials,
     String password,

@@ -135,7 +135,7 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       ..user.replace(action.user)
       ..settings.replace(action.user.userCompany.settings)),
   ),
-  TypedReducer<UserCompanyEntity, ConnecOAuthUserSuccess>(
+  TypedReducer<UserCompanyEntity, ConnectOAuthUserSuccess>(
     (userCompany, action) =>
         userCompany.rebuild((b) => b..user.replace(action.user)),
   ),
