@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final saveCompany = _saveCompany(repository);
   final saveAuthUser = _saveAuthUser(repository);
   final connectOAuthUser = _connectOAuthUser(repository);
+  final disconnectOAuthMailer = _disconnectOAuthMailer(repository);
   final connectGmailUser = _connectGmailUser(repository);
   final saveSettings = _saveSettings(repository);
   final uploadLogo = _uploadLogo(repository);
@@ -40,6 +41,8 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
     TypedMiddleware<AppState, ConnecOAuthUserRequest>(connectOAuthUser),
+    TypedMiddleware<AppState, DisconnectOAuthMailerRequest>(
+        disconnectOAuthMailer),
     TypedMiddleware<AppState, ConnecGmailUserRequest>(connectGmailUser),
     TypedMiddleware<AppState, DisableTwoFactorRequest>(disableTwoFactor),
     TypedMiddleware<AppState, SaveUserSettingsRequest>(saveSettings),
@@ -146,13 +149,45 @@ Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
       action.accessToken,
     )
         .then((user) {
-      store.dispatch(ConnecOAuthUserSuccess(user));
+      store.dispatch(ConnectOAuthUserSuccess(user));
       if (action.completer != null) {
         action.completer.complete();
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConnecOAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _disconnectOAuthMailer(
+    SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DisconnectOAuthMailerRequest;
+
+    settingsRepository
+        .disconnectOAuthMailer(
+      store.state.credentials,
+      action.password,
+      action.idToken,
+      action.user.id,
+    )
+        .then((user) {
+      store.dispatch(DisconnectOAuthMailerSuccess(user));
+      if (action.completer != null) {
+        action.completer.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisconnectOAuthMailerFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }

@@ -112,12 +112,11 @@ class UserDetailsVM {
                     final completer = snackBarCompleter<Null>(
                         context, AppLocalization.of(context).disconnectedEmail);
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user.rebuild((b) => b..oauthUserToken = ''),
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
+                      DisconnectOAuthMailerRequest(
+                          user: state.user,
+                          completer: completer,
+                          password: password,
+                          idToken: idToken),
                     );
                   });
             });
@@ -132,12 +131,11 @@ class UserDetailsVM {
                     final completer = snackBarCompleter<Null>(
                         context, AppLocalization.of(context).disconnectedGmail);
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user.rebuild((b) => b..oauthUserToken = ''),
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
+                      DisconnectOAuthMailerRequest(
+                          user: state.user,
+                          completer: completer,
+                          password: password,
+                          idToken: idToken),
                     );
                   });
             });
@@ -270,8 +268,8 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedMicrosoft);
+                    final completer = snackBarCompleter<Null>(
+                        context, AppLocalization.of(context).disconnectedApple);
                     store.dispatch(
                       SaveAuthUserRequest(
                         user: state.user.rebuild((b) => b..oauthProvider = ''),
