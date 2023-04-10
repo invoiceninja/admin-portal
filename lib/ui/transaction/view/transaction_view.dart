@@ -117,10 +117,11 @@ class _TransactionViewState extends State<TransactionView> {
                           .get(transaction.categoryId),
                       isFilter: false,
                     ),
-                    EntityListTile(
-                      entity: state.expenseState.get(transaction.expenseId),
-                      isFilter: false,
-                    ),
+                    for (final expenseId in transaction.expenseId.split(','))
+                      EntityListTile(
+                        entity: state.expenseState.get(expenseId),
+                        isFilter: false,
+                      ),
                   ]
                 ] else ...[
                   if (transaction.isDeposit)
@@ -673,7 +674,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   List<ExpenseEntity> _expenses;
   VendorEntity _selectedVendor;
   ExpenseCategoryEntity _selectedCategory;
-  ExpenseEntity _selectedExpense;
+  List<ExpenseEntity> _selectedExpenses;
 
   @override
   void initState() {
@@ -682,6 +683,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     _vendorFilterController = TextEditingController();
     _categoryFilterController = TextEditingController();
     _expenseFilterController = TextEditingController();
+    _selectedExpenses = [];
 
     _vendorFocusNode = FocusNode();
     _categoryFocusNode = FocusNode();
@@ -778,12 +780,6 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final expenseState = state.expenseState;
 
     _expenses = expenseState.map.values.where((expense) {
-      if (_selectedExpense != null) {
-        if (expense.id != _selectedExpense.id) {
-          return false;
-        }
-      }
-
       if (expense.transactionId.isNotEmpty || expense.isDeleted) {
         return false;
       }
@@ -1024,16 +1020,19 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     expense: expense,
                     showCheckbox: true,
                     showSelected: false,
-                    isChecked: _selectedExpense?.id == expense.id,
+                    isChecked: _selectedExpenses.contains(expense),
                     onTap: () => setState(() {
-                      if (_selectedExpense?.id == expense.id) {
-                        _selectedExpense = null;
+                      if (_selectedExpenses.contains(expense)) {
+                        _selectedExpenses.remove(expense);
                       } else {
-                        _selectedExpense = expense;
+                        _selectedExpenses.add(expense);
                       }
                       updateExpenseList();
                       store.dispatch(SaveTransactionSuccess(transaction.rebuild(
-                          (b) => b..pendingExpenseId = _selectedExpense?.id)));
+                          (b) => b
+                            ..pendingExpenseId = _selectedExpenses
+                                .map((expense) => expense.id)
+                                .join(','))));
                     }),
                   );
                 },
@@ -1236,13 +1235,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               ? AppButton(
                   label: localization.linkExpense,
                   onPressed:
-                      _selectedExpense == null || viewModel.state.isSaving
+                      _selectedExpenses.isEmpty || viewModel.state.isSaving
                           ? null
                           : () {
                               final viewModel = widget.viewModel;
                               viewModel.onLinkToExpense(
                                 context,
-                                _selectedExpense?.id ?? '',
+                                _selectedExpenses
+                                    .map((expense) => expense.id)
+                                    .join(','),
                               );
                             },
                   iconData: Icons.link,
