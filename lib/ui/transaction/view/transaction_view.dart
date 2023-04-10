@@ -868,6 +868,17 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final transaction =
         transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
+    String currencyId;
+    if (_selectedExpenses.isNotEmpty) {
+      currencyId =
+          state.clientState.get(_selectedExpenses.first.clientId).currencyId;
+    }
+
+    double totalSelected = 0;
+    _selectedExpenses.forEach((expense) {
+      totalSelected += expense.grossAmount;
+    });
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1222,6 +1233,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     ),
                   ),
               ],
+            ),
+          ),
+        if (_selectedExpenses.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Text(
+              '${_selectedExpenses.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
             ),
           ),
         ListDivider(),
