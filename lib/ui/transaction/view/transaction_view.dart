@@ -1233,7 +1233,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
           child: _matchExisting
               ? AppButton(
-                  label: localization.linkExpense,
+                  label: _selectedExpenses.length > 1
+                      ? localization.linkExpenses
+                      : localization.linkExpense,
                   onPressed:
                       _selectedExpenses.isEmpty || viewModel.state.isSaving
                           ? null
