@@ -166,7 +166,11 @@ class _ListFilterState extends State<ListFilter> {
                 },
                 options: EntityState.values.toList(),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(borderSide: BorderSide()),
+                  enabledBorder: state.prefState.enableDarkMode
+                      ? null
+                      : OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
                   isDense: true,
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 13, horizontal: 10),
@@ -239,6 +243,10 @@ class _ListFilterState extends State<ListFilter> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    enabledBorder: state.prefState.enableDarkMode
+                        ? null
+                        : OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
                     isDense: true,
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 13, horizontal: 10),
