@@ -163,6 +163,33 @@ class ConnecOAuthUserFailure implements StopSaving {
   final Object error;
 }
 
+class DisconnecOAuthUserRequest implements StartSaving {
+  DisconnecOAuthUserRequest({
+    @required this.user,
+    @required this.idToken,
+    @required this.completer,
+    @required this.password,
+  });
+
+  final UserEntity user;
+  final Completer completer;
+  final String password;
+  final String idToken;
+}
+
+class DisconnectOAuthUserSuccess
+    implements StopSaving, PersistData, PersistUI, UserVerifiedPassword {
+  DisconnectOAuthUserSuccess(this.user);
+
+  final UserEntity user;
+}
+
+class DisconnecOAuthUserFailure implements StopSaving {
+  DisconnecOAuthUserFailure(this.error);
+
+  final Object error;
+}
+
 class DisconnectOAuthMailerRequest implements StartSaving {
   DisconnectOAuthMailerRequest({
     @required this.completer,

@@ -87,6 +87,29 @@ class SettingsRepository {
     return userResponse.data;
   }
 
+  Future<UserEntity> disconnectOAuthUser(
+    Credentials credentials,
+    UserEntity user,
+    String password,
+    String idToken,
+  ) async {
+    dynamic response;
+
+    final url = credentials.url +
+        '/users/${user.id}/disconnect_oauth?include=company_user';
+    response = await webClient.post(
+      url,
+      credentials.token,
+      password: password,
+      idToken: idToken,
+    );
+
+    final UserItemResponse userResponse =
+        serializers.deserializeWith(UserItemResponse.serializer, response);
+
+    return userResponse.data;
+  }
+
   Future<UserEntity> disconnectOAuthMailer(
     Credentials credentials,
     String password,
