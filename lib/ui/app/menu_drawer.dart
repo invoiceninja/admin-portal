@@ -1329,6 +1329,16 @@ void _showAbout(BuildContext context) async {
     height: 40.0,
   );
 
+  final userCompany = state.userCompany;
+  String subtitle = state.appVersion + '\n';
+  subtitle +=
+      state.isSelfHosted ? localization.selfhosted : localization.hosted;
+  if (userCompany.isOwner) {
+    subtitle += ' • ' + localization.owner;
+  } else if (userCompany.isAdmin) {
+    subtitle += ' • ' + localization.admin;
+  }
+
   showDialog<Null>(
       context: context,
       builder: (BuildContext context) {
@@ -1364,7 +1374,7 @@ void _showAbout(BuildContext context) async {
                       'Invoice Ninja',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    subtitle: Text(state.appVersion),
+                    subtitle: Text(subtitle),
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: state.appVersion));
                       showToast(localization.copiedToClipboard

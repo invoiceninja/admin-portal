@@ -229,7 +229,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       version += '-';
     }
 
-    version += isSelfHosted ? 'S' : 'H';
+    //version += isSelfHosted ? 'S' : 'H';
     version += getPlatformLetter();
     version += kClientVersion.split('.').last;
 
