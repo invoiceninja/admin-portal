@@ -180,8 +180,8 @@ class UserDetailsVM {
                       GoogleOAuth.disconnect();
                     });
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user.rebuild((b) => b..oauthProvider = ''),
+                      DisconnecOAuthUserRequest(
+                        user: state.user,
                         password: password,
                         idToken: idToken,
                         completer: completer,
@@ -244,8 +244,8 @@ class UserDetailsVM {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context).disconnectedMicrosoft);
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user.rebuild((b) => b..oauthProvider = ''),
+                      DisconnecOAuthUserRequest(
+                        user: state.user,
                         password: password,
                         idToken: idToken,
                         completer: completer,
@@ -271,8 +271,8 @@ class UserDetailsVM {
                     final completer = snackBarCompleter<Null>(
                         context, AppLocalization.of(context).disconnectedApple);
                     store.dispatch(
-                      SaveAuthUserRequest(
-                        user: state.user.rebuild((b) => b..oauthProvider = ''),
+                      DisconnecOAuthUserRequest(
+                        user: state.user,
                         password: password,
                         idToken: idToken,
                         completer: completer,

@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final saveCompany = _saveCompany(repository);
   final saveAuthUser = _saveAuthUser(repository);
   final connectOAuthUser = _connectOAuthUser(repository);
+  final disconnectOAuthUser = _disconnectOAuthUser(repository);
   final disconnectOAuthMailer = _disconnectOAuthMailer(repository);
   final connectGmailUser = _connectGmailUser(repository);
   final saveSettings = _saveSettings(repository);
@@ -41,6 +42,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
     TypedMiddleware<AppState, ConnecOAuthUserRequest>(connectOAuthUser),
+    TypedMiddleware<AppState, DisconnecOAuthUserRequest>(disconnectOAuthUser),
     TypedMiddleware<AppState, DisconnectOAuthMailerRequest>(
         disconnectOAuthMailer),
     TypedMiddleware<AppState, ConnecGmailUserRequest>(connectGmailUser),
@@ -156,6 +158,38 @@ Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConnecOAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _disconnectOAuthUser(
+    SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DisconnecOAuthUserRequest;
+
+    settingsRepository
+        .disconnectOAuthUser(
+      store.state.credentials,
+      action.user,
+      action.password,
+      action.idToken,
+    )
+        .then((user) {
+      store.dispatch(DisconnectOAuthUserSuccess(user));
+      if (action.completer != null) {
+        action.completer.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisconnecOAuthUserFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
