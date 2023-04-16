@@ -153,7 +153,10 @@ ReportResult transactionReport(
           value = transaction.category;
           break;
         case TransactionReportFields.expenseNumber:
-          value = expenseMap[transaction.expenseId]?.number ?? '';
+          value = transaction.expenseId
+              .split(',')
+              .map((expenseId) => expenseMap[expenseId]?.number ?? '')
+              .join(', ');
           break;
         case TransactionReportFields.invoices:
           value = transaction.invoiceIds
