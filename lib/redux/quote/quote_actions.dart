@@ -525,14 +525,24 @@ Future handleQuoteAction(
       launchUrl(Uri.parse(quote.invitationSilentLink));
       break;
     case EntityAction.convertToInvoice:
-      store.dispatch(ConvertQuotesToInvoices(
-          snackBarCompleter<Null>(context, localization.convertedQuote),
-          quoteIds));
+      confirmCallback(
+          context: context,
+          message: localization.convertToInvoice,
+          callback: (_) {
+            store.dispatch(ConvertQuotesToInvoices(
+                snackBarCompleter<Null>(context, localization.convertedQuote),
+                quoteIds));
+          });
       break;
     case EntityAction.convertToProject:
-      store.dispatch(ConvertQuotesToProjects(
-          snackBarCompleter<Null>(context, localization.convertedQuote),
-          quoteIds));
+      confirmCallback(
+          context: context,
+          message: localization.convertToProject,
+          callback: (_) {
+            store.dispatch(ConvertQuotesToProjects(
+                snackBarCompleter<Null>(context, localization.convertedQuote),
+                quoteIds));
+          });
       break;
     case EntityAction.approve:
       final message = quoteIds.length > 1

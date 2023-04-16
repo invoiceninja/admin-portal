@@ -32,7 +32,7 @@ List<InvoiceEntity> _upcomingInvoices({
   });
 
   invoices.sort((invoiceA, invoiceB) =>
-      invoiceB.primaryDate.compareTo(invoiceA.primaryDate));
+      invoiceA.primaryDate.compareTo(invoiceB.primaryDate));
 
   return invoices;
 }
@@ -64,7 +64,7 @@ List<InvoiceEntity> _pastDueInvoices({
   });
 
   invoices.sort((invoiceA, invoiceB) =>
-      invoiceB.primaryDate.compareTo(invoiceA.primaryDate));
+      invoiceA.primaryDate.compareTo(invoiceB.primaryDate));
 
   return invoices;
 }
@@ -133,7 +133,7 @@ List<InvoiceEntity> _upcomingQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteB.primaryDate.compareTo(quoteA.primaryDate));
+      (quoteA, quoteB) => quoteA.primaryDate.compareTo(quoteB.primaryDate));
 
   return quotes;
 }
@@ -163,7 +163,7 @@ List<InvoiceEntity> _expiredQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteB.primaryDate.compareTo(quoteA.primaryDate));
+      (quoteA, quoteB) => quoteA.primaryDate.compareTo(quoteB.primaryDate));
 
   return quotes;
 }

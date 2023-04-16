@@ -135,8 +135,9 @@ class _ProductEditState extends State<ProductEdit> {
       ..stockQuantity = parseInt(_stockQuantityController.text.trim())
       ..stockNotificationThreshold =
           parseInt(_notificationThresholdController.text.trim())
-      ..maxQuantity = parseInt(_stockQuantityController.text.trim())
+      ..maxQuantity = parseInt(_maxQuantityController.text.trim())
       ..imageUrl = _imageUrlController.text.trim());
+
     if (product != widget.viewModel.product) {
       _debouncer.run(() {
         widget.viewModel.onChanged(product);
