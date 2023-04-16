@@ -197,6 +197,7 @@ final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, SaveAuthUserSuccess>(_updateAuthUser),
   TypedReducer<UserState, ConnectOAuthUserSuccess>(_connectOAuthUser),
   TypedReducer<UserState, ConnecGmailUserSuccess>(_connectGmailUser),
+  TypedReducer<UserState, DisconnectOAuthMailerSuccess>(_disconnectOAuthMailer),
   TypedReducer<UserState, AddUserSuccess>(_addUser),
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
@@ -253,6 +254,11 @@ UserState _updateAuthUser(UserState userState, SaveAuthUserSuccess action) {
 
 UserState _connectOAuthUser(
     UserState userState, ConnectOAuthUserSuccess action) {
+  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+}
+
+UserState _disconnectOAuthMailer(
+    UserState userState, DisconnectOAuthMailerSuccess action) {
   return userState.rebuild((b) => b..map[action.user.id] = action.user);
 }
 
