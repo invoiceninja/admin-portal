@@ -123,6 +123,8 @@ abstract class CompanyEntity extends Object
       convertPaymentCurrency: false,
       convertExpenseCurrency: false,
       notifyVendorWhenPaid: false,
+      calculateTaxes: false,
+      taxData: TaxDataEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -450,6 +452,12 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'stop_on_unpaid_recurring')
   bool get stopOnUnpaidRecurring;
+
+  @BuiltValueField(wireName: 'calculate_taxes')
+  bool get calculateTaxes;
+
+  @BuiltValueField(wireName: 'tax_data')
+  TaxDataEntity get taxData;
 
   String get displayName => settings.name ?? '';
 
@@ -1341,4 +1349,110 @@ abstract class DashboardField
 
   static Serializer<DashboardField> get serializer =>
       _$dashboardFieldSerializer;
+}
+
+abstract class TaxDataEntity
+    implements Built<TaxDataEntity, TaxDataEntityBuilder> {
+  factory TaxDataEntity() {
+    return _$TaxDataEntity._(
+      sellerRegion: '',
+      sellerSubregion: '',
+      regions: BuiltMap<String, TaxRegionDataEntity>(),
+    );
+  }
+
+  TaxDataEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'seller_region')
+  String get sellerRegion;
+
+  @BuiltValueField(wireName: 'seller_subregion')
+  String get sellerSubregion;
+
+  BuiltMap<String, TaxRegionDataEntity> get regions;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxDataEntityBuilder builder) => builder
+    ..sellerRegion = ''
+    ..sellerSubregion = '';
+
+  static Serializer<TaxDataEntity> get serializer => _$taxDataEntitySerializer;
+}
+
+abstract class TaxRegionDataEntity
+    implements Built<TaxRegionDataEntity, TaxRegionDataEntityBuilder> {
+  factory TaxRegionDataEntity(bool reportErrors) {
+    return _$TaxRegionDataEntity._(
+      hasSalesAboveThreshold: false,
+      taxAll: false,
+      vatThreshold: 0,
+      subregions: BuiltMap<String, TaxSubregionDataEntity>(),
+    );
+  }
+
+  TaxRegionDataEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'has_sales_above_threshold')
+  bool get hasSalesAboveThreshold;
+
+  @BuiltValueField(wireName: 'tax_all')
+  bool get taxAll;
+
+  @BuiltValueField(wireName: 'vat_threshold')
+  double get vatThreshold;
+
+  BuiltMap<String, TaxSubregionDataEntity> get subregions;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxRegionDataEntityBuilder builder) => builder
+    ..hasSalesAboveThreshold = false
+    ..taxAll = false
+    ..vatThreshold = 0;
+
+  static Serializer<TaxRegionDataEntity> get serializer =>
+      _$taxRegionDataEntitySerializer;
+}
+
+abstract class TaxSubregionDataEntity
+    implements Built<TaxSubregionDataEntity, TaxSubregionDataEntityBuilder> {
+  factory TaxSubregionDataEntity(bool reportErrors) {
+    return _$TaxSubregionDataEntity._(
+      applyTax: false,
+      vatRate: 0,
+      reducedVatRate: 0,
+    );
+  }
+
+  TaxSubregionDataEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'apply_tax')
+  bool get applyTax;
+
+  @BuiltValueField(wireName: 'vat_rate')
+  double get vatRate;
+
+  @BuiltValueField(wireName: 'reduced_vat_rate')
+  double get reducedVatRate;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxSubregionDataEntityBuilder builder) =>
+      builder
+        ..applyTax = false
+        ..reducedVatRate = 0
+        ..vatRate = 0;
+
+  static Serializer<TaxSubregionDataEntity> get serializer =>
+      _$taxSubregionDataEntitySerializer;
 }

@@ -186,11 +186,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TaskStatusState.serializer)
       ..add(TaskStatusUIState.serializer)
       ..add(TaskUIState.serializer)
+      ..add(TaxDataEntity.serializer)
       ..add(TaxRateEntity.serializer)
       ..add(TaxRateItemResponse.serializer)
       ..add(TaxRateListResponse.serializer)
       ..add(TaxRateState.serializer)
       ..add(TaxRateUIState.serializer)
+      ..add(TaxRegionDataEntity.serializer)
+      ..add(TaxSubregionDataEntity.serializer)
       ..add(TemplateEntity.serializer)
       ..add(TimezoneEntity.serializer)
       ..add(TimezoneItemResponse.serializer)
@@ -937,6 +940,18 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TaxRegionDataEntity)
+          ]),
+          () => new MapBuilder<String, TaxRegionDataEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TaxSubregionDataEntity)
+          ]),
+          () => new MapBuilder<String, TaxSubregionDataEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(TokenEntity)]),
