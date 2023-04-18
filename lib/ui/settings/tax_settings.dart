@@ -184,9 +184,9 @@ class _TaxSettingsState extends State<TaxSettings> {
                     },
                     items: subregions
                         .map((code) => DropdownMenuItem(
-                            child: Text(region == kTaxRegionEurope
-                                ? (countryMap[code]?.name ?? code)
-                                : code),
+                            child: Text(region == kTaxRegionUnitedStates
+                                ? code
+                                : (countryMap[code]?.name ?? code)),
                             value: code))
                         .toList()),
                 SizedBox(height: 12),
@@ -243,7 +243,14 @@ class _TaxSettingsState extends State<TaxSettings> {
                       ),
                       if (_showDetails[region])
                         ...taxDataRegion.subregions.keys
-                            .map((subregion) => Text(subregion))
+                            .map((subregion) => Row(
+                                  children: [
+                                    Text(region == kTaxRegionUnitedStates
+                                        ? subregion
+                                        : (countryMap[subregion]?.name ??
+                                            subregion)),
+                                  ],
+                                ))
                             .toList(),
                     ],
                   );
