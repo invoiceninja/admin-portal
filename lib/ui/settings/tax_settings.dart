@@ -256,12 +256,20 @@ class _TaxSettingsState extends State<TaxSettings> {
                             children: [
                               Expanded(
                                 child: CheckboxListTile(
-                                  title: Text(region == kTaxRegionUnitedStates
-                                      ? subregion
-                                      : (countryMap[subregion]?.name ??
-                                          subregion)),
-                                  subtitle: Text(
-                                    '${taxDataSubregion.taxName}: ${formatNumber(taxDataSubregion.taxRate, context, formatNumberType: FormatNumberType.percent) + (taxDataSubregion.reducedTaxRate != 0 ? ' • ' + formatNumber(taxDataSubregion.reducedTaxRate, context, formatNumberType: FormatNumberType.percent) : '')}',
+                                  title: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(region ==
+                                                kTaxRegionUnitedStates
+                                            ? subregion
+                                            : (countryMap[subregion]?.name ??
+                                                subregion)),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        '${taxDataSubregion.taxName}: ${formatNumber(taxDataSubregion.taxRate, context, formatNumberType: FormatNumberType.percent) + (taxDataSubregion.reducedTaxRate != 0 ? ' • ' + formatNumber(taxDataSubregion.reducedTaxRate, context, formatNumberType: FormatNumberType.percent) : '')}',
+                                      ))
+                                    ],
                                   ),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
