@@ -148,6 +148,7 @@ class _TaxSettingsState extends State<TaxSettings> {
           ),
           FormCard(
             isLast: true,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BoolDropdownButton(
                 iconData: MdiIcons.calculator,
@@ -166,6 +167,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   initialValue: taxData.version,
                 ),
                 */
+                SizedBox(height: 16),
                 AppDropdownButton<String>(
                     labelText: localization.sellerSubregion,
                     value: taxData.sellerSubregion,
@@ -177,6 +179,18 @@ class _TaxSettingsState extends State<TaxSettings> {
                         .map((code) =>
                             DropdownMenuItem(child: Text(code), value: code))
                         .toList()),
+                ...taxData.regions.keys
+                    .map((region) => Column(
+                          children: [
+                            Text(region),
+                            /*
+                            ...taxData.regions[region].subregions.keys
+                                .map((subregion) => Text(subregion))
+                                .toList(),
+                                */
+                          ],
+                        ))
+                    .toList(),
               ]
             ],
           )
