@@ -232,19 +232,16 @@ class _TaxSettingsState extends State<TaxSettings> {
                                     ),
                                   ]),
                             ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(minWidth: 80),
-                              child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showDetails[region] =
-                                          !_showDetails[region];
-                                    });
-                                  },
-                                  child: Text(_showDetails[region]
-                                      ? localization.hide
-                                      : localization.show)),
-                            )
+                            TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showDetails[region] =
+                                        !_showDetails[region];
+                                  });
+                                },
+                                child: Text(_showDetails[region]
+                                    ? localization.hide
+                                    : localization.show))
                           ],
                         ),
                       ),
