@@ -287,7 +287,10 @@ class _TaxSettingsState extends State<TaxSettings> {
                                         context: context,
                                         builder: (context) =>
                                             _EditSubregionDialog(
+                                              viewModel: viewModel,
                                               subregionData: taxDataSubregion,
+                                              region: region,
+                                              subregion: subregion,
                                             ));
                                   },
                                   child: Text(localization.edit))
@@ -349,9 +352,18 @@ class NumberOfRatesSelector extends StatelessWidget {
 }
 
 class _EditSubregionDialog extends StatefulWidget {
-  const _EditSubregionDialog({Key key, this.subregionData}) : super(key: key);
+  const _EditSubregionDialog({
+    Key key,
+    @required this.viewModel,
+    @required this.subregionData,
+    @required this.region,
+    @required this.subregion,
+  }) : super(key: key);
 
   final TaxSubregionDataEntity subregionData;
+  final TaxSettingsVM viewModel;
+  final String region;
+  final String subregion;
 
   @override
   State<_EditSubregionDialog> createState() => __EditSubregionDialogState();
@@ -365,15 +377,44 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final subregionData = widget.subregionData;
+    final company = viewModel.company;
+
     return AlertDialog(
       title: Text(localization.edit),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () {
+            final taxData = company.taxData;
+            final taxDataRegion = taxData.regions[widget.region];
+            final taxDataSubregion = taxDataRegion.subregions[widget.subregion];
+            viewModel.onCompanyChanged(company.rebuild((b) => b
+              ..taxData.replace(taxData.rebuild((b) => b
+                ..regions[widget.region] = taxDataRegion.rebuild((b) => b
+                  ..subregions[widget.subregion] = taxDataSubregion
+                      .rebuild((b) => b..taxName = _taxName))))));
+
+            viewModel.onCompanyChanged(company.rebuild(
+              (b) => b..taxData,
+            ));
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.done.toUpperCase()),
+        ),
+      ],
       content: SingleChildScrollView(
           child: Column(
         children: [
           DecoratedFormField(
             label: localization.taxName,
             keyboardType: TextInputType.text,
-            initialValue: widget.subregionData.taxName,
+            initialValue: subregionData.taxName,
+            onChanged: (value) => _taxName = value.trim(),
           ),
         ],
       )),
