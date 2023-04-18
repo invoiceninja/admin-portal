@@ -384,12 +384,31 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
     _reducedTaxRate = subregionData.reducedTaxRate;
   }
 
+  void _onDone() {
+    final viewModel = widget.viewModel;
+    final company = viewModel.company;
+
+    final taxData = company.taxData;
+    final taxDataRegion = taxData.regions[widget.region];
+    final taxDataSubregion = taxDataRegion.subregions[widget.subregion];
+
+    viewModel.onCompanyChanged(company.rebuild((b) => b
+      ..taxData.replace(taxData.rebuild((b) => b
+        ..regions[widget.region] = taxDataRegion.rebuild((b) => b
+          ..subregions[widget.subregion] = taxDataSubregion.rebuild(
+            (b) => b
+              ..taxName = _taxName
+              ..taxRate = _taxRate
+              ..reducedTaxRate = _reducedTaxRate,
+          ))))));
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
     final subregionData = widget.subregionData;
-    final company = viewModel.company;
 
     return AlertDialog(
       title: Text(localization.edit),
@@ -399,22 +418,7 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
           child: Text(localization.cancel.toUpperCase()),
         ),
         TextButton(
-          onPressed: () {
-            final taxData = company.taxData;
-            final taxDataRegion = taxData.regions[widget.region];
-            final taxDataSubregion = taxDataRegion.subregions[widget.subregion];
-            viewModel.onCompanyChanged(company.rebuild((b) => b
-              ..taxData.replace(taxData.rebuild((b) => b
-                ..regions[widget.region] = taxDataRegion.rebuild((b) => b
-                  ..subregions[widget.subregion] = taxDataSubregion.rebuild(
-                    (b) => b
-                      ..taxName = _taxName
-                      ..taxRate = _taxRate
-                      ..reducedTaxRate = _reducedTaxRate,
-                  ))))));
-
-            Navigator.of(context).pop();
-          },
+          onPressed: _onDone,
           child: Text(localization.done.toUpperCase()),
         ),
       ],
@@ -426,6 +430,7 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
             keyboardType: TextInputType.text,
             initialValue: subregionData.taxName,
             onChanged: (value) => _taxName = value.trim(),
+            onSavePressed: (context) => _onDone(),
           ),
           DecoratedFormField(
             label: localization.taxRate,
@@ -433,6 +438,7 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
             initialValue: formatNumber(subregionData.taxRate, context,
                 formatNumberType: FormatNumberType.inputAmount),
             onChanged: (value) => _taxRate = parseDouble(value),
+            onSavePressed: (context) => _onDone(),
           ),
           DecoratedFormField(
             label: localization.reducedRate,
@@ -440,6 +446,7 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
             initialValue: formatNumber(subregionData.reducedTaxRate, context,
                 formatNumberType: FormatNumberType.inputAmount),
             onChanged: (value) => _reducedTaxRate = parseDouble(value),
+            onSavePressed: (context) => _onDone(),
           ),
         ],
       )),
