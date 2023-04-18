@@ -263,6 +263,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'auto_bill_enabled',
       serializers.serialize(object.autoBillEnabled,
           specifiedType: const FullType(bool)),
+      'tax_data',
+      serializers.serialize(object.taxData,
+          specifiedType: const FullType(String)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -666,6 +669,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'auto_bill_enabled':
           result.autoBillEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'tax_data':
+          result.taxData = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'filename':
           result.filename = serializers.deserialize(value,
@@ -1544,6 +1551,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool autoBillEnabled;
   @override
+  final String taxData;
+  @override
   final String filename;
   @override
   final BuiltList<InvoiceScheduleEntity> recurringDates;
@@ -1641,6 +1650,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invoiceId,
       this.recurringId,
       this.autoBillEnabled,
+      this.taxData,
       this.filename,
       this.recurringDates,
       this.lineItems,
@@ -1744,6 +1754,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         nextSendDate, r'InvoiceEntity', 'nextSendDate');
     BuiltValueNullFieldError.checkNotNull(
         autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled');
+    BuiltValueNullFieldError.checkNotNull(taxData, r'InvoiceEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         lineItems, r'InvoiceEntity', 'lineItems');
     BuiltValueNullFieldError.checkNotNull(
@@ -1833,6 +1844,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         invoiceId == other.invoiceId &&
         recurringId == other.recurringId &&
         autoBillEnabled == other.autoBillEnabled &&
+        taxData == other.taxData &&
         filename == other.filename &&
         recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
@@ -1913,6 +1925,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, invoiceId.hashCode);
     _$hash = $jc(_$hash, recurringId.hashCode);
     _$hash = $jc(_$hash, autoBillEnabled.hashCode);
+    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, filename.hashCode);
     _$hash = $jc(_$hash, recurringDates.hashCode);
     _$hash = $jc(_$hash, lineItems.hashCode);
@@ -1993,6 +2006,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invoiceId', invoiceId)
           ..add('recurringId', recurringId)
           ..add('autoBillEnabled', autoBillEnabled)
+          ..add('taxData', taxData)
           ..add('filename', filename)
           ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
@@ -2262,6 +2276,10 @@ class InvoiceEntityBuilder
   set autoBillEnabled(bool autoBillEnabled) =>
       _$this._autoBillEnabled = autoBillEnabled;
 
+  String _taxData;
+  String get taxData => _$this._taxData;
+  set taxData(String taxData) => _$this._taxData = taxData;
+
   String _filename;
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
@@ -2412,6 +2430,7 @@ class InvoiceEntityBuilder
       _invoiceId = $v.invoiceId;
       _recurringId = $v.recurringId;
       _autoBillEnabled = $v.autoBillEnabled;
+      _taxData = $v.taxData;
       _filename = $v.filename;
       _recurringDates = $v.recurringDates?.toBuilder();
       _lineItems = $v.lineItems.toBuilder();
@@ -2519,6 +2538,7 @@ class InvoiceEntityBuilder
               invoiceId: invoiceId,
               recurringId: recurringId,
               autoBillEnabled: BuiltValueNullFieldError.checkNotNull(autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled'),
+              taxData: BuiltValueNullFieldError.checkNotNull(taxData, r'InvoiceEntity', 'taxData'),
               filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),

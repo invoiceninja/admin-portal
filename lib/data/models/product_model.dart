@@ -102,6 +102,7 @@ abstract class ProductEntity extends Object
       stockNotification: true,
       imageUrl: '',
       maxQuantity: 0,
+      taxId: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -178,6 +179,9 @@ abstract class ProductEntity extends Object
 
   @BuiltValueField(wireName: 'max_quantity')
   int get maxQuantity;
+
+  @BuiltValueField(wireName: 'tax_id')
+  int get taxId;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -362,7 +366,8 @@ abstract class ProductEntity extends Object
     ..stockNotification = true
     ..stockNotificationThreshold = 0
     ..imageUrl = ''
-    ..maxQuantity = 0;
+    ..maxQuantity = 0
+    ..taxId = 0;
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }
