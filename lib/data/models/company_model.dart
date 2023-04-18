@@ -124,7 +124,7 @@ abstract class CompanyEntity extends Object
       convertExpenseCurrency: false,
       notifyVendorWhenPaid: false,
       calculateTaxes: false,
-      //taxData: TaxDataEntity(),
+      taxData: TaxDataEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -456,11 +456,8 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'calculate_taxes')
   bool get calculateTaxes;
 
-  //@BuiltValueField(wireName: 'tax_data')
-  //TaxDataEntity get taxData;
-
-  @BuiltValueField(wireName: 'enable_e_invoice')
-  bool get enableEInvoice;
+  @BuiltValueField(wireName: 'tax_data')
+  TaxDataEntity get taxData;
 
   String get displayName => settings.name ?? '';
 
@@ -756,6 +753,7 @@ abstract class CompanyEntity extends Object
     ..convertPaymentCurrency = false
     ..convertExpenseCurrency = false
     ..notifyVendorWhenPaid = false
+    ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
@@ -1358,7 +1356,7 @@ abstract class TaxDataEntity
     implements Built<TaxDataEntity, TaxDataEntityBuilder> {
   factory TaxDataEntity() {
     return _$TaxDataEntity._(
-      sellerRegion: '',
+      version: '',
       sellerSubregion: '',
       regions: BuiltMap<String, TaxRegionDataEntity>(),
     );
@@ -1370,8 +1368,7 @@ abstract class TaxDataEntity
   @memoized
   int get hashCode;
 
-  @BuiltValueField(wireName: 'seller_region')
-  String get sellerRegion;
+  String get version;
 
   @BuiltValueField(wireName: 'seller_subregion')
   String get sellerSubregion;
@@ -1380,8 +1377,9 @@ abstract class TaxDataEntity
 
   // ignore: unused_element
   static void _initializeBuilder(TaxDataEntityBuilder builder) => builder
-    ..sellerRegion = ''
-    ..sellerSubregion = '';
+    ..version = ''
+    ..sellerSubregion = ''
+    ..regions.replace(BuiltMap<String, TaxRegionDataEntity>());
 
   static Serializer<TaxDataEntity> get serializer => _$taxDataEntitySerializer;
 }
@@ -1392,7 +1390,7 @@ abstract class TaxRegionDataEntity
     return _$TaxRegionDataEntity._(
       hasSalesAboveThreshold: false,
       taxAll: false,
-      vatThreshold: 0,
+      taxThreshold: 0,
       subregions: BuiltMap<String, TaxSubregionDataEntity>(),
     );
   }
@@ -1406,11 +1404,11 @@ abstract class TaxRegionDataEntity
   @BuiltValueField(wireName: 'has_sales_above_threshold')
   bool get hasSalesAboveThreshold;
 
-  @BuiltValueField(wireName: 'tax_all')
+  @BuiltValueField(wireName: 'tax_all_subregions')
   bool get taxAll;
 
-  @BuiltValueField(wireName: 'vat_threshold')
-  double get vatThreshold;
+  @BuiltValueField(wireName: 'tax_threshold')
+  double get taxThreshold;
 
   BuiltMap<String, TaxSubregionDataEntity> get subregions;
 
@@ -1418,7 +1416,7 @@ abstract class TaxRegionDataEntity
   static void _initializeBuilder(TaxRegionDataEntityBuilder builder) => builder
     ..hasSalesAboveThreshold = false
     ..taxAll = false
-    ..vatThreshold = 0;
+    ..taxThreshold = 0;
 
   static Serializer<TaxRegionDataEntity> get serializer =>
       _$taxRegionDataEntitySerializer;
@@ -1429,8 +1427,9 @@ abstract class TaxSubregionDataEntity
   factory TaxSubregionDataEntity(bool reportErrors) {
     return _$TaxSubregionDataEntity._(
       applyTax: false,
-      vatRate: 0,
-      reducedVatRate: 0,
+      taxRate: 0,
+      reducedTaxRate: 0,
+      taxName: '',
     );
   }
 
@@ -1443,18 +1442,22 @@ abstract class TaxSubregionDataEntity
   @BuiltValueField(wireName: 'apply_tax')
   bool get applyTax;
 
-  @BuiltValueField(wireName: 'vat_rate')
-  double get vatRate;
+  @BuiltValueField(wireName: 'tax_rate')
+  double get taxRate;
 
-  @BuiltValueField(wireName: 'reduced_vat_rate')
-  double get reducedVatRate;
+  @BuiltValueField(wireName: 'tax_name')
+  String get taxName;
+
+  @BuiltValueField(wireName: 'reduced_tax_rate')
+  double get reducedTaxRate;
 
   // ignore: unused_element
   static void _initializeBuilder(TaxSubregionDataEntityBuilder builder) =>
       builder
         ..applyTax = false
-        ..reducedVatRate = 0
-        ..vatRate = 0;
+        ..taxName = ''
+        ..reducedTaxRate = 0
+        ..taxRate = 0;
 
   static Serializer<TaxSubregionDataEntity> get serializer =>
       _$taxSubregionDataEntitySerializer;
