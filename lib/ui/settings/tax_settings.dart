@@ -147,7 +147,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               ],
             ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.only(left: 16, bottom: 8, right: 16),
             child: AppButton(
               iconData: Icons.settings,
               label: localization.configureRates.toUpperCase(),
@@ -216,12 +216,14 @@ class _TaxSettingsState extends State<TaxSettings> {
                                     items: [
                                       DropdownMenuItem<bool>(
                                         child: ListTile(
+                                          dense: true,
                                           title: Text(localization.taxAll),
                                         ),
                                         value: true,
                                       ),
                                       DropdownMenuItem<bool>(
                                         child: ListTile(
+                                          dense: true,
                                           title: Text(localization.taxSelected),
                                           subtitle: Text(
                                               '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element].applyTax).length} ${localization.selected}'),
