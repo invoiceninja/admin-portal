@@ -1,7 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -281,7 +283,12 @@ class _TaxSettingsState extends State<TaxSettings> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    //
+                                    showDialog<void>(
+                                        context: context,
+                                        builder: (context) =>
+                                            _EditSubregionDialog(
+                                              subregionData: taxDataSubregion,
+                                            ));
                                   },
                                   child: Text(localization.edit))
                             ],
@@ -337,6 +344,39 @@ class NumberOfRatesSelector extends StatelessWidget {
           value: '3',
         ),
       ],
+    );
+  }
+}
+
+class _EditSubregionDialog extends StatefulWidget {
+  const _EditSubregionDialog({Key key, this.subregionData}) : super(key: key);
+
+  final TaxSubregionDataEntity subregionData;
+
+  @override
+  State<_EditSubregionDialog> createState() => __EditSubregionDialogState();
+}
+
+class __EditSubregionDialogState extends State<_EditSubregionDialog> {
+  String _taxName = '';
+  double _taxRate = 0;
+  double _reducedTaxRate = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    return AlertDialog(
+      title: Text(localization.edit),
+      content: SingleChildScrollView(
+          child: Column(
+        children: [
+          DecoratedFormField(
+            label: localization.taxName,
+            keyboardType: TextInputType.text,
+            initialValue: widget.subregionData.taxName,
+          ),
+        ],
+      )),
     );
   }
 }
