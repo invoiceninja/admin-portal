@@ -375,6 +375,16 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
   double _reducedTaxRate = 0;
 
   @override
+  void initState() {
+    super.initState();
+
+    final subregionData = widget.subregionData;
+    _taxName = subregionData.taxName;
+    _taxRate = subregionData.taxRate;
+    _reducedTaxRate = subregionData.reducedTaxRate;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
