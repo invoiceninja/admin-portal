@@ -399,9 +399,6 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
                   ..subregions[widget.subregion] = taxDataSubregion
                       .rebuild((b) => b..taxName = _taxName))))));
 
-            viewModel.onCompanyChanged(company.rebuild(
-              (b) => b..taxData,
-            ));
             Navigator.of(context).pop();
           },
           child: Text(localization.done.toUpperCase()),
