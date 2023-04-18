@@ -1,8 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -54,7 +53,16 @@ class _TaxSettingsState extends State<TaxSettings> {
     final settings = viewModel.settings;
     final company = viewModel.company;
     final state = viewModel.state;
-    //final taxData = company.taxData;
+    final taxData = company.taxData;
+
+    List<String> subregions = [];
+    String region = 'EU';
+    if (company.settings.countryId == kCountryUnitedStates) {
+      region = 'US';
+    } else if (company.settings.countryId == kCountryAustralia) {
+      region = 'AU';
+    }
+    subregions = taxData.regions[region].subregions.keys.toList();
 
     return EditScaffold(
       title: localization.taxSettings,
@@ -150,7 +158,17 @@ class _TaxSettingsState extends State<TaxSettings> {
                 helpLabel: localization.calculateTaxesHelp,
               ),
               if (company.calculateTaxes) ...[
-                //AppDropdownButton<String>(value: , onChanged: onChanged, items: items),
+                AppDropdownButton<String>(
+                    labelText: localization.sellerSubregion,
+                    value: taxData.sellerSubregion,
+                    onChanged: (dynamic value) {
+                      viewModel.onCompanyChanged(company
+                          .rebuild((b) => b..taxData.sellerSubregion = value));
+                    },
+                    items: subregions
+                        .map((code) =>
+                            DropdownMenuItem(child: Text(code), value: code))
+                        .toList()),
               ]
             ],
           )

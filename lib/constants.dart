@@ -191,6 +191,7 @@ const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
+const String kCountryAustralia = '36';
 const String kCountryCanada = '124';
 const String kCountrySwitzerland = '756';
 
