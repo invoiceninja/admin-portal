@@ -188,6 +188,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                         .toList()),
                 SizedBox(height: 12),
                 ...taxData.regions.keys.map((region) {
+                  final taxDataRegion = taxData.regions[region];
                   return Column(
                     children: [
                       Padding(
@@ -197,6 +198,29 @@ class _TaxSettingsState extends State<TaxSettings> {
                             Expanded(
                                 child:
                                     Text(countryMap[region]?.name ?? region)),
+                            Flexible(
+                              child: AppDropdownButton<bool>(
+                                  value: taxDataRegion.taxAll,
+                                  onChanged: (dynamic value) {
+                                    //
+                                  },
+                                  items: [
+                                    DropdownMenuItem<bool>(
+                                      child: ListTile(
+                                        title: Text(localization.taxAll),
+                                      ),
+                                      value: true,
+                                    ),
+                                    DropdownMenuItem<bool>(
+                                      child: ListTile(
+                                        title: Text(localization.taxSelected),
+                                        subtitle: Text(
+                                            '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element].applyTax).length} ${localization.selected}'),
+                                      ),
+                                      value: false,
+                                    ),
+                                  ]),
+                            ),
                             TextButton(
                                 onPressed: () {
                                   setState(() {
@@ -211,7 +235,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                         ),
                       ),
                       if (_showDetails[region])
-                        ...taxData.regions[region].subregions.keys
+                        ...taxDataRegion.subregions.keys
                             .map((subregion) => Text(subregion))
                             .toList(),
                     ],
