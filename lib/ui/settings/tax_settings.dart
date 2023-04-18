@@ -202,7 +202,11 @@ class _TaxSettingsState extends State<TaxSettings> {
                               child: AppDropdownButton<bool>(
                                   value: taxDataRegion.taxAll,
                                   onChanged: (dynamic value) {
-                                    //
+                                    viewModel.onCompanyChanged(company.rebuild(
+                                        (b) => b
+                                          ..taxData.regions[region] =
+                                              taxDataRegion.rebuild(
+                                                  (b) => b..taxAll = value)));
                                   },
                                   items: [
                                     DropdownMenuItem<bool>(
