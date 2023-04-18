@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -32,6 +33,11 @@ class _TaxSettingsState extends State<TaxSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taxSettings');
   FocusScopeNode _focusNode;
+  final Map<String, bool> _showDetails = {
+    kTaxRegionUnitedStates: false,
+    kTaxRegionEurope: false,
+    kTaxRegionAustralia: false,
+  };
 
   @override
   void initState() {
@@ -54,12 +60,13 @@ class _TaxSettingsState extends State<TaxSettings> {
     final state = viewModel.state;
     final taxData = company.taxData;
 
+    final countryMap = memoizedCountryIso2Map(state.staticState.countryMap);
     List<String> subregions = [];
-    String region = 'EU';
+    String region = kTaxRegionEurope;
     if (company.settings.countryId == kCountryUnitedStates) {
-      region = 'US';
+      region = kTaxRegionUnitedStates;
     } else if (company.settings.countryId == kCountryAustralia) {
-      region = 'AU';
+      region = kTaxRegionAustralia;
     }
     subregions = taxData.regions[region].subregions.keys.toList();
 
@@ -179,18 +186,37 @@ class _TaxSettingsState extends State<TaxSettings> {
                         .map((code) =>
                             DropdownMenuItem(child: Text(code), value: code))
                         .toList()),
-                ...taxData.regions.keys
-                    .map((region) => Column(
+                SizedBox(height: 12),
+                ...taxData.regions.keys.map((region) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
                           children: [
-                            Text(region),
-                            /*
-                            ...taxData.regions[region].subregions.keys
-                                .map((subregion) => Text(subregion))
-                                .toList(),
-                                */
+                            Expanded(
+                                child:
+                                    Text(countryMap[region]?.name ?? region)),
+                            TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showDetails[region] =
+                                        !_showDetails[region];
+                                  });
+                                },
+                                child: Text(_showDetails[region]
+                                    ? localization.hideDetails
+                                    : localization.showDetails))
                           ],
-                        ))
-                    .toList(),
+                        ),
+                      ),
+                      if (_showDetails[region])
+                        ...taxData.regions[region].subregions.keys
+                            .map((subregion) => Text(subregion))
+                            .toList(),
+                    ],
+                  );
+                }).toList(),
               ]
             ],
           )

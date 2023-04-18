@@ -20,6 +20,19 @@ List<String> countryList(BuiltMap<String, CountryEntity> countryMap) {
   return list;
 }
 
+var memoizedCountryIso2Map = memo1(
+    (BuiltMap<String, CountryEntity> countryMap) => countryIso2Map(countryMap));
+
+Map<String, CountryEntity> countryIso2Map(
+    BuiltMap<String, CountryEntity> countryMap) {
+  final map = <String, CountryEntity>{};
+  countryMap.keys.forEach((countryId) {
+    final country = countryMap[countryId];
+    map[country.iso2] = country;
+  });
+  return map;
+}
+
 var memoizedGroupList =
     memo1((BuiltMap<String, GroupEntity> groupMap) => groupList(groupMap));
 

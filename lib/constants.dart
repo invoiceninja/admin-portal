@@ -649,6 +649,10 @@ const String kDefaultLightSelectedColorMenu = '#f2faff';
 const String kDefaultLightSelectedColor = '#e5f5ff';
 const String kDefaultLightBorderColor = '#dfdfdf';
 
+const String kTaxRegionUnitedStates = 'US';
+const String kTaxRegionEurope = 'EU';
+const String kTaxRegionAustralia = 'AU';
+
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';
 const String kReportGroupMonth = 'month';
