@@ -197,7 +197,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                     return Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             children: [
                               Expanded(
@@ -249,16 +249,31 @@ class _TaxSettingsState extends State<TaxSettings> {
                           ),
                         ),
                         if (_showDetails[region])
-                          ...taxDataRegion.subregions.keys
-                              .map((subregion) => Row(
-                                    children: [
-                                      Text(region == kTaxRegionUnitedStates
-                                          ? subregion
-                                          : (countryMap[subregion]?.name ??
-                                              subregion)),
-                                    ],
-                                  ))
-                              .toList(),
+                          ...taxDataRegion.subregions.keys.map((subregion) {
+                            final taxDataSubregion =
+                                taxDataRegion.subregions[subregion];
+                            return Row(
+                              children: [
+                                Checkbox(
+                                    value: taxDataSubregion.applyTax,
+                                    onChanged: (value) {
+                                      viewModel.onCompanyChanged(company.rebuild((b) => b
+                                        ..taxData.replace(taxData.rebuild((b) => b
+                                          ..regions[region] =
+                                              taxDataRegion.rebuild((b) => b
+                                                ..subregions[subregion] =
+                                                    taxDataSubregion.rebuild(
+                                                        (b) => b
+                                                          ..applyTax =
+                                                              value))))));
+                                    }),
+                                Text(region == kTaxRegionUnitedStates
+                                    ? subregion
+                                    : (countryMap[subregion]?.name ??
+                                        subregion)),
+                              ],
+                            );
+                          }).toList(),
                       ],
                     );
                   }).toList(),
