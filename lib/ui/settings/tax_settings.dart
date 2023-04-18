@@ -252,33 +252,32 @@ class _TaxSettingsState extends State<TaxSettings> {
                           ...taxDataRegion.subregions.keys.map((subregion) {
                             final taxDataSubregion =
                                 taxDataRegion.subregions[subregion];
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: CheckboxListTile(
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    value: taxDataRegion.taxAll ||
-                                        taxDataSubregion.applyTax,
-                                    onChanged: taxDataRegion.taxAll
-                                        ? null
-                                        : (value) {
-                                            viewModel.onCompanyChanged(company.rebuild((b) => b
-                                              ..taxData.replace(taxData.rebuild((b) => b
-                                                ..regions[region] =
-                                                    taxDataRegion.rebuild((b) => b
-                                                      ..subregions[subregion] =
-                                                          taxDataSubregion.rebuild((b) => b
-                                                            ..applyTax =
-                                                                value))))));
-                                          },
-                                    title: Text(region == kTaxRegionUnitedStates
-                                        ? subregion
-                                        : (countryMap[subregion]?.name ??
-                                            subregion)),
-                                  ),
-                                ),
-                              ],
+                            return Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  Checkbox(
+                                      value: taxDataRegion.taxAll ||
+                                          taxDataSubregion.applyTax,
+                                      onChanged: taxDataRegion.taxAll
+                                          ? null
+                                          : (value) {
+                                              viewModel.onCompanyChanged(company.rebuild((b) => b
+                                                ..taxData.replace(taxData.rebuild((b) => b
+                                                  ..regions[region] =
+                                                      taxDataRegion.rebuild((b) => b
+                                                        ..subregions[subregion] =
+                                                            taxDataSubregion.rebuild((b) => b
+                                                              ..applyTax =
+                                                                  value))))));
+                                            }),
+                                  SizedBox(width: 8),
+                                  Text(region == kTaxRegionUnitedStates
+                                      ? subregion
+                                      : (countryMap[subregion]?.name ??
+                                          subregion)),
+                                ],
+                              ),
                             );
                           }).toList(),
                       ],
