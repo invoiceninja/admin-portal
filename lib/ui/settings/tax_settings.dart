@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -153,20 +154,21 @@ class _TaxSettingsState extends State<TaxSettings> {
               onPressed: () => viewModel.onConfigureRatesPressed(context),
             ),
           ),
-          FormCard(
-            isLast: true,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BoolDropdownButton(
-                iconData: MdiIcons.calculator,
-                label: localization.calculateTaxes,
-                value: company.calculateTaxes,
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..calculateTaxes = value)),
-                helpLabel: localization.calculateTaxesHelp,
-              ),
-              if (company.calculateTaxes) ...[
-                /*
+          if (supportsLatestFeatures())
+            FormCard(
+              isLast: true,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BoolDropdownButton(
+                  iconData: MdiIcons.calculator,
+                  label: localization.calculateTaxes,
+                  value: company.calculateTaxes,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..calculateTaxes = value)),
+                  helpLabel: localization.calculateTaxesHelp,
+                ),
+                if (company.calculateTaxes) ...[
+                  /*
                 DecoratedFormField(
                   keyboardType: TextInputType.text,
                   enabled: false,
@@ -174,93 +176,93 @@ class _TaxSettingsState extends State<TaxSettings> {
                   initialValue: taxData.version,
                 ),
                 */
-                SizedBox(height: 16),
-                AppDropdownButton<String>(
-                    labelText: localization.sellerSubregion,
-                    value: taxData.sellerSubregion,
-                    onChanged: (dynamic value) {
-                      viewModel.onCompanyChanged(company
-                          .rebuild((b) => b..taxData.sellerSubregion = value));
-                    },
-                    items: subregions
-                        .map((code) => DropdownMenuItem(
-                            child: Text(region == kTaxRegionUnitedStates
-                                ? code
-                                : (countryMap[code]?.name ?? code)),
-                            value: code))
-                        .toList()),
-                SizedBox(height: 12),
-                ...taxData.regions.keys.map((region) {
-                  final taxDataRegion = taxData.regions[region];
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child:
-                                    Text(countryMap[region]?.name ?? region)),
-                            Flexible(
-                              child: AppDropdownButton<bool>(
-                                  value: taxDataRegion.taxAll,
-                                  onChanged: (dynamic value) {
-                                    viewModel.onCompanyChanged(company.rebuild(
-                                        (b) => b
-                                          ..taxData.regions[region] =
-                                              taxDataRegion.rebuild(
-                                                  (b) => b..taxAll = value)));
-                                  },
-                                  items: [
-                                    DropdownMenuItem<bool>(
-                                      child: ListTile(
-                                        title: Text(localization.taxAll),
+                  SizedBox(height: 16),
+                  AppDropdownButton<String>(
+                      labelText: localization.sellerSubregion,
+                      value: taxData.sellerSubregion,
+                      onChanged: (dynamic value) {
+                        viewModel.onCompanyChanged(company.rebuild(
+                            (b) => b..taxData.sellerSubregion = value));
+                      },
+                      items: subregions
+                          .map((code) => DropdownMenuItem(
+                              child: Text(region == kTaxRegionUnitedStates
+                                  ? code
+                                  : (countryMap[code]?.name ?? code)),
+                              value: code))
+                          .toList()),
+                  SizedBox(height: 12),
+                  ...taxData.regions.keys.map((region) {
+                    final taxDataRegion = taxData.regions[region];
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child:
+                                      Text(countryMap[region]?.name ?? region)),
+                              Flexible(
+                                child: AppDropdownButton<bool>(
+                                    value: taxDataRegion.taxAll,
+                                    onChanged: (dynamic value) {
+                                      viewModel.onCompanyChanged(
+                                          company.rebuild((b) => b
+                                            ..taxData.regions[region] =
+                                                taxDataRegion.rebuild(
+                                                    (b) => b..taxAll = value)));
+                                    },
+                                    items: [
+                                      DropdownMenuItem<bool>(
+                                        child: ListTile(
+                                          title: Text(localization.taxAll),
+                                        ),
+                                        value: true,
                                       ),
-                                      value: true,
-                                    ),
-                                    DropdownMenuItem<bool>(
-                                      child: ListTile(
-                                        title: Text(localization.taxSelected),
-                                        subtitle: Text(
-                                            '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element].applyTax).length} ${localization.selected}'),
+                                      DropdownMenuItem<bool>(
+                                        child: ListTile(
+                                          title: Text(localization.taxSelected),
+                                          subtitle: Text(
+                                              '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element].applyTax).length} ${localization.selected}'),
+                                        ),
+                                        value: false,
                                       ),
-                                      value: false,
-                                    ),
-                                  ]),
-                            ),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(minWidth: 120),
-                              child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _showDetails[region] =
-                                          !_showDetails[region];
-                                    });
-                                  },
-                                  child: Text(_showDetails[region]
-                                      ? localization.hideDetails
-                                      : localization.showDetails)),
-                            )
-                          ],
+                                    ]),
+                              ),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(minWidth: 120),
+                                child: TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _showDetails[region] =
+                                            !_showDetails[region];
+                                      });
+                                    },
+                                    child: Text(_showDetails[region]
+                                        ? localization.hideDetails
+                                        : localization.showDetails)),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      if (_showDetails[region])
-                        ...taxDataRegion.subregions.keys
-                            .map((subregion) => Row(
-                                  children: [
-                                    Text(region == kTaxRegionUnitedStates
-                                        ? subregion
-                                        : (countryMap[subregion]?.name ??
-                                            subregion)),
-                                  ],
-                                ))
-                            .toList(),
-                    ],
-                  );
-                }).toList(),
-              ]
-            ],
-          )
+                        if (_showDetails[region])
+                          ...taxDataRegion.subregions.keys
+                              .map((subregion) => Row(
+                                    children: [
+                                      Text(region == kTaxRegionUnitedStates
+                                          ? subregion
+                                          : (countryMap[subregion]?.name ??
+                                              subregion)),
+                                    ],
+                                  ))
+                              .toList(),
+                      ],
+                    );
+                  }).toList(),
+                ]
+              ],
+            )
         ],
       ),
     );
