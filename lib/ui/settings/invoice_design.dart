@@ -1071,19 +1071,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ),
                       ),
                     ),
-                    if (supportsLatestFeatures())
-                      FormCard(
-                        isLast: true,
-                        child: SwitchListTile(
-                          title: Text(localization.shareInvoiceQuoteColumns),
-                          value: settings.shareInvoiceQuoteColumns ?? true,
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          onChanged: (value) {
-                            viewModel.onSettingsChanged(settings.rebuild(
-                                (b) => b..shareInvoiceQuoteColumns = value));
-                          },
-                        ),
-                      )
+                    FormCard(
+                      isLast: true,
+                      child: SwitchListTile(
+                        title: Text(localization.shareInvoiceQuoteColumns),
+                        value: settings.shareInvoiceQuoteColumns ?? true,
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        onChanged: (value) {
+                          viewModel.onSettingsChanged(settings.rebuild(
+                              (b) => b..shareInvoiceQuoteColumns = value));
+                        },
+                      ),
+                    )
                   ],
                 ),
                 if (settings.shareInvoiceQuoteColumns == false)

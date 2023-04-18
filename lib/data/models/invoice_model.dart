@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'invoice_model.g.dart';
@@ -1030,10 +1029,8 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.stop);
           }
 
-          if (supportsLatestFeatures()) {
-            actions.add(EntityAction.updatePrices);
-            actions.add(EntityAction.increasePrices);
-          }
+          actions.add(EntityAction.updatePrices);
+          actions.add(EntityAction.increasePrices);
         } else {
           if (!isCancelledOrReversed) {
             if (multiselect) {
@@ -1041,9 +1038,7 @@ abstract class InvoiceEntity extends Object
             } else {
               actions.add(EntityAction.sendEmail);
               if (isUnpaid) {
-                if (supportsLatestFeatures()) {
-                  actions.add(EntityAction.schedule);
-                }
+                actions.add(EntityAction.schedule);
               }
             }
           }
