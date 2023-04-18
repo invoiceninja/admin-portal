@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -148,6 +147,7 @@ class _TaxSettingsState extends State<TaxSettings> {
             ),
           ),
           FormCard(
+            isLast: true,
             children: [
               BoolDropdownButton(
                 iconData: MdiIcons.calculator,
@@ -158,6 +158,14 @@ class _TaxSettingsState extends State<TaxSettings> {
                 helpLabel: localization.calculateTaxesHelp,
               ),
               if (company.calculateTaxes) ...[
+                /*
+                DecoratedFormField(
+                  keyboardType: TextInputType.text,
+                  enabled: false,
+                  label: localization.version,
+                  initialValue: taxData.version,
+                ),
+                */
                 AppDropdownButton<String>(
                     labelText: localization.sellerSubregion,
                     value: taxData.sellerSubregion,
