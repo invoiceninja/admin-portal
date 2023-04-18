@@ -1,5 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -51,6 +54,7 @@ class _TaxSettingsState extends State<TaxSettings> {
     final settings = viewModel.settings;
     final company = viewModel.company;
     final state = viewModel.state;
+    //final taxData = company.taxData;
 
     return EditScaffold(
       title: localization.taxSettings,
@@ -135,6 +139,21 @@ class _TaxSettingsState extends State<TaxSettings> {
               onPressed: () => viewModel.onConfigureRatesPressed(context),
             ),
           ),
+          FormCard(
+            children: [
+              BoolDropdownButton(
+                iconData: MdiIcons.calculator,
+                label: localization.calculateTaxes,
+                value: company.calculateTaxes,
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..calculateTaxes = value)),
+                helpLabel: localization.calculateTaxesHelp,
+              ),
+              if (company.calculateTaxes) ...[
+                //AppDropdownButton<String>(value: , onChanged: onChanged, items: items),
+              ]
+            ],
+          )
         ],
       ),
     );

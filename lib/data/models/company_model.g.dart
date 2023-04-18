@@ -380,9 +380,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'calculate_taxes',
       serializers.serialize(object.calculateTaxes,
           specifiedType: const FullType(bool)),
-      'tax_data',
-      serializers.serialize(object.taxData,
-          specifiedType: const FullType(TaxDataEntity)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -917,10 +914,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'calculate_taxes':
           result.calculateTaxes = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'tax_data':
-          result.taxData.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -2020,8 +2013,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool calculateTaxes;
   @override
-  final TaxDataEntity taxData;
-  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -2145,7 +2136,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.calculateExpenseTaxByAmount,
       this.stopOnUnpaidRecurring,
       this.calculateTaxes,
-      this.taxData,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -2347,7 +2337,6 @@ class _$CompanyEntity extends CompanyEntity {
         stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring');
     BuiltValueNullFieldError.checkNotNull(
         calculateTaxes, r'CompanyEntity', 'calculateTaxes');
-    BuiltValueNullFieldError.checkNotNull(taxData, r'CompanyEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'CompanyEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -2469,7 +2458,6 @@ class _$CompanyEntity extends CompanyEntity {
         calculateExpenseTaxByAmount == other.calculateExpenseTaxByAmount &&
         stopOnUnpaidRecurring == other.stopOnUnpaidRecurring &&
         calculateTaxes == other.calculateTaxes &&
-        taxData == other.taxData &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2587,7 +2575,6 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, calculateExpenseTaxByAmount.hashCode);
     _$hash = $jc(_$hash, stopOnUnpaidRecurring.hashCode);
     _$hash = $jc(_$hash, calculateTaxes.hashCode);
-    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2705,7 +2692,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('calculateExpenseTaxByAmount', calculateExpenseTaxByAmount)
           ..add('stopOnUnpaidRecurring', stopOnUnpaidRecurring)
           ..add('calculateTaxes', calculateTaxes)
-          ..add('taxData', taxData)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3244,11 +3230,6 @@ class CompanyEntityBuilder
   set calculateTaxes(bool calculateTaxes) =>
       _$this._calculateTaxes = calculateTaxes;
 
-  TaxDataEntityBuilder _taxData;
-  TaxDataEntityBuilder get taxData =>
-      _$this._taxData ??= new TaxDataEntityBuilder();
-  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
-
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -3395,7 +3376,6 @@ class CompanyEntityBuilder
       _calculateExpenseTaxByAmount = $v.calculateExpenseTaxByAmount;
       _stopOnUnpaidRecurring = $v.stopOnUnpaidRecurring;
       _calculateTaxes = $v.calculateTaxes;
-      _taxData = $v.taxData.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -3544,7 +3524,6 @@ class CompanyEntityBuilder
               calculateExpenseTaxByAmount: BuiltValueNullFieldError.checkNotNull(calculateExpenseTaxByAmount, r'CompanyEntity', 'calculateExpenseTaxByAmount'),
               stopOnUnpaidRecurring: BuiltValueNullFieldError.checkNotNull(stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring'),
               calculateTaxes: BuiltValueNullFieldError.checkNotNull(calculateTaxes, r'CompanyEntity', 'calculateTaxes'),
-              taxData: taxData.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'CompanyEntity', 'updatedAt'),
@@ -3628,9 +3607,6 @@ class CompanyEntityBuilder
 
         _$failedField = 'settings';
         settings.build();
-
-        _$failedField = 'taxData';
-        taxData.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CompanyEntity', _$failedField, e.toString());

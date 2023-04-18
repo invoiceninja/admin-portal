@@ -124,7 +124,7 @@ abstract class CompanyEntity extends Object
       convertExpenseCurrency: false,
       notifyVendorWhenPaid: false,
       calculateTaxes: false,
-      taxData: TaxDataEntity(),
+      //taxData: TaxDataEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -456,8 +456,8 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'calculate_taxes')
   bool get calculateTaxes;
 
-  @BuiltValueField(wireName: 'tax_data')
-  TaxDataEntity get taxData;
+  //@BuiltValueField(wireName: 'tax_data')
+  //TaxDataEntity get taxData;
 
   String get displayName => settings.name ?? '';
 
