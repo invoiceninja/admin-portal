@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Package imports:
@@ -272,10 +273,23 @@ class _TaxSettingsState extends State<TaxSettings> {
                                                                   value))))));
                                             }),
                                   SizedBox(width: 8),
-                                  Text(region == kTaxRegionUnitedStates
-                                      ? subregion
-                                      : (countryMap[subregion]?.name ??
-                                          subregion)),
+                                  Expanded(
+                                    child: Text(region == kTaxRegionUnitedStates
+                                        ? subregion
+                                        : (countryMap[subregion]?.name ??
+                                            subregion)),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      '${taxDataSubregion.taxName}: ${formatNumber(taxDataSubregion.taxRate, context, formatNumberType: FormatNumberType.percent)}',
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    taxDataSubregion.reducedTaxRate != 0
+                                        ? '${localization.reducedRate}: ${formatNumber(taxDataSubregion.reducedTaxRate, context, formatNumberType: FormatNumberType.percent)}'
+                                        : '',
+                                  )),
                                 ],
                               ),
                             );
