@@ -183,8 +183,11 @@ class _TaxSettingsState extends State<TaxSettings> {
                           .rebuild((b) => b..taxData.sellerSubregion = value));
                     },
                     items: subregions
-                        .map((code) =>
-                            DropdownMenuItem(child: Text(code), value: code))
+                        .map((code) => DropdownMenuItem(
+                            child: Text(region == kTaxRegionEurope
+                                ? (countryMap[code]?.name ?? code)
+                                : code),
+                            value: code))
                         .toList()),
                 SizedBox(height: 12),
                 ...taxData.regions.keys.map((region) {
