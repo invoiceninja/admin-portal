@@ -67,6 +67,7 @@ class ProductFields {
   static const String taxName3 = 'tax_name3';
   static const String stockQuantity = 'stock_quantity';
   static const String notificationThreshold = 'notification_threshold';
+  static const String taxId = 'tax_id';
 }
 
 abstract class ProductEntity extends Object
@@ -102,7 +103,7 @@ abstract class ProductEntity extends Object
       stockNotification: true,
       imageUrl: '',
       maxQuantity: 0,
-      taxId: 0,
+      taxId: '0',
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -181,7 +182,7 @@ abstract class ProductEntity extends Object
   int get maxQuantity;
 
   @BuiltValueField(wireName: 'tax_id')
-  int get taxId;
+  String get taxId;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -367,7 +368,7 @@ abstract class ProductEntity extends Object
     ..stockNotificationThreshold = 0
     ..imageUrl = ''
     ..maxQuantity = 0
-    ..taxId = 0;
+    ..taxId = '';
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

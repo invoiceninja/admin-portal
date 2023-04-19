@@ -55,6 +55,7 @@ bool supportsLatestFeatures() {
     return true;
   }
 
+  return false;
   return Version.parse(state.account.currentVersion) >=
       Version.parse('5.5.105');
 }

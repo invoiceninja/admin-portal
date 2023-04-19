@@ -178,7 +178,8 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       serializers.serialize(object.maxQuantity,
           specifiedType: const FullType(int)),
       'tax_id',
-      serializers.serialize(object.taxId, specifiedType: const FullType(int)),
+      serializers.serialize(object.taxId,
+          specifiedType: const FullType(String)),
       'documents',
       serializers.serialize(object.documents,
           specifiedType: const FullType(
@@ -321,7 +322,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'tax_id':
           result.taxId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
@@ -607,7 +608,7 @@ class _$ProductEntity extends ProductEntity {
   @override
   final int maxQuantity;
   @override
-  final int taxId;
+  final String taxId;
   @override
   final BuiltList<DocumentEntity> documents;
   @override
@@ -916,9 +917,9 @@ class ProductEntityBuilder
   int get maxQuantity => _$this._maxQuantity;
   set maxQuantity(int maxQuantity) => _$this._maxQuantity = maxQuantity;
 
-  int _taxId;
-  int get taxId => _$this._taxId;
-  set taxId(int taxId) => _$this._taxId = taxId;
+  String _taxId;
+  String get taxId => _$this._taxId;
+  set taxId(String taxId) => _$this._taxId = taxId;
 
   ListBuilder<DocumentEntity> _documents;
   ListBuilder<DocumentEntity> get documents =>
