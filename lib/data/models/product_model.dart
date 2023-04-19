@@ -104,7 +104,7 @@ abstract class ProductEntity extends Object
       stockNotification: true,
       imageUrl: '',
       maxQuantity: 0,
-      taxId: kTaxTypePhysical,
+      taxId: kTaxCategoryPhysical,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -369,7 +369,7 @@ abstract class ProductEntity extends Object
     ..stockNotificationThreshold = 0
     ..imageUrl = ''
     ..maxQuantity = 0
-    ..taxId = kTaxTypePhysical;
+    ..taxId = kTaxCategoryPhysical;
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

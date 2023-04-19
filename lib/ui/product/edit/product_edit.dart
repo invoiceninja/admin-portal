@@ -222,14 +222,14 @@ class _ProductEditState extends State<ProductEdit> {
                   AppDropdownButton<String>(
                       labelText: localization.taxCategory,
                       value: product.taxId,
-                      onChanged: (dynamic taxType) {
+                      onChanged: (dynamic taxCategory) {
                         viewModel.onChanged(product
-                            .rebuild((b) => b..taxId = taxType?.id ?? ''));
+                            .rebuild((b) => b..taxId = taxCategory?.id ?? ''));
                       },
-                      items: kTaxTypes.keys
+                      items: kTaxCategories.keys
                           .map((key) => DropdownMenuItem<String>(
-                                child:
-                                    Text(localization.lookup(kTaxTypes[key])),
+                                child: Text(
+                                    localization.lookup(kTaxCategories[key])),
                                 value: key,
                               ))
                           .toList()),
