@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -49,6 +50,11 @@ class _ProductOverviewState extends State<ProductOverview> {
     final fields = <String, String>{
       localization.tax: tax,
     };
+
+    if (company.calculateTaxes) {
+      fields[localization.taxCategory] =
+          localization.lookup(kTaxCategories[product.taxId]);
+    }
 
     if (product.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.product1);

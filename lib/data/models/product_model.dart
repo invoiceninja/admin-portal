@@ -69,6 +69,7 @@ class ProductFields {
   static const String stockQuantity = 'stock_quantity';
   static const String notificationThreshold = 'notification_threshold';
   static const String taxId = 'tax_id';
+  static const String taxCategory = 'tax_category';
 }
 
 abstract class ProductEntity extends Object

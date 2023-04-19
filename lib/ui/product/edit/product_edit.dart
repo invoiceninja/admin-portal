@@ -223,8 +223,8 @@ class _ProductEditState extends State<ProductEdit> {
                       labelText: localization.taxCategory,
                       value: product.taxId,
                       onChanged: (dynamic taxCategory) {
-                        viewModel.onChanged(product
-                            .rebuild((b) => b..taxId = taxCategory?.id ?? ''));
+                        viewModel.onChanged(
+                            product.rebuild((b) => b..taxId = taxCategory));
                       },
                       items: kTaxCategories.keys
                           .map((key) => DropdownMenuItem<String>(
