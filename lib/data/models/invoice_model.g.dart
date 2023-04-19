@@ -263,6 +263,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'auto_bill_enabled',
       serializers.serialize(object.autoBillEnabled,
           specifiedType: const FullType(bool)),
+      'tax_data',
+      serializers.serialize(object.taxData,
+          specifiedType: const FullType(String)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -667,6 +670,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.autoBillEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'tax_data':
+          result.taxData = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'filename':
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -806,6 +813,9 @@ class _$InvoiceItemEntitySerializer
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
+      'tax_id',
+      serializers.serialize(object.taxId,
+          specifiedType: const FullType(String)),
     ];
     Object value;
     value = object.typeId;
@@ -929,6 +939,10 @@ class _$InvoiceItemEntitySerializer
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'tax_id':
+          result.taxId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -1544,6 +1558,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool autoBillEnabled;
   @override
+  final String taxData;
+  @override
   final String filename;
   @override
   final BuiltList<InvoiceScheduleEntity> recurringDates;
@@ -1641,6 +1657,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invoiceId,
       this.recurringId,
       this.autoBillEnabled,
+      this.taxData,
       this.filename,
       this.recurringDates,
       this.lineItems,
@@ -1744,6 +1761,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         nextSendDate, r'InvoiceEntity', 'nextSendDate');
     BuiltValueNullFieldError.checkNotNull(
         autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled');
+    BuiltValueNullFieldError.checkNotNull(taxData, r'InvoiceEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         lineItems, r'InvoiceEntity', 'lineItems');
     BuiltValueNullFieldError.checkNotNull(
@@ -1833,6 +1851,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         invoiceId == other.invoiceId &&
         recurringId == other.recurringId &&
         autoBillEnabled == other.autoBillEnabled &&
+        taxData == other.taxData &&
         filename == other.filename &&
         recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
@@ -1913,6 +1932,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, invoiceId.hashCode);
     _$hash = $jc(_$hash, recurringId.hashCode);
     _$hash = $jc(_$hash, autoBillEnabled.hashCode);
+    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, filename.hashCode);
     _$hash = $jc(_$hash, recurringDates.hashCode);
     _$hash = $jc(_$hash, lineItems.hashCode);
@@ -1993,6 +2013,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invoiceId', invoiceId)
           ..add('recurringId', recurringId)
           ..add('autoBillEnabled', autoBillEnabled)
+          ..add('taxData', taxData)
           ..add('filename', filename)
           ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
@@ -2262,6 +2283,10 @@ class InvoiceEntityBuilder
   set autoBillEnabled(bool autoBillEnabled) =>
       _$this._autoBillEnabled = autoBillEnabled;
 
+  String _taxData;
+  String get taxData => _$this._taxData;
+  set taxData(String taxData) => _$this._taxData = taxData;
+
   String _filename;
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
@@ -2412,6 +2437,7 @@ class InvoiceEntityBuilder
       _invoiceId = $v.invoiceId;
       _recurringId = $v.recurringId;
       _autoBillEnabled = $v.autoBillEnabled;
+      _taxData = $v.taxData;
       _filename = $v.filename;
       _recurringDates = $v.recurringDates?.toBuilder();
       _lineItems = $v.lineItems.toBuilder();
@@ -2519,6 +2545,7 @@ class InvoiceEntityBuilder
               invoiceId: invoiceId,
               recurringId: recurringId,
               autoBillEnabled: BuiltValueNullFieldError.checkNotNull(autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled'),
+              taxData: BuiltValueNullFieldError.checkNotNull(taxData, r'InvoiceEntity', 'taxData'),
               filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),
@@ -2602,6 +2629,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   final String expenseId;
   @override
   final int createdAt;
+  @override
+  final String taxId;
 
   factory _$InvoiceItemEntity(
           [void Function(InvoiceItemEntityBuilder) updates]) =>
@@ -2627,7 +2656,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.discount,
       this.taskId,
       this.expenseId,
-      this.createdAt})
+      this.createdAt,
+      this.taxId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productKey, r'InvoiceItemEntity', 'productKey');
@@ -2659,6 +2689,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue4, r'InvoiceItemEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
         discount, r'InvoiceItemEntity', 'discount');
+    BuiltValueNullFieldError.checkNotNull(taxId, r'InvoiceItemEntity', 'taxId');
   }
 
   @override
@@ -2692,7 +2723,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         discount == other.discount &&
         taskId == other.taskId &&
         expenseId == other.expenseId &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        taxId == other.taxId;
   }
 
   int __hashCode;
@@ -2720,6 +2752,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     _$hash = $jc(_$hash, taskId.hashCode);
     _$hash = $jc(_$hash, expenseId.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, taxId.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -2746,7 +2779,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('discount', discount)
           ..add('taskId', taskId)
           ..add('expenseId', expenseId)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('taxId', taxId))
         .toString();
   }
 }
@@ -2835,6 +2869,10 @@ class InvoiceItemEntityBuilder
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
 
+  String _taxId;
+  String get taxId => _$this._taxId;
+  set taxId(String taxId) => _$this._taxId = taxId;
+
   InvoiceItemEntityBuilder() {
     InvoiceItemEntity._initializeBuilder(this);
   }
@@ -2862,6 +2900,7 @@ class InvoiceItemEntityBuilder
       _taskId = $v.taskId;
       _expenseId = $v.expenseId;
       _createdAt = $v.createdAt;
+      _taxId = $v.taxId;
       _$v = null;
     }
     return this;
@@ -2912,7 +2951,8 @@ class InvoiceItemEntityBuilder
             discount: BuiltValueNullFieldError.checkNotNull(discount, r'InvoiceItemEntity', 'discount'),
             taskId: taskId,
             expenseId: expenseId,
-            createdAt: createdAt);
+            createdAt: createdAt,
+            taxId: BuiltValueNullFieldError.checkNotNull(taxId, r'InvoiceItemEntity', 'taxId'));
     replace(_$result);
     return _$result;
   }

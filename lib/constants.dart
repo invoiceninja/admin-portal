@@ -190,7 +190,22 @@ const String kCurrencyAll = '-1';
 const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
+const String kTaxCategoryPhysical = '1';
+const String kTaxCategoryDigital = '2';
+const String kTaxCategoryServices = '3';
+const String kTaxCategoryShipping = '4';
+const String kTaxCategoryExempt = '5';
+
+const kTaxCategories = {
+  kTaxCategoryPhysical: 'Physical Goods',
+  kTaxCategoryDigital: 'Digital Products',
+  kTaxCategoryServices: 'Services',
+  kTaxCategoryShipping: 'Shipping',
+  kTaxCategoryExempt: 'Tax Exempt',
+};
+
 const String kCountryUnitedStates = '840';
+const String kCountryAustralia = '36';
 const String kCountryCanada = '124';
 const String kCountrySwitzerland = '756';
 
@@ -647,6 +662,10 @@ const String kDefaultDarkBorderColor = '#393A3C';
 const String kDefaultLightSelectedColorMenu = '#f2faff';
 const String kDefaultLightSelectedColor = '#e5f5ff';
 const String kDefaultLightBorderColor = '#dfdfdf';
+
+const String kTaxRegionUnitedStates = 'US';
+const String kTaxRegionEurope = 'EU';
+const String kTaxRegionAustralia = 'AU';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';

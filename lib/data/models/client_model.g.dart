@@ -215,6 +215,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'routing_id',
+      serializers.serialize(object.routingId,
+          specifiedType: const FullType(String)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -442,6 +445,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'routing_id':
+          result.routingId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'contacts':
@@ -997,6 +1004,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String customValue4;
   @override
+  final String routingId;
+  @override
   final BuiltList<ClientContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1065,6 +1074,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.routingId,
       this.contacts,
       this.activities,
       this.ledger,
@@ -1142,6 +1152,8 @@ class _$ClientEntity extends ClientEntity {
     BuiltValueNullFieldError.checkNotNull(
         customValue4, r'ClientEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
+        routingId, r'ClientEntity', 'routingId');
+    BuiltValueNullFieldError.checkNotNull(
         contacts, r'ClientEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'ClientEntity', 'activities');
@@ -1207,6 +1219,7 @@ class _$ClientEntity extends ClientEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        routingId == other.routingId &&
         contacts == other.contacts &&
         activities == other.activities &&
         ledger == other.ledger &&
@@ -1263,6 +1276,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, customValue2.hashCode);
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, routingId.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, ledger.hashCode);
@@ -1320,6 +1334,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('routingId', routingId)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('ledger', ledger)
@@ -1494,6 +1509,10 @@ class ClientEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  String _routingId;
+  String get routingId => _$this._routingId;
+  set routingId(String routingId) => _$this._routingId = routingId;
+
   ListBuilder<ClientContactEntity> _contacts;
   ListBuilder<ClientContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<ClientContactEntity>();
@@ -1606,6 +1625,7 @@ class ClientEntityBuilder
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
+      _routingId = $v.routingId;
       _contacts = $v.contacts.toBuilder();
       _activities = $v.activities.toBuilder();
       _ledger = $v.ledger.toBuilder();
@@ -1688,6 +1708,7 @@ class ClientEntityBuilder
               customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ClientEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
+              routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'ClientEntity', 'routingId'),
               contacts: contacts.build(),
               activities: activities.build(),
               ledger: ledger.build(),

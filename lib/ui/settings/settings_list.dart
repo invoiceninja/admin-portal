@@ -427,12 +427,13 @@ class SettingsSearch extends StatelessWidget {
       kSettingsTaxSettings: [
         [
           'tax_settings',
+          'inclusive_taxes',
+          if (supportsLatestFeatures()) 'calculate_taxes#2023-04-20',
         ],
       ],
       kSettingsTaxRates: [
         [
           'tax_rates',
-          'inclusive_taxes',
         ],
       ],
       kSettingsProducts: [

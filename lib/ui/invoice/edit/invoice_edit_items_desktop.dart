@@ -694,6 +694,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       ..customValue2 = product.customValue2
                                       ..customValue3 = product.customValue3
                                       ..customValue4 = product.customValue4
+                                      ..taskId = product.taxId
                                       ..taxName1 =
                                           company.numberOfItemTaxRates >= 1 &&
                                                   product.taxName1.isNotEmpty

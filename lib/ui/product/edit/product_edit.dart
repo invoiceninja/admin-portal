@@ -1,11 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -216,6 +218,21 @@ class _ProductEditState extends State<ProductEdit> {
                         decimal: true, signed: true),
                     onSavePressed: _onSavePressed,
                   ),
+                if (company.calculateTaxes)
+                  AppDropdownButton<String>(
+                      labelText: localization.taxCategory,
+                      value: product.taxId,
+                      onChanged: (dynamic taxCategory) {
+                        viewModel.onChanged(
+                            product.rebuild((b) => b..taxId = taxCategory));
+                      },
+                      items: kTaxCategories.keys
+                          .map((key) => DropdownMenuItem<String>(
+                                child: Text(
+                                    localization.lookup(kTaxCategories[key])),
+                                value: key,
+                              ))
+                          .toList()),
                 if (company.enableFirstItemTaxRate ||
                     product.taxName1.isNotEmpty)
                   TaxRateDropdown(

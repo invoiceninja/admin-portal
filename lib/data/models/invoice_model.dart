@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'invoice_model.g.dart';
@@ -248,6 +247,7 @@ abstract class InvoiceEntity extends Object
       dueDateDays: 'terms',
       saveDefaultTerms: false,
       saveDefaultFooter: false,
+      taxData: '',
     );
   }
 
@@ -594,6 +594,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
+
+  @BuiltValueField(wireName: 'tax_data')
+  String get taxData;
 
   @nullable
   String get filename;
@@ -1030,10 +1033,8 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.stop);
           }
 
-          if (supportsLatestFeatures()) {
-            actions.add(EntityAction.updatePrices);
-            actions.add(EntityAction.increasePrices);
-          }
+          actions.add(EntityAction.updatePrices);
+          actions.add(EntityAction.increasePrices);
         } else {
           if (!isCancelledOrReversed) {
             if (multiselect) {
@@ -1041,9 +1042,7 @@ abstract class InvoiceEntity extends Object
             } else {
               actions.add(EntityAction.sendEmail);
               if (isUnpaid) {
-                if (supportsLatestFeatures()) {
-                  actions.add(EntityAction.schedule);
-                }
+                actions.add(EntityAction.schedule);
               }
             }
           }
@@ -1521,7 +1520,8 @@ abstract class InvoiceEntity extends Object
     ..saveDefaultTerms = false
     ..saveDefaultFooter = false
     ..autoBillEnabled = false
-    ..subscriptionId = '';
+    ..subscriptionId = ''
+    ..taxData = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
@@ -1593,6 +1593,7 @@ abstract class InvoiceItemEntity
       customValue3: '',
       customValue4: '',
       discount: 0,
+      taxId: '',
       createdAt: DateTime.now().microsecondsSinceEpoch,
     );
   }
@@ -1668,6 +1669,9 @@ abstract class InvoiceItemEntity
 
   @nullable
   int get createdAt;
+
+  @BuiltValueField(wireName: 'tax_id')
+  String get taxId;
 
   double taxAmount(InvoiceEntity invoice, int precision) {
     double calculateTaxAmount(double rate) {
@@ -1773,8 +1777,9 @@ abstract class InvoiceItemEntity
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(InvoiceItemEntityBuilder builder) =>
-      builder..productCost = 0;
+  static void _initializeBuilder(InvoiceItemEntityBuilder builder) => builder
+    ..productCost = 0
+    ..taxId = '';
 
   static Serializer<InvoiceItemEntity> get serializer =>
       _$invoiceItemEntitySerializer;

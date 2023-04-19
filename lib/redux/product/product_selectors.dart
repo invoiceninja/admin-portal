@@ -56,6 +56,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..customValue2 = product.customValue2
       ..customValue3 = product.customValue3
       ..customValue4 = product.customValue4
+      ..taskId = product.taxId
       ..taxName1 = company.numberOfItemTaxRates >= 1 ? product.taxName1 : ''
       ..taxRate1 = company.numberOfItemTaxRates >= 1 ? product.taxRate1 : 0
       ..taxName2 = company.numberOfItemTaxRates >= 2 ? product.taxName2 : ''

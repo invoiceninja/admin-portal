@@ -2,6 +2,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -67,6 +68,8 @@ class ProductFields {
   static const String taxName3 = 'tax_name3';
   static const String stockQuantity = 'stock_quantity';
   static const String notificationThreshold = 'notification_threshold';
+  static const String taxId = 'tax_id';
+  static const String taxCategory = 'tax_category';
 }
 
 abstract class ProductEntity extends Object
@@ -102,6 +105,7 @@ abstract class ProductEntity extends Object
       stockNotification: true,
       imageUrl: '',
       maxQuantity: 0,
+      taxId: kTaxCategoryPhysical,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -178,6 +182,9 @@ abstract class ProductEntity extends Object
 
   @BuiltValueField(wireName: 'max_quantity')
   int get maxQuantity;
+
+  @BuiltValueField(wireName: 'tax_id')
+  String get taxId;
 
   BuiltList<DocumentEntity> get documents;
 
@@ -362,7 +369,8 @@ abstract class ProductEntity extends Object
     ..stockNotification = true
     ..stockNotificationThreshold = 0
     ..imageUrl = ''
-    ..maxQuantity = 0;
+    ..maxQuantity = 0
+    ..taxId = kTaxCategoryPhysical;
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class CreditRepository {
@@ -121,7 +120,7 @@ class CreditRepository {
       'template': 'email_template_$template',
       'body': body,
       'subject': subject,
-      if (supportsLatestFeatures()) 'cc_email': ccEmail,
+      'cc_email': ccEmail,
     };
 
     final dynamic response = await webClient.post(

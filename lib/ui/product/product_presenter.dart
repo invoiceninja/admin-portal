@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -8,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -39,12 +41,14 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.taxName3,
       ProductFields.stockQuantity,
       ProductFields.notificationThreshold,
+      ProductFields.taxCategory,
     ];
   }
 
   @override
   Widget getField({String field, BuildContext context}) {
     final product = entity as ProductEntity;
+    final localization = AppLocalization.of(context);
 
     switch (field) {
       case ProductFields.productKey:
@@ -99,6 +103,8 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.stockQuantity:
         return Text(formatNumber(product.stockQuantity.toDouble(), context,
             formatNumberType: FormatNumberType.int));
+      case ProductFields.taxCategory:
+        return Text(localization.lookup(kTaxCategories[product.taxId]));
       case ProductFields.notificationThreshold:
         final store = StoreProvider.of<AppState>(context);
         return Text(formatNumber(

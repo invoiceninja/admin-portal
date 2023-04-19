@@ -51,15 +51,13 @@ bool supportsLatestFeatures() {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   final state = store.state;
 
-  if (state.isSelfHosted) {
+  if (!kReleaseMode || state.isStaging) {
     return true;
   }
 
-  if (!kReleaseMode) {
-    return true;
-  }
-
-  return Version.parse(state.account.currentVersion) >= Version.parse('5.5.99');
+  return false;
+  return Version.parse(state.account.currentVersion) >=
+      Version.parse('5.5.105');
 }
 
 bool supportsInAppPurchase() {
