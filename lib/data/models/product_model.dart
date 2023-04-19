@@ -2,6 +2,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -103,7 +104,7 @@ abstract class ProductEntity extends Object
       stockNotification: true,
       imageUrl: '',
       maxQuantity: 0,
-      taxId: '0',
+      taxId: kTaxTypePhysical,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -368,7 +369,7 @@ abstract class ProductEntity extends Object
     ..stockNotificationThreshold = 0
     ..imageUrl = ''
     ..maxQuantity = 0
-    ..taxId = '';
+    ..taxId = kTaxTypePhysical;
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;
 }

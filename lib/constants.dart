@@ -190,6 +190,20 @@ const String kCurrencyAll = '-1';
 const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
+const String kTaxTypePhysical = '1';
+const String kTaxTypeDigital = '2';
+const String kTaxTypeServices = '3';
+const String kTaxTypeShipping = '4';
+const String kTaxTypeExempt = '5';
+
+const kTaxTypes = {
+  kTaxTypePhysical: 'Physical Goods',
+  kTaxTypeDigital: 'Digital Products',
+  kTaxTypeServices: 'Services',
+  kTaxTypeShipping: 'Shipping',
+  kTaxTypeExempt: 'Tax Exempt',
+};
+
 const String kCountryUnitedStates = '840';
 const String kCountryAustralia = '36';
 const String kCountryCanada = '124';
