@@ -1671,7 +1671,7 @@ abstract class InvoiceItemEntity
   int get createdAt;
 
   @BuiltValueField(wireName: 'tax_id')
-  String get tax_id;
+  String get taxId;
 
   double taxAmount(InvoiceEntity invoice, int precision) {
     double calculateTaxAmount(double rate) {
