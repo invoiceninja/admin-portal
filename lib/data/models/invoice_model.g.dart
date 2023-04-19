@@ -813,6 +813,9 @@ class _$InvoiceItemEntitySerializer
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
+      'tax_id',
+      serializers.serialize(object.tax_id,
+          specifiedType: const FullType(String)),
     ];
     Object value;
     value = object.typeId;
@@ -936,6 +939,10 @@ class _$InvoiceItemEntitySerializer
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'tax_id':
+          result.tax_id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -2622,6 +2629,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   final String expenseId;
   @override
   final int createdAt;
+  @override
+  final String tax_id;
 
   factory _$InvoiceItemEntity(
           [void Function(InvoiceItemEntityBuilder) updates]) =>
@@ -2647,7 +2656,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.discount,
       this.taskId,
       this.expenseId,
-      this.createdAt})
+      this.createdAt,
+      this.tax_id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productKey, r'InvoiceItemEntity', 'productKey');
@@ -2679,6 +2689,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue4, r'InvoiceItemEntity', 'customValue4');
     BuiltValueNullFieldError.checkNotNull(
         discount, r'InvoiceItemEntity', 'discount');
+    BuiltValueNullFieldError.checkNotNull(
+        tax_id, r'InvoiceItemEntity', 'tax_id');
   }
 
   @override
@@ -2712,7 +2724,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         discount == other.discount &&
         taskId == other.taskId &&
         expenseId == other.expenseId &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        tax_id == other.tax_id;
   }
 
   int __hashCode;
@@ -2740,6 +2753,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     _$hash = $jc(_$hash, taskId.hashCode);
     _$hash = $jc(_$hash, expenseId.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, tax_id.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -2766,7 +2780,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('discount', discount)
           ..add('taskId', taskId)
           ..add('expenseId', expenseId)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('tax_id', tax_id))
         .toString();
   }
 }
@@ -2855,6 +2870,10 @@ class InvoiceItemEntityBuilder
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
 
+  String _tax_id;
+  String get tax_id => _$this._tax_id;
+  set tax_id(String tax_id) => _$this._tax_id = tax_id;
+
   InvoiceItemEntityBuilder() {
     InvoiceItemEntity._initializeBuilder(this);
   }
@@ -2882,6 +2901,7 @@ class InvoiceItemEntityBuilder
       _taskId = $v.taskId;
       _expenseId = $v.expenseId;
       _createdAt = $v.createdAt;
+      _tax_id = $v.tax_id;
       _$v = null;
     }
     return this;
@@ -2932,7 +2952,8 @@ class InvoiceItemEntityBuilder
             discount: BuiltValueNullFieldError.checkNotNull(discount, r'InvoiceItemEntity', 'discount'),
             taskId: taskId,
             expenseId: expenseId,
-            createdAt: createdAt);
+            createdAt: createdAt,
+            tax_id: BuiltValueNullFieldError.checkNotNull(tax_id, r'InvoiceItemEntity', 'tax_id'));
     replace(_$result);
     return _$result;
   }
