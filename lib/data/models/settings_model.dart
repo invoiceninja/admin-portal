@@ -988,6 +988,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_task_item_description')
   bool get showTaskItemDescription;
 
+  @nullable
+  @BuiltValueField(wireName: 'e_invoice_type')
+  String get eInvoiceType;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

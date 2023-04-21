@@ -182,6 +182,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'notify_vendor_when_paid',
       serializers.serialize(object.notifyVendorWhenPaid,
           specifiedType: const FullType(bool)),
+      'enable_e_invoice',
+      serializers.serialize(object.enableEInvoice,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -632,6 +635,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'notify_vendor_when_paid':
           result.notifyVendorWhenPaid = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_e_invoice':
+          result.enableEInvoice = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'groups':
@@ -1919,6 +1926,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool notifyVendorWhenPaid;
   @override
+  final bool enableEInvoice;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -2098,6 +2107,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.convertPaymentCurrency,
       this.convertExpenseCurrency,
       this.notifyVendorWhenPaid,
+      this.enableEInvoice,
       this.groups,
       this.activities,
       this.taxRates,
@@ -2255,6 +2265,8 @@ class _$CompanyEntity extends CompanyEntity {
         convertExpenseCurrency, r'CompanyEntity', 'convertExpenseCurrency');
     BuiltValueNullFieldError.checkNotNull(
         notifyVendorWhenPaid, r'CompanyEntity', 'notifyVendorWhenPaid');
+    BuiltValueNullFieldError.checkNotNull(
+        enableEInvoice, r'CompanyEntity', 'enableEInvoice');
     BuiltValueNullFieldError.checkNotNull(groups, r'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'CompanyEntity', 'activities');
@@ -2422,6 +2434,7 @@ class _$CompanyEntity extends CompanyEntity {
         convertPaymentCurrency == other.convertPaymentCurrency &&
         convertExpenseCurrency == other.convertExpenseCurrency &&
         notifyVendorWhenPaid == other.notifyVendorWhenPaid &&
+        enableEInvoice == other.enableEInvoice &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -2540,6 +2553,7 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, convertPaymentCurrency.hashCode);
     _$hash = $jc(_$hash, convertExpenseCurrency.hashCode);
     _$hash = $jc(_$hash, notifyVendorWhenPaid.hashCode);
+    _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, groups.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, taxRates.hashCode);
@@ -2658,6 +2672,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('convertPaymentCurrency', convertPaymentCurrency)
           ..add('convertExpenseCurrency', convertExpenseCurrency)
           ..add('notifyVendorWhenPaid', notifyVendorWhenPaid)
+          ..add('enableEInvoice', enableEInvoice)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2955,6 +2970,11 @@ class CompanyEntityBuilder
   bool get notifyVendorWhenPaid => _$this._notifyVendorWhenPaid;
   set notifyVendorWhenPaid(bool notifyVendorWhenPaid) =>
       _$this._notifyVendorWhenPaid = notifyVendorWhenPaid;
+
+  bool _enableEInvoice;
+  bool get enableEInvoice => _$this._enableEInvoice;
+  set enableEInvoice(bool enableEInvoice) =>
+      _$this._enableEInvoice = enableEInvoice;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -3348,6 +3368,7 @@ class CompanyEntityBuilder
       _convertPaymentCurrency = $v.convertPaymentCurrency;
       _convertExpenseCurrency = $v.convertExpenseCurrency;
       _notifyVendorWhenPaid = $v.notifyVendorWhenPaid;
+      _enableEInvoice = $v.enableEInvoice;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -3497,6 +3518,7 @@ class CompanyEntityBuilder
               convertPaymentCurrency: BuiltValueNullFieldError.checkNotNull(convertPaymentCurrency, r'CompanyEntity', 'convertPaymentCurrency'),
               convertExpenseCurrency: BuiltValueNullFieldError.checkNotNull(convertExpenseCurrency, r'CompanyEntity', 'convertExpenseCurrency'),
               notifyVendorWhenPaid: BuiltValueNullFieldError.checkNotNull(notifyVendorWhenPaid, r'CompanyEntity', 'notifyVendorWhenPaid'),
+              enableEInvoice: BuiltValueNullFieldError.checkNotNull(enableEInvoice, r'CompanyEntity', 'enableEInvoice'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),
