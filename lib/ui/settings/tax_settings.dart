@@ -72,7 +72,10 @@ class _TaxSettingsState extends State<TaxSettings> {
     } else if (company.settings.countryId == kCountryAustralia) {
       region = kTaxRegionAustralia;
     }
-    subregions = taxData.regions[region].subregions.keys.toList();
+
+    if (taxData.regions.containsKey(region)) {
+      subregions = taxData.regions[region].subregions.keys.toList();
+    }
 
     return EditScaffold(
       title: localization.taxSettings,
