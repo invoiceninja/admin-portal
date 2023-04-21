@@ -1513,6 +1513,13 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.eInvoiceType;
+    if (value != null) {
+      result
+        ..add('e_invoice_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2393,6 +2400,10 @@ class _$SettingsEntitySerializer
           result.showTaskItemDescription = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'e_invoice_type':
+          result.eInvoiceType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -2901,6 +2912,8 @@ class _$SettingsEntity extends SettingsEntity {
   final bool allowBillableTaskItems;
   @override
   final bool showTaskItemDescription;
+  @override
+  final String eInvoiceType;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3120,7 +3133,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.clientInitiatedPaymentsMinimum,
       this.shareInvoiceQuoteColumns,
       this.allowBillableTaskItems,
-      this.showTaskItemDescription})
+      this.showTaskItemDescription,
+      this.eInvoiceType})
       : super._();
 
   @override
@@ -3354,7 +3368,8 @@ class _$SettingsEntity extends SettingsEntity {
             other.clientInitiatedPaymentsMinimum &&
         shareInvoiceQuoteColumns == other.shareInvoiceQuoteColumns &&
         allowBillableTaskItems == other.allowBillableTaskItems &&
-        showTaskItemDescription == other.showTaskItemDescription;
+        showTaskItemDescription == other.showTaskItemDescription &&
+        eInvoiceType == other.eInvoiceType;
   }
 
   int __hashCode;
@@ -3577,6 +3592,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, shareInvoiceQuoteColumns.hashCode);
     _$hash = $jc(_$hash, allowBillableTaskItems.hashCode);
     _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
+    _$hash = $jc(_$hash, eInvoiceType.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3803,7 +3819,8 @@ class _$SettingsEntity extends SettingsEntity {
               'clientInitiatedPaymentsMinimum', clientInitiatedPaymentsMinimum)
           ..add('shareInvoiceQuoteColumns', shareInvoiceQuoteColumns)
           ..add('allowBillableTaskItems', allowBillableTaskItems)
-          ..add('showTaskItemDescription', showTaskItemDescription))
+          ..add('showTaskItemDescription', showTaskItemDescription)
+          ..add('eInvoiceType', eInvoiceType))
         .toString();
   }
 }
@@ -4868,6 +4885,10 @@ class SettingsEntityBuilder
   set showTaskItemDescription(bool showTaskItemDescription) =>
       _$this._showTaskItemDescription = showTaskItemDescription;
 
+  String _eInvoiceType;
+  String get eInvoiceType => _$this._eInvoiceType;
+  set eInvoiceType(String eInvoiceType) => _$this._eInvoiceType = eInvoiceType;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5088,6 +5109,7 @@ class SettingsEntityBuilder
       _shareInvoiceQuoteColumns = $v.shareInvoiceQuoteColumns;
       _allowBillableTaskItems = $v.allowBillableTaskItems;
       _showTaskItemDescription = $v.showTaskItemDescription;
+      _eInvoiceType = $v.eInvoiceType;
       _$v = null;
     }
     return this;
@@ -5327,7 +5349,8 @@ class SettingsEntityBuilder
               clientInitiatedPaymentsMinimum: clientInitiatedPaymentsMinimum,
               shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
               allowBillableTaskItems: allowBillableTaskItems,
-              showTaskItemDescription: showTaskItemDescription);
+              showTaskItemDescription: showTaskItemDescription,
+              eInvoiceType: eInvoiceType);
     } catch (_) {
       String _$failedField;
       try {
