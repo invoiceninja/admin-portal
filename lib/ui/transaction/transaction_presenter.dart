@@ -105,8 +105,22 @@ class TransactionPresenter extends EntityPresenter {
           ),
         );
       case TransactionFields.expense:
-        final expense = state.expenseState.get(transaction.expenseId);
-        return LinkTextRelatedEntity(entity: expense, relation: transaction);
+        return ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
+          child: Wrap(
+            clipBehavior: Clip.antiAlias,
+            children: transaction.expenseId
+                .split(',')
+                .map((expenseId) => state.expenseState.map[expenseId])
+                .where((expense) => expense != null)
+                .map((expense) => Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: LinkTextRelatedEntity(
+                          entity: expense, relation: transaction),
+                    ))
+                .toList(),
+          ),
+        );
       case TransactionFields.vendor:
         final vendor = state.vendorState.get(transaction.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: transaction);
