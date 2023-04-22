@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 enum TaskReportFields {
+  number,
   id,
   rate,
   calculated_rate,
@@ -131,6 +132,9 @@ ReportResult taskReport(
       switch (column) {
         case TaskReportFields.id:
           value = task.id;
+          break;
+        case TaskReportFields.number:
+          value = task.number;
           break;
         case TaskReportFields.rate:
           value = task.rate;

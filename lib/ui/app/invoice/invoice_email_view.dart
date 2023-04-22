@@ -270,16 +270,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ],
           ),
         ),
-        ColoredBox(
-          color: Theme.of(context).canvasColor,
-          child: Padding(
-              padding: const EdgeInsets.only(left: 24, right: 10),
-              child: DecoratedFormField(
-                controller: _ccEmailController,
-                label: localization.ccEmail,
-                keyboardType: TextInputType.emailAddress,
-              )),
-        )
+        if (state.isProPlan || state.isTrial)
+          ColoredBox(
+            color: Theme.of(context).canvasColor,
+            child: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 10),
+                child: DecoratedFormField(
+                  controller: _ccEmailController,
+                  label: localization.ccEmail,
+                  keyboardType: TextInputType.emailAddress,
+                )),
+          )
       ],
     );
   }
