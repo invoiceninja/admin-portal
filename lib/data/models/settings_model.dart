@@ -992,6 +992,10 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'e_invoice_type')
   String get eInvoiceType;
 
+  @nullable
+  @BuiltValueField(wireName: 'default_expense_payment_type_id')
+  String get defaultExpensePaymentTypeId;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
