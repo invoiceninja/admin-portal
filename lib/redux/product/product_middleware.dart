@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   final editProduct = _editProduct();
   final loadProducts = _loadProducts(repository);
   final loadProduct = _loadProduct(repository);
+  final setTaxCategoryProducts = _setTaxCategoryProducts(repository);
   final saveProduct = _saveProduct(repository);
   final archiveProduct = _archiveProduct(repository);
   final deleteProduct = _deleteProduct(repository);
@@ -39,6 +40,8 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, LoadProduct>(loadProduct),
+    TypedMiddleware<AppState, SetTaxCategoryProductsRequest>(
+        setTaxCategoryProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
     TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
@@ -112,6 +115,30 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
     }).catchError((dynamic error) {
       print(error);
       store.dispatch(ArchiveProductsFailure(prevProducts));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _setTaxCategoryProducts(ProductRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SetTaxCategoryProductsRequest;
+    repository
+        .bulkAction(store.state.credentials, action.productIds,
+            EntityAction.setTaxCategory,
+            taxCategoryId: action.taxCategoryId)
+        .then((List<ProductEntity> products) {
+      store.dispatch(SetTaxCategoryProductsSuccess(products));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((dynamic error) {
+      print(error);
+      store.dispatch(SetTaxCategoryProductsFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

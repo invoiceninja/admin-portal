@@ -182,6 +182,8 @@ class EntityAction extends EnumClass {
       return 'expense';
     } else if (this == EntityAction.resume) {
       return 'start';
+    } else if (this == EntityAction.setTaxCategory) {
+      return 'set_tax_id';
     }
 
     // else if (value == 'approve') {

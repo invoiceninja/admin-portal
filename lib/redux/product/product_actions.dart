@@ -2,12 +2,13 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -192,6 +193,27 @@ class RestoreProductsFailure implements StopSaving {
   final List<ProductEntity> products;
 }
 
+class SetTaxCategoryProductsRequest implements StartSaving {
+  SetTaxCategoryProductsRequest(
+      {this.completer, this.productIds, this.taxCategoryId});
+
+  final Completer completer;
+  final List<String> productIds;
+  final String taxCategoryId;
+}
+
+class SetTaxCategoryProductsSuccess implements StopSaving, PersistData {
+  SetTaxCategoryProductsSuccess(this.products);
+
+  final List<ProductEntity> products;
+}
+
+class SetTaxCategoryProductsFailure implements StopSaving {
+  SetTaxCategoryProductsFailure(this.error);
+
+  final dynamic error;
+}
+
 class FilterProducts implements PersistUI {
   FilterProducts(this.filter);
 
@@ -368,6 +390,32 @@ void handleProductAction(
           ),
         );
       }
+      break;
+    case EntityAction.setTaxCategory:
+      showDialog<void>(
+          context: context,
+          builder: (context) {
+            return SimpleDialog(
+              title: Text(localization.setTaxCategory),
+              children: kTaxCategories.keys.map((taxCategoryId) {
+                final taxCategory = kTaxCategories[taxCategoryId];
+                return SimpleDialogOption(
+                  child: Text(localization.lookup(taxCategory)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    store.dispatch(SetTaxCategoryProductsRequest(
+                        productIds: productIds,
+                        taxCategoryId: taxCategoryId,
+                        completer: snackBarCompleter<Null>(
+                            context,
+                            productIds.length == 1
+                                ? localization.updatedTaxCategory
+                                : localization.updatedTaxCategories)));
+                  },
+                );
+              }).toList(),
+            );
+          });
       break;
     default:
       print('## ERROR: unhandled action $action in product_actions');
