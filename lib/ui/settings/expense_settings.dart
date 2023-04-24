@@ -1,9 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
@@ -43,7 +46,9 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final company = viewModel.company;
+    final settings = viewModel.settings;
 
     return EditScaffold(
       title: localization.expenseSettings,
@@ -70,6 +75,20 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..markExpensesPaid = value)),
               ),
+              if (company.markExpensesPaid == true)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20, top: 8),
+                  child: EntityDropdown(
+                    entityType: EntityType.paymentType,
+                    entityList: memoizedPaymentTypeList(
+                        state.staticState.paymentTypeMap),
+                    labelText: localization.paymentType,
+                    entityId: settings.defaultExpensePaymentTypeId,
+                    onSelected: (paymentType) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) =>
+                            b..defaultExpensePaymentTypeId = paymentType?.id)),
+                  ),
+                ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),

@@ -96,6 +96,7 @@ const EntityAction _$autoBill = const EntityAction._('autoBill');
 const EntityAction _$schedule = const EntityAction._('schedule');
 const EntityAction _$updatePrices = const EntityAction._('updatePrices');
 const EntityAction _$increasePrices = const EntityAction._('increasePrices');
+const EntityAction _$setTaxCategory = const EntityAction._('setTaxCategory');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -257,6 +258,8 @@ EntityAction _$valueOf(String name) {
       return _$updatePrices;
     case 'increasePrices':
       return _$increasePrices;
+    case 'setTaxCategory':
+      return _$setTaxCategory;
     default:
       throw new ArgumentError(name);
   }
@@ -343,6 +346,7 @@ final BuiltSet<EntityAction> _$values =
   _$schedule,
   _$updatePrices,
   _$increasePrices,
+  _$setTaxCategory,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

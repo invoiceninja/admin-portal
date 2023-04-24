@@ -131,6 +131,7 @@ class EntityAction extends EnumClass {
   static const EntityAction schedule = _$schedule;
   static const EntityAction updatePrices = _$updatePrices;
   static const EntityAction increasePrices = _$increasePrices;
+  static const EntityAction setTaxCategory = _$setTaxCategory;
 
   @override
   String toString() {
@@ -181,6 +182,8 @@ class EntityAction extends EnumClass {
       return 'expense';
     } else if (this == EntityAction.resume) {
       return 'start';
+    } else if (this == EntityAction.setTaxCategory) {
+      return 'set_tax_id';
     }
 
     // else if (value == 'approve') {

@@ -1520,6 +1520,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.defaultExpensePaymentTypeId;
+    if (value != null) {
+      result
+        ..add('default_expense_payment_type_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2404,6 +2411,10 @@ class _$SettingsEntitySerializer
           result.eInvoiceType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'default_expense_payment_type_id':
+          result.defaultExpensePaymentTypeId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -2914,6 +2925,8 @@ class _$SettingsEntity extends SettingsEntity {
   final bool showTaskItemDescription;
   @override
   final String eInvoiceType;
+  @override
+  final String defaultExpensePaymentTypeId;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3134,7 +3147,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.shareInvoiceQuoteColumns,
       this.allowBillableTaskItems,
       this.showTaskItemDescription,
-      this.eInvoiceType})
+      this.eInvoiceType,
+      this.defaultExpensePaymentTypeId})
       : super._();
 
   @override
@@ -3369,7 +3383,8 @@ class _$SettingsEntity extends SettingsEntity {
         shareInvoiceQuoteColumns == other.shareInvoiceQuoteColumns &&
         allowBillableTaskItems == other.allowBillableTaskItems &&
         showTaskItemDescription == other.showTaskItemDescription &&
-        eInvoiceType == other.eInvoiceType;
+        eInvoiceType == other.eInvoiceType &&
+        defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId;
   }
 
   int __hashCode;
@@ -3593,6 +3608,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, allowBillableTaskItems.hashCode);
     _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
+    _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3820,7 +3836,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('shareInvoiceQuoteColumns', shareInvoiceQuoteColumns)
           ..add('allowBillableTaskItems', allowBillableTaskItems)
           ..add('showTaskItemDescription', showTaskItemDescription)
-          ..add('eInvoiceType', eInvoiceType))
+          ..add('eInvoiceType', eInvoiceType)
+          ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId))
         .toString();
   }
 }
@@ -4889,6 +4906,11 @@ class SettingsEntityBuilder
   String get eInvoiceType => _$this._eInvoiceType;
   set eInvoiceType(String eInvoiceType) => _$this._eInvoiceType = eInvoiceType;
 
+  String _defaultExpensePaymentTypeId;
+  String get defaultExpensePaymentTypeId => _$this._defaultExpensePaymentTypeId;
+  set defaultExpensePaymentTypeId(String defaultExpensePaymentTypeId) =>
+      _$this._defaultExpensePaymentTypeId = defaultExpensePaymentTypeId;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5110,6 +5132,7 @@ class SettingsEntityBuilder
       _allowBillableTaskItems = $v.allowBillableTaskItems;
       _showTaskItemDescription = $v.showTaskItemDescription;
       _eInvoiceType = $v.eInvoiceType;
+      _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _$v = null;
     }
     return this;
@@ -5350,7 +5373,8 @@ class SettingsEntityBuilder
               shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
               allowBillableTaskItems: allowBillableTaskItems,
               showTaskItemDescription: showTaskItemDescription,
-              eInvoiceType: eInvoiceType);
+              eInvoiceType: eInvoiceType,
+              defaultExpensePaymentTypeId: defaultExpensePaymentTypeId);
     } catch (_) {
       String _$failedField;
       try {

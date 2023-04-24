@@ -2,10 +2,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -345,6 +347,13 @@ abstract class ProductEntity extends Object
 
       if (userCompany.canCreate(EntityType.purchaseOrder) && !isDeleted) {
         actions.add(EntityAction.newPurchaseOrder);
+      }
+
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+      final company = store.state.company;
+
+      if (company.calculateTaxes) {
+        actions.add(EntityAction.setTaxCategory);
       }
     }
 

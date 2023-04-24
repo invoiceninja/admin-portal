@@ -52,15 +52,28 @@ class ProductRepository {
   }
 
   Future<List<ProductEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action, {
+    String taxCategoryId = '',
+  }) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
         credentials.url + '/products/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode(
+        {
+          'ids': ids,
+          'action': action.toApiParam(),
+          if (taxCategoryId.isNotEmpty) 'tax_id': taxCategoryId,
+        },
+      ),
+    );
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);

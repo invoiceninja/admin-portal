@@ -220,6 +220,8 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, ArchiveProductsSuccess>(_archiveProductSuccess),
   TypedReducer<ProductState, DeleteProductsSuccess>(_deleteProductSuccess),
   TypedReducer<ProductState, RestoreProductsSuccess>(_restoreProductSuccess),
+  TypedReducer<ProductState, SetTaxCategoryProductsSuccess>(
+      _setTaxCategoryProductsSuccess),
 ]);
 
 ProductState _archiveProductSuccess(
@@ -242,6 +244,15 @@ ProductState _deleteProductSuccess(
 
 ProductState _restoreProductSuccess(
     ProductState productState, RestoreProductsSuccess action) {
+  return productState.rebuild((b) {
+    for (final product in action.products) {
+      b.map[product.id] = product;
+    }
+  });
+}
+
+ProductState _setTaxCategoryProductsSuccess(
+    ProductState productState, SetTaxCategoryProductsSuccess action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;

@@ -121,6 +121,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.syncIcon;
     case EntityAction.increasePrices:
       return MdiIcons.arrowUpBoldBoxOutline;
+    case EntityAction.setTaxCategory:
+      return MdiIcons.tag;
     default:
       return null;
   }
