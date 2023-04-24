@@ -369,6 +369,7 @@ const String kNotificationsAll = 'all_notifications';
 const String kNotificationsAllUser = 'all_user_notifications';
 const String kNotificationsPaymentSuccess = 'payment_success';
 const String kNotificationsPaymentFailure = 'payment_failure';
+const String kNotificationsPaymentManual = 'payment_manual';
 const String kNotificationsInvoiceCreated = 'invoice_created';
 const String kNotificationsInvoiceSent = 'invoice_sent';
 const String kNotificationsInvoiceLate = 'invoice_late';
@@ -394,6 +395,7 @@ const kNotificationEvents = [
   kNotificationsInvoiceLate,
   kNotificationsPaymentSuccess,
   kNotificationsPaymentFailure,
+  kNotificationsPaymentManual,
   kNotificationsQuoteCreated,
   kNotificationsQuoteSent,
   kNotificationsQuoteViewed,
