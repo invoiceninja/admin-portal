@@ -935,21 +935,16 @@ abstract class ActivityEntity
       kActivityViewPurchaseOrder,
       kActivityAcceptPurchaseOrder,
     ].contains(activityTypeId)) {
-      activity = activity.replaceFirst(
-          ':contact',
-          (vendorContact?.fullName ?? '').isNotEmpty
-              ? vendorContact.fullName
-              : (vendor?.name ?? '').isNotEmpty
-                  ? vendor.name
-                  : user?.fullName ?? '');
+      final name = (vendorContact?.fullName ?? '').isNotEmpty
+          ? vendorContact.fullName + ' - ' + (vendor?.name ?? '')
+          : (vendor?.name ?? '');
+      activity = activity.replaceFirst(':contact', name);
     } else {
-      activity = activity.replaceFirst(
-          ':contact',
-          (clientContact?.fullName ?? '').isNotEmpty
-              ? clientContact.fullName
-              : (client?.displayName ?? '').isNotEmpty
-                  ? client.displayName
-                  : user?.fullName ?? '');
+      final name = (clientContact?.fullName ?? '').isNotEmpty
+          ? clientContact.fullName +
+              ((client?.name ?? '').isNotEmpty ? ' - ' + client.name : '')
+          : (client?.displayName ?? '');
+      activity = activity.replaceFirst(':contact', name);
     }
     activity = activity.replaceFirst(
         ':payment', payment?.transactionReferenceOrNumber ?? '');
