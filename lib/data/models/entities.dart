@@ -936,13 +936,15 @@ abstract class ActivityEntity
       kActivityAcceptPurchaseOrder,
     ].contains(activityTypeId)) {
       final name = (vendorContact?.fullName ?? '').isNotEmpty
-          ? vendorContact.fullName + ' - ' + (vendor?.name ?? '')
+          ? (vendorContact.fullName + ' (' + (vendor?.name ?? '') + ')')
           : (vendor?.name ?? '');
       activity = activity.replaceFirst(':contact', name);
     } else {
       final name = (clientContact?.fullName ?? '').isNotEmpty
           ? clientContact.fullName +
-              ((client?.name ?? '').isNotEmpty ? ' - ' + client.name : '')
+              ((client?.name ?? '').isNotEmpty
+                  ? (' (' + client.name + ')')
+                  : '')
           : (client?.displayName ?? '');
       activity = activity.replaceFirst(':contact', name);
     }
