@@ -48,6 +48,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       persistData: false,
       persistUI: true,
       enableNativeBrowser: false,
+      statementIncludes: BuiltList(<String>[kStatementIncludePayments]),
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
       customColors: BuiltMap<String, String>(CONTRAST_COLORS),
@@ -111,6 +112,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   BuiltMap<EntityType, bool> get useSidebarViewer;
 
   BuiltMap<String, String> get customColors;
+
+  BuiltList<String> get statementIncludes;
 
   bool get isPreviewVisible;
 
@@ -230,6 +233,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
+    ..statementIncludes
+        .replace(BuiltList<String>(<String>[kStatementIncludePayments]))
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..useSidebarViewer.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())

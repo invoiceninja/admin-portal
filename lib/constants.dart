@@ -169,6 +169,10 @@ const String kColorThemeDark = 'dark';
 const double kGutterWidth = 16;
 const double kLighterOpacity = .6;
 
+const String kStatementIncludePayments = 'payments';
+const String kStatementIncludeCredits = 'credits';
+const String kStatementIncludeAging = 'aging';
+
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxPostSeconds = 120;
