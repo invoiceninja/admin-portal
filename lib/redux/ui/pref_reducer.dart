@@ -58,6 +58,8 @@ PrefState prefReducer(
     ..appLayout = layoutReducer(state.appLayout, action)
     ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
     ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
+    ..statementIncludes
+        .replace(statementIncludesReducer(state.statementIncludes, action))
     ..isPreviewVisible = isPreviewVisibleReducer(state.isPreviewVisible, action)
     ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
     ..historySidebarMode =
@@ -338,6 +340,12 @@ Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
+  }),
+]);
+
+Reducer<BuiltList<String>> statementIncludesReducer = combineReducers([
+  TypedReducer<BuiltList<String>, UpdateUserPreferences>((includes, action) {
+    return action.statementIncludes ?? includes;
   }),
 ]);
 

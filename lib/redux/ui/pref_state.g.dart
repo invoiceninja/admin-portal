@@ -137,6 +137,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       serializers.serialize(object.customColors,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'statementIncludes',
+      serializers.serialize(object.statementIncludes,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
       'isPreviewVisible',
       serializers.serialize(object.isPreviewVisible,
           specifiedType: const FullType(bool)),
@@ -273,6 +277,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.customColors.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(String)])));
+          break;
+        case 'statementIncludes':
+          result.statementIncludes.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<Object>);
           break;
         case 'isPreviewVisible':
           result.isPreviewVisible = serializers.deserialize(value,
@@ -637,6 +647,8 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<String, String> customColors;
   @override
+  final BuiltList<String> statementIncludes;
+  @override
   final bool isPreviewVisible;
   @override
   final bool isMenuVisible;
@@ -704,6 +716,7 @@ class _$PrefState extends PrefState {
       this.useSidebarEditor,
       this.useSidebarViewer,
       this.customColors,
+      this.statementIncludes,
       this.isPreviewVisible,
       this.isMenuVisible,
       this.showKanban,
@@ -746,6 +759,8 @@ class _$PrefState extends PrefState {
         useSidebarViewer, r'PrefState', 'useSidebarViewer');
     BuiltValueNullFieldError.checkNotNull(
         customColors, r'PrefState', 'customColors');
+    BuiltValueNullFieldError.checkNotNull(
+        statementIncludes, r'PrefState', 'statementIncludes');
     BuiltValueNullFieldError.checkNotNull(
         isPreviewVisible, r'PrefState', 'isPreviewVisible');
     BuiltValueNullFieldError.checkNotNull(
@@ -821,6 +836,7 @@ class _$PrefState extends PrefState {
         useSidebarEditor == other.useSidebarEditor &&
         useSidebarViewer == other.useSidebarViewer &&
         customColors == other.customColors &&
+        statementIncludes == other.statementIncludes &&
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         showKanban == other.showKanban &&
@@ -863,6 +879,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, useSidebarEditor.hashCode);
     _$hash = $jc(_$hash, useSidebarViewer.hashCode);
     _$hash = $jc(_$hash, customColors.hashCode);
+    _$hash = $jc(_$hash, statementIncludes.hashCode);
     _$hash = $jc(_$hash, isPreviewVisible.hashCode);
     _$hash = $jc(_$hash, isMenuVisible.hashCode);
     _$hash = $jc(_$hash, showKanban.hashCode);
@@ -905,6 +922,7 @@ class _$PrefState extends PrefState {
           ..add('useSidebarEditor', useSidebarEditor)
           ..add('useSidebarViewer', useSidebarViewer)
           ..add('customColors', customColors)
+          ..add('statementIncludes', statementIncludes)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('showKanban', showKanban)
@@ -976,6 +994,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _$this._customColors ??= new MapBuilder<String, String>();
   set customColors(MapBuilder<String, String> customColors) =>
       _$this._customColors = customColors;
+
+  ListBuilder<String> _statementIncludes;
+  ListBuilder<String> get statementIncludes =>
+      _$this._statementIncludes ??= new ListBuilder<String>();
+  set statementIncludes(ListBuilder<String> statementIncludes) =>
+      _$this._statementIncludes = statementIncludes;
 
   bool _isPreviewVisible;
   bool get isPreviewVisible => _$this._isPreviewVisible;
@@ -1128,6 +1152,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _useSidebarEditor = $v.useSidebarEditor.toBuilder();
       _useSidebarViewer = $v.useSidebarViewer.toBuilder();
       _customColors = $v.customColors.toBuilder();
+      _statementIncludes = $v.statementIncludes.toBuilder();
       _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
       _showKanban = $v.showKanban;
@@ -1191,6 +1216,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               useSidebarEditor: useSidebarEditor.build(),
               useSidebarViewer: useSidebarViewer.build(),
               customColors: customColors.build(),
+              statementIncludes: statementIncludes.build(),
               isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
                   isPreviewVisible, r'PrefState', 'isPreviewVisible'),
               isMenuVisible: BuiltValueNullFieldError.checkNotNull(
@@ -1232,6 +1258,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         useSidebarViewer.build();
         _$failedField = 'customColors';
         customColors.build();
+        _$failedField = 'statementIncludes';
+        statementIncludes.build();
 
         _$failedField = 'sortFields';
         sortFields.build();

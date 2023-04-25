@@ -363,7 +363,8 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (state.isHosted && !isDesktopOS()) ...[
+                    if (state.isHosted &&
+                        (!kReleaseMode || !isDesktopOS())) ...[
                       if (user.isConnectedToGoogle) ...[
                         googleButton,
                         SizedBox(width: kTableColumnGap),

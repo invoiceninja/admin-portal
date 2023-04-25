@@ -285,6 +285,13 @@ class _$ScheduleParametersSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.showCreditsTable;
+    if (value != null) {
+      result
+        ..add('show_credits_table')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.showAgingTable;
     if (value != null) {
       result
@@ -342,6 +349,10 @@ class _$ScheduleParametersSerializer
           break;
         case 'show_payments_table':
           result.showPaymentsTable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_credits_table':
+          result.showCreditsTable = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'show_aging_table':
@@ -867,6 +878,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   final bool showPaymentsTable;
   @override
+  final bool showCreditsTable;
+  @override
   final bool showAgingTable;
   @override
   final String status;
@@ -884,6 +897,7 @@ class _$ScheduleParameters extends ScheduleParameters {
   _$ScheduleParameters._(
       {this.dateRange,
       this.showPaymentsTable,
+      this.showCreditsTable,
       this.showAgingTable,
       this.status,
       this.clients,
@@ -906,6 +920,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     return other is ScheduleParameters &&
         dateRange == other.dateRange &&
         showPaymentsTable == other.showPaymentsTable &&
+        showCreditsTable == other.showCreditsTable &&
         showAgingTable == other.showAgingTable &&
         status == other.status &&
         clients == other.clients &&
@@ -920,6 +935,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     var _$hash = 0;
     _$hash = $jc(_$hash, dateRange.hashCode);
     _$hash = $jc(_$hash, showPaymentsTable.hashCode);
+    _$hash = $jc(_$hash, showCreditsTable.hashCode);
     _$hash = $jc(_$hash, showAgingTable.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, clients.hashCode);
@@ -934,6 +950,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     return (newBuiltValueToStringHelper(r'ScheduleParameters')
           ..add('dateRange', dateRange)
           ..add('showPaymentsTable', showPaymentsTable)
+          ..add('showCreditsTable', showCreditsTable)
           ..add('showAgingTable', showAgingTable)
           ..add('status', status)
           ..add('clients', clients)
@@ -955,6 +972,11 @@ class ScheduleParametersBuilder
   bool get showPaymentsTable => _$this._showPaymentsTable;
   set showPaymentsTable(bool showPaymentsTable) =>
       _$this._showPaymentsTable = showPaymentsTable;
+
+  bool _showCreditsTable;
+  bool get showCreditsTable => _$this._showCreditsTable;
+  set showCreditsTable(bool showCreditsTable) =>
+      _$this._showCreditsTable = showCreditsTable;
 
   bool _showAgingTable;
   bool get showAgingTable => _$this._showAgingTable;
@@ -985,6 +1007,7 @@ class ScheduleParametersBuilder
     if ($v != null) {
       _dateRange = $v.dateRange;
       _showPaymentsTable = $v.showPaymentsTable;
+      _showCreditsTable = $v.showCreditsTable;
       _showAgingTable = $v.showAgingTable;
       _status = $v.status;
       _clients = $v.clients?.toBuilder();
@@ -1016,6 +1039,7 @@ class ScheduleParametersBuilder
           new _$ScheduleParameters._(
               dateRange: dateRange,
               showPaymentsTable: showPaymentsTable,
+              showCreditsTable: showCreditsTable,
               showAgingTable: showAgingTable,
               status: status,
               clients: _clients?.build(),
