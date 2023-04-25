@@ -141,13 +141,14 @@ class ImportType extends EnumClass {
         };
       case ImportType.csv:
         return {
-          EntityType.client.toString(): 'clients',
-          EntityType.invoice.toString(): 'invoices',
-          EntityType.payment.toString(): 'payments',
-          EntityType.product.toString(): 'products',
-          EntityType.vendor.toString(): 'vendors',
-          EntityType.expense.toString(): 'expenses',
-          'bank_transaction': 'transactions',
+          EntityType.client.apiValue: 'clients',
+          EntityType.invoice.apiValue: 'invoices',
+          EntityType.recurringInvoice.apiValue: 'recurring_invoices',
+          EntityType.payment.apiValue: 'payments',
+          EntityType.product.apiValue: 'products',
+          EntityType.vendor.apiValue: 'vendors',
+          EntityType.expense.apiValue: 'expenses',
+          EntityType.transaction.apiValue: 'transactions',
         };
       case ImportType.freshbooks:
       case ImportType.invoicely:
