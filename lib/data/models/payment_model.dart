@@ -117,6 +117,7 @@ abstract class PaymentEntity extends Object
       transactionId: '',
       invitationId: '',
       isApplying: false,
+      gatewayTypeId: '',
     );
   }
 
@@ -202,6 +203,9 @@ abstract class PaymentEntity extends Object
 
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
+
+  @BuiltValueField(wireName: 'gateway_type_id')
+  String get gatewayTypeId;
 
   @nullable
   bool get isApplying;
@@ -606,6 +610,10 @@ abstract class PaymentableEntity extends Object
   double get listDisplayAmount => null;
 
 */
+
+  // ignore: unused_element
+  static void _initializeBuilder(PaymentEntityBuilder builder) =>
+      builder..gatewayTypeId = '';
 
   static Serializer<PaymentableEntity> get serializer =>
       _$paymentableEntitySerializer;
