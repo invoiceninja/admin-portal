@@ -199,13 +199,21 @@ const String kTaxCategoryDigital = '2';
 const String kTaxCategoryServices = '3';
 const String kTaxCategoryShipping = '4';
 const String kTaxCategoryExempt = '5';
+const String kTaxCategoryReducedTax = '6';
+const String kTaxCategoryOverrideTax = '7';
+const String kTaxCategoryZeroRated = '8';
+const String kTaxCategoryReverseTax = '9';
 
 const kTaxCategories = {
-  kTaxCategoryPhysical: 'Physical Goods',
-  kTaxCategoryDigital: 'Digital Products',
-  kTaxCategoryServices: 'Services',
-  kTaxCategoryShipping: 'Shipping',
-  kTaxCategoryExempt: 'Tax Exempt',
+  kTaxCategoryPhysical: 'physical_goods',
+  kTaxCategoryDigital: 'digital_products',
+  kTaxCategoryServices: 'services',
+  kTaxCategoryShipping: 'shipping',
+  kTaxCategoryExempt: 'tax_exempt',
+  kTaxCategoryReducedTax: 'reduced_tax',
+  kTaxCategoryOverrideTax: 'override_tax',
+  kTaxCategoryZeroRated: 'zero_rated',
+  kTaxCategoryReverseTax: 'reverse_tax',
 };
 
 const String kCountryUnitedStates = '840';
