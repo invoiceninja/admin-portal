@@ -826,8 +826,8 @@ abstract class GatewayEntity extends Object
       .where((typeId) => options[typeId].supportTokenBilling)
       .isNotEmpty;
 
-  bool get supportsRefunds =>
-      options.keys.where((typeId) => options[typeId].supportRefunds).isNotEmpty;
+  bool supportsRefunds(String gatewayTypeId) =>
+      options[gatewayTypeId].supportRefunds;
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);

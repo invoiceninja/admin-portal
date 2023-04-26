@@ -150,7 +150,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 onChanged: (value) => viewModel
                     .onChanged(payment.rebuild((b) => b..sendEmail = value)),
               ),
-              if (gateway.supportsRefunds)
+              if (gateway.supportsRefunds(payment.gatewayTypeId))
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.gatewayRefund),
