@@ -515,8 +515,9 @@ abstract class PaymentEntity extends Object
   }
 
   // ignore: unused_element
-  static void _initializeBuilder(PaymentEntityBuilder builder) =>
-      builder..transactionId = '';
+  static void _initializeBuilder(PaymentEntityBuilder builder) => builder
+    ..transactionId = ''
+    ..gatewayTypeId = '';
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
 }
@@ -610,10 +611,6 @@ abstract class PaymentableEntity extends Object
   double get listDisplayAmount => null;
 
 */
-
-  // ignore: unused_element
-  static void _initializeBuilder(PaymentEntityBuilder builder) =>
-      builder..gatewayTypeId = '';
 
   static Serializer<PaymentableEntity> get serializer =>
       _$paymentableEntitySerializer;
