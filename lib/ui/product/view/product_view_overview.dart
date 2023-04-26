@@ -53,7 +53,7 @@ class _ProductOverviewState extends State<ProductOverview> {
 
     if (company.calculateTaxes) {
       fields[localization.taxCategory] =
-          localization.lookup(kTaxCategories[product.taxId]);
+          localization.lookup(kTaxCategories[product.taxCategoryId]);
     }
 
     if (product.customValue1.isNotEmpty) {

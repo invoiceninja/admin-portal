@@ -1593,7 +1593,7 @@ abstract class InvoiceItemEntity
       customValue3: '',
       customValue4: '',
       discount: 0,
-      taxId: '',
+      taxCategoryId: '',
       createdAt: DateTime.now().microsecondsSinceEpoch,
     );
   }
@@ -1671,7 +1671,7 @@ abstract class InvoiceItemEntity
   int get createdAt;
 
   @BuiltValueField(wireName: 'tax_id')
-  String get taxId;
+  String get taxCategoryId;
 
   double taxAmount(InvoiceEntity invoice, int precision) {
     double calculateTaxAmount(double rate) {
@@ -1779,7 +1779,7 @@ abstract class InvoiceItemEntity
   // ignore: unused_element
   static void _initializeBuilder(InvoiceItemEntityBuilder builder) => builder
     ..productCost = 0
-    ..taxId = '';
+    ..taxCategoryId = '';
 
   static Serializer<InvoiceItemEntity> get serializer =>
       _$invoiceItemEntitySerializer;
