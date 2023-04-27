@@ -140,6 +140,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
+    final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
     final microsoftUserIds =
         memoizedMicrosoftUserList(viewModel.state.userState.map);
@@ -162,7 +163,7 @@ class _EmailSettingsState extends State<EmailSettings> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               AppDropdownButton<String>(
-                showBlank: state.uiState.settingsUIState.isFiltered,
+                showBlank: settingsUIState.isFiltered,
                 labelText: localization.emailProvider,
                 value: settings.emailSendingMethod,
                 onChanged: (dynamic value) {
@@ -455,10 +456,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                 maxLines: 6,
                 keyboardType: TextInputType.multiline,
               ),
-              SizedBox(height: 16),
+              if (!settingsUIState.isFiltered) SizedBox(height: 16),
               BoolDropdownButton(
                 label: localization.showEmailFooter,
-                value: state.settingsUIState.isFiltered
+                value: settingsUIState.isFiltered
                     ? settings.showEmailFooter
                     : (settings.showEmailFooter ?? true),
                 iconData: MdiIcons.textBox,
@@ -500,10 +501,11 @@ class _EmailSettingsState extends State<EmailSettings> {
               ),
               if (settings.enableEInvoice == true)
                 Padding(
-                  padding: const EdgeInsets.only(top: 16),
+                  padding:
+                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 16),
                   child: AppDropdownButton<String>(
                       labelText: localization.eInvoiceType,
-                      showBlank: state.uiState.settingsUIState.isFiltered,
+                      showBlank: settingsUIState.isFiltered,
                       value: settings.eInvoiceType,
                       onChanged: (dynamic value) {
                         viewModel.onSettingsChanged(
