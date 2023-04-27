@@ -41,6 +41,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _vatNumberController = TextEditingController();
   final _websiteController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _routingIdController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -60,6 +61,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _vatNumberController,
       _websiteController,
       _phoneController,
+      _routingIdController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -76,6 +78,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _vatNumberController.text = client.vatNumber;
     _websiteController.text = client.website;
     _phoneController.text = client.phone;
+    _routingIdController.text = client.routingId;
     _custom1Controller.text = client.customValue1;
     _custom2Controller.text = client.customValue2;
     _custom3Controller.text = client.customValue3;
@@ -106,6 +109,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       ..vatNumber = _vatNumberController.text.trim()
       ..website = _websiteController.text.trim()
       ..phone = _phoneController.text.trim()
+      ..routingId = _routingIdController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
@@ -259,6 +263,13 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             keyboardType: TextInputType.phone,
             onSavePressed: _onSavePressed,
           ),
+          if (state.company.settings.enableEInvoice == true)
+            DecoratedFormField(
+              label: localization.routingId,
+              controller: _routingIdController,
+              keyboardType: TextInputType.text,
+              onSavePressed: _onSavePressed,
+            ),
           CustomField(
             controller: _custom1Controller,
             field: CustomFieldType.client1,
