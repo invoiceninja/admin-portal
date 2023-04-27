@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 
 // Package imports:
@@ -405,14 +406,23 @@ Middleware<AppState> _loadRecurringInvoices(
     repository
         .loadList(
       state.credentials,
+      action.page,
       state.filterDeletedClients,
     )
         .then((data) {
       store.dispatch(LoadRecurringInvoicesSuccess(data));
-      if (action.completer != null) {
-        action.completer.complete(null);
+
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(LoadRecurringInvoices(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+        store.dispatch(LoadPayments());
       }
-      store.dispatch(LoadPayments());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadRecurringInvoicesFailure(error));

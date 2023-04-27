@@ -191,6 +191,9 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'currency_id',
       serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
+      'gateway_type_id',
+      serializers.serialize(object.gatewayTypeId,
+          specifiedType: const FullType(String)),
       'paymentables',
       serializers.serialize(object.paymentables,
           specifiedType: const FullType(
@@ -385,6 +388,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'gateway_type_id':
+          result.gatewayTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isApplying':
@@ -795,6 +802,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String currencyId;
   @override
+  final String gatewayTypeId;
+  @override
   final bool isApplying;
   @override
   final bool sendEmail;
@@ -852,6 +861,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.clientContactId,
       this.companyGatewayId,
       this.currencyId,
+      this.gatewayTypeId,
       this.isApplying,
       this.sendEmail,
       this.gatewayRefund,
@@ -911,6 +921,8 @@ class _$PaymentEntity extends PaymentEntity {
     BuiltValueNullFieldError.checkNotNull(
         currencyId, r'PaymentEntity', 'currencyId');
     BuiltValueNullFieldError.checkNotNull(
+        gatewayTypeId, r'PaymentEntity', 'gatewayTypeId');
+    BuiltValueNullFieldError.checkNotNull(
         paymentables, r'PaymentEntity', 'paymentables');
     BuiltValueNullFieldError.checkNotNull(
         invoices, r'PaymentEntity', 'invoices');
@@ -960,6 +972,7 @@ class _$PaymentEntity extends PaymentEntity {
         clientContactId == other.clientContactId &&
         companyGatewayId == other.companyGatewayId &&
         currencyId == other.currencyId &&
+        gatewayTypeId == other.gatewayTypeId &&
         isApplying == other.isApplying &&
         sendEmail == other.sendEmail &&
         gatewayRefund == other.gatewayRefund &&
@@ -1006,6 +1019,7 @@ class _$PaymentEntity extends PaymentEntity {
     _$hash = $jc(_$hash, clientContactId.hashCode);
     _$hash = $jc(_$hash, companyGatewayId.hashCode);
     _$hash = $jc(_$hash, currencyId.hashCode);
+    _$hash = $jc(_$hash, gatewayTypeId.hashCode);
     _$hash = $jc(_$hash, isApplying.hashCode);
     _$hash = $jc(_$hash, sendEmail.hashCode);
     _$hash = $jc(_$hash, gatewayRefund.hashCode);
@@ -1052,6 +1066,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('clientContactId', clientContactId)
           ..add('companyGatewayId', companyGatewayId)
           ..add('currencyId', currencyId)
+          ..add('gatewayTypeId', gatewayTypeId)
           ..add('isApplying', isApplying)
           ..add('sendEmail', sendEmail)
           ..add('gatewayRefund', gatewayRefund)
@@ -1180,6 +1195,11 @@ class PaymentEntityBuilder
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
+  String _gatewayTypeId;
+  String get gatewayTypeId => _$this._gatewayTypeId;
+  set gatewayTypeId(String gatewayTypeId) =>
+      _$this._gatewayTypeId = gatewayTypeId;
+
   bool _isApplying;
   bool get isApplying => _$this._isApplying;
   set isApplying(bool isApplying) => _$this._isApplying = isApplying;
@@ -1277,6 +1297,7 @@ class PaymentEntityBuilder
       _clientContactId = $v.clientContactId;
       _companyGatewayId = $v.companyGatewayId;
       _currencyId = $v.currencyId;
+      _gatewayTypeId = $v.gatewayTypeId;
       _isApplying = $v.isApplying;
       _sendEmail = $v.sendEmail;
       _gatewayRefund = $v.gatewayRefund;
@@ -1349,6 +1370,7 @@ class PaymentEntityBuilder
               clientContactId: BuiltValueNullFieldError.checkNotNull(clientContactId, r'PaymentEntity', 'clientContactId'),
               companyGatewayId: BuiltValueNullFieldError.checkNotNull(companyGatewayId, r'PaymentEntity', 'companyGatewayId'),
               currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'PaymentEntity', 'currencyId'),
+              gatewayTypeId: BuiltValueNullFieldError.checkNotNull(gatewayTypeId, r'PaymentEntity', 'gatewayTypeId'),
               isApplying: isApplying,
               sendEmail: sendEmail,
               gatewayRefund: gatewayRefund,

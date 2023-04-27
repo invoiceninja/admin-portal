@@ -230,7 +230,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
     final originalInvoice =
-        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
+        (state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity) ??
+            invoice;
 
     final countProducts = invoice.lineItems
         .where((item) =>
@@ -996,9 +997,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     ),
                                     textAlign: TextAlign.end,
                                     key: ValueKey(
-                                        '__invoice_paid_to_date_${invoice.paidToDate}_${invoice.clientId}__'),
+                                        '__invoice_paid_to_date_${originalInvoice.paidToDate}_${invoice.clientId}__'),
                                     initialValue: formatNumber(
-                                      invoice.paidToDate,
+                                      originalInvoice.paidToDate,
                                       context,
                                       clientId: invoice.isPurchaseOrder
                                           ? null
@@ -1079,12 +1080,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   ),
                                   textAlign: TextAlign.end,
                                   key: ValueKey(
-                                      '__invoice_total_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
+                                      '__invoice_total_${originalInvoice.paidToDate}_${invoice.calculateTotal(precision: precisionForInvoice(state, invoice))}_${invoice.clientId}__'),
                                   initialValue: formatNumber(
                                     invoice.calculateTotal(
                                             precision: precisionForInvoice(
                                                 state, invoice)) -
-                                        invoice.paidToDate,
+                                        originalInvoice.paidToDate,
                                     context,
                                     clientId: invoice.isPurchaseOrder
                                         ? null

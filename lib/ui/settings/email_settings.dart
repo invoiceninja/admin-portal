@@ -140,6 +140,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
+    final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
     final microsoftUserIds =
         memoizedMicrosoftUserList(viewModel.state.userState.map);
@@ -162,7 +163,7 @@ class _EmailSettingsState extends State<EmailSettings> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               AppDropdownButton<String>(
-                showBlank: state.uiState.settingsUIState.isFiltered,
+                showBlank: settingsUIState.isFiltered,
                 labelText: localization.emailProvider,
                 value: settings.emailSendingMethod,
                 onChanged: (dynamic value) {
@@ -455,20 +456,21 @@ class _EmailSettingsState extends State<EmailSettings> {
                 maxLines: 6,
                 keyboardType: TextInputType.multiline,
               ),
-            ],
-          ),
-          FormCard(
-            isLast: true,
-            children: <Widget>[
+              if (!settingsUIState.isFiltered) SizedBox(height: 16),
               BoolDropdownButton(
                 label: localization.showEmailFooter,
-                value: state.settingsUIState.isFiltered
+                value: settingsUIState.isFiltered
                     ? settings.showEmailFooter
                     : (settings.showEmailFooter ?? true),
                 iconData: MdiIcons.textBox,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..showEmailFooter = value)),
               ),
+            ],
+          ),
+          FormCard(
+            isLast: true,
+            children: <Widget>[
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
@@ -490,6 +492,33 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),
+              if (supportsLatestFeatures())
+                BoolDropdownButton(
+                  label: localization.enableEInvoice,
+                  value: settings.enableEInvoice,
+                  iconData: MdiIcons.fileXmlBox,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableEInvoice = value)),
+                ),
+              if (settings.enableEInvoice == true)
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 16),
+                  child: AppDropdownButton<String>(
+                      labelText: localization.eInvoiceType,
+                      showBlank: settingsUIState.isFiltered,
+                      value: settings.eInvoiceType,
+                      onChanged: (dynamic value) {
+                        viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..eInvoiceType = value));
+                      },
+                      items: kEInvoiceTypes
+                          .map((type) => DropdownMenuItem<String>(
+                                child: Text(type),
+                                value: type,
+                              ))
+                          .toList()),
+                )
             ],
           ),
         ],

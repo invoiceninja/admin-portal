@@ -55,6 +55,10 @@ bool supportsLatestFeatures() {
     return true;
   }
 
+  if (state.isSelfHosted) {
+    return true;
+  }
+
   return false;
   return Version.parse(state.account.currentVersion) >=
       Version.parse('5.5.106');

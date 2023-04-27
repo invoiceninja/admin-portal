@@ -221,10 +221,10 @@ class _ProductEditState extends State<ProductEdit> {
                 if (company.calculateTaxes)
                   AppDropdownButton<String>(
                       labelText: localization.taxCategory,
-                      value: product.taxId,
-                      onChanged: (dynamic taxCategory) {
-                        viewModel.onChanged(
-                            product.rebuild((b) => b..taxId = taxCategory));
+                      value: product.taxCategoryId,
+                      onChanged: (dynamic taxCategoryId) {
+                        viewModel.onChanged(product
+                            .rebuild((b) => b..taxCategoryId = taxCategoryId));
                       },
                       items: kTaxCategories.keys
                           .map((key) => DropdownMenuItem<String>(

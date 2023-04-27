@@ -106,9 +106,10 @@ class LoadRecurringInvoiceActivity {
 }
 
 class LoadRecurringInvoices {
-  LoadRecurringInvoices({this.completer});
+  LoadRecurringInvoices({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadRecurringInvoiceRequest implements StartLoading {}
