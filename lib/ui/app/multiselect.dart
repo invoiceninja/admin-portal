@@ -181,6 +181,7 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: DropdownButtonFormField<dynamic>(
+                  iconEnabledColor: Colors.white,
                   validator: widget.validator != null ? widget.validator : null,
                   decoration: widget.decoration != null
                       ? widget.decoration

@@ -25,8 +25,10 @@ class TransactionRepository {
     return transactionResponse.data;
   }
 
-  Future<BuiltList<TransactionEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/bank_transactions?';
+  Future<BuiltList<TransactionEntity>> loadList(
+      Credentials credentials, int page, int createdAt) async {
+    final String url = credentials.url +
+        '/bank_transactions?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TransactionListResponse transactionResponse = serializers

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -367,13 +368,26 @@ Middleware<AppState> _loadTransactions(TransactionRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadTransactionsRequest());
-    repository.loadList(state.credentials).then((data) {
+    repository
+        .loadList(
+      state.credentials,
+      action.page,
+      state.createdAtLimit,
+    )
+        .then((data) {
       store.dispatch(LoadTransactionsSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(LoadTransactions(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer.complete(null);
+        }
+        store.dispatch(PersistData());
       }
-      store.dispatch(PersistData());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTransactionsFailure(error));
