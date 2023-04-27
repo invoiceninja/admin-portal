@@ -59,9 +59,10 @@ class LoadTransactionActivity {
 }
 
 class LoadTransactions {
-  LoadTransactions({this.completer});
+  LoadTransactions({this.completer, this.page = 1});
 
   final Completer completer;
+  final int page;
 }
 
 class LoadTransactionRequest implements StartLoading {}
