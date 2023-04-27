@@ -124,7 +124,6 @@ abstract class CompanyEntity extends Object
       convertExpenseCurrency: false,
       notifyVendorWhenPaid: false,
       calculateTaxes: false,
-      enableEInvoice: false,
       taxData: TaxDataEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
@@ -313,9 +312,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'notify_vendor_when_paid')
   bool get notifyVendorWhenPaid;
-
-  @BuiltValueField(wireName: 'enable_e_invoice')
-  bool get enableEInvoice;
 
   BuiltList<GroupEntity> get groups;
 
@@ -758,7 +754,6 @@ abstract class CompanyEntity extends Object
     ..convertExpenseCurrency = false
     ..notifyVendorWhenPaid = false
     ..calculateTaxes = false
-    ..enableEInvoice = false
     ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())

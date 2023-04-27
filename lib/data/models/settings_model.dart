@@ -989,6 +989,10 @@ abstract class SettingsEntity
   bool get showTaskItemDescription;
 
   @nullable
+  @BuiltValueField(wireName: 'enable_e_invoice')
+  bool get enableEInvoice;
+
+  @nullable
   @BuiltValueField(wireName: 'e_invoice_type')
   String get eInvoiceType;
 

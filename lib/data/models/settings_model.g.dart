@@ -1513,6 +1513,13 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.enableEInvoice;
+    if (value != null) {
+      result
+        ..add('enable_e_invoice')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.eInvoiceType;
     if (value != null) {
       result
@@ -2407,6 +2414,10 @@ class _$SettingsEntitySerializer
           result.showTaskItemDescription = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'enable_e_invoice':
+          result.enableEInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'e_invoice_type':
           result.eInvoiceType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2924,6 +2935,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool showTaskItemDescription;
   @override
+  final bool enableEInvoice;
+  @override
   final String eInvoiceType;
   @override
   final String defaultExpensePaymentTypeId;
@@ -3147,6 +3160,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.shareInvoiceQuoteColumns,
       this.allowBillableTaskItems,
       this.showTaskItemDescription,
+      this.enableEInvoice,
       this.eInvoiceType,
       this.defaultExpensePaymentTypeId})
       : super._();
@@ -3383,6 +3397,7 @@ class _$SettingsEntity extends SettingsEntity {
         shareInvoiceQuoteColumns == other.shareInvoiceQuoteColumns &&
         allowBillableTaskItems == other.allowBillableTaskItems &&
         showTaskItemDescription == other.showTaskItemDescription &&
+        enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId;
   }
@@ -3607,6 +3622,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, shareInvoiceQuoteColumns.hashCode);
     _$hash = $jc(_$hash, allowBillableTaskItems.hashCode);
     _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
+    _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jf(_$hash);
@@ -3836,6 +3852,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('shareInvoiceQuoteColumns', shareInvoiceQuoteColumns)
           ..add('allowBillableTaskItems', allowBillableTaskItems)
           ..add('showTaskItemDescription', showTaskItemDescription)
+          ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId))
         .toString();
@@ -4902,6 +4919,11 @@ class SettingsEntityBuilder
   set showTaskItemDescription(bool showTaskItemDescription) =>
       _$this._showTaskItemDescription = showTaskItemDescription;
 
+  bool _enableEInvoice;
+  bool get enableEInvoice => _$this._enableEInvoice;
+  set enableEInvoice(bool enableEInvoice) =>
+      _$this._enableEInvoice = enableEInvoice;
+
   String _eInvoiceType;
   String get eInvoiceType => _$this._eInvoiceType;
   set eInvoiceType(String eInvoiceType) => _$this._eInvoiceType = eInvoiceType;
@@ -5131,6 +5153,7 @@ class SettingsEntityBuilder
       _shareInvoiceQuoteColumns = $v.shareInvoiceQuoteColumns;
       _allowBillableTaskItems = $v.allowBillableTaskItems;
       _showTaskItemDescription = $v.showTaskItemDescription;
+      _enableEInvoice = $v.enableEInvoice;
       _eInvoiceType = $v.eInvoiceType;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _$v = null;
@@ -5373,6 +5396,7 @@ class SettingsEntityBuilder
               shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
               allowBillableTaskItems: allowBillableTaskItems,
               showTaskItemDescription: showTaskItemDescription,
+              enableEInvoice: enableEInvoice,
               eInvoiceType: eInvoiceType,
               defaultExpensePaymentTypeId: defaultExpensePaymentTypeId);
     } catch (_) {

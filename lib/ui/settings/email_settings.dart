@@ -455,11 +455,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 maxLines: 6,
                 keyboardType: TextInputType.multiline,
               ),
-            ],
-          ),
-          FormCard(
-            isLast: true,
-            children: <Widget>[
+              SizedBox(height: 16),
               BoolDropdownButton(
                 label: localization.showEmailFooter,
                 value: state.settingsUIState.isFiltered
@@ -469,6 +465,11 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..showEmailFooter = value)),
               ),
+            ],
+          ),
+          FormCard(
+            isLast: true,
+            children: <Widget>[
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
@@ -490,6 +491,31 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),
+              BoolDropdownButton(
+                label: localization.enableEInvoice,
+                value: settings.enableEInvoice,
+                iconData: MdiIcons.fileXmlBox,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableEInvoice = value)),
+              ),
+              if (settings.enableEInvoice == true)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: AppDropdownButton<String>(
+                      labelText: localization.eInvoiceType,
+                      showBlank: state.uiState.settingsUIState.isFiltered,
+                      value: settings.eInvoiceType,
+                      onChanged: (dynamic value) {
+                        viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..eInvoiceType = value));
+                      },
+                      items: kEInvoiceTypes
+                          .map((type) => DropdownMenuItem<String>(
+                                child: Text(type),
+                                value: type,
+                              ))
+                          .toList()),
+                )
             ],
           ),
         ],
