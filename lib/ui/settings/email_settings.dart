@@ -492,13 +492,14 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),
-              BoolDropdownButton(
-                label: localization.enableEInvoice,
-                value: settings.enableEInvoice,
-                iconData: MdiIcons.fileXmlBox,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableEInvoice = value)),
-              ),
+              if (supportsLatestFeatures())
+                BoolDropdownButton(
+                  label: localization.enableEInvoice,
+                  value: settings.enableEInvoice,
+                  iconData: MdiIcons.fileXmlBox,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableEInvoice = value)),
+                ),
               if (settings.enableEInvoice == true)
                 Padding(
                   padding:
