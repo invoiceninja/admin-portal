@@ -364,9 +364,9 @@ class _AccountOverview extends StatelessWidget {
               onPressed: () => viewModel.onSetPrimaryCompany(context),
             ),
           ),
-        if (state.userCompany.ninjaPortalUrl.isNotEmpty &&
-            (!isApple() || supportsInAppPurchase()) &&
-            state.isHosted)
+        if (state.isHosted && state.isProPlan && supportsInAppPurchase())
+          SizedBox()
+        else if (state.isHosted)
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
             child: OutlinedButton(

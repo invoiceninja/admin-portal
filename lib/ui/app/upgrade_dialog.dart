@@ -210,9 +210,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final store = StoreProvider.of<AppState>(context);
     final account = store.state.account;
 
-    // This loading previous purchases code is just a demo. Please do not use this as it is.
-    // In your app you should always verify the purchase data using the `verificationData` inside the [PurchaseDetails] object before trusting it.
-    // We recommend that you use your own server to verify the purchase data.
     final Map<String, PurchaseDetails> purchases =
         Map<String, PurchaseDetails>.fromEntries(
             _purchases.map((PurchaseDetails purchase) {
@@ -235,7 +232,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
-                  // TODO(darrenaustin): Migrate to new API once it lands in stable: https://github.com/flutter/flutter/issues/105724
                   // ignore: deprecated_member_use
                   primary: Colors.white,
                 ),

@@ -183,15 +183,13 @@ ReportResult invoiceReport(
           value = invoice.id;
           break;
         case InvoiceReportFields.amount:
-          value = invoice.isCancelled ? 0.0 : invoice.amount;
+          value = invoice.amount;
           break;
         case InvoiceReportFields.balance:
           value = invoice.isCancelled ? 0.0 : invoice.balanceOrAmount;
           break;
         case InvoiceReportFields.converted_amount:
-          value = invoice.isCancelled
-              ? 0.0
-              : round(invoice.amount * 1 / invoice.exchangeRate, 2);
+          value = round(invoice.amount * 1 / invoice.exchangeRate, 2);
           break;
         case InvoiceReportFields.converted_balance:
           value = invoice.isCancelled
