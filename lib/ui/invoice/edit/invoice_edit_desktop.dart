@@ -230,7 +230,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
     final originalInvoice =
-        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
+        (state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity) ??
+            invoice;
 
     final countProducts = invoice.lineItems
         .where((item) =>
