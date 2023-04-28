@@ -247,7 +247,6 @@ abstract class InvoiceEntity extends Object
       dueDateDays: 'terms',
       saveDefaultTerms: false,
       saveDefaultFooter: false,
-      taxData: '',
     );
   }
 
@@ -594,9 +593,6 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
-
-  @BuiltValueField(wireName: 'tax_data')
-  String get taxData;
 
   @nullable
   String get filename;
@@ -1520,8 +1516,7 @@ abstract class InvoiceEntity extends Object
     ..saveDefaultTerms = false
     ..saveDefaultFooter = false
     ..autoBillEnabled = false
-    ..subscriptionId = ''
-    ..taxData = '';
+    ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
