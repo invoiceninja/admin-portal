@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -41,12 +42,13 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.customValue3,
       PaymentFields.customValue4,
       PaymentFields.gateway,
+      PaymentFields.gatewayType,
     ];
   }
 
   @override
   Widget getField({String field, BuildContext context}) {
-    //final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final payment = entity as PaymentEntity;
 
@@ -120,6 +122,8 @@ class PaymentPresenter extends EntityPresenter {
         final companyGateway =
             state.companyGatewayState.get(payment.companyGatewayId);
         return Text(companyGateway.label);
+      case PaymentFields.gatewayType:
+        return Text(localization.lookup(kGatewayTypes[payment.gatewayTypeId]));
     }
 
     return super.getField(field: field, context: context);
