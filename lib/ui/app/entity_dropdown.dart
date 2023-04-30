@@ -353,6 +353,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<SelectableEntity> onSelected,
             Iterable<SelectableEntity> options) {
+          if ((widget.entityId ?? '').isNotEmpty) {
+            return SizedBox();
+          }
+
           return Theme(
             data: theme,
             child: Align(
