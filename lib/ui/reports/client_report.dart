@@ -71,6 +71,7 @@ enum ClientReportFields {
   created_at,
   updated_at,
   documents,
+  routing_id,
 }
 
 var memoizedClientReport = memo6((
@@ -346,6 +347,10 @@ ReportResult clientReport(
           break;
         case ClientReportFields.documents:
           value = client.documents.length;
+          break;
+        case ClientReportFields.routing_id:
+          value = client.routingId;
+          break;
       }
 
       if (!ReportResult.matchField(

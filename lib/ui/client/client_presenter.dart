@@ -53,6 +53,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.group,
       ClientFields.contactPhone,
       ClientFields.contacts,
+      ClientFields.routingId,
     ];
   }
 
@@ -134,6 +135,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(presentCustomField(context, client.customValue3));
       case ClientFields.custom4:
         return Text(presentCustomField(context, client.customValue4));
+      case ClientFields.routingId:
+        return Text(client.routingId);
       case ClientFields.publicNotes:
         return TableTooltip(message: client.publicNotes);
       case ClientFields.privateNotes:
