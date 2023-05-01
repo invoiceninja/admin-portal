@@ -72,6 +72,7 @@ enum ClientReportFields {
   updated_at,
   documents,
   routing_id,
+  is_tax_exempt,
 }
 
 var memoizedClientReport = memo6((
@@ -350,6 +351,9 @@ ReportResult clientReport(
           break;
         case ClientReportFields.routing_id:
           value = client.routingId;
+          break;
+        case ClientReportFields.is_tax_exempt:
+          value = client.isTaxExempt;
           break;
       }
 

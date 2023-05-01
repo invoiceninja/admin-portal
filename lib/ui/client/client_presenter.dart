@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ClientPresenter extends EntityPresenter {
@@ -54,6 +55,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.contactPhone,
       ClientFields.contacts,
       ClientFields.routingId,
+      ClientFields.isTaxExempt,
     ];
   }
 
@@ -61,6 +63,7 @@ class ClientPresenter extends EntityPresenter {
   Widget getField({String field, BuildContext context}) {
     final client = entity as ClientEntity;
     final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
     final state = store.state;
 
     switch (field) {
@@ -137,6 +140,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(presentCustomField(context, client.customValue4));
       case ClientFields.routingId:
         return Text(client.routingId);
+      case ClientFields.isTaxExempt:
+        return Text(client.isTaxExempt ? localization.yes : localization.no);
       case ClientFields.publicNotes:
         return TableTooltip(message: client.publicNotes);
       case ClientFields.privateNotes:
