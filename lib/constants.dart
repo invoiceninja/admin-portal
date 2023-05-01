@@ -195,8 +195,8 @@ const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
 const String kTaxCategoryPhysical = '1';
-const String kTaxCategoryDigital = '2';
-const String kTaxCategoryServices = '3';
+const String kTaxCategoryServices = '2';
+const String kTaxCategoryDigital = '3';
 const String kTaxCategoryShipping = '4';
 const String kTaxCategoryExempt = '5';
 const String kTaxCategoryReducedTax = '6';
