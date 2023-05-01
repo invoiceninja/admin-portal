@@ -514,7 +514,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                       },
                       items: kEInvoiceTypes
                           .map((type) => DropdownMenuItem<String>(
-                                child: Text(type),
+                                child: Text(type
+                                    .replaceFirst('_', ' ')
+                                    .replaceAll('_', '.')),
                                 value: type,
                               ))
                           .toList()),

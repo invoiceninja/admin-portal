@@ -105,6 +105,7 @@ class ClientFields {
   static const String shippingCountry = 'shipping_country';
   static const String group = 'group';
   static const String routingId = 'routing_id';
+  static const String isTaxExempt = 'is_tax_exempt';
 }
 
 abstract class ClientEntity extends Object
@@ -154,6 +155,7 @@ abstract class ClientEntity extends Object
       customValue3: '',
       customValue4: '',
       routingId: '',
+      isTaxExempt: false,
       contacts: BuiltList<ClientContactEntity>(
         <ClientContactEntity>[
           ClientContactEntity().rebuild((b) => b..isPrimary = true)
@@ -307,6 +309,9 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'routing_id')
   String get routingId;
+
+  @BuiltValueField(wireName: 'is_tax_exempt')
+  bool get isTaxExempt;
 
   BuiltList<ClientContactEntity> get contacts;
 
@@ -769,6 +774,7 @@ abstract class ClientEntity extends Object
   static void _initializeBuilder(ClientEntityBuilder builder) => builder
     ..number = ''
     ..routingId = ''
+    ..isTaxExempt = false
     ..paymentBalance = 0;
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
