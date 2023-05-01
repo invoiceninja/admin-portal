@@ -263,13 +263,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             keyboardType: TextInputType.phone,
             onSavePressed: _onSavePressed,
           ),
-          if (state.company.settings.enableEInvoice == true)
-            DecoratedFormField(
-              label: localization.routingId,
-              controller: _routingIdController,
-              keyboardType: TextInputType.text,
-              onSavePressed: _onSavePressed,
-            ),
           CustomField(
             controller: _custom1Controller,
             field: CustomFieldType.client1,
@@ -294,6 +287,23 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             value: client.customValue4,
             onSavePressed: _onSavePressed,
           ),
+          if (state.company.settings.enableEInvoice == true) ...[
+            DecoratedFormField(
+              label: localization.routingId,
+              controller: _routingIdController,
+              keyboardType: TextInputType.text,
+              onSavePressed: _onSavePressed,
+            ),
+            SizedBox(height: 20),
+            SwitchListTile(
+              title: Text(localization.taxExempt),
+              value: client.isTaxExempt,
+              onChanged: (value) {
+                viewModel
+                    .onChanged(client.rebuild((b) => b..isTaxExempt = value));
+              },
+            )
+          ]
         ],
       ),
     );

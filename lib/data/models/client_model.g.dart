@@ -218,6 +218,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'routing_id',
       serializers.serialize(object.routingId,
           specifiedType: const FullType(String)),
+      'is_tax_exempt',
+      serializers.serialize(object.isTaxExempt,
+          specifiedType: const FullType(bool)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -450,6 +453,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'routing_id':
           result.routingId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_tax_exempt':
+          result.isTaxExempt = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
@@ -1006,6 +1013,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String routingId;
   @override
+  final bool isTaxExempt;
+  @override
   final BuiltList<ClientContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1075,6 +1084,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue3,
       this.customValue4,
       this.routingId,
+      this.isTaxExempt,
       this.contacts,
       this.activities,
       this.ledger,
@@ -1154,6 +1164,8 @@ class _$ClientEntity extends ClientEntity {
     BuiltValueNullFieldError.checkNotNull(
         routingId, r'ClientEntity', 'routingId');
     BuiltValueNullFieldError.checkNotNull(
+        isTaxExempt, r'ClientEntity', 'isTaxExempt');
+    BuiltValueNullFieldError.checkNotNull(
         contacts, r'ClientEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'ClientEntity', 'activities');
@@ -1220,6 +1232,7 @@ class _$ClientEntity extends ClientEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         routingId == other.routingId &&
+        isTaxExempt == other.isTaxExempt &&
         contacts == other.contacts &&
         activities == other.activities &&
         ledger == other.ledger &&
@@ -1277,6 +1290,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, routingId.hashCode);
+    _$hash = $jc(_$hash, isTaxExempt.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, ledger.hashCode);
@@ -1335,6 +1349,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('routingId', routingId)
+          ..add('isTaxExempt', isTaxExempt)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('ledger', ledger)
@@ -1513,6 +1528,10 @@ class ClientEntityBuilder
   String get routingId => _$this._routingId;
   set routingId(String routingId) => _$this._routingId = routingId;
 
+  bool _isTaxExempt;
+  bool get isTaxExempt => _$this._isTaxExempt;
+  set isTaxExempt(bool isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
+
   ListBuilder<ClientContactEntity> _contacts;
   ListBuilder<ClientContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<ClientContactEntity>();
@@ -1626,6 +1645,7 @@ class ClientEntityBuilder
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
       _routingId = $v.routingId;
+      _isTaxExempt = $v.isTaxExempt;
       _contacts = $v.contacts.toBuilder();
       _activities = $v.activities.toBuilder();
       _ledger = $v.ledger.toBuilder();
@@ -1709,6 +1729,7 @@ class ClientEntityBuilder
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
               routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'ClientEntity', 'routingId'),
+              isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'ClientEntity', 'isTaxExempt'),
               contacts: contacts.build(),
               activities: activities.build(),
               ledger: ledger.build(),
