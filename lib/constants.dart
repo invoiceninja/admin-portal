@@ -224,6 +224,9 @@ const String kEInvoiceTypeXInvoice_1_0 = 'XInvoice_1_0';
 const String kEInvoiceTypeXInvoice_Extended = 'XInvoice-Extended';
 const String kEInvoiceTypeXInvoice_BasicWL = 'XInvoice-BasicWL';
 const String kEInvoiceTypeXInvoice_Basic = 'XInvoice-Basic';
+const String kEInvoiceTypeFacturae_3_2 = 'Facturae_3.2';
+const String kEInvoiceTypeFacturae_3_2_1 = 'Facturae_3.2.1';
+const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
@@ -234,6 +237,9 @@ const kEInvoiceTypes = [
   kEInvoiceTypeXInvoice_Extended,
   kEInvoiceTypeXInvoice_BasicWL,
   kEInvoiceTypeXInvoice_Basic,
+  kEInvoiceTypeFacturae_3_2_2,
+  kEInvoiceTypeFacturae_3_2_1,
+  kEInvoiceTypeFacturae_3_2,
 ];
 
 const String kCountryUnitedStates = '840';
