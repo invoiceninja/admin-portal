@@ -368,6 +368,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       void _onColumnsPressed() {
         multiselectDialog(
           context: context,
+          entityType: widget.entityType,
           onSelected: (selected) {
             final listUIState = store.state.getListState(widget.entityType);
             if (!selected.contains(listUIState.sortField)) {
