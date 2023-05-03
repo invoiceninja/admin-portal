@@ -44,7 +44,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final listUIState = state.uiState.companyGatewayUIState.listUIState;
+    final listUIState = state.uiState.taskStatusUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final viewModel = widget.viewModel;
 
@@ -77,10 +77,10 @@ class _TaskStatusListState extends State<TaskStatusList> {
 
               widget.viewModel.onSortChanged(oldIndex, newIndex);
             },
-            children: viewModel.taskStatusList.map((companyGatewayId) {
-              final taskStatus = viewModel.taskStatusMap[companyGatewayId];
+            children: viewModel.taskStatusList.map((taskStatusId) {
+              final taskStatus = viewModel.taskStatusMap[taskStatusId];
               return TaskStatusListItem(
-                  key: ValueKey('__task_status_$companyGatewayId'),
+                  key: ValueKey('__task_status_$taskStatusId'),
                   user: state.userCompany.user,
                   filter: viewModel.filter,
                   taskStatus: taskStatus,

@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/task_status/task_status_list_vm.dart';
@@ -34,6 +37,7 @@ class TaskStatusScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.taskStatusUIState.listUIState;
 
     return ListScaffold(
       entityType: EntityType.taskStatus,
@@ -59,6 +63,25 @@ class TaskStatusScreen extends StatelessWidget {
           store.dispatch(StartTaskStatusMultiselect());
         }
       },
+      appBarActions: [
+        if (viewModel.isInMultiselect)
+          TextButton(
+              onPressed: () async {
+                final taskStatusIds = listUIState.selectedIds
+                    .map<TaskStatusEntity>(
+                        (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
+                    .toList();
+
+                await showEntityActionsDialog(
+                  entities: taskStatusIds,
+                  multiselect: true,
+                  completer: Completer<Null>()
+                    ..future.then<dynamic>(
+                        (_) => store.dispatch(ClearTaskStatusMultiselect())),
+                );
+              },
+              child: Text(localization.actions)),
+      ],
       body: TaskStatusListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taskStatus,
