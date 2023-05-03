@@ -94,11 +94,7 @@ class TaskStatusScreen extends StatelessWidget {
         onSelectedSortField: (value) {
           store.dispatch(SortTaskStatuses(value));
         },
-        sortFields: [
-          TaskStatusFields.name,
-          TaskStatusFields.order,
-          TaskStatusFields.updatedAt,
-        ],
+        sortFields: [],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTaskStatusesByState(state));
         },
