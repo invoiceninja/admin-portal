@@ -83,7 +83,7 @@ List<String> filteredCompanyGatewaysSelector(
     });
   }
 
-  return gatewaysIds;
+  return gatewaysIds.toSet().toList();
 }
 
 var memoizedCalculateCompanyGatewayProcessed = memo2(
