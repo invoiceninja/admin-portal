@@ -77,6 +77,10 @@ class TaskStatusListVM {
         final taskStatus = state.taskStatusState.get(taskStatusId);
 
         store.dispatch(SaveTaskStatusRequest(
+            completer: snackBarCompleter<TaskStatusEntity>(
+                navigatorKey.currentContext,
+                AppLocalization.of(navigatorKey.currentContext)
+                    .updatedTaskStatus),
             taskStatus: taskStatus.rebuild((b) => b..statusOrder = newIndex)));
       },
     );

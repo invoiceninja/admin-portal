@@ -57,38 +57,44 @@ class _TaskStatusListState extends State<TaskStatusList> {
           child: HelpText(AppLocalization.of(context).noRecordsFound));
     }
 
-    return RefreshIndicator(
-      onRefresh: () => widget.viewModel.onRefreshed(context),
-      child: ReorderableListView(
-        scrollController: _controller,
-        onReorder: (oldIndex, newIndex) {
-          // https://stackoverflow.com/a/54164333/497368
-          // These two lines are workarounds for ReorderableListView problems
-          if (newIndex > widget.viewModel.taskStatusList.length) {
-            newIndex = widget.viewModel.taskStatusList.length;
-          }
-          if (oldIndex < newIndex) {
-            newIndex--;
-          }
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        if (state.isSaving) LinearProgressIndicator(),
+        RefreshIndicator(
+          onRefresh: () => widget.viewModel.onRefreshed(context),
+          child: ReorderableListView(
+            scrollController: _controller,
+            onReorder: (oldIndex, newIndex) {
+              // https://stackoverflow.com/a/54164333/497368
+              // These two lines are workarounds for ReorderableListView problems
+              if (newIndex > widget.viewModel.taskStatusList.length) {
+                newIndex = widget.viewModel.taskStatusList.length;
+              }
+              if (oldIndex < newIndex) {
+                newIndex--;
+              }
 
-          widget.viewModel.onSortChanged(oldIndex, newIndex);
-        },
-        children: viewModel.taskStatusList.map((companyGatewayId) {
-          final taskStatus = viewModel.taskStatusMap[companyGatewayId];
-          return TaskStatusListItem(
-              key: ValueKey('__task_status_$companyGatewayId'),
-              user: state.userCompany.user,
-              filter: viewModel.filter,
-              taskStatus: taskStatus,
-              /*
-              onRemovePressed: widget.viewModel.state.settingsUIState.isFiltered
-                  ? () => widget.viewModel.onRemovePressed(companyGatewayId)
-                  : null,
-                  */
-              isChecked:
-                  isInMultiselect && listUIState.isSelected(taskStatus.id));
-        }).toList(),
-      ),
+              widget.viewModel.onSortChanged(oldIndex, newIndex);
+            },
+            children: viewModel.taskStatusList.map((companyGatewayId) {
+              final taskStatus = viewModel.taskStatusMap[companyGatewayId];
+              return TaskStatusListItem(
+                  key: ValueKey('__task_status_$companyGatewayId'),
+                  user: state.userCompany.user,
+                  filter: viewModel.filter,
+                  taskStatus: taskStatus,
+                  /*
+                onRemovePressed: widget.viewModel.state.settingsUIState.isFiltered
+                    ? () => widget.viewModel.onRemovePressed(companyGatewayId)
+                    : null,
+                    */
+                  isChecked:
+                      isInMultiselect && listUIState.isSelected(taskStatus.id));
+            }).toList(),
+          ),
+        ),
+      ],
     );
   }
 }
