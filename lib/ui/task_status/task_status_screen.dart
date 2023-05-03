@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
@@ -65,22 +66,24 @@ class TaskStatusScreen extends StatelessWidget {
       },
       appBarActions: [
         if (viewModel.isInMultiselect)
-          TextButton(
-              onPressed: () async {
-                final taskStatusIds = listUIState.selectedIds
-                    .map<TaskStatusEntity>(
-                        (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
-                    .toList();
+          AppTextButton(
+            isInHeader: true,
+            onPressed: () async {
+              final taskStatusIds = listUIState.selectedIds
+                  .map<TaskStatusEntity>(
+                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
+                  .toList();
 
-                await showEntityActionsDialog(
-                  entities: taskStatusIds,
-                  multiselect: true,
-                  completer: Completer<Null>()
-                    ..future.then<dynamic>(
-                        (_) => store.dispatch(ClearTaskStatusMultiselect())),
-                );
-              },
-              child: Text(localization.actions)),
+              await showEntityActionsDialog(
+                entities: taskStatusIds,
+                multiselect: true,
+                completer: Completer<Null>()
+                  ..future.then<dynamic>(
+                      (_) => store.dispatch(ClearTaskStatusMultiselect())),
+              );
+            },
+            label: localization.actions,
+          ),
       ],
       body: TaskStatusListBuilder(),
       bottomNavigationBar: AppBottomBar(

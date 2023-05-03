@@ -63,36 +63,40 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
         if (state.isSaving) LinearProgressIndicator(),
         RefreshIndicator(
           onRefresh: () => widget.viewModel.onRefreshed(context),
-          child: ReorderableListView(
-            scrollController: _controller,
-            onReorder: (oldIndex, newIndex) {
-              // https://stackoverflow.com/a/54164333/497368
-              // These two lines are workarounds for ReorderableListView problems
-              if (newIndex > widget.viewModel.companyGatewayList.length) {
-                newIndex = widget.viewModel.companyGatewayList.length;
-              }
-              if (oldIndex < newIndex) {
-                newIndex--;
-              }
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: ReorderableListView(
+              scrollController: _controller,
+              onReorder: (oldIndex, newIndex) {
+                // https://stackoverflow.com/a/54164333/497368
+                // These two lines are workarounds for ReorderableListView problems
+                if (newIndex > widget.viewModel.companyGatewayList.length) {
+                  newIndex = widget.viewModel.companyGatewayList.length;
+                }
+                if (oldIndex < newIndex) {
+                  newIndex--;
+                }
 
-              widget.viewModel.onSortChanged(oldIndex, newIndex);
-            },
-            children:
-                widget.viewModel.companyGatewayList.map((companyGatewayId) {
-              final companyGateway =
-                  widget.viewModel.companyGatewayMap[companyGatewayId];
-              return CompanyGatewayListItem(
-                  key: ValueKey('__company_gateway_$companyGatewayId'),
-                  user: state.userCompany.user,
-                  filter: widget.viewModel.filter,
-                  companyGateway: companyGateway,
-                  onRemovePressed: widget
-                          .viewModel.state.settingsUIState.isFiltered
-                      ? () => widget.viewModel.onRemovePressed(companyGatewayId)
-                      : null,
-                  isChecked: isInMultiselect &&
-                      listUIState.isSelected(companyGateway.id));
-            }).toList(),
+                widget.viewModel.onSortChanged(oldIndex, newIndex);
+              },
+              children:
+                  widget.viewModel.companyGatewayList.map((companyGatewayId) {
+                final companyGateway =
+                    widget.viewModel.companyGatewayMap[companyGatewayId];
+                return CompanyGatewayListItem(
+                    key: ValueKey('__company_gateway_$companyGatewayId'),
+                    user: state.userCompany.user,
+                    filter: widget.viewModel.filter,
+                    companyGateway: companyGateway,
+                    onRemovePressed: widget
+                            .viewModel.state.settingsUIState.isFiltered
+                        ? () =>
+                            widget.viewModel.onRemovePressed(companyGatewayId)
+                        : null,
+                    isChecked: isInMultiselect &&
+                        listUIState.isSelected(companyGateway.id));
+              }).toList(),
+            ),
           ),
         ),
       ],
