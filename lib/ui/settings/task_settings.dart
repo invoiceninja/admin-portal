@@ -143,8 +143,8 @@ class _TaskSettingsState extends State<TaskSettings> {
           ]),
           if (!viewModel.state.settingsUIState.isFiltered)
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 0, bottom: 8, right: 20, left: 20),
+              padding: const EdgeInsets.only(
+                  top: 0, bottom: 10, right: 16, left: 16),
               child: AppButton(
                 iconData: Icons.settings,
                 label: localization.configureStatuses.toUpperCase(),
