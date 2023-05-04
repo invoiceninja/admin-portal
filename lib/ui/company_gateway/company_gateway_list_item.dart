@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
-import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -50,63 +49,69 @@ class CompanyGatewayListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
+    final child = ListTile(
+      onTap: () => selectEntity(entity: companyGateway),
+      trailing: onRemovePressed == null
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: AppTextButton(
+                label: AppLocalization.of(context).remove,
+                onPressed: onRemovePressed,
+              ),
+            ),
+      leading: showCheckbox
+          ? IgnorePointer(
+              ignoring: listUIState.isInMultiselect(),
+              child: Checkbox(
+                value: isChecked,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onChanged: (value) => onCheckboxChanged(value),
+                activeColor: Theme.of(context).colorScheme.secondary,
+              ),
+            )
+          : null,
+      title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                companyGateway.listDisplayName,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Text(formatNumber(companyGateway.listDisplayAmount, context),
+                style: Theme.of(context).textTheme.titleMedium),
+          ],
+        ),
+      ),
+      subtitle: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          if (companyGateway.isTestMode) Text(localization.testMode),
+          subtitle != null && subtitle.isNotEmpty
+              ? Text(
+                  subtitle,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : Container(),
+          EntityStateLabel(companyGateway),
+        ],
+      ),
+    );
+
+    return child;
+
+    /*
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: companyGateway,
       isSelected: false,
-      child: ListTile(
-        onTap: () => selectEntity(entity: companyGateway),
-        trailing: onRemovePressed == null
-            ? null
-            : Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: AppTextButton(
-                  label: AppLocalization.of(context).remove,
-                  onPressed: onRemovePressed,
-                ),
-              ),
-        leading: showCheckbox
-            ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
-                child: Checkbox(
-                  value: isChecked,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                ),
-              )
-            : null,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  companyGateway.listDisplayName,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              Text(formatNumber(companyGateway.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.titleMedium),
-            ],
-          ),
-        ),
-        subtitle: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            if (companyGateway.isTestMode) Text(localization.testMode),
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
-            EntityStateLabel(companyGateway),
-          ],
-        ),
-      ),
+      child: child,
     );
+    */
   }
 }

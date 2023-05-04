@@ -103,8 +103,10 @@ List<String> filteredTaskStatusesSelector(
   list.sort((taskStatusAId, taskStatusBId) {
     return taskStatusMap[taskStatusAId].compareTo(
       taskStatus: taskStatusMap[taskStatusBId],
-      sortField: taskStatusListState.sortField,
-      sortAscending: taskStatusListState.sortAscending,
+      //sortField: taskStatusListState.sortField,
+      //sortAscending: taskStatusListState.sortAscending,
+      sortField: TaskStatusFields.order,
+      sortAscending: true,
     );
   });
 

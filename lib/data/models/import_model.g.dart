@@ -46,6 +46,7 @@ final BuiltSet<ImportType> _$typeValues =
   _$zoho,
 ]);
 
+const ExportType _$activities = const ExportType._('activities');
 const ExportType _$clients = const ExportType._('clients');
 const ExportType _$client_contacts = const ExportType._('client_contacts');
 const ExportType _$credits = const ExportType._('credits');
@@ -64,6 +65,8 @@ const ExportType _$profitloss = const ExportType._('profitloss');
 
 ExportType _$exportValueOf(String name) {
   switch (name) {
+    case 'activities':
+      return _$activities;
     case 'clients':
       return _$clients;
     case 'client_contacts':
@@ -99,6 +102,7 @@ ExportType _$exportValueOf(String name) {
 
 final BuiltSet<ExportType> _$exportValues =
     new BuiltSet<ExportType>(const <ExportType>[
+  _$activities,
   _$clients,
   _$client_contacts,
   _$credits,

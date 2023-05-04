@@ -315,6 +315,8 @@ abstract class InvoiceEntity extends Object
         ..lineItems.replace(lineItems
             .where((lineItem) =>
                 lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
+            .map((lineItem) => lineItem
+                .rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
             .toList())
         ..invitations.replace(
           invitations

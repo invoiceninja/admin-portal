@@ -822,7 +822,7 @@ abstract class GatewayEntity extends Object
       .isNotEmpty;
 
   bool supportsRefunds(String gatewayTypeId) =>
-      options[gatewayTypeId].supportRefunds;
+      options[gatewayTypeId]?.supportRefunds ?? false;
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);

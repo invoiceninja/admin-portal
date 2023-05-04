@@ -61,7 +61,7 @@ bool supportsLatestFeatures() {
 
   return false;
   return Version.parse(state.account.currentVersion) >=
-      Version.parse('5.5.106');
+      Version.parse('5.5.110');
 }
 
 bool supportsInAppPurchase() {

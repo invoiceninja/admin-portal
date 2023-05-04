@@ -8,23 +8,23 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_list_item.dart';
+import 'package:invoiceninja_flutter/ui/task_status/task_status_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class CompanyGatewayList extends StatefulWidget {
-  const CompanyGatewayList({
+class TaskStatusList extends StatefulWidget {
+  const TaskStatusList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final CompanyGatewayListVM viewModel;
+  final TaskStatusListVM viewModel;
 
   @override
-  _CompanyGatewayListState createState() => _CompanyGatewayListState();
+  _TaskStatusListState createState() => _TaskStatusListState();
 }
 
-class _CompanyGatewayListState extends State<CompanyGatewayList> {
+class _TaskStatusListState extends State<TaskStatusList> {
   // TODO remove this https://github.com/flutter/flutter/issues/71946
   ScrollController _controller;
 
@@ -44,7 +44,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final listUIState = state.uiState.companyGatewayUIState.listUIState;
+    final listUIState = state.uiState.taskStatusUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final viewModel = widget.viewModel;
 
@@ -52,7 +52,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
       return LoadingIndicator();
     }
 
-    if (viewModel.companyGatewayList.isEmpty) {
+    if (viewModel.taskStatusList.isEmpty) {
       return Center(
           child: HelpText(AppLocalization.of(context).noRecordsFound));
     }
@@ -66,12 +66,13 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: ReorderableListView(
+              buildDefaultDragHandles: false ? false : false,
               scrollController: _controller,
               onReorder: (oldIndex, newIndex) {
                 // https://stackoverflow.com/a/54164333/497368
                 // These two lines are workarounds for ReorderableListView problems
-                if (newIndex > widget.viewModel.companyGatewayList.length) {
-                  newIndex = widget.viewModel.companyGatewayList.length;
+                if (newIndex > widget.viewModel.taskStatusList.length) {
+                  newIndex = widget.viewModel.taskStatusList.length;
                 }
                 if (oldIndex < newIndex) {
                   newIndex--;
@@ -79,22 +80,20 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
 
                 widget.viewModel.onSortChanged(oldIndex, newIndex);
               },
-              children:
-                  widget.viewModel.companyGatewayList.map((companyGatewayId) {
-                final companyGateway =
-                    widget.viewModel.companyGatewayMap[companyGatewayId];
-                return CompanyGatewayListItem(
-                    key: ValueKey('__company_gateway_$companyGatewayId'),
+              children: viewModel.taskStatusList.map((taskStatusId) {
+                final taskStatus = viewModel.taskStatusMap[taskStatusId];
+                return TaskStatusListItem(
+                    key: ValueKey('__task_status_$taskStatusId'),
                     user: state.userCompany.user,
-                    filter: widget.viewModel.filter,
-                    companyGateway: companyGateway,
-                    onRemovePressed: widget
-                            .viewModel.state.settingsUIState.isFiltered
-                        ? () =>
-                            widget.viewModel.onRemovePressed(companyGatewayId)
-                        : null,
+                    filter: viewModel.filter,
+                    taskStatus: taskStatus,
+                    /*
+                  onRemovePressed: widget.viewModel.state.settingsUIState.isFiltered
+                      ? () => widget.viewModel.onRemovePressed(companyGatewayId)
+                      : null,
+                      */
                     isChecked: isInMultiselect &&
-                        listUIState.isSelected(companyGateway.id));
+                        listUIState.isSelected(taskStatus.id));
               }).toList(),
             ),
           ),
