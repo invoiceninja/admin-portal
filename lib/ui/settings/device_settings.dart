@@ -368,6 +368,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
             primary: true,
             children: [
               FormCard(children: [
+                /*
                 SwitchListTile(
                   title: Text(localization.darkMode),
                   value: prefState.enableDarkMode,
@@ -377,8 +378,31 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       ? Icons.lightbulb_outline
                       : MdiIcons.themeLightDark),
                   activeColor: Theme.of(context).colorScheme.secondary,
-                ),
+                ),                
                 SizedBox(height: 16),
+                */
+                AppDropdownButton<String>(
+                    labelText: localization.lightDarkMode,
+                    value: prefState.darkModeType,
+                    onChanged: (dynamic brightness) {
+                      viewModel.onDarkModeChanged(context, brightness);
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(
+                          '${localization.system} (${prefState.enableDarkModeSystem ? localization.dark : localization.light})',
+                        ),
+                        value: kBrightnessSytem,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.light),
+                        value: kBrightnessLight,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.dark),
+                        value: kBrightnessDark,
+                      ),
+                    ]),
                 AppDropdownButton<String>(
                   labelText: localization.statusColorTheme,
                   value: state.prefState.colorTheme,

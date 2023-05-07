@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/data/models/static/color_theme_model.dart';
 part 'pref_state.g.dart';
 
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
-  factory PrefState({ModuleLayout moduleLayout}) {
+  factory PrefState() {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.table,
@@ -26,7 +26,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       rowsPerPage: 10,
       isMenuVisible: true,
       isHistoryVisible: false,
-      enableDarkMode: false,
+      darkModeType: kBrightnessSytem,
+      enableDarkModeSystem: false,
       enableFlexibleSearch: false,
       editAfterSaving: true,
       requireAuthentication: false,
@@ -131,7 +132,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isHistoryVisible;
 
-  bool get enableDarkMode;
+  String get darkModeType;
+
+  bool get enableDarkModeSystem;
 
   bool get isFilterVisible;
 
@@ -168,6 +171,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   double get textScaleFactor;
 
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
+
+  bool get enableDarkMode => darkModeType == kBrightnessSytem
+      ? enableDarkModeSystem
+      : darkModeType == kBrightnessDark;
 
   ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
       ? colorThemesMap[colorTheme]
@@ -238,7 +245,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..useSidebarViewer.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
-    ..customColors.replace(builder.enableDarkMode == true
+    ..customColors.replace(builder.darkModeType == kBrightnessDark
         ? BuiltMap<String, String>()
         : BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
     ..showKanban = false
@@ -260,8 +267,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..enableTooltips = true
     ..enableNativeBrowser = false
     ..textScaleFactor = 1
-    ..colorTheme =
-        builder.enableDarkMode == true ? kColorThemeLight : kColorThemeLight;
+    ..colorTheme = builder.darkModeType == kBrightnessDark
+        ? kColorThemeDark
+        : kColorThemeLight;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

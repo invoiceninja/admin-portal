@@ -156,7 +156,8 @@ class UpdateUserPreferences implements PersistPrefs {
     this.appLayout,
     this.moduleLayout,
     this.sidebar,
-    this.enableDarkMode,
+    this.darkModeType,
+    this.enableDarkModeSystem,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
     this.textScaleFactor,
@@ -187,7 +188,8 @@ class UpdateUserPreferences implements PersistPrefs {
   final AppSidebar sidebar;
   final AppSidebarMode menuMode;
   final AppSidebarMode historyMode;
-  final bool enableDarkMode;
+  final String darkModeType;
+  final bool enableDarkModeSystem;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
   final bool isPreviewVisible;

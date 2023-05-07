@@ -165,8 +165,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'isHistoryVisible',
       serializers.serialize(object.isHistoryVisible,
           specifiedType: const FullType(bool)),
-      'enableDarkMode',
-      serializers.serialize(object.enableDarkMode,
+      'darkModeType',
+      serializers.serialize(object.darkModeType,
+          specifiedType: const FullType(String)),
+      'enableDarkModeSystem',
+      serializers.serialize(object.enableDarkModeSystem,
           specifiedType: const FullType(bool)),
       'isFilterVisible',
       serializers.serialize(object.isFilterVisible,
@@ -316,8 +319,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.isHistoryVisible = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'enableDarkMode':
-          result.enableDarkMode = serializers.deserialize(value,
+        case 'darkModeType':
+          result.darkModeType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'enableDarkModeSystem':
+          result.enableDarkModeSystem = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'isFilterVisible':
@@ -665,7 +672,9 @@ class _$PrefState extends PrefState {
   @override
   final bool isHistoryVisible;
   @override
-  final bool enableDarkMode;
+  final String darkModeType;
+  @override
+  final bool enableDarkModeSystem;
   @override
   final bool isFilterVisible;
   @override
@@ -725,7 +734,8 @@ class _$PrefState extends PrefState {
       this.enableTouchEvents,
       this.enableFlexibleSearch,
       this.isHistoryVisible,
-      this.enableDarkMode,
+      this.darkModeType,
+      this.enableDarkModeSystem,
       this.isFilterVisible,
       this.persistData,
       this.persistUI,
@@ -778,7 +788,9 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         isHistoryVisible, r'PrefState', 'isHistoryVisible');
     BuiltValueNullFieldError.checkNotNull(
-        enableDarkMode, r'PrefState', 'enableDarkMode');
+        darkModeType, r'PrefState', 'darkModeType');
+    BuiltValueNullFieldError.checkNotNull(
+        enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem');
     BuiltValueNullFieldError.checkNotNull(
         isFilterVisible, r'PrefState', 'isFilterVisible');
     BuiltValueNullFieldError.checkNotNull(
@@ -845,7 +857,8 @@ class _$PrefState extends PrefState {
         enableTouchEvents == other.enableTouchEvents &&
         enableFlexibleSearch == other.enableFlexibleSearch &&
         isHistoryVisible == other.isHistoryVisible &&
-        enableDarkMode == other.enableDarkMode &&
+        darkModeType == other.darkModeType &&
+        enableDarkModeSystem == other.enableDarkModeSystem &&
         isFilterVisible == other.isFilterVisible &&
         persistData == other.persistData &&
         persistUI == other.persistUI &&
@@ -888,7 +901,8 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, enableTouchEvents.hashCode);
     _$hash = $jc(_$hash, enableFlexibleSearch.hashCode);
     _$hash = $jc(_$hash, isHistoryVisible.hashCode);
-    _$hash = $jc(_$hash, enableDarkMode.hashCode);
+    _$hash = $jc(_$hash, darkModeType.hashCode);
+    _$hash = $jc(_$hash, enableDarkModeSystem.hashCode);
     _$hash = $jc(_$hash, isFilterVisible.hashCode);
     _$hash = $jc(_$hash, persistData.hashCode);
     _$hash = $jc(_$hash, persistUI.hashCode);
@@ -931,7 +945,8 @@ class _$PrefState extends PrefState {
           ..add('enableTouchEvents', enableTouchEvents)
           ..add('enableFlexibleSearch', enableFlexibleSearch)
           ..add('isHistoryVisible', isHistoryVisible)
-          ..add('enableDarkMode', enableDarkMode)
+          ..add('darkModeType', darkModeType)
+          ..add('enableDarkModeSystem', enableDarkModeSystem)
           ..add('isFilterVisible', isFilterVisible)
           ..add('persistData', persistData)
           ..add('persistUI', persistUI)
@@ -1040,10 +1055,14 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set isHistoryVisible(bool isHistoryVisible) =>
       _$this._isHistoryVisible = isHistoryVisible;
 
-  bool _enableDarkMode;
-  bool get enableDarkMode => _$this._enableDarkMode;
-  set enableDarkMode(bool enableDarkMode) =>
-      _$this._enableDarkMode = enableDarkMode;
+  String _darkModeType;
+  String get darkModeType => _$this._darkModeType;
+  set darkModeType(String darkModeType) => _$this._darkModeType = darkModeType;
+
+  bool _enableDarkModeSystem;
+  bool get enableDarkModeSystem => _$this._enableDarkModeSystem;
+  set enableDarkModeSystem(bool enableDarkModeSystem) =>
+      _$this._enableDarkModeSystem = enableDarkModeSystem;
 
   bool _isFilterVisible;
   bool get isFilterVisible => _$this._isFilterVisible;
@@ -1161,7 +1180,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _enableTouchEvents = $v.enableTouchEvents;
       _enableFlexibleSearch = $v.enableFlexibleSearch;
       _isHistoryVisible = $v.isHistoryVisible;
-      _enableDarkMode = $v.enableDarkMode;
+      _darkModeType = $v.darkModeType;
+      _enableDarkModeSystem = $v.enableDarkModeSystem;
       _isFilterVisible = $v.isFilterVisible;
       _persistData = $v.persistData;
       _persistUI = $v.persistUI;
@@ -1229,7 +1249,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               enableTouchEvents: BuiltValueNullFieldError.checkNotNull(enableTouchEvents, r'PrefState', 'enableTouchEvents'),
               enableFlexibleSearch: BuiltValueNullFieldError.checkNotNull(enableFlexibleSearch, r'PrefState', 'enableFlexibleSearch'),
               isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, r'PrefState', 'isHistoryVisible'),
-              enableDarkMode: BuiltValueNullFieldError.checkNotNull(enableDarkMode, r'PrefState', 'enableDarkMode'),
+              darkModeType: BuiltValueNullFieldError.checkNotNull(darkModeType, r'PrefState', 'darkModeType'),
+              enableDarkModeSystem: BuiltValueNullFieldError.checkNotNull(enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, r'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, r'PrefState', 'persistData'),
               persistUI: BuiltValueNullFieldError.checkNotNull(persistUI, r'PrefState', 'persistUI'),

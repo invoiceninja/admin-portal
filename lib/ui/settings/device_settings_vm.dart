@@ -74,11 +74,12 @@ class DeviceSettingsVM {
             context, AppLocalization.of(context).endedAllSessions);
         store.dispatch(UserLogoutAll(completer: completer));
       },
-      onDarkModeChanged: (BuildContext context, bool value) async {
+      onDarkModeChanged: (BuildContext context, String value) async {
         store.dispatch(UpdateUserPreferences(
-            enableDarkMode: value,
-            colorTheme: value ? kColorThemeDark : kColorThemeLight,
-            customColors: value
+            darkModeType: value,
+            colorTheme:
+                value == kBrightnessDark ? kColorThemeDark : kColorThemeLight,
+            customColors: value == kBrightnessDark
                 ? BuiltMap<String, String>()
                 : BuiltMap<String, String>(PrefState.CONTRAST_COLORS)));
         store.dispatch(UpdatedSetting());
@@ -205,7 +206,7 @@ class DeviceSettingsVM {
   final AppState state;
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext) onLogoutTap;
-  final Function(BuildContext, bool) onDarkModeChanged;
+  final Function(BuildContext, String) onDarkModeChanged;
   final Function(BuildContext, BuiltMap<String, String>) onCustomColorsChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;

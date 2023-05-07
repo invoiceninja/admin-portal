@@ -172,6 +172,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   void initState() {
     super.initState();
 
+    final window = WidgetsBinding.instance.window;
+    window.onPlatformBrightnessChanged = () {
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      widget.store.dispatch(UpdateUserPreferences(
+          enableDarkModeSystem: window.platformBrightness == Brightness.dark));
+      setState(() {});
+    };
+
     if (kIsWeb) {
       WebUtils.warnChanges(widget.store);
     }

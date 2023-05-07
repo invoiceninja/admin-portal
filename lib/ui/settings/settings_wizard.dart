@@ -257,20 +257,26 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final darkMode = LayoutBuilder(builder: (context, constraints) {
       return ToggleButtons(
         children: [
+          Text(localization.system),
           Text(localization.light),
           Text(localization.dark),
         ],
         constraints: BoxConstraints.expand(
-            width: (constraints.maxWidth / 2) - 2, height: 40),
+            width: (constraints.maxWidth / 3) - 2, height: 40),
         isSelected: [
-          !state.prefState.enableDarkMode,
-          state.prefState.enableDarkMode,
+          state.prefState.darkModeType == kBrightnessSytem,
+          state.prefState.darkModeType == kBrightnessLight,
+          state.prefState.darkModeType == kBrightnessDark,
         ],
         onPressed: (index) {
-          final isDark = index == 1;
+          final isDark = index == 2;
           store.dispatch(
             UpdateUserPreferences(
-              enableDarkMode: isDark,
+              darkModeType: index == 0
+                  ? kBrightnessSytem
+                  : index == 1
+                      ? kBrightnessLight
+                      : kBrightnessDark,
               colorTheme: isDark ? kColorThemeDark : kColorThemeLight,
               customColors: isDark
                   ? BuiltMap<String, String>()

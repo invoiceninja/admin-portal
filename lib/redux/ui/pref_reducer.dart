@@ -76,7 +76,9 @@ PrefState prefReducer(
     ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
-    ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..darkModeType = darkModeTypeReducer(state.darkModeType, action)
+    ..enableDarkModeSystem =
+        darkModeSystemReducer(state.enableDarkModeSystem, action)
     ..enableTooltips = enableTooltipsReducer(state.enableTooltips, action)
     ..enableFlexibleSearch =
         enableFlexibleSearchReducer(state.enableFlexibleSearch, action)
@@ -337,9 +339,15 @@ Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
   }),
 ]);
 
-Reducer<bool> darkModeReducer = combineReducers([
+Reducer<String> darkModeTypeReducer = combineReducers([
+  TypedReducer<String, UpdateUserPreferences>((enableDarkMode, action) {
+    return action.darkModeType ?? enableDarkMode;
+  }),
+]);
+
+Reducer<bool> darkModeSystemReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
-    return action.enableDarkMode ?? enableDarkMode;
+    return action.enableDarkModeSystem ?? enableDarkMode;
   }),
 ]);
 
