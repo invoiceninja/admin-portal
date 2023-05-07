@@ -47,6 +47,7 @@ class ExpenseListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final expenseUIState = uiState.expenseUIState;
+    final listUIState = expenseUIState.listUIState;
     final client = state.clientState.get(expense.clientId);
     final vendor = state.vendorState.get(expense.vendorId);
     final category = state.expenseCategoryState.get(expense.categoryId);
@@ -111,6 +112,7 @@ class ExpenseListItem extends StatelessWidget {
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: IgnorePointer(
+                                  ignoring: listUIState.isInMultiselect(),
                                   child: Checkbox(
                                     value: isChecked,
                                     materialTapTargetSize:
@@ -192,6 +194,7 @@ class ExpenseListItem extends StatelessWidget {
                     : selectEntity(entity: expense, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
+                        ignoring: listUIState.isInMultiselect(),
                         child: Checkbox(
                           value: isChecked,
                           materialTapTargetSize:
