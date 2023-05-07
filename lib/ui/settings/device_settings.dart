@@ -95,7 +95,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
         automaticallyImplyLeading: isMobile(context),
         title: Text(localization.deviceSettings),
         bottom: TabBar(
-          key: ValueKey(state.settingsUIState.updatedAt),
+          key: ValueKey(
+              '__settings_updated_${state.settingsUIState.updatedAt}__'),
           controller: _controller,
           isScrollable: false,
           tabs: [
@@ -369,19 +370,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
             primary: true,
             children: [
               FormCard(children: [
-                /*
-                SwitchListTile(
-                  title: Text(localization.darkMode),
-                  value: prefState.enableDarkMode,
-                  onChanged: (value) =>
-                      viewModel.onDarkModeChanged(context, value),
-                  secondary: Icon(kIsWeb
-                      ? Icons.lightbulb_outline
-                      : MdiIcons.themeLightDark),
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                ),                
-                SizedBox(height: 16),
-                */
                 AppDropdownButton<String>(
                     labelText: localization.lightDarkMode,
                     value: prefState.darkModeType,

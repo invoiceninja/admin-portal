@@ -76,7 +76,6 @@ class DeviceSettingsVM {
       },
       onDarkModeChanged: (BuildContext context, String value) async {
         store.dispatch(UpdateUserPreferences(darkModeType: value));
-        store.dispatch(UpdatedSetting());
         AppBuilder.of(context).rebuild();
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
@@ -189,7 +188,7 @@ class DeviceSettingsVM {
         } else {
           store.dispatch(UpdateUserPreferences(customColors: customColors));
         }
-        store.dispatch(UpdatedSetting());
+        store.dispatch(UpdatedSettingUI());
       },
       onPersistDataChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(persistData: value));
