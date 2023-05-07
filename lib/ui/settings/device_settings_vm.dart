@@ -189,7 +189,6 @@ class DeviceSettingsVM {
         } else {
           store.dispatch(UpdateUserPreferences(customColors: customColors));
         }
-
         store.dispatch(UpdatedSetting());
       },
       onPersistDataChanged: (context, value) {
