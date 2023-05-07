@@ -19,6 +19,7 @@ enum RecurringInvoiceReportFields {
   converted_amount,
   client,
   client_number,
+  client_id_number,
   client_balance,
   client_address1,
   client_address2,
@@ -375,6 +376,9 @@ ReportResult recurringInvoiceReport(
           break;
         case RecurringInvoiceReportFields.client_number:
           value = client.number;
+          break;
+        case RecurringInvoiceReportFields.client_id_number:
+          value = client.idNumber;
           break;
         case RecurringInvoiceReportFields.due_on:
           if (invoice.dueDateDays == 'terms') {

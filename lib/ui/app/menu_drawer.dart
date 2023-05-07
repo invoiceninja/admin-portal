@@ -73,8 +73,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final company = widget.viewModel.selectedCompany;
-    final inactiveColor = state.prefState
-            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor = state.prefState.activeCustomColors[
+            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
 
     if (company == null) {
@@ -345,7 +345,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     ? SizedBox()
                     : Theme(
                         data: state.prefState.enableDarkMode ||
-                                (state.prefState.customColors[PrefState
+                                (state.prefState.activeCustomColors[PrefState
                                             .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
                                         '')
                                     .isNotEmpty
@@ -789,17 +789,18 @@ class _DrawerTileState extends State<DrawerTile> {
         ? widget.entityType == uiState.filterEntityType
         : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');
 
-    final inactiveColor = prefState
-            .customColors[PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor = prefState.activeCustomColors[
+            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
-    final inactiveFontColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
-            '';
-    final activeColor = prefState
-            .customColors[PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+    final inactiveFontColor = prefState
+            .activeCustomColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
         '';
-    final activeFontColor =
-        prefState.customColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ?? '';
+    final activeColor = prefState.activeCustomColors[
+            PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+        '';
+    final activeFontColor = prefState
+            .activeCustomColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
+        '';
 
     Color color = Colors.transparent;
     Color textColor = Theme.of(context)

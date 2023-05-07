@@ -156,7 +156,8 @@ class UpdateUserPreferences implements PersistPrefs {
     this.appLayout,
     this.moduleLayout,
     this.sidebar,
-    this.enableDarkMode,
+    this.darkModeType,
+    this.enableDarkModeSystem,
     this.requireAuthentication,
     this.longPressSelectionIsDefault,
     this.textScaleFactor,
@@ -168,7 +169,9 @@ class UpdateUserPreferences implements PersistPrefs {
     this.isFilterVisible,
     this.rowsPerPage,
     this.colorTheme,
+    this.darkColorTheme,
     this.customColors,
+    this.darkCustomColors,
     this.persistData,
     this.persistUi,
     this.tapSelectedToEdit,
@@ -187,7 +190,8 @@ class UpdateUserPreferences implements PersistPrefs {
   final AppSidebar sidebar;
   final AppSidebarMode menuMode;
   final AppSidebarMode historyMode;
-  final bool enableDarkMode;
+  final String darkModeType;
+  final bool enableDarkModeSystem;
   final bool longPressSelectionIsDefault;
   final bool requireAuthentication;
   final bool isPreviewVisible;
@@ -196,6 +200,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final String accentColor;
   final int rowsPerPage;
   final String colorTheme;
+  final String darkColorTheme;
   final bool persistData;
   final bool persistUi;
   final bool tapSelectedToEdit;
@@ -203,6 +208,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool showPdfPreview;
   final bool showPdfPreviewSideBySide;
   final BuiltMap<String, String> customColors;
+  final BuiltMap<String, String> darkCustomColors;
   final bool editAfterSaving;
   final bool enableTouchEvents;
   final bool enableTooltips;

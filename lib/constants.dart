@@ -163,6 +163,10 @@ const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
 
+const String kBrightnessLight = 'light';
+const String kBrightnessDark = 'dark';
+const String kBrightnessSytem = 'system';
+
 const String kColorThemeLight = 'light';
 const String kColorThemeDark = 'dark';
 

@@ -76,7 +76,9 @@ PrefState prefReducer(
     ..textScaleFactor = textScaleFactorReducer(state.textScaleFactor, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
-    ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..darkModeType = darkModeTypeReducer(state.darkModeType, action)
+    ..enableDarkModeSystem =
+        darkModeSystemReducer(state.enableDarkModeSystem, action)
     ..enableTooltips = enableTooltipsReducer(state.enableTooltips, action)
     ..enableFlexibleSearch =
         enableFlexibleSearchReducer(state.enableFlexibleSearch, action)
@@ -93,7 +95,10 @@ PrefState prefReducer(
     ..requireAuthentication =
         requireAuthenticationReducer(state.requireAuthentication, action)
     ..colorTheme = colorThemeReducer(state.colorTheme, action)
+    ..darkColorTheme = darkColorThemeReducer(state.darkColorTheme, action)
     ..customColors.replace(customColorsReducer(state.customColors, action))
+    ..darkCustomColors
+        .replace(darkCustomColorsReducer(state.darkCustomColors, action))
     ..useSidebarEditor
         .replace(sidebarEditorReducer(state.useSidebarEditor, action))
     ..useSidebarViewer
@@ -337,9 +342,15 @@ Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
   }),
 ]);
 
-Reducer<bool> darkModeReducer = combineReducers([
+Reducer<String> darkModeTypeReducer = combineReducers([
+  TypedReducer<String, UpdateUserPreferences>((enableDarkMode, action) {
+    return action.darkModeType ?? enableDarkMode;
+  }),
+]);
+
+Reducer<bool> darkModeSystemReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
-    return action.enableDarkMode ?? enableDarkMode;
+    return action.enableDarkModeSystem ?? enableDarkMode;
   }),
 ]);
 
@@ -442,6 +453,12 @@ Reducer<String> colorThemeReducer = combineReducers([
   }),
 ]);
 
+Reducer<String> darkColorThemeReducer = combineReducers([
+  TypedReducer<String, UpdateUserPreferences>((currentColorTheme, action) {
+    return action.darkColorTheme ?? currentColorTheme;
+  }),
+]);
+
 Reducer<bool> showPdfPreviewReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.showPdfPreview ?? value;
@@ -470,6 +487,13 @@ Reducer<BuiltMap<String, String>> customColorsReducer = combineReducers([
   TypedReducer<BuiltMap<String, String>, UpdateUserPreferences>(
       (customColors, action) {
     return action.customColors ?? customColors;
+  }),
+]);
+
+Reducer<BuiltMap<String, String>> darkCustomColorsReducer = combineReducers([
+  TypedReducer<BuiltMap<String, String>, UpdateUserPreferences>(
+      (customColors, action) {
+    return action.darkCustomColors ?? customColors;
   }),
 ]);
 
