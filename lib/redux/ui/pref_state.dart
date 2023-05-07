@@ -283,6 +283,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..enableTooltips = true
     ..enableNativeBrowser = false
     ..textScaleFactor = 1
+    ..darkModeType = kBrightnessSytem
     ..colorTheme = kColorThemeLight
     ..darkColorTheme = kColorThemeDark;
 
