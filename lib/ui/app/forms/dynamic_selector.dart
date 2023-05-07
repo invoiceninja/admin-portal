@@ -34,8 +34,8 @@ class DynamicSelector extends StatelessWidget {
   final List<String> entityIds;
   final EntityType entityType;
   final Function(String) onChanged;
-  final Function(BaseEntity) overrideSuggestedAmount;
-  final Function(BaseEntity) overrideSuggestedLabel;
+  final Function(SelectableEntity) overrideSuggestedAmount;
+  final Function(SelectableEntity) overrideSuggestedLabel;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
 
   @override
