@@ -80,6 +80,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
+
     /*
     final countSessions = state.tokenState.list
         .map((tokenId) => state.tokenState.map[tokenId])
@@ -405,7 +406,9 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     ]),
                 AppDropdownButton<String>(
                   labelText: localization.statusColorTheme,
-                  value: state.prefState.colorTheme,
+                  value: prefState.enableDarkMode
+                      ? prefState.darkColorTheme
+                      : prefState.colorTheme,
                   items: [
                     ...colorThemesMap.keys
                         .map((key) => DropdownMenuItem(
@@ -465,13 +468,12 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         if (value == 'clear_all') {
                           viewModel.onCustomColorsChanged(
                               context,
-                              prefState.customColors
+                              prefState.activeCustomColors
                                   .rebuild((b) => b..clear()));
                         } else if (value == 'contrast') {
-                          final enableDarkMode = state.prefState.enableDarkMode;
                           viewModel.onCustomColorsChanged(
                             context,
-                            prefState.customColors.rebuild(
+                            prefState.activeCustomColors.rebuild(
                               (b) => b.addAll(
                                 <String, String>{
                                   PrefState
@@ -491,7 +493,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                       '#FFFFFF',
                                   PrefState
                                           .THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR:
-                                      enableDarkMode ? '#090909' : '#F9F9F9',
+                                      '#F9F9F9',
                                 },
                               ),
                             ),
@@ -502,19 +504,20 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         DropdownMenuItem(
                             child: Text(localization.clearAll),
                             value: 'clear_all'),
-                        DropdownMenuItem(
-                            child: Text(localization.contrast),
-                            value: 'contrast'),
+                        if (!state.prefState.enableDarkMode)
+                          DropdownMenuItem(
+                              child: Text(localization.contrast),
+                              value: 'contrast'),
                       ]),
                   ...PrefState.THEME_COLORS
                       .map(
                         (selector) => FormColorPicker(
                           labelText: localization.lookup(selector),
-                          initialValue: prefState.customColors[selector],
+                          initialValue: prefState.activeCustomColors[selector],
                           onSelected: (value) {
                             viewModel.onCustomColorsChanged(
                                 context,
-                                prefState.customColors
+                                prefState.activeCustomColors
                                     .rebuild((b) => b[selector] = value ?? ''));
                           },
                         ),
@@ -528,7 +531,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           onPressed: () {
                             final colors = PrefState.THEME_COLORS
                                 .map((selector) =>
-                                    prefState.customColors[selector] ?? '')
+                                    prefState.activeCustomColors[selector] ??
+                                    '')
                                 .toList();
                             Clipboard.setData(
                                 ClipboardData(text: colors.join(',')));
@@ -547,7 +551,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                               field: localization.colors,
                               callback: (value) {
                                 final colors = value.split(',');
-                                var customColors = prefState.customColors;
+                                var customColors = prefState.activeCustomColors;
                                 for (var i = 0; i < colors.length; i++) {
                                   customColors = customColors.rebuild((b) =>
                                       b[PrefState.THEME_COLORS[i]] = colors[i]);

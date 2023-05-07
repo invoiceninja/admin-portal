@@ -75,13 +75,7 @@ class DeviceSettingsVM {
         store.dispatch(UserLogoutAll(completer: completer));
       },
       onDarkModeChanged: (BuildContext context, String value) async {
-        store.dispatch(UpdateUserPreferences(
-            darkModeType: value,
-            colorTheme:
-                value == kBrightnessDark ? kColorThemeDark : kColorThemeLight,
-            customColors: value == kBrightnessDark
-                ? BuiltMap<String, String>()
-                : BuiltMap<String, String>(PrefState.CONTRAST_COLORS)));
+        store.dispatch(UpdateUserPreferences(darkModeType: value));
         store.dispatch(UpdatedSetting());
         AppBuilder.of(context).rebuild();
       },
@@ -130,8 +124,15 @@ class DeviceSettingsVM {
         store.dispatch(UpdateUserPreferences(flexibleSearch: value));
       },
       onColorThemeChanged: (context, value) async {
-        if (store.state.prefState.colorTheme != value) {
-          store.dispatch(UpdateUserPreferences(colorTheme: value));
+        final prefState = store.state.prefState;
+        if (prefState.enableDarkMode) {
+          if (prefState.darkColorTheme != value) {
+            store.dispatch(UpdateUserPreferences(darkColorTheme: value));
+          }
+        } else {
+          if (prefState.colorTheme != value) {
+            store.dispatch(UpdateUserPreferences(colorTheme: value));
+          }
         }
       },
       onEditAfterSavingChanged: (context, value) async {
@@ -183,7 +184,12 @@ class DeviceSettingsVM {
         },
       ),
       onCustomColorsChanged: (context, customColors) {
-        store.dispatch(UpdateUserPreferences(customColors: customColors));
+        if (store.state.prefState.enableDarkMode) {
+          store.dispatch(UpdateUserPreferences(darkCustomColors: customColors));
+        } else {
+          store.dispatch(UpdateUserPreferences(customColors: customColors));
+        }
+
         store.dispatch(UpdatedSetting());
       },
       onPersistDataChanged: (context, value) {

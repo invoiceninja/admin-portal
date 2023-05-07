@@ -137,6 +137,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       serializers.serialize(object.customColors,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'darkCustomColors',
+      serializers.serialize(object.darkCustomColors,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'statementIncludes',
       serializers.serialize(object.statementIncludes,
           specifiedType:
@@ -197,6 +201,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           specifiedType: const FullType(bool)),
       'colorTheme',
       serializers.serialize(object.colorTheme,
+          specifiedType: const FullType(String)),
+      'darkColorTheme',
+      serializers.serialize(object.darkColorTheme,
           specifiedType: const FullType(String)),
       'hideDesktopWarning',
       serializers.serialize(object.hideDesktopWarning,
@@ -281,6 +288,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(String)])));
           break;
+        case 'darkCustomColors':
+          result.darkCustomColors.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
+          break;
         case 'statementIncludes':
           result.statementIncludes.replace(serializers.deserialize(value,
                   specifiedType:
@@ -361,6 +373,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'colorTheme':
           result.colorTheme = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'darkColorTheme':
+          result.darkColorTheme = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'hideDesktopWarning':
@@ -654,6 +670,8 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<String, String> customColors;
   @override
+  final BuiltMap<String, String> darkCustomColors;
+  @override
   final BuiltList<String> statementIncludes;
   @override
   final bool isPreviewVisible;
@@ -694,6 +712,8 @@ class _$PrefState extends PrefState {
   @override
   final String colorTheme;
   @override
+  final String darkColorTheme;
+  @override
   final bool hideDesktopWarning;
   @override
   final bool hideGatewayWarning;
@@ -725,6 +745,7 @@ class _$PrefState extends PrefState {
       this.useSidebarEditor,
       this.useSidebarViewer,
       this.customColors,
+      this.darkCustomColors,
       this.statementIncludes,
       this.isPreviewVisible,
       this.isMenuVisible,
@@ -745,6 +766,7 @@ class _$PrefState extends PrefState {
       this.rowsPerPage,
       this.enableTooltips,
       this.colorTheme,
+      this.darkColorTheme,
       this.hideDesktopWarning,
       this.hideGatewayWarning,
       this.hideReviewApp,
@@ -769,6 +791,8 @@ class _$PrefState extends PrefState {
         useSidebarViewer, r'PrefState', 'useSidebarViewer');
     BuiltValueNullFieldError.checkNotNull(
         customColors, r'PrefState', 'customColors');
+    BuiltValueNullFieldError.checkNotNull(
+        darkCustomColors, r'PrefState', 'darkCustomColors');
     BuiltValueNullFieldError.checkNotNull(
         statementIncludes, r'PrefState', 'statementIncludes');
     BuiltValueNullFieldError.checkNotNull(
@@ -809,6 +833,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         colorTheme, r'PrefState', 'colorTheme');
     BuiltValueNullFieldError.checkNotNull(
+        darkColorTheme, r'PrefState', 'darkColorTheme');
+    BuiltValueNullFieldError.checkNotNull(
         hideDesktopWarning, r'PrefState', 'hideDesktopWarning');
     BuiltValueNullFieldError.checkNotNull(
         hideGatewayWarning, r'PrefState', 'hideGatewayWarning');
@@ -848,6 +874,7 @@ class _$PrefState extends PrefState {
         useSidebarEditor == other.useSidebarEditor &&
         useSidebarViewer == other.useSidebarViewer &&
         customColors == other.customColors &&
+        darkCustomColors == other.darkCustomColors &&
         statementIncludes == other.statementIncludes &&
         isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
@@ -868,6 +895,7 @@ class _$PrefState extends PrefState {
         rowsPerPage == other.rowsPerPage &&
         enableTooltips == other.enableTooltips &&
         colorTheme == other.colorTheme &&
+        darkColorTheme == other.darkColorTheme &&
         hideDesktopWarning == other.hideDesktopWarning &&
         hideGatewayWarning == other.hideGatewayWarning &&
         hideReviewApp == other.hideReviewApp &&
@@ -892,6 +920,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, useSidebarEditor.hashCode);
     _$hash = $jc(_$hash, useSidebarViewer.hashCode);
     _$hash = $jc(_$hash, customColors.hashCode);
+    _$hash = $jc(_$hash, darkCustomColors.hashCode);
     _$hash = $jc(_$hash, statementIncludes.hashCode);
     _$hash = $jc(_$hash, isPreviewVisible.hashCode);
     _$hash = $jc(_$hash, isMenuVisible.hashCode);
@@ -912,6 +941,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, rowsPerPage.hashCode);
     _$hash = $jc(_$hash, enableTooltips.hashCode);
     _$hash = $jc(_$hash, colorTheme.hashCode);
+    _$hash = $jc(_$hash, darkColorTheme.hashCode);
     _$hash = $jc(_$hash, hideDesktopWarning.hashCode);
     _$hash = $jc(_$hash, hideGatewayWarning.hashCode);
     _$hash = $jc(_$hash, hideReviewApp.hashCode);
@@ -936,6 +966,7 @@ class _$PrefState extends PrefState {
           ..add('useSidebarEditor', useSidebarEditor)
           ..add('useSidebarViewer', useSidebarViewer)
           ..add('customColors', customColors)
+          ..add('darkCustomColors', darkCustomColors)
           ..add('statementIncludes', statementIncludes)
           ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
@@ -956,6 +987,7 @@ class _$PrefState extends PrefState {
           ..add('rowsPerPage', rowsPerPage)
           ..add('enableTooltips', enableTooltips)
           ..add('colorTheme', colorTheme)
+          ..add('darkColorTheme', darkColorTheme)
           ..add('hideDesktopWarning', hideDesktopWarning)
           ..add('hideGatewayWarning', hideGatewayWarning)
           ..add('hideReviewApp', hideReviewApp)
@@ -1009,6 +1041,12 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _$this._customColors ??= new MapBuilder<String, String>();
   set customColors(MapBuilder<String, String> customColors) =>
       _$this._customColors = customColors;
+
+  MapBuilder<String, String> _darkCustomColors;
+  MapBuilder<String, String> get darkCustomColors =>
+      _$this._darkCustomColors ??= new MapBuilder<String, String>();
+  set darkCustomColors(MapBuilder<String, String> darkCustomColors) =>
+      _$this._darkCustomColors = darkCustomColors;
 
   ListBuilder<String> _statementIncludes;
   ListBuilder<String> get statementIncludes =>
@@ -1105,6 +1143,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   String get colorTheme => _$this._colorTheme;
   set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
 
+  String _darkColorTheme;
+  String get darkColorTheme => _$this._darkColorTheme;
+  set darkColorTheme(String darkColorTheme) =>
+      _$this._darkColorTheme = darkColorTheme;
+
   bool _hideDesktopWarning;
   bool get hideDesktopWarning => _$this._hideDesktopWarning;
   set hideDesktopWarning(bool hideDesktopWarning) =>
@@ -1171,6 +1214,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _useSidebarEditor = $v.useSidebarEditor.toBuilder();
       _useSidebarViewer = $v.useSidebarViewer.toBuilder();
       _customColors = $v.customColors.toBuilder();
+      _darkCustomColors = $v.darkCustomColors.toBuilder();
       _statementIncludes = $v.statementIncludes.toBuilder();
       _isPreviewVisible = $v.isPreviewVisible;
       _isMenuVisible = $v.isMenuVisible;
@@ -1191,6 +1235,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _rowsPerPage = $v.rowsPerPage;
       _enableTooltips = $v.enableTooltips;
       _colorTheme = $v.colorTheme;
+      _darkColorTheme = $v.darkColorTheme;
       _hideDesktopWarning = $v.hideDesktopWarning;
       _hideGatewayWarning = $v.hideGatewayWarning;
       _hideReviewApp = $v.hideReviewApp;
@@ -1236,6 +1281,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               useSidebarEditor: useSidebarEditor.build(),
               useSidebarViewer: useSidebarViewer.build(),
               customColors: customColors.build(),
+              darkCustomColors: darkCustomColors.build(),
               statementIncludes: statementIncludes.build(),
               isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
                   isPreviewVisible, r'PrefState', 'isPreviewVisible'),
@@ -1260,6 +1306,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, r'PrefState', 'rowsPerPage'),
               enableTooltips: BuiltValueNullFieldError.checkNotNull(enableTooltips, r'PrefState', 'enableTooltips'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, r'PrefState', 'colorTheme'),
+              darkColorTheme: BuiltValueNullFieldError.checkNotNull(darkColorTheme, r'PrefState', 'darkColorTheme'),
               hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, r'PrefState', 'hideDesktopWarning'),
               hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
               hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, r'PrefState', 'hideReviewApp'),
@@ -1279,6 +1326,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         useSidebarViewer.build();
         _$failedField = 'customColors';
         customColors.build();
+        _$failedField = 'darkCustomColors';
+        darkCustomColors.build();
         _$failedField = 'statementIncludes';
         statementIncludes.build();
 

@@ -82,7 +82,7 @@ class EntityDataTableSource extends AppDataTableSource {
     }
 
     Color backgroundColor;
-    final rowColor = state.prefState.customColors[
+    final rowColor = state.prefState.activeCustomColors[
             PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
         '';
 

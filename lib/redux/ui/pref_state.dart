@@ -32,6 +32,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       editAfterSaving: true,
       requireAuthentication: false,
       colorTheme: kColorThemeLight,
+      darkColorTheme: kColorThemeDark,
       enableTouchEvents: false,
       enableTooltips: true,
       isFilterVisible: false,
@@ -53,6 +54,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
       customColors: BuiltMap<String, String>(CONTRAST_COLORS),
+      darkCustomColors: BuiltMap<String, String>(),
     );
   }
 
@@ -114,6 +116,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltMap<String, String> get customColors;
 
+  BuiltMap<String, String> get darkCustomColors;
+
   BuiltList<String> get statementIncludes;
 
   bool get isPreviewVisible;
@@ -154,6 +158,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get colorTheme;
 
+  String get darkColorTheme;
+
   bool get hideDesktopWarning;
 
   bool get hideGatewayWarning;
@@ -176,9 +182,20 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       ? enableDarkModeSystem
       : darkModeType == kBrightnessDark;
 
-  ColorTheme get colorThemeModel => colorThemesMap.containsKey(colorTheme)
-      ? colorThemesMap[colorTheme]
-      : colorThemesMap[kColorThemeLight];
+  ColorTheme get colorThemeModel {
+    final theme = enableDarkMode ? darkColorTheme : colorTheme;
+
+    if (colorThemesMap.containsKey(theme)) {
+      return colorThemesMap[theme];
+    } else if (enableDarkMode) {
+      return colorThemesMap[kColorThemeDark];
+    } else {
+      return colorThemesMap[kColorThemeLight];
+    }
+  }
+
+  BuiltMap<String, String> get activeCustomColors =>
+      enableDarkMode ? darkCustomColors : customColors;
 
   BuiltMap<String, CompanyPrefState> get companyPrefs;
 
@@ -245,9 +262,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..useSidebarViewer.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
-    ..customColors.replace(builder.darkModeType == kBrightnessDark
-        ? BuiltMap<String, String>()
-        : BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
+    ..customColors.replace(BuiltMap<String, String>(PrefState.CONTRAST_COLORS))
+    ..darkCustomColors.replace(BuiltMap<String, String>())
     ..showKanban = false
     ..isPreviewVisible = false
     ..isFilterVisible = false
@@ -267,9 +283,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..enableTooltips = true
     ..enableNativeBrowser = false
     ..textScaleFactor = 1
-    ..colorTheme = builder.darkModeType == kBrightnessDark
-        ? kColorThemeDark
-        : kColorThemeLight;
+    ..colorTheme = kColorThemeLight
+    ..darkColorTheme = kColorThemeDark;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

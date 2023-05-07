@@ -277,10 +277,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
                   : index == 1
                       ? kBrightnessLight
                       : kBrightnessDark,
-              colorTheme: isDark ? kColorThemeDark : kColorThemeLight,
-              customColors: isDark
-                  ? BuiltMap<String, String>()
-                  : BuiltMap<String, String>(PrefState.CONTRAST_COLORS),
             ),
           );
           AppBuilder.of(context).rebuild();
