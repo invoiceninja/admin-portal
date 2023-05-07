@@ -18,6 +18,7 @@ enum QuoteReportFields {
   converted_amount,
   client,
   client_number,
+  client_id_number,
   client_balance,
   client_address1,
   client_address2,
@@ -346,6 +347,9 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_number:
           value = client.number;
+          break;
+        case QuoteReportFields.client_id_number:
+          value = client.idNumber;
           break;
       }
 

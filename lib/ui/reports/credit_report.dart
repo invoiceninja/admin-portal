@@ -20,6 +20,7 @@ enum CreditReportFields {
   converted_balance,
   client,
   client_number,
+  client_id_number,
   client_balance,
   client_address1,
   client_address2,
@@ -352,6 +353,9 @@ ReportResult creditReport(
           break;
         case CreditReportFields.client_number:
           value = client.number;
+          break;
+        case CreditReportFields.client_id_number:
+          value = client.idNumber;
           break;
       }
 

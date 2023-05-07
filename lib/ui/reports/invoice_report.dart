@@ -20,6 +20,7 @@ enum InvoiceReportFields {
   converted_balance,
   client,
   client_number,
+  client_id_number,
   client_balance,
   client_address1,
   client_address2,
@@ -413,6 +414,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client_number:
           value = client.number;
+          break;
+        case InvoiceReportFields.client_id_number:
+          value = client.idNumber;
           break;
         case InvoiceReportFields.age_group_0:
           value = invoice.isPaid || invoice.age >= 30 ? 0.0 : invoice.balance;
