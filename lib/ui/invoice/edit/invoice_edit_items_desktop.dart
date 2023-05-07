@@ -319,9 +319,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       String label = '';
       bool isNumeric = false;
       if (column == COLUMN_ITEM) {
-        label = translations['item'] ?? localization.item;
+        label = (translations['item'] ?? '').isNotEmpty
+            ? translations['item']
+            : localization.item;
       } else if (column == COLUMN_DESCRIPTION) {
-        label = translations['description'] ?? localization.description;
+        label = (translations['description'] ?? '').isNotEmpty
+            ? translations['description']
+            : localization.description;
       } else if (column == COLUMN_CUSTOM1) {
         label = company.getCustomFieldLabel(customField1);
       } else if (column == COLUMN_CUSTOM2) {
@@ -337,20 +341,30 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 : '');
       } else if (column == COLUMN_QUANTITY) {
         if (widget.isTasks) {
-          label = translations['hours'] ?? localization.hours;
+          label = (translations['hours'] ?? '').isNotEmpty
+              ? translations['hours']
+              : localization.hours;
         } else {
-          label = translations['quantity'] ?? localization.quantity;
+          label = (translations['quantity'] ?? '').isNotEmpty
+              ? translations['quantity']
+              : localization.hours;
         }
         isNumeric = true;
       } else if (column == COLUMN_UNIT_COST) {
         if (widget.isTasks) {
-          label = translations['rate'] ?? localization.rate;
+          label = (translations['rate'] ?? '').isNotEmpty
+              ? translations['rate']
+              : localization.rate;
         } else {
-          label = translations['unit_cost'] ?? localization.unitCost;
+          label = (translations['unit_cost'] ?? '').isNotEmpty
+              ? translations['unit_cost']
+              : localization.unitCost;
         }
         isNumeric = true;
       } else if (column == COLUMN_DISCOUNT) {
-        label = translations['discount'] ?? localization.discount;
+        label = (translations['discount'] ?? '').isNotEmpty
+            ? translations['discount']
+            : localization.discount;
         isNumeric = true;
       }
       tableHeaderColumns.add(TableHeader(
