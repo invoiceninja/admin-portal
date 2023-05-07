@@ -304,11 +304,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
 
     final tableFontColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
-    final tableHeaderColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor = state.prefState.activeCustomColors[
+            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
 
     final tableHeaderColumns = <Widget>[];
@@ -1179,11 +1179,11 @@ class TableHeader extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final tableHeaderColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor = state.prefState.activeCustomColors[
+            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
     final tableFontColor = state.prefState
-            .customColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
     return Padding(
