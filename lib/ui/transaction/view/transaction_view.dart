@@ -199,12 +199,19 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   void updateInvoiceList() {
     final state = widget.viewModel.state;
     final invoiceState = state.invoiceState;
+    final transactions = widget.viewModel.transactions;
 
     _invoices = invoiceState.map.values.where((invoice) {
       if (_selectedInvoices.isNotEmpty) {
         if (invoice.clientId != _selectedInvoices.first.clientId) {
           return false;
         }
+      }
+
+      if (transactions.isNotEmpty &&
+          state.clientState.get(invoice.clientId).currencyId !=
+              transactions.first.currencyId) {
+        return false;
       }
 
       if (invoice.isPaid || invoice.isDeleted) {
@@ -257,6 +264,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   void updatePaymentList() {
     final state = widget.viewModel.state;
     final paymentState = state.paymentState;
+    final transactions = widget.viewModel.transactions;
 
     _payments = paymentState.map.values.where((payment) {
       if (_selectedPayment != null) {
@@ -266,6 +274,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (payment.transactionId.isNotEmpty || payment.isDeleted) {
+        return false;
+      }
+
+      if (transactions.isNotEmpty &&
+          state.clientState.get(payment.clientId).currencyId !=
+              transactions.first.currencyId) {
         return false;
       }
 
@@ -778,9 +792,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   void updateExpenseList() {
     final state = widget.viewModel.state;
     final expenseState = state.expenseState;
+    final transactions = widget.viewModel.transactions;
 
     _expenses = expenseState.map.values.where((expense) {
       if (expense.transactionId.isNotEmpty || expense.isDeleted) {
+        return false;
+      }
+
+      if (transactions.isNotEmpty &&
+          expense.currencyId != transactions.first.currencyId) {
         return false;
       }
 
