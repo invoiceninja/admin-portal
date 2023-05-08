@@ -4,6 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -1002,6 +1004,8 @@ abstract class InvoiceEntity extends Object
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final state = store.state;
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
@@ -1057,6 +1061,9 @@ abstract class InvoiceEntity extends Object
         if (!isRecurring) {
           actions.add(EntityAction.printPdf);
           actions.add(EntityAction.download);
+          if (isInvoice && state.company.settings.enableEInvoice) {
+            actions.add(EntityAction.eInvoice);
+          }
         }
       }
 
@@ -1508,6 +1515,9 @@ abstract class InvoiceEntity extends Object
   String get invitationDownloadLink =>
       invitations.isEmpty ? '' : invitations.first.downloadLink;
 
+  String get invitationEInvoiceDownloadLink =>
+      invitations.isEmpty ? '' : invitations.first.eInvoiceDownloadLink;
+
   // ignore: unused_element
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
@@ -1843,6 +1853,9 @@ abstract class InvitationEntity extends Object
       '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
 
   String get silentLink => '$link?silent=true';
+
+  String get eInvoiceDownloadLink =>
+      '$link/download_e_invoice?t=${DateTime.now().millisecondsSinceEpoch}';
 
   String get borderlessLink => '$silentLink&borderless=true';
 

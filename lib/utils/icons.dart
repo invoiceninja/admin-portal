@@ -123,6 +123,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.arrowUpBoldBoxOutline;
     case EntityAction.setTaxCategory:
       return MdiIcons.tag;
+    case EntityAction.eInvoice:
+      return MdiIcons.xml;
     default:
       return null;
   }
