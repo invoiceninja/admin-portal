@@ -41,6 +41,22 @@ class DocumentRepository {
     return documentResponse.data;
   }
 
+  Future<DocumentEntity> saveData(
+      Credentials credentials, DocumentEntity document) async {
+    final data = serializers.serializeWith(DocumentEntity.serializer, document);
+    dynamic response;
+
+    final url = credentials.url + '/documents/${document.id}';
+
+    response =
+        await webClient.put(url, credentials.token, data: json.encode(data));
+
+    final DocumentItemResponse documentResponse =
+        serializers.deserializeWith(DocumentItemResponse.serializer, response);
+
+    return documentResponse.data;
+  }
+
   Future<List<DocumentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {

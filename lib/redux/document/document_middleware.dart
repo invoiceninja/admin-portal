@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final editDocument = _editDocument();
   final loadDocuments = _loadDocuments(repository);
   final loadDocument = _loadDocument(repository);
+  final saveDocument = _saveDocument(repository);
   final archiveDocument = _archiveDocument(repository);
   final deleteDocument = _deleteDocument(repository);
   final restoreDocument = _restoreDocument(repository);
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, EditDocument>(editDocument),
     TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
     TypedMiddleware<AppState, LoadDocument>(loadDocument),
+    TypedMiddleware<AppState, SaveDocumentRequest>(saveDocument),
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
     TypedMiddleware<AppState, DeleteDocumentRequest>(deleteDocument),
     TypedMiddleware<AppState, RestoreDocumentRequest>(restoreDocument),
@@ -83,6 +85,28 @@ Middleware<AppState> _viewDocumentList() {
 
     navigatorKey.currentState.pushNamedAndRemoveUntil(
         DocumentScreen.route, (Route<dynamic> route) => false);
+  };
+}
+
+Middleware<AppState> _saveDocument(DocumentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveDocumentRequest;
+    repository
+        .saveData(store.state.credentials, action.entity)
+        .then((DocumentEntity document) {
+      store.dispatch(SaveDocumentSuccess(document));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveDocumentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
   };
 }
 

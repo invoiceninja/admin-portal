@@ -114,16 +114,14 @@ class LoadDocumentsSuccess implements StopLoading {
   }
 }
 
-abstract class SaveDocumentRequest implements StartSaving {
+class SaveDocumentRequest implements StartSaving {
   SaveDocumentRequest({
     @required this.completer,
-    @required this.multipartFile,
     @required this.entity,
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
-  final BaseEntity entity;
+  final DocumentEntity entity;
 }
 
 class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {

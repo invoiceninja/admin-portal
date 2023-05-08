@@ -347,7 +347,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         } else {
           label = (translations['quantity'] ?? '').isNotEmpty
               ? translations['quantity']
-              : localization.hours;
+              : localization.quantity;
         }
         isNumeric = true;
       } else if (column == COLUMN_UNIT_COST) {
