@@ -396,6 +396,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
     if (value.isEmpty) {
       return;
     }
+
     Navigator.pop(context);
     widget.callback(value);
   }
