@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
@@ -22,7 +21,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -269,7 +267,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
           state.prefState.darkModeType == kBrightnessDark,
         ],
         onPressed: (index) {
-          final isDark = index == 2;
           store.dispatch(
             UpdateUserPreferences(
               darkModeType: index == 0
