@@ -459,6 +459,12 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'tax_data')
   TaxDataEntity get taxData;
 
+  @BuiltValueField(wireName: 'e_invoice_certificate')
+  String get eInvoiceCertificate;
+
+  @BuiltValueField(wireName: 'e_invoice_certificate_passphrase')
+  String get eInvoiceCertificatePassphrase;
+
   String get displayName => settings.name ?? '';
 
   @override

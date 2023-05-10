@@ -383,6 +383,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'tax_data',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
+      'e_invoice_certificate',
+      serializers.serialize(object.eInvoiceCertificate,
+          specifiedType: const FullType(String)),
+      'e_invoice_certificate_passphrase',
+      serializers.serialize(object.eInvoiceCertificatePassphrase,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -921,6 +927,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'tax_data':
           result.taxData.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
+          break;
+        case 'e_invoice_certificate':
+          result.eInvoiceCertificate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'e_invoice_certificate_passphrase':
+          result.eInvoiceCertificatePassphrase = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -2029,6 +2043,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final TaxDataEntity taxData;
   @override
+  final String eInvoiceCertificate;
+  @override
+  final String eInvoiceCertificatePassphrase;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -2153,6 +2171,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.stopOnUnpaidRecurring,
       this.calculateTaxes,
       this.taxData,
+      this.eInvoiceCertificate,
+      this.eInvoiceCertificatePassphrase,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -2356,6 +2376,10 @@ class _$CompanyEntity extends CompanyEntity {
         calculateTaxes, r'CompanyEntity', 'calculateTaxes');
     BuiltValueNullFieldError.checkNotNull(taxData, r'CompanyEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
+        eInvoiceCertificate, r'CompanyEntity', 'eInvoiceCertificate');
+    BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase,
+        r'CompanyEntity', 'eInvoiceCertificatePassphrase');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'CompanyEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'CompanyEntity', 'updatedAt');
@@ -2477,6 +2501,8 @@ class _$CompanyEntity extends CompanyEntity {
         stopOnUnpaidRecurring == other.stopOnUnpaidRecurring &&
         calculateTaxes == other.calculateTaxes &&
         taxData == other.taxData &&
+        eInvoiceCertificate == other.eInvoiceCertificate &&
+        eInvoiceCertificatePassphrase == other.eInvoiceCertificatePassphrase &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2595,6 +2621,8 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, stopOnUnpaidRecurring.hashCode);
     _$hash = $jc(_$hash, calculateTaxes.hashCode);
     _$hash = $jc(_$hash, taxData.hashCode);
+    _$hash = $jc(_$hash, eInvoiceCertificate.hashCode);
+    _$hash = $jc(_$hash, eInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2713,6 +2741,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('stopOnUnpaidRecurring', stopOnUnpaidRecurring)
           ..add('calculateTaxes', calculateTaxes)
           ..add('taxData', taxData)
+          ..add('eInvoiceCertificate', eInvoiceCertificate)
+          ..add('eInvoiceCertificatePassphrase', eInvoiceCertificatePassphrase)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3256,6 +3286,17 @@ class CompanyEntityBuilder
       _$this._taxData ??= new TaxDataEntityBuilder();
   set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
 
+  String _eInvoiceCertificate;
+  String get eInvoiceCertificate => _$this._eInvoiceCertificate;
+  set eInvoiceCertificate(String eInvoiceCertificate) =>
+      _$this._eInvoiceCertificate = eInvoiceCertificate;
+
+  String _eInvoiceCertificatePassphrase;
+  String get eInvoiceCertificatePassphrase =>
+      _$this._eInvoiceCertificatePassphrase;
+  set eInvoiceCertificatePassphrase(String eInvoiceCertificatePassphrase) =>
+      _$this._eInvoiceCertificatePassphrase = eInvoiceCertificatePassphrase;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -3403,6 +3444,8 @@ class CompanyEntityBuilder
       _stopOnUnpaidRecurring = $v.stopOnUnpaidRecurring;
       _calculateTaxes = $v.calculateTaxes;
       _taxData = $v.taxData.toBuilder();
+      _eInvoiceCertificate = $v.eInvoiceCertificate;
+      _eInvoiceCertificatePassphrase = $v.eInvoiceCertificatePassphrase;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -3552,6 +3595,8 @@ class CompanyEntityBuilder
               stopOnUnpaidRecurring: BuiltValueNullFieldError.checkNotNull(stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring'),
               calculateTaxes: BuiltValueNullFieldError.checkNotNull(calculateTaxes, r'CompanyEntity', 'calculateTaxes'),
               taxData: taxData.build(),
+              eInvoiceCertificate: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificate, r'CompanyEntity', 'eInvoiceCertificate'),
+              eInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase, r'CompanyEntity', 'eInvoiceCertificatePassphrase'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'CompanyEntity', 'updatedAt'),
