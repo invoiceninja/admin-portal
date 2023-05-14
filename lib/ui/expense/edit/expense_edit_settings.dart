@@ -203,14 +203,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             expense.rebuild((b) =>
                                 b..paymentTypeId = paymentType?.id ?? '')),
                       ),
-                      DatePicker(
-                        labelText: localization.date,
-                        selectedDate: expense.paymentDate,
-                        onSelected: (date, _) {
-                          viewModel.onChanged(
-                              expense.rebuild((b) => b..paymentDate = date));
-                        },
-                      ),
+                      if (!expense.isRecurring)
+                        DatePicker(
+                          labelText: localization.date,
+                          selectedDate: expense.paymentDate,
+                          onSelected: (date, _) {
+                            viewModel.onChanged(
+                                expense.rebuild((b) => b..paymentDate = date));
+                          },
+                        ),
                       DecoratedFormField(
                         controller: _transactionReferenceController,
                         keyboardType: TextInputType.multiline,
