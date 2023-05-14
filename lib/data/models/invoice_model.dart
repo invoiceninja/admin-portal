@@ -1018,7 +1018,7 @@ abstract class InvoiceEntity extends Object
           if ([
             kRecurringInvoiceStatusDraft,
             kRecurringInvoiceStatusPending,
-          ].contains(statusId)) {
+          ].contains(calculatedStatusId)) {
             actions.add(EntityAction.sendNow);
           }
 
@@ -1031,7 +1031,7 @@ abstract class InvoiceEntity extends Object
           } else if ([
             kRecurringInvoiceStatusPending,
             kRecurringInvoiceStatusActive
-          ].contains(statusId)) {
+          ].contains(calculatedStatusId)) {
             actions.add(EntityAction.stop);
           }
 
