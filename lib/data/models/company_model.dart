@@ -124,6 +124,8 @@ abstract class CompanyEntity extends Object
       convertExpenseCurrency: false,
       notifyVendorWhenPaid: false,
       calculateTaxes: false,
+      eInvoiceCertificate: '',
+      eInvoiceCertificatePassphrase: '',
       taxData: TaxDataEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
@@ -459,6 +461,12 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'tax_data')
   TaxDataEntity get taxData;
 
+  @BuiltValueField(wireName: 'e_invoice_certificate')
+  String get eInvoiceCertificate;
+
+  @BuiltValueField(wireName: 'e_invoice_certificate_passphrase')
+  String get eInvoiceCertificatePassphrase;
+
   String get displayName => settings.name ?? '';
 
   @override
@@ -754,6 +762,8 @@ abstract class CompanyEntity extends Object
     ..convertExpenseCurrency = false
     ..notifyVendorWhenPaid = false
     ..calculateTaxes = false
+    ..eInvoiceCertificate = ''
+    ..eInvoiceCertificatePassphrase = ''
     ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
