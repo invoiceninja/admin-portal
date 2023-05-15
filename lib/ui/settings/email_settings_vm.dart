@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -43,6 +44,8 @@ class EmailSettingsScreen extends StatelessWidget {
 class EmailSettingsVM {
   EmailSettingsVM({
     @required this.state,
+    @required this.company,
+    @required this.onCompanyChanged,
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
@@ -53,7 +56,10 @@ class EmailSettingsVM {
 
     return EmailSettingsVM(
         state: state,
+        company: state.uiState.settingsUIState.company,
         settings: state.uiState.settingsUIState.settings,
+        onCompanyChanged: (company) =>
+            store.dispatch(UpdateCompany(company: company)),
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
@@ -100,6 +106,8 @@ class EmailSettingsVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
+  final CompanyEntity company;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
+  final Function(CompanyEntity) onCompanyChanged;
 }
