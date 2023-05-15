@@ -35,10 +35,15 @@ class UpdateCompany implements PersistUI {
 }
 
 class SaveCompanyRequest implements StartSaving {
-  SaveCompanyRequest({this.completer, this.company});
+  SaveCompanyRequest({
+    this.completer,
+    this.company,
+    this.eInvoiceCertificate,
+  });
 
   final Completer completer;
   final CompanyEntity company;
+  final MultipartFile eInvoiceCertificate;
 }
 
 class SaveCompanySuccess implements StopSaving, PersistData, PersistUI {
