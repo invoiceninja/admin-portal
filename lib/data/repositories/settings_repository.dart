@@ -20,13 +20,18 @@ class SettingsRepository {
   final WebClient webClient;
 
   Future<CompanyEntity> saveCompany(
-      Credentials credentials, CompanyEntity company) async {
+      Credentials credentials, CompanyEntity company,
+      {MultipartFile eInvoiceCertificate}) async {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 
     final url = credentials.url + '/companies/${company.id}';
-    response =
-        await webClient.put(url, credentials.token, data: json.encode(data));
+    response = await webClient.put(
+      url,
+      credentials.token,
+      data: json.encode(data),
+      multipartFile: eInvoiceCertificate,
+    );
 
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);

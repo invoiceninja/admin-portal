@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:redux/redux.dart';
 
@@ -63,7 +64,7 @@ class EmailSettingsVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onSavePressed: (context) {
+        onSavePressed: (context, eInvoiceCertificate) {
           if (!state.isProPlan && !state.isTrial) {
             return;
           }
@@ -85,7 +86,10 @@ class EmailSettingsVM {
                 final completer = snackBarCompleter<Null>(
                     context, AppLocalization.of(context).savedSettings);
                 store.dispatch(SaveCompanyRequest(
-                    completer: completer, company: settingsUIState.company));
+                  completer: completer,
+                  company: settingsUIState.company,
+                  eInvoiceCertificate: eInvoiceCertificate,
+                ));
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
@@ -105,7 +109,7 @@ class EmailSettingsVM {
   }
 
   final AppState state;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext, MultipartFile) onSavePressed;
   final CompanyEntity company;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;

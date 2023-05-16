@@ -97,7 +97,11 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
     final action = dynamicAction as SaveCompanyRequest;
 
     settingsRepository
-        .saveCompany(store.state.credentials, action.company)
+        .saveCompany(
+      store.state.credentials,
+      action.company,
+      eInvoiceCertificate: action.eInvoiceCertificate,
+    )
         .then((company) {
       store.dispatch(SaveCompanySuccess(company));
       action.completer.complete();
