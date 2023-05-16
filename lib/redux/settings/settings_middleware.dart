@@ -126,11 +126,11 @@ Middleware<AppState> _saveEInvoiceCertificate(
       action.eInvoiceCertificate,
     )
         .then((company) {
-      store.dispatch(SaveCompanySuccess(company));
+      store.dispatch(SaveEInvoiceCertificateSuccess(company));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SaveCompanyFailure(error));
+      store.dispatch(SaveEInvoiceCertificateFailure(error));
       action.completer.completeError(error);
     });
 

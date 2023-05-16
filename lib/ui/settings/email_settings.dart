@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -156,7 +155,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = viewModel.company;
+    final company = viewModel.state.company;
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
@@ -577,13 +576,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   OutlinedButton(
                       onPressed: () async {
-                        if (state.settingsUIState.isChanged) {
-                          showMessageDialog(
-                              context: context,
-                              message: localization.errorUnsavedChanges);
-                          return;
-                        }
-
                         final file = await pickFile(
                           fileIndex: 'e_invoice_certificate',
                           allowedExtensions: [
