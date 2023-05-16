@@ -521,7 +521,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               if (settings.enableEInvoice == true) ...[
                 Padding(
                   padding:
-                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 16),
+                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 12),
                   child: AppDropdownButton<String>(
                       labelText: localization.eInvoiceType,
                       showBlank: settingsUIState.isFiltered,
@@ -540,7 +540,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                           .toList()),
                 ),
                 if (!settingsUIState.isFiltered) ...[
-                  SizedBox(height: 20),
+                  SizedBox(height: 22),
                   Row(
                     children: [
                       Expanded(
@@ -568,9 +568,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                             }
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child:
-                                Text(localization.setCertificate.toUpperCase()),
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                                localization.uploadCertificate.toUpperCase()),
                           ),
                         ),
                       ),
@@ -588,9 +588,14 @@ class _EmailSettingsState extends State<EmailSettings> {
                                   : Colors.grey,
                             ),
                             SizedBox(width: 8),
-                            Text(company.hasEInvoiceCertificate
-                                ? localization.certificateSet
-                                : localization.certificateNotSet),
+                            Flexible(
+                              child: Text(
+                                company.hasEInvoiceCertificate
+                                    ? localization.certificateSet
+                                    : localization.certificateNotSet,
+                                maxLines: 2,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -620,9 +625,14 @@ class _EmailSettingsState extends State<EmailSettings> {
                                 : Colors.grey,
                           ),
                           SizedBox(width: 8),
-                          Text(company.hasEInvoiceCertificatePassphrase
-                              ? localization.passphraseSet
-                              : localization.passphraseNotSet),
+                          Flexible(
+                            child: Text(
+                              company.hasEInvoiceCertificatePassphrase
+                                  ? localization.passphraseSet
+                                  : localization.passphraseNotSet,
+                              maxLines: 2,
+                            ),
+                          ),
                         ]),
                       )
                     ],
