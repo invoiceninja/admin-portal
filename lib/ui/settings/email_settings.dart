@@ -154,6 +154,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = viewModel.company;
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
@@ -485,6 +486,7 @@ class _EmailSettingsState extends State<EmailSettings> {
           ),
           FormCard(
             isLast: true,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               BoolDropdownButton(
                 label: localization.attachPdf,
@@ -536,6 +538,25 @@ class _EmailSettingsState extends State<EmailSettings> {
                               ))
                           .toList()),
                 ),
+                SizedBox(height: 20),
+                Center(
+                  child: Text((company.hasEInvoiceCertificate
+                          ? localization.certificateSet
+                          : localization.certificateNotSet) +
+                      ' • ' +
+                      (company.hasEInvoiceCertificatePassphrase
+                          ? localization.passphraseSet
+                          : localization.passphraseNotSet)),
+                ),
+                SizedBox(height: 20),
+                OutlinedButton(
+                    onPressed: () {
+                      //
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(localization.setCertificate.toUpperCase()),
+                    )),
                 DecoratedFormField(
                   label: localization.certificatePassphrase,
                   controller: _eInvoiceCertificatePassphraseController,
