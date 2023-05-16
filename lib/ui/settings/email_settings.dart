@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -576,6 +577,13 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   OutlinedButton(
                       onPressed: () async {
+                        if (state.settingsUIState.isChanged) {
+                          showMessageDialog(
+                              context: context,
+                              message: localization.errorUnsavedChanges);
+                          return;
+                        }
+
                         final file = await pickFile(
                           fileIndex: 'e_invoice_certificate',
                           allowedExtensions: [
@@ -591,7 +599,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                             'bin',
                           ],
                         );
-                        viewModel.onEInvoiceCertificateSelected(file);
+
+                        if (file != null) {
+                          viewModel.onEInvoiceCertificateSelected(file);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12),
