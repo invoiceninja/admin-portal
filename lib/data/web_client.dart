@@ -126,7 +126,6 @@ class WebClient {
     String token, {
     dynamic data,
     MultipartFile multipartFile,
-    String fileIndex = 'file',
     String password,
     String idToken,
   }) async {
@@ -144,7 +143,7 @@ class WebClient {
 
     if (multipartFile != null) {
       response = await _uploadFiles(url, token, [multipartFile],
-          fileIndex: fileIndex, data: data, method: 'PUT');
+          data: data, method: 'PUT');
     } else {
       final client = http.Client();
       response = await client.put(
@@ -309,7 +308,7 @@ String _parseError(int code, String response) {
 
 Future<http.Response> _uploadFiles(
     String url, String token, List<MultipartFile> multipartFiles,
-    {String method = 'POST', String fileIndex = 'file', dynamic data}) async {
+    {String method = 'POST', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
     ..headers.addAll(_getHeaders(url, token))

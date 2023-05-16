@@ -578,9 +578,13 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   OutlinedButton(
                       onPressed: () async {
-                        _eInvoiceCertificate = await pickFile(
+                        final file = await pickFile(
                           fileIndex: 'e_invoice_certificate',
+                          allowedExtensions: ['txt'],
                         );
+                        setState(() {
+                          _eInvoiceCertificate = file;
+                        });
                       },
                       child: ListTile(
                         title: Text(
