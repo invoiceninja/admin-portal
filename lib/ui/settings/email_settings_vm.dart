@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -50,6 +51,7 @@ class EmailSettingsVM {
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
+    @required this.onEInvoiceCertificateSelected,
   });
 
   static EmailSettingsVM fromStore(Store<AppState> store) {
@@ -64,7 +66,9 @@ class EmailSettingsVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onSavePressed: (context, eInvoiceCertificate) {
+        onSavePressed: (
+          context,
+        ) {
           if (!state.isProPlan && !state.isTrial) {
             return;
           }
@@ -88,7 +92,6 @@ class EmailSettingsVM {
                 store.dispatch(SaveCompanyRequest(
                   completer: completer,
                   company: settingsUIState.company,
-                  eInvoiceCertificate: eInvoiceCertificate,
                 ));
                 break;
               case EntityType.group:
@@ -105,13 +108,24 @@ class EmailSettingsVM {
                 break;
             }
           });
+        },
+        onEInvoiceCertificateSelected: (eInvoiceCertificate) {
+          final completer = snackBarCompleter<Null>(navigatorKey.currentContext,
+              AppLocalization.of(navigatorKey.currentContext).savedSettings);
+          store.dispatch(
+            SaveEInvoiceCertificateRequest(
+                completer: completer,
+                company: state.company,
+                eInvoiceCertificate: eInvoiceCertificate),
+          );
         });
   }
 
   final AppState state;
-  final Function(BuildContext, MultipartFile) onSavePressed;
+  final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(CompanyEntity) onCompanyChanged;
+  final Function(MultipartFile) onEInvoiceCertificateSelected;
 }

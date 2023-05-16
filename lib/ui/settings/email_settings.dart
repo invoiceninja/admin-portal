@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -54,7 +53,6 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
   final _eInvoiceCertificatePassphraseController = TextEditingController();
-  MultipartFile _eInvoiceCertificate;
 
   List<TextEditingController> _controllers = [];
 
@@ -149,7 +147,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       return;
     }
 
-    widget.viewModel.onSavePressed(context, _eInvoiceCertificate);
+    widget.viewModel.onSavePressed(context);
   }
 
   @override
@@ -580,23 +578,24 @@ class _EmailSettingsState extends State<EmailSettings> {
                       onPressed: () async {
                         final file = await pickFile(
                           fileIndex: 'e_invoice_certificate',
-                          allowedExtensions: ['txt'],
+                          allowedExtensions: [
+                            'p12',
+                            'pfx',
+                            'pem',
+                            'cer',
+                            'crt',
+                            'der',
+                            'txt',
+                            'p7b',
+                            'spc',
+                            'bin',
+                          ],
                         );
-                        setState(() {
-                          _eInvoiceCertificate = file;
-                        });
+                        viewModel.onEInvoiceCertificateSelected(file);
                       },
-                      child: ListTile(
-                        title: Text(
-                          localization.setCertificate.toUpperCase(),
-                          textAlign: TextAlign.center,
-                        ),
-                        subtitle: _eInvoiceCertificate == null
-                            ? null
-                            : Text(
-                                _eInvoiceCertificate.filename,
-                                textAlign: TextAlign.center,
-                              ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(localization.setCertificate.toUpperCase()),
                       )),
                   DecoratedFormField(
                     label: localization.certificatePassphrase,
