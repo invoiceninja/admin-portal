@@ -608,6 +608,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                         padding: const EdgeInsets.all(12),
                         child: Text(localization.setCertificate.toUpperCase()),
                       )),
+                  SizedBox(height: 8),
                   DecoratedFormField(
                     label: localization.certificatePassphrase,
                     controller: _eInvoiceCertificatePassphraseController,
