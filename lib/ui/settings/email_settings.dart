@@ -542,71 +542,64 @@ class _EmailSettingsState extends State<EmailSettings> {
                 if (!settingsUIState.isFiltered) ...[
                   SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        company.hasEInvoiceCertificate
-                            ? Icons.check_circle_outline
-                            : Icons.circle_outlined,
-                        size: 16,
-                        color: company.hasEInvoiceCertificate
-                            ? Colors.green
-                            : Colors.grey,
+                      Expanded(
+                        flex: 2,
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            final file = await pickFile(
+                              fileIndex: 'e_invoice_certificate',
+                              allowedExtensions: [
+                                'p12',
+                                'pfx',
+                                'pem',
+                                'cer',
+                                'crt',
+                                'der',
+                                'txt',
+                                'p7b',
+                                'spc',
+                                'bin',
+                              ],
+                            );
+
+                            if (file != null) {
+                              viewModel.onEInvoiceCertificateSelected(file);
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child:
+                                Text(localization.setCertificate.toUpperCase()),
+                          ),
+                        ),
                       ),
-                      SizedBox(width: 8),
-                      Text(company.hasEInvoiceCertificate
-                          ? localization.certificateSet
-                          : localization.certificateNotSet),
-                      SizedBox(width: 24),
-                      Icon(
-                        company.hasEInvoiceCertificatePassphrase
-                            ? Icons.check_circle_outline
-                            : Icons.circle_outlined,
-                        size: 16,
-                        color: company.hasEInvoiceCertificatePassphrase
-                            ? Colors.green
-                            : Colors.grey,
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              company.hasEInvoiceCertificate
+                                  ? Icons.check_circle_outline
+                                  : Icons.circle_outlined,
+                              size: 16,
+                              color: company.hasEInvoiceCertificate
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
+                            SizedBox(width: 8),
+                            Text(company.hasEInvoiceCertificate
+                                ? localization.certificateSet
+                                : localization.certificateNotSet),
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 8),
-                      Text(company.hasEInvoiceCertificatePassphrase
-                          ? localization.passphraseSet
-                          : localization.passphraseNotSet),
                     ],
                   ),
-                  SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
-                        child: OutlinedButton(
-                            onPressed: () async {
-                              final file = await pickFile(
-                                fileIndex: 'e_invoice_certificate',
-                                allowedExtensions: [
-                                  'p12',
-                                  'pfx',
-                                  'pem',
-                                  'cer',
-                                  'crt',
-                                  'der',
-                                  'txt',
-                                  'p7b',
-                                  'spc',
-                                  'bin',
-                                ],
-                              );
-
-                              if (file != null) {
-                                viewModel.onEInvoiceCertificateSelected(file);
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Text(
-                                  localization.setCertificate.toUpperCase()),
-                            )),
-                      ),
-                      SizedBox(height: 8),
-                      Expanded(
+                        flex: 2,
                         child: DecoratedFormField(
                           label: localization.certificatePassphrase,
                           controller: _eInvoiceCertificatePassphraseController,
@@ -614,6 +607,24 @@ class _EmailSettingsState extends State<EmailSettings> {
                           onSavePressed: _onSavePressed,
                         ),
                       ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: Row(children: [
+                          Icon(
+                            company.hasEInvoiceCertificatePassphrase
+                                ? Icons.check_circle_outline
+                                : Icons.circle_outlined,
+                            size: 16,
+                            color: company.hasEInvoiceCertificatePassphrase
+                                ? Colors.green
+                                : Colors.grey,
+                          ),
+                          SizedBox(width: 8),
+                          Text(company.hasEInvoiceCertificatePassphrase
+                              ? localization.passphraseSet
+                              : localization.passphraseNotSet),
+                        ]),
+                      )
                     ],
                   )
                 ],
