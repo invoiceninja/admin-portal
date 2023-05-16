@@ -110,8 +110,10 @@ class EmailSettingsVM {
           });
         },
         onEInvoiceCertificateSelected: (eInvoiceCertificate) {
-          final completer = snackBarCompleter<Null>(navigatorKey.currentContext,
-              AppLocalization.of(navigatorKey.currentContext).savedSettings);
+          final completer = snackBarCompleter<Null>(
+              navigatorKey.currentContext,
+              AppLocalization.of(navigatorKey.currentContext)
+                  .uploadedCertificate);
           store.dispatch(
             SaveEInvoiceCertificateRequest(
                 completer: completer,
