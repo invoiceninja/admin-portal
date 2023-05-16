@@ -538,30 +538,56 @@ class _EmailSettingsState extends State<EmailSettings> {
                               ))
                           .toList()),
                 ),
-                SizedBox(height: 20),
-                Center(
-                  child: Text((company.hasEInvoiceCertificate
+                if (!settingsUIState.isFiltered) ...[
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        company.hasEInvoiceCertificate
+                            ? Icons.check_circle_outline
+                            : Icons.circle_outlined,
+                        size: 16,
+                        color: company.hasEInvoiceCertificate
+                            ? Colors.green
+                            : Colors.grey,
+                      ),
+                      SizedBox(width: 8),
+                      Text(company.hasEInvoiceCertificate
                           ? localization.certificateSet
-                          : localization.certificateNotSet) +
-                      ' • ' +
-                      (company.hasEInvoiceCertificatePassphrase
+                          : localization.certificateNotSet),
+                      SizedBox(width: 24),
+                      Icon(
+                        company.hasEInvoiceCertificatePassphrase
+                            ? Icons.check_circle_outline
+                            : Icons.circle_outlined,
+                        size: 16,
+                        color: company.hasEInvoiceCertificatePassphrase
+                            ? Colors.green
+                            : Colors.grey,
+                      ),
+                      SizedBox(width: 8),
+                      Text(company.hasEInvoiceCertificatePassphrase
                           ? localization.passphraseSet
-                          : localization.passphraseNotSet)),
-                ),
-                SizedBox(height: 20),
-                OutlinedButton(
-                    onPressed: () {
-                      //
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(localization.setCertificate.toUpperCase()),
-                    )),
-                DecoratedFormField(
-                  label: localization.certificatePassphrase,
-                  controller: _eInvoiceCertificatePassphraseController,
-                  keyboardType: TextInputType.text,
-                ),
+                          : localization.passphraseNotSet),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  OutlinedButton(
+                      onPressed: () {
+                        //
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(localization.setCertificate.toUpperCase()),
+                      )),
+                  DecoratedFormField(
+                    label: localization.certificatePassphrase,
+                    controller: _eInvoiceCertificatePassphraseController,
+                    keyboardType: TextInputType.text,
+                    onSavePressed: _onSavePressed,
+                  ),
+                ],
               ],
             ],
           ),
