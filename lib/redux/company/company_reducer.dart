@@ -107,7 +107,9 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
     print(
         '## hasEInvoiceCertificate: ${action.company.hasEInvoiceCertificate}');
     return userCompany.rebuild((b) => b
-      ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate);
+      ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate
+      ..company.hasEInvoiceCertificatePassphrase =
+          action.company.hasEInvoiceCertificatePassphrase);
   }),
   TypedReducer<UserCompanyEntity, UpdateReportSettings>((userCompany, action) {
     if (userCompany.settings.reportSettings.containsKey(action.report)) {

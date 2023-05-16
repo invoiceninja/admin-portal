@@ -574,39 +574,48 @@ class _EmailSettingsState extends State<EmailSettings> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  OutlinedButton(
-                      onPressed: () async {
-                        final file = await pickFile(
-                          fileIndex: 'e_invoice_certificate',
-                          allowedExtensions: [
-                            'p12',
-                            'pfx',
-                            'pem',
-                            'cer',
-                            'crt',
-                            'der',
-                            'txt',
-                            'p7b',
-                            'spc',
-                            'bin',
-                          ],
-                        );
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                            onPressed: () async {
+                              final file = await pickFile(
+                                fileIndex: 'e_invoice_certificate',
+                                allowedExtensions: [
+                                  'p12',
+                                  'pfx',
+                                  'pem',
+                                  'cer',
+                                  'crt',
+                                  'der',
+                                  'txt',
+                                  'p7b',
+                                  'spc',
+                                  'bin',
+                                ],
+                              );
 
-                        if (file != null) {
-                          viewModel.onEInvoiceCertificateSelected(file);
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(localization.setCertificate.toUpperCase()),
-                      )),
-                  SizedBox(height: 8),
-                  DecoratedFormField(
-                    label: localization.certificatePassphrase,
-                    controller: _eInvoiceCertificatePassphraseController,
-                    keyboardType: TextInputType.text,
-                    onSavePressed: _onSavePressed,
-                  ),
+                              if (file != null) {
+                                viewModel.onEInvoiceCertificateSelected(file);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Text(
+                                  localization.setCertificate.toUpperCase()),
+                            )),
+                      ),
+                      SizedBox(height: 8),
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localization.certificatePassphrase,
+                          controller: _eInvoiceCertificatePassphraseController,
+                          keyboardType: TextInputType.text,
+                          onSavePressed: _onSavePressed,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ],
             ],
