@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
 ]) {
   final viewSettings = _viewSettings();
   final saveCompany = _saveCompany(repository);
+  final saveEInvoiceCertificate = _saveEInvoiceCertificate(repository);
   final saveAuthUser = _saveAuthUser(repository);
   final connectOAuthUser = _connectOAuthUser(repository);
   final disconnectOAuthUser = _disconnectOAuthUser(repository);
@@ -40,6 +41,8 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
+    TypedMiddleware<AppState, SaveEInvoiceCertificateRequest>(
+        saveEInvoiceCertificate),
     TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
     TypedMiddleware<AppState, ConnecOAuthUserRequest>(connectOAuthUser),
     TypedMiddleware<AppState, DisconnecOAuthUserRequest>(disconnectOAuthUser),
@@ -104,6 +107,30 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveCompanyFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveEInvoiceCertificate(
+    SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveEInvoiceCertificateRequest;
+
+    settingsRepository
+        .saveEInvoiceCertificate(
+      store.state.credentials,
+      action.company,
+      action.eInvoiceCertificate,
+    )
+        .then((company) {
+      store.dispatch(SaveEInvoiceCertificateSuccess(company));
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveEInvoiceCertificateFailure(error));
       action.completer.completeError(error);
     });
 

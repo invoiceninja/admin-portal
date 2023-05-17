@@ -383,9 +383,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'tax_data',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
-      'e_invoice_certificate',
-      serializers.serialize(object.eInvoiceCertificate,
-          specifiedType: const FullType(String)),
+      'has_e_invoice_certificate',
+      serializers.serialize(object.hasEInvoiceCertificate,
+          specifiedType: const FullType(bool)),
+      'has_e_invoice_certificate_passphrase',
+      serializers.serialize(object.hasEInvoiceCertificatePassphrase,
+          specifiedType: const FullType(bool)),
       'e_invoice_certificate_passphrase',
       serializers.serialize(object.eInvoiceCertificatePassphrase,
           specifiedType: const FullType(String)),
@@ -928,9 +931,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.taxData.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;
-        case 'e_invoice_certificate':
-          result.eInvoiceCertificate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'has_e_invoice_certificate':
+          result.hasEInvoiceCertificate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'has_e_invoice_certificate_passphrase':
+          result.hasEInvoiceCertificatePassphrase = serializers
+              .deserialize(value, specifiedType: const FullType(bool)) as bool;
           break;
         case 'e_invoice_certificate_passphrase':
           result.eInvoiceCertificatePassphrase = serializers.deserialize(value,
@@ -2043,7 +2050,9 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final TaxDataEntity taxData;
   @override
-  final String eInvoiceCertificate;
+  final bool hasEInvoiceCertificate;
+  @override
+  final bool hasEInvoiceCertificatePassphrase;
   @override
   final String eInvoiceCertificatePassphrase;
   @override
@@ -2171,7 +2180,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.stopOnUnpaidRecurring,
       this.calculateTaxes,
       this.taxData,
-      this.eInvoiceCertificate,
+      this.hasEInvoiceCertificate,
+      this.hasEInvoiceCertificatePassphrase,
       this.eInvoiceCertificatePassphrase,
       this.isChanged,
       this.createdAt,
@@ -2376,7 +2386,9 @@ class _$CompanyEntity extends CompanyEntity {
         calculateTaxes, r'CompanyEntity', 'calculateTaxes');
     BuiltValueNullFieldError.checkNotNull(taxData, r'CompanyEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
-        eInvoiceCertificate, r'CompanyEntity', 'eInvoiceCertificate');
+        hasEInvoiceCertificate, r'CompanyEntity', 'hasEInvoiceCertificate');
+    BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificatePassphrase,
+        r'CompanyEntity', 'hasEInvoiceCertificatePassphrase');
     BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase,
         r'CompanyEntity', 'eInvoiceCertificatePassphrase');
     BuiltValueNullFieldError.checkNotNull(
@@ -2501,7 +2513,9 @@ class _$CompanyEntity extends CompanyEntity {
         stopOnUnpaidRecurring == other.stopOnUnpaidRecurring &&
         calculateTaxes == other.calculateTaxes &&
         taxData == other.taxData &&
-        eInvoiceCertificate == other.eInvoiceCertificate &&
+        hasEInvoiceCertificate == other.hasEInvoiceCertificate &&
+        hasEInvoiceCertificatePassphrase ==
+            other.hasEInvoiceCertificatePassphrase &&
         eInvoiceCertificatePassphrase == other.eInvoiceCertificatePassphrase &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -2621,7 +2635,8 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, stopOnUnpaidRecurring.hashCode);
     _$hash = $jc(_$hash, calculateTaxes.hashCode);
     _$hash = $jc(_$hash, taxData.hashCode);
-    _$hash = $jc(_$hash, eInvoiceCertificate.hashCode);
+    _$hash = $jc(_$hash, hasEInvoiceCertificate.hashCode);
+    _$hash = $jc(_$hash, hasEInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, eInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -2741,7 +2756,9 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('stopOnUnpaidRecurring', stopOnUnpaidRecurring)
           ..add('calculateTaxes', calculateTaxes)
           ..add('taxData', taxData)
-          ..add('eInvoiceCertificate', eInvoiceCertificate)
+          ..add('hasEInvoiceCertificate', hasEInvoiceCertificate)
+          ..add('hasEInvoiceCertificatePassphrase',
+              hasEInvoiceCertificatePassphrase)
           ..add('eInvoiceCertificatePassphrase', eInvoiceCertificatePassphrase)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -3286,10 +3303,17 @@ class CompanyEntityBuilder
       _$this._taxData ??= new TaxDataEntityBuilder();
   set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
 
-  String _eInvoiceCertificate;
-  String get eInvoiceCertificate => _$this._eInvoiceCertificate;
-  set eInvoiceCertificate(String eInvoiceCertificate) =>
-      _$this._eInvoiceCertificate = eInvoiceCertificate;
+  bool _hasEInvoiceCertificate;
+  bool get hasEInvoiceCertificate => _$this._hasEInvoiceCertificate;
+  set hasEInvoiceCertificate(bool hasEInvoiceCertificate) =>
+      _$this._hasEInvoiceCertificate = hasEInvoiceCertificate;
+
+  bool _hasEInvoiceCertificatePassphrase;
+  bool get hasEInvoiceCertificatePassphrase =>
+      _$this._hasEInvoiceCertificatePassphrase;
+  set hasEInvoiceCertificatePassphrase(bool hasEInvoiceCertificatePassphrase) =>
+      _$this._hasEInvoiceCertificatePassphrase =
+          hasEInvoiceCertificatePassphrase;
 
   String _eInvoiceCertificatePassphrase;
   String get eInvoiceCertificatePassphrase =>
@@ -3444,7 +3468,8 @@ class CompanyEntityBuilder
       _stopOnUnpaidRecurring = $v.stopOnUnpaidRecurring;
       _calculateTaxes = $v.calculateTaxes;
       _taxData = $v.taxData.toBuilder();
-      _eInvoiceCertificate = $v.eInvoiceCertificate;
+      _hasEInvoiceCertificate = $v.hasEInvoiceCertificate;
+      _hasEInvoiceCertificatePassphrase = $v.hasEInvoiceCertificatePassphrase;
       _eInvoiceCertificatePassphrase = $v.eInvoiceCertificatePassphrase;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -3595,7 +3620,8 @@ class CompanyEntityBuilder
               stopOnUnpaidRecurring: BuiltValueNullFieldError.checkNotNull(stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring'),
               calculateTaxes: BuiltValueNullFieldError.checkNotNull(calculateTaxes, r'CompanyEntity', 'calculateTaxes'),
               taxData: taxData.build(),
-              eInvoiceCertificate: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificate, r'CompanyEntity', 'eInvoiceCertificate'),
+              hasEInvoiceCertificate: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificate, r'CompanyEntity', 'hasEInvoiceCertificate'),
+              hasEInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificatePassphrase, r'CompanyEntity', 'hasEInvoiceCertificatePassphrase'),
               eInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase, r'CompanyEntity', 'eInvoiceCertificatePassphrase'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyEntity', 'createdAt'),

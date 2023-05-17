@@ -102,6 +102,13 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       loadCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
       saveCompanySuccessReducer),
+  TypedReducer<UserCompanyEntity, SaveEInvoiceCertificateSuccess>(
+      (userCompany, action) {
+    return userCompany.rebuild((b) => b
+      ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate
+      ..company.hasEInvoiceCertificatePassphrase =
+          action.company.hasEInvoiceCertificatePassphrase);
+  }),
   TypedReducer<UserCompanyEntity, UpdateReportSettings>((userCompany, action) {
     if (userCompany.settings.reportSettings.containsKey(action.report)) {
       final settings = userCompany.settings.reportSettings[action.report];

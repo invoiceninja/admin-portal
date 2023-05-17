@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -51,6 +52,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _mailgunSecretController = TextEditingController();
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
+  final _eInvoiceCertificatePassphraseController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -84,12 +86,16 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunSecretController,
       _mailgunDomainController,
       _customSendingEmailController,
+      _eInvoiceCertificatePassphraseController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final settings = widget.viewModel.settings;
+    final viewModel = widget.viewModel;
+    final company = viewModel.company;
+    final settings = viewModel.settings;
+
     _fromNameController.text = settings.emailFromName;
     _replyToEmailController.text = settings.replyToEmail;
     _replyToNameController.text = settings.replyToName;
@@ -100,6 +106,8 @@ class _EmailSettingsState extends State<EmailSettings> {
     _customSendingEmailController.text = settings.customSendingEmail;
     _mailgunSecretController.text = settings.mailgunSecret;
     _mailgunDomainController.text = settings.mailgunDomain;
+    _eInvoiceCertificatePassphraseController.text =
+        company.eInvoiceCertificatePassphrase;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -108,7 +116,8 @@ class _EmailSettingsState extends State<EmailSettings> {
   }
 
   void _onChanged() {
-    final settings = widget.viewModel.settings.rebuild((b) => b
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings.rebuild((b) => b
       ..emailFromName = _fromNameController.text.trim()
       ..replyToEmail = _replyToEmailController.text.trim()
       ..replyToName = _replyToNameController.text.trim()
@@ -119,8 +128,15 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..mailgunSecret = _mailgunSecretController.text.trim()
       ..mailgunDomain = _mailgunDomainController.text.trim()
       ..customSendingEmail = _customSendingEmailController.text.trim());
-    if (settings != widget.viewModel.settings) {
-      widget.viewModel.onSettingsChanged(settings);
+    if (settings != viewModel.settings) {
+      viewModel.onSettingsChanged(settings);
+    }
+
+    final company = viewModel.company.rebuild((b) => b
+      ..eInvoiceCertificatePassphrase =
+          _eInvoiceCertificatePassphraseController.text.trim());
+    if (company != viewModel.company) {
+      viewModel.onCompanyChanged(company);
     }
   }
 
@@ -139,6 +155,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = viewModel.state.company;
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
@@ -470,6 +487,7 @@ class _EmailSettingsState extends State<EmailSettings> {
           ),
           FormCard(
             isLast: true,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               BoolDropdownButton(
                 label: localization.attachPdf,
@@ -500,10 +518,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..enableEInvoice = value)),
                 ),
-              if (settings.enableEInvoice == true)
+              if (settings.enableEInvoice == true) ...[
                 Padding(
                   padding:
-                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 16),
+                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 12),
                   child: AppDropdownButton<String>(
                       labelText: localization.eInvoiceType,
                       showBlank: settingsUIState.isFiltered,
@@ -520,7 +538,107 @@ class _EmailSettingsState extends State<EmailSettings> {
                                 value: type,
                               ))
                           .toList()),
-                )
+                ),
+                if (!settingsUIState.isFiltered) ...[
+                  SizedBox(height: 22),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            final file = await pickFile(
+                              fileIndex: 'e_invoice_certificate',
+                              allowedExtensions: [
+                                'p12',
+                                'pfx',
+                                'pem',
+                                'cer',
+                                'crt',
+                                'der',
+                                'txt',
+                                'p7b',
+                                'spc',
+                                'bin',
+                              ],
+                            );
+
+                            if (file != null) {
+                              viewModel.onEInvoiceCertificateSelected(file);
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                                localization.uploadCertificate.toUpperCase()),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              company.hasEInvoiceCertificate
+                                  ? Icons.check_circle_outline
+                                  : Icons.circle_outlined,
+                              size: 16,
+                              color: company.hasEInvoiceCertificate
+                                  ? Colors.green
+                                  : Colors.grey,
+                            ),
+                            SizedBox(width: 8),
+                            Flexible(
+                              child: Text(
+                                company.hasEInvoiceCertificate
+                                    ? localization.certificateSet
+                                    : localization.certificateNotSet,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: DecoratedFormField(
+                          label: localization.certificatePassphrase,
+                          controller: _eInvoiceCertificatePassphraseController,
+                          keyboardType: TextInputType.text,
+                          onSavePressed: _onSavePressed,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: Row(children: [
+                          Icon(
+                            company.hasEInvoiceCertificatePassphrase
+                                ? Icons.check_circle_outline
+                                : Icons.circle_outlined,
+                            size: 16,
+                            color: company.hasEInvoiceCertificatePassphrase
+                                ? Colors.green
+                                : Colors.grey,
+                          ),
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              company.hasEInvoiceCertificatePassphrase
+                                  ? localization.passphraseSet
+                                  : localization.passphraseNotSet,
+                              maxLines: 2,
+                            ),
+                          ),
+                        ]),
+                      )
+                    ],
+                  )
+                ],
+              ],
             ],
           ),
         ],

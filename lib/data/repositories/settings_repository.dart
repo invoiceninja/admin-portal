@@ -25,8 +25,33 @@ class SettingsRepository {
     dynamic response;
 
     final url = credentials.url + '/companies/${company.id}';
-    response =
-        await webClient.put(url, credentials.token, data: json.encode(data));
+    response = await webClient.put(
+      url,
+      credentials.token,
+      data: json.encode(data),
+    );
+
+    final CompanyItemResponse companyResponse =
+        serializers.deserializeWith(CompanyItemResponse.serializer, response);
+
+    return companyResponse.data;
+  }
+
+  Future<CompanyEntity> saveEInvoiceCertificate(Credentials credentials,
+      CompanyEntity company, MultipartFile eInvoiceCertificate) async {
+    dynamic response;
+
+    final url = credentials.url + '/companies/${company.id}';
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    response = await webClient.post(
+      url,
+      credentials.token,
+      multipartFiles: [eInvoiceCertificate],
+      data: fields,
+    );
 
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);
