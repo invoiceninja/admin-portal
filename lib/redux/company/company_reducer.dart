@@ -104,8 +104,6 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       saveCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveEInvoiceCertificateSuccess>(
       (userCompany, action) {
-    print(
-        '## hasEInvoiceCertificate: ${action.company.hasEInvoiceCertificate}');
     return userCompany.rebuild((b) => b
       ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate
       ..company.hasEInvoiceCertificatePassphrase =
