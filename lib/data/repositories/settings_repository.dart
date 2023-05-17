@@ -42,10 +42,15 @@ class SettingsRepository {
     dynamic response;
 
     final url = credentials.url + '/companies/${company.id}';
-    response = await webClient.put(
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    response = await webClient.post(
       url,
       credentials.token,
-      multipartFile: eInvoiceCertificate,
+      multipartFiles: [eInvoiceCertificate],
+      data: fields,
     );
 
     final CompanyItemResponse companyResponse =
