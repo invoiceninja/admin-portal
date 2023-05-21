@@ -335,6 +335,7 @@ class AppDataTable extends StatelessWidget {
     this.columnSpacing = 56.0,
     this.showCheckboxColumn = true,
     this.dividerThickness = 1.0,
+    this.hasActionsColumn = false,
     @required this.rows,
   })  : assert(columns != null),
         assert(columns.isNotEmpty),
@@ -436,6 +437,8 @@ class AppDataTable extends StatelessWidget {
   // Set by the constructor to the index of the only Column that is
   // non-numeric, if there is exactly one, otherwise null.
   final int _onlyTextColumn;
+
+  final bool hasActionsColumn;
 
   static int _initOnlyTextColumn(List<DataColumn> columns) {
     int result;
@@ -757,7 +760,7 @@ class AppDataTable extends StatelessWidget {
                 sortColumnIndex != dataColumnIndex || !sortAscending)
             : null,
         // IGNORE SORTING ON FIRST COLUMN
-        sorted: displayCheckboxColumn
+        sorted: displayCheckboxColumn || !hasActionsColumn
             ? dataColumnIndex == sortColumnIndex
             : (dataColumnIndex - 1) == sortColumnIndex,
         ascending: sortAscending,
