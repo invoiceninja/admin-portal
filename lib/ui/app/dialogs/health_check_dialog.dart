@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -166,8 +167,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: 'Invalid File Permissions',
                     isValid: false,
                     subtitle: _response.filePermissions,
-                    url:
-                        'https://invoiceninja.github.io/docs/self-host-installation/#file-permissions',
+                    url: '$kDocsUrl/self-host-installation/#file-permissions',
                   ),
                 /*
                 if (!state.account.isDocker) ...[
@@ -200,8 +200,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     title: 'Queue not enabled',
                     subtitle: 'Enable the queue for improved performance',
                     level: _HealthCheckLevel.Info,
-                    url:
-                        'https://invoiceninja.github.io/docs/self-host-installation/#final-setup-steps',
+                    url: '$kDocsUrl/self-host-installation/#final-setup-steps',
                   ),
                 if (!_response.pdfEngine.toLowerCase().startsWith('snappdf'))
                   _HealthListTile(
@@ -209,7 +208,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     subtitle: 'Use SnapPDF to generate PDF files locally',
                     level: _HealthCheckLevel.Info,
                     url:
-                        'https://invoiceninja.github.io/docs/self-host-troubleshooting/#pdf-conversion-issues',
+                        '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
                   ),
                 if (_response.trailingSlash)
                   _HealthListTile(
@@ -223,7 +222,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     subtitle: 'Add an Open Exchange key to the .env file',
                     level: _HealthCheckLevel.Info,
                     url:
-                        'https://invoiceninja.github.io/docs/self-host-installation/#currency-conversion',
+                        '$kDocsUrl/self-host-installation/#currency-conversion',
                   ),
               ],
             ),

@@ -1117,7 +1117,7 @@ class SidebarFooter extends StatelessWidget {
               icon: Icon(Icons.help_outline),
               onPressed: () {
                 // TODO use language setting
-                String url = kDocsUrl + '/en';
+                String url = kDocsUrl;
                 final uiState = state.uiState;
                 final subRoute = uiState.baseSubRoute;
 
