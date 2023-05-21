@@ -285,7 +285,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..textScaleFactor = 1
     ..darkModeType = kBrightnessSytem
     ..colorTheme = kColorThemeLight
-    ..darkColorTheme = kColorThemeDark;
+    ..darkColorTheme = kColorThemeDark
+    ..enableDarkModeSystem = false;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

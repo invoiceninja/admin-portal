@@ -112,9 +112,7 @@ class MenuDrawerVM {
                   section: uiState.subRoute,
                   force: true,
                 ));
-              }
-
-              if (uiState.isEditing ||
+              } else if (uiState.isEditing ||
                   uiState.isViewing ||
                   uiState.isEmailing ||
                   uiState.isPDF) {
