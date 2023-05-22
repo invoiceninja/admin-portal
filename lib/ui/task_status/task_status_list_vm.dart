@@ -81,7 +81,8 @@ class TaskStatusListVM {
                 navigatorKey.currentContext,
                 AppLocalization.of(navigatorKey.currentContext)
                     .updatedTaskStatus),
-            taskStatus: taskStatus.rebuild((b) => b..statusOrder = newIndex)));
+            taskStatus:
+                taskStatus.rebuild((b) => b..statusOrder = newIndex + 1)));
       },
     );
   }
