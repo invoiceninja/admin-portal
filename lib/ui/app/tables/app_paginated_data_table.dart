@@ -73,6 +73,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.onPageChanged,
     this.rowsPerPage = defaultRowsPerPage,
     this.subtractOneFromCount = false,
+    this.hasActionsColumn = false,
     this.availableRowsPerPage = const <int>[
       defaultRowsPerPage,
       defaultRowsPerPage * 2,
@@ -216,6 +217,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   final DragStartBehavior dragStartBehavior;
 
   final bool subtractOneFromCount;
+  final bool hasActionsColumn;
 
   @override
   AppPaginatedDataTableState createState() => AppPaginatedDataTableState();
@@ -498,6 +500,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                       columnSpacing: widget.columnSpacing,
                       showCheckboxColumn: widget.showCheckboxColumn,
                       rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                      hasActionsColumn: widget.hasActionsColumn,
                     ),
                   ),
                 ),

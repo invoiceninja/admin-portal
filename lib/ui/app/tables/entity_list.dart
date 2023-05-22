@@ -235,6 +235,7 @@ class _EntityListState extends State<EntityList> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(
+                    hasActionsColumn: true,
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);

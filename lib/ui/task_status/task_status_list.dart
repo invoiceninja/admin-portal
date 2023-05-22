@@ -66,7 +66,6 @@ class _TaskStatusListState extends State<TaskStatusList> {
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: ReorderableListView(
-              buildDefaultDragHandles: false ? false : false,
               scrollController: _controller,
               onReorder: (oldIndex, newIndex) {
                 // https://stackoverflow.com/a/54164333/497368

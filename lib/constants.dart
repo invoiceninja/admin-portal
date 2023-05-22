@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.115';
+const String kClientVersion = '5.0.116';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -55,28 +55,22 @@ const String kAppleOAuthRedirectUrl = 'https://invoicing.co/auth/apple';
 
 const String kReleaseNotesUrl =
     'https://github.com/invoiceninja/invoiceninja/releases';
-const String kDocsUrl = 'https://invoiceninja.github.io';
-const String kDocsCustomDomainUrl =
-    'https://invoiceninja.github.io/docs/hosted-custom-domain';
-const String kDocsCustomDesignUrl =
-    'https://invoiceninja.github.io/docs/custom-fields';
-const String kDocsCustomFieldsUrl =
-    'https://invoiceninja.github.io/docs/custom-fields/#custom-fields';
-const String kDocsStripeConnectUrl =
-    'https://invoiceninja.github.io/docs/hosted-stripe';
+const String kDocsUrl = 'https://invoiceninja.github.io/en';
+const String kDocsCustomDomainUrl = '$kDocsUrl/hosted-custom-domain';
+const String kDocsCustomDesignUrl = '$kDocsUrl/custom-fields';
+const String kDocsCustomFieldsUrl = '$kDocsUrl/custom-fields/#custom-fields';
+const String kDocsStripeConnectUrl = '$kDocsUrl/hosted-stripe';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
-const String kApiDocsURL =
-    'https://invoiceninja.github.io/docs/developer-guide';
+const String kApiDocsURL = '$kDocsUrl/developer-guide';
 const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
 
-const String kDebugModeUrl =
-    'https://invoiceninja.github.io/docs/self-host-debug-mode';
+const String kDebugModeUrl = '$kDocsUrl/self-host-debug-mode';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja';
 const String kCronsHelpUrl =
-    'https://invoiceninja.github.io/docs/self-host-troubleshooting/#cron-not-running-queue-not-running';
+    '$kDocsUrl/self-host-troubleshooting/#cron-not-running-queue-not-running';
 const String kGitHubDiffUrl =
     'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 const String kGitHubLangUrl =

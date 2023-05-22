@@ -634,7 +634,8 @@ class __FileMapperState extends State<_FileMapper> {
           final spaceCase = possible.replaceAll('_', ' ');
           final translated = localization.lookup(possible);
 
-          if ([possible, spaceCase, translated].contains(field.toLowerCase())) {
+          if ([possible, spaceCase, translated].contains(field.toLowerCase()) &&
+              _mapping[entry.key][i] == null) {
             _mapping[entry.key][i] = availableField;
           }
         }

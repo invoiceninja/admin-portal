@@ -450,7 +450,6 @@ String formatDate(String value, BuildContext context,
     }
     final formatter = DateFormat(format, localeSelector(state));
     final parsed = DateTime.tryParse(value.endsWith('Z') ? value : value + 'Z');
-
     formattedValue = parsed == null ? '' : formatter.format(parsed.toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;

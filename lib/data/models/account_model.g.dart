@@ -79,6 +79,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'trial_days_left',
       serializers.serialize(object.trialDaysLeft,
           specifiedType: const FullType(int)),
+      'has_iap_plan',
+      serializers.serialize(object.hasIapPlan,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -180,6 +183,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.trialDaysLeft = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'has_iap_plan':
+          result.hasIapPlan = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -230,6 +237,8 @@ class _$AccountEntity extends AccountEntity {
   final bool accountSmsVerified;
   @override
   final int trialDaysLeft;
+  @override
+  final bool hasIapPlan;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates))._build();
@@ -255,7 +264,8 @@ class _$AccountEntity extends AccountEntity {
       this.hostedCompanyCount,
       this.setReactAsDefaultAP,
       this.accountSmsVerified,
-      this.trialDaysLeft})
+      this.trialDaysLeft,
+      this.hasIapPlan})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
@@ -296,6 +306,8 @@ class _$AccountEntity extends AccountEntity {
         accountSmsVerified, r'AccountEntity', 'accountSmsVerified');
     BuiltValueNullFieldError.checkNotNull(
         trialDaysLeft, r'AccountEntity', 'trialDaysLeft');
+    BuiltValueNullFieldError.checkNotNull(
+        hasIapPlan, r'AccountEntity', 'hasIapPlan');
   }
 
   @override
@@ -329,7 +341,8 @@ class _$AccountEntity extends AccountEntity {
         hostedCompanyCount == other.hostedCompanyCount &&
         setReactAsDefaultAP == other.setReactAsDefaultAP &&
         accountSmsVerified == other.accountSmsVerified &&
-        trialDaysLeft == other.trialDaysLeft;
+        trialDaysLeft == other.trialDaysLeft &&
+        hasIapPlan == other.hasIapPlan;
   }
 
   int __hashCode;
@@ -358,6 +371,7 @@ class _$AccountEntity extends AccountEntity {
     _$hash = $jc(_$hash, setReactAsDefaultAP.hashCode);
     _$hash = $jc(_$hash, accountSmsVerified.hashCode);
     _$hash = $jc(_$hash, trialDaysLeft.hashCode);
+    _$hash = $jc(_$hash, hasIapPlan.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -385,7 +399,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('hostedCompanyCount', hostedCompanyCount)
           ..add('setReactAsDefaultAP', setReactAsDefaultAP)
           ..add('accountSmsVerified', accountSmsVerified)
-          ..add('trialDaysLeft', trialDaysLeft))
+          ..add('trialDaysLeft', trialDaysLeft)
+          ..add('hasIapPlan', hasIapPlan))
         .toString();
   }
 }
@@ -487,6 +502,10 @@ class AccountEntityBuilder
   int get trialDaysLeft => _$this._trialDaysLeft;
   set trialDaysLeft(int trialDaysLeft) => _$this._trialDaysLeft = trialDaysLeft;
 
+  bool _hasIapPlan;
+  bool get hasIapPlan => _$this._hasIapPlan;
+  set hasIapPlan(bool hasIapPlan) => _$this._hasIapPlan = hasIapPlan;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -515,6 +534,7 @@ class AccountEntityBuilder
       _setReactAsDefaultAP = $v.setReactAsDefaultAP;
       _accountSmsVerified = $v.accountSmsVerified;
       _trialDaysLeft = $v.trialDaysLeft;
+      _hasIapPlan = $v.hasIapPlan;
       _$v = null;
     }
     return this;
@@ -567,7 +587,8 @@ class AccountEntityBuilder
             hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount'),
             setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
             accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
-            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'));
+            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
+            hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'));
     replace(_$result);
     return _$result;
   }

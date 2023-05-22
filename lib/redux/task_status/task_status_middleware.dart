@@ -181,6 +181,7 @@ Middleware<AppState> _saveTaskStatus(TaskStatusRepository repository) {
         store.dispatch(SaveTaskStatusSuccess(taskStatus));
       }
 
+      store.dispatch(RefreshData());
       action.completer.complete(taskStatus);
     }).catchError((Object error) {
       print(error);

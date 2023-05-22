@@ -285,7 +285,7 @@ class DocumentTile extends StatelessWidget {
                                   ),
                                   value: localization.download,
                                 ),
-                                if (!kReleaseMode)
+                                if (false)
                                   PopupMenuItem<String>(
                                     child: IconText(
                                       text: localization.rename,

@@ -95,8 +95,10 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.lastSentDate:
         return Text(formatDate(invoice.lastSentDate, context));
       case InvoiceFields.nextSendDate:
-        return Text(
-            invoice.isPaid ? '' : formatDate(invoice.nextSendDate, context));
+        return Text(invoice.isPaid
+            ? ''
+            : formatDate(invoice.nextSendDatetime, context,
+                showTime: true, showSeconds: false));
       case InvoiceFields.reminder1Sent:
         return Text(formatDate(invoice.reminder1Sent, context));
       case InvoiceFields.reminder2Sent:

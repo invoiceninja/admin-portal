@@ -244,6 +244,7 @@ abstract class InvoiceEntity extends Object
       exchangeRate: exchangeRate,
       lastSentDate: '',
       nextSendDate: convertDateTimeToSqlDate(),
+      nextSendDatetime: '',
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
       dueDateDays: 'terms',
@@ -579,6 +580,9 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'next_send_date')
   String get nextSendDate;
 
+  @BuiltValueField(wireName: 'next_send_datetime')
+  String get nextSendDatetime;
+
   @nullable
   @BuiltValueField(wireName: 'remaining_cycles')
   int get remainingCycles;
@@ -824,7 +828,8 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.dueDate.compareTo(invoiceB.dueDate);
         break;
       case InvoiceFields.nextSendDate:
-        response = invoiceA.nextSendDate.compareTo(invoiceB.nextSendDate);
+        response =
+            invoiceA.nextSendDatetime.compareTo(invoiceB.nextSendDatetime);
         break;
       case EntityFields.assignedTo:
         final userA = userMap[invoiceA.assignedUserId] ?? UserEntity();
@@ -1528,6 +1533,7 @@ abstract class InvoiceEntity extends Object
     ..saveDefaultTerms = false
     ..saveDefaultFooter = false
     ..autoBillEnabled = false
+    ..nextSendDatetime = ''
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
