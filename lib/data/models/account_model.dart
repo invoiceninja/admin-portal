@@ -34,6 +34,7 @@ abstract class AccountEntity
       hostedCompanyCount: 1,
       setReactAsDefaultAP: false,
       trialDaysLeft: 0,
+      hasIapPlan: false,
     );
   }
 
@@ -103,6 +104,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'trial_days_left')
   int get trialDaysLeft;
 
+  @BuiltValueField(wireName: 'has_iap_plan')
+  bool get hasIapPlan;
+
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
@@ -130,6 +134,7 @@ abstract class AccountEntity
     ..disableAutoUpdate = false
     ..isMigrated = false
     ..isHosted = false
+    ..hasIapPlan = false
     ..trialStarted = ''
     ..defaultCompanyId = ''
     ..trialDaysLeft = 0
