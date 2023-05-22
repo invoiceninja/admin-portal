@@ -260,6 +260,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'next_send_date',
       serializers.serialize(object.nextSendDate,
           specifiedType: const FullType(String)),
+      'next_send_datetime',
+      serializers.serialize(object.nextSendDatetime,
+          specifiedType: const FullType(String)),
       'auto_bill_enabled',
       serializers.serialize(object.autoBillEnabled,
           specifiedType: const FullType(bool)),
@@ -645,6 +648,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'next_send_date':
           result.nextSendDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'next_send_datetime':
+          result.nextSendDatetime = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'remaining_cycles':
@@ -1541,6 +1548,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String nextSendDate;
   @override
+  final String nextSendDatetime;
+  @override
   final int remainingCycles;
   @override
   final String dueDateDays;
@@ -1643,6 +1652,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.frequencyId,
       this.lastSentDate,
       this.nextSendDate,
+      this.nextSendDatetime,
       this.remainingCycles,
       this.dueDateDays,
       this.invoiceId,
@@ -1750,6 +1760,8 @@ class _$InvoiceEntity extends InvoiceEntity {
     BuiltValueNullFieldError.checkNotNull(
         nextSendDate, r'InvoiceEntity', 'nextSendDate');
     BuiltValueNullFieldError.checkNotNull(
+        nextSendDatetime, r'InvoiceEntity', 'nextSendDatetime');
+    BuiltValueNullFieldError.checkNotNull(
         autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled');
     BuiltValueNullFieldError.checkNotNull(
         lineItems, r'InvoiceEntity', 'lineItems');
@@ -1835,6 +1847,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         frequencyId == other.frequencyId &&
         lastSentDate == other.lastSentDate &&
         nextSendDate == other.nextSendDate &&
+        nextSendDatetime == other.nextSendDatetime &&
         remainingCycles == other.remainingCycles &&
         dueDateDays == other.dueDateDays &&
         invoiceId == other.invoiceId &&
@@ -1915,6 +1928,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, frequencyId.hashCode);
     _$hash = $jc(_$hash, lastSentDate.hashCode);
     _$hash = $jc(_$hash, nextSendDate.hashCode);
+    _$hash = $jc(_$hash, nextSendDatetime.hashCode);
     _$hash = $jc(_$hash, remainingCycles.hashCode);
     _$hash = $jc(_$hash, dueDateDays.hashCode);
     _$hash = $jc(_$hash, invoiceId.hashCode);
@@ -1995,6 +2009,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('frequencyId', frequencyId)
           ..add('lastSentDate', lastSentDate)
           ..add('nextSendDate', nextSendDate)
+          ..add('nextSendDatetime', nextSendDatetime)
           ..add('remainingCycles', remainingCycles)
           ..add('dueDateDays', dueDateDays)
           ..add('invoiceId', invoiceId)
@@ -2247,6 +2262,11 @@ class InvoiceEntityBuilder
   String get nextSendDate => _$this._nextSendDate;
   set nextSendDate(String nextSendDate) => _$this._nextSendDate = nextSendDate;
 
+  String _nextSendDatetime;
+  String get nextSendDatetime => _$this._nextSendDatetime;
+  set nextSendDatetime(String nextSendDatetime) =>
+      _$this._nextSendDatetime = nextSendDatetime;
+
   int _remainingCycles;
   int get remainingCycles => _$this._remainingCycles;
   set remainingCycles(int remainingCycles) =>
@@ -2414,6 +2434,7 @@ class InvoiceEntityBuilder
       _frequencyId = $v.frequencyId;
       _lastSentDate = $v.lastSentDate;
       _nextSendDate = $v.nextSendDate;
+      _nextSendDatetime = $v.nextSendDatetime;
       _remainingCycles = $v.remainingCycles;
       _dueDateDays = $v.dueDateDays;
       _invoiceId = $v.invoiceId;
@@ -2521,6 +2542,7 @@ class InvoiceEntityBuilder
               frequencyId: frequencyId,
               lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, r'InvoiceEntity', 'lastSentDate'),
               nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, r'InvoiceEntity', 'nextSendDate'),
+              nextSendDatetime: BuiltValueNullFieldError.checkNotNull(nextSendDatetime, r'InvoiceEntity', 'nextSendDatetime'),
               remainingCycles: remainingCycles,
               dueDateDays: dueDateDays,
               invoiceId: invoiceId,
