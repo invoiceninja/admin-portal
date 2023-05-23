@@ -182,9 +182,10 @@ class InvoiceOverview extends StatelessWidget {
             formatDate(invoice.lastSentDate, context),
         RecurringInvoiceFields.nextSendDate:
             formatDate(invoice.nextSendDate, context),
-        RecurringInvoiceFields.nextSendTime: formatDate(
-            invoice.nextSendDatetime, context,
-            showDate: false, showTime: true, showSeconds: false),
+        if (invoice.nextSendDatetime.isNotEmpty)
+          RecurringInvoiceFields.nextSendTime: formatDate(
+              invoice.nextSendDatetime, context,
+              showDate: false, showTime: true, showSeconds: false),
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
