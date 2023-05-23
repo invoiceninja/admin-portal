@@ -1066,7 +1066,7 @@ abstract class InvoiceEntity extends Object
         if (!isRecurring) {
           actions.add(EntityAction.printPdf);
           actions.add(EntityAction.download);
-          if (isInvoice && state.company.settings.enableEInvoice) {
+          if (isInvoice && state.company.settings.enableEInvoice == true) {
             actions.add(EntityAction.eInvoice);
           }
         }
