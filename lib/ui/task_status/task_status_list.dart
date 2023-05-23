@@ -73,9 +73,10 @@ class _TaskStatusListState extends State<TaskStatusList> {
                 if (newIndex > widget.viewModel.taskStatusList.length) {
                   newIndex = widget.viewModel.taskStatusList.length;
                 }
-                if (oldIndex < newIndex) {
-                  newIndex--;
-                }
+
+                //if (oldIndex < newIndex) {
+                //  newIndex--;
+                //}
 
                 widget.viewModel.onSortChanged(oldIndex, newIndex);
               },
