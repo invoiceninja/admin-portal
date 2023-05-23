@@ -114,8 +114,10 @@ class RecurringInvoicePresenter extends EntityPresenter {
             ? localization.endless
             : '${invoice.remainingCycles}');
       case RecurringInvoiceFields.nextSendDate:
-        return Text(formatDate(invoice.nextSendDatetime, context,
-            showTime: true, showSeconds: false));
+        return Text(invoice.nextSendDatetime.isNotEmpty
+            ? formatDate(invoice.nextSendDatetime, context,
+                showTime: true, showSeconds: false)
+            : formatDate(invoice.nextSendDate, context));
       case RecurringInvoiceFields.frequency:
         return Text(localization.lookup(kFrequencies[invoice.frequencyId]));
       case RecurringInvoiceFields.dueDateDays:

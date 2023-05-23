@@ -828,8 +828,13 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.dueDate.compareTo(invoiceB.dueDate);
         break;
       case InvoiceFields.nextSendDate:
-        response =
-            invoiceA.nextSendDatetime.compareTo(invoiceB.nextSendDatetime);
+        if (invoiceA.nextSendDatetime.isNotEmpty &&
+            invoiceB.nextSendDatetime.isNotEmpty) {
+          response =
+              invoiceA.nextSendDatetime.compareTo(invoiceB.nextSendDatetime);
+        } else {
+          response = invoiceA.nextSendDate.compareTo(invoiceB.nextSendDate);
+        }
         break;
       case EntityFields.assignedTo:
         final userA = userMap[invoiceA.assignedUserId] ?? UserEntity();
@@ -1066,7 +1071,7 @@ abstract class InvoiceEntity extends Object
         if (!isRecurring) {
           actions.add(EntityAction.printPdf);
           actions.add(EntityAction.download);
-          if (isInvoice && state.company.settings.enableEInvoice) {
+          if (isInvoice && state.company.settings.enableEInvoice == true) {
             actions.add(EntityAction.eInvoice);
           }
         }
