@@ -47,7 +47,7 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 // TODO remove this function
 bool supportsMicrosoftOAuth() => kIsWeb;
 
-bool supportsLatestFeatures() {
+bool supportsLatestFeatures(String version) {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   final state = store.state;
 
@@ -55,8 +55,15 @@ bool supportsLatestFeatures() {
     return true;
   }
 
-  return Version.parse(state.account.currentVersion) >=
-      Version.parse('5.5.118');
+  if (state.isSelfHosted) {
+    return true;
+  }
+
+  if (version == null) {
+    return false;
+  }
+
+  return Version.parse(state.account.currentVersion) >= Version.parse(version);
 }
 
 bool supportsInAppPurchase() {
