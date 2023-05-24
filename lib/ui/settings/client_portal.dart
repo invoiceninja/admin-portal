@@ -641,12 +641,14 @@ class _ClientPortalState extends State<ClientPortal>
               FormCard(
                 isLast: true,
                 children: <Widget>[
+                  /*
                   DecoratedFormField(
                     controller: _customMessageDashboard,
                     label: localization.dashboard,
                     maxLines: 6,
                     keyboardType: TextInputType.multiline,
                   ),
+                  */
                   DecoratedFormField(
                     controller: _customMessageUnpaidInvoice,
                     label: localization.unpaidInvoice,
