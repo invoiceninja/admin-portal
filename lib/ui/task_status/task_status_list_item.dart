@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -81,7 +80,6 @@ class TaskStatusListItem extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (!kReleaseMode) Text('Sort: ${taskStatus.statusOrder}'),
           subtitle != null && subtitle.isNotEmpty
               ? Text(
                   subtitle,
