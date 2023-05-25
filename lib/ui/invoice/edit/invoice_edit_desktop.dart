@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/autobill_dropdown_menu_item.dart';
@@ -939,18 +940,21 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   HelpText(localization.saveToUploadDocuments)
                                 else
                                   DocumentGrid(
-                                      documents: invoice.documents.toList(),
-                                      onUploadDocument: (path) => widget
-                                          .entityViewModel
-                                          .onUploadDocument(context, path),
-                                      onDeleteDocument:
-                                          (document, password, idToken) =>
-                                              widget.entityViewModel
-                                                  .onDeleteDocument(
-                                                      context,
-                                                      document,
-                                                      password,
-                                                      idToken))
+                                    documents:
+                                        originalInvoice.documents.toList(),
+                                    onUploadDocument: (path) => widget
+                                        .entityViewModel
+                                        .onUploadDocument(context, path),
+                                    onDeleteDocument: (document, password,
+                                            idToken) =>
+                                        widget.entityViewModel.onDeleteDocument(
+                                            context,
+                                            document,
+                                            password,
+                                            idToken),
+                                    onRenamedDocument: () => store.dispatch(
+                                        LoadInvoice(invoiceId: invoice.id)),
+                                  )
                               ],
                             ),
                           ),

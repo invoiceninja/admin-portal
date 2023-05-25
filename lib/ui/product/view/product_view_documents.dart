@@ -1,5 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
@@ -13,6 +16,7 @@ class ProductViewDocuments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final product = viewModel.product;
 
     return DocumentGrid(
@@ -20,6 +24,8 @@ class ProductViewDocuments extends StatelessWidget {
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document, password, idToken) =>
           viewModel.onDeleteDocument(context, document, password, idToken),
+      onRenamedDocument: () =>
+          store.dispatch(LoadProduct(productId: product.id)),
     );
   }
 }

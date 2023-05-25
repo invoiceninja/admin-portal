@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
