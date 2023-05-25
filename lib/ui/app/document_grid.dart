@@ -285,14 +285,13 @@ class DocumentTile extends StatelessWidget {
                                   ),
                                   value: localization.download,
                                 ),
-                                if (false)
-                                  PopupMenuItem<String>(
-                                    child: IconText(
-                                      text: localization.rename,
-                                      icon: MdiIcons.renameBox,
-                                    ),
-                                    value: localization.rename,
+                                PopupMenuItem<String>(
+                                  child: IconText(
+                                    text: localization.rename,
+                                    icon: MdiIcons.renameBox,
                                   ),
+                                  value: localization.rename,
+                                ),
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.delete,
