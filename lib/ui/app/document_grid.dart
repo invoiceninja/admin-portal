@@ -255,6 +255,7 @@ class DocumentTile extends StatelessWidget {
                                   context: context,
                                   title: localization.rename,
                                   field: localization.name,
+                                  value: document.name,
                                   maxLength: 250,
                                   callback: (name) {
                                     store.dispatch(
