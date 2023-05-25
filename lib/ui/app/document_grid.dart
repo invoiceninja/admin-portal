@@ -41,6 +41,7 @@ class DocumentGrid extends StatelessWidget {
     @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
+    @required this.onRenamedDocument,
     this.onViewExpense,
   });
 
@@ -48,6 +49,7 @@ class DocumentGrid extends StatelessWidget {
   final Function(MultipartFile) onUploadDocument;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
+  final Function onRenamedDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +135,7 @@ class DocumentGrid extends StatelessWidget {
                       document: document,
                       onDeleteDocument: onDeleteDocument,
                       onViewExpense: onViewExpense,
+                      onRenamedDocument: onRenamedDocument,
                       isFromExpense: false,
                     ))
                 .toList(),
@@ -149,12 +152,14 @@ class DocumentTile extends StatelessWidget {
     @required this.onDeleteDocument,
     @required this.onViewExpense,
     @required this.isFromExpense,
+    @required this.onRenamedDocument,
   });
 
   final DocumentEntity document;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
+  final Function onRenamedDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +265,7 @@ class DocumentTile extends StatelessWidget {
                                                   context,
                                                   localization.renamedDocument)
                                                 ..future.then((value) {
-                                                  store.dispatch(RefreshData());
+                                                  onRenamedDocument();
                                                 }),
                                           entity: document
                                               .rebuild((b) => b..name = name)),
