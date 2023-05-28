@@ -364,7 +364,7 @@ class _AccountOverview extends StatelessWidget {
               onPressed: () => viewModel.onSetPrimaryCompany(context),
             ),
           ),
-        if (state.isHosted && state.isProPlan) ...[
+        if (state.isHosted && state.isProPlan && !state.isTrial) ...[
           if (supportsInAppPurchase())
             SizedBox()
           else if (!supportsInAppPurchase() && state.account.hasIapPlan)
@@ -517,7 +517,7 @@ class _AccountOverview extends StatelessWidget {
             child: ListDivider(),
           ),
         ],
-        if (state.isProPlan || state.isTrial)
+        if (state.isProPlan)
           Padding(
               padding: const EdgeInsets.all(16),
               child: Row(children: [

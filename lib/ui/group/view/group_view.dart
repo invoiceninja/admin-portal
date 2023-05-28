@@ -1,9 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -49,6 +50,7 @@ class _GroupViewState extends State<GroupView>
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -110,6 +112,8 @@ class _GroupViewState extends State<GroupView>
                 viewModel.onUploadDocument(context, path),
             onDeleteDocument: (document, password, idToken) => viewModel
                 .onDeleteDocument(context, document, password, idToken),
+            onRenamedDocument: () =>
+                store.dispatch(LoadGroup(groupId: group.id)),
           ),
         ],
       ),

@@ -313,7 +313,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final settings = viewModel.settings;
     final template = widget.viewModel.selectedTemplate;
     final company = state.company;
-    final enableCustomEmail = state.isProPlan || state.isTrial;
+    final enableCustomEmail = state.isProPlan;
 
     return EditScaffold(
       title: localization.templatesAndReminders,

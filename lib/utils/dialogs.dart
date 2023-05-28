@@ -349,6 +349,7 @@ void fieldCallback({
   BuildContext context,
   String title,
   String field,
+  String value = '',
   Function(String) callback,
   int maxLength,
   List<TextButton> secondaryActions,
@@ -361,6 +362,7 @@ void fieldCallback({
         callback: callback,
         field: field,
         title: title,
+        value: value,
         maxLength: maxLength,
         secondaryActions: secondaryActions,
       );
@@ -373,6 +375,7 @@ class FieldConfirmation extends StatefulWidget {
     @required this.callback,
     @required this.title,
     @required this.field,
+    this.value = '',
     this.maxLength,
     this.secondaryActions,
   });
@@ -380,6 +383,7 @@ class FieldConfirmation extends StatefulWidget {
   final Function(String) callback;
   final String title;
   final String field;
+  final String value;
   final int maxLength;
   final List<TextButton> secondaryActions;
 
@@ -407,7 +411,8 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
 
     return AlertDialog(
       title: Text(widget.title),
-      content: TextField(
+      content: TextFormField(
+        initialValue: widget.value,
         autofocus: true,
         onChanged: (value) => _field = value,
         maxLength: widget.maxLength,
@@ -418,7 +423,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         decoration: InputDecoration(
           labelText: widget.field,
         ),
-        onSubmitted: (value) => _submit(),
+        onFieldSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
         ...widget.secondaryActions ?? [],

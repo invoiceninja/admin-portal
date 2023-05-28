@@ -1,9 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -77,6 +80,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -115,12 +119,15 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                 )
               else
                 DocumentGrid(
-                    documents: expense.documents.toList(),
-                    onUploadDocument: (path) =>
-                        widget.viewModel.onUploadDocument(context, path),
-                    onDeleteDocument: (document, password, idToken) => widget
-                        .viewModel
-                        .onDeleteDocument(context, document, password, idToken))
+                  documents: expense.documents.toList(),
+                  onUploadDocument: (path) =>
+                      widget.viewModel.onUploadDocument(context, path),
+                  onDeleteDocument: (document, password, idToken) => widget
+                      .viewModel
+                      .onDeleteDocument(context, document, password, idToken),
+                  onRenamedDocument: () =>
+                      store.dispatch(LoadExpense(expenseId: expense.id)),
+                )
           ],
         ),
       ],

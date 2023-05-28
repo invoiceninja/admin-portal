@@ -1,14 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 // Package imports:
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -217,6 +218,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
@@ -700,6 +702,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   viewModel.onUploadDocument(context, path),
               onDeleteDocument: (document, password, idToken) => viewModel
                   .onDeleteDocument(context, document, password, idToken),
+              onRenamedDocument: () => store.dispatch(RefreshData()),
             ),
         ],
       ),

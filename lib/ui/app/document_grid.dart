@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -41,6 +40,7 @@ class DocumentGrid extends StatelessWidget {
     @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
+    @required this.onRenamedDocument,
     this.onViewExpense,
   });
 
@@ -48,6 +48,7 @@ class DocumentGrid extends StatelessWidget {
   final Function(MultipartFile) onUploadDocument;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
+  final Function onRenamedDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +134,7 @@ class DocumentGrid extends StatelessWidget {
                       document: document,
                       onDeleteDocument: onDeleteDocument,
                       onViewExpense: onViewExpense,
+                      onRenamedDocument: onRenamedDocument,
                       isFromExpense: false,
                     ))
                 .toList(),
@@ -149,12 +151,14 @@ class DocumentTile extends StatelessWidget {
     @required this.onDeleteDocument,
     @required this.onViewExpense,
     @required this.isFromExpense,
+    @required this.onRenamedDocument,
   });
 
   final DocumentEntity document;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
+  final Function onRenamedDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +255,7 @@ class DocumentTile extends StatelessWidget {
                                   context: context,
                                   title: localization.rename,
                                   field: localization.name,
+                                  value: document.name,
                                   maxLength: 250,
                                   callback: (name) {
                                     store.dispatch(
@@ -260,7 +265,7 @@ class DocumentTile extends StatelessWidget {
                                                   context,
                                                   localization.renamedDocument)
                                                 ..future.then((value) {
-                                                  store.dispatch(RefreshData());
+                                                  onRenamedDocument();
                                                 }),
                                           entity: document
                                               .rebuild((b) => b..name = name)),
@@ -285,14 +290,13 @@ class DocumentTile extends StatelessWidget {
                                   ),
                                   value: localization.download,
                                 ),
-                                if (false)
-                                  PopupMenuItem<String>(
-                                    child: IconText(
-                                      text: localization.rename,
-                                      icon: MdiIcons.renameBox,
-                                    ),
-                                    value: localization.rename,
+                                PopupMenuItem<String>(
+                                  child: IconText(
+                                    text: localization.rename,
+                                    icon: MdiIcons.renameBox,
                                   ),
+                                  value: localization.rename,
+                                ),
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.delete,
