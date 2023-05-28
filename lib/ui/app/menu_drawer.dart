@@ -678,7 +678,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   icon: getEntityIcon(EntityType.transaction),
                                   title: localization.transactions,
                                 ),
-                                if ((state.isProPlan || state.isTrial) &&
+                                if (state.isProPlan &&
                                     state.userCompany.canViewReports)
                                   DrawerTile(
                                     company: company,

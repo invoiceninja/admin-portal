@@ -270,7 +270,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ],
           ),
         ),
-        if (state.isProPlan || state.isTrial)
+        if (state.isProPlan)
           ColoredBox(
             color: Theme.of(context).canvasColor,
             child: Padding(

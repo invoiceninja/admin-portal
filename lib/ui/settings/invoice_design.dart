@@ -280,7 +280,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     FormCard(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        if (state.isProPlan || state.isTrial) ...[
+                        if (state.isProPlan) ...[
                           if (company.isModuleEnabled(EntityType.invoice)) ...[
                             DesignPicker(
                               label: localization.invoiceDesign,
