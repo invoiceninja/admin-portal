@@ -523,7 +523,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     ),
                                 if (state.userCompany.isOwner &&
                                     state.isHosted &&
-                                    !isPaidAccount(context) &&
+                                    !state.isProPlan &&
                                     (!isApple() || supportsInAppPurchase()))
                                   Material(
                                     child: Tooltip(
