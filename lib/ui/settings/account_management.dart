@@ -364,37 +364,40 @@ class _AccountOverview extends StatelessWidget {
               onPressed: () => viewModel.onSetPrimaryCompany(context),
             ),
           ),
-        if (state.isHosted && state.isProPlan && !state.isTrial) ...[
-          if (supportsInAppPurchase())
+        if (state.isHosted) ...[
+          if (state.isProPlan && account.hasIapPlan)
             SizedBox()
-          else if (!supportsInAppPurchase() && state.account.hasIapPlan)
+          else if (state.isProPlan &&
+              !account.hasIapPlan &&
+              supportsInAppPurchase())
             SizedBox()
-        ] else if (state.isHosted)
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-            child: OutlinedButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: IconText(
-                    icon: MdiIcons.openInNew,
-                    text:
-                        (account.isEligibleForTrial && !supportsInAppPurchase()
-                                ? localization.startFreeTrial
-                                : localization.changePlan)
-                            .toUpperCase(),
+          else
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconText(
+                      icon: MdiIcons.openInNew,
+                      text: (account.isEligibleForTrial &&
+                                  !supportsInAppPurchase()
+                              ? localization.startFreeTrial
+                              : localization.changePlan)
+                          .toUpperCase(),
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  if (supportsInAppPurchase()) {
-                    showDialog<void>(
-                      context: context,
-                      builder: (context) => UpgradeDialog(),
-                    );
-                  } else {
-                    launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
-                  }
-                }),
-          ),
+                  onPressed: () {
+                    if (supportsInAppPurchase()) {
+                      showDialog<void>(
+                        context: context,
+                        builder: (context) => UpgradeDialog(),
+                      );
+                    } else {
+                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+                    }
+                  }),
+            ),
+        ],
         FormCard(children: [
           SwitchListTile(
             value: !company.isDisabled,
