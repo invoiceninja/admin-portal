@@ -186,6 +186,15 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
+                if (false && settings.showTaskItemDescription == true)
+                  SwitchListTile(
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    title: Text(localization.invoiceTaskItemDescription),
+                    value: company.invoiceTaskItemDescription,
+                    subtitle: Text(localization.invoiceTaskItemDescriptionHelp),
+                    onChanged: (value) => viewModel.onCompanyChanged(company
+                        .rebuild((b) => b..invoiceTaskItemDescription = value)),
+                  ),
               ],
             ],
           ),
