@@ -319,9 +319,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       String label = '';
       bool isNumeric = false;
       if (column == COLUMN_ITEM) {
-        label = (translations['item'] ?? '').isNotEmpty
-            ? translations['item']
-            : localization.item;
+        if (widget.isTasks) {
+          label = (translations['service'] ?? '').isNotEmpty
+              ? translations['service']
+              : localization.service;
+        } else {
+          label = (translations['item'] ?? '').isNotEmpty
+              ? translations['item']
+              : localization.item;
+        }
       } else if (column == COLUMN_DESCRIPTION) {
         label = (translations['description'] ?? '').isNotEmpty
             ? translations['description']
