@@ -85,6 +85,7 @@ abstract class CompanyEntity extends Object
       invoiceTaskDatelog: true,
       invoiceTaskProject: false,
       invoiceTaskHours: false,
+      invoiceTaskItemDescription: true,
       isLarge: false,
       enableShopApi: false,
       convertProductExchangeRate: false,
@@ -436,6 +437,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'invoice_task_hours')
   bool get invoiceTaskHours;
 
+  @BuiltValueField(wireName: 'invoice_task_item_description')
+  bool get invoiceTaskItemDescription;
+
   @BuiltValueField(wireName: 'auto_start_tasks')
   bool get autoStartTasks;
 
@@ -760,6 +764,7 @@ abstract class CompanyEntity extends Object
     ..invoiceTaskProject = false
     ..invoiceTaskHours = false
     ..invoiceTaskLock = false
+    ..invoiceTaskItemDescription = true
     ..matomoUrl = ''
     ..matomoId = ''
     ..convertPaymentCurrency = false
