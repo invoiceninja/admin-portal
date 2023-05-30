@@ -195,7 +195,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
-                if (company.invoiceTaskProject)
+                if (false && company.invoiceTaskProject)
                   AppDropdownButton<bool>(
                       labelText: localization.location,
                       value: company.invoiceTaskProjectHeader,
