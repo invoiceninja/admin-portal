@@ -178,14 +178,6 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskHours = value)),
                 ),
-                SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.invoiceTaskProject),
-                  value: company.invoiceTaskProject,
-                  subtitle: Text(localization.invoiceTaskProjectHelp),
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskProject = value)),
-                ),
                 if (false && settings.showTaskItemDescription == true)
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
@@ -195,6 +187,32 @@ class _TaskSettingsState extends State<TaskSettings> {
                     onChanged: (value) => viewModel.onCompanyChanged(company
                         .rebuild((b) => b..invoiceTaskItemDescription = value)),
                   ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.invoiceTaskProject),
+                  value: company.invoiceTaskProject,
+                  subtitle: Text(localization.invoiceTaskProjectHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskProject = value)),
+                ),
+                if (company.invoiceTaskProject)
+                  AppDropdownButton<bool>(
+                      labelText: localization.location,
+                      value: company.invoiceTaskProjectHeader,
+                      onChanged: (dynamic value) {
+                        viewModel.onCompanyChanged(company.rebuild(
+                            (b) => b..invoiceTaskProjectHeader = value));
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.service),
+                          value: true,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.description),
+                          value: false,
+                        ),
+                      ]),
               ],
             ],
           ),

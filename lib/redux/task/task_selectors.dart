@@ -73,8 +73,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
           notes += hoursStr;
         }
         notes += lineBreak;
-        if (time.description.isNotEmpty &&
-            (true || company.invoiceTaskItemDescription)) {
+        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
           notes += time.description + lineBreak;
         }
       } else if (company.invoiceTaskDatelog) {
@@ -95,8 +94,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
           notes += hoursStr;
         }
         notes += lineBreak;
-        if (time.description.isNotEmpty &&
-            (true || company.invoiceTaskItemDescription)) {
+        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
           notes += time.description + lineBreak;
         }
       }
