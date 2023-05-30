@@ -104,15 +104,14 @@ class TaskScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
         iconButtons: [
-          if (state.prefState.showKanban)
-            IconButton(
-                icon: Icon(getEntityIcon(EntityType.settings)),
-                onPressed: () {
-                  store.dispatch(ViewSettings(
-                    section: kSettingsTaskStatuses,
-                    company: state.company,
-                  ));
-                })
+          IconButton(
+              icon: Icon(getEntityIcon(EntityType.settings)),
+              onPressed: () {
+                store.dispatch(ViewSettings(
+                  section: kSettingsTasks,
+                  company: state.company,
+                ));
+              })
         ],
         hideListOptions: state.prefState.showKanban,
         tableColumns: TaskPresenter.getAllTableFields(userCompany),
