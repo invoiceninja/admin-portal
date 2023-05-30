@@ -35,7 +35,9 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   }
   lineBreak += '\n';
 
-  if (project.isOld && includeProjectHeader) {
+  if (company.invoiceTaskProjectHeader &&
+      project.isOld &&
+      includeProjectHeader) {
     if (state.company.markdownEnabled) {
       notes += '## ${project.name}\n';
     } else {
@@ -161,6 +163,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   return InvoiceItemEntity().rebuild((b) => b
     ..typeId = InvoiceItemEntity.TYPE_TASK
     ..taskId = task.id
+    ..productKey =
+        company.invoiceTaskProject && !company.invoiceTaskProjectHeader
+            ? project.name
+            : ''
     ..notes = notes
     ..cost = taskRateSelector(
       company: company,
