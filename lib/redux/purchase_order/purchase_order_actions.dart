@@ -209,10 +209,12 @@ class SavePurchaseOrderFailure implements StopSaving {
 }
 
 class BulkEmailPurchaseOrdersRequest implements StartSaving {
-  BulkEmailPurchaseOrdersRequest(this.completer, this.purchaseOrderIds);
+  BulkEmailPurchaseOrdersRequest(
+      {this.completer, this.purchaseOrderIds, this.template});
 
   final Completer completer;
   final List<String> purchaseOrderIds;
+  final EmailTemplate template;
 }
 
 class BulkEmailPurchaseOrdersSuccess implements StopSaving, PersistData {
@@ -761,12 +763,13 @@ void handlePurchaseOrderAction(BuildContext context,
             message: localization.bulkEmailPurchaseOrders,
             callback: (_) {
               store.dispatch(BulkEmailPurchaseOrdersRequest(
-                  snackBarCompleter<Null>(
-                      context,
-                      purchaseOrderIds.length == 1
-                          ? localization.emailedPurchaseOrder
-                          : localization.emailedPurchaseOrders),
-                  purchaseOrderIds));
+                completer: snackBarCompleter<Null>(
+                    context,
+                    purchaseOrderIds.length == 1
+                        ? localization.emailedPurchaseOrder
+                        : localization.emailedPurchaseOrders),
+                purchaseOrderIds: purchaseOrderIds,
+              ));
             });
       }
       break;

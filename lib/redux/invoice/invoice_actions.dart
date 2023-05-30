@@ -279,10 +279,11 @@ class MarkInvoicesSentFailure implements StopSaving {
 }
 
 class BulkEmailInvoicesRequest implements StartSaving {
-  BulkEmailInvoicesRequest(this.completer, this.invoiceIds);
+  BulkEmailInvoicesRequest({this.completer, this.invoiceIds, this.template});
 
   final Completer completer;
   final List<String> invoiceIds;
+  final EmailTemplate template;
 }
 
 class BulkEmailInvoicesSuccess implements StopSaving, PersistData {
@@ -668,12 +669,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             message: localization.bulkEmailInvoices,
             callback: (_) {
               store.dispatch(BulkEmailInvoicesRequest(
-                  snackBarCompleter<Null>(
-                      context,
-                      invoiceIds.length == 1
-                          ? localization.emailedInvoice
-                          : localization.emailedInvoices),
-                  invoiceIds));
+                completer: snackBarCompleter<Null>(
+                    context,
+                    invoiceIds.length == 1
+                        ? localization.emailedInvoice
+                        : localization.emailedInvoices),
+                invoiceIds: invoiceIds,
+              ));
             });
       }
       break;

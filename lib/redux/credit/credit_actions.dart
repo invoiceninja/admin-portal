@@ -273,10 +273,11 @@ class MarkSentCreditFailure implements StopSaving {
 }
 
 class BulkEmailCreditsRequest implements StartSaving {
-  BulkEmailCreditsRequest(this.completer, this.creditIds);
+  BulkEmailCreditsRequest({this.completer, this.creditIds, this.template});
 
   final Completer completer;
   final List<String> creditIds;
+  final EmailTemplate template;
 }
 
 class BulkEmailCreditsSuccess implements StopSaving, PersistData {
@@ -548,12 +549,13 @@ Future handleCreditAction(
             message: localization.bulkEmailCredits,
             callback: (_) {
               store.dispatch(BulkEmailCreditsRequest(
-                  snackBarCompleter<Null>(
-                      context,
-                      creditIds.length == 1
-                          ? localization.emailedCredit
-                          : localization.emailedCredits),
-                  creditIds));
+                completer: snackBarCompleter<Null>(
+                    context,
+                    creditIds.length == 1
+                        ? localization.emailedCredit
+                        : localization.emailedCredits),
+                creditIds: creditIds,
+              ));
             });
       }
       break;
