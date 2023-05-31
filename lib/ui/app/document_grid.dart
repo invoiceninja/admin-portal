@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -65,8 +66,10 @@ class DocumentGrid extends StatelessWidget {
                 if (isMobileOS()) ...[
                   Expanded(
                     child: AppButton(
-                      iconData: Icons.camera_alt,
-                      label: localization.takePicture,
+                      iconData: isIOS() ? null : Icons.camera_alt,
+                      label: isIOS()
+                          ? localization.camera
+                          : localization.takePicture,
                       onPressed: () async {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
@@ -88,18 +91,18 @@ class DocumentGrid extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(
-                    width: 14,
-                  ),
+                  SizedBox(width: isIOS() ? 8 : 14),
                 ],
                 Expanded(
                   child: AppButton(
-                    iconData: Icons.insert_drive_file,
-                    label: localization.uploadFile,
+                    iconData: isIOS() ? null : Icons.insert_drive_file,
+                    label:
+                        isIOS() ? localization.files : localization.uploadFile,
                     onPressed: () async {
                       final multipartFile = await pickFile(
-                          fileIndex: 'documents[]',
-                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS);
+                        fileIndex: 'documents[]',
+                        allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                      );
 
                       if (multipartFile != null) {
                         onUploadDocument(multipartFile);
@@ -107,6 +110,25 @@ class DocumentGrid extends StatelessWidget {
                     },
                   ),
                 ),
+                if (isIOS()) ...[
+                  SizedBox(width: isIOS() ? 8 : 14),
+                  Expanded(
+                    child: AppButton(
+                      label: localization.gallery,
+                      onPressed: () async {
+                        final multipartFile = await pickFile(
+                          fileIndex: 'documents[]',
+                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                          fileType: FileType.image,
+                        );
+
+                        if (multipartFile != null) {
+                          onUploadDocument(multipartFile);
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ],
             ),
           )

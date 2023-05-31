@@ -120,6 +120,7 @@ bool isAndroid() {
 }
 
 bool isIOS() {
+  return true;
   if (kIsWeb) {
     return false;
   }
