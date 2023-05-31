@@ -91,7 +91,6 @@ class DocumentGrid extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(width: 12),
                 ],
                 if (isIOS()) ...[
                   SizedBox(width: 12),
@@ -112,6 +111,7 @@ class DocumentGrid extends StatelessWidget {
                     ),
                   ),
                 ],
+                SizedBox(width: 12),
                 Expanded(
                   child: AppButton(
                     iconData: isIOS() ? null : Icons.insert_drive_file,
