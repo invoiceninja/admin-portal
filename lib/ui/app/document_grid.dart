@@ -91,7 +91,26 @@ class DocumentGrid extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(width: isIOS() ? 8 : 14),
+                  SizedBox(width: 12),
+                ],
+                if (isIOS()) ...[
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: AppButton(
+                      label: localization.gallery,
+                      onPressed: () async {
+                        final multipartFile = await pickFile(
+                          fileIndex: 'documents[]',
+                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                          fileType: FileType.image,
+                        );
+
+                        if (multipartFile != null) {
+                          onUploadDocument(multipartFile);
+                        }
+                      },
+                    ),
+                  ),
                 ],
                 Expanded(
                   child: AppButton(
@@ -110,25 +129,6 @@ class DocumentGrid extends StatelessWidget {
                     },
                   ),
                 ),
-                if (isIOS()) ...[
-                  SizedBox(width: isIOS() ? 8 : 14),
-                  Expanded(
-                    child: AppButton(
-                      label: localization.gallery,
-                      onPressed: () async {
-                        final multipartFile = await pickFile(
-                          fileIndex: 'documents[]',
-                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
-                          fileType: FileType.image,
-                        );
-
-                        if (multipartFile != null) {
-                          onUploadDocument(multipartFile);
-                        }
-                      },
-                    ),
-                  ),
-                ],
               ],
             ),
           )
