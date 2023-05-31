@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class DocumentGrid extends StatelessWidget {
+class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
     @required this.documents,
     @required this.onUploadDocument,
@@ -52,13 +53,42 @@ class DocumentGrid extends StatelessWidget {
   final Function onRenamedDocument;
 
   @override
+  State<DocumentGrid> createState() => _DocumentGridState();
+}
+
+class _DocumentGridState extends State<DocumentGrid> {
+  final List<XFile> _list = [];
+  bool _dragging = false;
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
     return ScrollableListView(
       children: [
-        if (state.isEnterprisePlan)
+        if (state.isEnterprisePlan) ...[
+          if (isDesktopOS())
+            DropTarget(
+              onDragDone: (detail) {
+                print('## DROPPED: ${detail.files}');
+              },
+              onDragEntered: (detail) {
+                setState(() => _dragging = true);
+              },
+              onDragExited: (detail) {
+                setState(() => _dragging = false);
+              },
+              child: Container(
+                height: 200,
+                width: 200,
+                color:
+                    _dragging ? Colors.blue.withOpacity(0.4) : Colors.black26,
+                child: _list.isEmpty
+                    ? const Center(child: Text("Drop here"))
+                    : Text(_list.join("\n")),
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
             child: Row(
@@ -83,7 +113,7 @@ class DocumentGrid extends StatelessWidget {
                             final multipartFile = MultipartFile.fromBytes(
                                 'documents[]', bytes,
                                 filename: image.path.split('/').last);
-                            onUploadDocument(multipartFile);
+                            widget.onUploadDocument(multipartFile);
                           }
                         } else {
                           openAppSettings();
@@ -105,7 +135,7 @@ class DocumentGrid extends StatelessWidget {
                         );
 
                         if (multipartFile != null) {
-                          onUploadDocument(multipartFile);
+                          widget.onUploadDocument(multipartFile);
                         }
                       },
                     ),
@@ -124,15 +154,15 @@ class DocumentGrid extends StatelessWidget {
                       );
 
                       if (multipartFile != null) {
-                        onUploadDocument(multipartFile);
+                        widget.onUploadDocument(multipartFile);
                       }
                     },
                   ),
                 ),
               ],
             ),
-          )
-        else
+          ),
+        ] else
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
             child: Center(
@@ -151,12 +181,12 @@ class DocumentGrid extends StatelessWidget {
             shrinkWrap: true,
             primary: true,
             crossAxisCount: 2,
-            children: documents
+            children: widget.documents
                 .map((document) => DocumentTile(
                       document: document,
-                      onDeleteDocument: onDeleteDocument,
-                      onViewExpense: onViewExpense,
-                      onRenamedDocument: onRenamedDocument,
+                      onDeleteDocument: widget.onDeleteDocument,
+                      onViewExpense: widget.onViewExpense,
+                      onRenamedDocument: widget.onRenamedDocument,
                       isFromExpense: false,
                     ))
                 .toList(),
