@@ -322,8 +322,10 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
           haveProgressIndicator = true;
         }
       }
-      row ??= _getBlankRowFor(index);
-      result.add(row);
+      if (row != null) {
+        row ??= _getBlankRowFor(index);
+        result.add(row);
+      }
     }
     return result;
   }
@@ -378,6 +380,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     // FOOTER
     final TextStyle footerTextStyle = themeData.textTheme.bodySmall;
     final List<Widget> footerWidgets = <Widget>[];
+    final realRowCount =
+        widget.subtractOneFromCount ? _rowCount - 1 : _rowCount;
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
           //.where((int value) => value <= _rowCount || value == widget.rowsPerPage)
@@ -387,6 +391,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
           child: Text('$value'),
         );
       }).toList();
+
       footerWidgets.addAll(<Widget>[
         Container(width: 14.0),
         // to match trailing padding in case we overflow and end up scrolling
@@ -413,9 +418,9 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       Container(width: 32.0),
       Text(
         localizations.pageRowsInfoTitle(
-          _firstRowIndex + 1,
-          _firstRowIndex + widget.rowsPerPage,
-          _rowCount - (widget.subtractOneFromCount ? 1 : 0),
+          realRowCount > 0 ? _firstRowIndex + 1 : 0,
+          _firstRowIndex + math.min(widget.rowsPerPage, realRowCount),
+          realRowCount,
           _rowCountApproximate,
         ),
       ),
