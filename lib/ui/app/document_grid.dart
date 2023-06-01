@@ -70,8 +70,15 @@ class _DocumentGridState extends State<DocumentGrid> {
         if (state.isEnterprisePlan) ...[
           if (kIsWeb || isDesktopOS())
             DropTarget(
-              onDragDone: (detail) {
-                print('## DROPPED: ${detail.files}');
+              onDragDone: (detail) async {
+                final file = detail.files.first;
+                final bytes = await file.readAsBytes();
+                print('## FILE: ${file.name}');
+                print('## BYTES: $bytes');
+                final multipartFile = MultipartFile.fromBytes(
+                    'documents[]', bytes,
+                    filename: file.name);
+                widget.onUploadDocument(multipartFile);
               },
               onDragEntered: (detail) {
                 setState(() => _dragging = true);
