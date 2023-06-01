@@ -986,6 +986,8 @@ abstract class InvoiceEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );
@@ -1002,6 +1004,8 @@ abstract class InvoiceEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );
