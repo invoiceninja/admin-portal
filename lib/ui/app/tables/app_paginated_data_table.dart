@@ -323,7 +323,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         }
       }
       if (row != null) {
-        row ??= _getBlankRowFor(index);
         result.add(row);
       }
     }
