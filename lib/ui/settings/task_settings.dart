@@ -195,9 +195,10 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
-                if (false && company.invoiceTaskProject)
+                if (false && company.invoiceTaskProject) ...[
+                  SizedBox(height: 10),
                   AppDropdownButton<bool>(
-                      labelText: localization.location,
+                      labelText: localization.projectLocation,
                       value: company.invoiceTaskProjectHeader,
                       onChanged: (dynamic value) {
                         viewModel.onCompanyChanged(company.rebuild(
@@ -206,13 +207,14 @@ class _TaskSettingsState extends State<TaskSettings> {
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.service),
-                          value: true,
+                          value: false,
                         ),
                         DropdownMenuItem(
                           child: Text(localization.description),
-                          value: false,
+                          value: true,
                         ),
                       ]),
+                ],
               ],
             ],
           ),
