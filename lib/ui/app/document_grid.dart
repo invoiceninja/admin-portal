@@ -15,6 +15,7 @@ import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -85,6 +86,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                 onDragExited: (detail) {
                   setState(() => _dragging = false);
                 },
+                /*
                 child: Container(
                   height: 100,
                   decoration: BoxDecoration(
@@ -102,6 +104,24 @@ class _DocumentGridState extends State<DocumentGrid> {
                   child: Center(
                     child: Text(localization.dropFileHere),
                   ),
+                ),
+                */
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(localization.dropFileHere),
+                      ),
+                      color: _dragging
+                          ? Colors.blue.withOpacity(0.4)
+                          : Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    DashedRect(
+                      color: Colors.grey,
+                    ),
+                  ],
                 ),
               ),
             ),

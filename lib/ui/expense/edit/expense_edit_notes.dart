@@ -117,7 +117,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                   child: HelpText(localization.saveToUploadDocuments),
                   height: 200,
                 )
-              else
+              else ...[
+                SizedBox(height: 8),
                 DocumentGrid(
                   documents: expense.documents.toList(),
                   onUploadDocument: (path) =>
@@ -128,6 +129,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 )
+              ]
           ],
         ),
       ],
