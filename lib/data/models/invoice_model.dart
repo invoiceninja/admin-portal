@@ -942,7 +942,15 @@ abstract class InvoiceEntity extends Object
 
     for (final status in statuses) {
       if (status.id == statusId || status.id == calculatedStatusId) {
-        return true;
+        // Handle pending recurring invoices which are active
+        if (isRecurring &&
+            status.id == kRecurringInvoiceStatusActive &&
+            statusId == kRecurringInvoiceStatusActive &&
+            calculatedStatusId == kRecurringExpenseStatusPending) {
+          // skip
+        } else {
+          return true;
+        }
       } else if (status.id == kInvoiceStatusUnpaid &&
           isInvoice &&
           isUnpaid &&
