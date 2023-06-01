@@ -68,7 +68,7 @@ class _DocumentGridState extends State<DocumentGrid> {
     return ScrollableListView(
       children: [
         if (state.isEnterprisePlan) ...[
-          if (isDesktopOS())
+          if (kIsWeb || isDesktopOS())
             DropTarget(
               onDragDone: (detail) {
                 print('## DROPPED: ${detail.files}');
