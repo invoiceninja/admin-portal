@@ -57,7 +57,6 @@ class DocumentGrid extends StatefulWidget {
 }
 
 class _DocumentGridState extends State<DocumentGrid> {
-  final List<XFile> _list = [];
   bool _dragging = false;
 
   @override
@@ -69,31 +68,41 @@ class _DocumentGridState extends State<DocumentGrid> {
       children: [
         if (state.isEnterprisePlan) ...[
           if (kIsWeb || isDesktopOS())
-            DropTarget(
-              onDragDone: (detail) async {
-                final file = detail.files.first;
-                final bytes = await file.readAsBytes();
-                print('## FILE: ${file.name}');
-                print('## BYTES: $bytes');
-                final multipartFile = MultipartFile.fromBytes(
-                    'documents[]', bytes,
-                    filename: file.name);
-                widget.onUploadDocument(multipartFile);
-              },
-              onDragEntered: (detail) {
-                setState(() => _dragging = true);
-              },
-              onDragExited: (detail) {
-                setState(() => _dragging = false);
-              },
-              child: Container(
-                height: 200,
-                width: 200,
-                color:
-                    _dragging ? Colors.blue.withOpacity(0.4) : Colors.black26,
-                child: _list.isEmpty
-                    ? const Center(child: Text("Drop here"))
-                    : Text(_list.join("\n")),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: DropTarget(
+                onDragDone: (detail) async {
+                  final file = detail.files.first;
+                  final bytes = await file.readAsBytes();
+                  final multipartFile = MultipartFile.fromBytes(
+                      'documents[]', bytes,
+                      filename: file.name);
+                  widget.onUploadDocument(multipartFile);
+                },
+                onDragEntered: (detail) {
+                  setState(() => _dragging = true);
+                },
+                onDragExited: (detail) {
+                  setState(() => _dragging = false);
+                },
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    color: _dragging
+                        ? Colors.blue.withOpacity(0.4)
+                        : Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(localization.dropFileHere),
+                  ),
+                ),
               ),
             ),
           Padding(
