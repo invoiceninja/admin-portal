@@ -280,15 +280,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       widget.onPageChanged(_firstRowIndex);
   }
 
-  DataRow _getBlankRowFor(int index) {
-    return DataRow.byIndex(
-      index: index,
-      cells: widget.columns
-          .map<DataCell>((DataColumn column) => DataCell.empty)
-          .toList(),
-    );
-  }
-
   DataRow _getProgressIndicatorRowFor(int index) {
     bool haveProgressIndicator = false;
     final List<DataCell> cells =
