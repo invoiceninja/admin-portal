@@ -458,14 +458,22 @@ List<ChartDataGroup> chartPayments(
       double completedAmount = payment.completedAmount;
       double refunded = payment.refunded;
 
+      var invoice = InvoiceEntity();
+      if (payment.invoicePaymentables.isNotEmpty) {
+        final paymentable = payment.invoicePaymentables.first;
+        invoice = invoiceMap[paymentable.invoiceId] ?? InvoiceEntity();
+      }
+
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = payment.hasExchangeRate
             ? payment.exchangeRate
-            : getExchangeRate(currencyMap,
-                fromCurrencyId: client.currencyId,
-                toCurrencyId: company.currencyId);
+            : invoice.hasExchangeRate
+                ? invoice.exchangeRate
+                : getExchangeRate(currencyMap,
+                    fromCurrencyId: client.currencyId,
+                    toCurrencyId: company.currencyId);
         completedAmount *= exchangeRate;
         refunded *= exchangeRate;
       }
