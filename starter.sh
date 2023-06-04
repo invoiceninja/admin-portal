@@ -398,6 +398,7 @@ else
 
     comment="STARTER: history - do not remove comment"
     code="TypedReducer<BuiltList<HistoryRecord>, View${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}Id, entityType: EntityType.${module_camel}))),TypedReducer<BuiltList<HistoryRecord>, Edit${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}.id, entityType: EntityType.${module_camel}))),${lineBreak}"
+    code="${code}TypedReducer<BuiltList<HistoryRecord>, View${Module}List>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}Id, entityType: EntityType.${module_camel}))),TypedReducer<BuiltList<HistoryRecord>, Edit${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(entityType: EntityType.${module_camel}))),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
 
     comment="STARTER: import - do not remove comment"
