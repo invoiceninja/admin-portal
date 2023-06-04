@@ -107,7 +107,10 @@ class ReportsScreen extends StatelessWidget {
         kReportQuote,
         kReportQuoteItem,
       ],
-      if (state.company.isModuleEnabled(EntityType.credit)) kReportCredit,
+      if (state.company.isModuleEnabled(EntityType.credit)) ...[
+        kReportCredit,
+        kReportCreditItem,
+      ],
       kReportDocument,
       if (state.company.isModuleEnabled(EntityType.expense)) ...[
         kReportExpense,
