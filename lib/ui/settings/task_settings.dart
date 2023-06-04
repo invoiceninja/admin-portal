@@ -133,7 +133,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.allowBillableTaskItems),
+                title: Text(localization.showTaskBillable),
                 value: settings.allowBillableTaskItems,
                 subtitle: Text(localization.allowBillableTaskItemsHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(
