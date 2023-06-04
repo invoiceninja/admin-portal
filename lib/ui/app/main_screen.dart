@@ -274,11 +274,9 @@ class MainScreen extends StatelessWidget {
             ].contains(item.entityType)) {
               history = item;
               break;
+            } else if (item.id == null) {
+              history = item;
             } else {
-              if (item.id == null) {
-                continue;
-              }
-
               final entity =
                   state.getEntityMap(item.entityType)[item.id] as BaseEntity;
               if (entity == null || !entity.isActive) {
@@ -314,11 +312,15 @@ class MainScreen extends StatelessWidget {
               ));
               break;
             default:
-              viewEntityById(
-                entityId: history.id,
-                entityType: history.entityType,
-                showError: false,
-              );
+              if (history.id == null) {
+                viewEntitiesByType(entityType: history.entityType);
+              } else {
+                viewEntityById(
+                  entityId: history.id,
+                  entityType: history.entityType,
+                  showError: false,
+                );
+              }
           }
 
           return false;

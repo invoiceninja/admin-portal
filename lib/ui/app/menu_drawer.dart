@@ -132,11 +132,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 ));
                                 break;
                               default:
-                                viewEntityById(
-                                  entityId: history.id,
-                                  entityType: history.entityType,
-                                  showError: false,
-                                );
+                                if (history.id == null) {
+                                  viewEntitiesByType(
+                                      entityType: history.entityType);
+                                } else {
+                                  viewEntityById(
+                                    entityId: history.id,
+                                    entityType: history.entityType,
+                                    showError: false,
+                                  );
+                                }
                             }
                           },
                     icon: Icon(MdiIcons.arrowLeftCircleOutline))
