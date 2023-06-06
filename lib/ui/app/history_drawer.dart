@@ -132,6 +132,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
           style: Theme.of(context).textTheme.bodySmall,
         );
       }
+    } else if (history.id == null) {
+      title = Text(localization.lookup(history.entityType.plural));
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
@@ -241,10 +243,14 @@ class _HistoryListTileState extends State<HistoryListTile> {
               ));
               break;
             default:
-              viewEntityById(
-                entityId: history.id,
-                entityType: history.entityType,
-              );
+              if (history.id == null) {
+                viewEntitiesByType(entityType: history.entityType);
+              } else {
+                viewEntityById(
+                  entityId: history.id,
+                  entityType: history.entityType,
+                );
+              }
           }
         },
         onLongPress: entity == null

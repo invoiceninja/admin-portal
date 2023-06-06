@@ -10,11 +10,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_presenter.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'expense_screen_vm.dart';
 
@@ -91,6 +93,16 @@ class ExpenseScreen extends StatelessWidget {
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,
+        iconButtons: [
+          IconButton(
+              icon: Icon(getEntityIcon(EntityType.settings)),
+              onPressed: () {
+                store.dispatch(ViewSettings(
+                  section: kSettingsExpenses,
+                  company: state.company,
+                ));
+              })
+        ],
         tableColumns: ExpensePresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             ExpensePresenter.getDefaultTableFields(userCompany),

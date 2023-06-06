@@ -11,12 +11,14 @@ import 'package:invoiceninja_flutter/data/models/static/payment_status_model.dar
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -107,6 +109,16 @@ class PaymentScreen extends StatelessWidget {
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,
+        iconButtons: [
+          IconButton(
+              icon: Icon(getEntityIcon(EntityType.settings)),
+              onPressed: () {
+                store.dispatch(ViewSettings(
+                  section: kSettingsPaymentSettings,
+                  company: state.company,
+                ));
+              })
+        ],
         tableColumns: PaymentPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             PaymentPresenter.getDefaultTableFields(userCompany),

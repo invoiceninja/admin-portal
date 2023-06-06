@@ -133,7 +133,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.allowBillableTaskItems),
+                title: Text(localization.showTaskBillable),
                 value: settings.allowBillableTaskItems,
                 subtitle: Text(localization.allowBillableTaskItemsHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(
@@ -178,6 +178,15 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskHours = value)),
                 ),
+                if (settings.showTaskItemDescription == true)
+                  SwitchListTile(
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    title: Text(localization.invoiceTaskItemDescription),
+                    value: company.invoiceTaskItemDescription,
+                    subtitle: Text(localization.invoiceTaskItemDescriptionHelp),
+                    onChanged: (value) => viewModel.onCompanyChanged(company
+                        .rebuild((b) => b..invoiceTaskItemDescription = value)),
+                  ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskProject),
@@ -186,6 +195,26 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
+                if (company.invoiceTaskProject) ...[
+                  SizedBox(height: 10),
+                  AppDropdownButton<bool>(
+                      labelText: localization.projectLocation,
+                      value: company.invoiceTaskProjectHeader,
+                      onChanged: (dynamic value) {
+                        viewModel.onCompanyChanged(company.rebuild(
+                            (b) => b..invoiceTaskProjectHeader = value));
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.service),
+                          value: false,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.description),
+                          value: true,
+                        ),
+                      ]),
+                ],
               ],
             ],
           ),

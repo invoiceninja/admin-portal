@@ -35,7 +35,9 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   }
   lineBreak += '\n';
 
-  if (project.isOld && includeProjectHeader) {
+  if (company.invoiceTaskProjectHeader &&
+      project.isOld &&
+      includeProjectHeader) {
     if (state.company.markdownEnabled) {
       notes += '## ${project.name}\n';
     } else {
@@ -73,7 +75,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
           notes += hoursStr;
         }
         notes += lineBreak;
-        if (time.description.isNotEmpty) {
+        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
           notes += time.description + lineBreak;
         }
       } else if (company.invoiceTaskDatelog) {
@@ -94,7 +96,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
           notes += hoursStr;
         }
         notes += lineBreak;
-        if (time.description.isNotEmpty) {
+        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
           notes += time.description + lineBreak;
         }
       }
@@ -161,6 +163,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   return InvoiceItemEntity().rebuild((b) => b
     ..typeId = InvoiceItemEntity.TYPE_TASK
     ..taskId = task.id
+    ..productKey =
+        company.invoiceTaskProject && !company.invoiceTaskProjectHeader
+            ? project.name
+            : ''
     ..notes = notes
     ..cost = taskRateSelector(
       company: company,

@@ -413,7 +413,6 @@ void viewEntitiesByType({
           case EntityType.schedule:
             action = ViewScheduleList();
             break;
-
           case EntityType.transactionRule:
             action = ViewTransactionRuleList();
             break;
@@ -463,6 +462,10 @@ void viewEntitiesByType({
 
         if (action != null) {
           store.dispatch(action);
+        }
+
+        if (filterEntity != null) {
+          store.dispatch(PopLastHistory());
         }
       });
 }

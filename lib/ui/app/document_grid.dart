@@ -2,6 +2,8 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:desktop_drop/desktop_drop.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -35,7 +38,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class DocumentGrid extends StatelessWidget {
+class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
     @required this.documents,
     @required this.onUploadDocument,
@@ -51,13 +54,77 @@ class DocumentGrid extends StatelessWidget {
   final Function onRenamedDocument;
 
   @override
+  State<DocumentGrid> createState() => _DocumentGridState();
+}
+
+class _DocumentGridState extends State<DocumentGrid> {
+  bool _dragging = false;
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
     return ScrollableListView(
       children: [
-        if (state.isEnterprisePlan)
+        if (state.isEnterprisePlan) ...[
+          if (kIsWeb || isDesktopOS())
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+              child: DropTarget(
+                onDragDone: (detail) async {
+                  final file = detail.files.first;
+                  final bytes = await file.readAsBytes();
+                  final multipartFile = MultipartFile.fromBytes(
+                      'documents[]', bytes,
+                      filename: file.name);
+                  widget.onUploadDocument(multipartFile);
+                },
+                onDragEntered: (detail) {
+                  setState(() => _dragging = true);
+                },
+                onDragExited: (detail) {
+                  setState(() => _dragging = false);
+                },
+                /*
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    color: _dragging
+                        ? Colors.blue.withOpacity(0.4)
+                        : Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(localization.dropFileHere),
+                  ),
+                ),
+                */
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(localization.dropFileHere),
+                      ),
+                      color: _dragging
+                          ? Colors.blue.withOpacity(0.4)
+                          : Theme.of(context).scaffoldBackgroundColor,
+                    ),
+                    DashedRect(
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
             child: Row(
@@ -65,8 +132,10 @@ class DocumentGrid extends StatelessWidget {
                 if (isMobileOS()) ...[
                   Expanded(
                     child: AppButton(
-                      iconData: Icons.camera_alt,
-                      label: localization.takePicture,
+                      iconData: isIOS() ? null : Icons.camera_alt,
+                      label: isIOS()
+                          ? localization.camera
+                          : localization.takePicture,
                       onPressed: () async {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
@@ -80,7 +149,7 @@ class DocumentGrid extends StatelessWidget {
                             final multipartFile = MultipartFile.fromBytes(
                                 'documents[]', bytes,
                                 filename: image.path.split('/').last);
-                            onUploadDocument(multipartFile);
+                            widget.onUploadDocument(multipartFile);
                           }
                         } else {
                           openAppSettings();
@@ -88,29 +157,48 @@ class DocumentGrid extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(
-                    width: 14,
+                ],
+                if (isIOS()) ...[
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: AppButton(
+                      label: localization.gallery,
+                      onPressed: () async {
+                        final multipartFile = await pickFile(
+                          fileIndex: 'documents[]',
+                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                          fileType: FileType.image,
+                        );
+
+                        if (multipartFile != null) {
+                          widget.onUploadDocument(multipartFile);
+                        }
+                      },
+                    ),
                   ),
                 ],
+                if (isMobileOS()) SizedBox(width: 12),
                 Expanded(
                   child: AppButton(
-                    iconData: Icons.insert_drive_file,
-                    label: localization.uploadFile,
+                    iconData: isIOS() ? null : Icons.insert_drive_file,
+                    label:
+                        isIOS() ? localization.files : localization.uploadFile,
                     onPressed: () async {
                       final multipartFile = await pickFile(
-                          fileIndex: 'documents[]',
-                          allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS);
+                        fileIndex: 'documents[]',
+                        allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                      );
 
                       if (multipartFile != null) {
-                        onUploadDocument(multipartFile);
+                        widget.onUploadDocument(multipartFile);
                       }
                     },
                   ),
                 ),
               ],
             ),
-          )
-        else
+          ),
+        ] else
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
             child: Center(
@@ -129,12 +217,12 @@ class DocumentGrid extends StatelessWidget {
             shrinkWrap: true,
             primary: true,
             crossAxisCount: 2,
-            children: documents
+            children: widget.documents
                 .map((document) => DocumentTile(
                       document: document,
-                      onDeleteDocument: onDeleteDocument,
-                      onViewExpense: onViewExpense,
-                      onRenamedDocument: onRenamedDocument,
+                      onDeleteDocument: widget.onDeleteDocument,
+                      onViewExpense: widget.onViewExpense,
+                      onRenamedDocument: widget.onRenamedDocument,
                       isFromExpense: false,
                     ))
                 .toList(),

@@ -50,7 +50,8 @@ Future<MultipartFile> _pickFile(
     List<String> allowedExtensions}) async {
   final result = await FilePicker.platform.pickFiles(
     type: fileType ?? FileType.custom,
-    allowedExtensions: allowedExtensions ?? [],
+    allowedExtensions:
+        fileType == FileType.image ? [] : allowedExtensions ?? [],
     allowCompression: true,
     withData: true,
     allowMultiple: false,

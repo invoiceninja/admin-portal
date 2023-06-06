@@ -159,8 +159,7 @@ class _EntityListState extends State<EntityList> {
                     entityType: state.uiState.filterEntityType),
                 onClearPressed: () => store.dispatch(ClearEntityFilter()),
               ),
-            Flexible(
-              fit: FlexFit.loose,
+            Expanded(
               child: entityList.isEmpty
                   ? HelpText(
                       AppLocalization.of(context).clickPlusToCreateRecord)

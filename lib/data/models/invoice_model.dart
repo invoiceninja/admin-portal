@@ -942,7 +942,15 @@ abstract class InvoiceEntity extends Object
 
     for (final status in statuses) {
       if (status.id == statusId || status.id == calculatedStatusId) {
-        return true;
+        // Handle pending recurring invoices which are active
+        if (isRecurring &&
+            status.id == kRecurringInvoiceStatusActive &&
+            statusId == kRecurringInvoiceStatusActive &&
+            calculatedStatusId == kRecurringExpenseStatusPending) {
+          // skip
+        } else {
+          return true;
+        }
       } else if (status.id == kInvoiceStatusUnpaid &&
           isInvoice &&
           isUnpaid &&
@@ -986,6 +994,8 @@ abstract class InvoiceEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );
@@ -1002,6 +1012,8 @@ abstract class InvoiceEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );

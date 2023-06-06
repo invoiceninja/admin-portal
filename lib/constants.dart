@@ -605,6 +605,7 @@ const List<String> kAdvancedSettings = [
 const String kReportClient = 'client';
 const String kReportContact = 'contact';
 const String kReportCredit = 'credit';
+const String kReportCreditItem = 'credit_item';
 const String kReportDocument = 'document';
 const String kReportExpense = 'expense';
 const String kReportInvoice = 'invoice';
@@ -856,6 +857,7 @@ const kMonthsOfTheYear = {
   '12': 'december',
 };
 
+const kFrequencyOnce = '0';
 const kFrequencyMonthly = '5';
 
 const kStatementStatusAll = 'all';

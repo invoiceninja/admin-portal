@@ -111,7 +111,7 @@ List<String> dropdownInvoiceSelector(
       invoice: invoiceB,
       clientMap: clientMap,
       vendorMap: vendorMap,
-      sortAscending: false,
+      sortAscending: true,
       sortField: InvoiceFields.number,
       recurringPrefix: recurringPrefix,
       userMap: userMap,

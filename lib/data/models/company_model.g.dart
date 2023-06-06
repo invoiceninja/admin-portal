@@ -356,6 +356,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'invoice_task_hours',
       serializers.serialize(object.invoiceTaskHours,
           specifiedType: const FullType(bool)),
+      'invoice_task_item_description',
+      serializers.serialize(object.invoiceTaskItemDescription,
+          specifiedType: const FullType(bool)),
+      'invoice_task_project_header',
+      serializers.serialize(object.invoiceTaskProjectHeader,
+          specifiedType: const FullType(bool)),
       'auto_start_tasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
@@ -893,6 +899,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_task_hours':
           result.invoiceTaskHours = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_item_description':
+          result.invoiceTaskItemDescription = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_task_project_header':
+          result.invoiceTaskProjectHeader = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'auto_start_tasks':
@@ -2032,6 +2046,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool invoiceTaskHours;
   @override
+  final bool invoiceTaskItemDescription;
+  @override
+  final bool invoiceTaskProjectHeader;
+  @override
   final bool autoStartTasks;
   @override
   final bool showTasksTable;
@@ -2171,6 +2189,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.invoiceTaskDatelog,
       this.invoiceTaskProject,
       this.invoiceTaskHours,
+      this.invoiceTaskItemDescription,
+      this.invoiceTaskProjectHeader,
       this.autoStartTasks,
       this.showTasksTable,
       this.showTaskEndDate,
@@ -2368,6 +2388,10 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskProject, r'CompanyEntity', 'invoiceTaskProject');
     BuiltValueNullFieldError.checkNotNull(
         invoiceTaskHours, r'CompanyEntity', 'invoiceTaskHours');
+    BuiltValueNullFieldError.checkNotNull(invoiceTaskItemDescription,
+        r'CompanyEntity', 'invoiceTaskItemDescription');
+    BuiltValueNullFieldError.checkNotNull(
+        invoiceTaskProjectHeader, r'CompanyEntity', 'invoiceTaskProjectHeader');
     BuiltValueNullFieldError.checkNotNull(
         autoStartTasks, r'CompanyEntity', 'autoStartTasks');
     BuiltValueNullFieldError.checkNotNull(
@@ -2504,6 +2528,8 @@ class _$CompanyEntity extends CompanyEntity {
         invoiceTaskDatelog == other.invoiceTaskDatelog &&
         invoiceTaskProject == other.invoiceTaskProject &&
         invoiceTaskHours == other.invoiceTaskHours &&
+        invoiceTaskItemDescription == other.invoiceTaskItemDescription &&
+        invoiceTaskProjectHeader == other.invoiceTaskProjectHeader &&
         autoStartTasks == other.autoStartTasks &&
         showTasksTable == other.showTasksTable &&
         showTaskEndDate == other.showTaskEndDate &&
@@ -2626,6 +2652,8 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, invoiceTaskDatelog.hashCode);
     _$hash = $jc(_$hash, invoiceTaskProject.hashCode);
     _$hash = $jc(_$hash, invoiceTaskHours.hashCode);
+    _$hash = $jc(_$hash, invoiceTaskItemDescription.hashCode);
+    _$hash = $jc(_$hash, invoiceTaskProjectHeader.hashCode);
     _$hash = $jc(_$hash, autoStartTasks.hashCode);
     _$hash = $jc(_$hash, showTasksTable.hashCode);
     _$hash = $jc(_$hash, showTaskEndDate.hashCode);
@@ -2747,6 +2775,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('invoiceTaskDatelog', invoiceTaskDatelog)
           ..add('invoiceTaskProject', invoiceTaskProject)
           ..add('invoiceTaskHours', invoiceTaskHours)
+          ..add('invoiceTaskItemDescription', invoiceTaskItemDescription)
+          ..add('invoiceTaskProjectHeader', invoiceTaskProjectHeader)
           ..add('autoStartTasks', autoStartTasks)
           ..add('showTasksTable', showTasksTable)
           ..add('showTaskEndDate', showTaskEndDate)
@@ -3258,6 +3288,16 @@ class CompanyEntityBuilder
   set invoiceTaskHours(bool invoiceTaskHours) =>
       _$this._invoiceTaskHours = invoiceTaskHours;
 
+  bool _invoiceTaskItemDescription;
+  bool get invoiceTaskItemDescription => _$this._invoiceTaskItemDescription;
+  set invoiceTaskItemDescription(bool invoiceTaskItemDescription) =>
+      _$this._invoiceTaskItemDescription = invoiceTaskItemDescription;
+
+  bool _invoiceTaskProjectHeader;
+  bool get invoiceTaskProjectHeader => _$this._invoiceTaskProjectHeader;
+  set invoiceTaskProjectHeader(bool invoiceTaskProjectHeader) =>
+      _$this._invoiceTaskProjectHeader = invoiceTaskProjectHeader;
+
   bool _autoStartTasks;
   bool get autoStartTasks => _$this._autoStartTasks;
   set autoStartTasks(bool autoStartTasks) =>
@@ -3459,6 +3499,8 @@ class CompanyEntityBuilder
       _invoiceTaskDatelog = $v.invoiceTaskDatelog;
       _invoiceTaskProject = $v.invoiceTaskProject;
       _invoiceTaskHours = $v.invoiceTaskHours;
+      _invoiceTaskItemDescription = $v.invoiceTaskItemDescription;
+      _invoiceTaskProjectHeader = $v.invoiceTaskProjectHeader;
       _autoStartTasks = $v.autoStartTasks;
       _showTasksTable = $v.showTasksTable;
       _showTaskEndDate = $v.showTaskEndDate;
@@ -3611,6 +3653,8 @@ class CompanyEntityBuilder
               invoiceTaskDatelog: BuiltValueNullFieldError.checkNotNull(invoiceTaskDatelog, r'CompanyEntity', 'invoiceTaskDatelog'),
               invoiceTaskProject: BuiltValueNullFieldError.checkNotNull(invoiceTaskProject, r'CompanyEntity', 'invoiceTaskProject'),
               invoiceTaskHours: BuiltValueNullFieldError.checkNotNull(invoiceTaskHours, r'CompanyEntity', 'invoiceTaskHours'),
+              invoiceTaskItemDescription: BuiltValueNullFieldError.checkNotNull(invoiceTaskItemDescription, r'CompanyEntity', 'invoiceTaskItemDescription'),
+              invoiceTaskProjectHeader: BuiltValueNullFieldError.checkNotNull(invoiceTaskProjectHeader, r'CompanyEntity', 'invoiceTaskProjectHeader'),
               autoStartTasks: BuiltValueNullFieldError.checkNotNull(autoStartTasks, r'CompanyEntity', 'autoStartTasks'),
               showTasksTable: BuiltValueNullFieldError.checkNotNull(showTasksTable, r'CompanyEntity', 'showTasksTable'),
               showTaskEndDate: BuiltValueNullFieldError.checkNotNull(showTaskEndDate, r'CompanyEntity', 'showTaskEndDate'),

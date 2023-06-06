@@ -56,7 +56,8 @@ class InvoiceRepository {
   }
 
   Future<List<InvoiceEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+      Credentials credentials, List<String> ids, EntityAction action,
+      {EmailTemplate template}) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
@@ -64,7 +65,11 @@ class InvoiceRepository {
     final url =
         credentials.url + '/invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+        data: json.encode({
+          'ids': ids,
+          'action': action.toApiParam(),
+          if (template != null) 'email_type': 'email_template_$template',
+        }));
 
     final InvoiceListResponse invoiceResponse =
         serializers.deserializeWith(InvoiceListResponse.serializer, response);

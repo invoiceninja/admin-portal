@@ -10,6 +10,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -279,10 +281,11 @@ class MarkInvoicesSentFailure implements StopSaving {
 }
 
 class BulkEmailInvoicesRequest implements StartSaving {
-  BulkEmailInvoicesRequest(this.completer, this.invoiceIds);
+  BulkEmailInvoicesRequest({this.completer, this.invoiceIds, this.template});
 
   final Completer completer;
   final List<String> invoiceIds;
+  final EmailTemplate template;
 }
 
 class BulkEmailInvoicesSuccess implements StopSaving, PersistData {
@@ -668,13 +671,64 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
             message: localization.bulkEmailInvoices,
             callback: (_) {
               store.dispatch(BulkEmailInvoicesRequest(
-                  snackBarCompleter<Null>(
-                      context,
-                      invoiceIds.length == 1
-                          ? localization.emailedInvoice
-                          : localization.emailedInvoices),
-                  invoiceIds));
+                completer: snackBarCompleter<Null>(
+                    context,
+                    invoiceIds.length == 1
+                        ? localization.emailedInvoice
+                        : localization.emailedInvoices),
+                invoiceIds: invoiceIds,
+              ));
             });
+
+        if (false) {
+          final template = await showDialog<EmailTemplate>(
+            context: context,
+            builder: (context) {
+              final settings = getClientSettings(state, client);
+              final templates = {
+                EmailTemplate.invoice: localization.initialEmail,
+                EmailTemplate.reminder1: localization.firstReminder,
+                EmailTemplate.reminder2: localization.secondReminder,
+                EmailTemplate.reminder3: localization.thirdReminder,
+                EmailTemplate.reminder_endless: localization.endlessReminder,
+                if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
+                  EmailTemplate.custom1: localization.firstCustom,
+                if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
+                  EmailTemplate.custom2: localization.secondCustom,
+                if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
+                  EmailTemplate.custom3: localization.thirdCustom,
+              };
+              return SimpleDialog(
+                title: Text(
+                  invoiceIds.length == 1
+                      ? localization.emailInvoice
+                      : localization.emailCountInvoices
+                          .replaceFirst(':count', '${invoiceIds.length}'),
+                ),
+                children: templates.keys
+                    .map((template) => SimpleDialogOption(
+                          child: Text(templates[template]),
+                          onPressed: () {
+                            Navigator.of(context).pop(template);
+                          },
+                        ))
+                    .toList(),
+              );
+            },
+          );
+
+          if (template != null) {
+            store.dispatch(BulkEmailInvoicesRequest(
+              completer: snackBarCompleter<Null>(
+                  navigatorKey.currentContext,
+                  invoiceIds.length == 1
+                      ? localization.emailedInvoice
+                      : localization.emailedInvoices),
+              invoiceIds: invoiceIds,
+              template: template,
+            ));
+          }
+        }
       }
       break;
     case EntityAction.cloneToOther:

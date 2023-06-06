@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -60,6 +63,16 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
+        iconButtons: [
+          IconButton(
+              icon: Icon(getEntityIcon(EntityType.settings)),
+              onPressed: () {
+                store.dispatch(ViewSettings(
+                  section: kSettingsProducts,
+                  company: state.company,
+                ));
+              })
+        ],
         tableColumns: ProductPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             ProductPresenter.getDefaultTableFields(userCompany),

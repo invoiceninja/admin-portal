@@ -278,10 +278,11 @@ class MarkSentQuoteFailure implements StopSaving {
 }
 
 class BulkEmailQuotesRequest implements StartSaving {
-  BulkEmailQuotesRequest(this.completer, this.quoteIds);
+  BulkEmailQuotesRequest({this.completer, this.quoteIds, this.template});
 
   final Completer completer;
   final List<String> quoteIds;
+  final EmailTemplate template;
 }
 
 class BulkEmailQuotesSuccess implements StopSaving, PersistData {
@@ -622,12 +623,12 @@ Future handleQuoteAction(
             message: localization.bulkEmailQuotes,
             callback: (_) {
               store.dispatch(BulkEmailQuotesRequest(
-                  snackBarCompleter<Null>(
+                  completer: snackBarCompleter<Null>(
                       context,
                       quoteIds.length == 1
                           ? localization.emailedQuote
                           : localization.emailedQuotes),
-                  quoteIds));
+                  quoteIds: quoteIds));
             });
       }
       break;

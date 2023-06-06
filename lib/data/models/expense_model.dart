@@ -9,6 +9,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_expense_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -587,6 +588,8 @@ abstract class ExpenseEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );
@@ -607,6 +610,8 @@ abstract class ExpenseEntity extends Object
         customValue2,
         customValue3,
         customValue4,
+        formatNumber(amount, navigatorKey.currentContext),
+        formatDate(date, navigatorKey.currentContext)
       ],
       needle: filter,
     );
