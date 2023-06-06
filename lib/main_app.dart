@@ -408,6 +408,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
+                          useMaterial3: false,
+                          colorSchemeSeed: accentColor,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
@@ -424,45 +426,47 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
                               style: outlinedButtonTheme),
-                          colorScheme: ColorScheme.dark().copyWith(
-                            secondary: accentColor,
-                            primary: accentColor,
-                            background: Colors.black,
-                          ),
+                          //colorScheme: ColorScheme.dark().copyWith(
+                          //  secondary: accentColor,
+                          //  primary: accentColor,
+                          //  background: Colors.black,
+                          //),
                           bottomAppBarTheme:
-                              BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
+                              BottomAppBarTheme(color: const Color(0xFF1B1C1E))
                         )
                       : ThemeData(
+                          useMaterial3: true,
+                          colorSchemeSeed: accentColor,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
                           pageTransitionsTheme: pageTransitionsTheme,
-                          primaryColor: accentColor,
-                          indicatorColor: accentColor,
-                          textSelectionTheme: TextSelectionThemeData(
-                            selectionColor: accentColor,
-                          ),
-                          fontFamily: fontFamily,
-                          canvasColor: Colors.white,
-                          cardColor: Colors.white,
-                          primaryColorDark: hasAccentColor
-                              ? accentColor
-                              : const Color(0xFF0D5D91),
-                          primaryColorLight: hasAccentColor
-                              ? accentColor
-                              : const Color(0xFF5dabf4),
-                          scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                          tabBarTheme: TabBarTheme(
-                            labelColor:
-                                hasAccentColor ? Colors.white : Colors.black,
-                            unselectedLabelColor: hasAccentColor
-                                ? Colors.white.withOpacity(.65)
-                                : Colors.black.withOpacity(.65),
-                          ),
-                          iconTheme: IconThemeData(
-                            color: hasAccentColor ? null : accentColor,
-                          ),
-                          appBarTheme: AppBarTheme(
+                          //primaryColor: accentColor,
+                          //indicatorColor: accentColor,
+                          //textSelectionTheme: TextSelectionThemeData(
+                         //   selectionColor: accentColor,
+                         // ),
+                          //fontFamily: fontFamily,
+                          //canvasColor: Colors.white,
+                          //cardColor: Colors.white,
+                          //primaryColorDark: hasAccentColor
+                           //   ? accentColor
+                           //   : const Color(0xFF0D5D91),
+                          //primaryColorLight: hasAccentColor
+                          //    ? accentColor
+                          //    : const Color(0xFF5dabf4),
+                          //scaffoldBackgroundColor: const Color(0xFFF3F4F6),
+                          //tabBarTheme: TabBarTheme(
+                          //  labelColor:
+                          //      hasAccentColor ? Colors.white : Colors.black,
+                          //  unselectedLabelColor: hasAccentColor
+                          //      ? Colors.white.withOpacity(.65)
+                          //      : Colors.black.withOpacity(.65),
+                          //),
+                          //iconTheme: IconThemeData(
+                          //  color: hasAccentColor ? null : accentColor,
+                          //),
+                          /*appBarTheme: AppBarTheme(
                             color: hasAccentColor ? accentColor : Colors.white,
                             iconTheme: IconThemeData(
                               color:
@@ -478,13 +482,15 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               TextButtonThemeData(style: textButtonTheme),
                           outlinedButtonTheme: OutlinedButtonThemeData(
                               style: outlinedButtonTheme),
-                          colorScheme: ColorScheme.fromSwatch().copyWith(
-                            secondary: accentColor,
-                            background: Colors.white,
-                          ),
                           bottomAppBarTheme:
                               BottomAppBarTheme(color: Colors.white),
                         ),
+                              */
+                          //colorScheme: ColorScheme.fromSwatch().copyWith(
+                          //  secondary: accentColor,
+                          //  background: Colors.white,
+                          //),
+                  ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,
                   routes: isMobile(context)
