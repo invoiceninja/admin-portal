@@ -135,10 +135,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
       }
     } else if (history.id == null) {
       title = Text(localization.lookup(history.entityType.plural));
-
-      if (!kReleaseMode) {
-        subtitle = Text('Page: ${history.page}');
-      }
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 

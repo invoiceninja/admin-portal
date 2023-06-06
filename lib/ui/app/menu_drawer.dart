@@ -134,7 +134,6 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 break;
                               default:
                                 if ((history.id ?? '').isEmpty) {
-                                  print('## PAGE: ${history.page}');
                                   viewEntitiesByType(
                                       entityType: history.entityType,
                                       page: history.page);

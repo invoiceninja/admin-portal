@@ -319,7 +319,11 @@ class EntityTopFilterHeader extends StatelessWidget {
                 final entityType = uiState.filterEntityType;
                 if (entityType.hasFullWidthViewer &&
                     state.prefState.isViewerFullScreen(entityType)) {
-                  viewEntitiesByType(entityType: entityType);
+                  viewEntitiesByType(
+                      entityType: entityType,
+                      page: state.historyList.length >= 2
+                          ? state.historyList[1].page
+                          : 0);
                 } else {
                   store.dispatch(
                     FilterByEntity(entity: uiState.filterEntity),
