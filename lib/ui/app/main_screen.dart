@@ -308,11 +308,12 @@ class MainScreen extends StatelessWidget {
               store.dispatch(ViewSettings(
                 section: history.id,
                 company: state.company,
+                user: state.user,
                 tabIndex: 0,
               ));
               break;
             default:
-              if (history.id == null) {
+              if ((history.id ?? '').isEmpty) {
                 viewEntitiesByType(entityType: history.entityType);
               } else {
                 viewEntityById(

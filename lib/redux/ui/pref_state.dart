@@ -421,7 +421,7 @@ abstract class HistoryRecord
       isEqualTo(entityId: record.id, entityType: record.entityType);
 
   bool isEqualTo({EntityType entityType, String entityId}) =>
-      entityType == this.entityType && entityId == id;
+      entityType == this.entityType && (entityId ?? '') == (id ?? '');
 
   static Serializer<HistoryRecord> get serializer => _$historyRecordSerializer;
 }
