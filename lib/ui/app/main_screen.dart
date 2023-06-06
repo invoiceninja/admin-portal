@@ -314,7 +314,8 @@ class MainScreen extends StatelessWidget {
               break;
             default:
               if ((history.id ?? '').isEmpty) {
-                viewEntitiesByType(entityType: history.entityType);
+                viewEntitiesByType(
+                    entityType: history.entityType, page: history.page);
               } else {
                 viewEntityById(
                   entityId: history.id,

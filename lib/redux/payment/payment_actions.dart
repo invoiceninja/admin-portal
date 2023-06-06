@@ -18,9 +18,13 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentList implements PersistUI {
-  ViewPaymentList({this.force = false});
+  ViewPaymentList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewPayment implements PersistUI, PersistPrefs {

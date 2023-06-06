@@ -26,9 +26,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ViewClientList implements PersistUI {
   ViewClientList({
     this.force = false,
+    this.page = 0,
   });
 
   final bool force;
+  final int page;
 }
 
 class ViewClient implements PersistUI, PersistPrefs {

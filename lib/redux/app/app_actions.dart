@@ -97,6 +97,12 @@ class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 
 class PopLastHistory implements PersistUI {}
 
+class UpdateLastHistory implements PersistUI {
+  const UpdateLastHistory(this.page);
+
+  final int page;
+}
+
 class DismissNativeWarning implements PersistUI {}
 
 class DismissNativeWarningPermanently implements PersistUI, PersistPrefs {}
@@ -329,6 +335,7 @@ void filterByEntity({
 void viewEntitiesByType({
   @required EntityType entityType,
   BaseEntity filterEntity,
+  int page = 0,
 }) {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
   final uiState = store.state.uiState;
@@ -371,13 +378,13 @@ void viewEntitiesByType({
             );
             break;
           case EntityType.client:
-            action = ViewClientList();
+            action = ViewClientList(page: page);
             break;
           case EntityType.user:
             action = ViewUserList();
             break;
           case EntityType.project:
-            action = ViewProjectList();
+            action = ViewProjectList(page: page);
             break;
           case EntityType.taxRate:
             action = ViewTaxRateList();
@@ -386,25 +393,25 @@ void viewEntitiesByType({
             action = ViewCompanyGatewayList();
             break;
           case EntityType.invoice:
-            action = ViewInvoiceList();
+            action = ViewInvoiceList(page: page);
             break;
           case EntityType.quote:
-            action = ViewQuoteList();
+            action = ViewQuoteList(page: page);
             break;
           case EntityType.vendor:
-            action = ViewVendorList();
+            action = ViewVendorList(page: page);
             break;
           case EntityType.product:
-            action = ViewProductList();
+            action = ViewProductList(page: page);
             break;
           case EntityType.task:
-            action = ViewTaskList();
+            action = ViewTaskList(page: page);
             break;
           case EntityType.expense:
-            action = ViewExpenseList();
+            action = ViewExpenseList(page: page);
             break;
           case EntityType.payment:
-            action = ViewPaymentList();
+            action = ViewPaymentList(page: page);
             break;
           case EntityType.group:
             action = ViewGroupList();
@@ -416,20 +423,17 @@ void viewEntitiesByType({
           case EntityType.transactionRule:
             action = ViewTransactionRuleList();
             break;
-
           case EntityType.transaction:
-            action = ViewTransactionList();
+            action = ViewTransactionList(page: page);
             break;
-
           case EntityType.bankAccount:
             action = ViewBankAccountList();
             break;
-
           case EntityType.purchaseOrder:
-            action = ViewPurchaseOrderList();
+            action = ViewPurchaseOrderList(page: page);
             break;
           case EntityType.recurringExpense:
-            action = ViewRecurringExpenseList();
+            action = ViewRecurringExpenseList(page: page);
             break;
           case EntityType.subscription:
             action = ViewSubscriptionList();
@@ -441,7 +445,7 @@ void viewEntitiesByType({
             action = ViewExpenseCategoryList();
             break;
           case EntityType.recurringInvoice:
-            action = ViewRecurringInvoiceList();
+            action = ViewRecurringInvoiceList(page: page);
             break;
           case EntityType.webhook:
             action = ViewWebhookList();
@@ -456,7 +460,7 @@ void viewEntitiesByType({
             action = ViewDesignList();
             break;
           case EntityType.credit:
-            action = ViewCreditList();
+            action = ViewCreditList(page: page);
             break;
         }
 

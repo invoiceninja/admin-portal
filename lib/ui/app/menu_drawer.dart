@@ -135,7 +135,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                               default:
                                 if ((history.id ?? '').isEmpty) {
                                   viewEntitiesByType(
-                                      entityType: history.entityType);
+                                      entityType: history.entityType,
+                                      page: history.page);
                                 } else {
                                   viewEntityById(
                                     entityId: history.id,

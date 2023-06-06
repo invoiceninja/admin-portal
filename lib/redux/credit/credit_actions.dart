@@ -29,9 +29,13 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:printing/printing.dart';
 
 class ViewCreditList implements PersistUI {
-  ViewCreditList({this.force = false});
+  ViewCreditList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewCredit implements PersistUI, PersistPrefs {

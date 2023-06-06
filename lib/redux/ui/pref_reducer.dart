@@ -536,6 +536,18 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       }
     },
   ),
+  TypedReducer<BuiltList<HistoryRecord>, UpdateLastHistory>(
+    (historyList, action) {
+      if (historyList.isEmpty) {
+        return historyList;
+      }
+
+      final history = historyList.first;
+
+      return historyList.rebuild(
+          (b) => b..[0] = history.rebuild((b) => b.page = action.page));
+    },
+  ),
   TypedReducer<BuiltList<HistoryRecord>, ViewDashboard>((historyList, action) =>
       _addToHistory(
           historyList, HistoryRecord(entityType: EntityType.dashboard))),
@@ -551,9 +563,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),
-  TypedReducer<BuiltList<HistoryRecord>, ViewClientList>((historyList,
-          action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.client))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewClientList>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.client, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.client.id, entityType: EntityType.client))),
@@ -561,8 +573,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.productId, entityType: EntityType.product))),
   TypedReducer<BuiltList<HistoryRecord>, ViewProductList>(
-      (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.product))),
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.product, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditProduct>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -572,8 +584,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.invoiceId, entityType: EntityType.invoice))),
   TypedReducer<BuiltList<HistoryRecord>, ViewInvoiceList>(
-      (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.invoice))),
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.invoice, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditInvoice>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -583,8 +595,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.paymentId, entityType: EntityType.payment))),
   TypedReducer<BuiltList<HistoryRecord>, ViewPaymentList>(
-      (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.payment))),
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.payment, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditPayment>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -594,7 +606,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.quoteId, entityType: EntityType.quote))),
   TypedReducer<BuiltList<HistoryRecord>, ViewQuoteList>((historyList, action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.quote))),
+      _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.quote, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditQuote>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.quote.id, entityType: EntityType.quote))),
@@ -602,7 +615,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.taskId, entityType: EntityType.task))),
   TypedReducer<BuiltList<HistoryRecord>, ViewTaskList>((historyList, action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.task))),
+      _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.task, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditTask>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.task.id, entityType: EntityType.task))),
@@ -610,8 +624,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.projectId, entityType: EntityType.project))),
   TypedReducer<BuiltList<HistoryRecord>, ViewProjectList>(
-      (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.project))),
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.project, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditProject>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -620,9 +634,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewVendor>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.vendorId, entityType: EntityType.vendor))),
-  TypedReducer<BuiltList<HistoryRecord>, ViewVendorList>((historyList,
-          action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.vendor))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewVendorList>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.vendor, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditVendor>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.vendor.id, entityType: EntityType.vendor))),
@@ -630,8 +644,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.expenseId, entityType: EntityType.expense))),
   TypedReducer<BuiltList<HistoryRecord>, ViewExpenseList>(
-      (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.expense))),
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.expense, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditExpense>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -706,7 +720,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
               id: action.transactionId, entityType: EntityType.transaction))),
   TypedReducer<BuiltList<HistoryRecord>, ViewTransactionList>(
       (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.transaction))),
+          historyList,
+          HistoryRecord(
+              entityType: EntityType.transaction, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditTransaction>(
       (historyList, action) => _addToHistory(
           historyList,
@@ -729,7 +745,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
               entityType: EntityType.purchaseOrder))),
   TypedReducer<BuiltList<HistoryRecord>, ViewPurchaseOrderList>(
       (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.purchaseOrder))),
+          historyList,
+          HistoryRecord(
+              entityType: EntityType.purchaseOrder, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditPurchaseOrder>(
       (historyList, action) => _addToHistory(
           historyList,
@@ -744,7 +762,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
               entityType: EntityType.recurringExpense))),
   TypedReducer<BuiltList<HistoryRecord>, ViewRecurringExpenseList>(
       (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.recurringExpense))),
+          historyList,
+          HistoryRecord(
+              entityType: EntityType.recurringExpense, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditRecurringExpense>(
       (historyList, action) => _addToHistory(
           historyList,
@@ -803,7 +823,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
               entityType: EntityType.recurringInvoice))),
   TypedReducer<BuiltList<HistoryRecord>, ViewRecurringInvoiceList>(
       (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.recurringInvoice))),
+          historyList,
+          HistoryRecord(
+              entityType: EntityType.recurringInvoice, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditRecurringInvoice>(
       (historyList, action) => _addToHistory(
           historyList,
@@ -849,9 +871,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.creditId, entityType: EntityType.credit))),
-  TypedReducer<BuiltList<HistoryRecord>, ViewCreditList>((historyList,
-          action) =>
-      _addToHistory(historyList, HistoryRecord(entityType: EntityType.credit))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewCreditList>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.credit, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.credit.id, entityType: EntityType.credit))),

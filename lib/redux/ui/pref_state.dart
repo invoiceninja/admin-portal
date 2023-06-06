@@ -394,11 +394,13 @@ abstract class HistoryRecord
   factory HistoryRecord({
     @required EntityType entityType,
     String id,
+    int page,
   }) {
     return _$HistoryRecord._(
       id: id,
       entityType: entityType,
       timestamp: DateTime.now().millisecondsSinceEpoch,
+      page: page ?? 0,
     );
   }
 
@@ -412,6 +414,9 @@ abstract class HistoryRecord
   String get id;
 
   EntityType get entityType;
+
+  @nullable
+  int get page;
 
   int get timestamp;
 

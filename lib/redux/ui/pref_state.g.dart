@@ -620,6 +620,12 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.page;
+    if (value != null) {
+      result
+        ..add('page')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -642,6 +648,10 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
         case 'entityType':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'page':
+          result.page = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'timestamp':
           result.timestamp = serializers.deserialize(value,
@@ -1557,12 +1567,15 @@ class _$HistoryRecord extends HistoryRecord {
   @override
   final EntityType entityType;
   @override
+  final int page;
+  @override
   final int timestamp;
 
   factory _$HistoryRecord([void Function(HistoryRecordBuilder) updates]) =>
       (new HistoryRecordBuilder()..update(updates))._build();
 
-  _$HistoryRecord._({this.id, this.entityType, this.timestamp}) : super._() {
+  _$HistoryRecord._({this.id, this.entityType, this.page, this.timestamp})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         entityType, r'HistoryRecord', 'entityType');
     BuiltValueNullFieldError.checkNotNull(
@@ -1582,6 +1595,7 @@ class _$HistoryRecord extends HistoryRecord {
     return other is HistoryRecord &&
         id == other.id &&
         entityType == other.entityType &&
+        page == other.page &&
         timestamp == other.timestamp;
   }
 
@@ -1592,6 +1606,7 @@ class _$HistoryRecord extends HistoryRecord {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
+    _$hash = $jc(_$hash, page.hashCode);
     _$hash = $jc(_$hash, timestamp.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -1602,6 +1617,7 @@ class _$HistoryRecord extends HistoryRecord {
     return (newBuiltValueToStringHelper(r'HistoryRecord')
           ..add('id', id)
           ..add('entityType', entityType)
+          ..add('page', page)
           ..add('timestamp', timestamp))
         .toString();
   }
@@ -1619,6 +1635,10 @@ class HistoryRecordBuilder
   EntityType get entityType => _$this._entityType;
   set entityType(EntityType entityType) => _$this._entityType = entityType;
 
+  int _page;
+  int get page => _$this._page;
+  set page(int page) => _$this._page = page;
+
   int _timestamp;
   int get timestamp => _$this._timestamp;
   set timestamp(int timestamp) => _$this._timestamp = timestamp;
@@ -1630,6 +1650,7 @@ class HistoryRecordBuilder
     if ($v != null) {
       _id = $v.id;
       _entityType = $v.entityType;
+      _page = $v.page;
       _timestamp = $v.timestamp;
       _$v = null;
     }
@@ -1656,6 +1677,7 @@ class HistoryRecordBuilder
             id: id,
             entityType: BuiltValueNullFieldError.checkNotNull(
                 entityType, r'HistoryRecord', 'entityType'),
+            page: page,
             timestamp: BuiltValueNullFieldError.checkNotNull(
                 timestamp, r'HistoryRecord', 'timestamp'));
     replace(_$result);

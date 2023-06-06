@@ -23,9 +23,13 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewExpenseList implements PersistUI {
-  ViewExpenseList({this.force = false});
+  ViewExpenseList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewExpense implements PersistUI, PersistPrefs {

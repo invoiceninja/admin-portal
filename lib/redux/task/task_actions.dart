@@ -22,9 +22,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewTaskList implements PersistUI {
-  ViewTaskList({this.force = false});
+  ViewTaskList({this.force = false, this.page = 0,});
 
   final bool force;
+  final int page;
 }
 
 class ViewTask implements PersistUI, PersistPrefs {
