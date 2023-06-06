@@ -340,20 +340,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ),
           );
 
-          final outlinedButtonTheme = OutlinedButton.styleFrom(
-            foregroundColor:
-                state.prefState.enableDarkMode ? Colors.white : Colors.black87,
-          );
-
           return StyledToast(
             locale: locale,
             duration: Duration(seconds: 3),
-            backgroundColor:
-                state.prefState.enableDarkMode ? Colors.white : Colors.black,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             textStyle: TextStyle(
-              color: state.prefState.enableDarkMode
-                  ? Colors.black87
-                  : Colors.white,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
             child: WebSocketRefresh(
               companyId: state.company?.id,
@@ -395,7 +387,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       ? LockScreen(onAuthenticatePressed: _authenticate)
                       : InitScreen(),
                   locale: locale,
-                  /*
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
                           brightness: Brightness.dark,
@@ -405,92 +396,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           brightness: Brightness.light,
                           colorSchemeSeed: accentColor,
                           useMaterial3: true),
-                  */
-                  theme: state.prefState.enableDarkMode
-                      ? ThemeData(
-                          useMaterial3: false,
-                          colorSchemeSeed: accentColor,
-                          tooltipTheme: TooltipThemeData(
-                            waitDuration: Duration(milliseconds: 500),
-                          ),
-                          pageTransitionsTheme: pageTransitionsTheme,
-                          indicatorColor: accentColor,
-                          textSelectionTheme: TextSelectionThemeData(
-                            selectionHandleColor: accentColor,
-                          ),
-                          fontFamily: fontFamily,
-                          canvasColor: Colors.black,
-                          cardColor: const Color(0xFF1B1C1E),
-                          primaryColorDark: Colors.black,
-                          textButtonTheme:
-                              TextButtonThemeData(style: textButtonTheme),
-                          outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme),
-                          //colorScheme: ColorScheme.dark().copyWith(
-                          //  secondary: accentColor,
-                          //  primary: accentColor,
-                          //  background: Colors.black,
-                          //),
-                          bottomAppBarTheme:
-                              BottomAppBarTheme(color: const Color(0xFF1B1C1E))
-                        )
-                      : ThemeData(
-                          useMaterial3: true,
-                          colorSchemeSeed: accentColor,
-                          tooltipTheme: TooltipThemeData(
-                            waitDuration: Duration(milliseconds: 500),
-                          ),
-                          pageTransitionsTheme: pageTransitionsTheme,
-                          //primaryColor: accentColor,
-                          //indicatorColor: accentColor,
-                          //textSelectionTheme: TextSelectionThemeData(
-                         //   selectionColor: accentColor,
-                         // ),
-                          //fontFamily: fontFamily,
-                          //canvasColor: Colors.white,
-                          //cardColor: Colors.white,
-                          //primaryColorDark: hasAccentColor
-                           //   ? accentColor
-                           //   : const Color(0xFF0D5D91),
-                          //primaryColorLight: hasAccentColor
-                          //    ? accentColor
-                          //    : const Color(0xFF5dabf4),
-                          //scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                          //tabBarTheme: TabBarTheme(
-                          //  labelColor:
-                          //      hasAccentColor ? Colors.white : Colors.black,
-                          //  unselectedLabelColor: hasAccentColor
-                          //      ? Colors.white.withOpacity(.65)
-                          //      : Colors.black.withOpacity(.65),
-                          //),
-                          //iconTheme: IconThemeData(
-                          //  color: hasAccentColor ? null : accentColor,
-                          //),
-                          /*appBarTheme: AppBarTheme(
-                            color: hasAccentColor ? accentColor : Colors.white,
-                            iconTheme: IconThemeData(
-                              color:
-                                  hasAccentColor ? Colors.white : accentColor,
-                            ),
-                            titleTextStyle: TextStyle(
-                                fontSize: 20,
-                                color: hasAccentColor
-                                    ? Colors.white
-                                    : Colors.black),
-                          ),
-                          textButtonTheme:
-                              TextButtonThemeData(style: textButtonTheme),
-                          outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme),
-                          bottomAppBarTheme:
-                              BottomAppBarTheme(color: Colors.white),
-                        ),
-                              */
-                          //colorScheme: ColorScheme.fromSwatch().copyWith(
-                          //  secondary: accentColor,
-                          //  background: Colors.white,
-                          //),
-                  ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,
                   routes: isMobile(context)
