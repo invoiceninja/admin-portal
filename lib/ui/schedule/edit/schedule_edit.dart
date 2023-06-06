@@ -153,6 +153,10 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           viewModel.onChanged(
                             schedule.rebuild((b) => b
                               ..template = value
+                              ..frequencyId =
+                                  value == ScheduleEntity.TEMPLATE_EMAIL_RECORD
+                                      ? kFrequencyOnce
+                                      : schedule.frequencyId
                               ..parameters.replace(ScheduleParameters(value))),
                           );
                         },
