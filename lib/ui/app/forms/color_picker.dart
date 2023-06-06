@@ -64,6 +64,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
     Colors.brown,
     Colors.grey,
     Colors.blueGrey,
+    Colors.grey.shade700,
     Colors.black,
   ];
 
