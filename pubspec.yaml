@@ -45,10 +45,7 @@ dependencies:
   intl: ^0.17.0
   flutter_slidable: ^2.0.0
   charts_flutter: ^0.12.0
-  #qr_flutter: ^4.0.0
-  qr_flutter: # https://github.com/theyakka/qr.flutter/issues/174#issuecomment-1084235757
-    git:
-      url: https://github.com/theyakka/qr.flutter.git
+  qr_flutter: ^4.1.0
   local_auth: ^2.1.5
   sentry_flutter: ^6.20.1
   image_picker: ^0.8.6+3
@@ -91,7 +88,7 @@ dependency_overrides:
   photo_view:
     git:
       url: https://github.com/bluefireteam/photo_view
-      ref: master
+      ref: main
       
 dev_dependencies:
   flutter_driver:
