@@ -21,9 +21,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewVendorList implements PersistUI {
-  ViewVendorList({this.force = false});
+  ViewVendorList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewVendor implements PersistUI, PersistPrefs {

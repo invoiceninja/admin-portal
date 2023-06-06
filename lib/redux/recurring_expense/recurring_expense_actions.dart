@@ -22,9 +22,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ViewRecurringExpenseList implements PersistUI {
   ViewRecurringExpenseList({
     this.force = false,
+    this.page = 0,
   });
 
   final bool force;
+  final int page;
 }
 
 class ViewRecurringExpense implements PersistUI, PersistPrefs {

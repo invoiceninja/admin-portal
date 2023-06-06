@@ -22,9 +22,13 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProjectList implements PersistUI {
-  ViewProjectList({this.force = false});
+  ViewProjectList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewProject implements PersistUI, PersistPrefs {

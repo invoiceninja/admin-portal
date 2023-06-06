@@ -88,11 +88,19 @@ class _EntityListState extends State<EntityList> {
 
     // make sure the initial page shows the selected record
     final entityUIState = state.getUIState(entityType);
-    final selectedIndex = widget.entityList.indexOf(entityUIState.selectedId);
     final rowsPerPage = state.prefState.rowsPerPage;
 
-    if (selectedIndex >= 0) {
-      _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
+    if ((entityUIState.selectedId ?? '').isNotEmpty) {
+      final selectedIndex = widget.entityList.indexOf(entityUIState.selectedId);
+
+      if (selectedIndex >= 0) {
+        _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
+      }
+    } else {
+      final history = state.historyList.first;
+      if (history.page != null) {
+        _firstRowIndex = history.page * rowsPerPage;
+      }
     }
   }
 
@@ -279,7 +287,11 @@ class _EntityListState extends State<EntityList> {
                             : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
-                    onPageChanged: (row) => _firstRowIndex = row,
+                    onPageChanged: (row) {
+                      _firstRowIndex = row;
+                      store.dispatch(UpdateLastHistory(
+                          (row / state.prefState.rowsPerPage).floor()));
+                    },
                     initialFirstRowIndex: _firstRowIndex,
                     availableRowsPerPage: [
                       10,

@@ -31,9 +31,13 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:printing/printing.dart';
 
 class ViewInvoiceList implements PersistUI {
-  ViewInvoiceList({this.force = false});
+  ViewInvoiceList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewInvoice implements PersistUI, PersistPrefs {

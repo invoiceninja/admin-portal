@@ -23,9 +23,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import '../document/document_actions.dart';
 
 class ViewProductList implements PersistUI {
-  ViewProductList({this.force = false});
+  ViewProductList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewProduct implements PersistUI, PersistPrefs {

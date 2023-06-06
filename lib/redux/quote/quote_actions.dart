@@ -29,9 +29,13 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:printing/printing.dart';
 
 class ViewQuoteList implements PersistUI {
-  ViewQuoteList({this.force = false});
+  ViewQuoteList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewQuote implements PersistUI, PersistPrefs {

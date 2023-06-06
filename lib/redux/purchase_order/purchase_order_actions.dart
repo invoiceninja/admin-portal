@@ -20,9 +20,13 @@ import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewPurchaseOrderList implements PersistUI {
-  ViewPurchaseOrderList({this.force = false});
+  ViewPurchaseOrderList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewPurchaseOrder implements PersistUI, PersistPrefs {

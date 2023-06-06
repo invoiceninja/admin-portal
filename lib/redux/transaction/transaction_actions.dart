@@ -10,9 +10,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
 class ViewTransactionList implements PersistUI {
-  ViewTransactionList({this.force = false});
+  ViewTransactionList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewTransaction implements PersistUI, PersistPrefs {
