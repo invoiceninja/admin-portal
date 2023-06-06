@@ -150,7 +150,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.tertiaryContainer,
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
@@ -191,7 +191,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType).statusFilters,
           builder: (BuildContext context, statusFilters) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.tertiaryContainer,
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: widget.statuses.map((status) {
@@ -233,7 +233,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType),
           builder: (BuildContext context, listUIState) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.tertiaryContainer,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.sortFields.map((sortField) {
@@ -418,6 +418,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : null,
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                 ],
                 if (isMobile(context) ||
@@ -586,7 +587,7 @@ class CustomFieldSelector extends StatelessWidget {
           store.state.getListState(entityType).getCustomFilters(customNumber),
       builder: (BuildContext context, customFilters) {
         return Container(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.tertiaryContainer,
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
               children: customValues.map<Widget>((customField) {

@@ -54,7 +54,6 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-
     return ScrollableListView(
       children: [
         if (state.isEnterprisePlan)
@@ -64,9 +63,12 @@ class DocumentGrid extends StatelessWidget {
               children: <Widget>[
                 if (isMobileOS()) ...[
                   Expanded(
-                    child: AppButton(
-                      iconData: Icons.camera_alt,
-                      label: localization.takePicture,
+                    child: FilledButton.icon(
+                      icon: const Icon(Icons.camera_alt),
+                      label: Text(localization.takePicture),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary)
+                      ),
                       onPressed: () async {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
@@ -85,7 +87,8 @@ class DocumentGrid extends StatelessWidget {
                         } else {
                           openAppSettings();
                         }
-                      },
+                      }
+
                     ),
                   ),
                   SizedBox(
@@ -93,9 +96,12 @@ class DocumentGrid extends StatelessWidget {
                   ),
                 ],
                 Expanded(
-                  child: AppButton(
-                    iconData: Icons.insert_drive_file,
-                    label: localization.uploadFile,
+                  child: FilledButton.icon(
+                    icon: const Icon(Icons.insert_drive_file),
+                    label: Text(localization.uploadFile),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary)
+                    ),
                     onPressed: () async {
                       final multipartFile = await pickFile(
                           fileIndex: 'documents[]',
