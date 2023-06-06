@@ -366,11 +366,13 @@ class _AccountOverview extends StatelessWidget {
           ),
         if (state.isHosted) ...[
           if (state.isProPlan && account.hasIapPlan)
-            SizedBox()
-          else if (state.isProPlan &&
-              !account.hasIapPlan &&
-              supportsInAppPurchase())
-            SizedBox()
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                localization.useMobileToManagePlan,
+                textAlign: TextAlign.center,
+              ),
+            )
           else
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
@@ -387,7 +389,7 @@ class _AccountOverview extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    if (supportsInAppPurchase()) {
+                    if (supportsInAppPurchase() && !account.hasIapPlan) {
                       showDialog<void>(
                         context: context,
                         builder: (context) => UpgradeDialog(),
