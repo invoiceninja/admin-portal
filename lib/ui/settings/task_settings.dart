@@ -178,7 +178,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskHours = value)),
                 ),
-                if (false && settings.showTaskItemDescription == true)
+                if (settings.showTaskItemDescription == true)
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.invoiceTaskItemDescription),
@@ -195,7 +195,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
-                if (false && company.invoiceTaskProject) ...[
+                if (company.invoiceTaskProject) ...[
                   SizedBox(height: 10),
                   AppDropdownButton<bool>(
                       labelText: localization.projectLocation,
