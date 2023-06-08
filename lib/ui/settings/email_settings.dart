@@ -510,7 +510,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),
-              if (supportsLatestFeatures(null))
+              if (supportsLatestFeatures('5.6.0'))
                 BoolDropdownButton(
                   label: localization.enableEInvoice,
                   value: settings.enableEInvoice,
