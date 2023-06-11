@@ -68,7 +68,7 @@ class InvoiceRepository {
         data: json.encode({
           'ids': ids,
           'action': action.toApiParam(),
-          if (template != null) 'email_type': 'email_template_$template',
+          if (template != null) 'email_type': '$template',
         }));
 
     final InvoiceListResponse invoiceResponse =
