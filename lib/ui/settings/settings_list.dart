@@ -428,7 +428,7 @@ class SettingsSearch extends StatelessWidget {
         [
           'tax_settings',
           'inclusive_taxes',
-          if (supportsLatestFeatures('5.6.0')) 'calculate_taxes#2023-04-26',
+          'calculate_taxes#2023-06-11',
         ],
       ],
       kSettingsTaxRates: [
@@ -624,7 +624,7 @@ class SettingsSearch extends StatelessWidget {
           'mailgun#2023-01-11',
           'email_alignment#2023-01-17',
           'show_email_footer#2023-01-17',
-          if (supportsLatestFeatures('5.6.0')) 'enable_e_invoice#2023-04-27,'
+          'enable_e_invoice#2023-06-11,'
         ],
       ],
       kSettingsTemplatesAndReminders: [

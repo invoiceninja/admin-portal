@@ -160,8 +160,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               onPressed: () => viewModel.onConfigureRatesPressed(context),
             ),
           ),
-          if (!state.settingsUIState.isFiltered &&
-              supportsLatestFeatures('5.6.0'))
+          if (!state.settingsUIState.isFiltered)
             FormCard(
               isLast: true,
               crossAxisAlignment: CrossAxisAlignment.start,
