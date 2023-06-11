@@ -32,6 +32,8 @@ enum QuoteItemReportFields {
   quoteDate,
   client,
   clientEmail,
+  clientNumber,
+  clientIdNumber,
   validUntil,
   hasTaxes,
   taxRates,
@@ -188,6 +190,12 @@ ReportResult lineItemReport(
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
                     '';
+            break;
+          case QuoteItemReportFields.clientNumber:
+            value = client.number;
+            break;
+          case QuoteItemReportFields.clientIdNumber:
+            value = client.idNumber;
             break;
         }
 
