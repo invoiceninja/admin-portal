@@ -103,6 +103,8 @@ String calculateStartDate({
     case DateRange.lastYear:
       final date = addYears(firstDayOfYear, (1 + offset) * -1);
       return convertDateTimeToSqlDate(date);
+    case DateRange.allTime:
+      return null;
     default:
       final startDate = (customStartDate == null || customStartDate.isEmpty)
           ? DateTime.now()
@@ -165,6 +167,8 @@ String calculateEndDate({
       final date =
           addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
+    case DateRange.allTime:
+      return null;
     default:
       final startDate = (customStartDate == null || customStartDate.isEmpty)
           ? DateTime.now()

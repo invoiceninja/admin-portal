@@ -86,6 +86,9 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.showPaymentsTable: parameters.showPaymentsTable
                   ? localization.yes
                   : localization.no,
+              localization.onlyClientsWithInvoices: (parameters.onlyClientsWithInvoices != null && parameters.onlyClientsWithInvoices)
+                  ? localization.yes
+                  : localization.no,
               localization.status: localization.lookup(parameters.status),
             })
         ],

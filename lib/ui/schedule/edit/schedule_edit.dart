@@ -286,6 +286,13 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           viewModel.onChanged(schedule.rebuild(
                               (b) => b..parameters.showPaymentsTable = value));
                         }),
+                    BoolDropdownButton(
+                        label: localization.onlyClientsWithInvoices,
+                        value: parameters.onlyClientsWithInvoices,
+                        onChanged: (value) {
+                          viewModel.onChanged(schedule.rebuild(
+                                  (b) => b..parameters.onlyClientsWithInvoices = value));
+                        }),
                   ]),
                   FormCard(
                     isLast: true,

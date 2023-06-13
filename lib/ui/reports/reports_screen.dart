@@ -263,6 +263,7 @@ class ReportsScreen extends StatelessWidget {
                       })));
               },
         items: DateRange.values
+            .where((value) => value != DateRange.allTime)
             .map((dateRange) => DropdownMenuItem<DateRange>(
                   child: Text(localization.lookup(dateRange.toString())),
                   value: dateRange,
@@ -1173,6 +1174,7 @@ class ReportResult {
               }
             },
             items: DateRange.values
+                .where((value) => value != DateRange.allTime)
                 .map((dateRange) => DropdownMenuItem<DateRange>(
                       child: Text(localization.lookup(dateRange.toString())),
                       value: dateRange,

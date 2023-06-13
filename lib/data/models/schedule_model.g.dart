@@ -299,6 +299,13 @@ class _$ScheduleParametersSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.onlyClientsWithInvoices;
+    if (value != null) {
+      result
+        ..add('only_clients_with_invoices')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.status;
     if (value != null) {
       result
@@ -357,6 +364,10 @@ class _$ScheduleParametersSerializer
           break;
         case 'show_aging_table':
           result.showAgingTable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'only_clients_with_invoices':
+          result.onlyClientsWithInvoices = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'status':
@@ -882,6 +893,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   final bool showAgingTable;
   @override
+  final bool onlyClientsWithInvoices;
+  @override
   final String status;
   @override
   final BuiltList<String> clients;
@@ -899,6 +912,7 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.showPaymentsTable,
       this.showCreditsTable,
       this.showAgingTable,
+      this.onlyClientsWithInvoices,
       this.status,
       this.clients,
       this.entityType,
@@ -922,6 +936,7 @@ class _$ScheduleParameters extends ScheduleParameters {
         showPaymentsTable == other.showPaymentsTable &&
         showCreditsTable == other.showCreditsTable &&
         showAgingTable == other.showAgingTable &&
+        onlyClientsWithInvoices == other.onlyClientsWithInvoices &&
         status == other.status &&
         clients == other.clients &&
         entityType == other.entityType &&
@@ -937,6 +952,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, showPaymentsTable.hashCode);
     _$hash = $jc(_$hash, showCreditsTable.hashCode);
     _$hash = $jc(_$hash, showAgingTable.hashCode);
+    _$hash = $jc(_$hash, onlyClientsWithInvoices.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, clients.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
@@ -952,6 +968,7 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('showPaymentsTable', showPaymentsTable)
           ..add('showCreditsTable', showCreditsTable)
           ..add('showAgingTable', showAgingTable)
+          ..add('onlyClientsWithInvoices', onlyClientsWithInvoices)
           ..add('status', status)
           ..add('clients', clients)
           ..add('entityType', entityType)
@@ -983,6 +1000,11 @@ class ScheduleParametersBuilder
   set showAgingTable(bool showAgingTable) =>
       _$this._showAgingTable = showAgingTable;
 
+  bool _onlyClientsWithInvoices;
+  bool get onlyClientsWithInvoices => _$this._onlyClientsWithInvoices;
+  set onlyClientsWithInvoices(bool onlyClientsWithInvoices) =>
+      _$this._onlyClientsWithInvoices = onlyClientsWithInvoices;
+
   String _status;
   String get status => _$this._status;
   set status(String status) => _$this._status = status;
@@ -1009,6 +1031,7 @@ class ScheduleParametersBuilder
       _showPaymentsTable = $v.showPaymentsTable;
       _showCreditsTable = $v.showCreditsTable;
       _showAgingTable = $v.showAgingTable;
+      _onlyClientsWithInvoices = $v.onlyClientsWithInvoices;
       _status = $v.status;
       _clients = $v.clients?.toBuilder();
       _entityType = $v.entityType;
@@ -1041,6 +1064,7 @@ class ScheduleParametersBuilder
               showPaymentsTable: showPaymentsTable,
               showCreditsTable: showCreditsTable,
               showAgingTable: showAgingTable,
+              onlyClientsWithInvoices: onlyClientsWithInvoices,
               status: status,
               clients: _clients?.build(),
               entityType: entityType,
