@@ -155,6 +155,11 @@
 					<string>Field</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
 					<string>88xZPY</string>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>invoices</string>
+					</dict>
 					<key>INIntentParameterName</key>
 					<string>field</string>
 					<key>INIntentParameterPromptDialogs</key>
