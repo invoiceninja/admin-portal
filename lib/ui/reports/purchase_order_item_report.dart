@@ -27,6 +27,8 @@ enum PurchaseOrderItemReportFields {
   purchaseOrderDate,
   client,
   clientEmail,
+  clientNumber,
+  clientIdNumber,
   vendor,
   vendorEmail,
   dueDate,
@@ -193,6 +195,12 @@ ReportResult lineItemReport(
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
                     '';
+            break;
+          case PurchaseOrderItemReportFields.clientNumber:
+            value = client?.number ?? '';
+            break;
+          case PurchaseOrderItemReportFields.clientIdNumber:
+            value = client?.idNumber ?? '';
             break;
         }
 

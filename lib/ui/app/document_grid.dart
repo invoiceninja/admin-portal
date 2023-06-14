@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:desktop_drop/desktop_drop.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -37,6 +39,9 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
@@ -303,27 +308,40 @@ class DocumentTile extends StatelessWidget {
                                     document.downloadUrl +
                                     '?inline=true'));
                               } else if (value == localization.download) {
-                                if (kIsWeb ||
-                                    (!Platform.isIOS && !Platform.isAndroid)) {
-                                  launchUrl(Uri.parse(state.account.defaultUrl +
-                                      document.downloadUrl));
-                                } else {
-                                  final directory =
-                                      await getApplicationDocumentsDirectory();
-                                  final String folder =
-                                      '${directory.path}/documents';
-                                  await Directory(folder)
-                                      .create(recursive: true);
-                                  final filePath = '$folder/${document.name}';
+                                final http.Response response = await WebClient()
+                                    .get(document.url, state.credentials.token,
+                                        rawResponse: true);
 
-                                  final http.Response response =
-                                      await WebClient().get(
-                                          document.url, state.credentials.token,
-                                          rawResponse: true);
+                                if (kIsWeb) {
+                                  WebUtils.downloadBinaryFile(
+                                      document.name, response.bodyBytes);
+                                } else {
+                                  final directory = await (isDesktopOS()
+                                      ? getDownloadsDirectory()
+                                      : getApplicationDocumentsDirectory());
+
+                                  String filePath =
+                                      '${directory.path}${file.Platform.pathSeparator}${document.name}';
+
+                                  if (file.File(filePath).existsSync()) {
+                                    final extension =
+                                        document.name.split('.').last;
+                                    final timestamp =
+                                        DateTime.now().millisecondsSinceEpoch;
+                                    filePath = filePath.replaceFirst(
+                                        '.$extension',
+                                        '_$timestamp.$extension');
+                                  }
 
                                   await File(filePath)
                                       .writeAsBytes(response.bodyBytes);
-                                  await Share.shareXFiles([XFile(filePath)]);
+
+                                  if (isDesktopOS()) {
+                                    showToast(localization
+                                        .fileSavedInDownloadsFolder);
+                                  } else {
+                                    await Share.shareXFiles([XFile(filePath)]);
+                                  }
                                 }
                               } else if (value == localization.delete) {
                                 confirmCallback(
@@ -364,6 +382,7 @@ class DocumentTile extends StatelessWidget {
                             },
                             itemBuilder: (context) {
                               return [
+                                /*
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.view,
@@ -371,6 +390,7 @@ class DocumentTile extends StatelessWidget {
                                   ),
                                   value: localization.view,
                                 ),
+                                */
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.download,

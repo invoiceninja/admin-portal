@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -160,8 +159,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               onPressed: () => viewModel.onConfigureRatesPressed(context),
             ),
           ),
-          if (!state.settingsUIState.isFiltered &&
-              supportsLatestFeatures('5.6.0'))
+          if (!state.settingsUIState.isFiltered)
             FormCard(
               isLast: true,
               crossAxisAlignment: CrossAxisAlignment.start,

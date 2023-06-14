@@ -32,6 +32,8 @@ enum InvoiceItemReportFields {
   invoiceDate,
   client,
   clientEmail,
+  clientNumber,
+  clientIdNumber,
   dueDate,
   hasTaxes,
   taxRates,
@@ -192,6 +194,12 @@ ReportResult lineItemReport(
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
                     '';
+            break;
+          case InvoiceItemReportFields.clientNumber:
+            value = client.number;
+            break;
+          case InvoiceItemReportFields.clientIdNumber:
+            value = client.idNumber;
             break;
         }
 

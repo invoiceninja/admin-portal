@@ -670,68 +670,52 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
                   ..parameters.entityType = EntityType.invoice.apiValue
                   ..parameters.entityId = invoice.id));
       } else {
-        confirmCallback(
-            context: context,
-            message: localization.bulkEmailInvoices,
-            callback: (_) {
-              store.dispatch(BulkEmailInvoicesRequest(
-                completer: snackBarCompleter<Null>(
-                    context,
-                    invoiceIds.length == 1
-                        ? localization.emailedInvoice
-                        : localization.emailedInvoices),
-                invoiceIds: invoiceIds,
-              ));
-            });
+        final template = await showDialog<EmailTemplate>(
+          context: context,
+          builder: (context) {
+            final settings = getClientSettings(state, client);
+            final templates = {
+              EmailTemplate.invoice: localization.initialEmail,
+              EmailTemplate.reminder1: localization.firstReminder,
+              EmailTemplate.reminder2: localization.secondReminder,
+              EmailTemplate.reminder3: localization.thirdReminder,
+              EmailTemplate.reminder_endless: localization.endlessReminder,
+              if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
+                EmailTemplate.custom1: localization.firstCustom,
+              if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
+                EmailTemplate.custom2: localization.secondCustom,
+              if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
+                EmailTemplate.custom3: localization.thirdCustom,
+            };
+            return SimpleDialog(
+              title: Text(
+                invoiceIds.length == 1
+                    ? localization.emailInvoice
+                    : localization.emailCountInvoices
+                        .replaceFirst(':count', '${invoiceIds.length}'),
+              ),
+              children: templates.keys
+                  .map((template) => SimpleDialogOption(
+                        child: Text(templates[template]),
+                        onPressed: () {
+                          Navigator.of(context).pop(template);
+                        },
+                      ))
+                  .toList(),
+            );
+          },
+        );
 
-        if (false) {
-          final template = await showDialog<EmailTemplate>(
-            context: context,
-            builder: (context) {
-              final settings = getClientSettings(state, client);
-              final templates = {
-                EmailTemplate.invoice: localization.initialEmail,
-                EmailTemplate.reminder1: localization.firstReminder,
-                EmailTemplate.reminder2: localization.secondReminder,
-                EmailTemplate.reminder3: localization.thirdReminder,
-                EmailTemplate.reminder_endless: localization.endlessReminder,
-                if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)
-                  EmailTemplate.custom1: localization.firstCustom,
-                if ((settings.emailSubjectCustom2 ?? '').isNotEmpty)
-                  EmailTemplate.custom2: localization.secondCustom,
-                if ((settings.emailSubjectCustom3 ?? '').isNotEmpty)
-                  EmailTemplate.custom3: localization.thirdCustom,
-              };
-              return SimpleDialog(
-                title: Text(
-                  invoiceIds.length == 1
-                      ? localization.emailInvoice
-                      : localization.emailCountInvoices
-                          .replaceFirst(':count', '${invoiceIds.length}'),
-                ),
-                children: templates.keys
-                    .map((template) => SimpleDialogOption(
-                          child: Text(templates[template]),
-                          onPressed: () {
-                            Navigator.of(context).pop(template);
-                          },
-                        ))
-                    .toList(),
-              );
-            },
-          );
-
-          if (template != null) {
-            store.dispatch(BulkEmailInvoicesRequest(
-              completer: snackBarCompleter<Null>(
-                  navigatorKey.currentContext,
-                  invoiceIds.length == 1
-                      ? localization.emailedInvoice
-                      : localization.emailedInvoices),
-              invoiceIds: invoiceIds,
-              template: template,
-            ));
-          }
+        if (template != null) {
+          store.dispatch(BulkEmailInvoicesRequest(
+            completer: snackBarCompleter<Null>(
+                navigatorKey.currentContext,
+                invoiceIds.length == 1
+                    ? localization.emailedInvoice
+                    : localization.emailedInvoices),
+            invoiceIds: invoiceIds,
+            template: template,
+          ));
         }
       }
       break;

@@ -232,11 +232,10 @@ IconData getNativeAppIcon(String platform) {
     case kPlatformAndroid:
       return Icons.android;
     case kPlatformiPhone:
+    case kPlatformMacOS:
       return MdiIcons.apple;
     case kPlatformWindows:
       return MdiIcons.microsoft;
-    case kPlatformMacOS:
-      return MdiIcons.apple;
     case kPlatformLinux:
       return MdiIcons.linux;
   }
