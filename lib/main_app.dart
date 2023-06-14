@@ -281,6 +281,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     } else if (locale == 'fr') {
       timeago.setLocaleMessages('fr', timeago.FrMessages());
       timeago.setLocaleMessages('fr_short', timeago.FrShortMessages());
+    } else if (locale == 'hu') {
+      timeago.setLocaleMessages('hu', timeago.HuMessages());
+      timeago.setLocaleMessages('hu_short', timeago.HuShortMessages());
     } else if (locale == 'it') {
       timeago.setLocaleMessages('it', timeago.ItMessages());
       timeago.setLocaleMessages('it_short', timeago.ItShortMessages());
