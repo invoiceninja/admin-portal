@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.119';
+const String kClientVersion = '5.0.120';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -764,6 +764,7 @@ const List<String> kLanguages = [
   'fi',
   'fr',
   'fr_CA',
+  'hu',
   'hr',
   'it',
   'ja',
