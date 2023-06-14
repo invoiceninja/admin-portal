@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -6,6 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:widget_kit_plugin/user_defaults/user_defaults.dart';
+import 'package:widget_kit_plugin/widget_kit/widget_kit.dart';
 import 'package:window_manager/window_manager.dart';
 
 class WindowManager extends StatefulWidget {
@@ -22,15 +26,25 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
   void initState() {
     if (isDesktopOS()) {
       windowManager.addListener(this);
-      _init();
+      _initManager();
+    }
+
+    if (isApple()) {
+      _initWidgets();
     }
 
     super.initState();
   }
 
-  void _init() async {
+  void _initManager() async {
     await windowManager.setPreventClose(true);
     setState(() {});
+  }
+
+  void _initWidgets() async {
+    //print("## SET DATA");
+    //await UserDefaults.setString('widgetData', 'hello', 'group.com.invoiceninja.app');
+    //await WidgetKit.reloadAllTimelines();
   }
 
   @override
@@ -74,4 +88,14 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 
   @override
   Widget build(BuildContext context) => widget.child;
+}
+
+class WidgetData {
+  WidgetData(this.tokens);
+
+  final Map<String, String> tokens;
+
+  WidgetData.fromJson(Map<String, dynamic> json) : tokens = json['tokens'];
+
+  Map<String, dynamic> toJson() => <String, dynamic> {'tokens': tokens};
 }
