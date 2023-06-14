@@ -34,6 +34,12 @@
 		F9395FA72A3A30DE0066F1E7 /* DashboardWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA22A3A30DD0066F1E7 /* DashboardWidget.intentdefinition */; };
 		F9395FA82A3A30DE0066F1E7 /* DashboardWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA22A3A30DD0066F1E7 /* DashboardWidget.intentdefinition */; };
 		F9395FAB2A3A30DE0066F1E7 /* DashboardWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F9395F9A2A3A30DC0066F1E7 /* DashboardWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F9395FB72A3A53800066F1E7 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9395FB62A3A53800066F1E7 /* Intents.framework */; };
+		F9395FBA2A3A53800066F1E7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FB92A3A53800066F1E7 /* IntentHandler.swift */; };
+		F9395FBF2A3A53800066F1E7 /* CompanyIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F9395FB52A3A53800066F1E7 /* CompanyIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F9395FC52A3A542F0066F1E7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FB92A3A53800066F1E7 /* IntentHandler.swift */; };
+		F9395FC62A3A54A20066F1E7 /* DashboardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA02A3A30DD0066F1E7 /* DashboardWidget.swift */; };
+		F9395FC72A3A54F90066F1E7 /* DashboardWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA22A3A30DD0066F1E7 /* DashboardWidget.intentdefinition */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +56,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F9395F992A3A30DC0066F1E7;
 			remoteInfo = DashboardWidgetExtension;
+		};
+		F9395FBD2A3A53800066F1E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33CC10E52044A3C60003C045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9395FB42A3A53800066F1E7;
+			remoteInfo = CompanyIntent;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -70,6 +83,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				F9395FBF2A3A53800066F1E7 /* CompanyIntent.appex in Embed Foundation Extensions */,
 				F9395FAB2A3A30DE0066F1E7 /* DashboardWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -106,6 +120,11 @@
 		F9395FA32A3A30DE0066F1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9395FA52A3A30DE0066F1E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F9395FA62A3A30DE0066F1E7 /* DashboardWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DashboardWidget.entitlements; sourceTree = "<group>"; };
+		F9395FB52A3A53800066F1E7 /* CompanyIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CompanyIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9395FB62A3A53800066F1E7 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		F9395FB92A3A53800066F1E7 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		F9395FBB2A3A53800066F1E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9395FBC2A3A53800066F1E7 /* CompanyIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CompanyIntent.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +142,14 @@
 			files = (
 				F9395F9E2A3A30DC0066F1E7 /* SwiftUI.framework in Frameworks */,
 				F9395F9C2A3A30DC0066F1E7 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9395FB22A3A53800066F1E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9395FB72A3A53800066F1E7 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +173,7 @@
 				33FAB671232836740065AC1E /* Runner */,
 				33CEB47122A05771004F2AC0 /* Flutter */,
 				F9395F9F2A3A30DD0066F1E7 /* DashboardWidget */,
+				F9395FB82A3A53800066F1E7 /* CompanyIntent */,
 				33CC10EE2044A3C60003C045 /* Products */,
 				D73912EC22F37F3D000D13A0 /* Frameworks */,
 				8B71285C2494B6F379ADA2F4 /* Pods */,
@@ -157,6 +185,7 @@
 			children = (
 				33CC10ED2044A3C60003C045 /* Invoice Ninja.app */,
 				F9395F9A2A3A30DC0066F1E7 /* DashboardWidgetExtension.appex */,
+				F9395FB52A3A53800066F1E7 /* CompanyIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,6 +241,7 @@
 				C97F7E2DD0B37EAB27D4CC1C /* Pods_Runner.framework */,
 				F9395F9B2A3A30DC0066F1E7 /* WidgetKit.framework */,
 				F9395F9D2A3A30DC0066F1E7 /* SwiftUI.framework */,
+				F9395FB62A3A53800066F1E7 /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -226,6 +256,16 @@
 				F9395FA62A3A30DE0066F1E7 /* DashboardWidget.entitlements */,
 			);
 			path = DashboardWidget;
+			sourceTree = "<group>";
+		};
+		F9395FB82A3A53800066F1E7 /* CompanyIntent */ = {
+			isa = PBXGroup;
+			children = (
+				F9395FB92A3A53800066F1E7 /* IntentHandler.swift */,
+				F9395FBB2A3A53800066F1E7 /* Info.plist */,
+				F9395FBC2A3A53800066F1E7 /* CompanyIntent.entitlements */,
+			);
+			path = CompanyIntent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +289,7 @@
 			dependencies = (
 				33CC11202044C79F0003C045 /* PBXTargetDependency */,
 				F9395FAA2A3A30DE0066F1E7 /* PBXTargetDependency */,
+				F9395FBE2A3A53800066F1E7 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -270,6 +311,23 @@
 			name = DashboardWidgetExtension;
 			productName = DashboardWidgetExtension;
 			productReference = F9395F9A2A3A30DC0066F1E7 /* DashboardWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		F9395FB42A3A53800066F1E7 /* CompanyIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9395FC02A3A53800066F1E7 /* Build configuration list for PBXNativeTarget "CompanyIntent" */;
+			buildPhases = (
+				F9395FB12A3A53800066F1E7 /* Sources */,
+				F9395FB22A3A53800066F1E7 /* Frameworks */,
+				F9395FB32A3A53800066F1E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CompanyIntent;
+			productName = CompanyIntent;
+			productReference = F9395FB52A3A53800066F1E7 /* CompanyIntent.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -299,6 +357,9 @@
 					F9395F992A3A30DC0066F1E7 = {
 						CreatedOnToolsVersion = 14.2;
 					};
+					F9395FB42A3A53800066F1E7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 				};
 			};
 			buildConfigurationList = 33CC10E82044A3C60003C045 /* Build configuration list for PBXProject "Runner" */;
@@ -317,6 +378,7 @@
 				33CC10EC2044A3C60003C045 /* Runner */,
 				33CC111A2044C6BA0003C045 /* Flutter Assemble */,
 				F9395F992A3A30DC0066F1E7 /* DashboardWidgetExtension */,
+				F9395FB42A3A53800066F1E7 /* CompanyIntent */,
 			);
 		};
 /* End PBXProject section */
@@ -336,6 +398,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9395FA42A3A30DE0066F1E7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9395FB32A3A53800066F1E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,7 +507,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9395FA72A3A30DE0066F1E7 /* DashboardWidget.intentdefinition in Sources */,
+				F9395FC52A3A542F0066F1E7 /* IntentHandler.swift in Sources */,
 				F9395FA12A3A30DD0066F1E7 /* DashboardWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9395FB12A3A53800066F1E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9395FC72A3A54F90066F1E7 /* DashboardWidget.intentdefinition in Sources */,
+				F9395FC62A3A54A20066F1E7 /* DashboardWidget.swift in Sources */,
+				F9395FBA2A3A53800066F1E7 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +534,11 @@
 			isa = PBXTargetDependency;
 			target = F9395F992A3A30DC0066F1E7 /* DashboardWidgetExtension */;
 			targetProxy = F9395FA92A3A30DE0066F1E7 /* PBXContainerItemProxy */;
+		};
+		F9395FBE2A3A53800066F1E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9395FB42A3A53800066F1E7 /* CompanyIntent */;
+			targetProxy = F9395FBD2A3A53800066F1E7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -842,6 +927,124 @@
 			};
 			name = Profile;
 		};
+		F9395FC12A3A53800066F1E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = CompanyIntent/CompanyIntent.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NPC44Y2C98;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CompanyIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CompanyIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.app.CompanyIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F9395FC22A3A53800066F1E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = CompanyIntent/CompanyIntent.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NPC44Y2C98;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CompanyIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CompanyIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.app.CompanyIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F9395FC32A3A53800066F1E7 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = CompanyIntent/CompanyIntent.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NPC44Y2C98;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CompanyIntent/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CompanyIntent;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.6;
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.invoiceninja.app.CompanyIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Profile;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -881,6 +1084,16 @@
 				F9395FAD2A3A30DF0066F1E7 /* Debug */,
 				F9395FAE2A3A30DF0066F1E7 /* Release */,
 				F9395FAF2A3A30DF0066F1E7 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F9395FC02A3A53800066F1E7 /* Build configuration list for PBXNativeTarget "CompanyIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9395FC12A3A53800066F1E7 /* Debug */,
+				F9395FC22A3A53800066F1E7 /* Release */,
+				F9395FC32A3A53800066F1E7 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
