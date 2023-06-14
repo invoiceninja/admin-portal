@@ -764,6 +764,7 @@ const List<String> kLanguages = [
   'fi',
   'fr',
   'fr_CA',
+  'hu',
   'hr',
   'it',
   'ja',
