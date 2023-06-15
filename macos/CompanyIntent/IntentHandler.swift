@@ -11,15 +11,9 @@ import DashboardWidgetExtension
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
-        
-        // 1
-        // Fetch list of top ten crypto from API
-        //let assets = try await AssetFetcher.fetchTopTenAssets()
-        
-
-        
+              
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var exampleData: WidgetData = WidgetData(tokens:[:])
+        var exampleData: WidgetData = WidgetData(url: "", tokens:[:])
 
         if sharedDefaults != nil {
           do {
@@ -44,16 +38,9 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
             
             return company
         }
-        
-        // 3
-        // Create a collection with the array of cryptos.
-        //let company1 = Company(identifier: "1", display: "Test 1")
-        //let company2 = Company(identifier: "2", display: "Test 2")
-        //let collection = INObjectCollection(items: [company1, company2])
-        
+          
         let collection = INObjectCollection(items: companies)
         
-        // Return the collections
         return collection
         
     }

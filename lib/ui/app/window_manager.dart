@@ -91,11 +91,17 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 }
 
 class WidgetData {
-  WidgetData(this.tokens);
+  WidgetData({this.url, this.tokens});
 
+  final String url;
   final Map<String, String> tokens;
 
-  WidgetData.fromJson(Map<String, dynamic> json) : tokens = json['tokens'];
+  WidgetData.fromJson(Map<String, dynamic> json)
+      : url = json['url'],
+        tokens = json['tokens'];
 
-  Map<String, dynamic> toJson() => <String, dynamic> {'tokens': tokens};
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'tokens': tokens,
+        'url': url,
+      };
 }

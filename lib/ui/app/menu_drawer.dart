@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -1409,7 +1410,10 @@ void _showAbout(BuildContext context) async {
 
                         await UserDefaults.setString(
                             'widgetData',
-                            jsonEncode(WidgetData(state.apiTokens)),
+                            jsonEncode(WidgetData(
+                              url: formatApiUrl(state.authState.url),
+                              tokens: state.apiTokens,
+                            )),
                             'group.com.invoiceninja.app');
                         await WidgetKit.reloadAllTimelines();
 

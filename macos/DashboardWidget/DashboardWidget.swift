@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(tokens: ["plk": "ply"]))
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["plk": "ply"]))
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(tokens: ["sk": "sy"]))
+        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", tokens: ["sk": "sy"]))
         completion(entry)
     }
 
@@ -50,6 +50,7 @@ struct Provider: IntentTimelineProvider {
 }
 
 struct WidgetData: Decodable, Hashable {
+    let url: String
     let tokens: [String: String]
 }
 
@@ -64,7 +65,12 @@ struct DashboardWidgetEntryView : View {
 
     var body: some View {
         //Text(entry.widgetData?.tokens.keys.joined() ?? "BLANK")
-        Text("TEST \(entry.configuration.field.rawValue)")
+        //Text("TEST \(entry.configuration.field.rawValue)")
+        VStack {
+            //Text(entry.configuration.company?.identifier ?? "")
+            Text(entry.configuration.company?.displayString ?? "")
+            Text(entry.widgetData?.url ?? "")
+        }
     }
 }
 
@@ -84,7 +90,7 @@ struct DashboardWidget: Widget {
 
 struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(tokens: ["pk": "py"])))
+        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["pk": "py"])))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
