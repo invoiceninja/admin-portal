@@ -1406,8 +1406,6 @@ void _showAbout(BuildContext context) async {
                               ),
                             ]);
                       } else {
-                        print("## reloadAllTimelines");
-
                         await UserDefaults.setString(
                             'widgetData',
                             jsonEncode(WidgetData(
