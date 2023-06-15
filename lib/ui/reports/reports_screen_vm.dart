@@ -127,6 +127,7 @@ class ReportsScreenVM {
           state.userState.map,
           state.vendorState.map,
           state.projectState.map,
+          state.paymentState.map,
           state.staticState,
         );
         break;

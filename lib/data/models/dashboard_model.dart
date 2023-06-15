@@ -23,6 +23,7 @@ class DateRange extends EnumClass {
   static const DateRange lastQuarter = _$lastQuarter;
   static const DateRange thisYear = _$thisYear;
   static const DateRange lastYear = _$lastYear;
+  static const DateRange allTime = _$allTime;
   static const DateRange custom = _$custom;
 
   static BuiltSet<DateRange> get values => _$values;

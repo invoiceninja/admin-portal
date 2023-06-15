@@ -15,6 +15,7 @@ const DateRange _$thisQuarter = const DateRange._('thisQuarter');
 const DateRange _$lastQuarter = const DateRange._('lastQuarter');
 const DateRange _$thisYear = const DateRange._('thisYear');
 const DateRange _$lastYear = const DateRange._('lastYear');
+const DateRange _$allTime = const DateRange._('allTime');
 const DateRange _$custom = const DateRange._('custom');
 
 DateRange _$valueOf(String name) {
@@ -37,6 +38,8 @@ DateRange _$valueOf(String name) {
       return _$thisYear;
     case 'lastYear':
       return _$lastYear;
+    case 'allTime':
+      return _$allTime;
     case 'custom':
       return _$custom;
     default:
@@ -54,6 +57,7 @@ final BuiltSet<DateRange> _$values = new BuiltSet<DateRange>(const <DateRange>[
   _$lastQuarter,
   _$thisYear,
   _$lastYear,
+  _$allTime,
   _$custom,
 ]);
 

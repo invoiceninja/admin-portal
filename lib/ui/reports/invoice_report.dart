@@ -44,6 +44,7 @@ enum InvoiceReportFields {
   age,
   partial,
   partial_due_date,
+  paid_date,
   auto_bill,
   invoice1,
   invoice2,
@@ -93,7 +94,7 @@ enum InvoiceReportFields {
   age_group_120,
 }
 
-var memoizedInvoiceReport = memo8((
+var memoizedInvoiceReport = memo9((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -101,6 +102,7 @@ var memoizedInvoiceReport = memo8((
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) =>
     invoiceReport(
@@ -111,6 +113,7 @@ var memoizedInvoiceReport = memo8((
       userMap,
       vendorMap,
       projectMap,
+      paymentMap,
       staticState,
     ));
 
@@ -122,6 +125,7 @@ ReportResult invoiceReport(
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -151,6 +155,28 @@ ReportResult invoiceReport(
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
+  }
+
+  // Get the last payment for each invoice
+  final lastPaymentMap = Map<String, PaymentEntity>();
+  if (columns.contains(InvoiceReportFields.paid_date)) {
+    // Loop through each payment and add to the map if it is the last payment for the invoice
+    paymentMap.forEach((paymentId, payment) {
+      if (payment.paymentables != null && payment.paymentables.isNotEmpty) {
+        // Loop through each invoice on the payment
+        payment.paymentables.forEach((paymentable) {
+          final invoiceId = paymentable.invoiceId;
+          // If the invoice is in the invoice map and the payment is the last payment for the invoice
+          if(lastPaymentMap.containsKey(invoiceId)){
+            if(payment.date.compareTo(lastPaymentMap[invoiceId].date) == 1){
+              lastPaymentMap[invoiceId] = payment;
+            }
+          } else {
+            lastPaymentMap[invoiceId] = payment;
+          }
+        });
+      }
+    });
   }
 
   for (var invoiceId in invoiceMap.keys) {
@@ -253,6 +279,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.partial_due_date:
           value = invoice.partialDueDate;
+          break;
+        case InvoiceReportFields.paid_date:
+          value = invoice.isPaid ? lastPaymentMap[invoice.id]?.date : null;
           break;
         case InvoiceReportFields.auto_bill:
           value = invoice.autoBill;
