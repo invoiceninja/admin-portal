@@ -160,6 +160,7 @@ class DashboardPanels extends StatelessWidget {
           ),
         ),
         itemBuilder: (context) => DateRange.values
+            .where((value) => value != DateRange.allTime)
             .map((dateRange) => PopupMenuItem(
                   child: Text(dateRange == DateRange.custom
                       ? '${localization.more}...'

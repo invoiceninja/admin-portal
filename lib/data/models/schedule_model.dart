@@ -203,6 +203,8 @@ abstract class ScheduleParameters
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       showPaymentsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
+      onlyClientsWithInvoices:
+        action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
       showCreditsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       status: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
@@ -236,6 +238,10 @@ abstract class ScheduleParameters
   @nullable
   @BuiltValueField(wireName: 'show_aging_table')
   bool get showAgingTable;
+
+  @nullable
+  @BuiltValueField(wireName: 'only_clients_with_invoices')
+  bool get onlyClientsWithInvoices;
 
   @nullable
   String get status;
