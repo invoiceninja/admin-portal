@@ -99,7 +99,7 @@ class WidgetData {
 
   final String url;
   final Map<String, String> tokens;
-  
+
   Map<String, dynamic> toJson() => <String, dynamic>{
         'tokens': tokens,
         'url': url,
