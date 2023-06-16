@@ -676,14 +676,11 @@ GroupTotals calculateReportTotals({
             cell.currencyId != company.currencyId &&
             shouldConverCurrencies) {
           double cellValue = cell.value;
-          var rate = cell.exchangeRate;
-          if (rate == null || rate == 0 || rate == 1) {
-            rate = getExchangeRate(currencyMap,
-                fromCurrencyId: cell.currencyId,
-                toCurrencyId: company.currencyId);
-          }
           final toCurrency = currencyMap[company.currencyId];
-          cellValue = round(cellValue / rate, toCurrency.precision);
+          final rate = getExchangeRate(currencyMap,
+              fromCurrencyId: cell.currencyId,
+              toCurrencyId: company.currencyId);
+          cellValue = round(cellValue * rate, toCurrency.precision);
           totals[group][column] += cellValue;
         } else {
           totals[group][column] += cell.doubleValue;
