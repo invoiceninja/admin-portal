@@ -683,7 +683,7 @@ GroupTotals calculateReportTotals({
                 toCurrencyId: company.currencyId);
           }
           final toCurrency = currencyMap[company.currencyId];
-          cellValue = round(cellValue * rate, toCurrency.precision);
+          cellValue = round(cellValue / rate, toCurrency.precision);
           totals[group][column] += cellValue;
         } else {
           totals[group][column] += cell.doubleValue;
