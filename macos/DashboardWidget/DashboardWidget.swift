@@ -133,9 +133,66 @@ struct DashboardWidget_Previews: PreviewProvider {
 }
 
 
-struct ApiResult: Decodable {
-    let message: URL
-    let status: String
+struct ApiResult: Codable {
+    let currencies: [String: String]
+    let data: [String: CurrencyDetails]
+    
+    struct CurrencyDetails: Codable {
+        let invoices: InvoicesDetails
+        let revenue: RevenueDetails
+        let outstanding: OutstandingDetails
+        let expenses: ExpensesDetails
+        
+        struct InvoicesDetails: Codable {
+            let invoicedAmount: String
+            let currencyId: String
+            let code: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case invoicedAmount = "invoiced_amount"
+                case currencyId = "currency_id"
+                case code
+            }
+        }
+        
+        struct RevenueDetails: Codable {
+            let paidToDate: String
+            let currencyId: String
+            let code: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case paidToDate = "paid_to_date"
+                case currencyId = "currency_id"
+                case code
+            }
+        }
+        
+        struct OutstandingDetails: Codable {
+            let amount: String
+            let outstandingCount: Int
+            let currencyId: String
+            let code: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case amount
+                case outstandingCount = "outstanding_count"
+                case currencyId = "currency_id"
+                case code
+            }
+        }
+        
+        struct ExpensesDetails: Codable {
+            let amount: String
+            let currencyId: String
+            let code: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case amount
+                case currencyId = "currency_id"
+                case code
+            }
+        }
+    }
 }
 
 struct ApiService {
@@ -146,12 +203,43 @@ struct ApiService {
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue(apiToken, forHTTPHeaderField: "api-token")
+        request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
 
+        let dataDict: [String: Any] = [
+            "start_date": "2023-12-30",
+            "end_date": "2022-12-31",
+        ]
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dataDict, options: [])
+            request.httpBody = jsonData
+        } catch {
+            print("Error: Failed to serialize data - \(error)")
+        }
+        
         let (data, _) = try await URLSession.shared.data(for: request)
 
         let result = try JSONDecoder().decode(ApiResult.self, from: data)
 
+        
+        let currencies = result.currencies
+        let apiData = result.data
+        
+        print("Currencies:")
+        for (key, value) in currencies {
+            print("Key: \(key), Value: \(value)")
+        }
+        
+        print("\nCurrency Data:")
+        for (key, value) in apiData {
+            print("Currency Code: \(key)")
+            print("Invoices: \(value.invoices)")
+            print("Revenue: \(value.revenue)")
+            print("Outstanding: \(value.outstanding)")
+            print("Expenses: \(value.expenses)")
+            print()
+        }
+        
         return result
     }
 
