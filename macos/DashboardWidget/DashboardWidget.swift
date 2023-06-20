@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["plk": "ply"]))
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["plk": "ply"]), field: "Invoices", value: 0)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", tokens: ["sk": "sy"]))
+        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", tokens: ["sk": "sy"]), field: "Invoices", value: 0)
         completion(entry)
     }
 
@@ -62,7 +62,11 @@ struct Provider: IntentTimelineProvider {
                             return
                         }
                         
-                        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: exampleData)
+                        
+                        let currencyId = result.keys.first;
+                        let value = Double((result[currencyId!]?.invoices?.invoicedAmount ?? ""))
+                        
+                        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: exampleData, field: "Invoices", value: value ?? 0)
                         
                         // Next fetch happens 15 minutes later
                         let nextUpdate = Calendar.current.date(
@@ -96,6 +100,8 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let widgetData: WidgetData?
+    let field: String
+    let value: Double
 }
 
 struct DashboardWidgetEntryView : View {
@@ -106,6 +112,8 @@ struct DashboardWidgetEntryView : View {
         //Text("TEST \(entry.configuration.field.rawValue)")
         VStack {
             //Text(entry.configuration.company?.identifier ?? "")
+            Text(entry.field)
+            Text("Value: \(entry.value)")
             Text(entry.configuration.company?.displayString ?? "")
             Text(entry.widgetData?.url ?? "")
         }
@@ -144,7 +152,7 @@ struct DashboardWidget: Widget {
 
 struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["pk": "py"])))
+        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["pk": "py"]), field: "Invoices", value: 0))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             //.environment(\.sizeCategory, .extraLarge)
             //.environment(\.colorScheme, .dark)
@@ -234,7 +242,7 @@ struct ApiService {
             print("Error: Failed to serialize data - \(error)")
         }
         
-        let (data, details) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await URLSession.shared.data(for: request)
         
         //print("## Details: \(details)")
       
