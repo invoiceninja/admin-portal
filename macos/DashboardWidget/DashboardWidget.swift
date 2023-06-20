@@ -212,7 +212,7 @@ struct Expenses: Codable {
 
 struct ApiService {
 
-    static func post(urlString: String, apiToken: String) async throws -> ApiResult {
+    static func post(urlString: String, apiToken: String) async throws -> [String: ApiResult] {
 
         let url = URL(string: urlString)!
 
@@ -238,7 +238,7 @@ struct ApiService {
         
         //print("## Details: \(details)")
       
-        let result = try JSONDecoder().decode(ApiResult.self, from: ApiService.fixData(data: data))
+        let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
 
         print("## Result: \(result)")
         
