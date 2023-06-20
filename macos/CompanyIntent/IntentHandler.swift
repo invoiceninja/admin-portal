@@ -6,7 +6,6 @@
 //
 
 import Intents
-import DashboardWidgetExtension
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     

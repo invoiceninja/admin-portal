@@ -70,14 +70,16 @@
 			<string>Regular</string>
 			<key>INEnumValues</key>
 			<array>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Default</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>Cgucuz</string>
-					<key>INEnumValueName</key>
-					<string>unknown</string>
-				</dict>
+                                <dict>
+                                        <key>INEnumValueDisplayName</key>
+                                        <string>Default</string>
+                                        <key>INEnumValueDisplayNameID</key>
+                                        <string>84Crrt</string>
+                                        <key>INEnumValueIndex</key>
+                                        <integer>99999</integer>
+                                        <key>INEnumValueName</key>
+                                        <string>Default</string>
+                                </dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
 					<string>US Dollar</string>
