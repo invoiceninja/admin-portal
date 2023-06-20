@@ -78,6 +78,1046 @@
 					<key>INEnumValueName</key>
 					<string>unknown</string>
 				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>US Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>1</integer>
+					<key>INEnumValueName</key>
+					<string>US_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>British Pound</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>2</integer>
+					<key>INEnumValueName</key>
+					<string>British_Pound</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Euro</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>3</integer>
+					<key>INEnumValueName</key>
+					<string>Euro</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>South African Rand</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>4</integer>
+					<key>INEnumValueName</key>
+					<string>South_African_Rand</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Danish Krone</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>5</integer>
+					<key>INEnumValueName</key>
+					<string>Danish_Krone</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Israeli Shekel</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>6</integer>
+					<key>INEnumValueName</key>
+					<string>Israeli_Shekel</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Swedish Krona</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>7</integer>
+					<key>INEnumValueName</key>
+					<string>Swedish_Krona</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Kenyan Shilling</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>8</integer>
+					<key>INEnumValueName</key>
+					<string>Kenyan_Shilling</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Canadian Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>9</integer>
+					<key>INEnumValueName</key>
+					<string>Canadian_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Philippine Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>10</integer>
+					<key>INEnumValueName</key>
+					<string>Philippine_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Indian Rupee</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>11</integer>
+					<key>INEnumValueName</key>
+					<string>Indian_Rupee</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Australian Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>12</integer>
+					<key>INEnumValueName</key>
+					<string>Australian_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Singapore Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>13</integer>
+					<key>INEnumValueName</key>
+					<string>Singapore_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Norske Kroner</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>14</integer>
+					<key>INEnumValueName</key>
+					<string>Norske_Kroner</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>New Zealand Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>15</integer>
+					<key>INEnumValueName</key>
+					<string>New_Zealand_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Vietnamese Dong</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>16</integer>
+					<key>INEnumValueName</key>
+					<string>Vietnamese_Dong</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Swiss Franc</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>17</integer>
+					<key>INEnumValueName</key>
+					<string>Swiss_Franc</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Guatemalan Quetzal</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>18</integer>
+					<key>INEnumValueName</key>
+					<string>Guatemalan_Quetzal</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Malaysian Ringgit</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>19</integer>
+					<key>INEnumValueName</key>
+					<string>Malaysian_Ringgit</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Brazilian Real</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>20</integer>
+					<key>INEnumValueName</key>
+					<string>Brazilian_Real</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Thai Baht</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>21</integer>
+					<key>INEnumValueName</key>
+					<string>Thai_Baht</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Nigerian Naira</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>22</integer>
+					<key>INEnumValueName</key>
+					<string>Nigerian_Naira</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Argentine Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>23</integer>
+					<key>INEnumValueName</key>
+					<string>Argentine_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bangladeshi Taka</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>24</integer>
+					<key>INEnumValueName</key>
+					<string>Bangladeshi_Taka</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>United Arab Emirates Dirham</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>25</integer>
+					<key>INEnumValueName</key>
+					<string>United_Arab_Emirates_Dirham</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Hong Kong Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>26</integer>
+					<key>INEnumValueName</key>
+					<string>Hong_Kong_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Indonesian Rupiah</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>27</integer>
+					<key>INEnumValueName</key>
+					<string>Indonesian_Rupiah</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Mexican Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>28</integer>
+					<key>INEnumValueName</key>
+					<string>Mexican_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Egyptian Pound</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>29</integer>
+					<key>INEnumValueName</key>
+					<string>Egyptian_Pound</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Colombian Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>30</integer>
+					<key>INEnumValueName</key>
+					<string>Colombian_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>West African Franc</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>31</integer>
+					<key>INEnumValueName</key>
+					<string>West_African_Franc</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Chinese Renminbi</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>32</integer>
+					<key>INEnumValueName</key>
+					<string>Chinese_Renminbi</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Rwandan Franc</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>33</integer>
+					<key>INEnumValueName</key>
+					<string>Rwandan_Franc</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Tanzanian Shilling</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>34</integer>
+					<key>INEnumValueName</key>
+					<string>Tanzanian_Shilling</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Netherlands Antillean Guilder</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>35</integer>
+					<key>INEnumValueName</key>
+					<string>Netherlands_Antillean_Guilder</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Trinidad and Tobago Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>36</integer>
+					<key>INEnumValueName</key>
+					<string>Trinidad_and_Tobago_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>East Caribbean Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>37</integer>
+					<key>INEnumValueName</key>
+					<string>East_Caribbean_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Ghanaian Cedi</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>38</integer>
+					<key>INEnumValueName</key>
+					<string>Ghanaian_Cedi</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bulgarian Lev</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>39</integer>
+					<key>INEnumValueName</key>
+					<string>Bulgarian_Lev</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Aruban Florin</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>40</integer>
+					<key>INEnumValueName</key>
+					<string>Aruban_Florin</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Turkish Lira</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>41</integer>
+					<key>INEnumValueName</key>
+					<string>Turkish_Lira</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Romanian New Leu</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>42</integer>
+					<key>INEnumValueName</key>
+					<string>Romanian_New_Leu</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Croatian Kuna</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>43</integer>
+					<key>INEnumValueName</key>
+					<string>Croatian_Kuna</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Saudi Riyal</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>44</integer>
+					<key>INEnumValueName</key>
+					<string>Saudi_Riyal</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Japanese Yen</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>45</integer>
+					<key>INEnumValueName</key>
+					<string>Japanese_Yen</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Maldivian Rufiyaa</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>46</integer>
+					<key>INEnumValueName</key>
+					<string>Maldivian_Rufiyaa</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Costa Rican Colón</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>47</integer>
+					<key>INEnumValueName</key>
+					<string>Costa_Rican_Colon</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Pakistani Rupee</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>48</integer>
+					<key>INEnumValueName</key>
+					<string>Pakistani_Rupee</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Polish Zloty</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>49</integer>
+					<key>INEnumValueName</key>
+					<string>Polish_Zloty</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Sri Lankan Rupee</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>50</integer>
+					<key>INEnumValueName</key>
+					<string>Sri_Lankan_Rupee</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Czech Koruna</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>51</integer>
+					<key>INEnumValueName</key>
+					<string>Czech_Koruna</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Uruguayan Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>52</integer>
+					<key>INEnumValueName</key>
+					<string>Uruguayan_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Namibian Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>53</integer>
+					<key>INEnumValueName</key>
+					<string>Namibian_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Tunisian Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>54</integer>
+					<key>INEnumValueName</key>
+					<string>Tunisian_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Russian Ruble</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>55</integer>
+					<key>INEnumValueName</key>
+					<string>Russian_Ruble</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Mozambican Metical</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>56</integer>
+					<key>INEnumValueName</key>
+					<string>Mozambican_Metical</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Omani Rial</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>57</integer>
+					<key>INEnumValueName</key>
+					<string>Omani_Rial</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Ukrainian Hryvnia</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>58</integer>
+					<key>INEnumValueName</key>
+					<string>Ukrainian_Hryvnia</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Macanese Pataca</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>59</integer>
+					<key>INEnumValueName</key>
+					<string>Macanese_Pataca</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Taiwan New Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>60</integer>
+					<key>INEnumValueName</key>
+					<string>Taiwan_New_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Dominican Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>61</integer>
+					<key>INEnumValueName</key>
+					<string>Dominican_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Chilean Peso</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>62</integer>
+					<key>INEnumValueName</key>
+					<string>Chilean_Peso</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Icelandic Króna</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>63</integer>
+					<key>INEnumValueName</key>
+					<string>Icelandic_Krona</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Papua New Guinean Kina</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>64</integer>
+					<key>INEnumValueName</key>
+					<string>Papua_New_Guinean_Kina</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Jordanian Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>65</integer>
+					<key>INEnumValueName</key>
+					<string>Jordanian_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Myanmar Kyat</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>66</integer>
+					<key>INEnumValueName</key>
+					<string>Myanmar_Kyat</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Peruvian Sol</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>67</integer>
+					<key>INEnumValueName</key>
+					<string>Peruvian_Sol</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Botswana Pula</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>68</integer>
+					<key>INEnumValueName</key>
+					<string>Botswana_Pula</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Hungarian Forint</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>69</integer>
+					<key>INEnumValueName</key>
+					<string>Hungarian_Forint</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Ugandan Shilling</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>70</integer>
+					<key>INEnumValueName</key>
+					<string>Ugandan_Shilling</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Barbadian Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>71</integer>
+					<key>INEnumValueName</key>
+					<string>Barbadian_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Brunei Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>72</integer>
+					<key>INEnumValueName</key>
+					<string>Brunei_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Georgian Lari</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>73</integer>
+					<key>INEnumValueName</key>
+					<string>Georgian_Lari</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Qatari Riyal</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>74</integer>
+					<key>INEnumValueName</key>
+					<string>Qatari_Riyal</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Honduran Lempira</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>75</integer>
+					<key>INEnumValueName</key>
+					<string>Honduran_Lempira</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Surinamese Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>76</integer>
+					<key>INEnumValueName</key>
+					<string>Surinamese_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bahraini Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>77</integer>
+					<key>INEnumValueName</key>
+					<string>Bahraini_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Venezuelan Bolivars</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>78</integer>
+					<key>INEnumValueName</key>
+					<string>Venezuelan_Bolivars</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>South Korean Won</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>79</integer>
+					<key>INEnumValueName</key>
+					<string>South_Korean_Won</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Moroccan Dirham</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>80</integer>
+					<key>INEnumValueName</key>
+					<string>Moroccan_Dirham</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Jamaican Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>81</integer>
+					<key>INEnumValueName</key>
+					<string>Jamaican_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Angolan Kwanza</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>82</integer>
+					<key>INEnumValueName</key>
+					<string>Angolan_Kwanza</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Haitian Gourde</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>83</integer>
+					<key>INEnumValueName</key>
+					<string>Haitian_Gourde</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Zambian Kwacha</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>84</integer>
+					<key>INEnumValueName</key>
+					<string>Zambian_Kwacha</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Nepalese Rupee</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>85</integer>
+					<key>INEnumValueName</key>
+					<string>Nepalese_Rupee</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>CFP Franc</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>86</integer>
+					<key>INEnumValueName</key>
+					<string>CFP_Franc</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Mauritian Rupee</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>87</integer>
+					<key>INEnumValueName</key>
+					<string>Mauritian_Rupee</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Cape Verdean Escudo</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>88</integer>
+					<key>INEnumValueName</key>
+					<string>Cape_Verdean_Escudo</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Kuwaiti Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>89</integer>
+					<key>INEnumValueName</key>
+					<string>Kuwaiti_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Algerian Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>90</integer>
+					<key>INEnumValueName</key>
+					<string>Algerian_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Macedonian Denar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>91</integer>
+					<key>INEnumValueName</key>
+					<string>Macedonian_Denar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Fijian Dollar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>92</integer>
+					<key>INEnumValueName</key>
+					<string>Fijian_Dollar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bolivian Boliviano</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>93</integer>
+					<key>INEnumValueName</key>
+					<string>Bolivian_Boliviano</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Albanian Lek</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>94</integer>
+					<key>INEnumValueName</key>
+					<string>Albanian_Lek</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Serbian Dinar</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>95</integer>
+					<key>INEnumValueName</key>
+					<string>Serbian_Dinar</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Lebanese Pound</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>96</integer>
+					<key>INEnumValueName</key>
+					<string>Lebanese_Pound</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Armenian Dram</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>97</integer>
+					<key>INEnumValueName</key>
+					<string>Armenian_Dram</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Azerbaijan Manat</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>98</integer>
+					<key>INEnumValueName</key>
+					<string>Azerbaijan_Manat</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Bosnia and Herzegovina Convertible Mark</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>99</integer>
+					<key>INEnumValueName</key>
+					<string>Bosnia_and_Herzegovina_Convertible_Mark</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Belarusian Ruble</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>100</integer>
+					<key>INEnumValueName</key>
+					<string>Belarusian_Ruble</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Gibraltar Pound</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>101</integer>
+					<key>INEnumValueName</key>
+					<string>Gibraltar_Pound</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Moldovan Leu</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>102</integer>
+					<key>INEnumValueName</key>
+					<string>Moldovan_Leu</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Kazakhstani Tenge</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>103</integer>
+					<key>INEnumValueName</key>
+					<string>Kazakhstani_Tenge</string>
+				</dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Ethiopian Birr</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>104</integer>
+					<key>INEnumValueName</key>
+					<string>Ethiopian_Birr</string>
+				</dict>
 			</array>
 		</dict>
 	</array>
@@ -103,7 +1143,7 @@
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>4</integer>
+			<integer>6</integer>
 			<key>INIntentName</key>
 			<string>Configuration</string>
 			<key>INIntentParameters</key>
@@ -137,26 +1177,6 @@
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
 						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${company}’.</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>mK577R</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${company}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>pK0qrZ</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
-						</dict>
 					</array>
 					<key>INIntentParameterSupportsDynamicEnumeration</key>
 					<true/>
@@ -169,11 +1189,66 @@
 					<key>INIntentParameterConfigurable</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
+					<string>Currency</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>fiVf8T</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterEnumType</key>
+					<string>Currency</string>
+					<key>INIntentParameterEnumTypeNamespace</key>
+					<string>88xZPY</string>
+					<key>INIntentParameterName</key>
+					<string>currency</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${currency}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>31Arh1</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${currency}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>GBWSpT</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterTag</key>
+					<integer>6</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
 					<string>Field</string>
 					<key>INIntentParameterDisplayNameID</key>
 					<string>t2MezO</string>
 					<key>INIntentParameterDisplayPriority</key>
-					<integer>2</integer>
+					<integer>3</integer>
 					<key>INIntentParameterEnumType</key>
 					<string>Field</string>
 					<key>INIntentParameterEnumTypeNamespace</key>
@@ -241,6 +1316,8 @@
 						<string>failure</string>
 					</dict>
 				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>1</integer>
 			</dict>
 			<key>INIntentTitle</key>
 			<string>Configuration</string>
