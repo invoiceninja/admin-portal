@@ -38,7 +38,7 @@ struct Provider: IntentTimelineProvider {
                 let shared = sharedDefaults!.string(forKey: "widgetData")
                 if shared != nil {
                     
-                    print("## Shared: \(shared!)")
+                    //print("## Shared: \(shared!)")
                     
                   let decoder = JSONDecoder()
                   exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
@@ -52,7 +52,7 @@ struct Provider: IntentTimelineProvider {
                         
                         print("## company.name: \(configuration.company?.displayString ?? "")")
                         print("## company.id: \(configuration.company?.identifier ?? "")")
-                        print("## URL: \(url)")
+                        //print("## URL: \(url)")
                         
                         if (token == "") {
                             return
@@ -220,11 +220,11 @@ struct ApiService {
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
         
-        print("## TOKEN: \(apiToken)")
+        //print("## TOKEN: \(apiToken)")
         
         let dataDict: [String: Any] = [
-            "start_date": "2023-12-30",
-            "end_date": "2022-12-31",
+            "start_date": "2022-12-30",
+            "end_date": "2023-12-31",
         ]
         
         do {
@@ -236,11 +236,8 @@ struct ApiService {
         
         let (data, details) = try await URLSession.shared.data(for: request)
         
-        print("## Details: \(details)")
-        
-        let dataString = String(data: data, encoding: .utf8)!
-        print("## Response: \(dataString)")
-        
+        //print("## Details: \(details)")
+      
         let result = try JSONDecoder().decode(ApiResult.self, from: ApiService.fixData(data: data))
 
         print("## Result: \(result)")
@@ -250,25 +247,18 @@ struct ApiService {
     }
     
     static func fixData(data: Data) throws -> Data {
-        var jsonDictionary: [String: Any]
+        var dataString = String(data: data, encoding: .utf8)!
         
-        do {
-            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
-        } catch {
-            print("Failed to parse JSON data: \(error)")
-            throw error
-        }
+        print("## WAS: \(dataString)")
 
-        jsonDictionary.removeValue(forKey: "currencies")
-
-        do {
-            let modifiedJsonData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
-            print(modifiedJsonData)
-            return modifiedJsonData
-        } catch {
-            print("Failed to convert dictionary to JSON data: \(error)")
-            throw error
+        if let range = dataString.range(of: "\"currencies\":\\{[^\\}]*\\},", options: .regularExpression) {
+            dataString.removeSubrange(range)
         }
+        
+        print("## IS: \(dataString)")
+        
+        return dataString.data(using: .utf8)!
+
     }
 }
 
