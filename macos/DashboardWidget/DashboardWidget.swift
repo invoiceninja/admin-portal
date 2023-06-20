@@ -22,9 +22,11 @@ struct Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         print("## getTimeline")
         
+        /*
         if (configuration.company == nil) {
             return
         }
+        */
         
         Task {
                 
@@ -45,7 +47,8 @@ struct Provider: IntentTimelineProvider {
                         
                         let url = (exampleData?.url ?? "") + "/charts/totals_v2";
                         //let token = exampleData?.tokens[configuration.company?.identifier ?? ""];
-                        let token = configuration.company?.identifier ?? ""
+                        //let token = configuration.company?.identifier ?? ""
+                        let token = exampleData?.tokens.keys.first ?? "";
                         
                         print("## company.name: \(configuration.company?.displayString ?? "")")
                         print("## company.id: \(configuration.company?.identifier ?? "")")
@@ -150,66 +153,62 @@ struct DashboardWidget_Previews: PreviewProvider {
 
 
 struct ApiResult: Codable {
-    let currencies: [String: String]
-    let data: [String: CurrencyDetails]
+    let invoices: Invoices?
+    let revenue: Revenue?
+    let outstanding: Outstanding?
+    let expenses: Expenses?
+}
+
+struct Invoices: Codable {
+    let invoicedAmount: String?
+    let currencyID: String?
+    let code: String?
     
-    struct CurrencyDetails: Codable {
-        let invoices: InvoicesDetails
-        let revenue: RevenueDetails
-        let outstanding: OutstandingDetails
-        let expenses: ExpensesDetails
-        
-        struct InvoicesDetails: Codable {
-            let invoicedAmount: String
-            let currencyId: String
-            let code: String
-            
-            private enum CodingKeys: String, CodingKey {
-                case invoicedAmount = "invoiced_amount"
-                case currencyId = "currency_id"
-                case code
-            }
-        }
-        
-        struct RevenueDetails: Codable {
-            let paidToDate: String
-            let currencyId: String
-            let code: String
-            
-            private enum CodingKeys: String, CodingKey {
-                case paidToDate = "paid_to_date"
-                case currencyId = "currency_id"
-                case code
-            }
-        }
-        
-        struct OutstandingDetails: Codable {
-            let amount: String
-            let outstandingCount: Int
-            let currencyId: String
-            let code: String
-            
-            private enum CodingKeys: String, CodingKey {
-                case amount
-                case outstandingCount = "outstanding_count"
-                case currencyId = "currency_id"
-                case code
-            }
-        }
-        
-        struct ExpensesDetails: Codable {
-            let amount: String
-            let currencyId: String
-            let code: String
-            
-            private enum CodingKeys: String, CodingKey {
-                case amount
-                case currencyId = "currency_id"
-                case code
-            }
-        }
+    enum CodingKeys: String, CodingKey {
+        case invoicedAmount = "invoiced_amount"
+        case currencyID = "currency_id"
+        case code
     }
 }
+
+struct Revenue: Codable {
+    let paidToDate: String?
+    let currencyID: String?
+    let code: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case paidToDate = "paid_to_date"
+        case currencyID = "currency_id"
+        case code
+    }
+}
+
+struct Outstanding: Codable {
+    let amount: String?
+    let outstandingCount: Int?
+    let currencyID: String?
+    let code: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case amount
+        case outstandingCount = "outstanding_count"
+        case currencyID = "currency_id"
+        case code
+    }
+}
+
+struct Expenses: Codable {
+    let amount: String?
+    let currencyID: String?
+    let code: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case amount
+        case currencyID = "currency_id"
+        case code
+    }
+}
+
 
 struct ApiService {
 
@@ -239,37 +238,37 @@ struct ApiService {
         
         print("## Details: \(details)")
         
-        if let dataString = String(data: data, encoding: .utf8) {
-            print("## Response: \(dataString)")
-        } else {
-            print("Error: Unable to convert data to string")
-        }
+        let dataString = String(data: data, encoding: .utf8)!
+        print("## Response: \(dataString)")
         
-        let result = try JSONDecoder().decode(ApiResult.self, from: data)
+        let result = try JSONDecoder().decode(ApiResult.self, from: ApiService.fixData(data: data))
 
         print("## Result: \(result)")
         
         
-        let currencies = result.currencies
-        let apiData = result.data
-        
-        print("Currencies:")
-        for (key, value) in currencies {
-            print("Key: \(key), Value: \(value)")
-        }
-        
-        print("\nCurrency Data:")
-        for (key, value) in apiData {
-            print("Currency Code: \(key)")
-            print("Invoices: \(value.invoices)")
-            print("Revenue: \(value.revenue)")
-            print("Outstanding: \(value.outstanding)")
-            print("Expenses: \(value.expenses)")
-            print()
-        }
-        
         return result
     }
+    
+    static func fixData(data: Data) throws -> Data {
+        var jsonDictionary: [String: Any]
+        
+        do {
+            jsonDictionary = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] ?? [:]
+        } catch {
+            print("Failed to parse JSON data: \(error)")
+            throw error
+        }
 
+        jsonDictionary.removeValue(forKey: "currencies")
+
+        do {
+            let modifiedJsonData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            print(modifiedJsonData)
+            return modifiedJsonData
+        } catch {
+            print("Failed to convert dictionary to JSON data: \(error)")
+            throw error
+        }
+    }
 }
 
