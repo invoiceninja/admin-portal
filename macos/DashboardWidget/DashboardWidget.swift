@@ -46,10 +46,12 @@ struct Provider: IntentTimelineProvider {
                     if (exampleData?.url != nil) {
                         
                         let url = (exampleData?.url ?? "") + "/charts/totals_v2";
-                        //let token = exampleData?.tokens[configuration.company?.identifier ?? ""];
-                        //let token = configuration.company?.identifier ?? ""
-                        let token = exampleData?.tokens.keys.first ?? "";
+                        var token = configuration.company?.identifier ?? ""
                         
+                        if (token == "") {
+                            token = exampleData?.tokens.keys.first ?? "";
+                        }
+
                         print("## company.name: \(configuration.company?.displayString ?? "")")
                         print("## company.id: \(configuration.company?.identifier ?? "")")
                         //print("## URL: \(url)")
@@ -228,8 +230,6 @@ struct ApiService {
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
         
-        //print("## TOKEN: \(apiToken)")
-        
         let dataDict: [String: Any] = [
             "start_date": "2022-12-30",
             "end_date": "2023-12-31",
@@ -257,13 +257,9 @@ struct ApiService {
     static func fixData(data: Data) throws -> Data {
         var dataString = String(data: data, encoding: .utf8)!
         
-        print("## WAS: \(dataString)")
-
         if let range = dataString.range(of: "\"currencies\":\\{[^\\}]*\\},", options: .regularExpression) {
             dataString.removeSubrange(range)
         }
-        
-        print("## IS: \(dataString)")
         
         return dataString.data(using: .utf8)!
 
