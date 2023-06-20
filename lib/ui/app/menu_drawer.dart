@@ -14,7 +14,9 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -49,6 +51,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:widget_kit_plugin/widget_kit_plugin.dart';
 
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({
@@ -1388,7 +1391,7 @@ void _showAbout(BuildContext context) async {
                       showToast(localization.copiedToClipboard
                           .replaceFirst(':value', state.appVersion));
                     },
-                    onLongPress: () {
+                    onLongPress: () async {
                       if (kReleaseMode) {
                         showMessageDialog(
                             context: context,
@@ -1402,10 +1405,23 @@ void _showAbout(BuildContext context) async {
                               ),
                             ]);
                       } else {
+                        print("## reloadAllTimelines");
+
+                        await UserDefaults.setString(
+                            'widgetData',
+                            jsonEncode(WidgetData(
+                              url: formatApiUrl(state.authState.url),
+                              tokens: state.apiTokens,
+                            )),
+                            'group.com.invoiceninja.app');
+                        await WidgetKit.reloadAllTimelines();
+
+                        /*
                         showDialog<void>(
                           context: context,
                           builder: (context) => UpgradeDialog(),
                         );
+                         */
                       }
                     },
                   ),

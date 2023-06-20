@@ -1727,6 +1727,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.9.5"
+  widget_kit_plugin:
+    dependency: "direct main"
+    description:
+      name: widget_kit_plugin
+      sha256: d3b0036a841b34a30dd07d79404c51d5755b3047af4d95a1d7c74c7fcadb0058
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   win32:
     dependency: transitive
     description:

@@ -569,6 +569,8 @@ abstract class CompanyEntity extends Object
 
   bool get isSmall => !isLarge;
 
+  bool get hasName => (settings?.name ?? '').isNotEmpty;
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||

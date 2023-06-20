@@ -267,6 +267,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           }
                         },
                         items: DateRange.values
+                            .where((value) => value != DateRange.allTime)
                             .map((dateRange) => DropdownMenuItem<DateRange>(
                                   child: Text(localization
                                       .lookup(dateRange.toString())),

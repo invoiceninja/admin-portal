@@ -192,6 +192,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return color.isNotEmpty;
   }
 
+  Map<String, String> get apiTokens {
+    final map = <String, String>{};
+    for (var userCompany in userCompanyStates) {
+      if (userCompany.company.hasName) {
+        map[userCompany.token.token] = userCompany.company.settings.name;
+      }
+    }
+    return map;
+  }
+
   bool get showReviewApp => !prefState.hideReviewApp && company.daysActive > 60;
 
   bool get showOneYearReviewApp =>
