@@ -1150,12 +1150,11 @@ class SidebarFooter extends StatelessWidget {
               },
               tooltip: prefState.enableTooltips ? localization.userGuide : '',
             ),
-            if (state.userCompany.isAdmin)
-              IconButton(
-                icon: Icon(Icons.info_outline),
-                onPressed: () => _showAbout(context),
-                tooltip: prefState.enableTooltips ? localization.about : '',
-              ),
+            IconButton(
+              icon: Icon(Icons.info_outline),
+              onPressed: () => _showAbout(context),
+              tooltip: prefState.enableTooltips ? localization.about : '',
+            ),
             /*
             if (kDebugMode)
               IconButton(
@@ -1566,30 +1565,32 @@ void _showAbout(BuildContext context) async {
                     color: Colors.cyan,
                     onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
                   ),
-                  if (state.isSelfHosted || !kReleaseMode) ...[
-                    AppButton(
-                      label: localization.healthCheck.toUpperCase(),
-                      iconData: MdiIcons.shieldHalfFull,
-                      color: Colors.green,
-                      onPressed: () {
-                        showDialog<HealthCheckDialog>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return HealthCheckDialog();
-                            });
-                      },
-                    ),
-                    if (!state.account.disableAutoUpdate &&
-                        (!state.account.isDocker || state.isUpdateAvailable))
+                  if (state.userCompany.isAdmin) ...[
+                    if (state.isSelfHosted || !kReleaseMode) ...[
                       AppButton(
-                        label: (state.isUpdateAvailable
-                                ? localization.updateApp
-                                : localization.forceUpdate)
-                            .toUpperCase(),
-                        iconData: MdiIcons.cloudDownload,
-                        color: Colors.orange,
-                        onPressed: () => _showUpdate(context),
+                        label: localization.healthCheck.toUpperCase(),
+                        iconData: MdiIcons.shieldHalfFull,
+                        color: Colors.green,
+                        onPressed: () {
+                          showDialog<HealthCheckDialog>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return HealthCheckDialog();
+                              });
+                        },
                       ),
+                      if (!state.account.disableAutoUpdate &&
+                          (!state.account.isDocker || state.isUpdateAvailable))
+                        AppButton(
+                          label: (state.isUpdateAvailable
+                                  ? localization.updateApp
+                                  : localization.forceUpdate)
+                              .toUpperCase(),
+                          iconData: MdiIcons.cloudDownload,
+                          color: Colors.orange,
+                          onPressed: () => _showUpdate(context),
+                        ),
+                    ],
                   ],
                   if (state.company.daysActive > 30)
                     AppButton(

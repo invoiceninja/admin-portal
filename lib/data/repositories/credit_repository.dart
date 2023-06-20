@@ -93,7 +93,9 @@ class CreditRepository {
           '${credentials.url}/credits/${credit.id}?include=activities.history';
     }
 
-    if (action == EntityAction.markSent) {
+    if (action == EntityAction.markPaid) {
+      url += '&mark_paid=true';
+    } else if (action == EntityAction.markSent) {
       url += '&mark_sent=true';
     }
 
