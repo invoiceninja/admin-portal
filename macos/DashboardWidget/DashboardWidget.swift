@@ -32,13 +32,20 @@ struct Provider: IntentTimelineProvider {
               do {
                 let shared = sharedDefaults!.string(forKey: "widgetData")
                 if shared != nil {
+                    
+                    print("## Shared: shared")
+                    
                   let decoder = JSONDecoder()
                   exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
                     
                     if (exampleData?.url != nil) {
                         
                         let url = (exampleData?.url ?? "") + "/charts/totals_v2";
-                        let token = configuration.company?.token ?? "";
+                        //let token = exampleData?.tokens[configuration.company?.identifier ?? ""];
+                        let token = configuration.company?.identifier ?? ""
+                        
+                        print("## URL: \(url)")
+                        
                         guard let result = try? await ApiService.post(urlString: url, apiToken: token) else {
                             return
                         }
@@ -204,7 +211,9 @@ struct ApiService {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
-
+        
+        print("## TOKEN: \(apiToken)")
+        
         let dataDict: [String: Any] = [
             "start_date": "2023-12-30",
             "end_date": "2022-12-31",
@@ -217,10 +226,20 @@ struct ApiService {
             print("Error: Failed to serialize data - \(error)")
         }
         
-        let (data, _) = try await URLSession.shared.data(for: request)
-
+        let (data, details) = try await URLSession.shared.data(for: request)
+        
+        print("## Details: \(details)")
+        
+        if let dataString = String(data: data, encoding: .utf8) {
+            print("## Response: \(dataString)")
+        } else {
+            print("Error: Unable to convert data to string")
+        }
+        
         let result = try JSONDecoder().decode(ApiResult.self, from: data)
 
+        print("## Result: \(result)")
+        
         
         let currencies = result.currencies
         let apiData = result.data
