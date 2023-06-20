@@ -22,7 +22,10 @@ struct Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         print("## getTimeline")
         
-
+        if (configuration.company == nil) {
+            return
+        }
+        
         Task {
                 
             let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
@@ -33,7 +36,7 @@ struct Provider: IntentTimelineProvider {
                 let shared = sharedDefaults!.string(forKey: "widgetData")
                 if shared != nil {
                     
-                    print("## Shared: shared")
+                    print("## Shared: \(shared!)")
                     
                   let decoder = JSONDecoder()
                   exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
@@ -44,8 +47,14 @@ struct Provider: IntentTimelineProvider {
                         //let token = exampleData?.tokens[configuration.company?.identifier ?? ""];
                         let token = configuration.company?.identifier ?? ""
                         
+                        print("## company.name: \(configuration.company?.displayString ?? "")")
+                        print("## company.id: \(configuration.company?.identifier ?? "")")
                         print("## URL: \(url)")
                         
+                        if (token == "") {
+                            return
+                        }
+                            
                         guard let result = try? await ApiService.post(urlString: url, apiToken: token) else {
                             return
                         }
