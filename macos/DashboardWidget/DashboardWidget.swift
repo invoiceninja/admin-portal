@@ -22,12 +22,6 @@ struct Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         print("## getTimeline")
         
-        /*
-         if (configuration.company == nil) {
-         return
-         }
-         */
-        
         Task {
             
             let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
@@ -74,7 +68,7 @@ struct Provider: IntentTimelineProvider {
                     return
                 }
                 
-                let currencyId = result.keys.first;
+                let currencyId = configuration.currency?.identifier ?? company?.currencyId
                 let value = Double((result[currencyId!]?.invoices?.invoicedAmount ?? ""))
                 
                 let entry = SimpleEntry(date: Date(),
