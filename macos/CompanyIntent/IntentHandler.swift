@@ -1,92 +1,49 @@
-//
-//  IntentHandler.swift
-//  CompanyIntent
-//
-//  Created by hillel on 14/06/2023.
-//
-
 import Intents
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
-
-    func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
-              
-        let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
+    
+    private func loadWidgetData() -> WidgetData {
+        let sharedDefaults = UserDefaults(suiteName: "group.com.invoiceninja.app")
         var exampleData: WidgetData = WidgetData(url: "", companies: [:])
 
-        if sharedDefaults != nil {
-          do {
-            let shared = sharedDefaults!.string(forKey: "widget_data")
-              
-              print("## Shared: \(shared!)")
-              
-            if shared != nil {
-              let decoder = JSONDecoder()
-              exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+        if let sharedDefaults = sharedDefaults {
+            do {
+                if let shared = sharedDefaults.string(forKey: "widget_data") {
+                    let decoder = JSONDecoder()
+                    exampleData = try decoder.decode(WidgetData.self, from: shared.data(using: .utf8)!)
+                }
+            } catch {
+                print(error)
             }
-          } catch {
-            print(error)
-          }
         }
+        
+        return exampleData
+    }
+    
+    func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
+        let exampleData = loadWidgetData()
         
         let companies = exampleData.companies.values.map { company in
-            
-            let company = Company(
-                identifier: company.id,
-                display: company.name
-            )
-            
-            return company
+            Company(identifier: company.id, display: company.name)
         }
-          
-        let collection = INObjectCollection(items: companies)
         
-        return collection
-        
+        return INObjectCollection(items: companies)
     }
+    
+    //func defaultCompany(for intent: ConfigurationIntent) -> Company? {}
     
     func provideCurrencyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Currency> {
-              
-        let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var exampleData: WidgetData = WidgetData(url: "", companies: [:])
-
-        if sharedDefaults != nil {
-          do {
-            let shared = sharedDefaults!.string(forKey: "widget_data")
-              
-              print("## Shared: \(shared!)")
-              
-            if shared != nil {
-              let decoder = JSONDecoder()
-              exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
-            }
-          } catch {
-            print(error)
-          }
-        }
+        let exampleData = loadWidgetData()
         
-        let company = exampleData.companies[(intent.company?.identifier)!]
+        let company = exampleData.companies[(intent.company?.identifier!)!]
         let currencies = company!.currencies.values.map { currency in
-            
-            let currency = Currency(
-                identifier: currency.id,
-                display: currency.name
-            )
-            
-            return currency
+            Currency(identifier: currency.id, display: currency.name)
         }
-          
-        let collection = INObjectCollection(items: currencies)
         
-        return collection
-        
-    }
-
-    override func handler(for intent: INIntent) -> Any {
-        // This is the default implementation.  If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
-        
-        return self
+        return INObjectCollection(items: currencies)
     }
     
+    override func handler(for intent: INIntent) -> Any {
+        return self
+    }
 }
