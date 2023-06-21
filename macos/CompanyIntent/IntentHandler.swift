@@ -47,6 +47,13 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         return INObjectCollection(items: currencies)
     }
     
+    func defaultCurrency(for intent: ConfigurationIntent) -> Currency? {
+        let widgetData = loadWidgetData()
+        let company = widgetData.companies[widgetData.companyId];
+        let currency = company?.currencies[company!.currencyId];
+        return Currency(identifier: currency!.id, display: currency!.name)
+    }
+
     override func handler(for intent: INIntent) -> Any {
         return self
     }
