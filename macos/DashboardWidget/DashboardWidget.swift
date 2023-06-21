@@ -13,84 +13,94 @@ struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
     }
-
+    
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
         completion(entry)
     }
-
+    
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         print("## getTimeline")
         
         /*
-        if (configuration.company == nil) {
-            return
-        }
-        */
+         if (configuration.company == nil) {
+         return
+         }
+         */
         
         Task {
-                
+            
             let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-            var exampleData: WidgetData? = nil
-
-            if sharedDefaults != nil {
-              do {
-                let shared = sharedDefaults!.string(forKey: "widget_data")
-                if shared != nil {
-                    
-                    print("## Shared: \(shared!)")
-                    
-                  let decoder = JSONDecoder()
-                  exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
-                    
-                    if (exampleData?.url != nil) {
-                        
-                        let url = (exampleData?.url ?? "") + "/charts/totals_v2";
-                        var token = configuration.company?.identifier ?? ""
-                        
-                        if (token == "" && !(exampleData?.companies.isEmpty)!) {
-                            let company = exampleData?.companies.values.first;
-                            token = company?.token ?? ""
-                        }
-
-                        print("## company.name: \(configuration.company?.displayString ?? "")")
-                        print("## company.id: \(configuration.company?.identifier ?? "")")
-                        //print("## URL: \(url)")
-                        
-                        if (token == "") {
-                            return
-                        }
-                            
-                        guard let result = try? await ApiService.post(urlString: url, apiToken: token) else {
-                            return
-                        }
-                        
-                        
-                        let currencyId = result.keys.first;
-                        let value = Double((result[currencyId!]?.invoices?.invoicedAmount ?? ""))
-                        
-                        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: exampleData, field: "Invoices", value: value ?? 0)
-                        
-                        // Next fetch happens 15 minutes later
-                        let nextUpdate = Calendar.current.date(
-                            byAdding: DateComponents(minute: 15),
-                            to: Date()
-                        )!
-                        
-                        let timeline = Timeline(
-                            entries: [entry],
-                            policy: .after(nextUpdate)
-                        )
-                        
-                        completion(timeline)
-                    }
-                }
-              } catch {
-                print(error)
-              }
+            var widgetData: WidgetData? = nil
+            
+            if sharedDefaults == nil {
+                return
             }
-
+            
+            do {
+                let shared = sharedDefaults!.string(forKey: "widget_data")
+                if shared == nil {
+                    return
+                }
+                
+                print("## Shared: \(shared!)")
+                
+                let decoder = JSONDecoder()
+                widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+                
+                if (widgetData?.url == nil) {
+                    return
+                }
+                
+                let url = (widgetData?.url ?? "") + "/charts/totals_v2";
+                let companyId = configuration.company?.identifier ?? ""
+                let company = widgetData?.companies[companyId]
+                var token = company?.token
+                
+                if (token == "" && !(widgetData?.companies.isEmpty)!) {
+                    let company = widgetData?.companies.values.first;
+                    token = company?.token ?? ""
+                }
+                
+                print("## company.name: \(configuration.company?.displayString ?? "")")
+                print("## company.id: \(configuration.company?.identifier ?? "")")
+                //print("## URL: \(url)")
+                
+                if (token == "") {
+                    return
+                }
+                
+                guard let result = try? await ApiService.post(urlString: url, apiToken: token!) else {
+                    return
+                }
+                
+                let currencyId = result.keys.first;
+                let value = Double((result[currencyId!]?.invoices?.invoicedAmount ?? ""))
+                
+                let entry = SimpleEntry(date: Date(),
+                                        configuration: configuration,
+                                        widgetData: widgetData,
+                                        field: "Invoices",
+                                        value: value ?? 0)
+                
+                // Next fetch happens 15 minutes later
+                let nextUpdate = Calendar.current.date(
+                    byAdding: DateComponents(minute: 15),
+                    to: Date()
+                )!
+                
+                let timeline = Timeline(
+                    entries: [entry],
+                    policy: .after(nextUpdate)
+                )
+                
+                completion(timeline)
+                
+            } catch {
+                print(error)
+            }
         }
+        
     }
 }
 
@@ -146,7 +156,7 @@ struct SimpleEntry: TimelineEntry {
 
 struct DashboardWidgetEntryView : View {
     var entry: Provider.Entry
-
+    
     var body: some View {
         //Text(entry.widgetData?.tokens.keys.joined() ?? "BLANK")
         //Text("TEST \(entry.configuration.field.rawValue)")
@@ -159,27 +169,27 @@ struct DashboardWidgetEntryView : View {
         }
         
         /*
-        ZStack {
-            Rectangle().fill(BackgroundStyle())
-            VStack(alignment: .leading) {
-                Text("Balance")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.blue)
-                Text("$123.00")
-                    .privacySensitive()
-                    .font(.title2)
-                    .foregroundColor(Color.gray)
-            }
-        }
-        */
+         ZStack {
+         Rectangle().fill(BackgroundStyle())
+         VStack(alignment: .leading) {
+         Text("Balance")
+         .font(.largeTitle)
+         .fontWeight(.bold)
+         .foregroundColor(Color.blue)
+         Text("$123.00")
+         .privacySensitive()
+         .font(.title2)
+         .foregroundColor(Color.gray)
+         }
+         }
+         */
     }
 }
 
 @main
 struct DashboardWidget: Widget {
     let kind: String = "DashboardWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             DashboardWidgetEntryView(entry: entry)
@@ -194,8 +204,8 @@ struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
         DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-            //.environment(\.sizeCategory, .extraLarge)
-            //.environment(\.colorScheme, .dark)
+        //.environment(\.sizeCategory, .extraLarge)
+        //.environment(\.colorScheme, .dark)
     }
 }
 
@@ -259,11 +269,11 @@ struct Expenses: Codable {
 
 
 struct ApiService {
-
+    
     static func post(urlString: String, apiToken: String) async throws -> [String: ApiResult] {
-
+        
         let url = URL(string: urlString)!
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
@@ -283,9 +293,9 @@ struct ApiService {
         let (data, _) = try await URLSession.shared.data(for: request)
         
         //print("## Details: \(details)")
-      
+        
         let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
-
+        
         print("## Result: \(result)")
         
         
@@ -300,7 +310,8 @@ struct ApiService {
         }
         
         return dataString.data(using: .utf8)!
-
+        
     }
 }
+
 
