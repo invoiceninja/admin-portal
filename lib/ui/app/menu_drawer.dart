@@ -1406,11 +1406,17 @@ void _showAbout(BuildContext context) async {
                             ]);
                       } else {
                         await UserDefaults.setString(
-                            'widgetData',
+                            'widget_data',
                             jsonEncode(WidgetData(
-                              url: formatApiUrl(state.authState.url),
-                              tokens: state.apiTokens,
-                            )),
+                                url: formatApiUrl(state.authState.url),
+                                companies: {
+                                  for (var userCompany
+                                      in state.userCompanyStates.where((state) => state.company.hasName))
+                                    userCompany.company.id:
+                                        WidgetCompany.fromUserCompany(
+                                            userCompanyState: userCompany,
+                                            staticState: state.staticState,)
+                                })),
                             'group.com.invoiceninja.app');
                         await WidgetKit.reloadAllTimelines();
 

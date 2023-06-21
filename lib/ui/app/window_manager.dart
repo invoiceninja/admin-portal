@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:widget_kit_plugin/user_defaults/user_defaults.dart';
@@ -91,17 +95,90 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 }
 
 class WidgetData {
-  WidgetData({this.url, this.tokens});
+  WidgetData({this.url, this.companies});
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],
-        tokens = json['tokens'];
-
-  final String url;
-  final Map<String, String> tokens;
+        companies = json['companies'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'tokens': tokens,
+        'companies': companies,
         'url': url,
       };
+
+  final String url;
+  final Map<String, WidgetCompany> companies;
+}
+
+class WidgetCompany {
+  WidgetCompany(
+      {this.id,
+      this.name,
+      this.token,
+      this.accentColor,
+      this.currencyId,
+      this.currencies});
+
+  WidgetCompany.fromUserCompany(
+      {UserCompanyState userCompanyState, StaticState staticState})
+      : id = userCompanyState.userCompany.company.id,
+        name = userCompanyState.userCompany.company.displayName,
+        token = userCompanyState.userCompany.token.token,
+        accentColor = userCompanyState.userCompany.settings.accentColor,
+        currencyId = userCompanyState.userCompany.company.currencyId,
+        currencies = {
+          for (var currencyId in getCurrencyIds(
+            userCompanyState.userCompany.company,
+            userCompanyState.clientState.map,
+            userCompanyState.groupState.map,
+          ).where((currencyId) => currencyId != kCurrencyAll))
+            currencyId: WidgetCurrency(
+              id: currencyId,
+              name: staticState.currencyMap[currencyId].name,
+              exchangeRate: staticState.currencyMap[currencyId].exchangeRate,
+            )
+        };
+
+  WidgetCompany.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        token = json['token'],
+        accentColor = json['accent_color'],
+        currencies = json['currencies'],
+        currencyId = json['currency_id'];
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'token': token,
+        'accent_color': accentColor,
+        'currencies': currencies,
+        'currency_id': currencyId,
+      };
+
+  final String id;
+  final String name;
+  final String token;
+  final String accentColor;
+  final String currencyId;
+  final Map<String, WidgetCurrency> currencies;
+}
+
+class WidgetCurrency {
+  WidgetCurrency({this.id, this.name, this.exchangeRate});
+
+  WidgetCurrency.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        exchangeRate = json['exchange_rate'];
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': id,
+        'name': name,
+        'exchange_rate': exchangeRate,
+      };
+
+  final String id;
+  final String name;
+  final double exchangeRate;
 }

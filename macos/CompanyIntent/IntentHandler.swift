@@ -12,11 +12,14 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
               
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var exampleData: WidgetData = WidgetData(url: "", tokens:[:])
+        var exampleData: WidgetData = WidgetData(url: "", companies: [:])
 
         if sharedDefaults != nil {
           do {
-            let shared = sharedDefaults!.string(forKey: "widgetData")
+            let shared = sharedDefaults!.string(forKey: "widget_data")
+              
+              print("## Shared: \(shared!)")
+              
             if shared != nil {
               let decoder = JSONDecoder()
               exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
@@ -26,11 +29,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
           }
         }
         
-        let companies = exampleData.tokens.keys.map { token in
+        let companies = exampleData.companies.values.map { company in
             
             let company = Company(
-                identifier: token,
-                display: exampleData.tokens[token] ?? ""
+                identifier: company.token,
+                display: company.name
             )
             //company.symbol = asset.symbol
             //company.name = asset.name

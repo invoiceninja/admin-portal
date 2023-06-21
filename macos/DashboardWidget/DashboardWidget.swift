@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["plk": "ply"]), field: "Invoices", value: 0)
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", tokens: ["sk": "sy"]), field: "Invoices", value: 0)
+        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0)
         completion(entry)
     }
 
@@ -35,10 +35,10 @@ struct Provider: IntentTimelineProvider {
 
             if sharedDefaults != nil {
               do {
-                let shared = sharedDefaults!.string(forKey: "widgetData")
+                let shared = sharedDefaults!.string(forKey: "widget_data")
                 if shared != nil {
                     
-                    //print("## Shared: \(shared!)")
+                    print("## Shared: \(shared!)")
                     
                   let decoder = JSONDecoder()
                   exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
@@ -48,8 +48,9 @@ struct Provider: IntentTimelineProvider {
                         let url = (exampleData?.url ?? "") + "/charts/totals_v2";
                         var token = configuration.company?.identifier ?? ""
                         
-                        if (token == "") {
-                            token = exampleData?.tokens.keys.first ?? "";
+                        if (token == "" && !(exampleData?.companies.isEmpty)!) {
+                            let company = exampleData?.companies.values.first;
+                            token = company?.token ?? ""
                         }
 
                         print("## company.name: \(configuration.company?.displayString ?? "")")
@@ -95,7 +96,37 @@ struct Provider: IntentTimelineProvider {
 
 struct WidgetData: Decodable, Hashable {
     let url: String
-    let tokens: [String: String]
+    let companies: [String: WidgetCompany]
+}
+
+struct WidgetCompany: Decodable, Hashable {
+    let id: String
+    let name: String
+    let token: String
+    let accentColor: String
+    let currencyId: String
+    let currencies: [String: WidgetCurrency]
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case token
+        case accentColor = "accent_color"
+        case currencyId = "currency_id"
+        case currencies
+    }
+}
+
+struct WidgetCurrency: Decodable, Hashable {
+    let id: String
+    let name: String
+    let exchangeRate: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case exchangeRate = "exchange_rate"
+    }
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -154,7 +185,7 @@ struct DashboardWidget: Widget {
 
 struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", tokens: ["pk": "py"]), field: "Invoices", value: 0))
+        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             //.environment(\.sizeCategory, .extraLarge)
             //.environment(\.colorScheme, .dark)
