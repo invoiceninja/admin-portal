@@ -1409,6 +1409,7 @@ void _showAbout(BuildContext context) async {
                             'widget_data',
                             jsonEncode(WidgetData(
                                 url: formatApiUrl(state.authState.url),
+                                companyId: state.account.defaultCompanyId,
                                 companies: {
                                   for (var userCompany
                                       in state.userCompanyStates.where((state) => state.company.hasName))

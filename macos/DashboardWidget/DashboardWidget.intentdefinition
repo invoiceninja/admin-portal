@@ -152,13 +152,6 @@
 							<string>Primary</string>
 						</dict>
 					</array>
-					<key>INIntentParameterRelationship</key>
-					<dict>
-						<key>INIntentParameterRelationshipParentName</key>
-						<string>company</string>
-						<key>INIntentParameterRelationshipPredicateName</key>
-						<string>HasAnyValue</string>
-					</dict>
 					<key>INIntentParameterSupportsDynamicEnumeration</key>
 					<true/>
 					<key>INIntentParameterTag</key>
