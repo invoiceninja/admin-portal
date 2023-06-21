@@ -70,16 +70,16 @@
 			<string>Regular</string>
 			<key>INEnumValues</key>
 			<array>
-                                <dict>
-                                        <key>INEnumValueDisplayName</key>
-                                        <string>Default</string>
-                                        <key>INEnumValueDisplayNameID</key>
-                                        <string>84Crrt</string>
-                                        <key>INEnumValueIndex</key>
-                                        <integer>99999</integer>
-                                        <key>INEnumValueName</key>
-                                        <string>Default</string>
-                                </dict>
+				<dict>
+					<key>INEnumValueDisplayName</key>
+					<string>Default</string>
+					<key>INEnumValueDisplayNameID</key>
+					<string>84Crrt</string>
+					<key>INEnumValueIndex</key>
+					<integer>10000</integer>
+					<key>INEnumValueName</key>
+					<string>default</string>
+				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
 					<string>US Dollar</string>
@@ -88,7 +88,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>1</integer>
 					<key>INEnumValueName</key>
-					<string>US_Dollar</string>
+					<string>us_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -98,7 +98,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>2</integer>
 					<key>INEnumValueName</key>
-					<string>British_Pound</string>
+					<string>british_pound</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -108,7 +108,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>3</integer>
 					<key>INEnumValueName</key>
-					<string>Euro</string>
+					<string>euro</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -118,7 +118,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>4</integer>
 					<key>INEnumValueName</key>
-					<string>South_African_Rand</string>
+					<string>south_african_rand</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -128,7 +128,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>5</integer>
 					<key>INEnumValueName</key>
-					<string>Danish_Krone</string>
+					<string>danish_krone</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -138,7 +138,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>6</integer>
 					<key>INEnumValueName</key>
-					<string>Israeli_Shekel</string>
+					<string>israeli_shekel</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -148,7 +148,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>7</integer>
 					<key>INEnumValueName</key>
-					<string>Swedish_Krona</string>
+					<string>swedish_krona</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -158,7 +158,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>8</integer>
 					<key>INEnumValueName</key>
-					<string>Kenyan_Shilling</string>
+					<string>kenyan_shilling</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -168,7 +168,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>9</integer>
 					<key>INEnumValueName</key>
-					<string>Canadian_Dollar</string>
+					<string>canadian_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -178,7 +178,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>10</integer>
 					<key>INEnumValueName</key>
-					<string>Philippine_Peso</string>
+					<string>philippine_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -188,7 +188,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>11</integer>
 					<key>INEnumValueName</key>
-					<string>Indian_Rupee</string>
+					<string>indian_rupee</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -198,7 +198,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>12</integer>
 					<key>INEnumValueName</key>
-					<string>Australian_Dollar</string>
+					<string>australian_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -208,7 +208,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>13</integer>
 					<key>INEnumValueName</key>
-					<string>Singapore_Dollar</string>
+					<string>singapore_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -218,7 +218,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>14</integer>
 					<key>INEnumValueName</key>
-					<string>Norske_Kroner</string>
+					<string>norske_kroner</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -228,7 +228,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>15</integer>
 					<key>INEnumValueName</key>
-					<string>New_Zealand_Dollar</string>
+					<string>new_zealand_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -238,7 +238,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>16</integer>
 					<key>INEnumValueName</key>
-					<string>Vietnamese_Dong</string>
+					<string>vietnamese_dong</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -248,7 +248,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>17</integer>
 					<key>INEnumValueName</key>
-					<string>Swiss_Franc</string>
+					<string>swiss_franc</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -258,7 +258,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>18</integer>
 					<key>INEnumValueName</key>
-					<string>Guatemalan_Quetzal</string>
+					<string>guatemalan_quetzal</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -268,7 +268,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>19</integer>
 					<key>INEnumValueName</key>
-					<string>Malaysian_Ringgit</string>
+					<string>malaysian_ringgit</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -278,7 +278,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>20</integer>
 					<key>INEnumValueName</key>
-					<string>Brazilian_Real</string>
+					<string>brazilian_real</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -288,7 +288,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>21</integer>
 					<key>INEnumValueName</key>
-					<string>Thai_Baht</string>
+					<string>thai_baht</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -298,7 +298,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>22</integer>
 					<key>INEnumValueName</key>
-					<string>Nigerian_Naira</string>
+					<string>nigerian_naira</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -308,7 +308,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>23</integer>
 					<key>INEnumValueName</key>
-					<string>Argentine_Peso</string>
+					<string>argentine_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -318,7 +318,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>24</integer>
 					<key>INEnumValueName</key>
-					<string>Bangladeshi_Taka</string>
+					<string>bangladeshi_taka</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -328,7 +328,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>25</integer>
 					<key>INEnumValueName</key>
-					<string>United_Arab_Emirates_Dirham</string>
+					<string>united_arab_emirates_dirham</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -338,7 +338,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>26</integer>
 					<key>INEnumValueName</key>
-					<string>Hong_Kong_Dollar</string>
+					<string>hong_kong_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -348,7 +348,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>27</integer>
 					<key>INEnumValueName</key>
-					<string>Indonesian_Rupiah</string>
+					<string>indonesian_rupiah</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -358,7 +358,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>28</integer>
 					<key>INEnumValueName</key>
-					<string>Mexican_Peso</string>
+					<string>mexican_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -368,7 +368,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>29</integer>
 					<key>INEnumValueName</key>
-					<string>Egyptian_Pound</string>
+					<string>egyptian_pound</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -378,7 +378,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>30</integer>
 					<key>INEnumValueName</key>
-					<string>Colombian_Peso</string>
+					<string>colombian_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -388,7 +388,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>31</integer>
 					<key>INEnumValueName</key>
-					<string>West_African_Franc</string>
+					<string>west_african_franc</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -398,7 +398,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>32</integer>
 					<key>INEnumValueName</key>
-					<string>Chinese_Renminbi</string>
+					<string>chinese_renminbi</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -408,7 +408,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>33</integer>
 					<key>INEnumValueName</key>
-					<string>Rwandan_Franc</string>
+					<string>rwandan_franc</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -418,7 +418,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>34</integer>
 					<key>INEnumValueName</key>
-					<string>Tanzanian_Shilling</string>
+					<string>tanzanian_shilling</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -428,7 +428,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>35</integer>
 					<key>INEnumValueName</key>
-					<string>Netherlands_Antillean_Guilder</string>
+					<string>netherlands_antillean_guilder</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -438,7 +438,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>36</integer>
 					<key>INEnumValueName</key>
-					<string>Trinidad_and_Tobago_Dollar</string>
+					<string>trinidad_and_tobago_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -448,7 +448,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>37</integer>
 					<key>INEnumValueName</key>
-					<string>East_Caribbean_Dollar</string>
+					<string>east_caribbean_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -458,7 +458,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>38</integer>
 					<key>INEnumValueName</key>
-					<string>Ghanaian_Cedi</string>
+					<string>ghanaian_cedi</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -468,7 +468,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>39</integer>
 					<key>INEnumValueName</key>
-					<string>Bulgarian_Lev</string>
+					<string>bulgarian_lev</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -478,7 +478,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>40</integer>
 					<key>INEnumValueName</key>
-					<string>Aruban_Florin</string>
+					<string>aruban_florin</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -488,7 +488,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>41</integer>
 					<key>INEnumValueName</key>
-					<string>Turkish_Lira</string>
+					<string>turkish_lira</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -498,7 +498,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>42</integer>
 					<key>INEnumValueName</key>
-					<string>Romanian_New_Leu</string>
+					<string>romanian_new_leu</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -508,7 +508,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>43</integer>
 					<key>INEnumValueName</key>
-					<string>Croatian_Kuna</string>
+					<string>croatian_kuna</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -518,7 +518,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>44</integer>
 					<key>INEnumValueName</key>
-					<string>Saudi_Riyal</string>
+					<string>saudi_riyal</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -528,7 +528,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>45</integer>
 					<key>INEnumValueName</key>
-					<string>Japanese_Yen</string>
+					<string>japanese_yen</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -538,7 +538,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>46</integer>
 					<key>INEnumValueName</key>
-					<string>Maldivian_Rufiyaa</string>
+					<string>maldivian_rufiyaa</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -548,7 +548,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>47</integer>
 					<key>INEnumValueName</key>
-					<string>Costa_Rican_Colon</string>
+					<string>costa_rican_colón</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -558,7 +558,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>48</integer>
 					<key>INEnumValueName</key>
-					<string>Pakistani_Rupee</string>
+					<string>pakistani_rupee</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -568,7 +568,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>49</integer>
 					<key>INEnumValueName</key>
-					<string>Polish_Zloty</string>
+					<string>polish_zloty</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -578,7 +578,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>50</integer>
 					<key>INEnumValueName</key>
-					<string>Sri_Lankan_Rupee</string>
+					<string>sri_lankan_rupee</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -588,7 +588,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>51</integer>
 					<key>INEnumValueName</key>
-					<string>Czech_Koruna</string>
+					<string>czech_koruna</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -598,7 +598,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>52</integer>
 					<key>INEnumValueName</key>
-					<string>Uruguayan_Peso</string>
+					<string>uruguayan_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -608,7 +608,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>53</integer>
 					<key>INEnumValueName</key>
-					<string>Namibian_Dollar</string>
+					<string>namibian_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -618,7 +618,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>54</integer>
 					<key>INEnumValueName</key>
-					<string>Tunisian_Dinar</string>
+					<string>tunisian_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -628,7 +628,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>55</integer>
 					<key>INEnumValueName</key>
-					<string>Russian_Ruble</string>
+					<string>russian_ruble</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -638,7 +638,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>56</integer>
 					<key>INEnumValueName</key>
-					<string>Mozambican_Metical</string>
+					<string>mozambican_metical</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -648,7 +648,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>57</integer>
 					<key>INEnumValueName</key>
-					<string>Omani_Rial</string>
+					<string>omani_rial</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -658,7 +658,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>58</integer>
 					<key>INEnumValueName</key>
-					<string>Ukrainian_Hryvnia</string>
+					<string>ukrainian_hryvnia</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -668,7 +668,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>59</integer>
 					<key>INEnumValueName</key>
-					<string>Macanese_Pataca</string>
+					<string>macanese_pataca</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -678,7 +678,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>60</integer>
 					<key>INEnumValueName</key>
-					<string>Taiwan_New_Dollar</string>
+					<string>taiwan_new_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -688,7 +688,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>61</integer>
 					<key>INEnumValueName</key>
-					<string>Dominican_Peso</string>
+					<string>dominican_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -698,7 +698,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>62</integer>
 					<key>INEnumValueName</key>
-					<string>Chilean_Peso</string>
+					<string>chilean_peso</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -708,7 +708,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>63</integer>
 					<key>INEnumValueName</key>
-					<string>Icelandic_Krona</string>
+					<string>icelandic_króna</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -718,7 +718,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>64</integer>
 					<key>INEnumValueName</key>
-					<string>Papua_New_Guinean_Kina</string>
+					<string>papua_new_guinean_kina</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -728,7 +728,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>65</integer>
 					<key>INEnumValueName</key>
-					<string>Jordanian_Dinar</string>
+					<string>jordanian_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -738,7 +738,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>66</integer>
 					<key>INEnumValueName</key>
-					<string>Myanmar_Kyat</string>
+					<string>myanmar_kyat</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -748,7 +748,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>67</integer>
 					<key>INEnumValueName</key>
-					<string>Peruvian_Sol</string>
+					<string>peruvian_sol</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -758,7 +758,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>68</integer>
 					<key>INEnumValueName</key>
-					<string>Botswana_Pula</string>
+					<string>botswana_pula</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -768,7 +768,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>69</integer>
 					<key>INEnumValueName</key>
-					<string>Hungarian_Forint</string>
+					<string>hungarian_forint</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -778,7 +778,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>70</integer>
 					<key>INEnumValueName</key>
-					<string>Ugandan_Shilling</string>
+					<string>ugandan_shilling</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -788,7 +788,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>71</integer>
 					<key>INEnumValueName</key>
-					<string>Barbadian_Dollar</string>
+					<string>barbadian_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -798,7 +798,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>72</integer>
 					<key>INEnumValueName</key>
-					<string>Brunei_Dollar</string>
+					<string>brunei_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -808,7 +808,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>73</integer>
 					<key>INEnumValueName</key>
-					<string>Georgian_Lari</string>
+					<string>georgian_lari</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -818,7 +818,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>74</integer>
 					<key>INEnumValueName</key>
-					<string>Qatari_Riyal</string>
+					<string>qatari_riyal</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -828,7 +828,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>75</integer>
 					<key>INEnumValueName</key>
-					<string>Honduran_Lempira</string>
+					<string>honduran_lempira</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -838,7 +838,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>76</integer>
 					<key>INEnumValueName</key>
-					<string>Surinamese_Dollar</string>
+					<string>surinamese_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -848,7 +848,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>77</integer>
 					<key>INEnumValueName</key>
-					<string>Bahraini_Dinar</string>
+					<string>bahraini_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -858,7 +858,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>78</integer>
 					<key>INEnumValueName</key>
-					<string>Venezuelan_Bolivars</string>
+					<string>venezuelan_bolivars</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -868,7 +868,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>79</integer>
 					<key>INEnumValueName</key>
-					<string>South_Korean_Won</string>
+					<string>south_korean_won</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -878,7 +878,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>80</integer>
 					<key>INEnumValueName</key>
-					<string>Moroccan_Dirham</string>
+					<string>moroccan_dirham</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -888,7 +888,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>81</integer>
 					<key>INEnumValueName</key>
-					<string>Jamaican_Dollar</string>
+					<string>jamaican_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -898,7 +898,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>82</integer>
 					<key>INEnumValueName</key>
-					<string>Angolan_Kwanza</string>
+					<string>angolan_kwanza</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -908,7 +908,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>83</integer>
 					<key>INEnumValueName</key>
-					<string>Haitian_Gourde</string>
+					<string>haitian_gourde</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -918,7 +918,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>84</integer>
 					<key>INEnumValueName</key>
-					<string>Zambian_Kwacha</string>
+					<string>zambian_kwacha</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -928,7 +928,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>85</integer>
 					<key>INEnumValueName</key>
-					<string>Nepalese_Rupee</string>
+					<string>nepalese_rupee</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -938,7 +938,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>86</integer>
 					<key>INEnumValueName</key>
-					<string>CFP_Franc</string>
+					<string>cfp_franc</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -948,7 +948,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>87</integer>
 					<key>INEnumValueName</key>
-					<string>Mauritian_Rupee</string>
+					<string>mauritian_rupee</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -958,7 +958,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>88</integer>
 					<key>INEnumValueName</key>
-					<string>Cape_Verdean_Escudo</string>
+					<string>cape_verdean_escudo</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -968,7 +968,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>89</integer>
 					<key>INEnumValueName</key>
-					<string>Kuwaiti_Dinar</string>
+					<string>kuwaiti_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -978,7 +978,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>90</integer>
 					<key>INEnumValueName</key>
-					<string>Algerian_Dinar</string>
+					<string>algerian_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -988,7 +988,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>91</integer>
 					<key>INEnumValueName</key>
-					<string>Macedonian_Denar</string>
+					<string>macedonian_denar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -998,7 +998,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>92</integer>
 					<key>INEnumValueName</key>
-					<string>Fijian_Dollar</string>
+					<string>fijian_dollar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1008,7 +1008,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>93</integer>
 					<key>INEnumValueName</key>
-					<string>Bolivian_Boliviano</string>
+					<string>bolivian_boliviano</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1018,7 +1018,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>94</integer>
 					<key>INEnumValueName</key>
-					<string>Albanian_Lek</string>
+					<string>albanian_lek</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1028,7 +1028,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>95</integer>
 					<key>INEnumValueName</key>
-					<string>Serbian_Dinar</string>
+					<string>serbian_dinar</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1038,7 +1038,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>96</integer>
 					<key>INEnumValueName</key>
-					<string>Lebanese_Pound</string>
+					<string>lebanese_pound</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1048,7 +1048,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>97</integer>
 					<key>INEnumValueName</key>
-					<string>Armenian_Dram</string>
+					<string>armenian_dram</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1058,7 +1058,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>98</integer>
 					<key>INEnumValueName</key>
-					<string>Azerbaijan_Manat</string>
+					<string>azerbaijan_manat</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1068,7 +1068,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>99</integer>
 					<key>INEnumValueName</key>
-					<string>Bosnia_and_Herzegovina_Convertible_Mark</string>
+					<string>bosnia_and_herzegovina_convertible_mark</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1078,7 +1078,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>100</integer>
 					<key>INEnumValueName</key>
-					<string>Belarusian_Ruble</string>
+					<string>belarusian_ruble</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1088,7 +1088,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>101</integer>
 					<key>INEnumValueName</key>
-					<string>Gibraltar_Pound</string>
+					<string>gibraltar_pound</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1098,7 +1098,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>102</integer>
 					<key>INEnumValueName</key>
-					<string>Moldovan_Leu</string>
+					<string>moldovan_leu</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1108,7 +1108,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>103</integer>
 					<key>INEnumValueName</key>
-					<string>Kazakhstani_Tenge</string>
+					<string>kazakhstani_tenge</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -1118,7 +1118,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>104</integer>
 					<key>INEnumValueName</key>
-					<string>Ethiopian_Birr</string>
+					<string>ethiopian_birr</string>
 				</dict>
 			</array>
 		</dict>
