@@ -69,7 +69,13 @@ List<String> getCurrencyIds(
     }
   });
 
-  return currencyIds.length > 1 ? [kCurrencyAll, ...currencyIds] : currencyIds;
+  if (currencyIds.isEmpty) {
+    return [kCurrencyUSDollar];
+  } else if (currencyIds.length > 1) {
+    return [kCurrencyAll, ...currencyIds];
+  } else {
+    return currencyIds;
+  }
 }
 
 var memoizedFilteredSelector = memo2(

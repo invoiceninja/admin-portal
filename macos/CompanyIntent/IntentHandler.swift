@@ -32,11 +32,9 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         let companies = exampleData.companies.values.map { company in
             
             let company = Company(
-                identifier: company.token,
+                identifier: company.id,
                 display: company.name
             )
-            //company.symbol = asset.symbol
-            //company.name = asset.name
             
             return company
         }
@@ -67,19 +65,18 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
           }
         }
         
-        let companies = exampleData.companies.values.map { company in
+        let company = exampleData.companies[(intent.company?.identifier)!]
+        let currencies = company!.currencies.values.map { currency in
             
-            let company = Currency(
-                identifier: company.token,
-                display: company.name
+            let currency = Currency(
+                identifier: currency.id,
+                display: currency.name
             )
-            //company.symbol = asset.symbol
-            //company.name = asset.name
             
-            return company
+            return currency
         }
           
-        let collection = INObjectCollection(items: companies)
+        let collection = INObjectCollection(items: currencies)
         
         return collection
         
