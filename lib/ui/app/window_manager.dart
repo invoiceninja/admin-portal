@@ -95,18 +95,25 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
 }
 
 class WidgetData {
-  WidgetData({this.url, this.companies});
+  WidgetData({
+    this.url,
+    this.companies,
+    this.companyId,
+  });
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],
+        companyId = json['company_id'],
         companies = json['companies'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'companies': companies,
+        'company_id': companyId,
         'url': url,
       };
 
   final String url;
+  final String companyId;
   final Map<String, WidgetCompany> companies;
 }
 

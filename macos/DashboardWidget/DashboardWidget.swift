@@ -11,11 +11,11 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0)
+        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0)
+        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
         completion(entry)
     }
 
@@ -96,7 +96,14 @@ struct Provider: IntentTimelineProvider {
 
 struct WidgetData: Decodable, Hashable {
     let url: String
+    let companyId: String
     let companies: [String: WidgetCompany]
+    
+    enum CodingKeys: String, CodingKey {
+        case url
+        case companyId = "company_id"
+        case companies
+    }
 }
 
 struct WidgetCompany: Decodable, Hashable {
@@ -185,7 +192,7 @@ struct DashboardWidget: Widget {
 
 struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companies: [:]), field: "Invoices", value: 0))
+        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
             //.environment(\.sizeCategory, .extraLarge)
             //.environment(\.colorScheme, .dark)
