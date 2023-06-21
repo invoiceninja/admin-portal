@@ -556,7 +556,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>47</integer>
 					<key>INEnumValueName</key>
-					<string>costa_rican_colón</string>
+					<string>costa_rican_colon</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
@@ -716,7 +716,7 @@
 					<key>INEnumValueIndex</key>
 					<integer>63</integer>
 					<key>INEnumValueName</key>
-					<string>icelandic_króna</string>
+					<string>icelandic_krona</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
