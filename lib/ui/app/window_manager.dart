@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -139,10 +140,8 @@ class WidgetCompany {
             userCompanyState.clientState.map,
             userCompanyState.groupState.map,
           ).where((currencyId) => currencyId != kCurrencyAll))
-            currencyId: WidgetCurrency(
-              id: currencyId,
-              name: staticState.currencyMap[currencyId].name,
-              exchangeRate: staticState.currencyMap[currencyId].exchangeRate,
+            currencyId: WidgetCurrency.fromCurrency(
+              staticState.currencyMap[currencyId],
             )
         };
 
@@ -172,20 +171,34 @@ class WidgetCompany {
 }
 
 class WidgetCurrency {
-  WidgetCurrency({this.id, this.name, this.exchangeRate});
+  WidgetCurrency({
+    this.id,
+    this.name,
+    this.code,
+    this.exchangeRate,
+  });
+
+  WidgetCurrency.fromCurrency(CurrencyEntity currency)
+      : id = currency.id,
+        name = currency.name,
+        code = currency.code,
+        exchangeRate = currency.exchangeRate;
 
   WidgetCurrency.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
+        code = json['code'],
         exchangeRate = json['exchange_rate'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'name': name,
+        'code': code,
         'exchange_rate': exchangeRate,
       };
 
   final String id;
   final String name;
+  final String code;
   final double exchangeRate;
 }

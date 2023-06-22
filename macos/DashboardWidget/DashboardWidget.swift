@@ -33,8 +33,8 @@ struct Provider: IntentTimelineProvider {
     
     func getTimeline(for configuration: ConfigurationIntent,
                      in context: Context,
-                    completion: @escaping (Timeline<Entry>) -> ()) {
-            
+                     completion: @escaping (Timeline<Entry>) -> ()) {
+        
         print("## getTimeline")
         
         Task {
@@ -169,11 +169,13 @@ struct WidgetCompany: Decodable, Hashable {
 struct WidgetCurrency: Decodable, Hashable {
     let id: String
     let name: String
+    let code: String
     let exchangeRate: Double
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case code
         case exchangeRate = "exchange_rate"
     }
 }
@@ -190,31 +192,32 @@ struct DashboardWidgetEntryView : View {
     var entry: Provider.Entry
     
     var body: some View {
-        //Text(entry.widgetData?.tokens.keys.joined() ?? "BLANK")
-        //Text("TEST \(entry.configuration.field.rawValue)")
-        VStack {
-            //Text(entry.configuration.company?.identifier ?? "")
-            Text(entry.field)
-            Text("Value: \(entry.value)")
-            Text(entry.configuration.company?.displayString ?? "")
-            Text(entry.widgetData?.url ?? "")
-        }
-        
         /*
-         ZStack {
-         Rectangle().fill(BackgroundStyle())
-         VStack(alignment: .leading) {
-         Text("Balance")
-         .font(.largeTitle)
-         .fontWeight(.bold)
-         .foregroundColor(Color.blue)
-         Text("$123.00")
-         .privacySensitive()
-         .font(.title2)
-         .foregroundColor(Color.gray)
-         }
+         //Text(entry.widgetData?.tokens.keys.joined() ?? "BLANK")
+         //Text("TEST \(entry.configuration.field.rawValue)")
+         VStack {
+         //Text(entry.configuration.company?.identifier ?? "")
+         Text(entry.field)
+         Text("Value: \(entry.value)")
+         Text(entry.configuration.company?.displayString ?? "")
+         Text(entry.widgetData?.url ?? "")
          }
          */
+        
+        ZStack {
+            Rectangle().fill(BackgroundStyle())
+            VStack(alignment: .leading) {
+                Text(entry.field)
+                    .font(.body)
+                    .bold()
+                    .foregroundColor(Color.blue)
+                Text("\(entry.value)")
+                    .font(.title)
+                    .privacySensitive()
+                    .foregroundColor(Color.gray)
+                    .minimumScaleFactor(0.8)
+            }
+        }
     }
 }
 
@@ -331,12 +334,12 @@ struct ApiService {
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             // process data
-
+            
             //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
             let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
             
             return result
-
+            
         } catch {
             print("Error: \(error)")
         }
