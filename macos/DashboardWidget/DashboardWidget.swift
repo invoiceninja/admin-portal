@@ -311,11 +311,7 @@ struct ApiService {
             // process data
 
             //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
-            
-            let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
-            
-            //print("## Result: \(result)")
-            
+            let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
             
             return result
 
@@ -324,17 +320,6 @@ struct ApiService {
         }
         
         return nil
-    }
-    
-    static func fixData(data: Data) throws -> Data {
-        var dataString = String(data: data, encoding: .utf8)!
-        
-        if let range = dataString.range(of: "\"currencies\":\\{[^\\}]*\\},", options: .regularExpression) {
-            dataString.removeSubrange(range)
-        }
-        
-        return dataString.data(using: .utf8)!
-        
     }
 }
 

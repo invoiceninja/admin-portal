@@ -175,7 +175,7 @@
 					<key>INIntentParameterMetadata</key>
 					<dict>
 						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>invoices</string>
+						<string>active_invoices</string>
 					</dict>
 					<key>INIntentParameterName</key>
 					<string>field</string>
