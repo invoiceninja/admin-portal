@@ -233,7 +233,7 @@ struct DashboardWidgetEntryView : View {
                     .bold()
                     .foregroundColor(Color.white)
                 
-                Text("Last 30 days")
+                Text(entry.configuration.dateRange?.displayString ?? "")
                     .font(.caption)
                     .foregroundColor(Color.white)
                 
