@@ -37,7 +37,7 @@ struct Provider: IntentTimelineProvider {
                     return
                 }
                 
-                print("## Shared: \(shared!)")
+                //print("## Shared: \(shared!)")
                 
                 let decoder = JSONDecoder()
                 widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
@@ -52,6 +52,7 @@ struct Provider: IntentTimelineProvider {
                 var token = company?.token
                 
                 if (token == "" && !(widgetData?.companies.isEmpty)!) {
+                    print("## WARNING using first token")
                     let company = widgetData?.companies.values.first;
                     token = company?.token ?? ""
                 }
@@ -69,13 +70,34 @@ struct Provider: IntentTimelineProvider {
                 }
                 
                 let currencyId = configuration.currency?.identifier ?? company?.currencyId
-                let value = Double((result[currencyId!]?.invoices?.invoicedAmount ?? ""))
+                
+                var value = 0.0
+                var label = ""
+                let data = result[currencyId ?? "1"]
+                if (data != nil) {
+                    if (configuration.field == Field.active_invoices) {
+                        if (data?.invoices?.invoicedAmount != nil) {
+                            value = Double(data?.invoices?.invoicedAmount ?? "")!
+                        }
+                        label = "Active Invoices"
+                    } else if (configuration.field == Field.outstanding_invoices) {
+                        if (data?.outstanding?.amount != nil) {
+                            value = Double(data?.outstanding?.amount ?? "")!
+                        }
+                        label = "Outstanding Invoices"
+                    } else if (configuration.field == Field.completed_payments) {
+                        if (data?.revenue?.paidToDate != nil) {
+                            value = Double(data?.revenue?.paidToDate ?? "")!
+                        }
+                        label = "Completed Payments"
+                    }
+                }
                 
                 let entry = SimpleEntry(date: Date(),
                                         configuration: configuration,
                                         widgetData: widgetData,
-                                        field: "Invoices",
-                                        value: value ?? 0)
+                                        field: label,
+                                        value: value)
                 
                 // Next fetch happens 15 minutes later
                 let nextUpdate = Calendar.current.date(
@@ -213,24 +235,24 @@ struct ApiResult: Codable {
 
 struct Invoices: Codable {
     let invoicedAmount: String?
-    let currencyID: String?
+    let currencyId: String?
     let code: String?
     
     enum CodingKeys: String, CodingKey {
         case invoicedAmount = "invoiced_amount"
-        case currencyID = "currency_id"
+        case currencyId = "currency_id"
         case code
     }
 }
 
 struct Revenue: Codable {
     let paidToDate: String?
-    let currencyID: String?
+    let currencyId: String?
     let code: String?
     
     enum CodingKeys: String, CodingKey {
         case paidToDate = "paid_to_date"
-        case currencyID = "currency_id"
+        case currencyId = "currency_id"
         case code
     }
 }
@@ -238,25 +260,25 @@ struct Revenue: Codable {
 struct Outstanding: Codable {
     let amount: String?
     let outstandingCount: Int?
-    let currencyID: String?
+    let currencyId: String?
     let code: String?
     
     enum CodingKeys: String, CodingKey {
         case amount
         case outstandingCount = "outstanding_count"
-        case currencyID = "currency_id"
+        case currencyId = "currency_id"
         case code
     }
 }
 
 struct Expenses: Codable {
     let amount: String?
-    let currencyID: String?
+    let currencyId: String?
     let code: String?
     
     enum CodingKeys: String, CodingKey {
         case amount
-        case currencyID = "currency_id"
+        case currencyId = "currency_id"
         case code
     }
 }
@@ -272,8 +294,8 @@ struct ApiService {
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
         
-        let dataDict: [String: Any] = [
-            "start_date": "2022-12-30",
+        let dataDict: [String: String] = [
+            "start_date": "2020-12-30",
             "end_date": "2023-12-31",
         ]
         
@@ -286,11 +308,11 @@ struct ApiService {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        //print("## Details: \(details)")
+        //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
         
         let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
         
-        print("## Result: \(result)")
+        //print("## Result: \(result)")
         
         
         return result

@@ -27,33 +27,33 @@
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Invoices</string>
+					<string>Active Invoices</string>
 					<key>INEnumValueDisplayNameID</key>
 					<string>z5NmCf</string>
 					<key>INEnumValueIndex</key>
 					<integer>1</integer>
 					<key>INEnumValueName</key>
-					<string>invoices</string>
+					<string>active_invoices</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Payments</string>
+					<string>Outstanding Invoices</string>
 					<key>INEnumValueDisplayNameID</key>
-					<string>4DiypI</string>
+					<string>KMErB0</string>
 					<key>INEnumValueIndex</key>
 					<integer>2</integer>
 					<key>INEnumValueName</key>
-					<string>payments</string>
+					<string>outstanding_invoices</string>
 				</dict>
 				<dict>
 					<key>INEnumValueDisplayName</key>
-					<string>Expenses</string>
+					<string>Completed Payments</string>
 					<key>INEnumValueDisplayNameID</key>
-					<string>AldHP3</string>
+					<string>HEngYv</string>
 					<key>INEnumValueIndex</key>
 					<integer>3</integer>
 					<key>INEnumValueName</key>
-					<string>expenses</string>
+					<string>completed_payments</string>
 				</dict>
 			</array>
 		</dict>
