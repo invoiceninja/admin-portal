@@ -14,7 +14,7 @@ struct Provider: IntentTimelineProvider {
         
         SimpleEntry(date: Date(),
                     configuration: ConfigurationIntent(),
-                    widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                    widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                     field: "Active Invoices",
                     value: "$100.00")
     }
@@ -25,7 +25,7 @@ struct Provider: IntentTimelineProvider {
         
         let entry = SimpleEntry(date: Date(),
                                 configuration: configuration,
-                                widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                                widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                                 field: "Active Invoices",
                                 value: "$100.00")
         
@@ -146,11 +146,13 @@ struct WidgetData: Decodable, Hashable {
     let url: String
     let companyId: String
     let companies: [String: WidgetCompany]
+    let dateRanges: [String: String]
     
     enum CodingKeys: String, CodingKey {
         case url
         case companyId = "company_id"
         case companies
+        case dateRanges = "date_ranges"
     }
 }
 
@@ -158,6 +160,7 @@ struct WidgetCompany: Decodable, Hashable {
     let id: String
     let name: String
     let token: String
+    let firstMonthOfYear: Int
     let accentColor: String
     let currencyId: String
     let currencies: [String: WidgetCurrency]
@@ -166,6 +169,7 @@ struct WidgetCompany: Decodable, Hashable {
         case id
         case name
         case token
+        case firstMonthOfYear = "first_month_of_year"
         case accentColor = "accent_color"
         case currencyId = "currency_id"
         case currencies
@@ -257,7 +261,7 @@ struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
         let entry = SimpleEntry(date: Date(),
                                 configuration: ConfigurationIntent(),
-                                widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                                widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                                 field: "Active Invoices",
                                 value: "$100.00")
         

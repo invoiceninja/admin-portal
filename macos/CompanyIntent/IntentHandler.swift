@@ -1,10 +1,9 @@
 import Intents
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
-    
     private func loadWidgetData() -> WidgetData {
         let sharedDefaults = UserDefaults(suiteName: "group.com.invoiceninja.app")
-        var widgetData: WidgetData = WidgetData(url: "", companyId: "", companies: [:])
+        var widgetData: WidgetData = WidgetData(url: "", companyId: "", companies: [:], dateRanges: [:])
 
         if let sharedDefaults = sharedDefaults {
             do {
@@ -53,6 +52,25 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         let currency = company?.currencies[company!.currencyId];
         return Currency(identifier: currency!.id, display: currency!.name)
     }
+    
+    func provideDateRangeOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<DateRange> {
+        let widgetData = loadWidgetData()
+        
+        
+        let dateRanges = widgetData.dateRanges.keys.map { dateRange in
+            DateRange(identifier: dateRange, display: widgetData.dateRanges[dateRange]!)
+        }
+        
+        return INObjectCollection(items: dateRanges)
+    }
+    
+    func defaultDateRange(for intent: ConfigurationIntent) -> DateRange? {
+        let widgetData = loadWidgetData()
+        let defaultDateRange = "last30_days";
+        let dateRamge = widgetData.dateRanges[defaultDateRange]!;
+        return DateRange(identifier: defaultDateRange, display: dateRamge)
+    }
+
 
     override func handler(for intent: INIntent) -> Any {
         return self

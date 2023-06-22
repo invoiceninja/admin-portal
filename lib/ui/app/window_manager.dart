@@ -101,22 +101,26 @@ class WidgetData {
     this.url,
     this.companies,
     this.companyId,
+    this.dateRanges,
   });
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],
         companyId = json['company_id'],
-        companies = json['companies'];
+        companies = json['companies'],
+        dateRanges = json['date_ranges'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'companies': companies,
         'company_id': companyId,
         'url': url,
+        'date_ranges': dateRanges,
       };
 
   final String url;
   final String companyId;
   final Map<String, WidgetCompany> companies;
+  final Map<String, String> dateRanges;
 }
 
 class WidgetCompany {

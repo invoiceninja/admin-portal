@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -1405,20 +1406,27 @@ void _showAbout(BuildContext context) async {
                               ),
                             ]);
                       } else {
+                        final json = jsonEncode(WidgetData(
+                            url: formatApiUrl(state.authState.url),
+                            companyId: state.account.defaultCompanyId,
+                            dateRanges: Map.fromIterable(DateRange.values,
+                                key: (dynamic item) => toSnakeCase('$item'),
+                                value: (dynamic item) =>
+                                    localization.lookup('$item')),
+                            companies: {
+                              for (var userCompany in state.userCompanyStates
+                                  .where((state) => state.company.hasName))
+                                userCompany.company.id:
+                                    WidgetCompany.fromUserCompany(
+                                  userCompanyState: userCompany,
+                                  staticState: state.staticState,
+                                )
+                            }));
+
+                        print('## Set Widget Data: $json');
+
                         await UserDefaults.setString(
-                            'widget_data',
-                            jsonEncode(WidgetData(
-                                url: formatApiUrl(state.authState.url),
-                                companyId: state.account.defaultCompanyId,
-                                companies: {
-                                  for (var userCompany
-                                      in state.userCompanyStates.where((state) => state.company.hasName))
-                                    userCompany.company.id:
-                                        WidgetCompany.fromUserCompany(
-                                            userCompanyState: userCompany,
-                                            staticState: state.staticState,)
-                                })),
-                            'group.com.invoiceninja.app');
+                            'widget_data', json, 'group.com.invoiceninja.app');
                         await WidgetKit.reloadAllTimelines();
 
                         /*
