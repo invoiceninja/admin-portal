@@ -214,13 +214,13 @@ struct DashboardWidgetEntryView : View {
                             .privacySensitive()
                             .foregroundColor(Color.gray)
                             .minimumScaleFactor(0.8)
-                            .padding(.top, 8)
                     }
                     .padding(.all)
                     
                 }
-                .padding(.top, 8.0)
+                .padding(.top, 8)
                 .background(ContainerRelativeShape().fill(Color(.white)))
+                //.shadow(color: .gray, radius: 4, x: 4, y: 4)
                 
                 Spacer()
                 
@@ -229,7 +229,7 @@ struct DashboardWidgetEntryView : View {
                     .bold()
                     .foregroundColor(Color.white)
                 
-                Text("Date Range")
+                Text("Last 30 days")
                     .font(.caption)
                     .foregroundColor(Color.white)
                 
