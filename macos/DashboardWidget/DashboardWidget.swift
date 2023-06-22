@@ -352,7 +352,6 @@ struct ApiService {
         
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
-            // process data
             
             //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
             let result = try JSONDecoder().decode([String: ApiResult].self, from: data)

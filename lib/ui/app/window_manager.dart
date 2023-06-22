@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:widget_kit_plugin/user_defaults/user_defaults.dart';
@@ -124,6 +125,7 @@ class WidgetCompany {
       this.name,
       this.token,
       this.accentColor,
+      this.firstMonthOfYear,
       this.currencyId,
       this.currencies});
 
@@ -133,6 +135,8 @@ class WidgetCompany {
         name = userCompanyState.userCompany.company.displayName,
         token = userCompanyState.userCompany.token.token,
         accentColor = userCompanyState.userCompany.settings.accentColor,
+        firstMonthOfYear =
+            parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
         currencyId = userCompanyState.userCompany.company.currencyId,
         currencies = {
           for (var currencyId in getCurrencyIds(
@@ -151,7 +155,8 @@ class WidgetCompany {
         token = json['token'],
         accentColor = json['accent_color'],
         currencies = json['currencies'],
-        currencyId = json['currency_id'];
+        currencyId = json['currency_id'],
+        firstMonthOfYear = json['first_month_of_year'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
@@ -160,6 +165,7 @@ class WidgetCompany {
         'accent_color': accentColor,
         'currencies': currencies,
         'currency_id': currencyId,
+        'first_month_of_year': firstMonthOfYear,
       };
 
   final String id;
@@ -167,6 +173,7 @@ class WidgetCompany {
   final String token;
   final String accentColor;
   final String currencyId;
+  final int firstMonthOfYear;
   final Map<String, WidgetCurrency> currencies;
 }
 
