@@ -52,7 +52,7 @@ struct Provider: IntentTimelineProvider {
                 var token = company?.token
                 
                 if (token == "" && !(widgetData?.companies.isEmpty)!) {
-                    print("## WARNING using first token")
+                    print("## WARNING: using first token")
                     let company = widgetData?.companies.values.first;
                     token = company?.token ?? ""
                 }
@@ -286,7 +286,7 @@ struct Expenses: Codable {
 
 struct ApiService {
     
-    static func post(urlString: String, apiToken: String) async throws -> [String: ApiResult] {
+    static func post(urlString: String, apiToken: String) async throws -> [String: ApiResult]? {
         
         let url = URL(string: urlString)!
         
@@ -306,16 +306,24 @@ struct ApiService {
             print("Error: Failed to serialize data - \(error)")
         }
         
-        let (data, _) = try await URLSession.shared.data(for: request)
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            // process data
+
+            //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
+            
+            let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
+            
+            //print("## Result: \(result)")
+            
+            
+            return result
+
+        } catch {
+            print("Error: \(error)")
+        }
         
-        //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
-        
-        let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
-        
-        //print("## Result: \(result)")
-        
-        
-        return result
+        return nil
     }
     
     static func fixData(data: Data) throws -> Data {
