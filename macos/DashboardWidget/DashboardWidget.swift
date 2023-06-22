@@ -115,7 +115,6 @@ struct Provider: IntentTimelineProvider {
                 formatter.numberStyle = .currency
                 formatter.currencyCode = currency?.code ?? "USD"
                 
-                
                 let entry = SimpleEntry(date: Date(),
                                         configuration: configuration,
                                         widgetData: widgetData,
@@ -199,31 +198,43 @@ struct DashboardWidgetEntryView : View {
     var entry: Provider.Entry
     
     var body: some View {
-        /*
-         //Text(entry.widgetData?.tokens.keys.joined() ?? "BLANK")
-         //Text("TEST \(entry.configuration.field.rawValue)")
-         VStack {
-         //Text(entry.configuration.company?.identifier ?? "")
-         Text(entry.field)
-         Text("Value: \(entry.value)")
-         Text(entry.configuration.company?.displayString ?? "")
-         Text(entry.widgetData?.url ?? "")
-         }
-         */
-        
         ZStack {
-            Rectangle().fill(BackgroundStyle())
+            //Rectangle().fill(BackgroundStyle())
+            Rectangle().fill(Color.blue)
             VStack(alignment: .leading) {
-                Text(entry.field)
+                
+                HStack {
+                    VStack {
+                        Text(entry.field)
+                            .font(.body)
+                            .bold()
+                            .foregroundColor(Color.blue)
+                        Text(entry.value)
+                            .font(.title)
+                            .privacySensitive()
+                            .foregroundColor(Color.gray)
+                            .minimumScaleFactor(0.8)
+                            .padding(.top, 8)
+                    }
+                    .padding(.all)
+                    
+                }
+                .padding(.top, 8.0)
+                .background(ContainerRelativeShape().fill(Color(.white)))
+                
+                Spacer()
+                
+                Text(entry.configuration.company?.displayString ?? "")
                     .font(.body)
                     .bold()
-                    .foregroundColor(Color.blue)
-                Text(entry.value)
-                    .font(.title)
-                    .privacySensitive()
-                    .foregroundColor(Color.gray)
-                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color.white)
+                
+                Text("Date Range")
+                    .font(.caption)
+                    .foregroundColor(Color.white)
+                
             }
+            .padding(.all)
         }
     }
 }
