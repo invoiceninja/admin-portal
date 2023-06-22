@@ -34,7 +34,7 @@ struct Provider: IntentTimelineProvider {
     func getTimeline(for configuration: ConfigurationIntent,
                      in context: Context,
                     completion: @escaping (Timeline<Entry>) -> ()) {
-        
+            
         print("## getTimeline")
         
         Task {
