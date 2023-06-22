@@ -335,7 +335,8 @@ struct ApiService {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue(apiToken, forHTTPHeaderField: "X-Api-Token")
+        request.addValue(apiToken, forHTTPHeaderField: "X-API-Token")
+        request.addValue("macOS Widget", forHTTPHeaderField: "X-CLIENT")
         
         let dataDict: [String: String] = [
             "start_date": "2020-12-30",

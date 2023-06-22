@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 //import 'package:invoiceninja_flutter/main_app.dart';
 //import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:version/version.dart';
@@ -209,6 +210,7 @@ Map<String, String> _getHeaders(
     secret = Config.API_SECRET;
   }
   final headers = {
+    'X-CLIENT': getPlatformName(),
     'X-CLIENT-VERSION': kClientVersion,
     'X-API-SECRET': secret,
     'X-Requested-With': 'XMLHttpRequest',
