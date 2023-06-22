@@ -11,15 +11,30 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
+        
+        SimpleEntry(date: Date(),
+                    configuration: ConfigurationIntent(),
+                    widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                    field: "Invoices",
+                    value: 0)
     }
     
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration, widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0)
+    func getSnapshot(for configuration: ConfigurationIntent,
+                     in context: Context,
+                     completion: @escaping (SimpleEntry) -> ()) {
+        
+        let entry = SimpleEntry(date: Date(),
+                                configuration: configuration,
+                                widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                                field: "Invoices", value: 0)
+        
         completion(entry)
     }
     
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(for configuration: ConfigurationIntent,
+                     in context: Context,
+                    completion: @escaping (Timeline<Entry>) -> ()) {
+        
         print("## getTimeline")
         
         Task {
@@ -74,6 +89,7 @@ struct Provider: IntentTimelineProvider {
                 var value = 0.0
                 var label = ""
                 let data = result[currencyId ?? "1"]
+                
                 if (data != nil) {
                     if (configuration.field == Field.active_invoices) {
                         if (data?.invoices?.invoicedAmount != nil) {
@@ -218,7 +234,13 @@ struct DashboardWidget: Widget {
 
 struct DashboardWidget_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), widgetData: WidgetData(url: "url", companyId: "", companies: [:]), field: "Invoices", value: 0))
+        let entry = SimpleEntry(date: Date(),
+                                configuration: ConfigurationIntent(),
+                                widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
+                                field: "Invoices",
+                                value: 0)
+        
+        DashboardWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
         //.environment(\.sizeCategory, .extraLarge)
         //.environment(\.colorScheme, .dark)
