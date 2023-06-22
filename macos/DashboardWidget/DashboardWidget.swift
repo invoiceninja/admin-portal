@@ -15,8 +15,8 @@ struct Provider: IntentTimelineProvider {
         SimpleEntry(date: Date(),
                     configuration: ConfigurationIntent(),
                     widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
-                    field: "Invoices",
-                    value: 0)
+                    field: "Active Invoices",
+                    value: "$100.00")
     }
     
     func getSnapshot(for configuration: ConfigurationIntent,
@@ -26,7 +26,8 @@ struct Provider: IntentTimelineProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: configuration,
                                 widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
-                                field: "Invoices", value: 0)
+                                field: "Active Invoices",
+                                value: "$100.00")
         
         completion(entry)
     }
@@ -85,6 +86,7 @@ struct Provider: IntentTimelineProvider {
                 }
                 
                 let currencyId = configuration.currency?.identifier ?? company?.currencyId
+                let currency = company?.currencies[currencyId!]
                 
                 var value = 0.0
                 var label = ""
@@ -109,11 +111,16 @@ struct Provider: IntentTimelineProvider {
                     }
                 }
                 
+                let formatter = NumberFormatter()
+                formatter.numberStyle = .currency
+                formatter.currencyCode = currency?.code ?? "USD"
+                
+                
                 let entry = SimpleEntry(date: Date(),
                                         configuration: configuration,
                                         widgetData: widgetData,
                                         field: label,
-                                        value: value)
+                                        value: formatter.string(from: NSNumber(value: value))!)
                 
                 // Next fetch happens 15 minutes later
                 let nextUpdate = Calendar.current.date(
@@ -185,7 +192,7 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let widgetData: WidgetData?
     let field: String
-    let value: Double
+    let value: String
 }
 
 struct DashboardWidgetEntryView : View {
@@ -211,7 +218,7 @@ struct DashboardWidgetEntryView : View {
                     .font(.body)
                     .bold()
                     .foregroundColor(Color.blue)
-                Text("\(entry.value)")
+                Text(entry.value)
                     .font(.title)
                     .privacySensitive()
                     .foregroundColor(Color.gray)
@@ -240,8 +247,8 @@ struct DashboardWidget_Previews: PreviewProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: ConfigurationIntent(),
                                 widgetData: WidgetData(url: "url", companyId: "", companies: [:]),
-                                field: "Invoices",
-                                value: 0)
+                                field: "Active Invoices",
+                                value: "$100.00")
         
         DashboardWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
