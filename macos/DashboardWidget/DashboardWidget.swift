@@ -66,6 +66,7 @@ struct Provider: IntentTimelineProvider {
                 let companyId = configuration.company?.identifier ?? ""
                 let company = widgetData?.companies[companyId]
                 var token = company?.token
+                let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!)
                 
                 if (token == "" && !(widgetData?.companies.isEmpty)!) {
                     print("## WARNING: using first token")
@@ -75,13 +76,17 @@ struct Provider: IntentTimelineProvider {
                 
                 print("## company.name: \(configuration.company?.displayString ?? "")")
                 print("## company.id: \(configuration.company?.identifier ?? "")")
+                print("## Date Range: \(String(describing: configuration.dateRange?.identifier)) => \(startDate) - \(endDate)")
                 //print("## URL: \(url)")
                 
                 if (token == "") {
                     return
                 }
                 
-                guard let result = try? await ApiService.post(urlString: url, apiToken: token!) else {
+                guard let result = try? await ApiService.post(urlString: url,
+                                                              apiToken: token!,
+                                                              startDate: startDate,
+                                                              endDate: endDate) else {
                     return
                 }
                 
@@ -139,6 +144,55 @@ struct Provider: IntentTimelineProvider {
             }
         }
         
+    }
+    
+    func getDateRange(dateRange: String, firstYearOfMonth: Int = 1) -> (start: String, end: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        var start: Date = Date()
+        var end: Date = Date()
+        
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        
+        if (dateRange == "today") {
+            start = calendar.startOfDay(for: Date())
+        } else if (dateRange == "yesterday") {
+            start = calendar.date(byAdding: .day, value: -1, to: Date())!
+            end = calendar.startOfDay(for: Date())
+        } else if (dateRange == "last7_days" ){
+            start = calendar.date(byAdding: .day, value: -7, to: Date())!
+        } else if (dateRange == "last30_days") {
+            start = calendar.date(byAdding: .day, value: -30, to: Date())!
+        } else if (dateRange == "last365_days") {
+            start = calendar.date(byAdding: .day, value: -365, to: Date())!
+        } else if (dateRange == "this_month") {
+            start = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
+        } else if (dateRange == "last_month") {
+            let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: Date())!
+            start = calendar.date(from: calendar.dateComponents([.year, .month], from: previousMonthDate))!
+            end = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
+        } else if (dateRange == "this_quarter") {
+            dateComponents.month! = ((dateComponents.month! - firstYearOfMonth)/3)*3 + firstYearOfMonth
+            start = calendar.date(from: dateComponents)!
+        } else if (dateRange == "last_quarter") {
+            dateComponents.month! = ((dateComponents.month! - firstYearOfMonth - 3)/3)*3 + firstYearOfMonth
+            start = calendar.date(from: dateComponents)!
+            dateComponents.month! += 3
+            end = calendar.date(from: dateComponents)!
+        } else if (dateRange == "this_year") {
+            dateComponents.month = firstYearOfMonth
+            start = calendar.date(from: dateComponents)!
+        } else if (dateRange == "last_year") {
+            dateComponents.month = firstYearOfMonth
+            dateComponents.year! -= 1
+            start = calendar.date(from: dateComponents)!
+            dateComponents.year! += 1
+            end = calendar.date(from: dateComponents)!
+        }
+        
+        return (dateFormatter.string(from: start), dateFormatter.string(from: end))
     }
 }
 
@@ -333,31 +387,18 @@ struct Expenses: Codable {
 
 struct ApiService {
     
-    static func post(urlString: String, apiToken: String) async throws -> [String: ApiResult]? {
+    static func post(urlString: String, apiToken: String, startDate: String, endDate: String) async throws -> [String: ApiResult]? {
         
-        let url = URL(string: urlString)!
-        
+        let url = URL(string: "\(urlString)?start_date=\(startDate)&end_date=\(endDate)")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-API-Token")
         request.addValue("macOS Widget", forHTTPHeaderField: "X-CLIENT")
         
-        let dataDict: [String: String] = [
-            "start_date": "2020-12-30",
-            "end_date": "2023-12-31",
-        ]
-        
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dataDict, options: [])
-            request.httpBody = jsonData
-        } catch {
-            print("Error: Failed to serialize data - \(error)")
-        }
-        
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             
-            //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
+            print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
             let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
             
             return result
