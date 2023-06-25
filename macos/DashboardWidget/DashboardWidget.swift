@@ -165,7 +165,7 @@ struct Provider: IntentTimelineProvider {
         
         var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         
-        if (dateRange == "all") {
+        if (dateRange == "all_time") {
             start = calendar.date(byAdding: .year, value: -100, to: Date())!
         } else if (dateRange == "today") {
             start = calendar.startOfDay(for: Date())
@@ -261,11 +261,11 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct DashboardWidgetEntryView : View {
+    @Environment(\.colorScheme) var colorScheme
     var entry: Provider.Entry
     
     var body: some View {
         ZStack {
-            //Rectangle().fill(BackgroundStyle())
             Rectangle().fill(Color.blue)
             VStack(alignment: .leading) {
                 
@@ -274,18 +274,21 @@ struct DashboardWidgetEntryView : View {
                         Text(entry.field)
                             .font(.body)
                             .bold()
+                            .lineLimit(2)
+                            .multilineTextAlignment(.center)
                             .foregroundColor(Color.blue)
+                        
                         Text(entry.value)
                             .font(.title)
                             .privacySensitive()
-                            .foregroundColor(Color.gray)
+                            .lineLimit(2)
+                            //.foregroundColor(Color.gray)
                             .minimumScaleFactor(0.8)
                     }
                     .padding(.all)
-                    
                 }
-                .padding(.top, 8)
-                .background(ContainerRelativeShape().fill(Color(.white)))
+                .padding([.top, .bottom], 8)
+                .background(ContainerRelativeShape().fill(Color(colorScheme == .dark ? .black : .white)))
                 //.shadow(color: .gray, radius: 4, x: 4, y: 4)
                 
                 Spacer()
