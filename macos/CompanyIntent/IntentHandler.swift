@@ -22,8 +22,8 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
         let widgetData = loadWidgetData()
         
-        let companies = widgetData.companies.values.map { company in
-            Company(identifier: company.id, display: company.name)
+        let companies = widgetData.companies.keys.sorted().map { companyId in
+            Company(identifier: companyId, display: widgetData.companies[companyId]!.name)
         }
         
         return INObjectCollection(items: companies)
@@ -39,8 +39,8 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         let widgetData = loadWidgetData()
         
         let company = widgetData.companies[(intent.company?.identifier!)!]
-        let currencies = company!.currencies.values.map { currency in
-            Currency(identifier: currency.id, display: currency.name)
+        let currencies = company!.currencies.keys.sorted().map { currencyId in
+            Currency(identifier: currencyId, display: company!.currencies[currencyId]!.name)
         }
         
         return INObjectCollection(items: currencies)
@@ -57,7 +57,7 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         let widgetData = loadWidgetData()
         
         
-        let dateRanges = widgetData.dateRanges.keys.map { dateRange in
+        let dateRanges = widgetData.dateRanges.keys.sorted().map { dateRange in
             DateRange(identifier: dateRange, display: widgetData.dateRanges[dateRange]!)
         }
         
