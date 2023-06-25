@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -12,7 +13,9 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:widget_kit_plugin/user_defaults/user_defaults.dart';
 import 'package:widget_kit_plugin/widget_kit/widget_kit.dart';
@@ -103,6 +106,22 @@ class WidgetData {
     this.companyId,
     this.dateRanges,
   });
+
+  WidgetData.fromState(AppState state, AppLocalization localization)
+      : url = formatApiUrl(state.authState.url),
+        companyId = state.account.defaultCompanyId,
+        companies = {
+          for (var userCompany in state.userCompanyStates
+              .where((state) => state.company.hasName))
+            userCompany.company.id: WidgetCompany.fromUserCompany(
+              userCompanyState: userCompany,
+              staticState: state.staticState,
+            )
+        },
+        dateRanges = Map.fromIterable(
+            DateRange.values.where((value) => value != DateRange.custom),
+            key: (dynamic item) => toSnakeCase('$item'),
+            value: (dynamic item) => localization.lookup('$item'));
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],

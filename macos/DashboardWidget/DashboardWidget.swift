@@ -165,7 +165,9 @@ struct Provider: IntentTimelineProvider {
         
         var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         
-        if (dateRange == "today") {
+        if (dateRange == "all") {
+            start = calendar.date(byAdding: .year, value: -100, to: Date())!
+        } else if (dateRange == "today") {
             start = calendar.startOfDay(for: Date())
         } else if (dateRange == "yesterday") {
             start = calendar.date(byAdding: .day, value: -1, to: Date())!
