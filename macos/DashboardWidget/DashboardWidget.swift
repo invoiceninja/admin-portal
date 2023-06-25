@@ -66,7 +66,8 @@ struct Provider: IntentTimelineProvider {
                 let companyId = configuration.company?.identifier ?? ""
                 let company = widgetData?.companies[companyId]
                 var token = company?.token
-                let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!)
+                let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!,
+                                                        firstMonthOfYear: company!.firstMonthOfYear)
                 
                 if (token == "" && !(widgetData?.companies.isEmpty)!) {
                     print("## WARNING: using first token")
@@ -146,21 +147,29 @@ struct Provider: IntentTimelineProvider {
         
     }
     
-    func getDateRange(dateRange: String, firstYearOfMonth: Int = 1) -> (start: String, end: String) {
+    func getDateRange(dateRange: String, firstMonthOfYear: Int = 1) -> (start: String, end: String) {
+        
+        let today = Date()
+        let calendar = Calendar.current
+        
+        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))!
+        
+        let year = calendar.component(.year, from: today) - (firstMonthOfYear > calendar.component(.month, from: today) ? 1 : 0)
+        let firstDayOfYear = calendar.date(from: DateComponents(year: year, month: firstMonthOfYear, day: 1))!
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         var start: Date = Date()
         var end: Date = Date()
         
-        let calendar = Calendar.current
         var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         
         if (dateRange == "today") {
             start = calendar.startOfDay(for: Date())
         } else if (dateRange == "yesterday") {
             start = calendar.date(byAdding: .day, value: -1, to: Date())!
-            end = calendar.startOfDay(for: Date())
+            end = start
         } else if (dateRange == "last7_days" ){
             start = calendar.date(byAdding: .day, value: -7, to: Date())!
         } else if (dateRange == "last30_days") {
@@ -172,24 +181,21 @@ struct Provider: IntentTimelineProvider {
         } else if (dateRange == "last_month") {
             let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: Date())!
             start = calendar.date(from: calendar.dateComponents([.year, .month], from: previousMonthDate))!
-            end = calendar.date(from: calendar.dateComponents([.year, .month], from: Date()))!
+            end = calendar.date(byAdding: .month, value: 1, to: start)!.addingTimeInterval(-1)
         } else if (dateRange == "this_quarter") {
-            dateComponents.month! = ((dateComponents.month! - firstYearOfMonth)/3)*3 + firstYearOfMonth
-            start = calendar.date(from: dateComponents)!
+            let monthOffset = (calendar.component(.month, from: today) - 1) % 3 * -1
+            start = calendar.date(byAdding: .month, value: monthOffset, to: firstDayOfMonth)!
+            end = calendar.date(byAdding: .month, value: 3, to: start)!.addingTimeInterval(-1)
         } else if (dateRange == "last_quarter") {
-            dateComponents.month! = ((dateComponents.month! - firstYearOfMonth - 3)/3)*3 + firstYearOfMonth
-            start = calendar.date(from: dateComponents)!
-            dateComponents.month! += 3
-            end = calendar.date(from: dateComponents)!
+            let monthOffset = (calendar.component(.month, from: today) - 1) % 3 * -1
+             start = calendar.date(byAdding: .month, value: monthOffset - 3, to: firstDayOfMonth)!
+             end = calendar.date(byAdding: .month, value: 3, to: start)!.addingTimeInterval(-1)
         } else if (dateRange == "this_year") {
-            dateComponents.month = firstYearOfMonth
-            start = calendar.date(from: dateComponents)!
+            start = firstDayOfYear
+             end = calendar.date(byAdding: .year, value: 1, to: start)!.addingTimeInterval(-1)
         } else if (dateRange == "last_year") {
-            dateComponents.month = firstYearOfMonth
-            dateComponents.year! -= 1
-            start = calendar.date(from: dateComponents)!
-            dateComponents.year! += 1
-            end = calendar.date(from: dateComponents)!
+            start = calendar.date(byAdding: .year, value: -1, to: firstDayOfYear)!
+            end = calendar.date(byAdding: .year, value: 1, to: start)!.addingTimeInterval(-1)
         }
         
         return (dateFormatter.string(from: start), dateFormatter.string(from: end))
@@ -398,7 +404,7 @@ struct ApiService {
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             
-            print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
+            //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
             let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
             
             return result
