@@ -290,11 +290,14 @@ struct DashboardWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
     var entry: Provider.Entry
     
-
+    var accentColor: Color {
+        let companyId = entry.configuration.company?.identifier ?? ""
+        return Color(hex: (entry.widgetData?.companies[companyId]!.accentColor)!)
+    }
     
     var body: some View {
         ZStack {
-            //Rectangle().fill(Color(hex: (entry.widgetData?.companies[entry.configuration.company?.identifier ?? ""]!.accentColor)!))
+            Rectangle().fill(accentColor)
             VStack(alignment: .leading) {
                 
                 HStack {
@@ -304,7 +307,7 @@ struct DashboardWidgetEntryView : View {
                             .bold()
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
-                            //.foregroundColor(Color(hex: (entry.widgetData?.companies[(entry.configuration.company?.identifier)!]!.accentColor)!))
+                            .foregroundColor(accentColor)
                         Text(entry.value)
                             .font(.title)
                             .privacySensitive()
