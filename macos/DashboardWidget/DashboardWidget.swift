@@ -9,6 +9,32 @@ import WidgetKit
 import SwiftUI
 import Intents
 
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue:  Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
+
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         
@@ -264,9 +290,11 @@ struct DashboardWidgetEntryView : View {
     @Environment(\.colorScheme) var colorScheme
     var entry: Provider.Entry
     
+
+    
     var body: some View {
         ZStack {
-            Rectangle().fill(Color.blue)
+            //Rectangle().fill(Color(hex: (entry.widgetData?.companies[entry.configuration.company?.identifier ?? ""]!.accentColor)!))
             VStack(alignment: .leading) {
                 
                 HStack {
@@ -276,13 +304,12 @@ struct DashboardWidgetEntryView : View {
                             .bold()
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
-                            .foregroundColor(Color.blue)
-                        
+                            //.foregroundColor(Color(hex: (entry.widgetData?.companies[(entry.configuration.company?.identifier)!]!.accentColor)!))
                         Text(entry.value)
                             .font(.title)
                             .privacySensitive()
                             .lineLimit(2)
-                            //.foregroundColor(Color.gray)
+                        //.foregroundColor(Color.gray)
                             .minimumScaleFactor(0.8)
                     }
                     .padding(.all)
@@ -409,9 +436,12 @@ struct ApiService {
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             
-            //print("## Details: \(String(describing: String(data: data, encoding: .utf8)))")
-            let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
+            //print("## Details WAS: \(String(describing: String(data: data, encoding: .utf8)))")
+            //print("## Details IS: \(String(describing: String(data: try! ApiService.fixData(data: data), encoding: .utf8)))")
             
+            //let result = try JSONDecoder().decode([String: ApiResult].self, from: data)
+            let result = try JSONDecoder().decode([String: ApiResult].self, from: ApiService.fixData(data: data))
+
             return result
             
         } catch {
@@ -420,6 +450,23 @@ struct ApiService {
         
         return nil
     }
+    
+    static func fixData(data: Data) throws -> Data {
+        var dataString = String(data: data, encoding: .utf8)!
+        
+        if let range = dataString.range(of: "\"currencies\":\\{[^\\}]*?\\},", options: .regularExpression) {
+            dataString.removeSubrange(range)
+        }
+        
+        if let range = dataString.range(of: "\"start_date\":[^\\}]*?,", options: .regularExpression) {
+            dataString.removeSubrange(range)
+        }
+        
+        if let range = dataString.range(of: "\"end_date\":[^\\}]*?,", options: .regularExpression) {
+            dataString.removeSubrange(range)
+        }
+        
+        return dataString.data(using: .utf8)!
+
+    }
 }
-
-
