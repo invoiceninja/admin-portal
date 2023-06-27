@@ -160,7 +160,6 @@ struct Provider: IntentTimelineProvider {
                                     field: label,
                                     value: value)
             
-            
             let nextUpdate = Calendar.current.date(
                 byAdding: DateComponents(minute: 15),
                 to: Date()
@@ -318,6 +317,7 @@ struct DashboardWidgetEntryView : View {
                     }
                     .padding(.all)
                 }
+                .frame(maxWidth: .infinity)
                 .padding([.top, .bottom], 8)
                 .background(ContainerRelativeShape().fill(Color(colorScheme == .dark ? .black : .white)))
                 
