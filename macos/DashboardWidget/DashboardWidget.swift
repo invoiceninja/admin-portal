@@ -72,7 +72,7 @@ struct Provider: IntentTimelineProvider {
             do {
                 let widgetData = try getWidgetData()
                 
-                (label, value) = try await getTimelineData(for: configuration)
+                (label, value) = try await getTimelineData(for: configuration, widgetData: widgetData)
                 
                 print("## VALUE: \(value)")
                 
@@ -100,33 +100,10 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    func getWidgetData() throws -> (WidgetData?) {
+    func getWidgetData() throws -> (WidgetData) {
         
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var widgetData: WidgetData? = nil
         
-        if sharedDefaults != nil {
-            let shared = sharedDefaults!.string(forKey: "widget_data")
-            if shared != nil {
-                
-                //print("## Shared: \(shared!)")
-                
-                let decoder = JSONDecoder()
-                widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
-            }
-        }
-        
-        return widgetData
-    }
-    
-    func getTimelineData(for configuration: ConfigurationIntent) async throws -> (String, String) {
-        
-        var rawValue = 0.0
-        var value = "Error"
-        var label = ""
-        
-        let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var widgetData: WidgetData? = nil
         
         if sharedDefaults == nil {
             throw WidgetError.message("Not connected")
@@ -136,29 +113,36 @@ struct Provider: IntentTimelineProvider {
         if shared == nil {
             throw WidgetError.message("Not connected")
         }
-        
         //print("## Shared: \(shared!)")
         
         let decoder = JSONDecoder()
-        widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+        return try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+        
+    }
+    
+    func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String, String) {
+        
+        var rawValue = 0.0
+        var value = "Error"
+        var label = ""
         
         let companyId = configuration.company?.identifier ?? ""
-        let company = widgetData?.companies[companyId]
+        let company = widgetData.companies[companyId]
         let currencyId = configuration.currency?.identifier ?? company?.currencyId
         let currency = company?.currencies[currencyId!]
         
-        if (widgetData?.url == nil) {
+        if (widgetData.url.isEmpty) {
             throw WidgetError.message("URL is blank")
         }
         
-        let url = (widgetData?.url ?? "") + "/charts/totals_v2";
+        let url = (widgetData.url ?? "") + "/charts/totals_v2";
         var token = company?.token
         let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!,
                                                 firstMonthOfYear: company!.firstMonthOfYear)
         
-        if (token == "" && !(widgetData?.companies.isEmpty)!) {
+        if (token == "" && widgetData.companies.isEmpty) {
             print("## WARNING: using first token")
-            let company = widgetData?.companies.values.first;
+            let company = widgetData.companies.values.first;
             token = company?.token ?? ""
         }
         
