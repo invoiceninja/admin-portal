@@ -66,37 +66,45 @@ struct Provider: IntentTimelineProvider {
         
         Task {
             
-            var value = "Error"
+            var widgetData:WidgetData?
+            var value = ""
             var label = ""
+            var message = ""
             
             do {
-                let widgetData = try getWidgetData()
+                widgetData = try getWidgetData()
                 
-                (label, value) = try await getTimelineData(for: configuration, widgetData: widgetData)
+                (label, value) = try await getTimelineData(for: configuration, widgetData: widgetData!)
                 
                 print("## VALUE: \(value)")
                 
-                let entry = SimpleEntry(date: Date(),
-                                        configuration: configuration,
-                                        widgetData: widgetData,
-                                        field: label,
-                                        value: value)
-                
-                let nextUpdate = Calendar.current.date(
-                    byAdding: DateComponents(minute: 15),
-                    to: Date()
-                )!
-                
-                let timeline = Timeline(
-                    entries: [entry],
-                    policy: .after(nextUpdate)
-                )
-                
-                completion(timeline)
+            } catch WidgetError.message(let errorMessage) {
+                message = errorMessage;
+            
             } catch {
-                // TODO
-                print("## getTimeline ERROR: \(error)")
+                message = "Unknown error"
             }
+
+            print("## getTimeline ERROR: \(message)")
+            
+            
+            let entry = SimpleEntry(date: Date(),
+                                    configuration: configuration,
+                                    widgetData: widgetData,
+                                    field: label,
+                                    value: value)
+            
+            let nextUpdate = Calendar.current.date(
+                byAdding: DateComponents(minute: 15),
+                to: Date()
+            )!
+            
+            let timeline = Timeline(
+                entries: [entry],
+                policy: .after(nextUpdate)
+            )
+            
+            completion(timeline)
         }
     }
     
@@ -135,7 +143,7 @@ struct Provider: IntentTimelineProvider {
             throw WidgetError.message("URL is blank")
         }
         
-        let url = (widgetData.url ?? "") + "/charts/totals_v2";
+        let url = widgetData.url + "/charts/totals_v2";
         var token = company?.token
         let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!,
                                                 firstMonthOfYear: company!.firstMonthOfYear)
