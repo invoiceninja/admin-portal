@@ -157,7 +157,7 @@ class WidgetCompany {
       : id = userCompanyState.userCompany.company.id,
         name = userCompanyState.userCompany.company.displayName,
         token = userCompanyState.userCompany.token.token,
-        accentColor = userCompanyState.userCompany.settings.accentColor,
+        accentColor = userCompanyState.userCompany.settings.validatedAccentColor,
         firstMonthOfYear =
             parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
         currencyId = userCompanyState.userCompany.company.currencyId,

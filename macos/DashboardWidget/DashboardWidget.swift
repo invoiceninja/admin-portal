@@ -153,7 +153,6 @@ struct Provider: IntentTimelineProvider {
                                         field: label,
                                         value: formatter.string(from: NSNumber(value: value))!)
                 
-                // Next fetch happens 15 minutes later
                 let nextUpdate = Calendar.current.date(
                     byAdding: DateComponents(minute: 15),
                     to: Date()
@@ -188,8 +187,6 @@ struct Provider: IntentTimelineProvider {
         
         var start: Date = Date()
         var end: Date = Date()
-        
-        var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
         
         if (dateRange == "all_time") {
             start = calendar.date(byAdding: .year, value: -100, to: Date())!
