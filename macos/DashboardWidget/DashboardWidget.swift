@@ -120,7 +120,7 @@ struct Provider: IntentTimelineProvider {
     }
     
     func getTimelineData(for configuration: ConfigurationIntent) async throws -> (String, String) {
-                    
+        
         var rawValue = 0.0
         var value = "Error"
         var label = ""
@@ -128,86 +128,82 @@ struct Provider: IntentTimelineProvider {
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
         var widgetData: WidgetData? = nil
         
-        if sharedDefaults != nil {
-            do {
-                let shared = sharedDefaults!.string(forKey: "widget_data")
-                if shared != nil {
-                    
-                    //print("## Shared: \(shared!)")
-                    
-                    let decoder = JSONDecoder()
-                    widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
-                    
-                    let companyId = configuration.company?.identifier ?? ""
-                    let company = widgetData?.companies[companyId]
-                    let currencyId = configuration.currency?.identifier ?? company?.currencyId
-                    let currency = company?.currencies[currencyId!]
-                                        
-                    if (widgetData?.url == nil) {
-                        throw WidgetError.message("URL is blank")
-                    }
-                    
-                    let url = (widgetData?.url ?? "") + "/charts/totals_v2";
-                    var token = company?.token
-                    let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!,
-                                                            firstMonthOfYear: company!.firstMonthOfYear)
-                    
-                    if (token == "" && !(widgetData?.companies.isEmpty)!) {
-                        print("## WARNING: using first token")
-                        let company = widgetData?.companies.values.first;
-                        token = company?.token ?? ""
-                    }
-                    
-                    print("## company.name: \(configuration.company?.displayString ?? "")")
-                    print("## company.id: \(configuration.company?.identifier ?? "")")
-                    print("## Date Range: \(String(describing: configuration.dateRange?.identifier)) => \(startDate) - \(endDate)")
-                    //print("## URL: \(url)")
-                    
-                    if (token == "") {
-                        throw WidgetError.message("API token is blank")
-                    }
-                    
-                    
-                    let result = try await ApiService.post(urlString: url,
-                                                           apiToken: token!,
-                                                           startDate: startDate,
-                                                           endDate: endDate)!
-                    
-                    let data = result[currencyId ?? "1"]
-                    
-                    if (data != nil) {
-                        if (configuration.field == Field.active_invoices) {
-                            if (data?.invoices?.invoicedAmount != nil) {
-                                rawValue = Double(data?.invoices?.invoicedAmount ?? "")!
-                            }
-                            label = "Active Invoices"
-                        } else if (configuration.field == Field.outstanding_invoices) {
-                            if (data?.outstanding?.amount != nil) {
-                                rawValue = Double(data?.outstanding?.amount ?? "")!
-                            }
-                            label = "Outstanding Invoices"
-                        } else if (configuration.field == Field.completed_payments) {
-                            if (data?.revenue?.paidToDate != nil) {
-                                rawValue = Double(data?.revenue?.paidToDate ?? "")!
-                            }
-                            label = "Completed Payments"
-                        }
-                    }
-                    
-                    let formatter = NumberFormatter()
-                    formatter.numberStyle = .currency
-                    formatter.currencyCode = currency?.code ?? "USD"
-                    value = formatter.string(from: NSNumber(value: rawValue))!
-                    
+        if sharedDefaults == nil {
+            throw WidgetError.message("Not connected")
+        }
+        
+        let shared = sharedDefaults!.string(forKey: "widget_data")
+        if shared == nil {
+            throw WidgetError.message("Not connected")
+        }
+        
+        //print("## Shared: \(shared!)")
+        
+        let decoder = JSONDecoder()
+        widgetData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+        
+        let companyId = configuration.company?.identifier ?? ""
+        let company = widgetData?.companies[companyId]
+        let currencyId = configuration.currency?.identifier ?? company?.currencyId
+        let currency = company?.currencies[currencyId!]
+        
+        if (widgetData?.url == nil) {
+            throw WidgetError.message("URL is blank")
+        }
+        
+        let url = (widgetData?.url ?? "") + "/charts/totals_v2";
+        var token = company?.token
+        let (startDate, endDate) = getDateRange(dateRange: (configuration.dateRange?.identifier)!,
+                                                firstMonthOfYear: company!.firstMonthOfYear)
+        
+        if (token == "" && !(widgetData?.companies.isEmpty)!) {
+            print("## WARNING: using first token")
+            let company = widgetData?.companies.values.first;
+            token = company?.token ?? ""
+        }
+        
+        print("## company.name: \(configuration.company?.displayString ?? "")")
+        print("## company.id: \(configuration.company?.identifier ?? "")")
+        print("## Date Range: \(String(describing: configuration.dateRange?.identifier)) => \(startDate) - \(endDate)")
+        //print("## URL: \(url)")
+        
+        if (token == "") {
+            throw WidgetError.message("API token is blank")
+        }
+        
+        
+        let result = try await ApiService.post(urlString: url,
+                                               apiToken: token!,
+                                               startDate: startDate,
+                                               endDate: endDate)!
+        
+        let data = result[currencyId ?? "1"]
+        
+        if (data != nil) {
+            if (configuration.field == Field.active_invoices) {
+                if (data?.invoices?.invoicedAmount != nil) {
+                    rawValue = Double(data?.invoices?.invoicedAmount ?? "")!
                 }
-            } catch {
-                print("## ERROR: \(error)")
-                //value = "\(error)"
+                label = "Active Invoices"
+            } else if (configuration.field == Field.outstanding_invoices) {
+                if (data?.outstanding?.amount != nil) {
+                    rawValue = Double(data?.outstanding?.amount ?? "")!
+                }
+                label = "Outstanding Invoices"
+            } else if (configuration.field == Field.completed_payments) {
+                if (data?.revenue?.paidToDate != nil) {
+                    rawValue = Double(data?.revenue?.paidToDate ?? "")!
+                }
+                label = "Completed Payments"
             }
         }
         
-        return (label, value)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currency?.code ?? "USD"
+        value = formatter.string(from: NSNumber(value: rawValue))!
         
+        return (label, value)
     }
     
     
