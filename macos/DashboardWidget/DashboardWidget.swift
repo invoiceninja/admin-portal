@@ -312,14 +312,12 @@ struct DashboardWidgetEntryView : View {
                             .font(.title)
                             .privacySensitive()
                             .lineLimit(2)
-                        //.foregroundColor(Color.gray)
                             .minimumScaleFactor(0.8)
                     }
                     .padding(.all)
                 }
                 .padding([.top, .bottom], 8)
                 .background(ContainerRelativeShape().fill(Color(colorScheme == .dark ? .black : .white)))
-                //.shadow(color: .gray, radius: 4, x: 4, y: 4)
                 
                 Spacer()
                 
