@@ -9,6 +9,11 @@ import WidgetKit
 import SwiftUI
 import Intents
 
+extension String: Error {}
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -42,7 +47,8 @@ struct Provider: IntentTimelineProvider {
                     configuration: ConfigurationIntent(),
                     widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                     field: "Active Invoices",
-                    value: "$100.00")
+                    value: "$100.00",
+                    error: "")
     }
     
     func getSnapshot(for configuration: ConfigurationIntent,
@@ -53,7 +59,8 @@ struct Provider: IntentTimelineProvider {
                                 configuration: configuration,
                                 widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                                 field: "Active Invoices",
-                                value: "$100.00")
+                                value: "$100.00",
+                                error: "")
         
         completion(entry)
     }
@@ -78,11 +85,8 @@ struct Provider: IntentTimelineProvider {
                 
                 print("## VALUE: \(value)")
                 
-            } catch WidgetError.message(let errorMessage) {
-                message = errorMessage;
-            
             } catch {
-                message = "Unknown error"
+                message = "\(error)"
             }
 
             print("## getTimeline ERROR: \(message)")
@@ -92,7 +96,8 @@ struct Provider: IntentTimelineProvider {
                                     configuration: configuration,
                                     widgetData: widgetData,
                                     field: label,
-                                    value: value)
+                                    value: value,
+                                    error: message)
             
             let nextUpdate = Calendar.current.date(
                 byAdding: DateComponents(minute: 15),
@@ -114,12 +119,12 @@ struct Provider: IntentTimelineProvider {
         
         
         if sharedDefaults == nil {
-            throw WidgetError.message("Not connected")
+            throw "Not connected"
         }
         
         let shared = sharedDefaults!.string(forKey: "widget_data")
         if shared == nil {
-            throw WidgetError.message("Not connected")
+            throw "Not connected"
         }
         //print("## Shared: \(shared!)")
         
@@ -140,7 +145,7 @@ struct Provider: IntentTimelineProvider {
         let currency = company?.currencies[currencyId!]
         
         if (widgetData.url.isEmpty) {
-            throw WidgetError.message("URL is blank")
+            throw "URL is blank"
         }
         
         let url = widgetData.url + "/charts/totals_v2";
@@ -160,7 +165,7 @@ struct Provider: IntentTimelineProvider {
         //print("## URL: \(url)")
         
         if (token == "") {
-            throw WidgetError.message("API token is blank")
+            throw "API token is blank"
         }
         
         
@@ -308,6 +313,7 @@ struct SimpleEntry: TimelineEntry {
     let widgetData: WidgetData?
     let field: String
     let value: String
+    let error: String
 }
 
 struct DashboardWidgetEntryView : View {
@@ -320,43 +326,47 @@ struct DashboardWidgetEntryView : View {
     }
     
     var body: some View {
-        ZStack {
-            Rectangle().fill(accentColor)
-            VStack(alignment: .leading) {
-                
-                HStack {
-                    VStack {
-                        Text(entry.field)
-                            .font(.body)
-                            .bold()
-                            .lineLimit(2)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(accentColor)
-                        Text(entry.value)
-                            .font(.title)
-                            .privacySensitive()
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
+        if (!entry.error.isEmpty) {
+            Text(entry.error)
+        } else {
+            ZStack {
+                Rectangle().fill(accentColor)
+                VStack(alignment: .leading) {
+                    
+                    HStack {
+                        VStack {
+                            Text(entry.field)
+                                .font(.body)
+                                .bold()
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(accentColor)
+                            Text(entry.value)
+                                .font(.title)
+                                .privacySensitive()
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+                        }
+                        .padding(.all)
                     }
-                    .padding(.all)
+                    .frame(maxWidth: .infinity)
+                    .padding([.top, .bottom], 8)
+                    .background(ContainerRelativeShape().fill(Color(colorScheme == .dark ? .black : .white)))
+                    
+                    Spacer()
+                    
+                    Text(entry.configuration.company?.displayString ?? "")
+                        .font(.body)
+                        .bold()
+                        .foregroundColor(Color.white)
+                    
+                    Text(entry.configuration.dateRange?.displayString ?? "")
+                        .font(.caption)
+                        .foregroundColor(Color.white)
+                    
                 }
-                .frame(maxWidth: .infinity)
-                .padding([.top, .bottom], 8)
-                .background(ContainerRelativeShape().fill(Color(colorScheme == .dark ? .black : .white)))
-                
-                Spacer()
-                
-                Text(entry.configuration.company?.displayString ?? "")
-                    .font(.body)
-                    .bold()
-                    .foregroundColor(Color.white)
-                
-                Text(entry.configuration.dateRange?.displayString ?? "")
-                    .font(.caption)
-                    .foregroundColor(Color.white)
-                
+                .padding(.all)
             }
-            .padding(.all)
         }
     }
 }
@@ -381,7 +391,8 @@ struct DashboardWidget_Previews: PreviewProvider {
                                 configuration: ConfigurationIntent(),
                                 widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
                                 field: "Active Invoices",
-                                value: "$100.00")
+                                value: "$100.00",
+                                error: "")
         
         DashboardWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
@@ -452,9 +463,7 @@ struct ApiResultError: Codable {
     let errors: [String: String]
 }
 
-enum WidgetError: Error {
-    case message(String)
-}
+
 
 struct ApiService {
     
@@ -482,11 +491,11 @@ struct ApiService {
                 } else {
                     let result = try JSONDecoder().decode(ApiResultError.self, from: data)
                     
-                    throw WidgetError.message("\(statusCode): \(result.message)")
+                    throw "\(statusCode): \(result.message)"
                 }
             }
         } catch {
-            throw WidgetError.message("\(error)")
+            throw "\(error)"
         }
         
         return nil
