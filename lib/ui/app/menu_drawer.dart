@@ -9,16 +9,12 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
-import 'package:invoiceninja_flutter/data/models/widget_model.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
@@ -53,7 +49,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:widget_kit_plugin/widget_kit_plugin.dart';
 
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({
@@ -1407,17 +1402,10 @@ void _showAbout(BuildContext context) async {
                               ),
                             ]);
                       } else {
-                        final json = jsonEncode(WidgetData.fromState(state, localization));
-                        await UserDefaults.setString(
-                            'widget_data', json, 'group.com.invoiceninja.app');
-                        await WidgetKit.reloadAllTimelines();
-
-                        /*
                         showDialog<void>(
                           context: context,
                           builder: (context) => UpgradeDialog(),
                         );
-                         */
                       }
                     },
                   ),
