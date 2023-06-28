@@ -82,11 +82,6 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
     super.dispose();
   }
 
-  void updateWidgetData() {
-
-  }
-
   @override
   Widget build(BuildContext context) => widget.child;
 }
-

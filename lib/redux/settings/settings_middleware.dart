@@ -162,9 +162,9 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
       }
     });
 
-    updateWidgetData();
-
     next(action);
+
+    updateWidgetData();
   };
 }
 
@@ -333,9 +333,9 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
       action.completer.completeError(error);
     });
 
-    updateWidgetData();
-
     next(action);
+
+    updateWidgetData();
   };
 }
 

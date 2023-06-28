@@ -464,9 +464,9 @@ Middleware<AppState> _createAccountLoaded() {
       action.completer.complete(null);
     }
 
-    updateWidgetData();
-
     next(action);
+
+    updateWidgetData();
   };
 }
 
@@ -519,9 +519,9 @@ Middleware<AppState> _createDataRefreshed() {
       action.completer.complete(null);
     }
 
-    updateWidgetData();
-
     next(action);
+
+    updateWidgetData();
 
     if (store.state.company.isLarge && !store.state.isLoaded) {
       store.dispatch(LoadClients());
