@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
 import 'package:path_provider/path_provider.dart';
@@ -463,6 +464,8 @@ Middleware<AppState> _createAccountLoaded() {
       action.completer.complete(null);
     }
 
+    updateWidgetData();
+
     next(action);
   };
 }
@@ -515,6 +518,8 @@ Middleware<AppState> _createDataRefreshed() {
     if (action.completer != null) {
       action.completer.complete(null);
     }
+
+    updateWidgetData();
 
     next(action);
 

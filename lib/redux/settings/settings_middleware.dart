@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -160,6 +161,8 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
         action.completer.completeError(error);
       }
     });
+
+    updateWidgetData();
 
     next(action);
   };
@@ -329,6 +332,8 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
       store.dispatch(SaveUserSettingsFailure(error));
       action.completer.completeError(error);
     });
+
+    updateWidgetData();
 
     next(action);
   };
