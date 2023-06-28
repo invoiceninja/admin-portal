@@ -40,12 +40,40 @@ extension Color {
     }
 }
 
+func getWidgetData() throws -> (WidgetData) {
+    
+    let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
+    
+    if sharedDefaults == nil {
+        throw "Not connected"
+    }
+    
+    let shared = sharedDefaults!.string(forKey: "widget_data")
+    if shared == nil {
+        throw "Not connected"
+    }
+    
+    //print("## Shared: \(shared!)")
+    
+    let decoder = JSONDecoder()
+    
+    return try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
+}
+
 struct Provider: IntentTimelineProvider {
+    var widgetData: WidgetData? = {
+        do {
+            return try getWidgetData()
+        } catch {
+            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:])
+        }
+    }()
+    
     func placeholder(in context: Context) -> SimpleEntry {
         
         SimpleEntry(date: Date(),
                     configuration: ConfigurationIntent(),
-                    widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
+                    widgetData: widgetData,
                     field: "Active Invoices",
                     value: "$100.00",
                     error: "")
@@ -57,7 +85,7 @@ struct Provider: IntentTimelineProvider {
         
         let entry = SimpleEntry(date: Date(),
                                 configuration: configuration,
-                                widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
+                                widgetData: widgetData,
                                 field: "Active Invoices",
                                 value: "$100.00",
                                 error: "")
@@ -111,26 +139,6 @@ struct Provider: IntentTimelineProvider {
             
             completion(timeline)
         }
-    }
-    
-    func getWidgetData() throws -> (WidgetData) {
-        
-        let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        
-        if sharedDefaults == nil {
-            throw "Not connected"
-        }
-        
-        let shared = sharedDefaults!.string(forKey: "widget_data")
-        if shared == nil {
-            throw "Not connected"
-        }
-        
-        //print("## Shared: \(shared!)")
-        
-        let decoder = JSONDecoder()
-        
-        return try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
     }
     
     func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String, String) {
@@ -328,7 +336,9 @@ struct DashboardWidgetEntryView : View {
     
     var accentColor: Color {
         let companyId = entry.configuration.company?.identifier ?? ""
-        return Color(hex: (entry.widgetData?.companies[companyId]?.accentColor ?? "#0000ff")!)
+        print("## config companyID: \(companyId)")
+        print("## widget companyID: \(entry.widgetData?.companies[companyId]?.id ?? "")")
+        return Color(hex: (entry.widgetData?.companies[companyId]?.accentColor ?? "#2F7DC3")!)
     }
     
     var body: some View {
@@ -392,10 +402,18 @@ struct DashboardWidget: Widget {
 }
 
 struct DashboardWidget_Previews: PreviewProvider {
+    static var widgetData: WidgetData? = {
+        do {
+            return try getWidgetData()
+        } catch {
+            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:])
+        }
+    }()
+    
     static var previews: some View {
         let entry = SimpleEntry(date: Date(),
                                 configuration: ConfigurationIntent(),
-                                widgetData: WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:]),
+                                widgetData: widgetData,
                                 field: "Active Invoices",
                                 value: "$100.00",
                                 error: "")
