@@ -105,6 +105,7 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
         .then((company) {
       store.dispatch(SaveCompanySuccess(company));
       action.completer.complete();
+      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveCompanyFailure(error));
@@ -326,7 +327,6 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
         .then((userCompany) {
       store.dispatch(SaveUserSettingsSuccess(userCompany));
       action.completer.complete();
-      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserSettingsFailure(error));
