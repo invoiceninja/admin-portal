@@ -88,7 +88,7 @@ struct Provider: IntentTimelineProvider {
             } catch {
                 message = "\(error)"
             }
-
+            
             print("## getTimeline ERROR: \(message)")
             
             
@@ -117,7 +117,6 @@ struct Provider: IntentTimelineProvider {
         
         let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
         
-        
         if sharedDefaults == nil {
             throw "Not connected"
         }
@@ -126,11 +125,12 @@ struct Provider: IntentTimelineProvider {
         if shared == nil {
             throw "Not connected"
         }
+        
         //print("## Shared: \(shared!)")
         
         let decoder = JSONDecoder()
-        return try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
         
+        return try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
     }
     
     func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String, String) {
@@ -176,24 +176,30 @@ struct Provider: IntentTimelineProvider {
         
         let data = result[currencyId ?? "1"]
         
-        if (data != nil) {
-            if (configuration.field == Field.active_invoices) {
-                if (data?.invoices?.invoicedAmount != nil) {
-                    rawValue = Double(data?.invoices?.invoicedAmount ?? "")!
-                }
-                label = "Active Invoices"
-            } else if (configuration.field == Field.outstanding_invoices) {
-                if (data?.outstanding?.amount != nil) {
-                    rawValue = Double(data?.outstanding?.amount ?? "")!
-                }
-                label = "Outstanding Invoices"
-            } else if (configuration.field == Field.completed_payments) {
-                if (data?.revenue?.paidToDate != nil) {
-                    rawValue = Double(data?.revenue?.paidToDate ?? "")!
-                }
-                label = "Completed Payments"
-            }
+        if (data == nil) {
+            throw "Data not found"
         }
+        
+        switch configuration.field {
+        case .active_invoices:
+            if let invoicedAmount = data?.invoices?.invoicedAmount, let value = Double(invoicedAmount) {
+                rawValue = value
+            }
+            label = "Active Invoices"
+        case .outstanding_invoices:
+            if let amount = data?.outstanding?.amount, let value = Double(amount) {
+                rawValue = value
+            }
+            label = "Outstanding Invoices"
+        case .completed_payments:
+            if let paidToDate = data?.revenue?.paidToDate, let value = Double(paidToDate) {
+                rawValue = value
+            }
+            label = "Completed Payments"
+        default:
+            break
+        }
+        
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -472,7 +478,7 @@ struct ApiService {
         let url = URL(string: "\(urlString)?start_date=\(startDate)&end_date=\(endDate)")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        //request.addValue(apiToken, forHTTPHeaderField: "X-API-Token")
+        request.addValue(apiToken, forHTTPHeaderField: "X-API-Token")
         request.addValue("macOS Widget", forHTTPHeaderField: "X-CLIENT")
         
         do {
