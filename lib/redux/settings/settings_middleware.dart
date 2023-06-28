@@ -151,6 +151,7 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
       if (action.completer != null) {
         action.completer.complete();
       }
+      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveAuthUserFailure(error));
@@ -163,8 +164,6 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
     });
 
     next(action);
-
-    updateWidgetData();
   };
 }
 
@@ -327,6 +326,7 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
         .then((userCompany) {
       store.dispatch(SaveUserSettingsSuccess(userCompany));
       action.completer.complete();
+      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserSettingsFailure(error));
@@ -334,8 +334,6 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
     });
 
     next(action);
-
-    updateWidgetData();
   };
 }
 
