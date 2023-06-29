@@ -95,8 +95,6 @@ struct Provider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<Entry>) -> ()) {
         
-        print("## getTimeline")
-        
         Task {
             
             var widgetData:WidgetData?
@@ -106,17 +104,10 @@ struct Provider: IntentTimelineProvider {
             
             do {
                 widgetData = try getWidgetData()
-                
                 value = try await getTimelineData(for: configuration, widgetData: widgetData!)
-                
-                print("## VALUE: \(value)")
-                
             } catch {
                 message = "\(error)"
             }
-            
-            print("## getTimeline ERROR: \(message)")
-            
             
             let entry = SimpleEntry(date: Date(),
                                     configuration: configuration,
@@ -163,9 +154,9 @@ struct Provider: IntentTimelineProvider {
             token = company?.token ?? ""
         }
         
-        print("## company.name: \(configuration.company?.displayString ?? "")")
-        print("## company.id: \(configuration.company?.identifier ?? "")")
-        print("## Date Range: \(String(describing: configuration.dateRange?.identifier)) => \(startDate) - \(endDate)")
+        //print("## company.name: \(configuration.company?.displayString ?? "")")
+        //print("## company.id: \(configuration.company?.identifier ?? "")")
+        //print("## Date Range: \(String(describing: configuration.dateRange?.identifier)) => \(startDate) - \(endDate)")
         //print("## URL: \(url)")
         
         if (token == "") {
@@ -334,8 +325,6 @@ struct DashboardWidgetEntryView : View {
     
     var accentColor: Color {
         let companyId = entry.configuration.company?.identifier ?? ""
-        print("## config companyID: \(companyId)")
-        print("## widget companyID: \(entry.widgetData?.companies[companyId]?.id ?? "")")
         return Color(hex: (entry.widgetData?.companies[companyId]?.accentColor ?? "#2F7DC3")!)
     }
     
