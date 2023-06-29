@@ -54,7 +54,7 @@ class WidgetData {
         'company_id': companyId,
         'url': url,
         'date_ranges': dateRanges,
-        'dashboard_Fields': dashboardFields,
+        'dashboard_fields': dashboardFields,
       };
 
   final String url;

@@ -12,6 +12,9 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         if let sharedDefaults = sharedDefaults {
             do {
                 if let shared = sharedDefaults.string(forKey: "widget_data") {
+                    
+                    //print("## Shared: \(shared)")
+                    
                     let decoder = JSONDecoder()
                     widgetData = try decoder.decode(WidgetData.self, from: shared.data(using: .utf8)!)
                 }
@@ -35,6 +38,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func defaultCompany(for intent: ConfigurationIntent) -> Company? {
         let widgetData = loadWidgetData()
+        
+        if (widgetData.companyId.isEmpty) {
+            return nil
+        }
+        
         let company = widgetData.companies[widgetData.companyId];
         return Company(identifier: company!.id, display: company!.name)
     }
@@ -52,6 +60,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func defaultCurrency(for intent: ConfigurationIntent) -> Currency? {
         let widgetData = loadWidgetData()
+        
+        if (widgetData.companyId.isEmpty) {
+            return nil
+        }
+
         let company = widgetData.companies[widgetData.companyId];
         let currency = company?.currencies[company!.currencyId];
         return Currency(identifier: currency!.id, display: currency!.name)
@@ -70,6 +83,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func defaultDateRange(for intent: ConfigurationIntent) -> DateRange? {
         let widgetData = loadWidgetData()
+        
+        if (widgetData.dateRanges.isEmpty) {
+            return nil
+        }
+
         let defaultDateRange = "last30_days";
         let dateRamge = widgetData.dateRanges[defaultDateRange]!;
         return DateRange(identifier: defaultDateRange, display: dateRamge)
@@ -88,6 +106,11 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
     
     func defaultDashboardField(for intent: ConfigurationIntent) -> DashboardField? {
         let widgetData = loadWidgetData()
+        
+        if (widgetData.dashboardFields.isEmpty) {
+            return nil
+        }
+
         let defaultField = "total_active_invoices";
         let field = widgetData.dashboardFields[defaultField]!;
         return DashboardField(identifier: defaultField, display: field)
