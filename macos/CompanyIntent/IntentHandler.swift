@@ -2,27 +2,18 @@ import Intents
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     private func loadWidgetData() -> WidgetData {
-        let sharedDefaults = UserDefaults(suiteName: "group.com.invoiceninja.app")
         var widgetData: WidgetData = WidgetData(url: "",
                                                 companyId: "",
                                                 companies: [:],
                                                 dateRanges: [:],
                                                 dashboardFields: [:])
-
-        if let sharedDefaults = sharedDefaults {
-            do {
-                if let shared = sharedDefaults.string(forKey: "widget_data") {
-                    
-                    //print("## Shared: \(shared)")
-                    
-                    let decoder = JSONDecoder()
-                    widgetData = try decoder.decode(WidgetData.self, from: shared.data(using: .utf8)!)
-                }
-            } catch {
-                print(error)
-            }
-        }
         
+        do {
+            widgetData = try getWidgetData()
+        } catch {
+            print(error)
+        }
+                
         return widgetData
     }
     

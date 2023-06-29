@@ -40,7 +40,7 @@ class WidgetData {
         dateRanges = Map.fromIterable(
             DateRange.values.where((value) => value != DateRange.custom),
             key: (dynamic item) => toSnakeCase('$item'),
-            value: (dynamic item) => localization.lookup('$item'));
+            value: (dynamic item) => localization.lookup(toSnakeCase('$item')));
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],
