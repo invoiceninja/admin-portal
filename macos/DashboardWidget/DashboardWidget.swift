@@ -205,6 +205,10 @@ struct Provider: IntentTimelineProvider {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = currency?.code ?? "USD"
+        
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        
         value = formatter.string(from: NSNumber(value: rawValue))!
         
         return value
@@ -228,7 +232,7 @@ struct Provider: IntentTimelineProvider {
         var end: Date = Date()
         
         if (dateRange == "all_time") {
-            start = calendar.date(byAdding: .year, value: -100, to: Date())!
+            start = calendar.date(byAdding: .year, value: -15, to: Date())!
         } else if (dateRange == "today") {
             start = calendar.startOfDay(for: Date())
         } else if (dateRange == "yesterday") {
