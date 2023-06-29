@@ -353,14 +353,15 @@ struct DashboardWidgetEntryView : View {
                             Text(entry.configuration.dashboardField?.displayString ?? "")
                                 .font(.body)
                                 .bold()
-                                .lineLimit(2)
+                                .lineLimit(1)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(accentColor)
                             Text(entry.value)
                                 .font(.title)
                                 .privacySensitive()
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
+                                .lineLimit(1)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.5)
                         }
                         .padding(.all)
                     }
