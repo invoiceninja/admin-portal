@@ -3,7 +3,7 @@ import Intents
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     private func loadWidgetData() -> WidgetData {
         let sharedDefaults = UserDefaults(suiteName: "group.com.invoiceninja.app")
-        var widgetData: WidgetData = WidgetData(url: "", companyId: "", companies: [:], dateRanges: [:])
+        var widgetData: WidgetData = WidgetData(url: "", companyId: "", companies: [:], dateRanges: [:], fields: [:])
 
         if let sharedDefaults = sharedDefaults {
             do {

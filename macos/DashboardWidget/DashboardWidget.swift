@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
         do {
             return try getWidgetData()
         } catch {
-            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:])
+            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:], fields: [:])
         }
     }()
     
@@ -278,12 +278,14 @@ struct WidgetData: Decodable, Hashable {
     let companyId: String
     let companies: [String: WidgetCompany]
     let dateRanges: [String: String]
+    let fields: [String: String]
     
     enum CodingKeys: String, CodingKey {
         case url
         case companyId = "company_id"
         case companies
         case dateRanges = "date_ranges"
+        case fields
     }
 }
 
@@ -341,6 +343,11 @@ struct DashboardWidgetEntryView : View {
         return Color(hex: (entry.widgetData?.companies[companyId]?.accentColor ?? "#2F7DC3")!)
     }
     
+    var companyName: String {
+        let companyId = entry.configuration.company?.identifier ?? ""
+        return entry.widgetData?.companies[companyId]?.name ?? entry.configuration.company?.displayString ?? "";
+    }
+    
     var body: some View {
         if (!entry.error.isEmpty) {
             Text(entry.error)
@@ -371,7 +378,7 @@ struct DashboardWidgetEntryView : View {
                     
                     Spacer()
                     
-                    Text(entry.configuration.company?.displayString ?? "")
+                    Text(companyName)
                         .font(.body)
                         .bold()
                         .foregroundColor(Color.white)
@@ -406,7 +413,7 @@ struct DashboardWidget_Previews: PreviewProvider {
         do {
             return try getWidgetData()
         } catch {
-            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:])
+            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:], fields: [:])
         }
     }()
     

@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -15,6 +16,7 @@ class WidgetData {
     this.companies,
     this.companyId,
     this.dateRanges,
+    this.fields,
   });
 
   WidgetData.fromState(AppState state, AppLocalization localization)
@@ -28,6 +30,13 @@ class WidgetData {
               staticState: state.staticState,
             )
         },
+        fields = Map.fromIterable(<String>[
+          DashboardUISettings.FIELD_ACTIVE_INVOICES,
+          DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+          DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+        ],
+            key: (dynamic item) => item,
+            value: (dynamic item) => localization.lookup('$item')),
         dateRanges = Map.fromIterable(
             DateRange.values.where((value) => value != DateRange.custom),
             key: (dynamic item) => toSnakeCase('$item'),
@@ -37,39 +46,43 @@ class WidgetData {
       : url = json['url'],
         companyId = json['company_id'],
         companies = json['companies'],
-        dateRanges = json['date_ranges'];
+        dateRanges = json['date_ranges'],
+        fields = json['fields'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'companies': companies,
-    'company_id': companyId,
-    'url': url,
-    'date_ranges': dateRanges,
-  };
+        'companies': companies,
+        'company_id': companyId,
+        'url': url,
+        'date_ranges': dateRanges,
+        'fields': fields,
+      };
 
   final String url;
   final String companyId;
   final Map<String, WidgetCompany> companies;
   final Map<String, String> dateRanges;
+  final Map<String, String> fields;
 }
 
 class WidgetCompany {
   WidgetCompany(
       {this.id,
-        this.name,
-        this.token,
-        this.accentColor,
-        this.firstMonthOfYear,
-        this.currencyId,
-        this.currencies});
+      this.name,
+      this.token,
+      this.accentColor,
+      this.firstMonthOfYear,
+      this.currencyId,
+      this.currencies});
 
   WidgetCompany.fromUserCompany(
       {UserCompanyState userCompanyState, StaticState staticState})
       : id = userCompanyState.userCompany.company.id,
         name = userCompanyState.userCompany.company.displayName,
         token = userCompanyState.userCompany.token.token,
-        accentColor = userCompanyState.userCompany.settings.validatedAccentColor,
+        accentColor =
+            userCompanyState.userCompany.settings.validatedAccentColor,
         firstMonthOfYear =
-        parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
+            parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
         currencyId = userCompanyState.userCompany.company.currencyId,
         currencies = {
           for (var currencyId in getCurrencyIds(
@@ -92,14 +105,14 @@ class WidgetCompany {
         firstMonthOfYear = json['first_month_of_year'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'name': name,
-    'token': token,
-    'accent_color': accentColor,
-    'currencies': currencies,
-    'currency_id': currencyId,
-    'first_month_of_year': firstMonthOfYear,
-  };
+        'id': id,
+        'name': name,
+        'token': token,
+        'accent_color': accentColor,
+        'currencies': currencies,
+        'currency_id': currencyId,
+        'first_month_of_year': firstMonthOfYear,
+      };
 
   final String id;
   final String name;
@@ -131,11 +144,11 @@ class WidgetCurrency {
         exchangeRate = json['exchange_rate'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'id': id,
-    'name': name,
-    'code': code,
-    'exchange_rate': exchangeRate,
-  };
+        'id': id,
+        'name': name,
+        'code': code,
+        'exchange_rate': exchangeRate,
+      };
 
   final String id;
   final String name;
