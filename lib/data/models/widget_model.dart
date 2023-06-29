@@ -16,7 +16,7 @@ class WidgetData {
     this.companies,
     this.companyId,
     this.dateRanges,
-    this.fields,
+    this.dashboardFields,
   });
 
   WidgetData.fromState(AppState state, AppLocalization localization)
@@ -30,7 +30,7 @@ class WidgetData {
               staticState: state.staticState,
             )
         },
-        fields = Map.fromIterable(<String>[
+        dashboardFields = Map.fromIterable(<String>[
           DashboardUISettings.FIELD_ACTIVE_INVOICES,
           DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
           DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
@@ -47,21 +47,21 @@ class WidgetData {
         companyId = json['company_id'],
         companies = json['companies'],
         dateRanges = json['date_ranges'],
-        fields = json['fields'];
+        dashboardFields = json['dashboard_fields'];
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'companies': companies,
         'company_id': companyId,
         'url': url,
         'date_ranges': dateRanges,
-        'fields': fields,
+        'dashboard_Fields': dashboardFields,
       };
 
   final String url;
   final String companyId;
   final Map<String, WidgetCompany> companies;
   final Map<String, String> dateRanges;
-  final Map<String, String> fields;
+  final Map<String, String> dashboardFields;
 }
 
 class WidgetCompany {

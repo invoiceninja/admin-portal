@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
         do {
             return try getWidgetData()
         } catch {
-            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:], fields: [:])
+            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:], dashboardFields: [:])
         }
     }()
     
@@ -74,7 +74,6 @@ struct Provider: IntentTimelineProvider {
         SimpleEntry(date: Date(),
                     configuration: ConfigurationIntent(),
                     widgetData: widgetData,
-                    field: "Active Invoices",
                     value: "$100.00",
                     error: "")
     }
@@ -86,7 +85,6 @@ struct Provider: IntentTimelineProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: configuration,
                                 widgetData: widgetData,
-                                field: "Active Invoices",
                                 value: "$100.00",
                                 error: "")
         
@@ -109,7 +107,7 @@ struct Provider: IntentTimelineProvider {
             do {
                 widgetData = try getWidgetData()
                 
-                (label, value) = try await getTimelineData(for: configuration, widgetData: widgetData!)
+                value = try await getTimelineData(for: configuration, widgetData: widgetData!)
                 
                 print("## VALUE: \(value)")
                 
@@ -123,7 +121,6 @@ struct Provider: IntentTimelineProvider {
             let entry = SimpleEntry(date: Date(),
                                     configuration: configuration,
                                     widgetData: widgetData,
-                                    field: label,
                                     value: value,
                                     error: message)
             
@@ -141,11 +138,10 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String, String) {
+    func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String) {
         
         var rawValue = 0.0
         var value = "Error"
-        var label = ""
         
         let companyId = configuration.company?.identifier ?? ""
         let company = widgetData.companies[companyId]
@@ -188,22 +184,19 @@ struct Provider: IntentTimelineProvider {
             throw "Data not found"
         }
         
-        switch configuration.field {
-        case .active_invoices:
+        switch configuration.dashboardField?.identifier {
+        case "total_active_invoices":
             if let invoicedAmount = data?.invoices?.invoicedAmount, let value = Double(invoicedAmount) {
                 rawValue = value
             }
-            label = "Active Invoices"
-        case .outstanding_invoices:
+        case "total_outstanding_invoices":
             if let amount = data?.outstanding?.amount, let value = Double(amount) {
                 rawValue = value
             }
-            label = "Outstanding Invoices"
-        case .completed_payments:
+        case "total_completed_payments":
             if let paidToDate = data?.revenue?.paidToDate, let value = Double(paidToDate) {
                 rawValue = value
             }
-            label = "Completed Payments"
         default:
             break
         }
@@ -214,7 +207,7 @@ struct Provider: IntentTimelineProvider {
         formatter.currencyCode = currency?.code ?? "USD"
         value = formatter.string(from: NSNumber(value: rawValue))!
         
-        return (label, value)
+        return value
     }
     
     
@@ -278,14 +271,14 @@ struct WidgetData: Decodable, Hashable {
     let companyId: String
     let companies: [String: WidgetCompany]
     let dateRanges: [String: String]
-    let fields: [String: String]
+    let dashboardFields: [String: String]
     
     enum CodingKeys: String, CodingKey {
         case url
         case companyId = "company_id"
         case companies
         case dateRanges = "date_ranges"
-        case fields
+        case dashboardFields = "dashboard_fields"
     }
 }
 
@@ -327,7 +320,6 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let widgetData: WidgetData?
-    let field: String
     let value: String
     let error: String
 }
@@ -358,7 +350,7 @@ struct DashboardWidgetEntryView : View {
                     
                     HStack {
                         VStack {
-                            Text(entry.field)
+                            Text(entry.configuration.dashboardField?.displayString ?? "")
                                 .font(.body)
                                 .bold()
                                 .lineLimit(2)
@@ -413,7 +405,11 @@ struct DashboardWidget_Previews: PreviewProvider {
         do {
             return try getWidgetData()
         } catch {
-            return WidgetData(url: "url", companyId: "", companies: [:], dateRanges: [:], fields: [:])
+            return WidgetData(url: "url",
+                              companyId: "",
+                              companies: [:],
+                              dateRanges: [:],
+                              dashboardFields: [:])
         }
     }()
     
@@ -421,7 +417,6 @@ struct DashboardWidget_Previews: PreviewProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: ConfigurationIntent(),
                                 widgetData: widgetData,
-                                field: "Active Invoices",
                                 value: "$100.00",
                                 error: "")
         

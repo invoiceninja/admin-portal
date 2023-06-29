@@ -3,7 +3,11 @@ import Intents
 class IntentHandler: INExtension, ConfigurationIntentHandling {
     private func loadWidgetData() -> WidgetData {
         let sharedDefaults = UserDefaults(suiteName: "group.com.invoiceninja.app")
-        var widgetData: WidgetData = WidgetData(url: "", companyId: "", companies: [:], dateRanges: [:], fields: [:])
+        var widgetData: WidgetData = WidgetData(url: "",
+                                                companyId: "",
+                                                companies: [:],
+                                                dateRanges: [:],
+                                                dashboardFields: [:])
 
         if let sharedDefaults = sharedDefaults {
             do {
@@ -71,7 +75,24 @@ class IntentHandler: INExtension, ConfigurationIntentHandling {
         return DateRange(identifier: defaultDateRange, display: dateRamge)
     }
 
-
+    func provideDashboardFieldOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<DashboardField> {
+        let widgetData = loadWidgetData()
+        
+        
+        let fields = widgetData.dashboardFields.keys.sorted().map { field in
+            DashboardField(identifier: field, display: widgetData.dashboardFields[field]!)
+        }
+        
+        return INObjectCollection(items: fields)
+    }
+    
+    func defaultDashboardField(for intent: ConfigurationIntent) -> DashboardField? {
+        let widgetData = loadWidgetData()
+        let defaultField = "total_active_invoices";
+        let field = widgetData.dashboardFields[defaultField]!;
+        return DashboardField(identifier: defaultField, display: field)
+    }
+    
     override func handler(for intent: INIntent) -> Any {
         return self
     }

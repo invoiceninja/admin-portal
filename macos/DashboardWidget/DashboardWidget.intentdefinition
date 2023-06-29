@@ -3,67 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>INEnums</key>
-	<array>
-		<dict>
-			<key>INEnumDisplayName</key>
-			<string>Field</string>
-			<key>INEnumDisplayNameID</key>
-			<string>a7k58J</string>
-			<key>INEnumGeneratesHeader</key>
-			<true/>
-			<key>INEnumName</key>
-			<string>Field</string>
-			<key>INEnumType</key>
-			<string>Regular</string>
-			<key>INEnumValues</key>
-			<array>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>unknown</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>lwYuqc</string>
-					<key>INEnumValueName</key>
-					<string>unknown</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Active Invoices</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>z5NmCf</string>
-					<key>INEnumValueIndex</key>
-					<integer>1</integer>
-					<key>INEnumValueName</key>
-					<string>active_invoices</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Outstanding Invoices</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>KMErB0</string>
-					<key>INEnumValueIndex</key>
-					<integer>2</integer>
-					<key>INEnumValueName</key>
-					<string>outstanding_invoices</string>
-				</dict>
-				<dict>
-					<key>INEnumValueDisplayName</key>
-					<string>Completed Payments</string>
-					<key>INEnumValueDisplayNameID</key>
-					<string>HEngYv</string>
-					<key>INEnumValueIndex</key>
-					<integer>3</integer>
-					<key>INEnumValueName</key>
-					<string>completed_payments</string>
-				</dict>
-			</array>
-		</dict>
-	</array>
+	<array/>
 	<key>INIntentDefinitionModelVersion</key>
 	<string>1.2</string>
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>21G115</string>
+	<string>21G651</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>14C18</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -80,7 +26,7 @@
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>11</integer>
+			<integer>12</integer>
 			<key>INIntentName</key>
 			<string>Configuration</string>
 			<key>INIntentParameters</key>
@@ -168,17 +114,12 @@
 					<string>t2MezO</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>3</integer>
-					<key>INIntentParameterEnumType</key>
-					<string>Field</string>
-					<key>INIntentParameterEnumTypeNamespace</key>
-					<string>88xZPY</string>
-					<key>INIntentParameterMetadata</key>
-					<dict>
-						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>active_invoices</string>
-					</dict>
 					<key>INIntentParameterName</key>
-					<string>field</string>
+					<string>dashboardField</string>
+					<key>INIntentParameterObjectType</key>
+					<string>DashboardField</string>
+					<key>INIntentParameterObjectTypeNamespace</key>
+					<string>88xZPY</string>
 					<key>INIntentParameterPromptDialogs</key>
 					<array>
 						<dict>
@@ -197,7 +138,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${field}’.</string>
+							<string>There are ${count} options matching ‘${dashboardField}’.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>3UOOUA</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -207,17 +148,19 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${field}’?</string>
+							<string>Just to confirm, you wanted ‘${dashboardField}’?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>4sG08t</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Confirmation</string>
 						</dict>
 					</array>
+					<key>INIntentParameterSupportsDynamicEnumeration</key>
+					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>2</integer>
+					<integer>12</integer>
 					<key>INIntentParameterType</key>
-					<string>Integer</string>
+					<string>Object</string>
 				</dict>
 				<dict>
 					<key>INIntentParameterConfigurable</key>
@@ -247,26 +190,6 @@
 							<true/>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${dateRange}’.</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>M1c9EE</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${dateRange}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>YL2DLe</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
 						</dict>
 					</array>
 					<key>INIntentParameterSupportsDynamicEnumeration</key>
@@ -442,6 +365,69 @@
 			<integer>99</integer>
 			<key>INTypeName</key>
 			<string>DateRange</string>
+			<key>INTypeProperties</key>
+			<array>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>1</integer>
+					<key>INTypePropertyName</key>
+					<string>identifier</string>
+					<key>INTypePropertyTag</key>
+					<integer>1</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>2</integer>
+					<key>INTypePropertyName</key>
+					<string>displayString</string>
+					<key>INTypePropertyTag</key>
+					<integer>2</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>3</integer>
+					<key>INTypePropertyName</key>
+					<string>pronunciationHint</string>
+					<key>INTypePropertyTag</key>
+					<integer>3</integer>
+					<key>INTypePropertyType</key>
+					<string>String</string>
+				</dict>
+				<dict>
+					<key>INTypePropertyDefault</key>
+					<true/>
+					<key>INTypePropertyDisplayPriority</key>
+					<integer>4</integer>
+					<key>INTypePropertyName</key>
+					<string>alternativeSpeakableMatches</string>
+					<key>INTypePropertySupportsMultipleValues</key>
+					<true/>
+					<key>INTypePropertyTag</key>
+					<integer>4</integer>
+					<key>INTypePropertyType</key>
+					<string>SpeakableString</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>INTypeDisplayName</key>
+			<string>Field</string>
+			<key>INTypeDisplayNameID</key>
+			<string>VFh9Fr</string>
+			<key>INTypeLastPropertyTag</key>
+			<integer>99</integer>
+			<key>INTypeName</key>
+			<string>DashboardField</string>
 			<key>INTypeProperties</key>
 			<array>
 				<dict>
