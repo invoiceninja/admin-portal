@@ -349,7 +349,7 @@ struct DashboardWidgetEntryView : View {
                 VStack(alignment: .leading) {
                     
                     HStack {
-                        VStack (spacing: 4) {
+                        VStack (spacing: 2) {
                             Text(entry.configuration.dashboardField?.displayString ?? "")
                                 .font(.body)
                                 .bold()
