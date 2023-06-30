@@ -74,7 +74,7 @@ struct Provider: IntentTimelineProvider {
         SimpleEntry(date: Date(),
                     configuration: ConfigurationIntent(),
                     widgetData: widgetData,
-                    value: "$100.00",
+                    value: 0,
                     error: "")
     }
     
@@ -85,7 +85,7 @@ struct Provider: IntentTimelineProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: configuration,
                                 widgetData: widgetData,
-                                value: "$100.00",
+                                value: 0,
                                 error: "")
         
         completion(entry)
@@ -98,8 +98,7 @@ struct Provider: IntentTimelineProvider {
         Task {
             
             var widgetData:WidgetData?
-            var value = ""
-            var label = ""
+            var value = 0.0
             var message = ""
             
             do {
@@ -129,10 +128,9 @@ struct Provider: IntentTimelineProvider {
         }
     }
     
-    func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (String) {
+    func getTimelineData(for configuration: ConfigurationIntent, widgetData:WidgetData) async throws -> (Double) {
         
-        var rawValue = 0.0
-        var value = "Error"
+        var value = 0.0
         
         let companyId = configuration.company?.identifier ?? ""
         let company = widgetData.companies[companyId]
@@ -177,31 +175,22 @@ struct Provider: IntentTimelineProvider {
         
         switch configuration.dashboardField?.identifier {
         case "total_active_invoices":
-            if let invoicedAmount = data?.invoices?.invoicedAmount, let value = Double(invoicedAmount) {
-                rawValue = value
+            if let invoicedAmount = data?.invoices?.invoicedAmount {
+                value = Double(invoicedAmount) ?? 0
             }
         case "total_outstanding_invoices":
-            if let amount = data?.outstanding?.amount, let value = Double(amount) {
-                rawValue = value
+            if let amount = data?.outstanding?.amount {
+                value = Double(amount) ?? 0
             }
         case "total_completed_payments":
-            if let paidToDate = data?.revenue?.paidToDate, let value = Double(paidToDate) {
-                rawValue = value
+            if let paidToDate = data?.revenue?.paidToDate {
+                value = Double(paidToDate) ?? 0
             }
         default:
             break
         }
         
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = currency?.code ?? "USD"
-        
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 0
-        
-        value = formatter.string(from: NSNumber(value: rawValue))!
-        
+     
         return value
     }
     
@@ -315,7 +304,7 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
     let widgetData: WidgetData?
-    let value: String
+    let value: Double
     let error: String
 }
 
@@ -331,6 +320,23 @@ struct DashboardWidgetEntryView : View {
     var companyName: String {
         let companyId = entry.configuration.company?.identifier ?? ""
         return entry.widgetData?.companies[companyId]?.name ?? entry.configuration.company?.displayString ?? "";
+    }
+    
+    var value: String {
+        let companyId = entry.configuration.company?.identifier ?? ""
+        let company = entry.widgetData?.companies[companyId]
+        let currencyId = entry.configuration.currency?.identifier ?? ""
+        let currency = company?.currencies[currencyId]
+
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currency?.code ?? "USD"
+        
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 0
+        
+        return formatter.string(from: NSNumber(value: entry.value))!
     }
     
     var body: some View {
@@ -349,7 +355,7 @@ struct DashboardWidgetEntryView : View {
                                 .lineLimit(1)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(accentColor)
-                            Text(entry.value)
+                            Text(value)
                                 .font(.title)
                                 .privacySensitive()
                                 .lineLimit(1)
@@ -411,7 +417,7 @@ struct DashboardWidget_Previews: PreviewProvider {
         let entry = SimpleEntry(date: Date(),
                                 configuration: ConfigurationIntent(),
                                 widgetData: widgetData,
-                                value: "$100.00",
+                                value: 0,
                                 error: "")
         
         DashboardWidgetEntryView(entry: entry)
