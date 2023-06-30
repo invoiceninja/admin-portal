@@ -332,6 +332,7 @@ struct DashboardWidgetEntryView : View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.currencyCode = currency?.code ?? "USD"
+        formatter.locale = Locale(identifier: "en_US")
         
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 0
@@ -348,7 +349,7 @@ struct DashboardWidgetEntryView : View {
                 VStack(alignment: .leading) {
                     
                     HStack {
-                        VStack {
+                        VStack (spacing: 4) {
                             Text(entry.configuration.dashboardField?.displayString ?? "")
                                 .font(.body)
                                 .bold()
