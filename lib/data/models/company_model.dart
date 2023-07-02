@@ -1204,6 +1204,18 @@ abstract class UserSettingsEntity
     }
   }
 
+  String get validatedAccentColor {
+    if ((accentColor ?? '').isEmpty) {
+      return kDefaultAccentColor;
+    }
+
+    if (accentColor.toLowerCase() == '#ffffff') {
+      return kDefaultAccentColor;
+    }
+
+    return accentColor;
+  }
+
   // ignore: unused_element
   static void _initializeBuilder(UserSettingsEntityBuilder builder) => builder
     ..accentColor = kDefaultAccentColor

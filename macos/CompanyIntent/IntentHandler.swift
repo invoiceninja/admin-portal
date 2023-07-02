@@ -1,55 +1,113 @@
-//
-//  IntentHandler.swift
-//  CompanyIntent
-//
-//  Created by hillel on 14/06/2023.
-//
-
 import Intents
-import DashboardWidgetExtension
 
 class IntentHandler: INExtension, ConfigurationIntentHandling {
+    private func loadWidgetData() -> WidgetData {
+        var widgetData: WidgetData = WidgetData(url: "",
+                                                companyId: "",
+                                                companies: [:],
+                                                dateRanges: [:],
+                                                dashboardFields: [:])
+        
+        do {
+            widgetData = try getWidgetData()
+        } catch {
+            print(error)
+        }
+                
+        return widgetData
+    }
     
     func provideCompanyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Company> {
-              
-        let sharedDefaults = UserDefaults.init(suiteName: "group.com.invoiceninja.app")
-        var exampleData: WidgetData = WidgetData(url: "", tokens:[:])
-
-        if sharedDefaults != nil {
-          do {
-            let shared = sharedDefaults!.string(forKey: "widgetData")
-            if shared != nil {
-              let decoder = JSONDecoder()
-              exampleData = try decoder.decode(WidgetData.self, from: shared!.data(using: .utf8)!)
-            }
-          } catch {
-            print(error)
-          }
+        let widgetData = loadWidgetData()
+        
+        let companies = widgetData.companies.keys.sorted().map { companyId in
+            Company(identifier: companyId, display: widgetData.companies[companyId]!.name)
         }
         
-        let companies = exampleData.tokens.keys.map { token in
-            
-            let company = Company(
-                identifier: token,
-                display: exampleData.tokens[token] ?? ""
-            )
-            //company.symbol = asset.symbol
-            //company.name = asset.name
-            
-            return company
-        }
-          
-        let collection = INObjectCollection(items: companies)
-        
-        return collection
-        
-    }
-
-    override func handler(for intent: INIntent) -> Any {
-        // This is the default implementation.  If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
-        
-        return self
+        return INObjectCollection(items: companies)
     }
     
+    func defaultCompany(for intent: ConfigurationIntent) -> Company? {
+        let widgetData = loadWidgetData()
+        
+        if (widgetData.companyId.isEmpty) {
+            return nil
+        }
+        
+        let company = widgetData.companies[widgetData.companyId];
+        return Company(identifier: company!.id, display: company!.name)
+    }
+    
+    func provideCurrencyOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<Currency> {
+        let widgetData = loadWidgetData()
+        
+        let company = widgetData.companies[(intent.company?.identifier!)!]
+        let currencies = company!.currencies.keys.sorted().map { currencyId in
+            Currency(identifier: currencyId, display: company!.currencies[currencyId]!.name)
+        }
+        
+        return INObjectCollection(items: currencies)
+    }
+    
+    func defaultCurrency(for intent: ConfigurationIntent) -> Currency? {
+        let widgetData = loadWidgetData()
+        
+        if (widgetData.companyId.isEmpty) {
+            return nil
+        }
+
+        let company = widgetData.companies[widgetData.companyId];
+        let currency = company?.currencies[company!.currencyId];
+        return Currency(identifier: currency!.id, display: currency!.name)
+    }
+    
+    func provideDateRangeOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<DateRange> {
+        let widgetData = loadWidgetData()
+        
+        
+        let dateRanges = widgetData.dateRanges.keys.sorted().map { dateRange in
+            DateRange(identifier: dateRange, display: widgetData.dateRanges[dateRange]!)
+        }
+        
+        return INObjectCollection(items: dateRanges)
+    }
+    
+    func defaultDateRange(for intent: ConfigurationIntent) -> DateRange? {
+        let widgetData = loadWidgetData()
+        
+        if (widgetData.dateRanges.isEmpty) {
+            return nil
+        }
+
+        let defaultDateRange = "last30_days";
+        let dateRamge = widgetData.dateRanges[defaultDateRange]!;
+        return DateRange(identifier: defaultDateRange, display: dateRamge)
+    }
+
+    func provideDashboardFieldOptionsCollection(for intent: ConfigurationIntent) async throws -> INObjectCollection<DashboardField> {
+        let widgetData = loadWidgetData()
+        
+        
+        let fields = widgetData.dashboardFields.keys.sorted().map { field in
+            DashboardField(identifier: field, display: widgetData.dashboardFields[field]!)
+        }
+        
+        return INObjectCollection(items: fields)
+    }
+    
+    func defaultDashboardField(for intent: ConfigurationIntent) -> DashboardField? {
+        let widgetData = loadWidgetData()
+        
+        if (widgetData.dashboardFields.isEmpty) {
+            return nil
+        }
+
+        let defaultField = "total_active_invoices";
+        let field = widgetData.dashboardFields[defaultField]!;
+        return DashboardField(identifier: defaultField, display: field)
+    }
+    
+    override func handler(for intent: INIntent) -> Any {
+        return self
+    }
 }

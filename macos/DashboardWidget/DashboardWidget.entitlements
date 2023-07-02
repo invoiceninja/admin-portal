@@ -8,5 +8,7 @@
 	<array>
 		<string>group.com.invoiceninja.app</string>
 	</array>
+	<key>com.apple.security.network.client</key>
+	<true/>
 </dict>
 </plist>

@@ -158,7 +158,7 @@ ReportResult invoiceReport(
   }
 
   // Get the last payment for each invoice
-  final lastPaymentMap = Map<String, PaymentEntity>();
+  final lastPaymentMap = <String, PaymentEntity>{};
   if (columns.contains(InvoiceReportFields.paid_date)) {
     // Loop through each payment and add to the map if it is the last payment for the invoice
     paymentMap.forEach((paymentId, payment) {
@@ -167,8 +167,8 @@ ReportResult invoiceReport(
         payment.paymentables.forEach((paymentable) {
           final invoiceId = paymentable.invoiceId;
           // If the invoice is in the invoice map and the payment is the last payment for the invoice
-          if(lastPaymentMap.containsKey(invoiceId)){
-            if(payment.date.compareTo(lastPaymentMap[invoiceId].date) == 1){
+          if (lastPaymentMap.containsKey(invoiceId)) {
+            if (payment.date.compareTo(lastPaymentMap[invoiceId].date) == 1) {
               lastPaymentMap[invoiceId] = payment;
             }
           } else {

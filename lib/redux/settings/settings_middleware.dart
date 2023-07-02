@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -104,6 +105,7 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
         .then((company) {
       store.dispatch(SaveCompanySuccess(company));
       action.completer.complete();
+      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveCompanyFailure(error));
@@ -150,6 +152,7 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
       if (action.completer != null) {
         action.completer.complete();
       }
+      updateWidgetData();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveAuthUserFailure(error));

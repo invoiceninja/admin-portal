@@ -37,7 +37,6 @@
 		F9395FB72A3A53800066F1E7 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9395FB62A3A53800066F1E7 /* Intents.framework */; };
 		F9395FBA2A3A53800066F1E7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FB92A3A53800066F1E7 /* IntentHandler.swift */; };
 		F9395FBF2A3A53800066F1E7 /* CompanyIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F9395FB52A3A53800066F1E7 /* CompanyIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F9395FC52A3A542F0066F1E7 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FB92A3A53800066F1E7 /* IntentHandler.swift */; };
 		F9395FC62A3A54A20066F1E7 /* DashboardWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA02A3A30DD0066F1E7 /* DashboardWidget.swift */; };
 		F9395FC72A3A54F90066F1E7 /* DashboardWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = F9395FA22A3A30DD0066F1E7 /* DashboardWidget.intentdefinition */; };
 /* End PBXBuildFile section */
@@ -507,7 +506,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9395FA72A3A30DE0066F1E7 /* DashboardWidget.intentdefinition in Sources */,
-				F9395FC52A3A542F0066F1E7 /* IntentHandler.swift in Sources */,
 				F9395FA12A3A30DD0066F1E7 /* DashboardWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
