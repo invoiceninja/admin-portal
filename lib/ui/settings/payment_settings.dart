@@ -205,22 +205,32 @@ class _PaymentSettingsState extends State<PaymentSettings> {
           ),
           SizedBox(height: 8),
           FormCard(children: [
-            if (!state.uiState.settingsUIState.isFiltered) ...[
+            if (!state.uiState.settingsUIState.isFiltered)
               BoolDropdownButton(
-                label: localization.enableApplyingPaymentsLater,
+                label: localization.adminInitiatedPayments,
                 value: company.enableApplyingPayments,
-                helpLabel: localization.enableApplyingPaymentsHelp,
+                helpLabel: localization.adminInitiatedPaymentsHelp,
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableApplyingPayments = value)),
               ),
-              BoolDropdownButton(
-                label: localization.convertCurrency,
-                value: company.convertPaymentCurrency,
-                helpLabel: localization.convertPaymentCurrencyHelp,
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..convertPaymentCurrency = value)),
+            BoolDropdownButton(
+              label: localization.clientInitiatedPayments,
+              value: settings.clientInitiatedPayments,
+              helpLabel: localization.clientInitiatedPaymentsHelp,
+              onChanged: (value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..clientInitiatedPayments = value)),
+            ),
+            if (settings.clientInitiatedPayments == true)
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: DecoratedFormField(
+                  label: localization.minimumPaymentAmount,
+                  controller: _minimumPaymentAmountController,
+                  isMoney: true,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                ),
               ),
-            ],
             BoolDropdownButton(
               label: localization.allowOverPayment,
               value: settings.clientPortalAllowOverPayment,
@@ -246,23 +256,13 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                       decimal: true, signed: true),
                 ),
               ),
-            BoolDropdownButton(
-              label: localization.clientInitiatedPayments,
-              value: settings.clientInitiatedPayments,
-              helpLabel: localization.clientInitiatedPaymentsHelp,
-              onChanged: (value) => viewModel.onSettingsChanged(
-                  settings.rebuild((b) => b..clientInitiatedPayments = value)),
-            ),
-            if (settings.clientInitiatedPayments == true)
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: DecoratedFormField(
-                  label: localization.minimumPaymentAmount,
-                  controller: _minimumPaymentAmountController,
-                  isMoney: true,
-                  keyboardType: TextInputType.numberWithOptions(
-                      decimal: true, signed: true),
-                ),
+            if (!state.uiState.settingsUIState.isFiltered)
+              BoolDropdownButton(
+                label: localization.convertCurrency,
+                value: company.convertPaymentCurrency,
+                helpLabel: localization.convertPaymentCurrencyHelp,
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..convertPaymentCurrency = value)),
               ),
           ]),
           FormCard(
