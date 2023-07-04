@@ -25,6 +25,8 @@ class ProductPresenter extends EntityPresenter {
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    final company = userCompany.company;
+
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -41,7 +43,7 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.taxName3,
       ProductFields.stockQuantity,
       ProductFields.notificationThreshold,
-      ProductFields.taxCategory,
+      if (company.calculateTaxes) ProductFields.taxCategory,
     ];
   }
 
