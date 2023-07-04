@@ -4,6 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -74,6 +75,8 @@ Middleware<AppState> _createUserLogout() {
         LoginScreen.route, (Route<dynamic> route) => false);
 
     store.dispatch(UpdateCurrentRoute(LoginScreen.route));
+
+    WidgetUtils.clearData();
   };
 }
 
@@ -84,8 +87,6 @@ Middleware<AppState> _createUserLogoutAll(AuthRepository repository) {
     repository
         .logout(credentials: store.state.credentials)
         .then((dynamic response) {
-      print('## DONE MIDDLE');
-
       store.dispatch(UserLogoutAllSuccess());
       store.dispatch(UserLogout());
     }).catchError((Object error) {
