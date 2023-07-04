@@ -13,7 +13,7 @@ class WidgetUtils {
   static const DATA_KEY = 'widget_data';
   static const APP_GROUP = 'group.com.invoiceninja.app';
 
-  static void updateWidgetData() {
+  static void updateData() {
     if (!isApple()) {
       return;
     }
