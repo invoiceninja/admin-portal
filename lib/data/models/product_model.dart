@@ -292,7 +292,7 @@ abstract class ProductEntity extends Object
     }
 
     if (response == 0) {
-      response = product.createdAt.compareTo(createdAt);
+      response = productA.price.compareTo(productB.price);
     }
 
     return response;
