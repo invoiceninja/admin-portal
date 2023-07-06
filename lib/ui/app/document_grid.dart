@@ -16,14 +16,15 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -304,9 +305,25 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                launchUrl(Uri.parse(state.account.defaultUrl +
-                                    document.downloadUrl +
-                                    '?inline=true'));
+                                final http.Response response = await WebClient()
+                                    .get(document.url, state.credentials.token,
+                                        rawResponse: true);
+                                showDialog<void>(
+                                    context: navigatorKey.currentContext,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(),
+                                                child: Text(localization.close
+                                                    .toUpperCase())),
+                                          ],
+                                          content: PinchZoom(
+                                            child: Image.memory(
+                                                response.bodyBytes),
+                                          ));
+                                    });
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
                                     .get(document.url, state.credentials.token,
@@ -382,15 +399,14 @@ class DocumentTile extends StatelessWidget {
                             },
                             itemBuilder: (context) {
                               return [
-                                /*
-                                PopupMenuItem<String>(
-                                  child: IconText(
-                                    text: localization.view,
-                                    icon: Icons.open_in_browser,
+                                if (document.isImage)
+                                  PopupMenuItem<String>(
+                                    child: IconText(
+                                      text: localization.view,
+                                      icon: Icons.open_in_browser,
+                                    ),
+                                    value: localization.view,
                                   ),
-                                  value: localization.view,
-                                ),
-                                */
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.download,

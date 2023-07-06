@@ -466,7 +466,7 @@ Middleware<AppState> _createAccountLoaded() {
 
     next(action);
 
-    updateWidgetData();
+    WidgetUtils.updateData();
   };
 }
 
@@ -521,7 +521,7 @@ Middleware<AppState> _createDataRefreshed() {
 
     next(action);
 
-    updateWidgetData();
+    WidgetUtils.updateData();
 
     if (store.state.company.isLarge && !store.state.isLoaded) {
       store.dispatch(LoadClients());

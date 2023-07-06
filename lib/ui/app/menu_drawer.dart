@@ -980,10 +980,16 @@ class _DrawerTileState extends State<DrawerTile> {
       ),
     );
 
-    if (state.isMenuCollapsed) {
-      child = Tooltip(
-        message: widget.title,
-        child: child,
+    if (isSelected) {
+      child = Stack(
+        children: [
+          child,
+          SizedBox(
+            width: 6,
+            height: 40,
+            child: ColoredBox(color: state.accentColor),
+          ),
+        ],
       );
     }
 
@@ -1014,7 +1020,9 @@ class SidebarFooter extends StatelessWidget {
             Expanded(child: SizedBox())
           ] else ...[
             if (!Config.DEMO_MODE && !state.isDemo && account.isOld)
-              if (state.isSelfHosted && !account.isSchedulerRunning)
+              if (state.isSelfHosted &&
+                  !account.isSchedulerRunning &&
+                  state.userCompany.isAdmin)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization.error : '',
                   icon: Icon(
