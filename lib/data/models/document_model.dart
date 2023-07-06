@@ -142,8 +142,14 @@ abstract class DocumentEntity extends Object
 
   String get downloadUrl => '/documents/$hash';
 
-  bool get isImage =>
-      name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.jpeg');
+  bool get isImage {
+    final fileName = name.toLowerCase();
+    return fileName.endsWith('.png') ||
+        fileName.endsWith('.jpg') ||
+        fileName.endsWith('.jpeg') ||
+        fileName.endsWith('.bmp') ||
+        fileName.endsWith('.webp');
+  }
 
   int compareTo(DocumentEntity document,
       [String sortField, bool sortAscending = true]) {
