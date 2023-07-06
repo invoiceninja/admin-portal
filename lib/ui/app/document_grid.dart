@@ -16,6 +16,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -304,9 +305,26 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                launchUrl(Uri.parse(state.account.defaultUrl +
-                                    document.downloadUrl +
-                                    '?inline=true'));
+                                final http.Response response = await WebClient()
+                                    .get(document.url, state.credentials.token,
+                                        rawResponse: true);
+                                showDialog<void>(
+                                    context: navigatorKey.currentContext,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: Text(localization.close
+                                                  .toUpperCase())),
+                                        ],
+                                        content: Image.memory(
+                                          response.bodyBytes,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    });
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
                                     .get(document.url, state.credentials.token,
@@ -382,7 +400,6 @@ class DocumentTile extends StatelessWidget {
                             },
                             itemBuilder: (context) {
                               return [
-                                /*
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.view,
@@ -390,7 +407,6 @@ class DocumentTile extends StatelessWidget {
                                   ),
                                   value: localization.view,
                                 ),
-                                */
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.download,
