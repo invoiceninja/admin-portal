@@ -400,13 +400,14 @@ class DocumentTile extends StatelessWidget {
                             },
                             itemBuilder: (context) {
                               return [
-                                PopupMenuItem<String>(
-                                  child: IconText(
-                                    text: localization.view,
-                                    icon: Icons.open_in_browser,
+                                if (document.isImage)
+                                  PopupMenuItem<String>(
+                                    child: IconText(
+                                      text: localization.view,
+                                      icon: Icons.open_in_browser,
+                                    ),
+                                    value: localization.view,
                                   ),
-                                  value: localization.view,
-                                ),
                                 PopupMenuItem<String>(
                                   child: IconText(
                                     text: localization.download,
