@@ -1072,6 +1072,14 @@ packages:
       url: "https://github.com/bluefireteam/photo_view"
     source: git
     version: "0.14.0"
+  pinch_zoom:
+    dependency: "direct main"
+    description:
+      name: pinch_zoom
+      sha256: ad12872281742726afaf03438d99a4572c584a612630768953beb6dfd6f9389a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   pinput:
     dependency: "direct main"
     description:

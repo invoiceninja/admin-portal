@@ -23,8 +23,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -312,18 +312,17 @@ class DocumentTile extends StatelessWidget {
                                     context: navigatorKey.currentContext,
                                     builder: (context) {
                                       return AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              child: Text(localization.close
-                                                  .toUpperCase())),
-                                        ],
-                                        content: Image.memory(
-                                          response.bodyBytes,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      );
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(),
+                                                child: Text(localization.close
+                                                    .toUpperCase())),
+                                          ],
+                                          content: PinchZoom(
+                                            child: Image.memory(
+                                                response.bodyBytes),
+                                          ));
                                     });
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
