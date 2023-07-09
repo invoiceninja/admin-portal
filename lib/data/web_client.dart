@@ -210,7 +210,7 @@ Map<String, String> _getHeaders(
     secret = Config.API_SECRET;
   }
   final headers = {
-    'X-CLIENT': getPlatformName(),
+    'X-CLIENT-PLATFORM': getPlatformName(),
     'X-CLIENT-VERSION': kClientVersion,
     'X-API-SECRET': secret,
     'X-Requested-With': 'XMLHttpRequest',
