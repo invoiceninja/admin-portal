@@ -500,7 +500,7 @@ struct ApiService {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue(apiToken, forHTTPHeaderField: "X-API-Token")
-        request.addValue("macOS Widget", forHTTPHeaderField: "X-CLIENT")
+        request.addValue("macOS Widget", forHTTPHeaderField: "X-CLIENT-PLATFORM")
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
