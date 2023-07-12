@@ -24,6 +24,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 
 // Project imports:
@@ -312,17 +313,31 @@ class DocumentTile extends StatelessWidget {
                                     context: navigatorKey.currentContext,
                                     builder: (context) {
                                       return AlertDialog(
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: Text(localization.close
-                                                    .toUpperCase())),
-                                          ],
-                                          content: PinchZoom(
-                                            child: Image.memory(
-                                                response.bodyBytes),
-                                          ));
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: Text(localization.close
+                                                  .toUpperCase())),
+                                        ],
+                                        content: document.isImage
+                                            ? PinchZoom(
+                                                child: Image.memory(
+                                                    response.bodyBytes),
+                                              )
+                                            : SizedBox(
+                                                width: 600,
+                                                child: PdfPreview(
+                                                  build: (format) =>
+                                                      response.bodyBytes,
+                                                  canChangeOrientation: false,
+                                                  canChangePageFormat: false,
+                                                  allowPrinting: false,
+                                                  allowSharing: false,
+                                                  canDebug: false,
+                                                ),
+                                              ),
+                                      );
                                     });
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
@@ -399,7 +414,7 @@ class DocumentTile extends StatelessWidget {
                             },
                             itemBuilder: (context) {
                               return [
-                                if (document.isImage)
+                                if (document.isImage || document.isPdf)
                                   PopupMenuItem<String>(
                                     child: IconText(
                                       text: localization.view,
@@ -455,7 +470,7 @@ class DocumentPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
 
-    if (['png', 'jpg', 'jpeg'].contains(document.type)) {
+    if (document.isImage) {
       return CachedNetworkImage(
           height: height,
           width: double.infinity,
