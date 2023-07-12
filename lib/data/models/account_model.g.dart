@@ -82,6 +82,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'has_iap_plan',
       serializers.serialize(object.hasIapPlan,
           specifiedType: const FullType(bool)),
+      'payment_id',
+      serializers.serialize(object.paymentId,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -187,6 +190,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.hasIapPlan = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'payment_id':
+          result.paymentId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -239,6 +246,8 @@ class _$AccountEntity extends AccountEntity {
   final int trialDaysLeft;
   @override
   final bool hasIapPlan;
+  @override
+  final String paymentId;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates))._build();
@@ -265,7 +274,8 @@ class _$AccountEntity extends AccountEntity {
       this.setReactAsDefaultAP,
       this.accountSmsVerified,
       this.trialDaysLeft,
-      this.hasIapPlan})
+      this.hasIapPlan,
+      this.paymentId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
@@ -308,6 +318,8 @@ class _$AccountEntity extends AccountEntity {
         trialDaysLeft, r'AccountEntity', 'trialDaysLeft');
     BuiltValueNullFieldError.checkNotNull(
         hasIapPlan, r'AccountEntity', 'hasIapPlan');
+    BuiltValueNullFieldError.checkNotNull(
+        paymentId, r'AccountEntity', 'paymentId');
   }
 
   @override
@@ -342,7 +354,8 @@ class _$AccountEntity extends AccountEntity {
         setReactAsDefaultAP == other.setReactAsDefaultAP &&
         accountSmsVerified == other.accountSmsVerified &&
         trialDaysLeft == other.trialDaysLeft &&
-        hasIapPlan == other.hasIapPlan;
+        hasIapPlan == other.hasIapPlan &&
+        paymentId == other.paymentId;
   }
 
   int __hashCode;
@@ -372,6 +385,7 @@ class _$AccountEntity extends AccountEntity {
     _$hash = $jc(_$hash, accountSmsVerified.hashCode);
     _$hash = $jc(_$hash, trialDaysLeft.hashCode);
     _$hash = $jc(_$hash, hasIapPlan.hashCode);
+    _$hash = $jc(_$hash, paymentId.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -400,7 +414,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('setReactAsDefaultAP', setReactAsDefaultAP)
           ..add('accountSmsVerified', accountSmsVerified)
           ..add('trialDaysLeft', trialDaysLeft)
-          ..add('hasIapPlan', hasIapPlan))
+          ..add('hasIapPlan', hasIapPlan)
+          ..add('paymentId', paymentId))
         .toString();
   }
 }
@@ -506,6 +521,10 @@ class AccountEntityBuilder
   bool get hasIapPlan => _$this._hasIapPlan;
   set hasIapPlan(bool hasIapPlan) => _$this._hasIapPlan = hasIapPlan;
 
+  String _paymentId;
+  String get paymentId => _$this._paymentId;
+  set paymentId(String paymentId) => _$this._paymentId = paymentId;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -535,6 +554,7 @@ class AccountEntityBuilder
       _accountSmsVerified = $v.accountSmsVerified;
       _trialDaysLeft = $v.trialDaysLeft;
       _hasIapPlan = $v.hasIapPlan;
+      _paymentId = $v.paymentId;
       _$v = null;
     }
     return this;
@@ -588,7 +608,8 @@ class AccountEntityBuilder
             setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
             accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
             trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
-            hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'));
+            hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'),
+            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'AccountEntity', 'paymentId'));
     replace(_$result);
     return _$result;
   }
