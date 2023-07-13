@@ -389,7 +389,9 @@ class _AccountOverview extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    if (supportsInAppPurchase() && !account.hasIapPlan) {
+                    if (supportsInAppPurchase() &&
+                        !account.hasIapPlan &&
+                        account.paymentId.isEmpty) {
                       showDialog<void>(
                         context: context,
                         builder: (context) => UpgradeDialog(),

@@ -151,6 +151,11 @@ abstract class DocumentEntity extends Object
         fileName.endsWith('.webp');
   }
 
+  bool get isPdf {
+    final fileName = name.toLowerCase();
+    return fileName.endsWith('.pdf');
+  }
+
   int compareTo(DocumentEntity document,
       [String sortField, bool sortAscending = true]) {
     int response = 0;

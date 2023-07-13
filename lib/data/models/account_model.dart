@@ -35,6 +35,7 @@ abstract class AccountEntity
       setReactAsDefaultAP: false,
       trialDaysLeft: 0,
       hasIapPlan: false,
+      paymentId: '',
     );
   }
 
@@ -107,6 +108,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'has_iap_plan')
   bool get hasIapPlan;
 
+  @BuiltValueField(wireName: 'payment_id')
+  String get paymentId;
+
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
@@ -141,7 +145,8 @@ abstract class AccountEntity
     ..hostedClientCount = 0
     ..hostedCompanyCount = 1
     ..accountSmsVerified = true
-    ..setReactAsDefaultAP = false;
+    ..setReactAsDefaultAP = false
+    ..paymentId = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }
