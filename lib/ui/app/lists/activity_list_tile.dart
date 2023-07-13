@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -45,7 +46,11 @@ class ActivityListTile extends StatelessWidget {
     final purchaseOrder =
         state.purchaseOrderState.map[activity.purchaseOrderId];
 
-    String title = localization.lookup('activity_${activity.activityTypeId}');
+    String key = 'activity_${activity.activityTypeId}';
+    if (activity.activityTypeId == kActivityCreatePayment) {
+      key += payment.isOnline ? '_online' : '_manual';
+    }
+    String title = localization.lookup(key);
     title = activity.getDescription(
       title,
       localization.system,
