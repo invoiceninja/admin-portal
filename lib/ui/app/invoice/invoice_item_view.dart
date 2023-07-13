@@ -38,6 +38,7 @@ class InvoiceItemListTile extends StatelessWidget {
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final client = state.clientState.get(invoice.clientId);
     final precision =
         state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
@@ -80,25 +81,29 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     final List<String> parts = [];
-    if (invoiceItem.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product1) &&
+        invoiceItem.customValue1.isNotEmpty) {
       parts.add(formatCustomValue(
           context: context,
           field: CustomFieldType.product1,
           value: invoiceItem.customValue1));
     }
-    if (invoiceItem.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product2) &&
+        invoiceItem.customValue2.isNotEmpty) {
       parts.add(formatCustomValue(
           context: context,
           field: CustomFieldType.product2,
           value: invoiceItem.customValue2));
     }
-    if (invoiceItem.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product3) &&
+        invoiceItem.customValue3.isNotEmpty) {
       parts.add(formatCustomValue(
           context: context,
           field: CustomFieldType.product3,
           value: invoiceItem.customValue3));
     }
-    if (invoiceItem.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product4) &&
+        invoiceItem.customValue4.isNotEmpty) {
       parts.add(formatCustomValue(
           context: context,
           field: CustomFieldType.product4,

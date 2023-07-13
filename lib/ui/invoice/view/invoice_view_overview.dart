@@ -210,28 +210,32 @@ class InvoiceOverview extends StatelessWidget {
       }
     };
 
-    if (invoice.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.invoice1) &&
+        invoice.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.invoice1);
       fields[label1] = formatCustomValue(
           context: context,
           field: CustomFieldType.invoice1,
           value: invoice.customValue1);
     }
-    if (invoice.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.invoice2) &&
+        invoice.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.invoice2);
       fields[label2] = formatCustomValue(
           context: context,
           field: CustomFieldType.invoice2,
           value: invoice.customValue2);
     }
-    if (invoice.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.invoice3) &&
+        invoice.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.invoice3);
       fields[label3] = formatCustomValue(
           context: context,
           field: CustomFieldType.invoice3,
           value: invoice.customValue3);
     }
-    if (invoice.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.invoice4) &&
+        invoice.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.invoice4);
       fields[label4] = formatCustomValue(
           context: context,

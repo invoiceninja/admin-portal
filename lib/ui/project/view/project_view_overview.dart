@@ -66,28 +66,32 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           formatNumberType: FormatNumberType.money, clientId: project.clientId),
     };
 
-    if (project.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.project1) &&
+        project.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.project1);
       fields[label1] = formatCustomValue(
           context: context,
           field: CustomFieldType.project1,
           value: project.customValue1);
     }
-    if (project.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.project2) &&
+        project.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.project2);
       fields[label2] = formatCustomValue(
           context: context,
           field: CustomFieldType.project2,
           value: project.customValue2);
     }
-    if (project.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.project3) &&
+        project.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.project3);
       fields[label3] = formatCustomValue(
           context: context,
           field: CustomFieldType.project3,
           value: project.customValue3);
     }
-    if (project.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.project4) &&
+        project.customValue2.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.project4);
       fields[label4] = formatCustomValue(
           context: context,

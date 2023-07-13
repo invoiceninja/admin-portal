@@ -74,14 +74,17 @@ class _TaskOverviewState extends State<TaskOverview> {
           company.taskStatusMap[task.statusId]?.name ?? '';
     }
 
-    if (task.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.task1) &&
+        task.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
       fields[label1] = formatCustomValue(
           context: context,
           field: CustomFieldType.task1,
           value: task.customValue1);
     }
-    if (task.customValue2.isNotEmpty) {
+
+    if (company.hasCustomField(CustomFieldType.task2) &&
+        task.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
       fields[label2] = formatCustomValue(
           context: context,
@@ -89,7 +92,8 @@ class _TaskOverviewState extends State<TaskOverview> {
           value: task.customValue2);
     }
 
-    if (task.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.task3) &&
+        task.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.task3);
       fields[label3] = formatCustomValue(
           context: context,
@@ -97,7 +101,8 @@ class _TaskOverviewState extends State<TaskOverview> {
           value: task.customValue3);
     }
 
-    if (task.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.task4) &&
+        task.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.task4);
       fields[label4] = formatCustomValue(
           context: context,

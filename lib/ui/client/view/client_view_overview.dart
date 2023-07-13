@@ -89,28 +89,32 @@ class ClientOverview extends StatelessWidget {
           statics.currencyMap[client.currencyId]?.name;
     }
 
-    if (client.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.client1) &&
+        client.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.client1);
       fields[label1] = formatCustomValue(
           context: context,
           field: CustomFieldType.client1,
           value: client.customValue1);
     }
-    if (client.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.client2) &&
+        client.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.client2);
       fields[label2] = formatCustomValue(
           context: context,
           field: CustomFieldType.client2,
           value: client.customValue2);
     }
-    if (client.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.client3) &&
+        client.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.client3);
       fields[label3] = formatCustomValue(
           context: context,
           field: CustomFieldType.client3,
           value: client.customValue3);
     }
-    if (client.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.client4) &&
+        client.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.client4);
       fields[label4] = formatCustomValue(
           context: context,

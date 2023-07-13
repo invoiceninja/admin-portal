@@ -187,7 +187,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 entityType: EntityType.paymentType,
                 entityList:
                     memoizedPaymentTypeList(state.staticState.paymentTypeMap),
-                labelText: localization.paymentType,
+                labelText: localization.defaultPaymentType,
                 entityId: settings.defaultPaymentTypeId,
                 onSelected: (paymentType) => viewModel.onSettingsChanged(
                     settings.rebuild(
