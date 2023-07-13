@@ -131,9 +131,12 @@ ReportResult lineItemReport(
             break;
           case InvoiceItemReportFields.profit:
           case InvoiceItemReportFields.markup:
-            final cost = productId == null
-                ? 0.0
-                : (productMap[productId].cost * lineItem.quantity);
+            var cost = 0.0;
+            if (lineItem.productCost != 0) {
+              cost = lineItem.productCost;
+            } else {
+              cost = productId == null ? 0.0 : productMap[productId].cost;
+            }
             value = lineItem.netTotal(invoice, precision) - cost;
             if (column == InvoiceItemReportFields.markup && cost != 0) {
               value = '${round(value / cost * 100, 2)}%';
