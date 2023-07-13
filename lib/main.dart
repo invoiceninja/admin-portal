@@ -100,6 +100,7 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  _registerErrorHandlers();
 
   try {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
@@ -276,4 +277,23 @@ Future<AppState> _initialState(bool isTesting) async {
     isWhiteLabeled: whiteLabeled,
     currentRoute: browserRoute,
   );
+}
+
+void _registerErrorHandlers() {
+  /*
+  // * Show some error UI if any uncaught exception happens
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    //errorLogger.logError(details.exception, details.stack);
+  };
+  // * Handle errors from the underlying platform/OS
+  PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+    //errorLogger.logError(error, stack);
+    return true;
+  };
+  */
+
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return Center(child: Text(details.toString()));
+  };
 }
