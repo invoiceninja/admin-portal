@@ -56,7 +56,8 @@ class _ProductOverviewState extends State<ProductOverview> {
           localization.lookup(kTaxCategories[product.taxCategoryId]);
     }
 
-    if (product.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product1) &&
+        product.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.product1);
       fields[label1] = formatCustomValue(
           context: context,
@@ -64,7 +65,8 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue1);
     }
 
-    if (product.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product2) &&
+        product.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.product2);
       fields[label2] = formatCustomValue(
           context: context,
@@ -72,7 +74,8 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue2);
     }
 
-    if (product.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product3) &&
+        product.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.product3);
       fields[label3] = formatCustomValue(
           context: context,
@@ -80,7 +83,8 @@ class _ProductOverviewState extends State<ProductOverview> {
           value: product.customValue3);
     }
 
-    if (product.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.product4) &&
+        product.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.product4);
       fields[label4] = formatCustomValue(
           context: context,

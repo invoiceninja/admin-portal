@@ -51,28 +51,32 @@ class ExpenseOverview extends StatelessWidget {
     }
 
     final fields = <String, String>{};
-    if (expense.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.expense1) &&
+        expense.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.expense1);
       fields[label1] = formatCustomValue(
           context: context,
           field: CustomFieldType.expense1,
           value: expense.customValue1);
     }
-    if (expense.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.expense2) &&
+        expense.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.expense2);
       fields[label2] = formatCustomValue(
           context: context,
           field: CustomFieldType.expense2,
           value: expense.customValue2);
     }
-    if (expense.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.expense3) &&
+        expense.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.expense3);
       fields[label3] = formatCustomValue(
           context: context,
           field: CustomFieldType.expense3,
           value: expense.customValue3);
     }
-    if (expense.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.expense4) &&
+        expense.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.expense4);
       fields[label4] = formatCustomValue(
           context: context,

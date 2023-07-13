@@ -48,7 +48,8 @@ class VendorOverview extends StatelessWidget {
           statics.currencyMap[vendor.currencyId].name;
     }
 
-    if (vendor.customValue1.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.vendor1) &&
+        vendor.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.vendor1);
       fields[label1] = formatCustomValue(
           context: context,
@@ -56,7 +57,8 @@ class VendorOverview extends StatelessWidget {
           value: vendor.customValue1);
     }
 
-    if (vendor.customValue2.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.vendor2) &&
+        vendor.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.vendor2);
       fields[label2] = formatCustomValue(
           context: context,
@@ -64,7 +66,8 @@ class VendorOverview extends StatelessWidget {
           value: vendor.customValue2);
     }
 
-    if (vendor.customValue3.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.vendor3) &&
+        vendor.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.vendor3);
       fields[label3] = formatCustomValue(
           context: context,
@@ -72,7 +75,8 @@ class VendorOverview extends StatelessWidget {
           value: vendor.customValue3);
     }
 
-    if (vendor.customValue4.isNotEmpty) {
+    if (company.hasCustomField(CustomFieldType.vendor4) &&
+        vendor.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.vendor4);
       fields[label4] = formatCustomValue(
           context: context,
