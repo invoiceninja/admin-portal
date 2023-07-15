@@ -220,7 +220,7 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.converted_balance:
           value = invoice.isCancelled
-              ? 0
+              ? 0.0
               : round(invoice.balanceOrAmount * 1 / invoice.exchangeRate, 2);
           break;
         case InvoiceReportFields.client:
