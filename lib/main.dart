@@ -294,6 +294,6 @@ void _registerErrorHandlers() {
   */
 
   ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Center(child: Text(details.toString()));
+    return Material(child: Center(child: Text(details.toString())));
   };
 }
