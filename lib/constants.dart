@@ -62,7 +62,7 @@ const String kDocsCustomFieldsUrl = '$kDocsUrl/custom-fields/#custom-fields';
 const String kDocsStripeConnectUrl = '$kDocsUrl/hosted-stripe';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
-const String kApiDocsURL = '$kDocsUrl/developer-guide';
+const String kApiDocsURL = 'https://api-docs.invoicing.co';
 const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
