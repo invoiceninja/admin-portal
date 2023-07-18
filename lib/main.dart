@@ -294,6 +294,14 @@ void _registerErrorHandlers() {
   */
 
   ErrorWidget.builder = (FlutterErrorDetails details) {
-    return Material(child: Center(child: Text(details.toString())));
+    return Material(
+      color: Colors.grey.shade100,
+      child: Center(
+        child: Text(
+          details.toString(),
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
   };
 }

@@ -587,6 +587,8 @@ Middleware<AppState> _createClearData(
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     companyRepositories.forEach((repo) => repo.delete());
 
+    store.dispatch(PersistData());
+
     next(action);
   };
 }

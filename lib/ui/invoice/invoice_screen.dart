@@ -72,6 +72,11 @@ class InvoiceScreen extends StatelessWidget {
           ..id = kInvoiceStatusPastDue
           ..name = localization.pastDue,
       ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kInvoiceStatusCancelled
+          ..name = localization.cancelled,
+      ),
     ];
 
     return ListScaffold(
