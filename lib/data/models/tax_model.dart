@@ -82,6 +82,43 @@ abstract class TaxDataEntity
   double get district5UseTax;
   String get originDestination;
 
+  // ignore: unused_element
+  static void _initializeBuilder(TaxDataEntityBuilder builder) => builder
+    ..citySalesTax = 0
+    ..cityTaxCode = ''
+    ..cityUseTax = 0
+    ..countySalesTax = 0
+    ..countyTaxCode = ''
+    ..countyUseTax = 0
+    ..district1Code = ''
+    ..district1SalesTax = 0
+    ..district1UseTax = 0
+    ..district2Code = ''
+    ..district2SalesTax = 0
+    ..district2UseTax = 0
+    ..district3Code = ''
+    ..district3SalesTax = 0
+    ..district3UseTax = 0
+    ..district4Code = ''
+    ..district4SalesTax = 0
+    ..district4UseTax = 0
+    ..district5Code = ''
+    ..district5SalesTax = 0
+    ..district5UseTax = 0
+    ..districtSalesTax = 0
+    ..districtUseTax = 0
+    ..geoCity = ''
+    ..geoCounty = ''
+    ..geoPostalCode = ''
+    ..geoState = ''
+    ..originDestination = ''
+    ..stateSalesTax = 0
+    ..stateUseTax = 0
+    ..taxSales = 0
+    ..taxUse = 0
+    ..txbFreight = ''
+    ..txbService = '';
+
   static Serializer<TaxDataEntity> get serializer => _$taxDataEntitySerializer;
 }
 
