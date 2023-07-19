@@ -31,7 +31,7 @@ class QuoteRepository {
         credentials.token);
 
     final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return quoteResponse.data;
@@ -49,7 +49,7 @@ class QuoteRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse quoteResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[InvoiceListResponse.serializer, response]);
 
     return quoteResponse.data;

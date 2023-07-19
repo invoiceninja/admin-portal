@@ -31,7 +31,7 @@ class ProductRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProductItemResponse productResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[ProductItemResponse.serializer, response]);
 
     return productResponse.data;
@@ -45,7 +45,7 @@ class ProductRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProductListResponse productResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[ProductListResponse.serializer, response]);
 
     return productResponse.data;

@@ -31,7 +31,7 @@ class VendorRepository {
         credentials.token);
 
     final VendorItemResponse vendorResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[VendorItemResponse.serializer, response]);
 
     return vendorResponse.data;
@@ -45,7 +45,7 @@ class VendorRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final VendorListResponse vendorResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[VendorListResponse.serializer, response]);
 
     return vendorResponse.data;
