@@ -956,7 +956,9 @@ class TaxDataEntityBuilder
   set originDestination(String originDestination) =>
       _$this._originDestination = originDestination;
 
-  TaxDataEntityBuilder();
+  TaxDataEntityBuilder() {
+    TaxDataEntity._initializeBuilder(this);
+  }
 
   TaxDataEntityBuilder get _$this {
     final $v = _$v;
