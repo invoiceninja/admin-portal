@@ -1,15 +1,51 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 part 'tax_model.g.dart';
 
-abstract class TaxConfigEntity
-    implements Built<TaxConfigEntity, TaxConfigEntityBuilder> {
-  factory TaxConfigEntity() {
-    return _$TaxConfigEntity._();
+abstract class TaxDataEntity
+    implements Built<TaxDataEntity, TaxDataEntityBuilder> {
+  factory TaxDataEntity() {
+    return _$TaxDataEntity._(
+      citySalesTax: 0,
+      cityTaxCode: '',
+      cityUseTax: 0,
+      countySalesTax: 0,
+      countyTaxCode: '',
+      countyUseTax: 0,
+      district1Code: '',
+      district1SalesTax: 0,
+      district1UseTax: 0,
+      district2Code: '',
+      district2SalesTax: 0,
+      district2UseTax: 0,
+      district3Code: '',
+      district3SalesTax: 0,
+      district3UseTax: 0,
+      district4Code: '',
+      district4SalesTax: 0,
+      district4UseTax: 0,
+      district5Code: '',
+      district5SalesTax: 0,
+      district5UseTax: 0,
+      districtSalesTax: 0,
+      districtUseTax: 0,
+      geoCity: '',
+      geoCounty: '',
+      geoPostalCode: '',
+      geoState: '',
+      originDestination: '',
+      stateSalesTax: 0,
+      stateUseTax: 0,
+      taxSales: 0,
+      taxUse: 0,
+      txbFreight: '',
+      txbService: '',
+    );
   }
 
-  TaxConfigEntity._();
+  TaxDataEntity._();
 
   String get geoPostalCode;
   String get geoCity;
@@ -46,6 +82,119 @@ abstract class TaxConfigEntity
   double get district5UseTax;
   String get originDestination;
 
+  static Serializer<TaxDataEntity> get serializer => _$taxDataEntitySerializer;
+}
+
+abstract class TaxConfigEntity
+    implements Built<TaxConfigEntity, TaxConfigEntityBuilder> {
+  factory TaxConfigEntity() {
+    return _$TaxConfigEntity._(
+      version: '',
+      sellerSubregion: '',
+      regions: BuiltMap<String, TaxConfigRegionEntity>(),
+    );
+  }
+
+  TaxConfigEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get version;
+
+  @BuiltValueField(wireName: 'seller_subregion')
+  String get sellerSubregion;
+
+  BuiltMap<String, TaxConfigRegionEntity> get regions;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxConfigEntityBuilder builder) => builder
+    ..version = ''
+    ..sellerSubregion = ''
+    ..regions.replace(BuiltMap<String, TaxConfigRegionEntity>());
+
   static Serializer<TaxConfigEntity> get serializer =>
       _$taxConfigEntitySerializer;
+}
+
+abstract class TaxConfigRegionEntity
+    implements Built<TaxConfigRegionEntity, TaxConfigRegionEntityBuilder> {
+  factory TaxConfigRegionEntity(bool reportErrors) {
+    return _$TaxConfigRegionEntity._(
+      hasSalesAboveThreshold: false,
+      taxAll: false,
+      taxThreshold: 0,
+      subregions: BuiltMap<String, TaxConfigSubregionEntity>(),
+    );
+  }
+
+  TaxConfigRegionEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'has_sales_above_threshold')
+  bool get hasSalesAboveThreshold;
+
+  @BuiltValueField(wireName: 'tax_all_subregions')
+  bool get taxAll;
+
+  @BuiltValueField(wireName: 'tax_threshold')
+  double get taxThreshold;
+
+  BuiltMap<String, TaxConfigSubregionEntity> get subregions;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxConfigRegionEntityBuilder builder) =>
+      builder
+        ..hasSalesAboveThreshold = false
+        ..taxAll = false
+        ..taxThreshold = 0;
+
+  static Serializer<TaxConfigRegionEntity> get serializer =>
+      _$taxConfigRegionEntitySerializer;
+}
+
+abstract class TaxConfigSubregionEntity
+    implements
+        Built<TaxConfigSubregionEntity, TaxConfigSubregionEntityBuilder> {
+  factory TaxConfigSubregionEntity(bool reportErrors) {
+    return _$TaxConfigSubregionEntity._(
+      applyTax: false,
+      taxRate: 0,
+      reducedTaxRate: 0,
+      taxName: '',
+    );
+  }
+
+  TaxConfigSubregionEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'apply_tax')
+  bool get applyTax;
+
+  @BuiltValueField(wireName: 'tax_rate')
+  double get taxRate;
+
+  @BuiltValueField(wireName: 'tax_name')
+  String get taxName;
+
+  @BuiltValueField(wireName: 'reduced_tax_rate')
+  double get reducedTaxRate;
+
+  // ignore: unused_element
+  static void _initializeBuilder(TaxConfigSubregionEntityBuilder builder) =>
+      builder
+        ..applyTax = false
+        ..taxName = ''
+        ..reducedTaxRate = 0
+        ..taxRate = 0;
+
+  static Serializer<TaxConfigSubregionEntity> get serializer =>
+      _$taxConfigSubregionEntitySerializer;
 }

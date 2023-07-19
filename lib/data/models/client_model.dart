@@ -157,7 +157,7 @@ abstract class ClientEntity extends Object
       customValue4: '',
       routingId: '',
       isTaxExempt: false,
-      taxConfig: TaxConfigEntity(),
+      taxData: TaxDataEntity(),
       contacts: BuiltList<ClientContactEntity>(
         <ClientContactEntity>[
           ClientContactEntity().rebuild((b) => b..isPrimary = true)
@@ -316,7 +316,7 @@ abstract class ClientEntity extends Object
   bool get isTaxExempt;
 
   @BuiltValueField(wireName: 'tax_data')
-  TaxConfigEntity get taxConfig;
+  TaxDataEntity get taxData;
 
   BuiltList<ClientContactEntity> get contacts;
 
@@ -780,7 +780,7 @@ abstract class ClientEntity extends Object
     ..number = ''
     ..routingId = ''
     ..isTaxExempt = false
-    ..taxConfig.replace(TaxConfigEntity())
+    ..taxData.replace(TaxDataEntity())
     ..paymentBalance = 0;
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;

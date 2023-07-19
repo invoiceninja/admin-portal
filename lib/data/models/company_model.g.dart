@@ -24,12 +24,6 @@ Serializer<RegistrationFieldEntity> _$registrationFieldEntitySerializer =
     new _$RegistrationFieldEntitySerializer();
 Serializer<DashboardField> _$dashboardFieldSerializer =
     new _$DashboardFieldSerializer();
-Serializer<TaxDataEntity> _$taxDataEntitySerializer =
-    new _$TaxDataEntitySerializer();
-Serializer<TaxRegionDataEntity> _$taxRegionDataEntitySerializer =
-    new _$TaxRegionDataEntitySerializer();
-Serializer<TaxSubregionDataEntity> _$taxSubregionDataEntitySerializer =
-    new _$TaxSubregionDataEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -387,11 +381,11 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.calculateTaxes,
           specifiedType: const FullType(bool)),
       'tax_data',
-      serializers.serialize(object.taxData,
-          specifiedType: const FullType(TaxDataEntity)),
-      'origin_tax_data',
       serializers.serialize(object.taxConfig,
           specifiedType: const FullType(TaxConfigEntity)),
+      'origin_tax_data',
+      serializers.serialize(object.taxData,
+          specifiedType: const FullType(TaxDataEntity)),
       'has_e_invoice_certificate',
       serializers.serialize(object.hasEInvoiceCertificate,
           specifiedType: const FullType(bool)),
@@ -945,13 +939,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'tax_data':
-          result.taxData.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
-          break;
-        case 'origin_tax_data':
           result.taxConfig.replace(serializers.deserialize(value,
                   specifiedType: const FullType(TaxConfigEntity))
               as TaxConfigEntity);
+          break;
+        case 'origin_tax_data':
+          result.taxData.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;
         case 'has_e_invoice_certificate':
           result.hasEInvoiceCertificate = serializers.deserialize(value,
@@ -1666,206 +1660,6 @@ class _$DashboardFieldSerializer
   }
 }
 
-class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
-  @override
-  final Iterable<Type> types = const [TaxDataEntity, _$TaxDataEntity];
-  @override
-  final String wireName = 'TaxDataEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, TaxDataEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'version',
-      serializers.serialize(object.version,
-          specifiedType: const FullType(String)),
-      'seller_subregion',
-      serializers.serialize(object.sellerSubregion,
-          specifiedType: const FullType(String)),
-      'regions',
-      serializers.serialize(object.regions,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxRegionDataEntity)
-          ])),
-    ];
-
-    return result;
-  }
-
-  @override
-  TaxDataEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxDataEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final Object value = iterator.current;
-      switch (key) {
-        case 'version':
-          result.version = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'seller_subregion':
-          result.sellerSubregion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'regions':
-          result.regions.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(TaxRegionDataEntity)
-              ])));
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$TaxRegionDataEntitySerializer
-    implements StructuredSerializer<TaxRegionDataEntity> {
-  @override
-  final Iterable<Type> types = const [
-    TaxRegionDataEntity,
-    _$TaxRegionDataEntity
-  ];
-  @override
-  final String wireName = 'TaxRegionDataEntity';
-
-  @override
-  Iterable<Object> serialize(
-      Serializers serializers, TaxRegionDataEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'has_sales_above_threshold',
-      serializers.serialize(object.hasSalesAboveThreshold,
-          specifiedType: const FullType(bool)),
-      'tax_all_subregions',
-      serializers.serialize(object.taxAll, specifiedType: const FullType(bool)),
-      'tax_threshold',
-      serializers.serialize(object.taxThreshold,
-          specifiedType: const FullType(double)),
-      'subregions',
-      serializers.serialize(object.subregions,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxSubregionDataEntity)
-          ])),
-    ];
-
-    return result;
-  }
-
-  @override
-  TaxRegionDataEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRegionDataEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final Object value = iterator.current;
-      switch (key) {
-        case 'has_sales_above_threshold':
-          result.hasSalesAboveThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'tax_all_subregions':
-          result.taxAll = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'tax_threshold':
-          result.taxThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'subregions':
-          result.subregions.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(TaxSubregionDataEntity)
-              ])));
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$TaxSubregionDataEntitySerializer
-    implements StructuredSerializer<TaxSubregionDataEntity> {
-  @override
-  final Iterable<Type> types = const [
-    TaxSubregionDataEntity,
-    _$TaxSubregionDataEntity
-  ];
-  @override
-  final String wireName = 'TaxSubregionDataEntity';
-
-  @override
-  Iterable<Object> serialize(
-      Serializers serializers, TaxSubregionDataEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'apply_tax',
-      serializers.serialize(object.applyTax,
-          specifiedType: const FullType(bool)),
-      'tax_rate',
-      serializers.serialize(object.taxRate,
-          specifiedType: const FullType(double)),
-      'tax_name',
-      serializers.serialize(object.taxName,
-          specifiedType: const FullType(String)),
-      'reduced_tax_rate',
-      serializers.serialize(object.reducedTaxRate,
-          specifiedType: const FullType(double)),
-    ];
-
-    return result;
-  }
-
-  @override
-  TaxSubregionDataEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxSubregionDataEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final Object value = iterator.current;
-      switch (key) {
-        case 'apply_tax':
-          result.applyTax = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'tax_rate':
-          result.taxRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'tax_name':
-          result.taxName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'reduced_tax_rate':
-          result.reducedTaxRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
 class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableCustomSurchargeTaxes1;
@@ -2074,9 +1868,9 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool calculateTaxes;
   @override
-  final TaxDataEntity taxData;
-  @override
   final TaxConfigEntity taxConfig;
+  @override
+  final TaxDataEntity taxData;
   @override
   final bool hasEInvoiceCertificate;
   @override
@@ -2209,8 +2003,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.calculateExpenseTaxByAmount,
       this.stopOnUnpaidRecurring,
       this.calculateTaxes,
-      this.taxData,
       this.taxConfig,
+      this.taxData,
       this.hasEInvoiceCertificate,
       this.hasEInvoiceCertificatePassphrase,
       this.eInvoiceCertificatePassphrase,
@@ -2419,9 +2213,9 @@ class _$CompanyEntity extends CompanyEntity {
         stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring');
     BuiltValueNullFieldError.checkNotNull(
         calculateTaxes, r'CompanyEntity', 'calculateTaxes');
-    BuiltValueNullFieldError.checkNotNull(taxData, r'CompanyEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         taxConfig, r'CompanyEntity', 'taxConfig');
+    BuiltValueNullFieldError.checkNotNull(taxData, r'CompanyEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         hasEInvoiceCertificate, r'CompanyEntity', 'hasEInvoiceCertificate');
     BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificatePassphrase,
@@ -2551,8 +2345,8 @@ class _$CompanyEntity extends CompanyEntity {
         calculateExpenseTaxByAmount == other.calculateExpenseTaxByAmount &&
         stopOnUnpaidRecurring == other.stopOnUnpaidRecurring &&
         calculateTaxes == other.calculateTaxes &&
-        taxData == other.taxData &&
         taxConfig == other.taxConfig &&
+        taxData == other.taxData &&
         hasEInvoiceCertificate == other.hasEInvoiceCertificate &&
         hasEInvoiceCertificatePassphrase ==
             other.hasEInvoiceCertificatePassphrase &&
@@ -2676,8 +2470,8 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, calculateExpenseTaxByAmount.hashCode);
     _$hash = $jc(_$hash, stopOnUnpaidRecurring.hashCode);
     _$hash = $jc(_$hash, calculateTaxes.hashCode);
-    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, taxConfig.hashCode);
+    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, hasEInvoiceCertificate.hashCode);
     _$hash = $jc(_$hash, hasEInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, eInvoiceCertificatePassphrase.hashCode);
@@ -2800,8 +2594,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('calculateExpenseTaxByAmount', calculateExpenseTaxByAmount)
           ..add('stopOnUnpaidRecurring', stopOnUnpaidRecurring)
           ..add('calculateTaxes', calculateTaxes)
-          ..add('taxData', taxData)
           ..add('taxConfig', taxConfig)
+          ..add('taxData', taxData)
           ..add('hasEInvoiceCertificate', hasEInvoiceCertificate)
           ..add('hasEInvoiceCertificatePassphrase',
               hasEInvoiceCertificatePassphrase)
@@ -3354,16 +3148,16 @@ class CompanyEntityBuilder
   set calculateTaxes(bool calculateTaxes) =>
       _$this._calculateTaxes = calculateTaxes;
 
-  TaxDataEntityBuilder _taxData;
-  TaxDataEntityBuilder get taxData =>
-      _$this._taxData ??= new TaxDataEntityBuilder();
-  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
-
   TaxConfigEntityBuilder _taxConfig;
   TaxConfigEntityBuilder get taxConfig =>
       _$this._taxConfig ??= new TaxConfigEntityBuilder();
   set taxConfig(TaxConfigEntityBuilder taxConfig) =>
       _$this._taxConfig = taxConfig;
+
+  TaxDataEntityBuilder _taxData;
+  TaxDataEntityBuilder get taxData =>
+      _$this._taxData ??= new TaxDataEntityBuilder();
+  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
 
   bool _hasEInvoiceCertificate;
   bool get hasEInvoiceCertificate => _$this._hasEInvoiceCertificate;
@@ -3531,8 +3325,8 @@ class CompanyEntityBuilder
       _calculateExpenseTaxByAmount = $v.calculateExpenseTaxByAmount;
       _stopOnUnpaidRecurring = $v.stopOnUnpaidRecurring;
       _calculateTaxes = $v.calculateTaxes;
-      _taxData = $v.taxData.toBuilder();
       _taxConfig = $v.taxConfig.toBuilder();
+      _taxData = $v.taxData.toBuilder();
       _hasEInvoiceCertificate = $v.hasEInvoiceCertificate;
       _hasEInvoiceCertificatePassphrase = $v.hasEInvoiceCertificatePassphrase;
       _eInvoiceCertificatePassphrase = $v.eInvoiceCertificatePassphrase;
@@ -3686,8 +3480,8 @@ class CompanyEntityBuilder
               calculateExpenseTaxByAmount: BuiltValueNullFieldError.checkNotNull(calculateExpenseTaxByAmount, r'CompanyEntity', 'calculateExpenseTaxByAmount'),
               stopOnUnpaidRecurring: BuiltValueNullFieldError.checkNotNull(stopOnUnpaidRecurring, r'CompanyEntity', 'stopOnUnpaidRecurring'),
               calculateTaxes: BuiltValueNullFieldError.checkNotNull(calculateTaxes, r'CompanyEntity', 'calculateTaxes'),
-              taxData: taxData.build(),
               taxConfig: taxConfig.build(),
+              taxData: taxData.build(),
               hasEInvoiceCertificate: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificate, r'CompanyEntity', 'hasEInvoiceCertificate'),
               hasEInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificatePassphrase, r'CompanyEntity', 'hasEInvoiceCertificatePassphrase'),
               eInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase, r'CompanyEntity', 'eInvoiceCertificatePassphrase'),
@@ -3775,10 +3569,10 @@ class CompanyEntityBuilder
         _$failedField = 'settings';
         settings.build();
 
-        _$failedField = 'taxData';
-        taxData.build();
         _$failedField = 'taxConfig';
         taxConfig.build();
+        _$failedField = 'taxData';
+        taxData.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CompanyEntity', _$failedField, e.toString());
@@ -5139,430 +4933,6 @@ class DashboardFieldBuilder
                 period, r'DashboardField', 'period'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'DashboardField', 'type'));
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$TaxDataEntity extends TaxDataEntity {
-  @override
-  final String version;
-  @override
-  final String sellerSubregion;
-  @override
-  final BuiltMap<String, TaxRegionDataEntity> regions;
-
-  factory _$TaxDataEntity([void Function(TaxDataEntityBuilder) updates]) =>
-      (new TaxDataEntityBuilder()..update(updates))._build();
-
-  _$TaxDataEntity._({this.version, this.sellerSubregion, this.regions})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(version, r'TaxDataEntity', 'version');
-    BuiltValueNullFieldError.checkNotNull(
-        sellerSubregion, r'TaxDataEntity', 'sellerSubregion');
-    BuiltValueNullFieldError.checkNotNull(regions, r'TaxDataEntity', 'regions');
-  }
-
-  @override
-  TaxDataEntity rebuild(void Function(TaxDataEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  TaxDataEntityBuilder toBuilder() => new TaxDataEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is TaxDataEntity &&
-        version == other.version &&
-        sellerSubregion == other.sellerSubregion &&
-        regions == other.regions;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    if (__hashCode != null) return __hashCode;
-    var _$hash = 0;
-    _$hash = $jc(_$hash, version.hashCode);
-    _$hash = $jc(_$hash, sellerSubregion.hashCode);
-    _$hash = $jc(_$hash, regions.hashCode);
-    _$hash = $jf(_$hash);
-    return __hashCode ??= _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'TaxDataEntity')
-          ..add('version', version)
-          ..add('sellerSubregion', sellerSubregion)
-          ..add('regions', regions))
-        .toString();
-  }
-}
-
-class TaxDataEntityBuilder
-    implements Builder<TaxDataEntity, TaxDataEntityBuilder> {
-  _$TaxDataEntity _$v;
-
-  String _version;
-  String get version => _$this._version;
-  set version(String version) => _$this._version = version;
-
-  String _sellerSubregion;
-  String get sellerSubregion => _$this._sellerSubregion;
-  set sellerSubregion(String sellerSubregion) =>
-      _$this._sellerSubregion = sellerSubregion;
-
-  MapBuilder<String, TaxRegionDataEntity> _regions;
-  MapBuilder<String, TaxRegionDataEntity> get regions =>
-      _$this._regions ??= new MapBuilder<String, TaxRegionDataEntity>();
-  set regions(MapBuilder<String, TaxRegionDataEntity> regions) =>
-      _$this._regions = regions;
-
-  TaxDataEntityBuilder() {
-    TaxDataEntity._initializeBuilder(this);
-  }
-
-  TaxDataEntityBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _version = $v.version;
-      _sellerSubregion = $v.sellerSubregion;
-      _regions = $v.regions.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(TaxDataEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$TaxDataEntity;
-  }
-
-  @override
-  void update(void Function(TaxDataEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  TaxDataEntity build() => _build();
-
-  _$TaxDataEntity _build() {
-    _$TaxDataEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$TaxDataEntity._(
-              version: BuiltValueNullFieldError.checkNotNull(
-                  version, r'TaxDataEntity', 'version'),
-              sellerSubregion: BuiltValueNullFieldError.checkNotNull(
-                  sellerSubregion, r'TaxDataEntity', 'sellerSubregion'),
-              regions: regions.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'regions';
-        regions.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'TaxDataEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$TaxRegionDataEntity extends TaxRegionDataEntity {
-  @override
-  final bool hasSalesAboveThreshold;
-  @override
-  final bool taxAll;
-  @override
-  final double taxThreshold;
-  @override
-  final BuiltMap<String, TaxSubregionDataEntity> subregions;
-
-  factory _$TaxRegionDataEntity(
-          [void Function(TaxRegionDataEntityBuilder) updates]) =>
-      (new TaxRegionDataEntityBuilder()..update(updates))._build();
-
-  _$TaxRegionDataEntity._(
-      {this.hasSalesAboveThreshold,
-      this.taxAll,
-      this.taxThreshold,
-      this.subregions})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(hasSalesAboveThreshold,
-        r'TaxRegionDataEntity', 'hasSalesAboveThreshold');
-    BuiltValueNullFieldError.checkNotNull(
-        taxAll, r'TaxRegionDataEntity', 'taxAll');
-    BuiltValueNullFieldError.checkNotNull(
-        taxThreshold, r'TaxRegionDataEntity', 'taxThreshold');
-    BuiltValueNullFieldError.checkNotNull(
-        subregions, r'TaxRegionDataEntity', 'subregions');
-  }
-
-  @override
-  TaxRegionDataEntity rebuild(
-          void Function(TaxRegionDataEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  TaxRegionDataEntityBuilder toBuilder() =>
-      new TaxRegionDataEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is TaxRegionDataEntity &&
-        hasSalesAboveThreshold == other.hasSalesAboveThreshold &&
-        taxAll == other.taxAll &&
-        taxThreshold == other.taxThreshold &&
-        subregions == other.subregions;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    if (__hashCode != null) return __hashCode;
-    var _$hash = 0;
-    _$hash = $jc(_$hash, hasSalesAboveThreshold.hashCode);
-    _$hash = $jc(_$hash, taxAll.hashCode);
-    _$hash = $jc(_$hash, taxThreshold.hashCode);
-    _$hash = $jc(_$hash, subregions.hashCode);
-    _$hash = $jf(_$hash);
-    return __hashCode ??= _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'TaxRegionDataEntity')
-          ..add('hasSalesAboveThreshold', hasSalesAboveThreshold)
-          ..add('taxAll', taxAll)
-          ..add('taxThreshold', taxThreshold)
-          ..add('subregions', subregions))
-        .toString();
-  }
-}
-
-class TaxRegionDataEntityBuilder
-    implements Builder<TaxRegionDataEntity, TaxRegionDataEntityBuilder> {
-  _$TaxRegionDataEntity _$v;
-
-  bool _hasSalesAboveThreshold;
-  bool get hasSalesAboveThreshold => _$this._hasSalesAboveThreshold;
-  set hasSalesAboveThreshold(bool hasSalesAboveThreshold) =>
-      _$this._hasSalesAboveThreshold = hasSalesAboveThreshold;
-
-  bool _taxAll;
-  bool get taxAll => _$this._taxAll;
-  set taxAll(bool taxAll) => _$this._taxAll = taxAll;
-
-  double _taxThreshold;
-  double get taxThreshold => _$this._taxThreshold;
-  set taxThreshold(double taxThreshold) => _$this._taxThreshold = taxThreshold;
-
-  MapBuilder<String, TaxSubregionDataEntity> _subregions;
-  MapBuilder<String, TaxSubregionDataEntity> get subregions =>
-      _$this._subregions ??= new MapBuilder<String, TaxSubregionDataEntity>();
-  set subregions(MapBuilder<String, TaxSubregionDataEntity> subregions) =>
-      _$this._subregions = subregions;
-
-  TaxRegionDataEntityBuilder() {
-    TaxRegionDataEntity._initializeBuilder(this);
-  }
-
-  TaxRegionDataEntityBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _hasSalesAboveThreshold = $v.hasSalesAboveThreshold;
-      _taxAll = $v.taxAll;
-      _taxThreshold = $v.taxThreshold;
-      _subregions = $v.subregions.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(TaxRegionDataEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$TaxRegionDataEntity;
-  }
-
-  @override
-  void update(void Function(TaxRegionDataEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  TaxRegionDataEntity build() => _build();
-
-  _$TaxRegionDataEntity _build() {
-    _$TaxRegionDataEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$TaxRegionDataEntity._(
-              hasSalesAboveThreshold: BuiltValueNullFieldError.checkNotNull(
-                  hasSalesAboveThreshold,
-                  r'TaxRegionDataEntity',
-                  'hasSalesAboveThreshold'),
-              taxAll: BuiltValueNullFieldError.checkNotNull(
-                  taxAll, r'TaxRegionDataEntity', 'taxAll'),
-              taxThreshold: BuiltValueNullFieldError.checkNotNull(
-                  taxThreshold, r'TaxRegionDataEntity', 'taxThreshold'),
-              subregions: subregions.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'subregions';
-        subregions.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'TaxRegionDataEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$TaxSubregionDataEntity extends TaxSubregionDataEntity {
-  @override
-  final bool applyTax;
-  @override
-  final double taxRate;
-  @override
-  final String taxName;
-  @override
-  final double reducedTaxRate;
-
-  factory _$TaxSubregionDataEntity(
-          [void Function(TaxSubregionDataEntityBuilder) updates]) =>
-      (new TaxSubregionDataEntityBuilder()..update(updates))._build();
-
-  _$TaxSubregionDataEntity._(
-      {this.applyTax, this.taxRate, this.taxName, this.reducedTaxRate})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        applyTax, r'TaxSubregionDataEntity', 'applyTax');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate, r'TaxSubregionDataEntity', 'taxRate');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName, r'TaxSubregionDataEntity', 'taxName');
-    BuiltValueNullFieldError.checkNotNull(
-        reducedTaxRate, r'TaxSubregionDataEntity', 'reducedTaxRate');
-  }
-
-  @override
-  TaxSubregionDataEntity rebuild(
-          void Function(TaxSubregionDataEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  TaxSubregionDataEntityBuilder toBuilder() =>
-      new TaxSubregionDataEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is TaxSubregionDataEntity &&
-        applyTax == other.applyTax &&
-        taxRate == other.taxRate &&
-        taxName == other.taxName &&
-        reducedTaxRate == other.reducedTaxRate;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    if (__hashCode != null) return __hashCode;
-    var _$hash = 0;
-    _$hash = $jc(_$hash, applyTax.hashCode);
-    _$hash = $jc(_$hash, taxRate.hashCode);
-    _$hash = $jc(_$hash, taxName.hashCode);
-    _$hash = $jc(_$hash, reducedTaxRate.hashCode);
-    _$hash = $jf(_$hash);
-    return __hashCode ??= _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(r'TaxSubregionDataEntity')
-          ..add('applyTax', applyTax)
-          ..add('taxRate', taxRate)
-          ..add('taxName', taxName)
-          ..add('reducedTaxRate', reducedTaxRate))
-        .toString();
-  }
-}
-
-class TaxSubregionDataEntityBuilder
-    implements Builder<TaxSubregionDataEntity, TaxSubregionDataEntityBuilder> {
-  _$TaxSubregionDataEntity _$v;
-
-  bool _applyTax;
-  bool get applyTax => _$this._applyTax;
-  set applyTax(bool applyTax) => _$this._applyTax = applyTax;
-
-  double _taxRate;
-  double get taxRate => _$this._taxRate;
-  set taxRate(double taxRate) => _$this._taxRate = taxRate;
-
-  String _taxName;
-  String get taxName => _$this._taxName;
-  set taxName(String taxName) => _$this._taxName = taxName;
-
-  double _reducedTaxRate;
-  double get reducedTaxRate => _$this._reducedTaxRate;
-  set reducedTaxRate(double reducedTaxRate) =>
-      _$this._reducedTaxRate = reducedTaxRate;
-
-  TaxSubregionDataEntityBuilder() {
-    TaxSubregionDataEntity._initializeBuilder(this);
-  }
-
-  TaxSubregionDataEntityBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _applyTax = $v.applyTax;
-      _taxRate = $v.taxRate;
-      _taxName = $v.taxName;
-      _reducedTaxRate = $v.reducedTaxRate;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(TaxSubregionDataEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$TaxSubregionDataEntity;
-  }
-
-  @override
-  void update(void Function(TaxSubregionDataEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  TaxSubregionDataEntity build() => _build();
-
-  _$TaxSubregionDataEntity _build() {
-    final _$result = _$v ??
-        new _$TaxSubregionDataEntity._(
-            applyTax: BuiltValueNullFieldError.checkNotNull(
-                applyTax, r'TaxSubregionDataEntity', 'applyTax'),
-            taxRate: BuiltValueNullFieldError.checkNotNull(
-                taxRate, r'TaxSubregionDataEntity', 'taxRate'),
-            taxName: BuiltValueNullFieldError.checkNotNull(
-                taxName, r'TaxSubregionDataEntity', 'taxName'),
-            reducedTaxRate: BuiltValueNullFieldError.checkNotNull(
-                reducedTaxRate, r'TaxSubregionDataEntity', 'reducedTaxRate'));
     replace(_$result);
     return _$result;
   }
