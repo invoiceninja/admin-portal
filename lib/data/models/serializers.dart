@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
@@ -122,11 +123,9 @@ part 'serializers.g.dart';
   ScheduleEntity,
   ScheduleListResponse,
   ScheduleItemResponse,
-
   TransactionRuleEntity,
   TransactionRuleListResponse,
   TransactionRuleItemResponse,
-
   TransactionEntity,
   TransactionListResponse,
   TransactionItemResponse,
@@ -177,6 +176,7 @@ part 'serializers.g.dart';
   ImportRequestMapping,
   UserTwoFactorResponse,
   PdfPreviewRequest,
+  TaxConfigEntity,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -156,6 +157,7 @@ abstract class ClientEntity extends Object
       customValue4: '',
       routingId: '',
       isTaxExempt: false,
+      taxConfig: TaxConfigEntity(),
       contacts: BuiltList<ClientContactEntity>(
         <ClientContactEntity>[
           ClientContactEntity().rebuild((b) => b..isPrimary = true)
@@ -312,6 +314,9 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'is_tax_exempt')
   bool get isTaxExempt;
+
+  @BuiltValueField(wireName: 'tax_data')
+  TaxConfigEntity get taxConfig;
 
   BuiltList<ClientContactEntity> get contacts;
 
@@ -775,6 +780,7 @@ abstract class ClientEntity extends Object
     ..number = ''
     ..routingId = ''
     ..isTaxExempt = false
+    ..taxConfig.replace(TaxConfigEntity())
     ..paymentBalance = 0;
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;

@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -130,6 +131,7 @@ abstract class CompanyEntity extends Object
       hasEInvoiceCertificatePassphrase: false,
       eInvoiceCertificatePassphrase: '',
       taxData: TaxDataEntity(),
+      taxConfig: TaxConfigEntity(),
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -470,6 +472,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'tax_data')
   TaxDataEntity get taxData;
 
+  @BuiltValueField(wireName: 'origin_tax_data')
+  TaxConfigEntity get taxConfig;
+
   @BuiltValueField(wireName: 'has_e_invoice_certificate')
   bool get hasEInvoiceCertificate;
 
@@ -782,6 +787,7 @@ abstract class CompanyEntity extends Object
     ..hasEInvoiceCertificatePassphrase = false
     ..eInvoiceCertificatePassphrase = ''
     ..taxData.replace(TaxDataEntity())
+    ..taxConfig.replace(TaxConfigEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
     ..subscriptions.replace(BuiltList<SubscriptionEntity>())
     ..recurringExpenses.replace(BuiltList<ExpenseEntity>())
