@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceTaxDetails extends StatelessWidget {
-  const InvoiceTaxDetails({Key key}) : super(key: key);
+  const InvoiceTaxDetails({
+    Key key,
+    @required this.invoice,
+  }) : super(key: key);
+
+  final InvoiceEntity invoice;
 
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
+    final client = state.clientState.get(invoice.id);
+    final company = state.company;
 
     return AlertDialog(
       title: Text(localization.taxDetails),

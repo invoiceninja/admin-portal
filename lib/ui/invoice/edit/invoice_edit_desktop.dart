@@ -1131,8 +1131,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 onPressed: () {
                                   showDialog<void>(
                                       context: context,
-                                      builder: (context) =>
-                                          InvoiceTaxDetails());
+                                      builder: (context) => InvoiceTaxDetails(
+                                            invoice: invoice,
+                                          ));
                                 },
                               ),
                             ),
