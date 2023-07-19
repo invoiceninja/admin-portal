@@ -282,6 +282,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
+      'tax_data_temp',
+      serializers.serialize(object.taxData,
+          specifiedType: const FullType(TaxDataEntity)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -707,6 +710,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'tax_data_temp':
+          result.taxData.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
@@ -1576,6 +1583,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool saveDefaultFooter;
   @override
+  final TaxDataEntity taxData;
+  @override
   final int loadedAt;
   @override
   final bool isChanged;
@@ -1666,6 +1675,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.activities,
       this.saveDefaultTerms,
       this.saveDefaultFooter,
+      this.taxData,
       this.loadedAt,
       this.isChanged,
       this.createdAt,
@@ -1775,6 +1785,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         saveDefaultTerms, r'InvoiceEntity', 'saveDefaultTerms');
     BuiltValueNullFieldError.checkNotNull(
         saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter');
+    BuiltValueNullFieldError.checkNotNull(taxData, r'InvoiceEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'InvoiceEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -1860,6 +1871,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         documents == other.documents &&
         saveDefaultTerms == other.saveDefaultTerms &&
         saveDefaultFooter == other.saveDefaultFooter &&
+        taxData == other.taxData &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1941,6 +1953,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, documents.hashCode);
     _$hash = $jc(_$hash, saveDefaultTerms.hashCode);
     _$hash = $jc(_$hash, saveDefaultFooter.hashCode);
+    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2023,6 +2036,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('activities', activities)
           ..add('saveDefaultTerms', saveDefaultTerms)
           ..add('saveDefaultFooter', saveDefaultFooter)
+          ..add('taxData', taxData)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -2333,6 +2347,11 @@ class InvoiceEntityBuilder
   set saveDefaultFooter(bool saveDefaultFooter) =>
       _$this._saveDefaultFooter = saveDefaultFooter;
 
+  TaxDataEntityBuilder _taxData;
+  TaxDataEntityBuilder get taxData =>
+      _$this._taxData ??= new TaxDataEntityBuilder();
+  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
+
   int _loadedAt;
   int get loadedAt => _$this._loadedAt;
   set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
@@ -2448,6 +2467,7 @@ class InvoiceEntityBuilder
       _activities = $v.activities.toBuilder();
       _saveDefaultTerms = $v.saveDefaultTerms;
       _saveDefaultFooter = $v.saveDefaultFooter;
+      _taxData = $v.taxData.toBuilder();
       _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -2556,6 +2576,7 @@ class InvoiceEntityBuilder
               activities: activities.build(),
               saveDefaultTerms: BuiltValueNullFieldError.checkNotNull(saveDefaultTerms, r'InvoiceEntity', 'saveDefaultTerms'),
               saveDefaultFooter: BuiltValueNullFieldError.checkNotNull(saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter'),
+              taxData: taxData.build(),
               loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'InvoiceEntity', 'createdAt'),
@@ -2579,6 +2600,9 @@ class InvoiceEntityBuilder
         documents.build();
         _$failedField = 'activities';
         activities.build();
+
+        _$failedField = 'taxData';
+        taxData.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'InvoiceEntity', _$failedField, e.toString());

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -250,6 +251,7 @@ abstract class InvoiceEntity extends Object
       dueDateDays: 'terms',
       saveDefaultTerms: false,
       saveDefaultFooter: false,
+      taxData: TaxDataEntity(),
     );
   }
 
@@ -625,6 +627,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(serialize: false)
   bool get saveDefaultFooter;
+
+  @BuiltValueField(wireName: 'tax_data_temp')
+  TaxDataEntity get taxData;
 
   bool get isApproved {
     if (isQuote &&
@@ -1551,6 +1556,7 @@ abstract class InvoiceEntity extends Object
     ..saveDefaultFooter = false
     ..autoBillEnabled = false
     ..nextSendDatetime = ''
+    ..taxData.replace(TaxDataEntity())
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
