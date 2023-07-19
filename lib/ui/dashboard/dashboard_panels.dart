@@ -2,6 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -440,6 +441,10 @@ class DashboardPanels extends StatelessWidget {
       if (company.isModuleEnabled(EntityType.task)) EntityType.task,
       if (company.isModuleEnabled(EntityType.expense)) EntityType.expense,
     ];
+
+    if (!kReleaseMode) {
+      return Text(company.taxData.toString());
+    }
 
     return Stack(
       children: <Widget>[
