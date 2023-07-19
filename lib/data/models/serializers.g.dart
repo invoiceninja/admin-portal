@@ -187,14 +187,14 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(TaskStatusUIState.serializer)
       ..add(TaskUIState.serializer)
       ..add(TaxConfigEntity.serializer)
+      ..add(TaxConfigRegionEntity.serializer)
+      ..add(TaxConfigSubregionEntity.serializer)
       ..add(TaxDataEntity.serializer)
       ..add(TaxRateEntity.serializer)
       ..add(TaxRateItemResponse.serializer)
       ..add(TaxRateListResponse.serializer)
       ..add(TaxRateState.serializer)
       ..add(TaxRateUIState.serializer)
-      ..add(TaxRegionDataEntity.serializer)
-      ..add(TaxSubregionDataEntity.serializer)
       ..add(TemplateEntity.serializer)
       ..add(TimezoneEntity.serializer)
       ..add(TimezoneItemResponse.serializer)
@@ -942,24 +942,24 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TaxConfigRegionEntity)
+          ]),
+          () => new MapBuilder<String, TaxConfigRegionEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TaxConfigSubregionEntity)
+          ]),
+          () => new MapBuilder<String, TaxConfigSubregionEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(TaxRateEntity)]),
           () => new MapBuilder<String, TaxRateEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxRegionDataEntity)
-          ]),
-          () => new MapBuilder<String, TaxRegionDataEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxSubregionDataEntity)
-          ]),
-          () => new MapBuilder<String, TaxSubregionDataEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(TokenEntity)]),

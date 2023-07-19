@@ -222,8 +222,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.isTaxExempt,
           specifiedType: const FullType(bool)),
       'tax_data',
-      serializers.serialize(object.taxConfig,
-          specifiedType: const FullType(TaxConfigEntity)),
+      serializers.serialize(object.taxData,
+          specifiedType: const FullType(TaxDataEntity)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -462,9 +462,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'tax_data':
-          result.taxConfig.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaxConfigEntity))
-              as TaxConfigEntity);
+          result.taxData.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
@@ -1023,7 +1022,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isTaxExempt;
   @override
-  final TaxConfigEntity taxConfig;
+  final TaxDataEntity taxData;
   @override
   final BuiltList<ClientContactEntity> contacts;
   @override
@@ -1095,7 +1094,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue4,
       this.routingId,
       this.isTaxExempt,
-      this.taxConfig,
+      this.taxData,
       this.contacts,
       this.activities,
       this.ledger,
@@ -1176,8 +1175,7 @@ class _$ClientEntity extends ClientEntity {
         routingId, r'ClientEntity', 'routingId');
     BuiltValueNullFieldError.checkNotNull(
         isTaxExempt, r'ClientEntity', 'isTaxExempt');
-    BuiltValueNullFieldError.checkNotNull(
-        taxConfig, r'ClientEntity', 'taxConfig');
+    BuiltValueNullFieldError.checkNotNull(taxData, r'ClientEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         contacts, r'ClientEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
@@ -1246,7 +1244,7 @@ class _$ClientEntity extends ClientEntity {
         customValue4 == other.customValue4 &&
         routingId == other.routingId &&
         isTaxExempt == other.isTaxExempt &&
-        taxConfig == other.taxConfig &&
+        taxData == other.taxData &&
         contacts == other.contacts &&
         activities == other.activities &&
         ledger == other.ledger &&
@@ -1305,7 +1303,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, routingId.hashCode);
     _$hash = $jc(_$hash, isTaxExempt.hashCode);
-    _$hash = $jc(_$hash, taxConfig.hashCode);
+    _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, ledger.hashCode);
@@ -1365,7 +1363,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue4', customValue4)
           ..add('routingId', routingId)
           ..add('isTaxExempt', isTaxExempt)
-          ..add('taxConfig', taxConfig)
+          ..add('taxData', taxData)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('ledger', ledger)
@@ -1548,11 +1546,10 @@ class ClientEntityBuilder
   bool get isTaxExempt => _$this._isTaxExempt;
   set isTaxExempt(bool isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
 
-  TaxConfigEntityBuilder _taxConfig;
-  TaxConfigEntityBuilder get taxConfig =>
-      _$this._taxConfig ??= new TaxConfigEntityBuilder();
-  set taxConfig(TaxConfigEntityBuilder taxConfig) =>
-      _$this._taxConfig = taxConfig;
+  TaxDataEntityBuilder _taxData;
+  TaxDataEntityBuilder get taxData =>
+      _$this._taxData ??= new TaxDataEntityBuilder();
+  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
 
   ListBuilder<ClientContactEntity> _contacts;
   ListBuilder<ClientContactEntity> get contacts =>
@@ -1668,7 +1665,7 @@ class ClientEntityBuilder
       _customValue4 = $v.customValue4;
       _routingId = $v.routingId;
       _isTaxExempt = $v.isTaxExempt;
-      _taxConfig = $v.taxConfig.toBuilder();
+      _taxData = $v.taxData.toBuilder();
       _contacts = $v.contacts.toBuilder();
       _activities = $v.activities.toBuilder();
       _ledger = $v.ledger.toBuilder();
@@ -1753,7 +1750,7 @@ class ClientEntityBuilder
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
               routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'ClientEntity', 'routingId'),
               isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'ClientEntity', 'isTaxExempt'),
-              taxConfig: taxConfig.build(),
+              taxData: taxData.build(),
               contacts: contacts.build(),
               activities: activities.build(),
               ledger: ledger.build(),
@@ -1774,8 +1771,8 @@ class ClientEntityBuilder
         _$failedField = 'settings';
         settings.build();
 
-        _$failedField = 'taxConfig';
-        taxConfig.build();
+        _$failedField = 'taxData';
+        taxData.build();
         _$failedField = 'contacts';
         contacts.build();
         _$failedField = 'activities';

@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -61,7 +61,7 @@ class _TaxSettingsState extends State<TaxSettings> {
     final settings = viewModel.settings;
     final company = viewModel.company;
     final state = viewModel.state;
-    final taxData = company.taxData;
+    final taxConfig = company.taxConfig;
 
     final countryMap = memoizedCountryIso2Map(state.staticState.countryMap);
     List<String> subregions = [];
@@ -72,8 +72,8 @@ class _TaxSettingsState extends State<TaxSettings> {
       region = kTaxRegionAustralia;
     }
 
-    if (taxData.regions.containsKey(region)) {
-      subregions = taxData.regions[region].subregions.keys.toList();
+    if (taxConfig.regions.containsKey(region)) {
+      subregions = taxConfig.regions[region].subregions.keys.toList();
     }
 
     return EditScaffold(
@@ -184,10 +184,10 @@ class _TaxSettingsState extends State<TaxSettings> {
                   SizedBox(height: 16),
                   AppDropdownButton<String>(
                       labelText: localization.sellerSubregion,
-                      value: taxData.sellerSubregion,
+                      value: taxConfig.sellerSubregion,
                       onChanged: (dynamic value) {
                         viewModel.onCompanyChanged(company.rebuild(
-                            (b) => b..taxData.sellerSubregion = value));
+                            (b) => b..taxConfig.sellerSubregion = value));
                       },
                       items: subregions
                           .map((code) => DropdownMenuItem(
@@ -197,8 +197,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                               value: code))
                           .toList()),
                   SizedBox(height: 12),
-                  ...taxData.regions.keys.map((region) {
-                    final taxDataRegion = taxData.regions[region];
+                  ...taxConfig.regions.keys.map((region) {
+                    final taxDataRegion = taxConfig.regions[region];
                     return Column(children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
@@ -213,7 +213,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                                   onChanged: (dynamic value) {
                                     viewModel.onCompanyChanged(company.rebuild(
                                         (b) => b
-                                          ..taxData.regions[region] =
+                                          ..taxConfig.regions[region] =
                                               taxDataRegion.rebuild(
                                                   (b) => b..taxAll = value)));
                                   },
@@ -281,7 +281,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                                       ? null
                                       : (value) {
                                           viewModel.onCompanyChanged(company.rebuild((b) => b
-                                            ..taxData.replace(taxData.rebuild((b) => b
+                                            ..taxConfig.replace(taxConfig.rebuild((b) => b
                                               ..regions[region] =
                                                   taxDataRegion.rebuild((b) => b
                                                     ..subregions[subregion] =
@@ -298,7 +298,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                                         builder: (context) =>
                                             _EditSubregionDialog(
                                               viewModel: viewModel,
-                                              subregionData: taxDataSubregion,
+                                              subregionConfig: taxDataSubregion,
                                               region: region,
                                               subregion: subregion,
                                             ));
@@ -365,12 +365,12 @@ class _EditSubregionDialog extends StatefulWidget {
   const _EditSubregionDialog({
     Key key,
     @required this.viewModel,
-    @required this.subregionData,
+    @required this.subregionConfig,
     @required this.region,
     @required this.subregion,
   }) : super(key: key);
 
-  final TaxSubregionDataEntity subregionData;
+  final TaxConfigSubregionEntity subregionConfig;
   final TaxSettingsVM viewModel;
   final String region;
   final String subregion;
@@ -388,24 +388,24 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
   void initState() {
     super.initState();
 
-    final subregionData = widget.subregionData;
-    _taxName = subregionData.taxName;
-    _taxRate = subregionData.taxRate;
-    _reducedTaxRate = subregionData.reducedTaxRate;
+    final subregionConfig = widget.subregionConfig;
+    _taxName = subregionConfig.taxName;
+    _taxRate = subregionConfig.taxRate;
+    _reducedTaxRate = subregionConfig.reducedTaxRate;
   }
 
   void _onDone() {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
-    final taxData = company.taxData;
-    final taxDataRegion = taxData.regions[widget.region];
-    final taxDataSubregion = taxDataRegion.subregions[widget.subregion];
+    final taxConfig = company.taxConfig;
+    final taxConfigRegion = taxConfig.regions[widget.region];
+    final taxConfigSubregion = taxConfigRegion.subregions[widget.subregion];
 
     viewModel.onCompanyChanged(company.rebuild((b) => b
-      ..taxData.replace(taxData.rebuild((b) => b
-        ..regions[widget.region] = taxDataRegion.rebuild((b) => b
-          ..subregions[widget.subregion] = taxDataSubregion.rebuild(
+      ..taxConfig.replace(taxConfig.rebuild((b) => b
+        ..regions[widget.region] = taxConfigRegion.rebuild((b) => b
+          ..subregions[widget.subregion] = taxConfigSubregion.rebuild(
             (b) => b
               ..taxName = _taxName
               ..taxRate = _taxRate
@@ -418,7 +418,7 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final subregionData = widget.subregionData;
+    final subregionData = widget.subregionConfig;
 
     return AlertDialog(
       title: Text(localization.edit),

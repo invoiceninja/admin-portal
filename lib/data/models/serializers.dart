@@ -176,7 +176,7 @@ part 'serializers.g.dart';
   ImportRequestMapping,
   UserTwoFactorResponse,
   PdfPreviewRequest,
-  TaxConfigEntity,
+  TaxDataEntity,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
