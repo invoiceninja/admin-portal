@@ -49,6 +49,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.da
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_tax_details.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
@@ -964,6 +965,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     Expanded(
                       flex: 1,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           FormCard(
                               padding: const EdgeInsets.only(
@@ -1120,6 +1122,20 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     ),
                                   ),
                               ]),
+                          if (company.calculateTaxes)
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 16),
+                              child: AppButton(
+                                label: localization.taxDetails.toUpperCase(),
+                                onPressed: () {
+                                  showDialog<void>(
+                                      context: context,
+                                      builder: (context) =>
+                                          InvoiceTaxDetails());
+                                },
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -1128,8 +1144,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 if (state.prefState.showPdfPreview &&
                     !state.prefState.showPdfPreviewSideBySide)
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, bottom: 16, top: 2),
+                    padding: const EdgeInsets.all(16),
                     child: _PdfPreview(invoice: invoice),
                   ),
               ],
