@@ -245,7 +245,7 @@ class AuthRepository {
           secret: secret, data: json.encode(data));
     }
 
-    return await compute<dynamic, dynamic>(SerializationUtils.computeDecode,
+    return await compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
         <dynamic>[LoginResponse.serializer, response]);
   }
 

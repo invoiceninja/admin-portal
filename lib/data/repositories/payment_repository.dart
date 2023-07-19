@@ -30,7 +30,7 @@ class PaymentRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final PaymentItemResponse paymentResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[PaymentItemResponse.serializer, response]);
 
     return paymentResponse.data;
@@ -48,7 +48,7 @@ class PaymentRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final PaymentListResponse paymentResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[PaymentListResponse.serializer, response]);
 
     return paymentResponse.data;

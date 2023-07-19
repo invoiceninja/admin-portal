@@ -31,7 +31,7 @@ class CreditRepository {
         credentials.token);
 
     final InvoiceItemResponse creditResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return creditResponse.data;
@@ -48,7 +48,7 @@ class CreditRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse creditResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[InvoiceListResponse.serializer, response]);
 
     return creditResponse.data;

@@ -29,7 +29,7 @@ class TaskRepository {
         '${credentials.url}/tasks/$entityId', credentials.token);
 
     final TaskItemResponse taskResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[TaskItemResponse.serializer, response]);
 
     return taskResponse.data;
@@ -49,7 +49,7 @@ class TaskRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskListResponse taskResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.computeDecode,
+        SerializationUtils.deserializeWith,
         <dynamic>[TaskListResponse.serializer, response]);
 
     return taskResponse.data;
