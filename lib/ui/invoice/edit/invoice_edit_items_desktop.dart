@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -56,6 +57,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   static const COLUMN_TAX1 = 'tax1';
   static const COLUMN_TAX2 = 'tax2';
   static const COLUMN_TAX3 = 'tax3';
+  static const COLUMN_TAX_CATEGORY = 'tax_category';
   static const COLUMN_DISCOUNT = 'discount';
 
   final _debouncer = Debouncer();
@@ -77,6 +79,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final lineItems = viewModel.invoice.lineItems;
     final state = viewModel.state;
     final company = state.company;
+    final invoice = viewModel.invoice;
 
     final includedLineItems = lineItems.where((lineItem) {
       return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
@@ -212,14 +215,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           company.hasCustomField(customField4)) {
         _columns.add(COLUMN_CUSTOM4);
       } else if (ProductItemFields.tax == column) {
-        if (hasTax1) {
-          _columns.add(COLUMN_TAX1);
-        }
-        if (hasTax2) {
-          _columns.add(COLUMN_TAX2);
-        }
-        if (hasTax3) {
-          _columns.add(COLUMN_TAX3);
+        if (company.calculateTaxes) {
+          _columns.add(COLUMN_TAX_CATEGORY);
+        } else {
+          if (hasTax1) {
+            _columns.add(COLUMN_TAX1);
+          }
+          if (hasTax2) {
+            _columns.add(COLUMN_TAX2);
+          }
+          if (hasTax3) {
+            _columns.add(COLUMN_TAX3);
+          }
         }
       } else if (ProductItemFields.discount == column &&
           company.enableProductDiscount) {
@@ -345,6 +352,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             (company.settings.enableInclusiveTaxes
                 ? ' - ${localization.inclusive}'
                 : '');
+      } else if (column == COLUMN_TAX_CATEGORY) {
+        label = localization.taxCategory;
       } else if (column == COLUMN_QUANTITY) {
         if (widget.isTasks) {
           label = (translations['hours'] ?? '').isNotEmpty
@@ -460,6 +469,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               return Text(item.taxName2 ?? '');
                             } else if (column == COLUMN_TAX3) {
                               return Text(item.taxName3 ?? '');
+                            } else if (column == COLUMN_TAX_CATEGORY) {
+                              return Text(kTaxCategories[item.taxCategoryId]);
                             } else if (column == COLUMN_UNIT_COST) {
                               return Text(
                                 formatNumber(
@@ -982,6 +993,30 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               initialTaxName: lineItems[index].taxName2,
                               initialTaxRate: lineItems[index].taxRate2,
                             ),
+                          ),
+                        );
+                      } else if (column == COLUMN_TAX_CATEGORY) {
+                        return Focus(
+                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          skipTraversal: true,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kTableColumnGap),
+                            child: AppDropdownButton<String>(
+                                labelText: '',
+                                value: lineItems[index].taxCategoryId,
+                                onChanged: (dynamic value) => _onChanged(
+                                    lineItems[index].rebuild(
+                                        (b) => b..taxCategoryId = value),
+                                    index),
+                                items: kTaxCategories.keys
+                                    .map((key) => DropdownMenuItem<String>(
+                                          child: Text(localization.lookup(
+                                            kTaxCategories[key],
+                                          )),
+                                          value: key,
+                                        ))
+                                    .toList()),
                           ),
                         );
                       } else if (column == COLUMN_TAX3) {
