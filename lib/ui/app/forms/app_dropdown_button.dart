@@ -55,7 +55,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     if (labelText != null) {
       dropDownButton = InputDecorator(
           decoration: InputDecoration(
-            labelText: labelText,
+            labelText: labelText.isEmpty ? null : '',
           ),
           isEmpty: isEmpty && blankLabel == null,
           child: dropDownButton);
