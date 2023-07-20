@@ -45,19 +45,11 @@ class ClientRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    // Change this
-    final ClientListResponse clientResponse1 =
-        serializers.deserializeWith(ClientListResponse.serializer, response);
-
-    // To this
-    final ClientListResponse clientResponse2 = await compute<dynamic, dynamic>(
+    final ClientListResponse clientResponse = await compute<dynamic, dynamic>(
         SerializationUtils.deserializeWith,
         <dynamic>[ClientListResponse.serializer, response]);
 
-    print(clientResponse1);
-    print(clientResponse2);
-
-    return clientResponse2.data;
+    return clientResponse.data;
   }
 
   Future<List<ClientEntity>> bulkAction(
