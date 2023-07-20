@@ -14,10 +14,10 @@ class InvoiceTaxDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
-    final client = state.clientState.get(invoice.id);
-    final company = state.company;
+    //final state = StoreProvider.of<AppState>(context).state;
+    //final client = state.clientState.get(invoice.id);
+    //final company = state.company;
 
     return AlertDialog(
       title: Text(localization.taxDetails),
