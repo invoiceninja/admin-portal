@@ -1128,13 +1128,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   const EdgeInsets.only(left: 10, right: 16),
                               child: AppButton(
                                 label: localization.taxDetails.toUpperCase(),
-                                onPressed: () {
-                                  showDialog<void>(
-                                      context: context,
-                                      builder: (context) => InvoiceTaxDetails(
-                                            invoice: invoice,
-                                          ));
-                                },
+                                onPressed: invoice.hasClient
+                                    ? () {
+                                        showDialog<void>(
+                                            context: context,
+                                            builder: (context) =>
+                                                InvoiceTaxDetails(
+                                                  invoice: invoice,
+                                                ));
+                                      }
+                                    : null,
                               ),
                             ),
                         ],
