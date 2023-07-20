@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -60,6 +61,11 @@ class InvoiceItemListTile extends StatelessWidget {
             vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
             formatNumberType: FormatNumberType.percent);
       }
+    }
+
+    if (company.calculateTaxes) {
+      subtitle += ' • ' +
+          localization.lookup(kTaxCategories[invoiceItem.taxCategoryId]);
     }
 
     if (invoiceItem.taxRate1 != 0) {
