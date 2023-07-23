@@ -45,6 +45,8 @@ class ClientRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
+    //debugPrint('## CLIENTS: $response');
+
     final ClientListResponse clientResponse = await compute<dynamic, dynamic>(
         SerializationUtils.deserializeWith,
         <dynamic>[ClientListResponse.serializer, response]);

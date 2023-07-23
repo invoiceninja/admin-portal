@@ -18,11 +18,12 @@ abstract class TaxDataEntity
       geoState: '',
       stateSalesTax: 0,
       taxSales: 0,
+      districtSalesTax: 0,
       /*
       cityUseTax: 0,
       countyUseTax: 0,
-      district1Code: '',
       district1SalesTax: 0,
+      district1Code: '',
       district1UseTax: 0,
       district2Code: '',
       district2SalesTax: 0,
@@ -36,7 +37,6 @@ abstract class TaxDataEntity
       district5Code: '',
       district5SalesTax: 0,
       district5UseTax: 0,
-      districtSalesTax: 0,
       districtUseTax: 0,
       originDestination: '',
       stateUseTax: 0,
@@ -59,13 +59,13 @@ abstract class TaxDataEntity
   String get cityTaxCode;
   double get countySalesTax;
   String get countyTaxCode;
+  double get districtSalesTax;
   //double get taxUse;
   //String get txbService;
   //String get txbFreight;
   //double get stateUseTax;
   //double get cityUseTax;
   //double get countyUseTax;
-  //double get districtSalesTax;
   //double get districtUseTax;
   //String get district1Code;
   //double get district1SalesTax;
@@ -95,12 +95,13 @@ abstract class TaxDataEntity
     ..geoPostalCode = ''
     ..geoState = ''
     ..stateSalesTax = 0
-    ..taxSales = 0;
-  /*
+    ..taxSales = 0
+    ..districtSalesTax = 0;
+  /*    
     ..cityUseTax = 0
     ..countyUseTax = 0
-    ..district1Code = ''
     ..district1SalesTax = 0
+    ..district1Code = ''
     ..district1UseTax = 0
     ..district2Code = ''
     ..district2SalesTax = 0
@@ -113,8 +114,7 @@ abstract class TaxDataEntity
     ..district4UseTax = 0
     ..district5Code = ''
     ..district5SalesTax = 0
-    ..district5UseTax = 0
-    ..districtSalesTax = 0
+    ..district5UseTax = 0    
     ..districtUseTax = 0
     ..originDestination = ''
     ..stateUseTax = 0

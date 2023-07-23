@@ -55,6 +55,9 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
       'countyTaxCode',
       serializers.serialize(object.countyTaxCode,
           specifiedType: const FullType(String)),
+      'districtSalesTax',
+      serializers.serialize(object.districtSalesTax,
+          specifiedType: const FullType(double)),
     ];
 
     return result;
@@ -111,6 +114,10 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
         case 'countyTaxCode':
           result.countyTaxCode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'districtSalesTax':
+          result.districtSalesTax = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
       }
     }
@@ -341,6 +348,8 @@ class _$TaxDataEntity extends TaxDataEntity {
   final double countySalesTax;
   @override
   final String countyTaxCode;
+  @override
+  final double districtSalesTax;
 
   factory _$TaxDataEntity([void Function(TaxDataEntityBuilder) updates]) =>
       (new TaxDataEntityBuilder()..update(updates))._build();
@@ -355,7 +364,8 @@ class _$TaxDataEntity extends TaxDataEntity {
       this.citySalesTax,
       this.cityTaxCode,
       this.countySalesTax,
-      this.countyTaxCode})
+      this.countyTaxCode,
+      this.districtSalesTax})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         geoPostalCode, r'TaxDataEntity', 'geoPostalCode');
@@ -376,6 +386,8 @@ class _$TaxDataEntity extends TaxDataEntity {
         countySalesTax, r'TaxDataEntity', 'countySalesTax');
     BuiltValueNullFieldError.checkNotNull(
         countyTaxCode, r'TaxDataEntity', 'countyTaxCode');
+    BuiltValueNullFieldError.checkNotNull(
+        districtSalesTax, r'TaxDataEntity', 'districtSalesTax');
   }
 
   @override
@@ -398,7 +410,8 @@ class _$TaxDataEntity extends TaxDataEntity {
         citySalesTax == other.citySalesTax &&
         cityTaxCode == other.cityTaxCode &&
         countySalesTax == other.countySalesTax &&
-        countyTaxCode == other.countyTaxCode;
+        countyTaxCode == other.countyTaxCode &&
+        districtSalesTax == other.districtSalesTax;
   }
 
   @override
@@ -414,6 +427,7 @@ class _$TaxDataEntity extends TaxDataEntity {
     _$hash = $jc(_$hash, cityTaxCode.hashCode);
     _$hash = $jc(_$hash, countySalesTax.hashCode);
     _$hash = $jc(_$hash, countyTaxCode.hashCode);
+    _$hash = $jc(_$hash, districtSalesTax.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -430,7 +444,8 @@ class _$TaxDataEntity extends TaxDataEntity {
           ..add('citySalesTax', citySalesTax)
           ..add('cityTaxCode', cityTaxCode)
           ..add('countySalesTax', countySalesTax)
-          ..add('countyTaxCode', countyTaxCode))
+          ..add('countyTaxCode', countyTaxCode)
+          ..add('districtSalesTax', districtSalesTax))
         .toString();
   }
 }
@@ -483,7 +498,14 @@ class TaxDataEntityBuilder
   set countyTaxCode(String countyTaxCode) =>
       _$this._countyTaxCode = countyTaxCode;
 
-  TaxDataEntityBuilder();
+  double _districtSalesTax;
+  double get districtSalesTax => _$this._districtSalesTax;
+  set districtSalesTax(double districtSalesTax) =>
+      _$this._districtSalesTax = districtSalesTax;
+
+  TaxDataEntityBuilder() {
+    TaxDataEntity._initializeBuilder(this);
+  }
 
   TaxDataEntityBuilder get _$this {
     final $v = _$v;
@@ -498,6 +520,7 @@ class TaxDataEntityBuilder
       _cityTaxCode = $v.cityTaxCode;
       _countySalesTax = $v.countySalesTax;
       _countyTaxCode = $v.countyTaxCode;
+      _districtSalesTax = $v.districtSalesTax;
       _$v = null;
     }
     return this;
@@ -538,7 +561,8 @@ class TaxDataEntityBuilder
                 cityTaxCode, r'TaxDataEntity', 'cityTaxCode'),
             countySalesTax:
                 BuiltValueNullFieldError.checkNotNull(countySalesTax, r'TaxDataEntity', 'countySalesTax'),
-            countyTaxCode: BuiltValueNullFieldError.checkNotNull(countyTaxCode, r'TaxDataEntity', 'countyTaxCode'));
+            countyTaxCode: BuiltValueNullFieldError.checkNotNull(countyTaxCode, r'TaxDataEntity', 'countyTaxCode'),
+            districtSalesTax: BuiltValueNullFieldError.checkNotNull(districtSalesTax, r'TaxDataEntity', 'districtSalesTax'));
     replace(_$result);
     return _$result;
   }
