@@ -1122,7 +1122,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     ),
                                   ),
                               ]),
-                          if (company.calculateTaxes)
+                          if (false && company.calculateTaxes)
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, right: 16),
