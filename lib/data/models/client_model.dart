@@ -315,7 +315,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'is_tax_exempt')
   bool get isTaxExempt;
 
-  @BuiltValueField(wireName: 'tax_data_temp')
+  @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
 
   BuiltList<ClientContactEntity> get contacts;

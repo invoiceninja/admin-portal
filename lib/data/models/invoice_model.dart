@@ -628,7 +628,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(serialize: false)
   bool get saveDefaultFooter;
 
-  @BuiltValueField(wireName: 'tax_data_temp')
+  @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
 
   bool get isApproved {
