@@ -58,6 +58,7 @@ class RecurringExpensePresenter extends EntityPresenter {
       RecurringExpenseFields.customValue4,
       RecurringExpenseFields.documents,
       RecurringExpenseFields.remainingCycles,
+      RecurringExpenseFields.lastSentDate,
     ];
   }
 
@@ -80,6 +81,8 @@ class RecurringExpensePresenter extends EntityPresenter {
         return LinkTextRelatedEntity(entity: client, relation: expense);
       case RecurringExpenseFields.nextSendDate:
         return Text(formatDate(expense.nextSendDate, context));
+      case RecurringExpenseFields.lastSentDate:
+        return Text(formatDate(expense.lastSentDate, context));
       case RecurringExpenseFields.netAmount:
         return Text(formatNumber(expense.netAmount, context,
             currencyId: expense.currencyId));

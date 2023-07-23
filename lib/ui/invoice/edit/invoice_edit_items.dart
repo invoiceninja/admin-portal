@@ -1,8 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -118,6 +120,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   TaxRateEntity _taxRate1;
   TaxRateEntity _taxRate2;
   TaxRateEntity _taxRate3;
+  String _taxCategoryId;
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -163,6 +166,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         TaxRateEntity(name: invoiceItem.taxName2, rate: invoiceItem.taxRate2);
     _taxRate3 =
         TaxRateEntity(name: invoiceItem.taxName3, rate: invoiceItem.taxRate3);
+    _taxCategoryId = invoiceItem.taxCategoryId;
 
     super.didChangeDependencies();
   }
@@ -195,14 +199,19 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
 
-    if (_taxRate1 != null) {
-      invoiceItem = invoiceItem.applyTax(_taxRate1);
-    }
-    if (_taxRate2 != null) {
-      invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
-    }
-    if (_taxRate3 != null) {
-      invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
+    if (widget.viewModel.company.calculateTaxes) {
+      invoiceItem =
+          invoiceItem.rebuild((b) => b..taxCategoryId = _taxCategoryId);
+    } else {
+      if (_taxRate1 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate1);
+      }
+      if (_taxRate2 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+      }
+      if (_taxRate3 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
+      }
     }
 
     if (invoiceItem != widget.invoiceItem) {
@@ -307,51 +316,71 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
-            if (company.enableFirstItemTaxRate || _taxRate1.name.isNotEmpty)
-              TaxRateDropdown(
-                onSelected: (taxRate) {
-                  setState(() {
-                    _taxRate1 = taxRate;
-                    _onChanged();
-                  });
-                },
-                labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : ''),
-                initialTaxName: _taxRate1.name,
-                initialTaxRate: _taxRate1.rate,
-              ),
-            if (company.enableSecondItemTaxRate || _taxRate2.name.isNotEmpty)
-              TaxRateDropdown(
-                onSelected: (taxRate) {
-                  setState(() {
-                    _taxRate2 = taxRate;
-                    _onChanged();
-                  });
-                },
-                labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : ''),
-                initialTaxName: _taxRate2.name,
-                initialTaxRate: _taxRate2.rate,
-              ),
-            if (company.enableThirdItemTaxRate || _taxRate3.name.isNotEmpty)
-              TaxRateDropdown(
-                onSelected: (taxRate) {
-                  setState(() {
-                    _taxRate3 = taxRate;
-                    _onChanged();
-                  });
-                },
-                labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
-                        ? ' - ${localization.inclusive}'
-                        : ''),
-                initialTaxName: _taxRate3.name,
-                initialTaxRate: _taxRate3.rate,
-              ),
+            if (company.calculateTaxes)
+              AppDropdownButton<String>(
+                  labelText: localization.taxCategory,
+                  value: _taxCategoryId,
+                  onChanged: (dynamic value) {
+                    setState(() {
+                      _taxCategoryId = value;
+                      _onChanged();
+                    });
+                  },
+                  items: kTaxCategories.keys
+                      .map((key) => DropdownMenuItem<String>(
+                            child: Text(localization.lookup(
+                              kTaxCategories[key],
+                            )),
+                            value: key,
+                          ))
+                      .toList())
+            else ...[
+              if (company.enableFirstItemTaxRate || _taxRate1.name.isNotEmpty)
+                TaxRateDropdown(
+                  onSelected: (taxRate) {
+                    setState(() {
+                      _taxRate1 = taxRate;
+                      _onChanged();
+                    });
+                  },
+                  labelText: localization.tax +
+                      (company.settings.enableInclusiveTaxes
+                          ? ' - ${localization.inclusive}'
+                          : ''),
+                  initialTaxName: _taxRate1.name,
+                  initialTaxRate: _taxRate1.rate,
+                ),
+              if (company.enableSecondItemTaxRate || _taxRate2.name.isNotEmpty)
+                TaxRateDropdown(
+                  onSelected: (taxRate) {
+                    setState(() {
+                      _taxRate2 = taxRate;
+                      _onChanged();
+                    });
+                  },
+                  labelText: localization.tax +
+                      (company.settings.enableInclusiveTaxes
+                          ? ' - ${localization.inclusive}'
+                          : ''),
+                  initialTaxName: _taxRate2.name,
+                  initialTaxRate: _taxRate2.rate,
+                ),
+              if (company.enableThirdItemTaxRate || _taxRate3.name.isNotEmpty)
+                TaxRateDropdown(
+                  onSelected: (taxRate) {
+                    setState(() {
+                      _taxRate3 = taxRate;
+                      _onChanged();
+                    });
+                  },
+                  labelText: localization.tax +
+                      (company.settings.enableInclusiveTaxes
+                          ? ' - ${localization.inclusive}'
+                          : ''),
+                  initialTaxName: _taxRate3.name,
+                  initialTaxRate: _taxRate3.rate,
+                ),
+            ],
           ],
         ),
       ),

@@ -135,8 +135,10 @@ class ExpenseOverview extends StatelessWidget {
           localization.remainingCycles: expense.remainingCycles == -1
               ? localization.endless
               : '${expense.remainingCycles}',
-        if (expense.isRecurring)
-          localization.sendDate: formatDate(expense.nextSendDate, context),
+        if (expense.isRecurring) ...{
+          localization.lastSentDate: formatDate(expense.lastSentDate, context),
+          localization.nextSendDate: formatDate(expense.nextSendDate, context),
+        },
         if (!expense.isRecurring)
           localization.date: formatDate(expense.date, context),
         localization.transactionReference: expense.transactionReference,

@@ -14,27 +14,31 @@ class InvoiceTaxDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
-    final client = state.clientState.get(invoice.id);
-    final company = state.company;
+    //final state = StoreProvider.of<AppState>(context).state;
+    //final client = state.clientState.get(invoice.id);
+    //final company = state.company;
 
     return AlertDialog(
       title: Text(localization.taxDetails),
-      content: DataTable(
-        columns: [
-          DataColumn(label: Text('')),
-          DataColumn(label: Text(localization.invoice)),
-          DataColumn(label: Text(localization.client)),
-          DataColumn(label: Text(localization.company)),
-        ],
-        rows: [
-          DataRow(cells: [
-            DataCell(Text(localization.address)),
-            DataCell(Text('test')),
-            DataCell(Text('test')),
-            DataCell(Text('test')),
-          ])
+      content: Table(
+        children: [
+          TableRow(children: [
+            TableCell(child: Text(localization.state)),
+            TableCell(child: Text('')),
+          ]),
+          TableRow(children: [
+            TableCell(child: Text(localization.county)),
+            TableCell(child: Text('')),
+          ]),
+          TableRow(children: [
+            TableCell(child: Text(localization.city)),
+            TableCell(child: Text('')),
+          ]),
+          TableRow(children: [
+            TableCell(child: Text(localization.total)),
+            TableCell(child: Text('')),
+          ]),
         ],
       ),
       actions: [

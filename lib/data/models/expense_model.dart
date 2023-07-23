@@ -557,6 +557,9 @@ abstract class ExpenseEntity extends Object
       case RecurringExpenseFields.nextSendDate:
         response = expenseA.nextSendDate.compareTo(expenseB.nextSendDate);
         break;
+      case RecurringExpenseFields.lastSentDate:
+        response = expenseA.lastSentDate.compareTo(expenseB.lastSentDate);
+        break;
       case ExpenseFields.status:
         response =
             expenseA.calculatedStatusId.compareTo(expenseB.calculatedStatusId);
