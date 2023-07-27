@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/autobill_dropdown_menu_item.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -26,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_tax_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -161,7 +163,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     return ScrollableListView(
       children: <Widget>[
         FormCard(
-          isLast: true,
+          isLast: !company.calculateTaxes,
           children: <Widget>[
             invoice.isNew
                 ? invoice.isPurchaseOrder
@@ -542,9 +544,25 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         invoice.rebuild((b) => b..autoBillEnabled = value));
                   },
                 ),
-              )
+              ),
           ],
         ),
+        if (company.calculateTaxes)
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
+            child: AppButton(
+              label: localization.taxDetails.toUpperCase(),
+              onPressed: invoice.hasClient
+                  ? () {
+                      showDialog<void>(
+                          context: context,
+                          builder: (context) => InvoiceTaxDetails(
+                                invoice: invoice,
+                              ));
+                    }
+                  : null,
+            ),
+          ),
       ],
     );
   }
