@@ -128,6 +128,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
+                  if (client.isTaxExempt) Text(localization.isTaxExempt),
                   if (client.paymentBalance != 0)
                     Text(localization.payments +
                         ': ' +
