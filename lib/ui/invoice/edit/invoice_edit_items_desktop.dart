@@ -469,7 +469,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             } else if (column == COLUMN_TAX3) {
                               return Text(item.taxName3 ?? '');
                             } else if (column == COLUMN_TAX_CATEGORY) {
-                              return Text(kTaxCategories[item.taxCategoryId]);
+                              return Text(localization
+                                  .lookup(kTaxCategories[item.taxCategoryId]));
                             } else if (column == COLUMN_UNIT_COST) {
                               return Text(
                                 formatNumber(
