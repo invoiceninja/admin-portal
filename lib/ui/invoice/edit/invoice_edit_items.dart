@@ -188,6 +188,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   void _onChanged() {
+    final company = widget.viewModel.company;
+
     var invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
@@ -199,10 +201,12 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
 
-    if (widget.viewModel.company.calculateTaxes) {
+    if (company.calculateTaxes) {
       invoiceItem =
           invoiceItem.rebuild((b) => b..taxCategoryId = _taxCategoryId);
-    } else {
+    }
+
+    if (!company.calculateTaxes || invoiceItem.hasOverrideTax) {
       if (_taxRate1 != null) {
         invoiceItem = invoiceItem.applyTax(_taxRate1);
       }
@@ -333,8 +337,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                             )),
                             value: key,
                           ))
-                      .toList())
-            else ...[
+                      .toList()),
+            if (!company.calculateTaxes ||
+                _taxCategoryId == kTaxCategoryOverrideTax) ...[
               if (company.enableFirstItemTaxRate || _taxRate1.name.isNotEmpty)
                 TaxRateDropdown(
                   onSelected: (taxRate) {
