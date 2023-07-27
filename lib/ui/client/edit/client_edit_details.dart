@@ -287,23 +287,24 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             value: client.customValue4,
             onSavePressed: _onSavePressed,
           ),
-          if (state.company.settings.enableEInvoice == true) ...[
+          if (state.company.settings.enableEInvoice == true)
             DecoratedFormField(
               label: localization.routingId,
               controller: _routingIdController,
               keyboardType: TextInputType.text,
               onSavePressed: _onSavePressed,
             ),
+          if (state.company.calculateTaxes) ...[
             SizedBox(height: 20),
             SwitchListTile(
-              title: Text(localization.taxExempt),
+              title: Text(localization.isTaxExempt),
               value: client.isTaxExempt,
               onChanged: (value) {
                 viewModel
                     .onChanged(client.rebuild((b) => b..isTaxExempt = value));
               },
             )
-          ]
+          ],
         ],
       ),
     );

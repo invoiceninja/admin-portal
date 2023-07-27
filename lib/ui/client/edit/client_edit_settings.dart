@@ -154,15 +154,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                     numDays == null ? null : '$numDays'));
             },
           ),
-        if (company.isModuleEnabled(EntityType.task))
-          DecoratedFormField(
-            controller: _taskRateController,
-            isMoney: true,
-            label: localization.taskRate,
-            onSavePressed: viewModel.onSavePressed,
-            keyboardType:
-                TextInputType.numberWithOptions(decimal: true, signed: true),
-          ),
         if (company.isModuleEnabled(EntityType.invoice)) ...[
           AppDropdownButton<bool>(
             blankValue: null,
@@ -185,6 +176,15 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               ),
             ],
           ),
+          if (company.isModuleEnabled(EntityType.task))
+            DecoratedFormField(
+              controller: _taskRateController,
+              isMoney: true,
+              label: localization.taskRate,
+              onSavePressed: viewModel.onSavePressed,
+              keyboardType:
+                  TextInputType.numberWithOptions(decimal: true, signed: true),
+            ),
         ],
       ],
     );
