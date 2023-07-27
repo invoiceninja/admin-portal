@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class InvoiceTaxDetails extends StatelessWidget {
@@ -24,7 +25,7 @@ class InvoiceTaxDetails extends StatelessWidget {
     return AlertDialog(
       title: Text(localization.taxDetails),
       content: SizedBox(
-        width: 400,
+        width: isDesktop(context) ? 500 : null,
         child: client.isTaxExempt
             ? SizedBox(
                 child: HelpText(localization.isTaxExempt),
@@ -44,12 +45,18 @@ class InvoiceTaxDetails extends StatelessWidget {
                   ]),
                   DataRow(cells: [
                     DataCell(Text(localization.county)),
-                    DataCell(Text(toTitleCase(taxData.geoCounty))),
+                    DataCell(Text(toTitleCase(taxData.geoCounty) +
+                        (taxData.countyTaxCode.isEmpty
+                            ? ''
+                            : ' • ${taxData.countyTaxCode}'))),
                     DataCell(Text('${taxData.countySalesTax}')),
                   ]),
                   DataRow(cells: [
                     DataCell(Text(localization.city)),
-                    DataCell(Text(toTitleCase(taxData.geoCity))),
+                    DataCell(Text(toTitleCase(taxData.geoCity) +
+                        (taxData.cityTaxCode.isEmpty
+                            ? ''
+                            : ' • ${taxData.cityTaxCode}'))),
                     DataCell(Text('${taxData.citySalesTax}')),
                   ]),
                   DataRow(cells: [
