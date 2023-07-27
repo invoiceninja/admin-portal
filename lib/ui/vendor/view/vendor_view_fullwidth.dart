@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_documents.dart';
@@ -63,6 +64,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);
+    final hasMultipleContacts = vendor.contacts.length > 1;
 
     final showStanding = !state.prefState.isPreviewVisible &&
         !state.uiState.isEditing &&
@@ -227,55 +229,80 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                 children: [
                   Text(
                     localization.contacts +
-                        (vendor.contacts.length > 1
+                        (hasMultipleContacts
                             ? ' (${vendor.contacts.length})'
                             : ''),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
                   ...vendor.contacts.map((contact) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    return Row(
                       children: [
-                        Text(
-                          contact.fullName,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                contact.fullName,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              if (contact.email.isNotEmpty)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: CopyToClipboard(
+                                    value: contact.email,
+                                    child: IconText(
+                                        icon: Icons.email, text: contact.email),
+                                  ),
+                                ),
+                              if (contact.phone.isNotEmpty)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: CopyToClipboard(
+                                    value: contact.phone,
+                                    child: IconText(
+                                        icon: Icons.phone, text: contact.phone),
+                                  ),
+                                ),
+                              if (contact.customValue1.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.vendorContact1,
+                                    contact.customValue1)),
+                              if (contact.customValue2.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.vendorContact2,
+                                    contact.customValue2)),
+                              if (contact.customValue3.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.vendorContact3,
+                                    contact.customValue3)),
+                              if (contact.customValue4.isNotEmpty)
+                                Text(company.formatCustomFieldValue(
+                                    CustomFieldType.vendorContact4,
+                                    contact.customValue4)),
+                              SizedBox(height: 8),
+                              if (!hasMultipleContacts) ...[
+                                PortalLinks(
+                                  viewLink: contact.silentLink,
+                                  copyLink: contact.link,
+                                  client: null,
+                                  style: PortalLinkStyle.icons,
+                                ),
+                                SizedBox(height: 16),
+                              ] else
+                                SizedBox(height: 8),
+                            ],
+                          ),
                         ),
-                        if (contact.email.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.email,
-                              child: IconText(
-                                  icon: Icons.email, text: contact.email),
-                            ),
-                          ),
-                        if (contact.phone.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: CopyToClipboard(
-                              value: contact.phone,
-                              child: IconText(
-                                  icon: Icons.phone, text: contact.phone),
-                            ),
-                          ),
-                        if (contact.customValue1.isNotEmpty)
-                          Text(company.formatCustomFieldValue(
-                              CustomFieldType.vendorContact1,
-                              contact.customValue1)),
-                        if (contact.customValue2.isNotEmpty)
-                          Text(company.formatCustomFieldValue(
-                              CustomFieldType.vendorContact2,
-                              contact.customValue2)),
-                        if (contact.customValue3.isNotEmpty)
-                          Text(company.formatCustomFieldValue(
-                              CustomFieldType.vendorContact3,
-                              contact.customValue3)),
-                        if (contact.customValue4.isNotEmpty)
-                          Text(company.formatCustomFieldValue(
-                              CustomFieldType.vendorContact4,
-                              contact.customValue4)),
-                        SizedBox(height: 16),
+                        if (hasMultipleContacts)
+                          PortalLinks(
+                            client: null,
+                            viewLink: contact.silentLink,
+                            copyLink: contact.link,
+                            style: PortalLinkStyle.dropdown,
+                          )
                       ],
                     );
                   }).toList()
