@@ -1753,6 +1753,8 @@ abstract class InvoiceItemEntity
 
   bool get isExpense => typeId == TYPE_EXPENSE;
 
+  bool get hasOverrideTax => taxCategoryId == kTaxCategoryOverrideTax;
+
   bool get isEmpty =>
       productKey.isEmpty &&
       notes.isEmpty &&

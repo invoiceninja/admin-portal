@@ -952,49 +952,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ),
                           ),
                         );
-                      } else if (column == COLUMN_TAX1) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: TaxRateDropdown(
-                              onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName1 = taxRate.name
-                                  ..taxRate1 = taxRate.rate),
-                                index,
-                                debounce: false,
-                              ),
-                              labelText: null,
-                              initialTaxName: lineItems[index].taxName1,
-                              initialTaxRate: lineItems[index].taxRate1,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_TAX2) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: TaxRateDropdown(
-                              onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName2 = taxRate.name
-                                  ..taxRate2 = taxRate.rate),
-                                index,
-                                debounce: false,
-                              ),
-                              labelText: null,
-                              initialTaxName: lineItems[index].taxName2,
-                              initialTaxRate: lineItems[index].taxRate2,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_TAX_CATEGORY) {
+                      } else if (column == COLUMN_TAX_CATEGORY &&
+                          !lineItems[index].hasOverrideTax) {
                         return Focus(
                           onFocusChange: (hasFocus) => _onFocusChange(),
                           skipTraversal: true,
@@ -1016,6 +975,69 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                           value: key,
                                         ))
                                     .toList()),
+                          ),
+                        );
+                      } else if (column == COLUMN_TAX1 ||
+                          (column == COLUMN_TAX_CATEGORY &&
+                              lineItems[index].hasOverrideTax)) {
+                        Widget child = Focus(
+                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          skipTraversal: true,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kTableColumnGap),
+                            child: TaxRateDropdown(
+                              onSelected: (taxRate) => _onChanged(
+                                lineItems[index].rebuild((b) => b
+                                  ..taxName1 = taxRate.name
+                                  ..taxRate1 = taxRate.rate),
+                                index,
+                                debounce: false,
+                              ),
+                              labelText: null,
+                              initialTaxName: lineItems[index].taxName1,
+                              initialTaxRate: lineItems[index].taxRate1,
+                            ),
+                          ),
+                        );
+
+                        if (lineItems[index].hasOverrideTax) {
+                          child = Row(
+                            children: [
+                              Expanded(child: child),
+                              IconButton(
+                                  visualDensity: VisualDensity.compact,
+                                  onPressed: () => _onChanged(
+                                      lineItems[index].rebuild((b) => b
+                                        ..taxName1 = ''
+                                        ..taxRate1 = 0
+                                        ..taxCategoryId = kTaxCategoryPhysical),
+                                      index),
+                                  icon: Icon(Icons.clear))
+                            ],
+                          );
+                        }
+
+                        return child;
+                      } else if (column == COLUMN_TAX2) {
+                        return Focus(
+                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          skipTraversal: true,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kTableColumnGap),
+                            child: TaxRateDropdown(
+                              onSelected: (taxRate) => _onChanged(
+                                lineItems[index].rebuild((b) => b
+                                  ..taxName2 = taxRate.name
+                                  ..taxRate2 = taxRate.rate),
+                                index,
+                                debounce: false,
+                              ),
+                              labelText: null,
+                              initialTaxName: lineItems[index].taxName2,
+                              initialTaxRate: lineItems[index].taxRate2,
+                            ),
                           ),
                         );
                       } else if (column == COLUMN_TAX3) {
