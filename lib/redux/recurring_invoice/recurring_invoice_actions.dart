@@ -513,6 +513,7 @@ void handleRecurringInvoiceAction(BuildContext context,
   final recurringInvoice = recurringInvoices.first as InvoiceEntity;
   final recurringInvoiceIds =
       recurringInvoices.map((recurringInvoice) => recurringInvoice.id).toList();
+  final client = state.clientState.get(recurringInvoice.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -570,7 +571,14 @@ void handleRecurringInvoiceAction(BuildContext context,
       }
       break;
     case EntityAction.clientPortal:
-      launchUrl(Uri.parse(recurringInvoice.invitationSilentLink));
+      var link = recurringInvoice.invitationSilentLink;
+      if (link.isNotEmpty) {
+        if (!link.contains('?')) {
+          link += '?';
+        }
+        link += '&client_hash=${client.clientHash}';
+        launchUrl(Uri.parse(link));
+      }
       break;
     case EntityAction.cloneToPurchaseOrder:
       final designId = getDesignIdForVendorByEntity(

@@ -221,7 +221,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'is_tax_exempt',
       serializers.serialize(object.isTaxExempt,
           specifiedType: const FullType(bool)),
-      'tax_data_temp',
+      'tax_info',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
       'contacts',
@@ -461,7 +461,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.isTaxExempt = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'tax_data_temp':
+        case 'tax_info':
           result.taxData.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;

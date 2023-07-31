@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 
 // Package imports:
 import 'package:url_launcher/url_launcher.dart';
@@ -45,6 +46,8 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.company;
     final vendor = widget.vendor;
 
     List<Widget> _buildDetailsList() {
@@ -52,17 +55,51 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
       final contacts = vendor.contacts;
 
       contacts.forEach((contact) {
-        if ((contact.email ?? '').isNotEmpty) {
-          listTiles.add(AppListTile(
-            icon: Icons.email,
-            title: contact.fullName + '\n' + contact.email,
-            copyValue: contact.email,
-            subtitle: localization.email,
-            onLongPress: () => setState(() {
-              _launched = _launchURL(context, 'mailto:' + contact.email);
-            }),
-          ));
+        final subtitleParts = <String>[];
+        if (contact.email.isNotEmpty) {
+          subtitleParts.add(contact.email);
         }
+        if (company.hasCustomField(CustomFieldType.vendorContact1) &&
+            contact.customValue1.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.vendorContact1, contact.customValue1));
+        }
+        if (company.hasCustomField(CustomFieldType.vendorContact2) &&
+            contact.customValue2.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.vendorContact2, contact.customValue2));
+        }
+        if (company.hasCustomField(CustomFieldType.vendorContact3) &&
+            contact.customValue3.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.vendorContact3, contact.customValue3));
+        }
+        if (company.hasCustomField(CustomFieldType.vendorContact4) &&
+            contact.customValue4.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.vendorContact4, contact.customValue4));
+        }
+
+        listTiles.add(AppListTile(
+          buttonRow: PortalLinks(
+            viewLink: contact.silentLink,
+            copyLink: contact.link,
+            client: null,
+          ),
+          icon: Icons.email,
+          title: contact.fullName.isEmpty
+              ? localization.blankContact
+              : contact.fullName,
+          subtitle: subtitleParts.join('\n'),
+          copyValue: contact.email,
+          onLongPress: () => setState(() {
+            if ((contact.email ?? '').isEmpty) {
+              return;
+            }
+
+            _launched = _launchURL(context, 'mailto:' + contact.email);
+          }),
+        ));
 
         if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
@@ -130,17 +167,6 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           }),
         ));
       }
-
-      /*
-      if (listTiles.isNotEmpty) {
-        listTiles.add(
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        );
-      }
-      */
 
       if ((vendor.vatNumber ?? '').isNotEmpty) {
         listTiles.add(AppListTile(

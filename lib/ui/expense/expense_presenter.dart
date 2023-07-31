@@ -149,7 +149,7 @@ class ExpensePresenter extends EntityPresenter {
         return Text('${expense.documents.length}');
       case ExpenseFields.recurringExpense:
         final recurringExpense =
-            state.recurringExpenseState.get(expense.recurringId);
+            state.recurringExpenseState.get(expense.recurringExpenseId);
         return LinkTextRelatedEntity(
             entity: recurringExpense, relation: expense);
     }

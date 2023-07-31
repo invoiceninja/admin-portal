@@ -281,7 +281,7 @@ EntityStats recurringExpenseStatsForExpense(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.recurringId == recurrigExpenseId) {
+    if (expense.recurringExpenseId == recurrigExpenseId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isDeleted) {

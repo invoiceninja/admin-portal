@@ -554,7 +554,14 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       store.dispatch(ShowPdfInvoice(invoice: invoice, context: context));
       break;
     case EntityAction.clientPortal:
-      launchUrl(Uri.parse(invoice.invitationSilentLink));
+      var link = invoice.invitationSilentLink;
+      if (link.isNotEmpty) {
+        if (!link.contains('?')) {
+          link += '?';
+        }
+        link += '&client_hash=${client.clientHash}';
+        launchUrl(Uri.parse(link));
+      }
       break;
     case EntityAction.markSent:
       store.dispatch(MarkInvoicesSentRequest(

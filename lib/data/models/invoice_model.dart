@@ -628,7 +628,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(serialize: false)
   bool get saveDefaultFooter;
 
-  @BuiltValueField(wireName: 'tax_data_temp')
+  @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
 
   bool get isApproved {
@@ -1752,6 +1752,8 @@ abstract class InvoiceItemEntity
   bool get isTask => typeId == TYPE_TASK;
 
   bool get isExpense => typeId == TYPE_EXPENSE;
+
+  bool get hasOverrideTax => taxCategoryId == kTaxCategoryOverrideTax;
 
   bool get isEmpty =>
       productKey.isEmpty &&

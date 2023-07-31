@@ -363,10 +363,14 @@ void handleClientAction(
       store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
-      final contact = client.contacts
-          .firstWhere((contact) => contact.link.isNotEmpty, orElse: null);
-      if (contact != null) {
-        launchUrl(Uri.parse(contact.silentLink));
+      final contact = client.primaryContact;
+      var link = contact.silentLink;
+      if (link.isNotEmpty) {
+        if (!link.contains('?')) {
+          link += '?';
+        }
+        link += '&client_hash=${client.clientHash}';
+        launchUrl(Uri.parse(link));
       }
       break;
     case EntityAction.settings:

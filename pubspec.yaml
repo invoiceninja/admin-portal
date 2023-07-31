@@ -90,12 +90,6 @@ dependencies:
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
 
-dependency_overrides:
-  photo_view:
-    git:
-      url: https://github.com/bluefireteam/photo_view
-      ref: master
-      
 dev_dependencies:
   flutter_driver:
     sdk: flutter

@@ -282,7 +282,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
-      'tax_data_temp',
+      'tax_info',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
       'created_at',
@@ -711,7 +711,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                       BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<Object>);
           break;
-        case 'tax_data_temp':
+        case 'tax_info':
           result.taxData.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
           break;

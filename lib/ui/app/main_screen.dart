@@ -664,6 +664,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.transactionRule:
             leftFilterChild = TransactionRuleViewScreen(isFilter: true);
             break;
+          case EntityType.recurringExpense:
+            leftFilterChild = RecurringExpenseViewScreen(isFilter: true);
+            break;
           default:
             print(
                 'Error: filter view not implemented for ${uiState.filterEntityType}');

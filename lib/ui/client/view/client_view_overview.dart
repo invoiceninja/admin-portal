@@ -78,6 +78,10 @@ class ClientOverview extends StatelessWidget {
       }
     });
 
+    if (client.isTaxExempt) {
+      fields[localization.isTaxExempt] = localization.yes;
+    }
+
     if (client.hasLanguage &&
         client.languageId != company.settings.languageId) {
       fields[ClientFields.language] =

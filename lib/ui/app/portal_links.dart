@@ -39,13 +39,17 @@ class PortalLinks extends StatelessWidget {
     if (!viewLink.contains('?')) {
       viewLinkWithHash += '?';
     }
-    viewLinkWithHash += '&client_hash=${client.clientHash}';
+    if (client != null) {
+      viewLinkWithHash += '&client_hash=${client.clientHash}';
+    }
 
     var copyLinkWithHash = copyLink;
     if (!copyLink.contains('?')) {
       copyLinkWithHash += '?';
     }
-    copyLinkWithHash += '&client_hash=${client.clientHash}';
+    if (client != null) {
+      copyLinkWithHash += '&client_hash=${client.clientHash}';
+    }
 
     final viewLinkPressed = () => launchUrl(Uri.parse(viewLinkWithHash));
     final copyLinkPressed = () {

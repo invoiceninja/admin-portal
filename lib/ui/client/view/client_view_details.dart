@@ -46,6 +46,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.company;
     final client = widget.client;
 
     List<Widget> _buildDetailsList() {
@@ -53,6 +55,31 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       final contacts = client.contacts;
 
       contacts.forEach((contact) {
+        final subtitleParts = <String>[];
+        if (contact.email.isNotEmpty) {
+          subtitleParts.add(contact.email);
+        }
+        if (company.hasCustomField(CustomFieldType.contact1) &&
+            contact.customValue1.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.contact1, contact.customValue1));
+        }
+        if (company.hasCustomField(CustomFieldType.contact2) &&
+            contact.customValue2.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.contact2, contact.customValue2));
+        }
+        if (company.hasCustomField(CustomFieldType.contact3) &&
+            contact.customValue3.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.contact3, contact.customValue3));
+        }
+        if (company.hasCustomField(CustomFieldType.contact4) &&
+            contact.customValue4.isNotEmpty) {
+          subtitleParts.add(company.formatCustomFieldValue(
+              CustomFieldType.contact4, contact.customValue4));
+        }
+
         listTiles.add(AppListTile(
           buttonRow: PortalLinks(
             viewLink: contact.silentLink,
@@ -63,7 +90,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           title: contact.fullName.isEmpty
               ? localization.blankContact
               : contact.fullName,
-          subtitle: contact.email,
+          subtitle: subtitleParts.join('\n'),
           copyValue: contact.email,
           onLongPress: () => setState(() {
             if ((contact.email ?? '').isEmpty) {
