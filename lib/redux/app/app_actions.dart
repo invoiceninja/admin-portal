@@ -179,7 +179,6 @@ class UpdateUserPreferences implements PersistPrefs {
     this.customColors,
     this.darkCustomColors,
     this.persistData,
-    this.persistUi,
     this.tapSelectedToEdit,
     this.showPdfPreview,
     this.showPdfPreviewSideBySide,
@@ -208,7 +207,6 @@ class UpdateUserPreferences implements PersistPrefs {
   final String colorTheme;
   final String darkColorTheme;
   final bool persistData;
-  final bool persistUi;
   final bool tapSelectedToEdit;
   final double textScaleFactor;
   final bool showPdfPreview;

@@ -240,8 +240,7 @@ Middleware<AppState> _createLoadState(
             })));
 
       if (uiState.currentRoute != LoginScreen.route &&
-          uiState.currentRoute.isNotEmpty &&
-          prefState.persistUI) {
+          uiState.currentRoute.isNotEmpty) {
         final NavigatorState navigator = navigatorKey.currentState;
         final routes = _getRoutes(appState);
         if (appState.prefState.appLayout == AppLayout.mobile) {
@@ -389,11 +388,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    if (store.state.prefState.persistUI) {
-      _persistUIDebouncer.run(() {
-        uiRepository.saveUIState(store.state.uiState);
-      });
-    }
+    _persistUIDebouncer.run(() {
+      uiRepository.saveUIState(store.state.uiState);
+    });
   };
 }
 

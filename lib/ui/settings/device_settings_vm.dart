@@ -52,7 +52,6 @@ class DeviceSettingsVM {
     @required this.onColorThemeChanged,
     @required this.onCustomColorsChanged,
     @required this.onPersistDataChanged,
-    @required this.onPersistUiChanged,
     @required this.onShowPdfChanged,
     @required this.onEnableNativeBrowserChanged,
     @required this.onShowPdfSideBySideChanged,
@@ -198,12 +197,6 @@ class DeviceSettingsVM {
           store.dispatch(ClearPersistedData());
         }
       },
-      onPersistUiChanged: (context, value) {
-        store.dispatch(UpdateUserPreferences(persistUi: value));
-        if (value) {
-          store.dispatch(PersistUI());
-        }
-      },
     );
   }
 
@@ -221,7 +214,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onEditAfterSavingChanged;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onPersistDataChanged;
-  final Function(BuildContext, bool) onPersistUiChanged;
   final Function(BuildContext, bool) onShowPdfChanged;
   final Function(BuildContext, bool) onEnableNativeBrowserChanged;
   final Function(BuildContext, bool) onShowPdfSideBySideChanged;
