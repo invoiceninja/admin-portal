@@ -79,7 +79,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final lineItems = viewModel.invoice.lineItems;
     final state = viewModel.state;
     final company = state.company;
-    final invoice = viewModel.invoice;
 
     final includedLineItems = lineItems.where((lineItem) {
       return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
