@@ -340,7 +340,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                         ),
                       ),
                       onPressed: () {
-                        if (supportsInAppPurchase()) {
+                        if (supportsInAppPurchase() &&
+                            state.account.canMakeIAP) {
                           showDialog<void>(
                             context: context,
                             builder: (context) => UpgradeDialog(),

@@ -111,6 +111,8 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'payment_id')
   String get paymentId;
 
+  bool get canMakeIAP => !hasIapPlan && paymentId.isEmpty;
+
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
