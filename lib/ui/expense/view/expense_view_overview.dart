@@ -42,7 +42,7 @@ class ExpenseOverview extends StatelessWidget {
     final transaction = state.transactionState.get(expense.transactionId);
     final user = state.userState.get(expense.assignedUserId);
     final recurringExpense =
-        state.recurringExpenseState.get(expense.recurringId);
+        state.recurringExpenseState.get(expense.recurringExpenseId);
 
     InvoiceEntity purchaseOrder;
     if (state.company.isModuleEnabled(EntityType.purchaseOrder)) {
@@ -209,7 +209,7 @@ class ExpenseOverview extends StatelessWidget {
           entity: transaction,
           isFilter: isFilter,
         ),
-        if ((expense.recurringId ?? '').isNotEmpty)
+        if ((expense.recurringExpenseId ?? '').isNotEmpty)
           EntityListTile(entity: recurringExpense, isFilter: isFilter),
         if (expense.isRecurring)
           EntitiesListTile(

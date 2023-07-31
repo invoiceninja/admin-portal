@@ -217,7 +217,7 @@ List<String> filteredExpensesSelector(
           client.groupId != filterEntityId) {
         return false;
       } else if (filterEntityType == EntityType.recurringExpense &&
-          expense.recurringId != filterEntityId) {
+          expense.recurringExpenseId != filterEntityId) {
         return false;
       } else if (filterEntityType == EntityType.transaction &&
           expense.transactionId != filterEntityId) {

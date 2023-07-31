@@ -287,10 +287,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    value = object.recurringId;
+    value = object.recurringExpenseId;
     if (value != null) {
       result
-        ..add('recurring_id')
+        ..add('recurring_expense_id')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -508,8 +508,8 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'recurring_id':
-          result.recurringId = serializers.deserialize(value,
+        case 'recurring_expense_id':
+          result.recurringExpenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'frequency_id':
@@ -951,7 +951,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String number;
   @override
-  final String recurringId;
+  final String recurringExpenseId;
   @override
   final String frequencyId;
   @override
@@ -1024,7 +1024,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.calculateTaxByAmount,
       this.documents,
       this.number,
-      this.recurringId,
+      this.recurringExpenseId,
       this.frequencyId,
       this.lastSentDate,
       this.nextSendDate,
@@ -1163,7 +1163,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         calculateTaxByAmount == other.calculateTaxByAmount &&
         documents == other.documents &&
         number == other.number &&
-        recurringId == other.recurringId &&
+        recurringExpenseId == other.recurringExpenseId &&
         frequencyId == other.frequencyId &&
         lastSentDate == other.lastSentDate &&
         nextSendDate == other.nextSendDate &&
@@ -1222,7 +1222,7 @@ class _$ExpenseEntity extends ExpenseEntity {
     _$hash = $jc(_$hash, calculateTaxByAmount.hashCode);
     _$hash = $jc(_$hash, documents.hashCode);
     _$hash = $jc(_$hash, number.hashCode);
-    _$hash = $jc(_$hash, recurringId.hashCode);
+    _$hash = $jc(_$hash, recurringExpenseId.hashCode);
     _$hash = $jc(_$hash, frequencyId.hashCode);
     _$hash = $jc(_$hash, lastSentDate.hashCode);
     _$hash = $jc(_$hash, nextSendDate.hashCode);
@@ -1281,7 +1281,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('calculateTaxByAmount', calculateTaxByAmount)
           ..add('documents', documents)
           ..add('number', number)
-          ..add('recurringId', recurringId)
+          ..add('recurringExpenseId', recurringExpenseId)
           ..add('frequencyId', frequencyId)
           ..add('lastSentDate', lastSentDate)
           ..add('nextSendDate', nextSendDate)
@@ -1463,9 +1463,10 @@ class ExpenseEntityBuilder
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
-  String _recurringId;
-  String get recurringId => _$this._recurringId;
-  set recurringId(String recurringId) => _$this._recurringId = recurringId;
+  String _recurringExpenseId;
+  String get recurringExpenseId => _$this._recurringExpenseId;
+  set recurringExpenseId(String recurringExpenseId) =>
+      _$this._recurringExpenseId = recurringExpenseId;
 
   String _frequencyId;
   String get frequencyId => _$this._frequencyId;
@@ -1576,7 +1577,7 @@ class ExpenseEntityBuilder
       _calculateTaxByAmount = $v.calculateTaxByAmount;
       _documents = $v.documents.toBuilder();
       _number = $v.number;
-      _recurringId = $v.recurringId;
+      _recurringExpenseId = $v.recurringExpenseId;
       _frequencyId = $v.frequencyId;
       _lastSentDate = $v.lastSentDate;
       _nextSendDate = $v.nextSendDate;
@@ -1660,7 +1661,7 @@ class ExpenseEntityBuilder
               calculateTaxByAmount: calculateTaxByAmount,
               documents: documents.build(),
               number: BuiltValueNullFieldError.checkNotNull(number, r'ExpenseEntity', 'number'),
-              recurringId: recurringId,
+              recurringExpenseId: recurringExpenseId,
               frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, r'ExpenseEntity', 'frequencyId'),
               lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, r'ExpenseEntity', 'lastSentDate'),
               nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, r'ExpenseEntity', 'nextSendDate'),

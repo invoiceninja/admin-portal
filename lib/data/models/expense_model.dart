@@ -121,6 +121,7 @@ abstract class ExpenseEntity extends Object
       invoiceDocuments: company?.invoiceExpenseDocuments ?? false,
       transactionId: '',
       transactionReference: '',
+      recurringExpenseId: '',
       bankId: '',
       amount: 0,
       date: convertDateTimeToSqlDate(),
@@ -305,9 +306,9 @@ abstract class ExpenseEntity extends Object
 
   String get number;
 
-  @nullable
-  @BuiltValueField(wireName: 'recurring_id')
-  String get recurringId;
+  @nullable // TODO remove this
+  @BuiltValueField(wireName: 'recurring_expense_id')
+  String get recurringExpenseId;
 
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
