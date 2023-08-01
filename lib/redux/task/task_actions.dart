@@ -22,7 +22,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewTaskList implements PersistUI {
-  ViewTaskList({this.force = false, this.page = 0,});
+  ViewTaskList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
   final int page;
@@ -568,12 +571,12 @@ class ClearTaskMultiselect {}
 class SaveTaskDocumentRequest implements StartSaving {
   SaveTaskDocumentRequest({
     @required this.completer,
-    @required this.multipartFile,
+    @required this.multipartFiles,
     @required this.task,
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFiles;
   final TaskEntity task;
 }
 

@@ -21,7 +21,7 @@ class VendorViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: vendor.documents.toList(),
-      onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
+      onUploadDocument: (path) => viewModel.onUploadDocuments(context, path),
       onDeleteDocument: (document, password, idToken) =>
           viewModel.onDeleteDocument(context, document, password, idToken),
       onRenamedDocument: () => store.dispatch(LoadVendor(vendorId: vendor.id)),

@@ -94,15 +94,15 @@ class ExpenseRepository {
     return expenseResponse.data;
   }
 
-  Future<ExpenseEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, MultipartFile multipartFile) async {
+  Future<ExpenseEntity> uploadDocuments(Credentials credentials,
+      BaseEntity entity, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
 
     final dynamic response = await webClient.post(
         '${credentials.url}/expenses/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: [multipartFile]);
+        data: fields, multipartFiles: multipartFiles);
 
     final ExpenseItemResponse expenseResponse =
         serializers.deserializeWith(ExpenseItemResponse.serializer, response);

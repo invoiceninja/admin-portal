@@ -546,8 +546,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                         flex: 2,
                         child: OutlinedButton(
                           onPressed: () async {
-                            final file = await pickFile(
+                            final files = await pickFiles(
                               fileIndex: 'e_invoice_certificate',
+                              allowMultiple: false,
                               allowedExtensions: [
                                 'p12',
                                 'pfx',
@@ -562,8 +563,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                               ],
                             );
 
-                            if (file != null) {
-                              viewModel.onEInvoiceCertificateSelected(file);
+                            if (files != null && files.isNotEmpty) {
+                              viewModel
+                                  .onEInvoiceCertificateSelected(files.first);
                             }
                           },
                           child: Padding(

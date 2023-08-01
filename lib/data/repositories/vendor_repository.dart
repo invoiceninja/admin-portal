@@ -90,14 +90,14 @@ class VendorRepository {
   }
 
   Future<VendorEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, MultipartFile multipartFile) async {
+      BaseEntity entity, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
 
     final dynamic response = await webClient.post(
         '${credentials.url}/vendors/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: [multipartFile]);
+        data: fields, multipartFiles: multipartFiles);
 
     final VendorItemResponse vendorResponse =
         serializers.deserializeWith(VendorItemResponse.serializer, response);

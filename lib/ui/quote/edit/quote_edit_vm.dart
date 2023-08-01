@@ -57,7 +57,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocument,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -69,7 +69,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           onItemsAdded: onItemsAdded,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
         );
 
@@ -165,7 +165,8 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocument:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(
             multipartFile: multipartFile, quote: quote, completer: completer));

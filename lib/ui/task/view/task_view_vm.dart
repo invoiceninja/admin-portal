@@ -60,7 +60,7 @@ class TaskViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -117,10 +117,11 @@ class TaskViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([task], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveTaskDocumentRequest(
-            multipartFile: multipartFile, task: task, completer: completer));
+            multipartFiles: multipartFiles, task: task, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
@@ -159,6 +160,6 @@ class TaskViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

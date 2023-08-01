@@ -55,7 +55,7 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     bool isSaving,
     bool isLoading,
@@ -66,7 +66,7 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
           company: company,
           onEntityAction: onEntityAction,
           onRefreshed: onRefreshed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
           isSaving: isSaving,
           isLoading: isLoading,
@@ -97,10 +97,11 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([recurringExpense], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));
         completer.future.then((client) {

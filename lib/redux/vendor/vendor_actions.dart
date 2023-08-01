@@ -424,12 +424,12 @@ class ClearVendorMultiselect {}
 class SaveVendorDocumentRequest implements StartSaving {
   SaveVendorDocumentRequest({
     @required this.completer,
-    @required this.multipartFile,
+    @required this.multipartFiles,
     @required this.vendor,
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFiles;
   final VendorEntity vendor;
 }
 

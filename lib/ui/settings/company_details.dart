@@ -492,13 +492,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                                 return;
                               }
 
-                              final multipartFile = await pickFile(
+                              final multipartFiles = await pickFiles(
                                 fileIndex: 'company_logo',
                                 fileType: FileType.image,
+                                allowMultiple: false,
                               );
-                              if (multipartFile != null) {
+                              if (multipartFiles != null &&
+                                  multipartFiles.isNotEmpty) {
                                 viewModel.onUploadLogo(
-                                    navigatorKey.currentContext, multipartFile);
+                                    navigatorKey.currentContext,
+                                    multipartFiles.first);
                               }
                             },
                           ),
@@ -699,7 +702,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
             DocumentGrid(
               documents: company.documents.toList(),
               onUploadDocument: (path) =>
-                  viewModel.onUploadDocument(context, path),
+                  viewModel.onUploadDocuments(context, path),
               onDeleteDocument: (document, password, idToken) => viewModel
                   .onDeleteDocument(context, document, password, idToken),
               onRenamedDocument: () => store.dispatch(RefreshData()),

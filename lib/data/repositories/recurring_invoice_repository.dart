@@ -113,7 +113,7 @@ class RecurringInvoiceRepository {
   }
 
   Future<InvoiceEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, MultipartFile multipartFile) async {
+      BaseEntity entity, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
@@ -122,7 +122,7 @@ class RecurringInvoiceRepository {
         '${credentials.url}/recurring_invoices/${entity.id}/upload',
         credentials.token,
         data: fields,
-        multipartFiles: [multipartFile]);
+        multipartFiles: multipartFiles);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

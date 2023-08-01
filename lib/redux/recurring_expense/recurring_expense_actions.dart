@@ -330,7 +330,7 @@ class SaveRecurringExpenseDocumentRequest implements StartSaving {
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFile;
   final ExpenseEntity expense;
 }
 

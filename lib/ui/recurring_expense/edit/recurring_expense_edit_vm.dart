@@ -58,7 +58,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
         onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddVendorPressed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -69,7 +69,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           origExpense: origExpense,
           onAddClientPressed: onAddClientPressed,
           onAddVendorPressed: onAddVendorPressed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocument: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
         );
 
@@ -186,10 +186,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           }
         });
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));
         completer.future.then((client) {

@@ -495,7 +495,7 @@ class SaveQuoteDocumentRequest implements StartSaving {
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFile;
   final InvoiceEntity quote;
 }
 

@@ -569,7 +569,7 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(store.state.credentials, action.purchaseOrder,
-              action.multipartFile)
+              action.multipartFiles)
           .then((purchaseOrder) {
         store.dispatch(SavePurchaseOrderSuccess(purchaseOrder));
         action.completer.complete(null);

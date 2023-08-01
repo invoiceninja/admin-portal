@@ -57,7 +57,7 @@ class ProductViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onRefreshed,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -86,10 +86,11 @@ class ProductViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([product], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProductDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFile,
             product: product,
             completer: completer));
         completer.future.then((client) {
@@ -123,7 +124,7 @@ class ProductViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

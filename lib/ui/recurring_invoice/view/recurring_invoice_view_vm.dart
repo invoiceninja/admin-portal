@@ -60,7 +60,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
     Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
@@ -75,7 +75,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
           onEditPressed: onEditPressed,
           onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
           onViewPdf: onViewPdf,
@@ -114,10 +114,11 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringInvoiceDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFiles,
             invoice: invoice,
             completer: completer));
         completer.future.then((client) {

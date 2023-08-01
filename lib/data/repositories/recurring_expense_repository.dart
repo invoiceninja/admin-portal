@@ -95,7 +95,7 @@ class RecurringExpenseRepository {
   }
 
   Future<ExpenseEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, MultipartFile multipartFile) async {
+      BaseEntity entity, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
@@ -104,7 +104,7 @@ class RecurringExpenseRepository {
         '${credentials.url}/recurring_expenses/${entity.id}/upload',
         credentials.token,
         data: fields,
-        multipartFiles: [multipartFile]);
+        multipartFiles: multipartFiles);
 
     final ExpenseItemResponse expenseResponse =
         serializers.deserializeWith(ExpenseItemResponse.serializer, response);

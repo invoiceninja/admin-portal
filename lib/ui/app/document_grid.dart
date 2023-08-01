@@ -55,7 +55,7 @@ class DocumentGrid extends StatefulWidget {
   });
 
   final List<DocumentEntity> documents;
-  final Function(MultipartFile) onUploadDocument;
+  final Function(List<MultipartFile>) onUploadDocument;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final Function onRenamedDocument;
@@ -80,12 +80,17 @@ class _DocumentGridState extends State<DocumentGrid> {
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
               child: DropTarget(
                 onDragDone: (detail) async {
-                  final file = detail.files.first;
-                  final bytes = await file.readAsBytes();
-                  final multipartFile = MultipartFile.fromBytes(
-                      'documents[]', bytes,
-                      filename: file.name);
-                  widget.onUploadDocument(multipartFile);
+                  final List<MultipartFile> multipartFiles = [];
+                  for (var index = 0; index < detail.files.length; index++) {
+                    final file = detail.files[index];
+                    final bytes = await file.readAsBytes();
+                    final multipartFile = MultipartFile.fromBytes(
+                        'documents[$index]', bytes,
+                        filename: file.name);
+                    multipartFiles.add(multipartFile);
+                  }
+
+                  widget.onUploadDocument(multipartFiles);
                 },
                 onDragEntered: (detail) {
                   setState(() => _dragging = true);
@@ -146,18 +151,21 @@ class _DocumentGridState extends State<DocumentGrid> {
                       onPressed: () async {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
-                          final image = await ImagePicker()
-                              .pickImage(source: ImageSource.camera);
-
-                          if (image != null && image.path != null) {
-                            final croppedFile = await ImageCropper()
-                                .cropImage(sourcePath: image.path);
-                            final bytes = await croppedFile.readAsBytes();
-                            final multipartFile = MultipartFile.fromBytes(
-                                'documents[]', bytes,
-                                filename: image.path.split('/').last);
-                            widget.onUploadDocument(multipartFile);
+                          final multipartFiles = <MultipartFile>[];
+                          final images = await ImagePicker().pickMultiImage();
+                          for (var index = 0; index < images.length; index++) {
+                            final image = images[index];
+                            if (image != null && image.path != null) {
+                              final croppedFile = await ImageCropper()
+                                  .cropImage(sourcePath: image.path);
+                              final bytes = await croppedFile.readAsBytes();
+                              final multipartFile = MultipartFile.fromBytes(
+                                  'documents[$index]', bytes,
+                                  filename: image.path.split('/').last);
+                              multipartFiles.add(multipartFile);
+                            }
                           }
+                          widget.onUploadDocument(multipartFiles);
                         } else {
                           openAppSettings();
                         }
@@ -171,7 +179,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                     child: AppButton(
                       label: localization.gallery,
                       onPressed: () async {
-                        final multipartFile = await pickFile(
+                        final multipartFile = await pickFiles(
                           fileIndex: 'documents[]',
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                           fileType: FileType.image,
@@ -191,7 +199,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                     label:
                         isIOS() ? localization.files : localization.uploadFile,
                     onPressed: () async {
-                      final multipartFile = await pickFile(
+                      final multipartFile = await pickFiles(
                         fileIndex: 'documents[]',
                         allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                       );

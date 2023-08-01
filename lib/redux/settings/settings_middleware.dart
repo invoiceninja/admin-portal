@@ -377,7 +377,7 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
     if (state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, state.company, action.multipartFile)
+              store.state.credentials, state.company, action.multipartFiles)
           .then((company) {
         store.dispatch(SaveCompanySuccess(company));
         action.completer.complete(null);

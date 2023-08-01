@@ -59,7 +59,7 @@ class CompanyDetailsVM {
     @required this.onUploadLogo,
     @required this.onDeleteLogo,
     @required this.onConfigurePaymentTermsPressed,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -151,10 +151,11 @@ class CompanyDetailsVM {
           store.dispatch(ViewSettings(section: kSettingsPaymentTerms));
         }
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCompanyDocumentRequest(
-            multipartFile: multipartFile, completer: completer));
+            multipartFiles: multipartFile, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
@@ -189,6 +190,6 @@ class CompanyDetailsVM {
   final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
