@@ -17,6 +17,7 @@ import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -263,6 +264,46 @@ class DocumentTile extends StatelessWidget {
   final bool isFromExpense;
   final Function onRenamedDocument;
 
+  void _viewFile(BuildContext context) async {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    store.dispatch(StartLoading());
+
+    final http.Response response = await WebClient()
+        .get(document.url, state.credentials.token, rawResponse: true);
+
+    store.dispatch(StopLoading());
+
+    showDialog<void>(
+        context: navigatorKey.currentContext,
+        builder: (context) {
+          return AlertDialog(
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(localization.close.toUpperCase())),
+            ],
+            content: document.isImage
+                ? PinchZoom(
+                    child: Image.memory(response.bodyBytes),
+                  )
+                : SizedBox(
+                    width: 600,
+                    child: PdfPreview(
+                      build: (format) => response.bodyBytes,
+                      canChangeOrientation: false,
+                      canChangePageFormat: false,
+                      allowPrinting: false,
+                      allowSharing: false,
+                      canDebug: false,
+                    ),
+                  ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -279,9 +320,14 @@ class DocumentTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DocumentPreview(
-                  document,
-                  height: 110,
+                InkWell(
+                  onTap: (document.isImage || document.isPdf)
+                      ? () => _viewFile(context)
+                      : null,
+                  child: DocumentPreview(
+                    document,
+                    height: 110,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4),
@@ -314,39 +360,7 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                final http.Response response = await WebClient()
-                                    .get(document.url, state.credentials.token,
-                                        rawResponse: true);
-                                showDialog<void>(
-                                    context: navigatorKey.currentContext,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              child: Text(localization.close
-                                                  .toUpperCase())),
-                                        ],
-                                        content: document.isImage
-                                            ? PinchZoom(
-                                                child: Image.memory(
-                                                    response.bodyBytes),
-                                              )
-                                            : SizedBox(
-                                                width: 600,
-                                                child: PdfPreview(
-                                                  build: (format) =>
-                                                      response.bodyBytes,
-                                                  canChangeOrientation: false,
-                                                  canChangePageFormat: false,
-                                                  allowPrinting: false,
-                                                  allowSharing: false,
-                                                  canDebug: false,
-                                                ),
-                                              ),
-                                      );
-                                    });
+                                _viewFile(context);
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
                                     .get(document.url, state.credentials.token,
