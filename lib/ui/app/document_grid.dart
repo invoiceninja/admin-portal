@@ -125,7 +125,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                       height: 100,
                       width: double.infinity,
                       child: Center(
-                        child: Text(localization.dropFileHere),
+                        child: Text(localization.dropFilesHere),
                       ),
                       color: _dragging
                           ? Colors.blue.withOpacity(0.4)
@@ -198,7 +198,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                   child: AppButton(
                     iconData: isIOS() ? null : Icons.insert_drive_file,
                     label:
-                        isIOS() ? localization.files : localization.uploadFile,
+                        isIOS() ? localization.files : localization.uploadFiles,
                     onPressed: () async {
                       final multipartFile = await pickFiles(
                         fileIndex: 'documents[]',
