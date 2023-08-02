@@ -639,8 +639,6 @@ abstract class ExpenseEntity extends Object
           } else {
             return true;
           }
-        } else {
-          return false;
         }
       } else if (status.id == kExpenseStatusInvoiced && isInvoiced) {
         return true;
