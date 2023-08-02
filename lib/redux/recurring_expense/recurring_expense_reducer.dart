@@ -28,6 +28,8 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewRecurringExpenseList>((completer, action) => false),
   TypedReducer<bool, FilterRecurringExpensesByState>(
       (completer, action) => false),
+  TypedReducer<bool, FilterRecurringExpensesByStatus>(
+      (completer, action) => false),
   TypedReducer<bool, FilterRecurringExpenses>((completer, action) => false),
   TypedReducer<bool, FilterRecurringExpensesByCustom1>(
       (completer, action) => false),
