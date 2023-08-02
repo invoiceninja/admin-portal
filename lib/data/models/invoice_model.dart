@@ -951,7 +951,7 @@ abstract class InvoiceEntity extends Object
         if (isRecurring &&
             status.id == kRecurringInvoiceStatusActive &&
             statusId == kRecurringInvoiceStatusActive &&
-            calculatedStatusId == kRecurringExpenseStatusPending) {
+            calculatedStatusId == kRecurringInvoiceStatusPending) {
           // skip
         } else {
           return true;
