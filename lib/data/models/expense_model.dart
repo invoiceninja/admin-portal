@@ -628,16 +628,19 @@ abstract class ExpenseEntity extends Object
     }
 
     for (final status in statuses) {
-      if (isRecurring &&
-          (status.id == statusId || status.id == calculatedStatusId)) {
-        // Handle pending recurring invoices which are active
-        if (isRecurring &&
-            status.id == kRecurringExpenseStatusActive &&
-            statusId == kRecurringExpenseStatusActive &&
-            calculatedStatusId == kRecurringExpenseStatusPending) {
-          // skip
+      if (isRecurring) {
+        if (status.id == statusId || status.id == calculatedStatusId) {
+          // Handle pending recurring invoices which are active
+          if (isRecurring &&
+              status.id == kRecurringExpenseStatusActive &&
+              statusId == kRecurringExpenseStatusActive &&
+              calculatedStatusId == kRecurringExpenseStatusPending) {
+            // skip
+          } else {
+            return true;
+          }
         } else {
-          return true;
+          return false;
         }
       } else if (status.id == kExpenseStatusInvoiced && isInvoiced) {
         return true;
