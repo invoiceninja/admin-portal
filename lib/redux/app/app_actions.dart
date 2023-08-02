@@ -460,6 +460,12 @@ void viewEntitiesByType({
           case EntityType.credit:
             action = ViewCreditList(page: page);
             break;
+          case EntityType.document:
+            action = ViewDocumentList();
+            break;
+          default:
+            print('## viewEntitiesByTyp not handled for $entityType');
+            break;
         }
 
         if (action != null) {
