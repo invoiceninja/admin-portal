@@ -232,6 +232,12 @@ class FilterRecurringExpensesByState implements PersistUI {
   final EntityState state;
 }
 
+class FilterRecurringExpensesByStatus implements PersistUI {
+  FilterRecurringExpensesByStatus(this.status);
+
+  final EntityStatus status;
+}
+
 class FilterRecurringExpensesByCustom1 implements PersistUI {
   FilterRecurringExpensesByCustom1(this.value);
 
@@ -330,7 +336,7 @@ class SaveRecurringExpenseDocumentRequest implements StartSaving {
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFile;
   final ExpenseEntity expense;
 }
 

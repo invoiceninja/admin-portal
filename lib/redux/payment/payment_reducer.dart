@@ -25,6 +25,7 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewPayment>((completer, action) => true),
   TypedReducer<bool, ViewPaymentList>((completer, action) => false),
   TypedReducer<bool, FilterPaymentsByState>((completer, action) => false),
+  TypedReducer<bool, FilterPaymentsByStatus>((completer, action) => false),
   TypedReducer<bool, FilterPayments>((completer, action) => false),
   TypedReducer<bool, FilterPaymentsByCustom1>((completer, action) => false),
   TypedReducer<bool, FilterPaymentsByCustom2>((completer, action) => false),

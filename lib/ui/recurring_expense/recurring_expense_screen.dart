@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -36,6 +37,34 @@ class RecurringExpenseScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringExpenseStatusDraft
+          ..name = localization.draft,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringExpenseStatusPending
+          ..name = localization.pending,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringExpenseStatusActive
+          ..name = localization.active,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringExpenseStatusPaused
+          ..name = localization.paused,
+      ),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kRecurringExpenseStatusCompleted
+          ..name = localization.completed,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.recurringExpense,
       onHamburgerLongPress: () =>
@@ -49,9 +78,13 @@ class RecurringExpenseScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterRecurringExpenses(value));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterRecurringExpensesByStatus(status));
+        },
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterRecurringExpensesByState(state));
         },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.recurringExpenseListState.isInMultiselect()) {
@@ -69,6 +102,9 @@ class RecurringExpenseScreen extends StatelessWidget {
         onSelectedSortField: (value) {
           store.dispatch(SortRecurringExpenses(value));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterRecurringExpensesByStatus(status));
+        },
         sortFields: [
           RecurringExpenseFields.number,
           RecurringExpenseFields.nextSendDate,
@@ -84,6 +120,7 @@ class RecurringExpenseScreen extends StatelessWidget {
             store.dispatch(StartRecurringExpenseMultiselect());
           }
         },
+        statuses: statuses,
         customValues1: company.getCustomFieldValues(CustomFieldType.expense1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.expense2,

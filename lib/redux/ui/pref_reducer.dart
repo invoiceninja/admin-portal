@@ -85,7 +85,6 @@ PrefState prefReducer(
     ..enableNativeBrowser =
         enableNativeBrowserReducer(state.enableNativeBrowser, action)
     ..persistData = persistDataReducer(state.persistData, action)
-    ..persistUI = persistUIReducer(state.persistUI, action)
     ..showKanban = showKanbanReducer(state.showKanban, action)
     ..isFilterVisible = isFilterVisibleReducer(state.isFilterVisible, action)
     ..longPressSelectionIsDefault =
@@ -381,12 +380,6 @@ Reducer<bool> enableNativeBrowserReducer = combineReducers([
 Reducer<bool> persistDataReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((persistData, action) {
     return action.persistData ?? persistData;
-  }),
-]);
-
-Reducer<bool> persistUIReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((persistUI, action) {
-    return action.persistUi ?? persistUI;
   }),
 ]);
 

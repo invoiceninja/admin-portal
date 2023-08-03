@@ -62,7 +62,7 @@ class VendorViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -108,10 +108,11 @@ class VendorViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([vendor], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveVendorDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFile,
             vendor: vendor,
             completer: completer));
         completer.future.then((client) {
@@ -150,6 +151,6 @@ class VendorViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

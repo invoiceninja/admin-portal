@@ -521,19 +521,20 @@ class _FileImportState extends State<_FileImport> {
         OutlinedButton(
           child: Text(localization.selectFile),
           onPressed: () async {
-            final multipartFile = await pickFile(
+            final multipartFiles = await pickFiles(
               fileIndex: widget.importType == ImportType.json
                   ? 'files'
                   : 'files[' + uploadPart.key + ']',
               fileType: FileType.custom,
+              allowMultiple: false,
               allowedExtensions: widget.importType == ImportType.json
                   ? ['json', 'zip']
                   : ['csv'],
             );
 
-            if (multipartFile != null) {
+            if (multipartFiles != null && multipartFiles.isNotEmpty) {
               setState(() {
-                _multipartFiles[uploadPart.key] = multipartFile;
+                _multipartFiles[uploadPart.key] = multipartFiles.first;
               });
             }
           },

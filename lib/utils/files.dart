@@ -16,15 +16,18 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
-Future<MultipartFile> pickFile(
-    {String fileIndex,
-    FileType fileType,
-    List<String> allowedExtensions}) async {
+Future<List<MultipartFile>> pickFiles({
+  String fileIndex,
+  FileType fileType,
+  List<String> allowedExtensions,
+  bool allowMultiple = true,
+}) async {
   if (kIsWeb || isDesktopOS()) {
-    return _pickFile(
+    return _pickFiles(
       fileIndex: fileIndex,
       fileType: fileType,
       allowedExtensions: allowedExtensions,
+      allowMultiple: allowMultiple,
     );
   } else {
     final permission = await (fileType == FileType.image && Platform.isIOS
@@ -32,10 +35,11 @@ Future<MultipartFile> pickFile(
         : Permission.storage.request());
 
     if (permission == PermissionStatus.granted) {
-      return _pickFile(
+      return _pickFiles(
         fileIndex: fileIndex,
         fileType: fileType,
         allowedExtensions: allowedExtensions,
+        allowMultiple: allowMultiple,
       );
     } else {
       openAppSettings();
@@ -44,23 +48,31 @@ Future<MultipartFile> pickFile(
   }
 }
 
-Future<MultipartFile> _pickFile(
-    {String fileIndex,
-    FileType fileType,
-    List<String> allowedExtensions}) async {
+Future<List<MultipartFile>> _pickFiles({
+  String fileIndex,
+  FileType fileType,
+  List<String> allowedExtensions,
+  bool allowMultiple,
+}) async {
   final result = await FilePicker.platform.pickFiles(
     type: fileType ?? FileType.custom,
     allowedExtensions:
         fileType == FileType.image ? [] : allowedExtensions ?? [],
     allowCompression: true,
     withData: true,
-    allowMultiple: false,
+    allowMultiple: allowMultiple,
   );
 
   if (result != null && result.files.isNotEmpty) {
-    final file = result.files.first;
-    return MultipartFile.fromBytes(fileIndex ?? 'file', file.bytes,
-        filename: file.name);
+    final multipartFiles = <MultipartFile>[];
+    for (var index = 0; index < result.files.length; index++) {
+      final file = result.files[index];
+      multipartFiles.add(MultipartFile.fromBytes(
+          allowMultiple ? 'documents[$index]' : fileIndex, file.bytes,
+          filename: file.name));
+    }
+
+    return multipartFiles;
   }
 
   return null;

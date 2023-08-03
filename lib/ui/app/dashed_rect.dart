@@ -13,7 +13,7 @@ class DashedRect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 75,
       width: double.infinity,
       child: Padding(
         padding: EdgeInsets.all(strokeWidth / 2),

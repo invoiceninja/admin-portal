@@ -55,7 +55,7 @@ class AbstractExpenseViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onRefreshed,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
     @required this.isSaving,
     @required this.isLoading,
@@ -67,7 +67,7 @@ class AbstractExpenseViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
@@ -81,7 +81,7 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     bool isSaving,
     bool isLoading,
@@ -92,7 +92,7 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
           company: company,
           onEntityAction: onEntityAction,
           onRefreshed: onRefreshed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
           isSaving: isSaving,
           isLoading: isLoading,
@@ -121,10 +121,11 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([expense], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveExpenseDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFiles,
             expense: expense,
             completer: completer));
         completer.future.then((client) {

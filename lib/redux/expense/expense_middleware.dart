@@ -263,8 +263,8 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
     final action = dynamicAction as SaveExpenseDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
-              store.state.credentials, action.expense, action.multipartFile)
+          .uploadDocuments(
+              store.state.credentials, action.expense, action.multipartFiles)
           .then((expense) {
         store.dispatch(SaveExpenseSuccess(expense));
         action.completer.complete(null);

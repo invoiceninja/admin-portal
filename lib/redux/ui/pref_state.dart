@@ -274,7 +274,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..hideTwoYearReviewApp = false
     ..tapSelectedToEdit = false
     ..persistData = false
-    ..persistUI = true
     ..editAfterSaving = true
     ..showPdfPreview = true
     ..showPdfPreviewSideBySide = false

@@ -119,14 +119,14 @@ class TaskRepository {
   }
 
   Future<TaskEntity> uploadDocument(Credentials credentials, BaseEntity entity,
-      MultipartFile multipartFile) async {
+      List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
 
     final dynamic response = await webClient.post(
         '${credentials.url}/tasks/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: [multipartFile]);
+        data: fields, multipartFiles: multipartFiles);
 
     final TaskItemResponse taskResponse =
         serializers.deserializeWith(TaskItemResponse.serializer, response);

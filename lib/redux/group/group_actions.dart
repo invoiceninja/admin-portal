@@ -319,12 +319,12 @@ class ClearGroupMultiselect {}
 class SaveGroupDocumentRequest implements StartSaving {
   SaveGroupDocumentRequest({
     @required this.completer,
-    @required this.multipartFile,
+    @required this.multipartFiles,
     @required this.group,
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFiles;
   final GroupEntity group;
 }
 

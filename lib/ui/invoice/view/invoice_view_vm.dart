@@ -55,7 +55,7 @@ class AbstractInvoiceViewVM {
     @required this.isSaving,
     @required this.isDirty,
     @required this.onActionSelected,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
     @required this.onEditPressed,
     @required this.onPaymentsPressed,
@@ -74,7 +74,7 @@ class AbstractInvoiceViewVM {
   final Function(BuildContext, [int]) onEditPressed;
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
   final Function(BuildContext, InvoiceEntity, [String]) onViewPdf;
@@ -95,7 +95,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
       Function(BuildContext) onPaymentsPressed,
       Function(BuildContext) onRefreshed,
-      Function(BuildContext, MultipartFile) onUploadDocument,
+      Function(BuildContext, List<MultipartFile>) onUploadDocuments,
       Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
       Function(BuildContext, DocumentEntity) onViewExpense,
       Function(BuildContext, InvoiceEntity, [String]) onViewPdf})
@@ -110,7 +110,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
           onEditPressed: onEditPressed,
           onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
           onViewPdf: onViewPdf,
@@ -149,10 +149,11 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFile,
             invoice: invoice,
             completer: completer));
         completer.future.then((client) {

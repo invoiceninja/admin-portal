@@ -61,7 +61,7 @@ class GroupViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -98,10 +98,11 @@ class GroupViewVM {
               entityType: EntityType.client, filterEntity: group);
         }
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveGroupDocumentRequest(
-            multipartFile: multipartFile, group: group, completer: completer));
+            multipartFiles: multipartFile, group: group, completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
@@ -135,7 +136,7 @@ class GroupViewVM {
   final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

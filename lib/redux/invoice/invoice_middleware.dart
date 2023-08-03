@@ -510,8 +510,8 @@ Middleware<AppState> _saveDocument(InvoiceRepository repository) {
     final action = dynamicAction as SaveInvoiceDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
-              store.state.credentials, action.invoice, action.multipartFile)
+          .uploadDocuments(
+              store.state.credentials, action.invoice, action.multipartFiles)
           .then((invoice) {
         store.dispatch(SaveInvoiceSuccess(invoice));
         action.completer.complete(null);

@@ -21,6 +21,7 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewTransaction>((completer, action) => true),
   TypedReducer<bool, ViewTransactionList>((completer, action) => false),
   TypedReducer<bool, FilterTransactionsByState>((completer, action) => false),
+  TypedReducer<bool, FilterTransactionsByStatus>((completer, action) => false),
   TypedReducer<bool, FilterTransactions>((completer, action) => false),
   TypedReducer<bool, FilterTransactionsByCustom1>((completer, action) => false),
   TypedReducer<bool, FilterTransactionsByCustom2>((completer, action) => false),

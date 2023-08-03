@@ -151,7 +151,8 @@ class EditScaffold extends StatelessWidget {
                               onTap: () async {
                                 if (bannerClick != null) {
                                   bannerClick();
-                                } else if (supportsInAppPurchase()) {
+                                } else if (supportsInAppPurchase() &&
+                                    account.canMakeIAP) {
                                   showDialog<void>(
                                     context: context,
                                     builder: (context) => UpgradeDialog(),

@@ -232,14 +232,14 @@ class SettingsRepository {
   }
 
   Future<CompanyEntity> uploadDocument(Credentials credentials,
-      CompanyEntity company, MultipartFile multipartFile) async {
+      CompanyEntity company, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
 
     final dynamic response = await webClient.post(
         '${credentials.url}/companies/${company.id}/upload', credentials.token,
-        data: fields, multipartFiles: [multipartFile]);
+        data: fields, multipartFiles: multipartFiles);
 
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);

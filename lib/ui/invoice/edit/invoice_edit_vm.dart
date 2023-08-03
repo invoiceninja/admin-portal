@@ -57,7 +57,7 @@ abstract class AbstractInvoiceEditVM {
     @required this.onItemsAdded,
     @required this.isSaving,
     @required this.onCancelPressed,
-    @required this.onUploadDocument,
+    @required this.onUploadDocuments,
     @required this.onDeleteDocument,
   });
 
@@ -70,7 +70,7 @@ abstract class AbstractInvoiceEditVM {
   final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext, MultipartFile) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
 
@@ -85,7 +85,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -97,7 +97,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           onItemsAdded: onItemsAdded,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
         );
 
@@ -231,10 +231,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFiles) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFiles,
             invoice: invoice,
             completer: completer));
         completer.future.then((client) {

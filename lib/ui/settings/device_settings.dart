@@ -298,17 +298,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       secondary: Icon(MdiIcons.tooltip),
                     ),
                   ],
-                  /*
-                  SwitchListTile(
-                    title: Text(localization.persistUi),
-                    subtitle: Text(localization.persistUiHelp),
-                    value: prefState.persistUI,
-                    onChanged: (value) =>
-                        viewModel.onPersistUiChanged(context, value),
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    secondary: Icon(Icons.save_alt),
-                  ),
-                  */
                   SwitchListTile(
                     title: Text(localization.persistData),
                     subtitle: Text(localization.persistDataHelp),

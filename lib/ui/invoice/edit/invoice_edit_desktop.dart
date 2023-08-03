@@ -945,7 +945,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         originalInvoice.documents.toList(),
                                     onUploadDocument: (path) => widget
                                         .entityViewModel
-                                        .onUploadDocument(context, path),
+                                        .onUploadDocuments(context, path),
                                     onDeleteDocument: (document, password,
                                             idToken) =>
                                         widget.entityViewModel.onDeleteDocument(

@@ -31,6 +31,8 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewRecurringInvoiceList>((completer, action) => false),
   TypedReducer<bool, FilterRecurringInvoicesByState>(
       (completer, action) => false),
+  TypedReducer<bool, FilterRecurringInvoicesByStatus>(
+      (completer, action) => false),
   TypedReducer<bool, FilterRecurringInvoices>((completer, action) => false),
   TypedReducer<bool, FilterRecurringInvoicesByCustom1>(
       (completer, action) => false),

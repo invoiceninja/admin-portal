@@ -28,6 +28,8 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewRecurringExpenseList>((completer, action) => false),
   TypedReducer<bool, FilterRecurringExpensesByState>(
       (completer, action) => false),
+  TypedReducer<bool, FilterRecurringExpensesByStatus>(
+      (completer, action) => false),
   TypedReducer<bool, FilterRecurringExpenses>((completer, action) => false),
   TypedReducer<bool, FilterRecurringExpensesByCustom1>(
       (completer, action) => false),
@@ -67,6 +69,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SortRecurringExpenses>((selectedId, action) => ''),
   TypedReducer<String, FilterRecurringExpenses>((selectedId, action) => ''),
   TypedReducer<String, FilterRecurringExpensesByState>(
+      (selectedId, action) => ''),
+  TypedReducer<String, FilterRecurringExpensesByStatus>(
       (selectedId, action) => ''),
   TypedReducer<String, FilterRecurringExpensesByCustom1>(
       (selectedId, action) => ''),
@@ -120,6 +124,8 @@ final recurringExpenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortRecurringExpenses>(_sortRecurringExpenses),
   TypedReducer<ListUIState, FilterRecurringExpensesByState>(
       _filterRecurringExpensesByState),
+  TypedReducer<ListUIState, FilterRecurringExpensesByStatus>(
+      _filterRecurringExpensesByStatus),
   TypedReducer<ListUIState, FilterRecurringExpenses>(_filterRecurringExpenses),
   TypedReducer<ListUIState, FilterRecurringExpensesByCustom1>(
       _filterRecurringExpensesByCustom1),
@@ -182,6 +188,18 @@ ListUIState _filterRecurringExpensesByState(
   } else {
     return recurringExpenseListState
         .rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterRecurringExpensesByStatus(
+    ListUIState recurringExpenseListState,
+    FilterRecurringExpensesByStatus action) {
+  if (recurringExpenseListState.statusFilters.contains(action.status)) {
+    return recurringExpenseListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return recurringExpenseListState
+        .rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 

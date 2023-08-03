@@ -432,7 +432,8 @@ class ReportsScreen extends StatelessWidget {
                     AppButton(
                         label: localization.upgrade.toUpperCase(),
                         onPressed: () {
-                          if (supportsInAppPurchase()) {
+                          if (supportsInAppPurchase() &&
+                              state.account.canMakeIAP) {
                             showDialog<void>(
                               context: context,
                               builder: (context) => UpgradeDialog(),

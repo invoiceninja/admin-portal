@@ -57,7 +57,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, MultipartFile) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -69,7 +69,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           onItemsAdded: onItemsAdded,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
-          onUploadDocument: onUploadDocument,
+          onUploadDocuments: onUploadDocuments,
           onDeleteDocument: onDeleteDocument,
         );
 
@@ -166,10 +166,11 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocument: (BuildContext context, MultipartFile multipartFile) {
+      onUploadDocuments:
+          (BuildContext context, List<MultipartFile> multipartFile) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCreditDocumentRequest(
-            multipartFile: multipartFile,
+            multipartFiles: multipartFile,
             credit: credit,
             completer: completer));
         completer.future.then((client) {

@@ -30,6 +30,7 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewQuote>((completer, action) => true),
   TypedReducer<bool, ViewQuoteList>((completer, action) => false),
   TypedReducer<bool, FilterQuotesByState>((completer, action) => false),
+  TypedReducer<bool, FilterQuotesByStatus>((completer, action) => false),
   TypedReducer<bool, FilterQuotes>((completer, action) => false),
   TypedReducer<bool, FilterQuotesByCustom1>((completer, action) => false),
   TypedReducer<bool, FilterQuotesByCustom2>((completer, action) => false),

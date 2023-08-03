@@ -230,6 +230,12 @@ class MainScreen extends StatelessWidget {
             editingFilterEntity: editingFilterEntity,
           );
           break;
+        case DocumentScreen.route:
+          screen = EntityScreens(
+            entityType: EntityType.document,
+            editingFilterEntity: editingFilterEntity,
+          );
+          break;
         case SettingsScreen.route:
           screen = SettingsScreens();
           break;
@@ -722,6 +728,9 @@ class EntityScreens extends StatelessWidget {
           break;
         case EntityType.transaction:
           listWidget = TransactionScreenBuilder();
+          break;
+        case EntityType.document:
+          listWidget = DocumentScreenBuilder();
           break;
         default:
           print('## ERROR: list widget not implemented for $entityType');

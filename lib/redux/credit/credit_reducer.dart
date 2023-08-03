@@ -28,6 +28,7 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewCredit>((completer, action) => true),
   TypedReducer<bool, ViewCreditList>((completer, action) => false),
   TypedReducer<bool, FilterCreditsByState>((completer, action) => false),
+  TypedReducer<bool, FilterCreditsByStatus>((completer, action) => false),
   TypedReducer<bool, FilterCredits>((completer, action) => false),
   TypedReducer<bool, FilterCreditsByCustom1>((completer, action) => false),
   TypedReducer<bool, FilterCreditsByCustom2>((completer, action) => false),

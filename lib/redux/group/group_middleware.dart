@@ -247,8 +247,8 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
     final action = dynamicAction as SaveGroupDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
-              store.state.credentials, action.group, action.multipartFile)
+          .uploadDocuments(
+              store.state.credentials, action.group, action.multipartFiles)
           .then((group) {
         store.dispatch(SaveGroupSuccess(group));
         action.completer.complete(null);

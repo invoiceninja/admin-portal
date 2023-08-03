@@ -147,7 +147,7 @@ class PurchaseOrderRepository {
   }
 
   Future<InvoiceEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, MultipartFile multipartFile) async {
+      BaseEntity entity, List<MultipartFile> multipartFiles) async {
     final fields = <String, String>{
       '_method': 'put',
     };
@@ -156,7 +156,7 @@ class PurchaseOrderRepository {
         '${credentials.url}/purchase_orders/${entity.id}/upload',
         credentials.token,
         data: fields,
-        multipartFiles: [multipartFile]);
+        multipartFiles: multipartFiles);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

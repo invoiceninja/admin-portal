@@ -143,11 +143,11 @@ class UpdateCompanyLanguage {
 class SaveCompanyDocumentRequest implements StartSaving {
   SaveCompanyDocumentRequest({
     @required this.completer,
-    @required this.multipartFile,
+    @required this.multipartFiles,
   });
 
   final Completer completer;
-  final MultipartFile multipartFile;
+  final List<MultipartFile> multipartFiles;
 }
 
 class SaveCompanyDocumentSuccess implements StopSaving, PersistData, PersistUI {

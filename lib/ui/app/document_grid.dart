@@ -17,6 +17,7 @@ import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -55,7 +56,7 @@ class DocumentGrid extends StatefulWidget {
   });
 
   final List<DocumentEntity> documents;
-  final Function(MultipartFile) onUploadDocument;
+  final Function(List<MultipartFile>) onUploadDocument;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final Function onRenamedDocument;
@@ -80,12 +81,17 @@ class _DocumentGridState extends State<DocumentGrid> {
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
               child: DropTarget(
                 onDragDone: (detail) async {
-                  final file = detail.files.first;
-                  final bytes = await file.readAsBytes();
-                  final multipartFile = MultipartFile.fromBytes(
-                      'documents[]', bytes,
-                      filename: file.name);
-                  widget.onUploadDocument(multipartFile);
+                  final List<MultipartFile> multipartFiles = [];
+                  for (var index = 0; index < detail.files.length; index++) {
+                    final file = detail.files[index];
+                    final bytes = await file.readAsBytes();
+                    final multipartFile = MultipartFile.fromBytes(
+                        'documents[$index]', bytes,
+                        filename: file.name);
+                    multipartFiles.add(multipartFile);
+                  }
+
+                  widget.onUploadDocument(multipartFiles);
                 },
                 onDragEntered: (detail) {
                   setState(() => _dragging = true);
@@ -116,10 +122,10 @@ class _DocumentGridState extends State<DocumentGrid> {
                 child: Stack(
                   children: [
                     Container(
-                      height: 100,
+                      height: 75,
                       width: double.infinity,
                       child: Center(
-                        child: Text(localization.dropFileHere),
+                        child: Text(localization.dropFilesHere),
                       ),
                       color: _dragging
                           ? Colors.blue.withOpacity(0.4)
@@ -146,18 +152,21 @@ class _DocumentGridState extends State<DocumentGrid> {
                       onPressed: () async {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
-                          final image = await ImagePicker()
-                              .pickImage(source: ImageSource.camera);
-
-                          if (image != null && image.path != null) {
-                            final croppedFile = await ImageCropper()
-                                .cropImage(sourcePath: image.path);
-                            final bytes = await croppedFile.readAsBytes();
-                            final multipartFile = MultipartFile.fromBytes(
-                                'documents[]', bytes,
-                                filename: image.path.split('/').last);
-                            widget.onUploadDocument(multipartFile);
+                          final multipartFiles = <MultipartFile>[];
+                          final images = await ImagePicker().pickMultiImage();
+                          for (var index = 0; index < images.length; index++) {
+                            final image = images[index];
+                            if (image != null && image.path != null) {
+                              final croppedFile = await ImageCropper()
+                                  .cropImage(sourcePath: image.path);
+                              final bytes = await croppedFile.readAsBytes();
+                              final multipartFile = MultipartFile.fromBytes(
+                                  'documents[$index]', bytes,
+                                  filename: image.path.split('/').last);
+                              multipartFiles.add(multipartFile);
+                            }
                           }
+                          widget.onUploadDocument(multipartFiles);
                         } else {
                           openAppSettings();
                         }
@@ -171,14 +180,13 @@ class _DocumentGridState extends State<DocumentGrid> {
                     child: AppButton(
                       label: localization.gallery,
                       onPressed: () async {
-                        final multipartFile = await pickFile(
-                          fileIndex: 'documents[]',
+                        final multipartFiles = await pickFiles(
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                           fileType: FileType.image,
                         );
 
-                        if (multipartFile != null) {
-                          widget.onUploadDocument(multipartFile);
+                        if (multipartFiles.isNotEmpty) {
+                          widget.onUploadDocument(multipartFiles);
                         }
                       },
                     ),
@@ -189,15 +197,13 @@ class _DocumentGridState extends State<DocumentGrid> {
                   child: AppButton(
                     iconData: isIOS() ? null : Icons.insert_drive_file,
                     label:
-                        isIOS() ? localization.files : localization.uploadFile,
+                        isIOS() ? localization.files : localization.uploadFiles,
                     onPressed: () async {
-                      final multipartFile = await pickFile(
-                        fileIndex: 'documents[]',
+                      final files = await pickFiles(
                         allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                       );
-
-                      if (multipartFile != null) {
-                        widget.onUploadDocument(multipartFile);
+                      if (files.isNotEmpty) {
+                        widget.onUploadDocument(files);
                       }
                     },
                   ),
@@ -255,6 +261,46 @@ class DocumentTile extends StatelessWidget {
   final bool isFromExpense;
   final Function onRenamedDocument;
 
+  void _viewFile(BuildContext context) async {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    store.dispatch(StartLoading());
+
+    final http.Response response = await WebClient()
+        .get(document.url, state.credentials.token, rawResponse: true);
+
+    store.dispatch(StopLoading());
+
+    showDialog<void>(
+        context: navigatorKey.currentContext,
+        builder: (context) {
+          return AlertDialog(
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(localization.close.toUpperCase())),
+            ],
+            content: document.isImage
+                ? PinchZoom(
+                    child: Image.memory(response.bodyBytes),
+                  )
+                : SizedBox(
+                    width: 600,
+                    child: PdfPreview(
+                      build: (format) => response.bodyBytes,
+                      canChangeOrientation: false,
+                      canChangePageFormat: false,
+                      allowPrinting: false,
+                      allowSharing: false,
+                      canDebug: false,
+                    ),
+                  ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -271,9 +317,14 @@ class DocumentTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                DocumentPreview(
-                  document,
-                  height: 110,
+                InkWell(
+                  onTap: (document.isImage || document.isPdf)
+                      ? () => _viewFile(context)
+                      : null,
+                  child: DocumentPreview(
+                    document,
+                    height: 110,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4),
@@ -306,39 +357,7 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                final http.Response response = await WebClient()
-                                    .get(document.url, state.credentials.token,
-                                        rawResponse: true);
-                                showDialog<void>(
-                                    context: navigatorKey.currentContext,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                              child: Text(localization.close
-                                                  .toUpperCase())),
-                                        ],
-                                        content: document.isImage
-                                            ? PinchZoom(
-                                                child: Image.memory(
-                                                    response.bodyBytes),
-                                              )
-                                            : SizedBox(
-                                                width: 600,
-                                                child: PdfPreview(
-                                                  build: (format) =>
-                                                      response.bodyBytes,
-                                                  canChangeOrientation: false,
-                                                  canChangePageFormat: false,
-                                                  allowPrinting: false,
-                                                  allowSharing: false,
-                                                  canDebug: false,
-                                                ),
-                                              ),
-                                      );
-                                    });
+                                _viewFile(context);
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
                                     .get(document.url, state.credentials.token,

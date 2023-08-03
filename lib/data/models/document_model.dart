@@ -50,6 +50,12 @@ class DocumentFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String name = 'name';
+  static const String url = 'url';
+  static const String type = 'type';
+  static const String size = 'size';
+  static const String width = 'width';
+  static const String height = 'height';
+  static const String hash = 'hash';
 }
 
 abstract class DocumentEntity extends Object

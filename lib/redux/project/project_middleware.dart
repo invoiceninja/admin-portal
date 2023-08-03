@@ -265,7 +265,7 @@ Middleware<AppState> _saveDocument(ProjectRepository repository) {
     final action = dynamicAction as SaveProjectDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
+          .uploadDocuments(
               store.state.credentials, action.project, action.multipartFile)
           .then((project) {
         store.dispatch(SaveProjectSuccess(project));

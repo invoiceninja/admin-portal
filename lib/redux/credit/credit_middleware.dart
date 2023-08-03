@@ -430,8 +430,8 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
     final action = dynamicAction as SaveCreditDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(
-              store.state.credentials, action.credit, action.multipartFile)
+          .uploadDocuments(
+              store.state.credentials, action.credit, action.multipartFiles)
           .then((credit) {
         store.dispatch(SaveCreditSuccess(credit));
         action.completer.complete(null);

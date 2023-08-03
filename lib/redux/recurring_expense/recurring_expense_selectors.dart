@@ -149,6 +149,9 @@ List<String> filteredRecurringExpensesSelector(
     if (!expense.matchesStatuses(expenseListState.statusFilters)) {
       return false;
     }
+    if (!expense.matchesStatuses(expenseListState.statusFilters)) {
+      return false;
+    }
 
     if (expenseListState.custom1Filters.isNotEmpty &&
         !expenseListState.custom1Filters.contains(expense.customValue1)) {

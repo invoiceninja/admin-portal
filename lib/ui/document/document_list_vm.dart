@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/document/document_presenter.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -35,8 +36,8 @@ class DocumentListBuilder extends StatelessWidget {
             entityType: EntityType.document,
             state: viewModel.state,
             entityList: viewModel.documentList,
-            //presenter: DocumentPresenter(),
-            //tableColumns: viewModel.tableColumns,
+            presenter: DocumentPresenter(),
+            tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
@@ -70,6 +71,7 @@ class DocumentListVM {
     @required this.onEntityAction,
     @required this.onSortColumn,
     @required this.onClearMultielsect,
+    @required this.tableColumns,
   });
 
   static DocumentListVM fromStore(Store<AppState> store) {
@@ -99,6 +101,9 @@ class DocumentListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
+      tableColumns:
+          state.userCompany.settings?.getTableColumns(EntityType.document) ??
+              DocumentPresenter.getDefaultTableFields(state.userCompany),
     );
   }
 
@@ -106,6 +111,7 @@ class DocumentListVM {
   final List<String> documentList;
   final BuiltMap<String, DocumentEntity> documentMap;
   final ListUIState listState;
+  final List<String> tableColumns;
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;

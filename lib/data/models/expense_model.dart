@@ -628,7 +628,19 @@ abstract class ExpenseEntity extends Object
     }
 
     for (final status in statuses) {
-      if (status.id == kExpenseStatusInvoiced && isInvoiced) {
+      if (isRecurring) {
+        if (status.id == statusId || status.id == calculatedStatusId) {
+          // Handle pending recurring invoices which are active
+          if (isRecurring &&
+              status.id == kRecurringExpenseStatusActive &&
+              statusId == kRecurringExpenseStatusActive &&
+              calculatedStatusId == kRecurringExpenseStatusPending) {
+            // skip
+          } else {
+            return true;
+          }
+        }
+      } else if (status.id == kExpenseStatusInvoiced && isInvoiced) {
         return true;
       } else if (status.id == kExpenseStatusPending && isPending) {
         return true;
@@ -797,7 +809,9 @@ abstract class ExpenseEntity extends Object
 
   String get calculatedStatusId {
     if (isRecurring) {
-      if (isPending) {
+      if (remainingCycles == 0) {
+        return kRecurringInvoiceStatusCompleted;
+      } else if (isPending) {
         return kRecurringExpenseStatusPending;
       } else {
         return statusId;
@@ -828,7 +842,9 @@ abstract class ExpenseEntity extends Object
 
   bool get isPending {
     if (isRecurring) {
-      return statusId == kRecurringExpenseStatusPending;
+      return false;
+      return statusId == kRecurringExpenseStatusActive &&
+          (lastSentDate ?? '').isEmpty;
     } else {
       return !isInvoiced && shouldBeInvoiced;
     }
