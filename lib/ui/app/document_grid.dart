@@ -122,7 +122,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                 child: Stack(
                   children: [
                     Container(
-                      height: 100,
+                      height: 75,
                       width: double.infinity,
                       child: Center(
                         child: Text(localization.dropFilesHere),
