@@ -180,14 +180,13 @@ class _DocumentGridState extends State<DocumentGrid> {
                     child: AppButton(
                       label: localization.gallery,
                       onPressed: () async {
-                        final multipartFile = await pickFiles(
-                          fileIndex: 'documents[]',
+                        final multipartFiles = await pickFiles(
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                           fileType: FileType.image,
                         );
 
-                        if (multipartFile != null) {
-                          widget.onUploadDocument(multipartFile);
+                        if (multipartFiles.isNotEmpty) {
+                          widget.onUploadDocument(multipartFiles);
                         }
                       },
                     ),
@@ -200,13 +199,11 @@ class _DocumentGridState extends State<DocumentGrid> {
                     label:
                         isIOS() ? localization.files : localization.uploadFiles,
                     onPressed: () async {
-                      final multipartFile = await pickFiles(
-                        fileIndex: 'documents[]',
+                      final files = await pickFiles(
                         allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                       );
-
-                      if (multipartFile != null) {
-                        widget.onUploadDocument(multipartFile);
+                      if (files.isNotEmpty) {
+                        widget.onUploadDocument(files);
                       }
                     },
                   ),
