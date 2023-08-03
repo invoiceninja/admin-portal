@@ -66,7 +66,7 @@ Future<List<MultipartFile>> _pickFiles({
   if (result != null && result.files.isNotEmpty) {
     final multipartFiles = <MultipartFile>[];
     for (var index = 0; index < result.files.length; index++) {
-      final file = result.files.first;
+      final file = result.files[index];
       multipartFiles.add(MultipartFile.fromBytes(
           allowMultiple ? 'documents[$index]' : fileIndex, file.bytes,
           filename: file.name));
