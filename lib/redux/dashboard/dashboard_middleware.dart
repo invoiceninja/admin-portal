@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -23,6 +24,12 @@ List<Middleware<AppState>> createStoreDashboardMiddleware() {
 Middleware<AppState> _createViewDashboard() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewDashboard;
+
+    if (!store.state.userCompany.canViewDashboard) {
+      store.dispatch(ViewClientList());
+      next(action);
+      return;
+    }
 
     checkForChanges(
         store: store,
