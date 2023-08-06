@@ -133,6 +133,7 @@ class EntityAction extends EnumClass {
   static const EntityAction increasePrices = _$increasePrices;
   static const EntityAction setTaxCategory = _$setTaxCategory;
   static const EntityAction eInvoice = _$eInvoice;
+  static const EntityAction unlink = _$unlink;
 
   @override
   String toString() {
