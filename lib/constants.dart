@@ -643,6 +643,7 @@ const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 const String kPermissionViewReports = 'view_reports';
+const String kPermissionViewDashboard = 'view_dashboard';
 
 const String kPaymentStatusPartiallyUnapplied = '-2';
 const String kPaymentStatusUnapplied = '-1';
