@@ -578,15 +578,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       ),
                                     ),
                                   ),
-                                DrawerTile(
-                                  company: company,
-                                  icon: getEntityIcon(EntityType.dashboard),
-                                  title: localization.dashboard,
-                                  onTap: () => viewEntitiesByType(
-                                      entityType: EntityType.dashboard),
-                                  onLongPress: () =>
-                                      store.dispatch(ViewDashboard(filter: '')),
-                                ),
+                                if (state.userCompany.canViewDashboard)
+                                  DrawerTile(
+                                    company: company,
+                                    icon: getEntityIcon(EntityType.dashboard),
+                                    title: localization.dashboard,
+                                    onTap: () => viewEntitiesByType(
+                                        entityType: EntityType.dashboard),
+                                    onLongPress: () => store
+                                        .dispatch(ViewDashboard(filter: '')),
+                                  ),
                                 DrawerTile(
                                   company: company,
                                   entityType: EntityType.client,

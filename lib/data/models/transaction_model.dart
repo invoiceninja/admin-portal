@@ -204,6 +204,10 @@ abstract class TransactionEntity extends Object
       if (isMatched) {
         actions.add(EntityAction.convertMatched);
       }
+
+      if (isConverted) {
+        actions.add(EntityAction.unlink);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {

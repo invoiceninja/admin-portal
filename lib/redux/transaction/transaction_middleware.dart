@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
   final deleteTransaction = _deleteTransaction(repository);
   final restoreTransaction = _restoreTransaction(repository);
   final convertTransactions = _convertTransactions(repository);
+  final unlinkTransactions = _unlinkTransactions(repository);
   final convertToPayment = _convertToPayment(repository);
   final convertToExpense = _convertToExpense(repository);
   final linkToPayment = _linkToPayment(repository);
@@ -43,6 +44,7 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
     TypedMiddleware<AppState, DeleteTransactionsRequest>(deleteTransaction),
     TypedMiddleware<AppState, RestoreTransactionsRequest>(restoreTransaction),
     TypedMiddleware<AppState, ConvertTransactionsRequest>(convertTransactions),
+    TypedMiddleware<AppState, UnlinkTransactionsRequest>(unlinkTransactions),
     TypedMiddleware<AppState, ConvertTransactionToPaymentRequest>(
         convertToPayment),
     TypedMiddleware<AppState, ConvertTransactionsToExpensesRequest>(
@@ -194,6 +196,31 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertTransactionsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _unlinkTransactions(TransactionRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UnlinkTransactionsRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.transactionIds, EntityAction.unlink)
+        .then((List<TransactionEntity> transactions) {
+      store.dispatch(UnlinkTransactionsSuccess(
+          BuiltList<TransactionEntity>(transactions)));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UnlinkTransactionsFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

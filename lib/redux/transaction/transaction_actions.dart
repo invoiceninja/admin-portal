@@ -247,6 +247,28 @@ class LinkTransactionToPaymentFailure implements StopSaving {
   final dynamic error;
 }
 
+class UnlinkTransactionsRequest implements StartSaving {
+  UnlinkTransactionsRequest(
+    this.completer,
+    this.transactionIds,
+  );
+
+  final Completer completer;
+  final List<String> transactionIds;
+}
+
+class UnlinkTransactionsSuccess implements StopSaving, PersistData {
+  UnlinkTransactionsSuccess(this.transactions);
+
+  final BuiltList<TransactionEntity> transactions;
+}
+
+class UnlinkTransactionsFailure implements StopSaving {
+  UnlinkTransactionsFailure(this.error);
+
+  final dynamic error;
+}
+
 class LinkTransactionToExpenseRequest implements StartSaving {
   LinkTransactionToExpenseRequest(
     this.completer,
@@ -424,6 +446,16 @@ void handleTransactionAction(
     case EntityAction.convertMatched:
       store.dispatch(ConvertTransactionsRequest(
           snackBarCompleter<Null>(context, localization.convertedTransactions),
+          transactionIds));
+      break;
+    case EntityAction.unlink:
+      store.dispatch(UnlinkTransactionsRequest(
+          snackBarCompleter<Null>(
+              context,
+              transactionIds.length == 1
+                  ? localization.unlinkedTransaction
+                  : localization.unlinkedTransactions
+                      .replaceFirst(':count', '${transactionIds.length}')),
           transactionIds));
       break;
     case EntityAction.toggleMultiselect:

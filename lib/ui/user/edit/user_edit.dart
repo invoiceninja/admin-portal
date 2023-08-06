@@ -279,6 +279,40 @@ class _UserEditState extends State<UserEdit>
                     activeColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SwitchListTile(
+                    title: Text(localization.dashboard),
+                    subtitle: Text(localization.viewDashboardPermission),
+                    value: userCompany.isAdmin
+                        ? true
+                        : userCompany.permissions
+                            .contains(kPermissionViewDashboard),
+                    onChanged: userCompany.isAdmin
+                        ? null
+                        : (value) {
+                            final permissions = userCompany.permissions
+                                .split(',')
+                                .where((element) => element.isNotEmpty)
+                                .toList();
+                            if (value) {
+                              if (!permissions
+                                  .contains(kPermissionViewDashboard)) {
+                                permissions.add(kPermissionViewDashboard);
+                              }
+                            } else {
+                              if (!value) {
+                                if (permissions
+                                    .contains(kPermissionViewDashboard)) {
+                                  permissions.remove(kPermissionViewDashboard);
+                                }
+                              }
+                            }
+
+                            viewModel.onUserChanged(user.rebuild((b) => b
+                              ..userCompany.permissions =
+                                  permissions.join(',')));
+                          },
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SwitchListTile(
                     title: Text(localization.reports),
                     subtitle: Text(localization.viewReportPermission),
                     value: userCompany.isAdmin

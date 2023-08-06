@@ -125,6 +125,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return MdiIcons.tag;
     case EntityAction.eInvoice:
       return MdiIcons.xml;
+    case EntityAction.unlink:
+      return MdiIcons.pipeDisconnected;
     default:
       return null;
   }
