@@ -842,7 +842,6 @@ abstract class ExpenseEntity extends Object
 
   bool get isPending {
     if (isRecurring) {
-      return false;
       return statusId == kRecurringExpenseStatusActive &&
           (lastSentDate ?? '').isEmpty;
     } else {
