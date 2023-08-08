@@ -123,6 +123,14 @@ abstract class DocumentEntity extends Object
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
 
+  @nullable
+  @BuiltValueField(wireName: 'parent_id')
+  String get parentId;
+
+  @nullable
+  @BuiltValueField(wireName: 'parent_type')
+  String get parentType;
+
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isChanged = false

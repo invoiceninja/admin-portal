@@ -92,7 +92,8 @@ class DocumentListVM {
       listState: state.documentListState,
       documentList: memoizedFilteredDocumentList(
         state.getUISelection(EntityType.document),
-        state.userCompanyState,
+        state.documentState.map,
+        state.documentState.list,
         state.documentListState,
       ),
       documentMap: state.documentState.map,

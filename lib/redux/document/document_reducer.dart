@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -166,6 +167,7 @@ final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, SaveDocumentSuccess>(_updateDocument),
   //TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
   TypedReducer<DocumentState, LoadDocumentsSuccess>(_setLoadedDocuments),
+  TypedReducer<DocumentState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<DocumentState, LoadDocumentSuccess>(_setLoadedDocument),
   TypedReducer<DocumentState, ArchiveDocumentSuccess>(_archiveDocumentSuccess),
   TypedReducer<DocumentState, DeleteDocumentSuccess>(_deleteDocumentSuccess),
@@ -217,4 +219,24 @@ DocumentState _setLoadedDocuments(
     )));
 
   return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+DocumentState _setLoadedClients(
+    DocumentState documentState, LoadClientsSuccess action) {
+  final documents = <DocumentEntity>[];
+
+  action.clients.forEach((client) {
+    documents.addAll(client.documents);
+  });
+
+  final map = Map<String, DocumentEntity>.fromIterable(
+    documents,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+
+  return documentState.rebuild((b) => b
+    ..map.addAll(map)
+    ..list.replace(
+        (map.keys.toList() + documentState.list.toList()).toSet().toList()));
 }

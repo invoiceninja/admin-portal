@@ -49,7 +49,8 @@ class DocumentScreenVM {
       documentMap: state.documentState.map,
       documentList: memoizedFilteredDocumentList(
         state.getUISelection(EntityType.document),
-        state.userCompanyState,
+        state.documentState.map,
+        state.documentState.list,
         state.documentListState,
       ),
       userCompany: state.userCompany,

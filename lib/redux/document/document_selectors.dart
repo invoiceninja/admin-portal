@@ -36,28 +36,28 @@ List<String> dropdownDocumentsSelector(
   return list;
 }
 
-var memoizedFilteredDocumentList = memo3((
+var memoizedFilteredDocumentList = memo4((
   SelectionState selectionState,
-  UserCompanyState userCompanyState,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltList<String> documentList,
   ListUIState documentListState,
 ) =>
     filteredDocumentsSelector(
       selectionState,
-      userCompanyState,
+      documentMap,
+      documentList,
       documentListState,
     ));
 
 List<String> filteredDocumentsSelector(
   SelectionState selectionState,
-  UserCompanyState userCompanyState,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltList<String> documentList,
   ListUIState documentListState,
 ) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
-  final list = <String>[];
-
-  /*
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
     if (filterEntityType == EntityType.document &&
@@ -70,7 +70,6 @@ List<String> filteredDocumentsSelector(
     }
     return document.matchesFilter(documentListState.filter);
   }).toList();
-  */
 
   /*
   list.sort((documentAId, documentBId) {

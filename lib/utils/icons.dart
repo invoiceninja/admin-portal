@@ -193,6 +193,8 @@ IconData getEntityIcon(EntityType entityType) {
       return Icons.rule_folder;
     case EntityType.schedule:
       return Icons.schedule;
+    case EntityType.document:
+      return Icons.photo;
     default:
       return MdiIcons.crosshairsQuestion;
   }

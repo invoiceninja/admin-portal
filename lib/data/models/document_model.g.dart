@@ -152,6 +152,20 @@ class _$DocumentEntitySerializer
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object value;
+    value = object.parentId;
+    if (value != null) {
+      result
+        ..add('parent_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.parentType;
+    if (value != null) {
+      result
+        ..add('parent_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -230,6 +244,14 @@ class _$DocumentEntitySerializer
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'parent_id':
+          result.parentId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'parent_type':
+          result.parentType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -490,6 +512,10 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final bool isDefault;
   @override
+  final String parentId;
+  @override
+  final String parentType;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -519,6 +545,8 @@ class _$DocumentEntity extends DocumentEntity {
       this.size,
       this.preview,
       this.isDefault,
+      this.parentId,
+      this.parentType,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -569,6 +597,8 @@ class _$DocumentEntity extends DocumentEntity {
         size == other.size &&
         preview == other.preview &&
         isDefault == other.isDefault &&
+        parentId == other.parentId &&
+        parentType == other.parentType &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -593,6 +623,8 @@ class _$DocumentEntity extends DocumentEntity {
     _$hash = $jc(_$hash, size.hashCode);
     _$hash = $jc(_$hash, preview.hashCode);
     _$hash = $jc(_$hash, isDefault.hashCode);
+    _$hash = $jc(_$hash, parentId.hashCode);
+    _$hash = $jc(_$hash, parentType.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -617,6 +649,8 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('size', size)
           ..add('preview', preview)
           ..add('isDefault', isDefault)
+          ..add('parentId', parentId)
+          ..add('parentType', parentType)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -669,6 +703,14 @@ class DocumentEntityBuilder
   bool get isDefault => _$this._isDefault;
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
 
+  String _parentId;
+  String get parentId => _$this._parentId;
+  set parentId(String parentId) => _$this._parentId = parentId;
+
+  String _parentType;
+  String get parentType => _$this._parentType;
+  set parentType(String parentType) => _$this._parentType = parentType;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -717,6 +759,8 @@ class DocumentEntityBuilder
       _size = $v.size;
       _preview = $v.preview;
       _isDefault = $v.isDefault;
+      _parentId = $v.parentId;
+      _parentType = $v.parentType;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -765,6 +809,8 @@ class DocumentEntityBuilder
                 preview, r'DocumentEntity', 'preview'),
             isDefault: BuiltValueNullFieldError.checkNotNull(
                 isDefault, r'DocumentEntity', 'isDefault'),
+            parentId: parentId,
+            parentType: parentType,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, r'DocumentEntity', 'createdAt'),
