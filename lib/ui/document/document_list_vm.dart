@@ -90,8 +90,11 @@ class DocumentListVM {
     return DocumentListVM(
       state: state,
       listState: state.documentListState,
-      documentList: memoizedFilteredDocumentList(state.documentState.map,
-          state.documentState.list, state.documentListState),
+      documentList: memoizedFilteredDocumentList(
+        state.getUISelection(EntityType.document),
+        state.userCompanyState,
+        state.documentListState,
+      ),
       documentMap: state.documentState.map,
       isLoading: state.isLoading,
       filter: state.documentUIState.listUIState.filter,

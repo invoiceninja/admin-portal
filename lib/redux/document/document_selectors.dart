@@ -1,5 +1,7 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -34,37 +36,50 @@ List<String> dropdownDocumentsSelector(
   return list;
 }
 
-var memoizedFilteredDocumentList = memo3((BuiltMap<String, DocumentEntity>
-            documentMap,
-        BuiltList<String> documentList,
-        ListUIState documentListState) =>
-    filteredDocumentsSelector(documentMap, documentList, documentListState));
+var memoizedFilteredDocumentList = memo3((
+  SelectionState selectionState,
+  UserCompanyState userCompanyState,
+  ListUIState documentListState,
+) =>
+    filteredDocumentsSelector(
+      selectionState,
+      userCompanyState,
+      documentListState,
+    ));
 
 List<String> filteredDocumentsSelector(
-    BuiltMap<String, DocumentEntity> documentMap,
-    BuiltList<String> documentList,
-    ListUIState documentListState) {
+  SelectionState selectionState,
+  UserCompanyState userCompanyState,
+  ListUIState documentListState,
+) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
+  final list = <String>[];
+
+  /*
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
-    /*
-    if (documentListState.filterEntityId != null &&
-        document.id != documentListState.filterEntityId) {
+    if (filterEntityType == EntityType.document &&
+        document.id != filterEntityId) {
       return false;
-    } else {}
-    */
+    }
 
     if (!document.matchesStates(documentListState.stateFilters)) {
       return false;
     }
     return document.matchesFilter(documentListState.filter);
   }).toList();
+  */
 
+  /*
   list.sort((documentAId, documentBId) {
     final documentA = documentMap[documentAId];
     final documentB = documentMap[documentBId];
     return documentA.compareTo(documentB, documentListState.sortField,
         documentListState.sortAscending);
   });
+  */
 
   return list;
 }

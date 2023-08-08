@@ -67,7 +67,10 @@ Middleware<AppState> _viewDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-    navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
+
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
+    }
   };
 }
 
@@ -83,8 +86,10 @@ Middleware<AppState> _viewDocumentList() {
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
-    navigatorKey.currentState.pushNamedAndRemoveUntil(
-        DocumentScreen.route, (Route<dynamic> route) => false);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
+          DocumentScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
