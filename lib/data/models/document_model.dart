@@ -2,6 +2,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -73,6 +74,7 @@ abstract class DocumentEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      isPublic: true,
       preview: '',
       width: 0,
       height: 0,
@@ -123,6 +125,9 @@ abstract class DocumentEntity extends Object
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
+
+  @BuiltValueField(wireName: 'is_public')
+  bool get isPublic;
 
   @nullable
   @BuiltValueField(wireName: 'parent_id')
@@ -229,6 +234,31 @@ abstract class DocumentEntity extends Object
   }
 
   @override
+  bool matchesStatuses(BuiltList<EntityStatus> statuses) {
+    if (statuses.isEmpty) {
+      return true;
+    }
+
+    for (final status in statuses) {
+      if (status.id == kDocumentStatusPublic && isPublic) {
+        return true;
+      } else if (status.id == kDocumentStatusPrivate && !isPublic) {
+        return true;
+      }
+
+      if (status.id == kDocumentStatusImage && isImage) {
+        return true;
+      } else if (status.id == kDocumentStatusPDF && isPdf) {
+        return true;
+      } else if (status.id == kDocumentStatusOther && !isImage && !isPdf) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @override
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
@@ -283,6 +313,10 @@ abstract class DocumentEntity extends Object
 
     return actions;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(DocumentEntityBuilder builder) =>
+      builder..isPublic = true;
 
   static Serializer<DocumentEntity> get serializer =>
       _$documentEntitySerializer;

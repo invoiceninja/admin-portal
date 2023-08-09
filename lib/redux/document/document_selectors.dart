@@ -67,6 +67,9 @@ List<String> filteredDocumentsSelector(
     if (!document.matchesStates(documentListState.stateFilters)) {
       return false;
     }
+    if (!document.matchesStatuses(documentListState.statusFilters)) {
+      return false;
+    }
     return document.matchesFilter(documentListState.filter);
   }).toList();
 
