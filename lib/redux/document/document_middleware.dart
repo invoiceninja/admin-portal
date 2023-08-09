@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final editDocument = _editDocument();
   //final loadDocuments = _loadDocuments(repository);
   final loadDocument = _loadDocument(repository);
+  final loadDocumentData = _loadDocumentData(repository);
   final saveDocument = _saveDocument(repository);
   final archiveDocument = _archiveDocument(repository);
   final deleteDocument = _deleteDocument(repository);
@@ -37,6 +38,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, EditDocument>(editDocument),
     //TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
     TypedMiddleware<AppState, LoadDocument>(loadDocument),
+    TypedMiddleware<AppState, LoadDocumentData>(loadDocumentData),
     TypedMiddleware<AppState, SaveDocumentRequest>(saveDocument),
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
     TypedMiddleware<AppState, DeleteDocumentRequest>(deleteDocument),
@@ -63,6 +65,12 @@ Middleware<AppState> _viewDocument() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as ViewDocument;
+
+    final state = store.state;
+    final document = state.documentState.map[action.documentId];
+    if (document.data == null) {
+      store.dispatch(LoadDocumentDataRequest());
+    }
 
     next(action);
 
@@ -234,6 +242,36 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDocumentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDocumentData;
+
+    final state = store.state;
+    final document = state.documentState.map[action.documentId];
+
+    store.dispatch(LoadDocumentRequest());
+    repository.loadData(store.state.credentials, document).then((bodyBytes) {
+      store.dispatch(
+        LoadDocumentDataSuccess(
+          document..rebuild((b) => b..data = bodyBytes),
+        ),
+      );
+
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadDocumentDataFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

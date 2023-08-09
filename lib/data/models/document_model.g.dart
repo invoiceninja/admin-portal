@@ -517,6 +517,8 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
+  final Uint8List data;
+  @override
   final bool isDefault;
   @override
   final bool isPublic;
@@ -553,6 +555,7 @@ class _$DocumentEntity extends DocumentEntity {
       this.height,
       this.size,
       this.preview,
+      this.data,
       this.isDefault,
       this.isPublic,
       this.parentId,
@@ -608,6 +611,7 @@ class _$DocumentEntity extends DocumentEntity {
         height == other.height &&
         size == other.size &&
         preview == other.preview &&
+        data == other.data &&
         isDefault == other.isDefault &&
         isPublic == other.isPublic &&
         parentId == other.parentId &&
@@ -635,6 +639,7 @@ class _$DocumentEntity extends DocumentEntity {
     _$hash = $jc(_$hash, height.hashCode);
     _$hash = $jc(_$hash, size.hashCode);
     _$hash = $jc(_$hash, preview.hashCode);
+    _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jc(_$hash, isDefault.hashCode);
     _$hash = $jc(_$hash, isPublic.hashCode);
     _$hash = $jc(_$hash, parentId.hashCode);
@@ -662,6 +667,7 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('height', height)
           ..add('size', size)
           ..add('preview', preview)
+          ..add('data', data)
           ..add('isDefault', isDefault)
           ..add('isPublic', isPublic)
           ..add('parentId', parentId)
@@ -713,6 +719,10 @@ class DocumentEntityBuilder
   String _preview;
   String get preview => _$this._preview;
   set preview(String preview) => _$this._preview = preview;
+
+  Uint8List _data;
+  Uint8List get data => _$this._data;
+  set data(Uint8List data) => _$this._data = data;
 
   bool _isDefault;
   bool get isDefault => _$this._isDefault;
@@ -779,6 +789,7 @@ class DocumentEntityBuilder
       _height = $v.height;
       _size = $v.size;
       _preview = $v.preview;
+      _data = $v.data;
       _isDefault = $v.isDefault;
       _isPublic = $v.isPublic;
       _parentId = $v.parentId;
@@ -829,6 +840,7 @@ class DocumentEntityBuilder
                 size, r'DocumentEntity', 'size'),
             preview: BuiltValueNullFieldError.checkNotNull(
                 preview, r'DocumentEntity', 'preview'),
+            data: data,
             isDefault: BuiltValueNullFieldError.checkNotNull(
                 isDefault, r'DocumentEntity', 'isDefault'),
             isPublic: BuiltValueNullFieldError.checkNotNull(

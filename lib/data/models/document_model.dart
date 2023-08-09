@@ -1,4 +1,6 @@
 // Package imports:
+import 'dart:typed_data';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -122,6 +124,10 @@ abstract class DocumentEntity extends Object
   int get size;
 
   String get preview;
+
+  @nullable
+  @BuiltValueField(serialize: false)
+  Uint8List get data;
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;

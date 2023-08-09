@@ -56,6 +56,13 @@ class LoadDocument {
   final String documentId;
 }
 
+class LoadDocumentData {
+  LoadDocumentData({this.completer, this.documentId});
+
+  final Completer completer;
+  final String documentId;
+}
+
 class LoadDocumentActivity {
   LoadDocumentActivity({this.completer, this.documentId});
 
@@ -84,6 +91,30 @@ class LoadDocumentFailure implements StopLoading {
 
 class LoadDocumentSuccess implements StopLoading, PersistData {
   LoadDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+
+  @override
+  String toString() {
+    return 'LoadDocumentSuccess{document: $document}';
+  }
+}
+
+class LoadDocumentDataRequest implements StartLoading {}
+
+class LoadDocumentDataFailure implements StopLoading {
+  LoadDocumentDataFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadDocumentFailure{error: $error}';
+  }
+}
+
+class LoadDocumentDataSuccess implements StopLoading, PersistData {
+  LoadDocumentDataSuccess(this.document);
 
   final DocumentEntity document;
 

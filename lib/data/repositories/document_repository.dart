@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -28,6 +29,14 @@ class DocumentRepository {
         serializers.deserializeWith(DocumentItemResponse.serializer, response);
 
     return documentResponse.data;
+  }
+
+  Future<Uint8List> loadData(
+      Credentials credentials, DocumentEntity document) async {
+    final dynamic response = await WebClient()
+        .get(document.url, credentials.token, rawResponse: true);
+
+    return response.bodyBytes;
   }
 
   Future<BuiltList<DocumentEntity>> loadList(Credentials credentials) async {
