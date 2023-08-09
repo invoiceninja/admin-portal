@@ -1,8 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class DocumentPresenter extends EntityPresenter {
@@ -10,6 +13,7 @@ class DocumentPresenter extends EntityPresenter {
     return [
       DocumentFields.name,
       DocumentFields.type,
+      DocumentFields.linkedTo,
       DocumentFields.size,
       DocumentFields.width,
       DocumentFields.height,
@@ -30,6 +34,8 @@ class DocumentPresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final document = entity as DocumentEntity;
 
     switch (field) {
@@ -47,6 +53,12 @@ class DocumentPresenter extends EntityPresenter {
         return Text(document.id);
       case DocumentFields.hash:
         return Text(document.hash);
+      case DocumentFields.linkedTo:
+        final parentEntity =
+            state.getEntity(document.parentType, document.parentId);
+        print(
+            '## ${document.parentType} ${document.parentId} => $parentEntity');
+        return LinkTextRelatedEntity(entity: parentEntity, relation: document);
     }
 
     return super.getField(field: field, context: context);

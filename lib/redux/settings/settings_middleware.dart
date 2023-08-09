@@ -387,7 +387,7 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
         company.documents.forEach((document) {
           documents.add(document.rebuild((b) => b
             ..parentId = company.id
-            ..parentType = EntityType.document));
+            ..parentType = EntityType.company));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
 

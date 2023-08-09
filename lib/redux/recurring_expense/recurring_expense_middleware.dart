@@ -339,7 +339,7 @@ Middleware<AppState> _saveDocument(RecurringExpenseRepository repository) {
         expense.documents.forEach((document) {
           documents.add(document.rebuild((b) => b
             ..parentId = expense.id
-            ..parentType = EntityType.expense));
+            ..parentType = EntityType.recurringExpense));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
 

@@ -242,6 +242,110 @@ DocumentState _setLoadedCompany(
       ..parentType = EntityType.company));
   });
 
+  company.clients.forEach((client) {
+    client.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = client.id
+        ..parentType = EntityType.client));
+    });
+  });
+
+  company.credits.forEach((credit) {
+    credit.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = credit.id
+        ..parentType = EntityType.credit));
+    });
+  });
+
+  company.expenses.forEach((expense) {
+    expense.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = expense.id
+        ..parentType = EntityType.expense));
+    });
+  });
+
+  company.groups.forEach((group) {
+    group.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = group.id
+        ..parentType = EntityType.group));
+    });
+  });
+
+  company.invoices.forEach((invoice) {
+    invoice.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = invoice.id
+        ..parentType = EntityType.invoice));
+    });
+  });
+
+  company.products.forEach((product) {
+    product.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = product.id
+        ..parentType = EntityType.product));
+    });
+  });
+
+  company.projects.forEach((project) {
+    project.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = project.id
+        ..parentType = EntityType.project));
+    });
+  });
+
+  company.purchaseOrders.forEach((purchaseOrder) {
+    purchaseOrder.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = purchaseOrder.id
+        ..parentType = EntityType.purchaseOrder));
+    });
+  });
+
+  company.quotes.forEach((quote) {
+    quote.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = quote.id
+        ..parentType = EntityType.quote));
+    });
+  });
+
+  company.recurringExpenses.forEach((recurringExpense) {
+    recurringExpense.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = recurringExpense.id
+        ..parentType = EntityType.recurringExpense));
+    });
+  });
+
+  company.recurringInvoices.forEach((recurringInvoice) {
+    recurringInvoice.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = recurringInvoice.id
+        ..parentType = EntityType.recurringInvoice));
+    });
+  });
+
+  company.tasks.forEach((task) {
+    task.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = task.id
+        ..parentType = EntityType.task));
+    });
+  });
+
+  company.vendors.forEach((vendor) {
+    vendor.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = vendor.id
+        ..parentType = EntityType.vendor));
+    });
+  });
+
   final state = documentState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
       documents,

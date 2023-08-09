@@ -56,6 +56,7 @@ class DocumentFields {
   static const String width = 'width';
   static const String height = 'height';
   static const String hash = 'hash';
+  static const String linkedTo = 'linked_to';
 }
 
 abstract class DocumentEntity extends Object

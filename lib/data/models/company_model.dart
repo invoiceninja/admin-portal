@@ -544,7 +544,7 @@ abstract class CompanyEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => settings?.name ?? '';
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
