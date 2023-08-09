@@ -17,9 +17,13 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewDocumentList implements PersistUI {
-  ViewDocumentList({this.force = false});
+  ViewDocumentList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewDocument implements PersistUI {
