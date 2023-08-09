@@ -278,6 +278,15 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
               store.state.credentials, action.expense, action.multipartFiles)
           .then((expense) {
         store.dispatch(SaveExpenseSuccess(expense));
+
+        final documents = <DocumentEntity>[];
+        expense.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = expense.id
+            ..parentType = EntityType.expense));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

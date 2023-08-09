@@ -280,6 +280,15 @@ Middleware<AppState> _saveDocument(ProjectRepository repository) {
               store.state.credentials, action.project, action.multipartFile)
           .then((project) {
         store.dispatch(SaveProjectSuccess(project));
+
+        final documents = <DocumentEntity>[];
+        project.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = project.id
+            ..parentType = EntityType.project));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

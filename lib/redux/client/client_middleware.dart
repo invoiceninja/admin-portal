@@ -342,6 +342,15 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
               store.state.credentials, action.client, action.multipartFile)
           .then((client) {
         store.dispatch(SaveClientSuccess(client));
+
+        final documents = <DocumentEntity>[];
+        client.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = client.id
+            ..parentType = EntityType.client));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

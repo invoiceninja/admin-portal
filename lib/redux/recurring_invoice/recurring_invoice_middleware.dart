@@ -456,6 +456,15 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
               store.state.credentials, action.invoice, action.multipartFiles)
           .then((invoice) {
         store.dispatch(SaveRecurringInvoiceSuccess(invoice));
+
+        final documents = <DocumentEntity>[];
+        invoice.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = invoice.id
+            ..parentType = EntityType.invoice));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

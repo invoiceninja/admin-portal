@@ -164,8 +164,9 @@ ListUIState _clearListMultiselect(
 
 final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, SaveDocumentSuccess>(_updateDocument),
-  //TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
+  TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
   TypedReducer<DocumentState, LoadDocumentsSuccess>(_setLoadedDocuments),
+  TypedReducer<DocumentState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<DocumentState, LoadDocumentSuccess>(_setLoadedDocument),
   TypedReducer<DocumentState, ArchiveDocumentSuccess>(_archiveDocumentSuccess),
   TypedReducer<DocumentState, DeleteDocumentSuccess>(_deleteDocumentSuccess),
@@ -195,6 +196,18 @@ DocumentState _restoreDocumentSuccess(
   });
 }
 
+DocumentState _addDocument(
+    DocumentState documentState, AddDocumentSuccess action) {
+  final state = documentState.rebuild((b) => b
+    ..map.addAll(Map.fromIterable(
+      action.documents,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
 DocumentState _updateDocument(
     DocumentState documentState, SaveDocumentSuccess action) {
   return documentState
@@ -212,6 +225,26 @@ DocumentState _setLoadedDocuments(
   final state = documentState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
       action.documents,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+DocumentState _setLoadedCompany(
+    DocumentState documentState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  final documents = <DocumentEntity>[];
+  company.documents.forEach((document) {
+    documents.add(document.rebuild((b) => b
+      ..parentId = company.id
+      ..parentType = EntityType.company));
+  });
+
+  final state = documentState.rebuild((b) => b
+    ..map.addAll(Map.fromIterable(
+      documents,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

@@ -334,6 +334,15 @@ Middleware<AppState> _saveDocument(RecurringExpenseRepository repository) {
               store.state.credentials, action.expense, action.multipartFile)
           .then((expense) {
         store.dispatch(SaveRecurringExpenseSuccess(expense));
+
+        final documents = <DocumentEntity>[];
+        expense.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = expense.id
+            ..parentType = EntityType.expense));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

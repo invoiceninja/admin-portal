@@ -100,6 +100,7 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
         .saveData(store.state.credentials, action.entity)
         .then((DocumentEntity document) {
       store.dispatch(SaveDocumentSuccess(document));
+
       if (action.completer != null) {
         action.completer.complete(null);
       }

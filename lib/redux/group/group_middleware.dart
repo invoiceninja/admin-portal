@@ -262,6 +262,15 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
               store.state.credentials, action.group, action.multipartFiles)
           .then((group) {
         store.dispatch(SaveGroupSuccess(group));
+
+        final documents = <DocumentEntity>[];
+        group.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = group.id
+            ..parentType = EntityType.group));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

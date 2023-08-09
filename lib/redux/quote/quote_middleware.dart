@@ -499,6 +499,15 @@ Middleware<AppState> _saveDocument(QuoteRepository repository) {
               store.state.credentials, action.quote, action.multipartFile)
           .then((quote) {
         store.dispatch(SaveQuoteSuccess(quote));
+
+        final documents = <DocumentEntity>[];
+        quote.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = quote.id
+            ..parentType = EntityType.quote));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

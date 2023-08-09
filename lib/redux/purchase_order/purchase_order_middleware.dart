@@ -585,6 +585,15 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
               action.multipartFiles)
           .then((purchaseOrder) {
         store.dispatch(SavePurchaseOrderSuccess(purchaseOrder));
+
+        final documents = <DocumentEntity>[];
+        purchaseOrder.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = purchaseOrder.id
+            ..parentType = EntityType.purchaseOrder));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

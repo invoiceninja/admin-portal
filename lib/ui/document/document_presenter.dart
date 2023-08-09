@@ -40,9 +40,9 @@ class DocumentPresenter extends EntityPresenter {
       case DocumentFields.size:
         return Text(document.prettySize);
       case DocumentFields.width:
-        return Text('${document.width}');
+        return Text(document.width > 0 ? '${document.width}' : '');
       case DocumentFields.height:
-        return Text('${document.height}');
+        return Text(document.height > 0 ? '${document.height}' : '');
       case DocumentFields.id:
         return Text(document.id);
       case DocumentFields.hash:

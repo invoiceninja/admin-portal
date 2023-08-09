@@ -313,6 +313,15 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
               store.state.credentials, action.product, action.multipartFiles)
           .then((product) {
         store.dispatch(SaveProductSuccess(product));
+
+        final documents = <DocumentEntity>[];
+        product.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = product.id
+            ..parentType = EntityType.product));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

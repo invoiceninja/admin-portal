@@ -335,6 +335,15 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
               store.state.credentials, action.task, action.multipartFiles)
           .then((task) {
         store.dispatch(SaveTaskSuccess(task));
+
+        final documents = <DocumentEntity>[];
+        task.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = task.id
+            ..parentType = EntityType.task));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

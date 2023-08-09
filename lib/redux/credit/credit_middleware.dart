@@ -446,6 +446,15 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
               store.state.credentials, action.credit, action.multipartFiles)
           .then((credit) {
         store.dispatch(SaveCreditSuccess(credit));
+
+        final documents = <DocumentEntity>[];
+        credit.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = credit.id
+            ..parentType = EntityType.credit));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

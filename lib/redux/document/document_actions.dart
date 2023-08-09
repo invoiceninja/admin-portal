@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
@@ -128,7 +129,13 @@ class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
   final DocumentEntity document;
 }
 
-class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {}
+class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  AddDocumentSuccess(this.documents, this.parentType, this.parentId);
+
+  final BuiltList<DocumentEntity> documents;
+  final EntityType parentType;
+  final String parentId;
+}
 
 class SaveDocumentFailure implements StopSaving {
   SaveDocumentFailure(this.error);

@@ -277,6 +277,15 @@ Middleware<AppState> _saveDocument(VendorRepository repository) {
               store.state.credentials, action.vendor, action.multipartFiles)
           .then((vendor) {
         store.dispatch(SaveVendorSuccess(vendor));
+
+        final documents = <DocumentEntity>[];
+        vendor.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = vendor.id
+            ..parentType = EntityType.vendor));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);
