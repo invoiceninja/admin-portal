@@ -169,12 +169,13 @@ Middleware<AppState> _downloadDocuments(DocumentRepository repository) {
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDocumentRequest;
+    final documentId = action.documentIds.first;
 
     repository
-        .delete(store.state.credentials, action.documentIds.first,
-            action.password, action.idToken)
+        .delete(store.state.credentials, documentId, action.password,
+            action.idToken)
         .then((value) {
-      store.dispatch(DeleteDocumentSuccess());
+      store.dispatch(DeleteDocumentSuccess(documentId: documentId));
       if (action.completer != null) {
         action.completer.complete(null);
       }

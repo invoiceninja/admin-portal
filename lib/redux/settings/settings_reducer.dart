@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_state.dart';
 import 'package:redux/redux.dart';
 
@@ -77,6 +78,11 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origCompany.replace(action.company)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, DeleteDocumentSuccess>((state, action) {
+    return state.rebuild(
+      (b) => b..updatedAt = DateTime.now().millisecondsSinceEpoch,
+    );
   }),
   TypedReducer<SettingsUIState, SaveGroupSuccess>((state, action) {
     return state.rebuild((b) => b

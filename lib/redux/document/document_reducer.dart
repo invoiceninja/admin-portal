@@ -184,7 +184,9 @@ DocumentState _archiveDocumentSuccess(
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState.rebuild((b) => b..map.remove(action.documentId));
+  return documentState.rebuild((b) => b
+    ..map.remove(action.documentId)
+    ..list.remove(action.documentId));
 }
 
 DocumentState _restoreDocumentSuccess(
