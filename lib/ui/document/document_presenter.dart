@@ -56,8 +56,6 @@ class DocumentPresenter extends EntityPresenter {
       case DocumentFields.linkedTo:
         final parentEntity =
             state.getEntity(document.parentType, document.parentId);
-        print(
-            '## ${document.parentType} ${document.parentId} => $parentEntity');
         return LinkTextRelatedEntity(entity: parentEntity, relation: document);
     }
 

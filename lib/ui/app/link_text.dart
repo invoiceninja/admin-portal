@@ -46,11 +46,15 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
           ),
         ),
         onTap: () {
-          if (widget.entity.entityType.hasFullWidthViewer) {
-            viewEntity(entity: widget.entity);
+          final entity = widget.entity;
+          if (entity.entityType == EntityType.company ||
+              entity.entityType == null) {
+            viewEntitiesByType(entityType: EntityType.settings);
+          } else if (entity.entityType.hasFullWidthViewer) {
+            viewEntity(entity: entity);
           } else {
             viewEntity(entity: widget.relation);
-            viewEntity(entity: widget.entity, addToStack: true);
+            viewEntity(entity: entity, addToStack: true);
           }
         },
         onLongPress: () {
