@@ -164,7 +164,7 @@ class _$DocumentEntitySerializer
       result
         ..add('parent_type')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(EntityType)));
     }
     value = object.isChanged;
     if (value != null) {
@@ -251,7 +251,7 @@ class _$DocumentEntitySerializer
           break;
         case 'parent_type':
           result.parentType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -514,7 +514,7 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String parentId;
   @override
-  final String parentType;
+  final EntityType parentType;
   @override
   final bool isChanged;
   @override
@@ -707,9 +707,9 @@ class DocumentEntityBuilder
   String get parentId => _$this._parentId;
   set parentId(String parentId) => _$this._parentId = parentId;
 
-  String _parentType;
-  String get parentType => _$this._parentType;
-  set parentType(String parentType) => _$this._parentType = parentType;
+  EntityType _parentType;
+  EntityType get parentType => _$this._parentType;
+  set parentType(EntityType parentType) => _$this._parentType = parentType;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;

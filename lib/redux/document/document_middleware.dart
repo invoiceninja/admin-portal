@@ -23,7 +23,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final viewDocumentList = _viewDocumentList();
   final viewDocument = _viewDocument();
   final editDocument = _editDocument();
-  final loadDocuments = _loadDocuments(repository);
+  //final loadDocuments = _loadDocuments(repository);
   final loadDocument = _loadDocument(repository);
   final saveDocument = _saveDocument(repository);
   final archiveDocument = _archiveDocument(repository);
@@ -35,7 +35,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, ViewDocumentList>(viewDocumentList),
     TypedMiddleware<AppState, ViewDocument>(viewDocument),
     TypedMiddleware<AppState, EditDocument>(editDocument),
-    TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
+    //TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
     TypedMiddleware<AppState, LoadDocument>(loadDocument),
     TypedMiddleware<AppState, SaveDocumentRequest>(saveDocument),
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
@@ -241,6 +241,7 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
   };
 }
 
+/*
 Middleware<AppState> _loadDocuments(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadDocuments;
@@ -262,3 +263,4 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
     next(action);
   };
 }
+*/

@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 
 // Package imports:
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
@@ -105,7 +104,7 @@ class LoadDocumentsFailure implements StopLoading {
 class LoadDocumentsSuccess implements StopLoading {
   LoadDocumentsSuccess(this.documents);
 
-  final BuiltList<DocumentEntity> documents;
+  final List<DocumentEntity> documents;
 
   @override
   String toString() {

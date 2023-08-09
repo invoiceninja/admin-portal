@@ -129,7 +129,7 @@ abstract class DocumentEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'parent_type')
-  String get parentType;
+  EntityType get parentType;
 
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId

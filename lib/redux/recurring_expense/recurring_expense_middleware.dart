@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 
 // Package imports:
@@ -248,6 +249,16 @@ Middleware<AppState> _loadRecurringExpenses(
     store.dispatch(LoadRecurringExpensesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadRecurringExpensesSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((expense) {
+        expense.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = expense.id
+            ..parentType = EntityType.recurringExpense));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
 
       if (action.completer != null) {
         action.completer.complete(null);

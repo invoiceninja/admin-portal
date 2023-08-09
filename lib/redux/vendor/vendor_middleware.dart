@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 
 // Package imports:
@@ -233,6 +234,17 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
     store.dispatch(LoadVendorsRequest());
     repository.loadList(store.state.credentials, action.page).then((data) {
       store.dispatch(LoadVendorsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((vendor) {
+        vendor.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = vendor.id
+            ..parentType = EntityType.vendor));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadVendors(
           completer: action.completer,

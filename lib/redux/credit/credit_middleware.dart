@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -362,6 +363,17 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
             state.credentials, state.createdAtLimit, state.filterDeletedClients)
         .then((data) {
       store.dispatch(LoadCreditsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((credit) {
+        credit.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = credit.id
+            ..parentType = EntityType.credit));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (action.completer != null) {
         action.completer.complete(null);
       }

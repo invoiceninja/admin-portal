@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -291,6 +292,16 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     )
         .then((data) {
       store.dispatch(LoadTasksSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((task) {
+        task.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = task.id
+            ..parentType = EntityType.task));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
 
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadTasks(

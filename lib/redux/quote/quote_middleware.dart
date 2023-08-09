@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -455,6 +456,17 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     )
         .then((data) {
       store.dispatch(LoadQuotesSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((quote) {
+        quote.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = quote.id
+            ..parentType = EntityType.quote));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadQuotes(
           completer: action.completer,

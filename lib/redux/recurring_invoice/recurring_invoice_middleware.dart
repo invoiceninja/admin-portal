@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
 
+import '../document/document_actions.dart';
+
 List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   RecurringInvoiceRepository repository = const RecurringInvoiceRepository(),
 ]) {
@@ -411,6 +413,16 @@ Middleware<AppState> _loadRecurringInvoices(
     )
         .then((data) {
       store.dispatch(LoadRecurringInvoicesSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((client) {
+        client.documents.forEach((invoice) {
+          documents.add(invoice.rebuild((b) => b
+            ..parentId = client.id
+            ..parentType = EntityType.recurringInvoice));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
 
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadRecurringInvoices(

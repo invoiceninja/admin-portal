@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -226,6 +227,16 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
     store.dispatch(LoadGroupsRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadGroupsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((group) {
+        group.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = group.id
+            ..parentType = EntityType.group));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
 
       if (action.completer != null) {
         action.completer.complete(null);

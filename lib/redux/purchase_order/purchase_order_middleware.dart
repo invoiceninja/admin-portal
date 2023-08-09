@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 
+import '../document/document_actions.dart';
+
 List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
   PurchaseOrderRepository repository = const PurchaseOrderRepository(),
 ]) {
@@ -540,6 +542,17 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
     )
         .then((data) {
       store.dispatch(LoadPurchaseOrdersSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((purchaseOrder) {
+        purchaseOrder.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = purchaseOrder.id
+            ..parentType = EntityType.purchaseOrder));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadPurchaseOrders(
           completer: action.completer,
