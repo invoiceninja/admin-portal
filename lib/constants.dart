@@ -340,6 +340,12 @@ const kPurchaseOrderStatuses = {
   kPurchaseOrderStatusViewed: 'viewed',
 };
 
+const String kDocumentStatusPublic = '-1';
+const String kDocumentStatusPrivate = '-2';
+const String kDocumentStatusImage = '-3';
+const String kDocumentStatusPDF = '-4';
+const String kDocumentStatusOther = '-5';
+
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';

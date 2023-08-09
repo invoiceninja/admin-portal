@@ -142,7 +142,9 @@ class _ListFilterState extends State<ListFilter> {
             ),
           ),
         ),
-        if (isDesktop(context) && !isDashboardOrSettings) ...[
+        if (isDesktop(context) &&
+            !isDashboardOrSettings &&
+            widget.onSelectedState != null) ...[
           SizedBox(width: 8),
           Flexible(
             child: DropDownMultiSelect(

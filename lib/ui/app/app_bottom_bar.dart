@@ -25,8 +25,8 @@ class AppBottomBar extends StatefulWidget {
     @required this.entityType,
     @required this.sortFields,
     @required this.onSelectedSortField,
-    @required this.onSelectedState,
     @required this.onCheckboxPressed,
+    this.onSelectedState,
     this.defaultTableColumns,
     this.tableColumns,
     this.onSelectedStatus,
@@ -421,7 +421,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     ),
                 ],
                 if (isMobile(context) ||
-                    widget.entityType == EntityType.companyGateway)
+                    widget.entityType == EntityType.companyGateway &&
+                        widget.onSelectedState != null)
                   IconButton(
                     tooltip: localization.filter,
                     icon: Icon(Icons.filter_list),

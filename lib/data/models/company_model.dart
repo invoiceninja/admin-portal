@@ -546,9 +546,6 @@ abstract class CompanyEntity extends Object
   @override
   String get listDisplayName => settings?.name ?? '';
 
-  @override
-  EntityType get entityType => EntityType.company;
-
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
   bool get enableFirstInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 1;

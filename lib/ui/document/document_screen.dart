@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -34,6 +35,34 @@ class DocumentScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kDocumentStatusPublic
+          ..name = localization.public,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kDocumentStatusPrivate
+          ..name = localization.private,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kDocumentStatusImage
+          ..name = localization.image,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kDocumentStatusPDF
+          ..name = localization.pdf,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kDocumentStatusOther
+          ..name = localization.other,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.document,
       onHamburgerLongPress: () => store.dispatch(StartDocumentMultiselect()),
@@ -45,8 +74,9 @@ class DocumentScreen extends StatelessWidget {
         onFilterChanged: (value) {
           store.dispatch(FilterDocuments(value));
         },
-        onSelectedState: (EntityState state, value) {
-          store.dispatch(FilterDocumentsByState(state));
+        statuses: statuses,
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterDocumentsByStatus(status));
         },
       ),
       onCheckboxPressed: () {
@@ -74,9 +104,10 @@ class DocumentScreen extends StatelessWidget {
         sortFields: [
           DocumentFields.updatedAt,
         ],
-        onSelectedState: (EntityState state, value) {
-          store.dispatch(FilterDocumentsByState(state));
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterDocumentsByStatus(status));
         },
+        statuses: statuses,
         onCheckboxPressed: () {
           if (store.state.documentListState.isInMultiselect()) {
             store.dispatch(ClearDocumentMultiselect());

@@ -230,6 +230,12 @@ class FilterDocuments implements PersistUI {
   final String filter;
 }
 
+class FilterDocumentsByStatus implements PersistUI {
+  FilterDocumentsByStatus(this.status);
+
+  final EntityStatus status;
+}
+
 class SortDocuments implements PersistUI, PersistPrefs {
   SortDocuments(this.field);
 
