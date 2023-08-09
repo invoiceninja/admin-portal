@@ -230,6 +230,9 @@ class EntityType extends EnumClass {
     return this;
   }
 
+  bool get hideCreate =>
+      this == EntityType.settings || this == EntityType.document;
+
   String get snakeCase => toSnakeCase(toString());
 
   String get apiValue {
