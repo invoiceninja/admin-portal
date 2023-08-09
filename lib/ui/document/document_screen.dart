@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/document_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'document_screen_vm.dart';
 
@@ -58,6 +59,9 @@ class DocumentScreen extends StatelessWidget {
       body: DocumentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.document,
+        tableColumns: DocumentPresenter.getAllTableFields(userCompany),
+        defaultTableColumns:
+            DocumentPresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortDocuments(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterDocumentsByCustom1(value)),

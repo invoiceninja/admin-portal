@@ -183,6 +183,9 @@ abstract class DocumentEntity extends Object
             .toLowerCase()
             .compareTo(documentB.name.toLowerCase());
         break;
+      case DocumentFields.id:
+        response = documentA.id.compareTo(documentB.id);
+        break;
       case DocumentFields.updatedAt:
         response = documentA.updatedAt.compareTo(documentB.updatedAt);
         break;

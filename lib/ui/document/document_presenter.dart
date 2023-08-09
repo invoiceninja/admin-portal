@@ -23,11 +23,7 @@ class DocumentPresenter extends EntityPresenter {
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
-      ...EntityPresenter.getBaseFields(),
       DocumentFields.id,
-      DocumentFields.updatedAt,
-      DocumentFields.archivedAt,
-      DocumentFields.isDeleted,
       DocumentFields.hash,
     ];
   }
