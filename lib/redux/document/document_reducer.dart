@@ -23,6 +23,7 @@ final forceSelectedReducer = combineReducers<bool>([
   TypedReducer<bool, ViewDocument>((completer, action) => true),
   TypedReducer<bool, ViewDocumentList>((completer, action) => false),
   TypedReducer<bool, FilterDocumentsByState>((completer, action) => false),
+  TypedReducer<bool, FilterDocumentsByStatus>((completer, action) => false),
   TypedReducer<bool, FilterDocuments>((completer, action) => false),
   TypedReducer<bool, FilterDocumentsByCustom1>((completer, action) => false),
   TypedReducer<bool, FilterDocumentsByCustom2>((completer, action) => false),
@@ -43,6 +44,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, SortDocuments>((selectedId, action) => ''),
   TypedReducer<String, FilterDocuments>((selectedId, action) => ''),
   TypedReducer<String, FilterDocumentsByState>((selectedId, action) => ''),
+  TypedReducer<String, FilterDocumentsByStatus>((selectedId, action) => ''),
   TypedReducer<String, FilterDocumentsByCustom1>((selectedId, action) => ''),
   TypedReducer<String, FilterDocumentsByCustom2>((selectedId, action) => ''),
   TypedReducer<String, FilterDocumentsByCustom3>((selectedId, action) => ''),
@@ -68,6 +70,7 @@ DocumentEntity _updateEditing(DocumentEntity document, dynamic action) {
 final documentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortDocuments>(_sortDocuments),
   TypedReducer<ListUIState, FilterDocumentsByState>(_filterDocumentsByState),
+  TypedReducer<ListUIState, FilterDocumentsByStatus>(_filterDocumentsByStatus),
   TypedReducer<ListUIState, FilterDocuments>(_filterDocuments),
   TypedReducer<ListUIState, FilterDocumentsByCustom1>(
       _filterDocumentsByCustom1),
@@ -122,6 +125,17 @@ ListUIState _filterDocumentsByState(
         .rebuild((b) => b..stateFilters.remove(action.state));
   } else {
     return documentListState.rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterDocumentsByStatus(
+    ListUIState documentListState, FilterDocumentsByStatus action) {
+  if (documentListState.statusFilters.contains(action.status)) {
+    return documentListState
+        .rebuild((b) => b..statusFilters.remove(action.status));
+  } else {
+    return documentListState
+        .rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 

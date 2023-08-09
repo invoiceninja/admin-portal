@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/static/document_status_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -36,27 +37,27 @@ class DocumentScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     final statuses = [
-      InvoiceStatusEntity().rebuild(
+      DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPublic
           ..name = localization.public,
       ),
-      InvoiceStatusEntity().rebuild(
+      DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPrivate
           ..name = localization.private,
       ),
-      InvoiceStatusEntity().rebuild(
+      DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusImage
           ..name = localization.image,
       ),
-      InvoiceStatusEntity().rebuild(
+      DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPDF
           ..name = localization.pdf,
       ),
-      InvoiceStatusEntity().rebuild(
+      DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusOther
           ..name = localization.other,
