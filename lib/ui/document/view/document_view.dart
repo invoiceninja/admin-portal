@@ -30,7 +30,7 @@ class _DocumentViewState extends State<DocumentView> {
       isFilter: widget.isFilter,
       entity: document,
       body: FormCard(children: [
-        Text('${document.data}'),
+        Text('${document.data?.length ?? ''}'),
       ]),
     );
   }

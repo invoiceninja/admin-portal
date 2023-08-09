@@ -69,7 +69,7 @@ Middleware<AppState> _viewDocument() {
     final state = store.state;
     final document = state.documentState.map[action.documentId];
     if (document.data == null) {
-      store.dispatch(LoadDocumentDataRequest());
+      store.dispatch(LoadDocumentData(documentId: document.id));
     }
 
     next(action);
@@ -262,7 +262,7 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     repository.loadData(store.state.credentials, document).then((bodyBytes) {
       store.dispatch(
         LoadDocumentSuccess(
-          document..rebuild((b) => b..data = bodyBytes),
+          document.rebuild((b) => b..data = bodyBytes),
         ),
       );
 
