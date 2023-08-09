@@ -261,7 +261,7 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     store.dispatch(LoadDocumentRequest());
     repository.loadData(store.state.credentials, document).then((bodyBytes) {
       store.dispatch(
-        LoadDocumentDataSuccess(
+        LoadDocumentSuccess(
           document..rebuild((b) => b..data = bodyBytes),
         ),
       );
@@ -271,7 +271,7 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(LoadDocumentDataFailure(error));
+      store.dispatch(LoadDocumentFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

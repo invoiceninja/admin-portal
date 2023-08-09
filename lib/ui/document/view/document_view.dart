@@ -30,7 +30,7 @@ class _DocumentViewState extends State<DocumentView> {
       isFilter: widget.isFilter,
       entity: document,
       body: FormCard(children: [
-        // STARTER: widgets - do not remove comment
+        Text('${document.data}'),
       ]),
     );
   }
