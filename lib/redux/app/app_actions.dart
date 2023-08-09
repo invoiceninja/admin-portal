@@ -744,6 +744,15 @@ void viewEntityById({
               force: force,
             ));
             break;
+          case EntityType.document:
+            store.dispatch(ViewDocument(
+              documentId: entityId,
+              force: force,
+            ));
+            break;
+          default:
+            print('## viewEntity not implemented for $entityType');
+            break;
         }
       });
 }

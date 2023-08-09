@@ -598,6 +598,9 @@ class EntityScreens extends StatelessWidget {
           case EntityType.transactionRule:
             child = TransactionRuleViewScreen();
             break;
+          case EntityType.document:
+            child = DocumentViewScreen();
+            break;
           default:
             print('## View screen not defined for $previewEntityType');
         }
