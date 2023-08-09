@@ -70,14 +70,12 @@ List<String> filteredDocumentsSelector(
     return document.matchesFilter(documentListState.filter);
   }).toList();
 
-  /*
   list.sort((documentAId, documentBId) {
     final documentA = documentMap[documentAId];
     final documentB = documentMap[documentBId];
     return documentA.compareTo(documentB, documentListState.sortField,
         documentListState.sortAscending);
   });
-  */
 
   return list;
 }

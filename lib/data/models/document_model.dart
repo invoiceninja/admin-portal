@@ -186,6 +186,29 @@ abstract class DocumentEntity extends Object
       case DocumentFields.updatedAt:
         response = documentA.updatedAt.compareTo(documentB.updatedAt);
         break;
+      case DocumentFields.type:
+        response = documentA.type.compareTo(documentB.type);
+        break;
+      case DocumentFields.size:
+        response = documentA.size.compareTo(documentB.size);
+        break;
+      case DocumentFields.width:
+        response = documentA.width.compareTo(documentB.width);
+        break;
+      case DocumentFields.height:
+        response = documentA.height.compareTo(documentB.height);
+        break;
+      case DocumentFields.hash:
+        response = documentA.hash.compareTo(documentB.hash);
+        break;
+      case DocumentFields.linkedTo:
+        if (documentA.parentType == documentB.parentType) {
+          response = documentA.parentId.compareTo(documentB.parentId);
+        } else {
+          response =
+              '${documentA.parentType}'.compareTo('${documentB.parentType}');
+        }
+        break;
       default:
         print('## ERROR: sort by documents.$sortField is not implemented');
         break;
