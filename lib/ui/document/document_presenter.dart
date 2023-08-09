@@ -13,7 +13,6 @@ class DocumentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       DocumentFields.name,
-      DocumentFields.type,
       DocumentFields.linkedTo,
       DocumentFields.size,
       DocumentFields.width,
@@ -26,6 +25,7 @@ class DocumentPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       DocumentFields.id,
+      DocumentFields.type,
       DocumentFields.hash,
     ];
   }
