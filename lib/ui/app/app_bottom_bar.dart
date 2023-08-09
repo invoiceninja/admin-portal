@@ -409,6 +409,18 @@ class _AppBottomBarState extends State<AppBottomBar> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 SizedBox(width: 4),
+                if (!widget.entityType.isSetting)
+                  IconButton(
+                    tooltip: prefState.enableTooltips
+                        ? (isList
+                            ? localization.showTable
+                            : localization.showList)
+                        : null,
+                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                    onPressed: () {
+                      store.dispatch(SwitchListTableLayout());
+                    },
+                  ),
                 ...widget.iconButtons,
                 if (!widget.hideListOptions) ...[
                   if (isMobile(context))
@@ -433,7 +445,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         ? Theme.of(context).colorScheme.secondary
                         : null,
                   ),
-                if (widget.statuses.isNotEmpty && isMobile(context))
+                if (widget.statuses.isNotEmpty && isList)
                   IconButton(
                     tooltip:
                         prefState.enableTooltips ? localization.status : null,
@@ -500,18 +512,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                             .hasCustom4Filters
                         ? Theme.of(context).colorScheme.secondary
                         : null,
-                  ),
-                if (!widget.entityType.isSetting)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? (isList
-                            ? localization.showTable
-                            : localization.showList)
-                        : null,
-                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-                    onPressed: () {
-                      store.dispatch(SwitchListTableLayout());
-                    },
                   ),
                 if (!widget.hideListOptions) ...[
                   if (isList && widget.sortFields.isNotEmpty)

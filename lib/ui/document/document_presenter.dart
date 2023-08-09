@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DocumentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -17,6 +18,7 @@ class DocumentPresenter extends EntityPresenter {
       DocumentFields.size,
       DocumentFields.width,
       DocumentFields.height,
+      DocumentFields.createdAt,
     ];
   }
 
@@ -37,6 +39,10 @@ class DocumentPresenter extends EntityPresenter {
     switch (field) {
       case DocumentFields.name:
         return Text(document.name);
+      case DocumentFields.createdAt:
+        return Text(formatDate(
+            convertTimestampToDateString(entity.createdAt), context,
+            showTime: true));
       case DocumentFields.type:
         return Text(document.type);
       case DocumentFields.size:

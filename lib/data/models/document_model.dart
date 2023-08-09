@@ -47,7 +47,7 @@ abstract class DocumentItemResponse
 
 class DocumentFields {
   static const String id = 'id';
-  static const String updatedAt = 'updated_at';
+  static const String createdAt = 'created_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String name = 'name';
@@ -191,8 +191,8 @@ abstract class DocumentEntity extends Object
       case DocumentFields.id:
         response = documentA.id.compareTo(documentB.id);
         break;
-      case DocumentFields.updatedAt:
-        response = documentA.updatedAt.compareTo(documentB.updatedAt);
+      case DocumentFields.createdAt:
+        response = documentA.createdAt.compareTo(documentB.createdAt);
         break;
       case DocumentFields.type:
         response = documentA.type.compareTo(documentB.type);
