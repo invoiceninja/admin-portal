@@ -80,6 +80,8 @@ class VendorFields {
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
   static const String postalCity = 'postal_city';
+  static const String lastLoginAt = 'last_login_at';
+  static const String contactEmail = 'contact_email';
 }
 
 abstract class VendorEntity extends Object
@@ -121,6 +123,7 @@ abstract class VendorEntity extends Object
       assignedUserId: user?.id ?? '',
       createdUserId: '',
       createdAt: 0,
+      lastLogin: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -210,6 +213,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'last_login')
+  int get lastLogin;
 
   BuiltList<VendorContactEntity> get contacts;
 
@@ -505,6 +511,7 @@ abstract class VendorEntity extends Object
 
   static void _initializeBuilder(VendorEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
+    ..lastLogin = 0
     ..languageId = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;

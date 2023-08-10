@@ -51,6 +51,7 @@ enum VendorReportFields {
   created_at,
   updated_at,
   documents,
+  last_login,
   /*
   contact_last_login,
   shipping_address1,
@@ -294,6 +295,9 @@ ReportResult vendorReport(
             customFieldType: CustomFieldType.vendorContact4,
             company: userCompany.company,
           );
+          break;
+        case VendorReportFields.last_login:
+          value = convertTimestampToDateString(vendor.lastLogin);
           break;
         /*
         case VendorReportFields.contact_last_login:

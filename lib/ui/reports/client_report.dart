@@ -66,6 +66,7 @@ enum ClientReportFields {
   contact2,
   contact3,
   contact4,
+  last_login,
   contact_last_login,
   is_active,
   created_at,
@@ -303,6 +304,9 @@ ReportResult clientReport(
             customFieldType: CustomFieldType.contact4,
             company: userCompany.company,
           );
+          break;
+        case ClientReportFields.last_login:
+          value = convertTimestampToDateString(client.lastLogin);
           break;
         case ClientReportFields.contact_last_login:
           value = convertTimestampToDateString(contact.lastLogin);
