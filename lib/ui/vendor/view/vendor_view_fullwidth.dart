@@ -137,6 +137,17 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                if ((vendor.languageId ?? '').isNotEmpty &&
+                    vendor.languageId != state.company.languageId)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      state.staticState.languageMap[vendor.languageId]?.name ??
+                          '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 if (vendor.customValue1.isNotEmpty)
                   Text(company.formatCustomFieldValue(
                       CustomFieldType.vendor1, vendor.customValue1)),
