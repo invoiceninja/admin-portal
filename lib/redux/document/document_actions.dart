@@ -352,7 +352,7 @@ void handleDocumentAction(
         entities: [document],
       );
       break;
-    case EntityAction.documents:
+    case EntityAction.bulkDownload:
       store.dispatch(
         DownloadDocumentsRequest(
           documentIds: documentIds,

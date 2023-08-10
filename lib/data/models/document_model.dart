@@ -301,18 +301,24 @@ abstract class DocumentEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
-
-      if (userCompany.canCreate(EntityType.invoice)) {
-        actions.add(EntityAction.newInvoice);
-      }
     }
 
-    if (!isDeleted && multiselect) {
-      actions.add(EntityAction.documents);
+    actions.add(EntityAction.viewDocument);
+
+    if (!isDeleted) {
+      if (multiselect) {
+        actions.add(EntityAction.bulkDownload);
+      } else {
+        actions.add(EntityAction.download);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
+    }
+
+    if (userCompany.canEditEntity(this)) {
+      actions.add(EntityAction.delete);
     }
 
     //return actions..addAll(super.getActions(userCompany: userCompany));

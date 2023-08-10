@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 
@@ -58,6 +60,11 @@ class _DocumentViewState extends State<DocumentView> {
                         allowSharing: false,
                         canDebug: false,
                       ),
+          ),
+          BottomButtons(
+            entity: document,
+            action1: EntityAction.viewDocument,
+            action2: EntityAction.download,
           ),
         ],
       ),
