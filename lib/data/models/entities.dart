@@ -483,7 +483,7 @@ abstract class BaseEntity implements SelectableEntity {
       ClientEntity client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    if (isNew) {
+    if (isNew || entityType == EntityType.company) {
       return [];
     }
 

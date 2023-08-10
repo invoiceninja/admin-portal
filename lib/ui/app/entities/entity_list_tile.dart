@@ -83,12 +83,15 @@ class _EntityListTileState extends State<EntityListTile> {
     final trailing = widget.entity.createdAt == 0
         ? null
         : IgnorePointer(
-            ignoring: !isHovered || widget.isFilter,
+            ignoring: !isHovered ||
+                widget.isFilter ||
+                widget.entity.entityType == EntityType.company,
             child: IconButton(
-              icon: Icon(isHovered ||
-                      widget.isFilter ||
-                      isMobile(context) ||
-                      state.uiState.previewStack.isNotEmpty
+              icon: Icon(widget.entity.entityType != EntityType.company &&
+                      (isHovered ||
+                          widget.isFilter ||
+                          isMobile(context) ||
+                          state.uiState.previewStack.isNotEmpty)
                   ? Icons.chevron_right
                   : Icons.filter_list),
               onPressed: () => viewEntity(

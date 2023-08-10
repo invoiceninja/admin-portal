@@ -487,6 +487,9 @@ abstract class CompanyEntity extends Object
   String get displayName => settings.name ?? '';
 
   @override
+  bool get isActive => true;
+
+  @override
   bool matchesFilter(String filter) {
     for (final user in users) {
       if (user.matchesFilter(filter)) {
@@ -753,6 +756,7 @@ abstract class CompanyEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..entityType = EntityType.company
     ..calculateExpenseTaxByAmount = false
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false

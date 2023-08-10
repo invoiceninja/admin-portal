@@ -33,6 +33,7 @@ class EntityPresenter {
     }
 
     if ([
+          EntityType.company,
           EntityType.client,
           EntityType.vendor,
           EntityType.project,

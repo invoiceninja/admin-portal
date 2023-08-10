@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -26,17 +28,25 @@ class _DocumentViewState extends State<DocumentView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final document = viewModel.document;
+    final entity = state.getEntity(document.parentType, document.parentId);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: document,
-      body: Column(children: [
-        document.data == null
-            ? LoadingIndicator()
-            : SizedBox(
-                height: 600,
-                child: document.isImage
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ListDivider(),
+          EntityListTile(
+            isFilter: widget.isFilter,
+            entity: entity,
+          ),
+          Expanded(
+            child: document.data == null
+                ? LoadingIndicator()
+                : document.isImage
                     ? PinchZoom(
                         child: Image.memory(document.data),
                       )
@@ -48,8 +58,9 @@ class _DocumentViewState extends State<DocumentView> {
                         allowSharing: false,
                         canDebug: false,
                       ),
-              )
-      ]),
+          ),
+        ],
+      ),
     );
   }
 }
