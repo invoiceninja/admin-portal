@@ -747,6 +747,8 @@ abstract class CompanyEntity extends Object
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
+  String get languageId => settings.languageId ?? kDefaultLanguageId;
+
   bool get supportsQrIban => settings.countryId == kCountrySwitzerland;
 
   // ignore: unused_element

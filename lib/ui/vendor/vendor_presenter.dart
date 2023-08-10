@@ -35,6 +35,7 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.vatNumber,
       VendorFields.idNumber,
       VendorFields.currencyId,
+      VendorFields.languageId,
       VendorFields.customValue1,
       VendorFields.customValue2,
       VendorFields.customValue3,
@@ -84,6 +85,9 @@ class VendorPresenter extends EntityPresenter {
       case VendorFields.currencyId:
         return Text(
             state.staticState.currencyMap[vendor.currencyId]?.name ?? '');
+      case VendorFields.languageId:
+        return Text(
+            state.staticState.languageMap[vendor.languageId]?.name ?? '');
       case VendorFields.customValue1:
         return Text(presentCustomField(context, vendor.customValue1));
       case VendorFields.customValue2:

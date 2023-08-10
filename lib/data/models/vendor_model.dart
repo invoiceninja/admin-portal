@@ -486,6 +486,8 @@ abstract class VendorEntity extends Object
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
+  bool get hasLanguage => languageId != null && languageId.isNotEmpty;
+
   bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
 
   bool get hasEmailAddress =>

@@ -19,6 +19,7 @@ enum VendorReportFields {
   name,
   website,
   currency,
+  language,
   private_notes,
   public_notes,
   address1,
@@ -146,6 +147,10 @@ ReportResult vendorReport(
         case VendorReportFields.currency:
           value =
               staticState.currencyMap[vendor.currencyId]?.listDisplayName ?? '';
+          break;
+        case VendorReportFields.language:
+          value =
+              staticState.languageMap[vendor.languageId]?.listDisplayName ?? '';
           break;
         /*
         case VendorReportFields.language:

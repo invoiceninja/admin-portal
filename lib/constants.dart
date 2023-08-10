@@ -700,6 +700,7 @@ const kTransactionStatuses = {
 };
 
 const String kDefaultCurrencyId = '1';
+const String kDefaultLanguageId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#2F7DC3';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
