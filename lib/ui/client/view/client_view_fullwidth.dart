@@ -186,7 +186,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company.settings.languageId)
+                      client.languageId != state.company.languageId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
