@@ -59,6 +59,7 @@ class VendorFields {
   static const String state = 'state';
   static const String postalCode = 'postal_code';
   static const String countryId = 'country_id';
+  static const String languageId = 'language_id';
   static const String country = 'country';
   static const String phone = 'phone';
   static const String privateNotes = 'private_notes';
@@ -96,6 +97,7 @@ abstract class VendorEntity extends Object
       state: '',
       postalCode: '',
       countryId: '',
+      languageId: '',
       phone: '',
       privateNotes: '',
       publicNotes: '',
@@ -171,6 +173,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
+
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
 
   @BuiltValueField(wireName: 'phone')
   String get phone;
@@ -323,6 +328,9 @@ abstract class VendorEntity extends Object
         break;
       case VendorFields.countryId:
         response = vendorA.countryId.compareTo(vendorB.countryId);
+        break;
+      case VendorFields.languageId:
+        response = vendorA.languageId.compareTo(vendorB.languageId);
         break;
       case VendorFields.privateNotes:
         response = vendorA.privateNotes.compareTo(vendorB.privateNotes);
@@ -493,8 +501,9 @@ abstract class VendorEntity extends Object
   VendorContactEntity getContact(String contactId) => contacts
       .firstWhere((contact) => contact.id == contactId, orElse: () => null);
 
-  static void _initializeBuilder(VendorEntityBuilder builder) =>
-      builder..activities.replace(BuiltList<ActivityEntity>());
+  static void _initializeBuilder(VendorEntityBuilder builder) => builder
+    ..activities.replace(BuiltList<ActivityEntity>())
+    ..languageId = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }

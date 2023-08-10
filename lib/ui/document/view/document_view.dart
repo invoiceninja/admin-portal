@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
