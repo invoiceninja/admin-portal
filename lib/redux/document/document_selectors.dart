@@ -59,9 +59,15 @@ List<String> filteredDocumentsSelector(
 
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
-    if (filterEntityType == EntityType.document &&
-        document.id != filterEntityId) {
-      return false;
+
+    if (filterEntityType != null) {
+      if (filterEntityType == EntityType.document &&
+          document.id != filterEntityId) {
+        return false;
+      } else if (document.parentType != filterEntityType ||
+          document.parentId != filterEntityId) {
+        return false;
+      }
     }
 
     if (!document.matchesStates(documentListState.stateFilters)) {
