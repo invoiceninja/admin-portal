@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_address.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 
 class VendorEditDesktop extends StatelessWidget {
@@ -45,6 +46,9 @@ class VendorEditDesktop extends StatelessWidget {
                 child: Column(
                   children: [
                     VendorEditContactsScreen(
+                      viewModel: viewModel,
+                    ),
+                    VendorEditSettings(
                       viewModel: viewModel,
                     ),
                   ],
