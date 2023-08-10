@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEdit extends StatefulWidget {
   const VendorEdit({
