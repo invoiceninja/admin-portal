@@ -1,12 +1,16 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io' as file;
+import 'dart:io';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -16,8 +20,14 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ViewDocumentList implements PersistUI {
   ViewDocumentList({
@@ -404,6 +414,46 @@ void handleDocumentAction(
               ..future.then((value) => showDocument())));
       } else {
         showDocument();
+      }
+      break;
+    case EntityAction.download:
+      void downloadDocument() async {
+        final DocumentEntity document =
+            store.state.documentState.map[documentIds.first];
+        if (kIsWeb) {
+          WebUtils.downloadBinaryFile(document.name, document.data);
+        } else {
+          final directory = await (isDesktopOS()
+              ? getDownloadsDirectory()
+              : getApplicationDocumentsDirectory());
+
+          String filePath =
+              '${directory.path}${file.Platform.pathSeparator}${document.name}';
+
+          if (file.File(filePath).existsSync()) {
+            final extension = document.name.split('.').last;
+            final timestamp = DateTime.now().millisecondsSinceEpoch;
+            filePath =
+                filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+          }
+
+          await File(filePath).writeAsBytes(document.data);
+
+          if (isDesktopOS()) {
+            showToast(localization.fileSavedInPath
+                .replaceFirst(':path', directory.path));
+          } else {
+            await Share.shareXFiles([XFile(filePath)]);
+          }
+        }
+      }
+      if (document.data == null) {
+        store.dispatch(LoadDocumentData(
+            documentId: document.id,
+            completer: Completer<void>()
+              ..future.then((value) => downloadDocument())));
+      } else {
+        downloadDocument();
       }
       break;
   }

@@ -1,7 +1,3 @@
-// Dart imports:
-import 'dart:io';
-import 'dart:io' as file;
-
 // Flutter imports:
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_picker/file_picker.dart';
@@ -11,8 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,13 +14,10 @@ import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
@@ -38,9 +29,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
@@ -318,41 +306,8 @@ class DocumentTile extends StatelessWidget {
                                 handleDocumentAction(context, [document],
                                     EntityAction.viewDocument);
                               } else if (value == localization.download) {
-                                final http.Response response = await WebClient()
-                                    .get(document.url, state.credentials.token,
-                                        rawResponse: true);
-
-                                if (kIsWeb) {
-                                  WebUtils.downloadBinaryFile(
-                                      document.name, response.bodyBytes);
-                                } else {
-                                  final directory = await (isDesktopOS()
-                                      ? getDownloadsDirectory()
-                                      : getApplicationDocumentsDirectory());
-
-                                  String filePath =
-                                      '${directory.path}${file.Platform.pathSeparator}${document.name}';
-
-                                  if (file.File(filePath).existsSync()) {
-                                    final extension =
-                                        document.name.split('.').last;
-                                    final timestamp =
-                                        DateTime.now().millisecondsSinceEpoch;
-                                    filePath = filePath.replaceFirst(
-                                        '.$extension',
-                                        '_$timestamp.$extension');
-                                  }
-
-                                  await File(filePath)
-                                      .writeAsBytes(response.bodyBytes);
-
-                                  if (isDesktopOS()) {
-                                    showToast(localization.fileSavedInPath
-                                        .replaceFirst(':path', directory.path));
-                                  } else {
-                                    await Share.shareXFiles([XFile(filePath)]);
-                                  }
-                                }
+                                handleDocumentAction(
+                                    context, [document], EntityAction.download);
                               } else if (value == localization.delete) {
                                 confirmCallback(
                                     context: context,
