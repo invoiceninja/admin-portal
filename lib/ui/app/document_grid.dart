@@ -261,46 +261,6 @@ class DocumentTile extends StatelessWidget {
   final bool isFromExpense;
   final Function onRenamedDocument;
 
-  void _viewFile(BuildContext context) async {
-    final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-
-    store.dispatch(StartLoading());
-
-    final http.Response response = await WebClient()
-        .get(document.url, state.credentials.token, rawResponse: true);
-
-    store.dispatch(StopLoading());
-
-    showDialog<void>(
-        context: navigatorKey.currentContext,
-        builder: (context) {
-          return AlertDialog(
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(localization.close.toUpperCase())),
-            ],
-            content: document.isImage
-                ? PinchZoom(
-                    child: Image.memory(response.bodyBytes),
-                  )
-                : SizedBox(
-                    width: 600,
-                    child: PdfPreview(
-                      build: (format) => response.bodyBytes,
-                      canChangeOrientation: false,
-                      canChangePageFormat: false,
-                      allowPrinting: false,
-                      allowSharing: false,
-                      canDebug: false,
-                    ),
-                  ),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -319,7 +279,8 @@ class DocumentTile extends StatelessWidget {
               children: <Widget>[
                 InkWell(
                   onTap: (document.isImage || document.isPdf)
-                      ? () => _viewFile(context)
+                      ? () => handleDocumentAction(
+                          context, [document], EntityAction.viewDocument)
                       : null,
                   child: DocumentPreview(
                     document,
@@ -357,7 +318,8 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization.view) {
-                                _viewFile(context);
+                                handleDocumentAction(context, [document],
+                                    EntityAction.viewDocument);
                               } else if (value == localization.download) {
                                 final http.Response response = await WebClient()
                                     .get(document.url, state.credentials.token,
