@@ -296,8 +296,8 @@ void handleDocumentAction(
 
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final document = documents.first as DocumentEntity;
   final documentIds = documents.map((document) => document.id).toList();
+  final document = store.state.documentState.map[documentIds.first];
 
   switch (action) {
     case EntityAction.edit:

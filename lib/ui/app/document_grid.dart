@@ -16,16 +16,12 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dashed_rect.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
-import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 
 // Project imports:
@@ -232,7 +228,7 @@ class _DocumentGridState extends State<DocumentGrid> {
             crossAxisCount: 2,
             children: widget.documents
                 .map((document) => DocumentTile(
-                      document: document,
+                      documentId: document.id,
                       onDeleteDocument: widget.onDeleteDocument,
                       onViewExpense: widget.onViewExpense,
                       onRenamedDocument: widget.onRenamedDocument,
@@ -248,14 +244,14 @@ class _DocumentGridState extends State<DocumentGrid> {
 
 class DocumentTile extends StatelessWidget {
   const DocumentTile({
-    @required this.document,
+    @required this.documentId,
     @required this.onDeleteDocument,
     @required this.onViewExpense,
     @required this.isFromExpense,
     @required this.onRenamedDocument,
   });
 
-  final DocumentEntity document;
+  final String documentId;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
@@ -266,6 +262,7 @@ class DocumentTile extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final document = state.documentState.map[documentId];
 
     return Column(
       mainAxisSize: MainAxisSize.max,
