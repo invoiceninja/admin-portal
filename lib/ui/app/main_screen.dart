@@ -518,6 +518,12 @@ class EntityScreens extends StatelessWidget {
         case EntityType.transaction:
           child = TransactionEditScreen();
           break;
+        case EntityType.document:
+          child = DocumentEditScreen();
+          break;
+        default:
+          print('## Edit screen not defined for $entityType');
+          break;
       }
     } else {
       final previewStack = uiState.previewStack;

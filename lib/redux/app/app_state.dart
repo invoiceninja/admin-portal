@@ -777,6 +777,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentTermUIState.editing.isChanged == true;
       case DesignEditScreen.route:
         return designUIState.editing.isChanged == true;
+      case DocumentEditScreen.route:
+        return documentUIState.editing.isChanged == true;
     }
 
     if (uiState.isInSettings) {

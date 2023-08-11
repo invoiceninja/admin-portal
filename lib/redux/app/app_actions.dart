@@ -1481,6 +1481,12 @@ void editEntity({
               completer: completer,
             ));
             break;
+          case EntityType.document:
+            store.dispatch(EditDocument(
+              document: entity,
+              completer: completer,
+            ));
+            break;
           default:
             print('## Edit not handled for $entityType');
         }
