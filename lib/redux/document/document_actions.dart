@@ -3,18 +3,21 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:printing/printing.dart';
 
 class ViewDocumentList implements PersistUI {
   ViewDocumentList({
@@ -293,7 +296,7 @@ void handleDocumentAction(
 
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final document = documents.first;
+  final document = documents.first as DocumentEntity;
   final documentIds = documents.map((document) => document.id).toList();
 
   switch (action) {
@@ -362,6 +365,46 @@ void handleDocumentAction(
           ),
         ),
       );
+      break;
+    case EntityAction.viewDocument:
+      void showDocument() {
+        showDialog<void>(
+            context: navigatorKey.currentContext,
+            builder: (context) {
+              final DocumentEntity document =
+                  store.state.documentState.map[documentIds.first];
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(localization.close.toUpperCase())),
+                ],
+                content: document.isImage
+                    ? PinchZoom(
+                        child: Image.memory(document.data),
+                      )
+                    : SizedBox(
+                        width: 600,
+                        child: PdfPreview(
+                          build: (format) => document.data,
+                          canChangeOrientation: false,
+                          canChangePageFormat: false,
+                          allowPrinting: false,
+                          allowSharing: false,
+                          canDebug: false,
+                        ),
+                      ),
+              );
+            });
+      }
+      if (document.data == null) {
+        store.dispatch(LoadDocumentData(
+            documentId: document.id,
+            completer: Completer<void>()
+              ..future.then((value) => showDocument())));
+      } else {
+        showDocument();
+      }
       break;
   }
 }

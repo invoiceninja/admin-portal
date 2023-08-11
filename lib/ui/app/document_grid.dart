@@ -488,27 +488,32 @@ class DocumentPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final repoDocument = state.documentState.map[document.id];
 
     if (document.isImage) {
-      return CachedNetworkImage(
-          height: height,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          key: ValueKey(document.preview),
-          imageUrl: document.url,
-          imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-          httpHeaders: {'X-API-TOKEN': state.credentials.token},
-          placeholder: (context, url) => Container(
-                height: height,
-                child: Center(
-                  child: CircularProgressIndicator(),
+      if (repoDocument.data != null) {
+        return Image.memory(repoDocument.data);
+      } else {
+        return CachedNetworkImage(
+            height: height,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            key: ValueKey(document.preview),
+            imageUrl: document.url,
+            imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+            httpHeaders: {'X-API-TOKEN': state.credentials.token},
+            placeholder: (context, url) => Container(
+                  height: height,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
-              ),
-          errorWidget: (context, url, Object error) => Text(
-                '$error: $url',
-                maxLines: 6,
-                overflow: TextOverflow.ellipsis,
-              ));
+            errorWidget: (context, url, Object error) => Text(
+                  '$error: $url',
+                  maxLines: 6,
+                  overflow: TextOverflow.ellipsis,
+                ));
+      }
     }
 
     return SizedBox(
