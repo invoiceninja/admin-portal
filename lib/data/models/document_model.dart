@@ -306,7 +306,9 @@ abstract class DocumentEntity extends Object
       }
     }
 
-    actions.add(EntityAction.viewDocument);
+    if (!multiselect) {
+      actions.add(EntityAction.viewDocument);
+    }
 
     if (!isDeleted) {
       if (multiselect) {
@@ -320,7 +322,7 @@ abstract class DocumentEntity extends Object
       actions.add(null);
     }
 
-    if (userCompany.canEditEntity(this)) {
+    if (userCompany.canEditEntity(this) && !multiselect) {
       actions.add(EntityAction.delete);
     }
 
