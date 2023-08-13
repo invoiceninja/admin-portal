@@ -86,7 +86,11 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     final state = viewModel.state;
     final expense = viewModel.expense;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
-    final showDocuments = isDesktop(context) && state.isEnterprisePlan;
+    final company = state.company;
+
+    final showDocuments = isDesktop(context) &&
+        state.isEnterprisePlan &&
+        company.isModuleEnabled(EntityType.document);
 
     return ScrollableListView(
       children: <Widget>[

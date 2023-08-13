@@ -44,9 +44,13 @@ class _ExpenseViewState extends State<ExpenseView>
 
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = state.company;
+
     _controller = TabController(
         vsync: this,
-        length: viewModel.expense.isRecurring ? 3 : 2,
+        length: 1 +
+            (viewModel.expense.isRecurring ? 1 : 0) +
+            (company.isModuleEnabled(EntityType.document) ? 1 : 0),
         initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -87,54 +91,70 @@ class _ExpenseViewState extends State<ExpenseView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
+    final company = viewModel.company;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: expense,
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: isMobile(context),
-        tabs: [
-          Tab(
-            text: localization.overview,
-          ),
-          Tab(
-            text: expense.documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${expense.documents.length})',
-          ),
-          if (expense.isRecurring)
-            Tab(
-              text: localization.schedule,
-            )
-        ],
-      ),
+      appBarBottom:
+          (company.isModuleEnabled(EntityType.document) || expense.isRecurring)
+              ? TabBar(
+                  controller: _controller,
+                  isScrollable: isMobile(context),
+                  tabs: [
+                    Tab(
+                      text: localization.overview,
+                    ),
+                    if (company.isModuleEnabled(EntityType.document))
+                      Tab(
+                        text: expense.documents.isEmpty
+                            ? localization.documents
+                            : '${localization.documents} (${expense.documents.length})',
+                      ),
+                    if (expense.isRecurring)
+                      Tab(
+                        text: localization.schedule,
+                      )
+                  ],
+                )
+              : null,
       body: Builder(builder: (context) {
         return Column(
           children: [
             Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ExpenseOverview(
-                      viewModel: viewModel,
-                      isFilter: widget.isFilter,
-                    ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ExpenseViewDocuments(
-                        viewModel: viewModel, expense: viewModel.expense),
-                  ),
-                  if (expense.isRecurring)
-                    RefreshIndicator(
+              child: (company.isModuleEnabled(EntityType.document) ||
+                      expense.isRecurring)
+                  ? TabBarView(
+                      controller: _controller,
+                      children: <Widget>[
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: ExpenseOverview(
+                            viewModel: viewModel,
+                            isFilter: widget.isFilter,
+                          ),
+                        ),
+                        if (company.isModuleEnabled(EntityType.document))
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: ExpenseViewDocuments(
+                                viewModel: viewModel,
+                                expense: viewModel.expense),
+                          ),
+                        if (expense.isRecurring)
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: ExpenseViewSchedule(viewModel: viewModel),
+                          ),
+                      ],
+                    )
+                  : RefreshIndicator(
                       onRefresh: () => viewModel.onRefreshed(context),
-                      child: ExpenseViewSchedule(viewModel: viewModel),
+                      child: ExpenseOverview(
+                        viewModel: viewModel,
+                        isFilter: widget.isFilter,
+                      ),
                     ),
-                ],
-              ),
             ),
             BottomButtons(
               entity: expense,
