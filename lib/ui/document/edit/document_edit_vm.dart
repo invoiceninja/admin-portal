@@ -49,6 +49,7 @@ class DocumentEditVM {
     @required this.isSaving,
     @required this.origDocument,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.isLoading,
   });
 
@@ -63,6 +64,10 @@ class DocumentEditVM {
       origDocument: state.documentState.map[document.id],
       document: document,
       company: state.company,
+      onCancelPressed: (BuildContext context) {
+        createEntity(context: context, entity: DocumentEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onChanged: (DocumentEntity document) {
         store.dispatch(UpdateDocument(document));
       },
@@ -106,6 +111,7 @@ class DocumentEditVM {
   final CompanyEntity company;
   final Function(DocumentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
   final DocumentEntity origDocument;

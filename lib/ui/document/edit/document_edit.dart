@@ -88,6 +88,7 @@ class _DocumentEditState extends State<DocumentEdit> {
       title:
           document.isNew ? localization.newDocument : localization.editDocument,
       onSavePressed: (_) => _onSavePressed(),
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {
