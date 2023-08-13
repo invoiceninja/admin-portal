@@ -335,7 +335,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: 3,
+                  length: company.isModuleEnabled(EntityType.document) ? 3 : 2,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -347,11 +347,12 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                             Tab(
                               child: Text(localization.standing),
                             ),
-                            Tab(
-                              text: documents.isEmpty
-                                  ? localization.documents
-                                  : '${localization.documents} (${documents.length})',
-                            ),
+                            if (company.isModuleEnabled(EntityType.document))
+                              Tab(
+                                text: documents.isEmpty
+                                    ? localization.documents
+                                    : '${localization.documents} (${documents.length})',
+                              ),
                             Tab(
                               child: Text(localization.activity),
                             ),
@@ -383,13 +384,15 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                     )
                                 ],
                               ),
-                              RefreshIndicator(
-                                onRefresh: () => viewModel.onRefreshed(context),
-                                child: VendorViewDocuments(
-                                  viewModel: viewModel,
-                                  key: ValueKey(viewModel.vendor.id),
+                              if (company.isModuleEnabled(EntityType.document))
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: VendorViewDocuments(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.vendor.id),
+                                  ),
                                 ),
-                              ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: VendorViewActivity(
