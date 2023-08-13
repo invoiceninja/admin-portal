@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -31,6 +30,22 @@ class DocumentListBuilder extends StatelessWidget {
     return StoreConnector<AppState, DocumentListVM>(
       converter: DocumentListVM.fromStore,
       builder: (context, viewModel) {
+        final localization = AppLocalization.of(context);
+
+        // TODO remove this widget
+        if (viewModel.documentList.length <=
+            viewModel.state.company.documents.length) {
+          return Center(
+            child: OutlinedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(localization.refreshData),
+              ),
+              onPressed: () => viewModel.onRefreshed(context, true),
+            ),
+          );
+        }
+
         return EntityList(
             onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.document,
@@ -38,7 +53,7 @@ class DocumentListBuilder extends StatelessWidget {
             entityList: viewModel.documentList,
             presenter: DocumentPresenter(),
             tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
+            onRefreshed: (context) => viewModel.onRefreshed(context, false),
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -75,13 +90,13 @@ class DocumentListVM {
   });
 
   static DocumentListVM fromStore(Store<AppState> store) {
-    Future<Null> _handleRefresh(BuildContext context) {
+    Future<Null> _handleRefresh(BuildContext context, bool clearData) {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(RefreshData(completer: completer));
+      store.dispatch(RefreshData(completer: completer, clearData: clearData));
       return completer.future;
     }
 
@@ -102,7 +117,7 @@ class DocumentListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
               EntityAction action) =>
           handleDocumentAction(context, documents, action),
-      onRefreshed: (context) => _handleRefresh(context),
+      onRefreshed: (context, clearData) => _handleRefresh(context, clearData),
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
       tableColumns:
@@ -118,7 +133,7 @@ class DocumentListVM {
   final List<String> tableColumns;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, bool) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
       onEntityAction;
   final Function(String) onSortColumn;
