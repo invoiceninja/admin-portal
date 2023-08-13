@@ -142,11 +142,11 @@ class LoadDocumentsSuccess implements StopLoading {
 class SaveDocumentRequest implements StartSaving {
   SaveDocumentRequest({
     @required this.completer,
-    @required this.entity,
+    @required this.document,
   });
 
   final Completer completer;
-  final DocumentEntity entity;
+  final DocumentEntity document;
 }
 
 class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {

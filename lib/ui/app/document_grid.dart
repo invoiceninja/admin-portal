@@ -338,7 +338,7 @@ class DocumentTile extends StatelessWidget {
                                                 ..future.then((value) {
                                                   onRenamedDocument();
                                                 }),
-                                          entity: document
+                                          document: document
                                               .rebuild((b) => b..name = name)),
                                     );
                                   },

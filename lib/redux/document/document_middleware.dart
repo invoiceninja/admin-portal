@@ -105,7 +105,7 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveDocumentRequest;
     repository
-        .saveData(store.state.credentials, action.entity)
+        .saveData(store.state.credentials, action.document)
         .then((DocumentEntity document) {
       store.dispatch(SaveDocumentSuccess(document));
 

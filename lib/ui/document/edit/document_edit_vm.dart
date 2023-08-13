@@ -1,8 +1,17 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -58,8 +67,7 @@ class DocumentEditVM {
         store.dispatch(UpdateDocument(document));
       },
       onSavePressed: (BuildContext context) {
-        /*
-Debouncer.runOnComplete(() {
+        Debouncer.runOnComplete(() {
           final document = store.state.documentUIState.editing;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
@@ -68,14 +76,11 @@ Debouncer.runOnComplete(() {
           store.dispatch(
               SaveDocumentRequest(completer: completer, document: document));
           return completer.future.then((savedDocument) {
-              showToast(client.isNew
-                  ? localization.createdClient
-                  : localization.updatedClient);
+            showToast(localization.updatedDocument);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
               if (document.isNew) {
-                navigator
-                    .pushReplacementNamed(DocumentViewScreen.route);
+                navigator.pushReplacementNamed(DocumentViewScreen.route);
               } else {
                 navigator.pop(savedDocument);
               }
@@ -92,7 +97,7 @@ Debouncer.runOnComplete(() {
                   return ErrorDialog(error);
                 });
           });
-        });*/
+        });
       },
     );
   }
