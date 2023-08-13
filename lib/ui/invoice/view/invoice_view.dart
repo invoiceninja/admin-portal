@@ -49,6 +49,8 @@ class _InvoiceViewState extends State<InvoiceView>
 
     final invoice = widget.viewModel.invoice;
     final state = widget.viewModel.state;
+    final company = state.company;
+
     int tabIndex = 0;
 
     if (invoice.isRecurring) {
@@ -65,7 +67,7 @@ class _InvoiceViewState extends State<InvoiceView>
 
     _controller = TabController(
       vsync: this,
-      length: 5,
+      length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
       initialIndex: widget.isFilter ? 0 : tabIndex,
     );
     _controller.addListener(_onTabChanged);
@@ -113,6 +115,8 @@ class _InvoiceViewState extends State<InvoiceView>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
+    final company = state.company;
     /*
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);
@@ -138,10 +142,11 @@ class _InvoiceViewState extends State<InvoiceView>
         tabs: [
           Tab(text: localization.overview),
           Tab(text: localization.contacts),
-          Tab(
-              text: documents.isEmpty
-                  ? localization.documents
-                  : '${localization.documents} (${documents.length})'),
+          if (company.isModuleEnabled(EntityType.document))
+            Tab(
+                text: documents.isEmpty
+                    ? localization.documents
+                    : '${localization.documents} (${documents.length})'),
           if (invoice.isRecurring) Tab(text: localization.schedule),
           if (!invoice.isRecurring) Tab(text: localization.history),
           Tab(text: localization.activity),
@@ -174,14 +179,15 @@ class _InvoiceViewState extends State<InvoiceView>
                               '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
                         ),
                       ),
-                      RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: InvoiceViewDocuments(
-                            viewModel: viewModel,
-                            invoice: viewModel.invoice,
-                            key: ValueKey(
-                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
-                      ),
+                      if (company.isModuleEnabled(EntityType.document))
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: InvoiceViewDocuments(
+                              viewModel: viewModel,
+                              invoice: viewModel.invoice,
+                              key: ValueKey(
+                                  '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
+                        ),
                       if (invoice.isRecurring)
                         RefreshIndicator(
                           onRefresh: () => viewModel.onRefreshed(context),
