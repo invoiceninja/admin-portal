@@ -104,6 +104,7 @@ class DocumentScreen extends StatelessWidget {
             store.dispatch(FilterDocumentsByCustom4(value)),
         sortFields: [
           DocumentFields.name,
+          DocumentFields.size,
           DocumentFields.createdAt,
         ],
         onSelectedStatus: (EntityStatus status, value) {
