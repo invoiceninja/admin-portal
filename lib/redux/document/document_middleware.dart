@@ -107,10 +107,14 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
     repository
         .saveData(store.state.credentials, action.document)
         .then((DocumentEntity document) {
+      document = document.rebuild((b) => b
+        ..parentId = action.document.parentId
+        ..parentType = action.document.parentType);
+
       store.dispatch(SaveDocumentSuccess(document));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer.complete(document);
       }
     }).catchError((Object error) {
       print(error);
