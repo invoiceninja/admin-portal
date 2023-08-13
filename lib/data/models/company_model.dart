@@ -740,6 +740,9 @@ abstract class CompanyEntity extends Object
     } else if (entityType == EntityType.transaction &&
         enabledModules & kModuleTransactions == 0) {
       return false;
+    } else if (entityType == EntityType.document &&
+        enabledModules & kModuleDocuments == 0) {
+      return false;
     }
 
     return true;

@@ -271,6 +271,9 @@ abstract class DocumentEntity extends Object
         name,
         type,
         preview,
+        '$prettySize',
+        '$width',
+        '$height',
       ],
       needle: filter,
     );
