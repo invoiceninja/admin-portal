@@ -79,48 +79,59 @@ class _TaskViewState extends State<TaskView>
     final localization = AppLocalization.of(context);
     final documents = task.documents;
     final state = viewModel.state;
+    final company = state.company;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: task,
       isEditable: !state.company.invoiceTaskLock || !task.isInvoiced,
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: false,
-        tabs: [
-          Tab(
-            text: localization.overview,
-          ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
-        ],
-      ),
+      appBarBottom: company.isModuleEnabled(EntityType.document)
+          ? TabBar(
+              controller: _controller,
+              isScrollable: false,
+              tabs: [
+                Tab(
+                  text: localization.overview,
+                ),
+                Tab(
+                  text: documents.isEmpty
+                      ? localization.documents
+                      : '${localization.documents} (${documents.length})',
+                ),
+              ],
+            )
+          : null,
       body: Builder(builder: (context) {
         return Column(
           children: <Widget>[
             Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: TaskOverview(
-                      viewModel: viewModel,
-                      isFilter: widget.isFilter,
+              child: company.isModuleEnabled(EntityType.document)
+                  ? TabBarView(
+                      controller: _controller,
+                      children: <Widget>[
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: TaskOverview(
+                            viewModel: viewModel,
+                            isFilter: widget.isFilter,
+                          ),
+                        ),
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: TaskViewDocuments(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.task.id),
+                          ),
+                        ),
+                      ],
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: TaskOverview(
+                        viewModel: viewModel,
+                        isFilter: widget.isFilter,
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: TaskViewDocuments(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.task.id),
-                    ),
-                  ),
-                ],
-              ),
             ),
             BottomButtons(
               entity: task,
