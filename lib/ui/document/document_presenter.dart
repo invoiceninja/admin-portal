@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -17,6 +18,7 @@ class DocumentPresenter extends EntityPresenter {
       DocumentFields.size,
       DocumentFields.width,
       DocumentFields.height,
+      DocumentFields.isPrivate,
       DocumentFields.createdAt,
     ];
   }
@@ -34,6 +36,7 @@ class DocumentPresenter extends EntityPresenter {
   Widget getField({String field, BuildContext context}) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final localization = AppLocalization.of(context);
     final document = entity as DocumentEntity;
 
     switch (field) {
@@ -59,6 +62,8 @@ class DocumentPresenter extends EntityPresenter {
         final parentEntity =
             state.getEntity(document.parentType, document.parentId);
         return LinkTextRelatedEntity(entity: parentEntity, relation: document);
+      case DocumentFields.isPrivate:
+        return Text(document.isPublic ? localization.no : localization.yes);
     }
 
     return super.getField(field: field, context: context);

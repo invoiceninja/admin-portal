@@ -309,9 +309,19 @@ class DocumentTile extends StatelessWidget {
                       ? () => handleDocumentAction(
                           context, [document], EntityAction.viewDocument)
                       : null,
-                  child: DocumentPreview(
-                    document,
-                    height: 110,
+                  child: Stack(
+                    alignment: Alignment.topLeft,
+                    children: [
+                      DocumentPreview(
+                        document,
+                        height: 110,
+                      ),
+                      if (!document.isPublic)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.lock),
+                        ),
+                    ],
                   ),
                 ),
                 Padding(

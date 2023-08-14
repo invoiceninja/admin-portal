@@ -60,8 +60,8 @@ class DocumentFields {
   static const String height = 'height';
   static const String hash = 'hash';
   static const String linkedTo = 'linked_to';
-  static const String isPublic = 'is_public';
-  static const String isPrivate = 'is_private';
+  static const String isPublic = 'public';
+  static const String isPrivate = 'private';
 }
 
 abstract class DocumentEntity extends Object
