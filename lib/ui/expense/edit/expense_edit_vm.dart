@@ -68,7 +68,7 @@ abstract class AbstractExpenseEditVM {
       onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddVendorPressed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocument;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
 
@@ -86,7 +86,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddVendorPressed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocument,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -203,8 +203,8 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           }
         });
       },
-      onUploadDocument:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocument: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveExpenseDocumentRequest(
             multipartFiles: multipartFile,

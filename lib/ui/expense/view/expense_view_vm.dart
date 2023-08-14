@@ -67,7 +67,7 @@ class AbstractExpenseViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
@@ -81,7 +81,7 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     bool isSaving,
     bool isLoading,
@@ -121,8 +121,8 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([expense], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveExpenseDocumentRequest(
             multipartFiles: multipartFiles,

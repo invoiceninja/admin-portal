@@ -62,7 +62,7 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
     Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
@@ -116,8 +116,8 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([purchaseOrder], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SavePurchaseOrderDocumentRequest(
             multipartFiles: multipartFile,

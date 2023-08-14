@@ -70,7 +70,7 @@ abstract class AbstractInvoiceEditVM {
   final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
 
@@ -85,7 +85,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
@@ -231,8 +231,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
             multipartFiles: multipartFiles,

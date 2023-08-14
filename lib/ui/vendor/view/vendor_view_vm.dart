@@ -108,8 +108,8 @@ class VendorViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([vendor], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveVendorDocumentRequest(
             multipartFiles: multipartFile,
@@ -151,6 +151,6 @@ class VendorViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

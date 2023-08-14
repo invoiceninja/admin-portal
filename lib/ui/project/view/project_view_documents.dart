@@ -21,7 +21,8 @@ class ProjectViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: project.documents.toList(),
-      onUploadDocument: (path) => viewModel.onUploadDocuments(context, path),
+      onUploadDocument: (path, isPrivate) =>
+          viewModel.onUploadDocuments(context, path, isPrivate),
       onDeleteDocument: (document, password, idToken) =>
           viewModel.onDeleteDocument(context, document, password, idToken),
       onRenamedDocument: () =>

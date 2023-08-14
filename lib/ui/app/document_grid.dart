@@ -40,7 +40,7 @@ class DocumentGrid extends StatefulWidget {
   });
 
   final List<DocumentEntity> documents;
-  final Function(List<MultipartFile>) onUploadDocument;
+  final Function(List<MultipartFile>, bool) onUploadDocument;
   final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final Function onRenamedDocument;
@@ -51,6 +51,7 @@ class DocumentGrid extends StatefulWidget {
 
 class _DocumentGridState extends State<DocumentGrid> {
   bool _dragging = false;
+  bool _isPrivate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +68,11 @@ class _DocumentGridState extends State<DocumentGrid> {
             Text(localization.private),
           ],
         ),
-        value: false,
+        value: _isPrivate,
         onChanged: (value) {
-          //
+          setState(() {
+            _isPrivate = value;
+          });
         },
       ),
     );
@@ -85,7 +88,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                     allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                   );
                   if (files != null && files.isNotEmpty) {
-                    widget.onUploadDocument(files);
+                    widget.onUploadDocument(files, _isPrivate);
                   }
                 },
                 child: Padding(
@@ -104,7 +107,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                         multipartFiles.add(multipartFile);
                       }
 
-                      widget.onUploadDocument(multipartFiles);
+                      widget.onUploadDocument(multipartFiles, _isPrivate);
                     },
                     onDragEntered: (detail) {
                       setState(() => _dragging = true);
@@ -183,7 +186,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                               multipartFiles.add(multipartFile);
                             }
                           }
-                          widget.onUploadDocument(multipartFiles);
+                          widget.onUploadDocument(multipartFiles, _isPrivate);
                         } else {
                           openAppSettings();
                         }
@@ -204,7 +207,7 @@ class _DocumentGridState extends State<DocumentGrid> {
 
                           if (multipartFiles != null &&
                               multipartFiles.isNotEmpty) {
-                            widget.onUploadDocument(multipartFiles);
+                            widget.onUploadDocument(multipartFiles, _isPrivate);
                           }
                         },
                       ),
@@ -222,7 +225,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                         );
                         if (files != null && files.isNotEmpty) {
-                          widget.onUploadDocument(files);
+                          widget.onUploadDocument(files, _isPrivate);
                         }
                       },
                     ),
@@ -286,6 +289,10 @@ class DocumentTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final document = state.documentState.map[documentId];
+
+    if (document == null) {
+      return SizedBox();
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.max,

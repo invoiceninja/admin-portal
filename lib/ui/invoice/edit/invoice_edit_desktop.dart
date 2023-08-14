@@ -951,9 +951,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     DocumentGrid(
                                       documents:
                                           originalInvoice.documents.toList(),
-                                      onUploadDocument: (path) => widget
-                                          .entityViewModel
-                                          .onUploadDocuments(context, path),
+                                      onUploadDocument: (path, isPrivate) =>
+                                          widget.entityViewModel
+                                              .onUploadDocuments(
+                                                  context, path, isPrivate),
                                       onDeleteDocument:
                                           (document, password, idToken) =>
                                               widget.entityViewModel

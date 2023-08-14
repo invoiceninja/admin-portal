@@ -86,8 +86,8 @@ class ProductViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([product], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProductDocumentRequest(
             multipartFiles: multipartFile,
@@ -124,7 +124,7 @@ class ProductViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;

@@ -151,8 +151,8 @@ class CompanyDetailsVM {
           store.dispatch(ViewSettings(section: kSettingsPaymentTerms));
         }
       },
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCompanyDocumentRequest(
             multipartFiles: multipartFile, completer: completer));
@@ -190,6 +190,6 @@ class CompanyDetailsVM {
   final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
