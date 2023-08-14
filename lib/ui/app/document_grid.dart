@@ -61,52 +61,62 @@ class _DocumentGridState extends State<DocumentGrid> {
       children: [
         if (state.isEnterprisePlan) ...[
           if (kIsWeb || isDesktopOS())
-            Padding(
-              padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
-              child: DropTarget(
-                onDragDone: (detail) async {
-                  final List<MultipartFile> multipartFiles = [];
-                  for (var index = 0; index < detail.files.length; index++) {
-                    final file = detail.files[index];
-                    final bytes = await file.readAsBytes();
-                    final multipartFile = MultipartFile.fromBytes(
-                        'documents[$index]', bytes,
-                        filename: file.name);
-                    multipartFiles.add(multipartFile);
-                  }
+            InkWell(
+              onTap: () async {
+                final files = await pickFiles(
+                  allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                );
+                if (files != null && files.isNotEmpty) {
+                  widget.onUploadDocument(files);
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: DropTarget(
+                  onDragDone: (detail) async {
+                    final List<MultipartFile> multipartFiles = [];
+                    for (var index = 0; index < detail.files.length; index++) {
+                      final file = detail.files[index];
+                      final bytes = await file.readAsBytes();
+                      final multipartFile = MultipartFile.fromBytes(
+                          'documents[$index]', bytes,
+                          filename: file.name);
+                      multipartFiles.add(multipartFile);
+                    }
 
-                  widget.onUploadDocument(multipartFiles);
-                },
-                onDragEntered: (detail) {
-                  setState(() => _dragging = true);
-                },
-                onDragExited: (detail) {
-                  setState(() => _dragging = false);
-                },
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 75,
-                      width: double.infinity,
-                      child: Center(
-                        child: Text(localization.dropFilesHere),
+                    widget.onUploadDocument(multipartFiles);
+                  },
+                  onDragEntered: (detail) {
+                    setState(() => _dragging = true);
+                  },
+                  onDragExited: (detail) {
+                    setState(() => _dragging = false);
+                  },
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 75,
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(localization.clickOrDropFilesHere),
+                        ),
+                        color: _dragging
+                            ? Colors.blue.withOpacity(0.4)
+                            : Theme.of(context).scaffoldBackgroundColor,
                       ),
-                      color: _dragging
-                          ? Colors.blue.withOpacity(0.4)
-                          : Theme.of(context).scaffoldBackgroundColor,
-                    ),
-                    DashedRect(
-                      color: Colors.grey,
-                    ),
-                  ],
+                      DashedRect(
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-            child: Row(
-              children: <Widget>[
-                if (isMobileOS()) ...[
+          if (isMobileOS())
+            Padding(
+              padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+              child: Row(
+                children: <Widget>[
                   Expanded(
                     child: AppButton(
                       iconData: isIOS() ? null : Icons.camera_alt,
@@ -137,44 +147,46 @@ class _DocumentGridState extends State<DocumentGrid> {
                       },
                     ),
                   ),
-                ],
-                if (isIOS()) ...[
+                  if (isIOS()) ...[
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: AppButton(
+                        label: localization.gallery,
+                        onPressed: () async {
+                          final multipartFiles = await pickFiles(
+                            allowedExtensions:
+                                DocumentEntity.ALLOWED_EXTENSIONS,
+                            fileType: FileType.image,
+                          );
+
+                          if (multipartFiles != null &&
+                              multipartFiles.isNotEmpty) {
+                            widget.onUploadDocument(multipartFiles);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                   SizedBox(width: 12),
                   Expanded(
                     child: AppButton(
-                      label: localization.gallery,
+                      iconData: isIOS() ? null : Icons.insert_drive_file,
+                      label: isIOS()
+                          ? localization.files
+                          : localization.uploadFiles,
                       onPressed: () async {
-                        final multipartFiles = await pickFiles(
+                        final files = await pickFiles(
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
-                          fileType: FileType.image,
                         );
-
-                        if (multipartFiles.isNotEmpty) {
-                          widget.onUploadDocument(multipartFiles);
+                        if (files != null && files.isNotEmpty) {
+                          widget.onUploadDocument(files);
                         }
                       },
                     ),
                   ),
                 ],
-                if (isMobileOS()) SizedBox(width: 12),
-                Expanded(
-                  child: AppButton(
-                    iconData: isIOS() ? null : Icons.insert_drive_file,
-                    label:
-                        isIOS() ? localization.files : localization.uploadFiles,
-                    onPressed: () async {
-                      final files = await pickFiles(
-                        allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
-                      );
-                      if (files.isNotEmpty) {
-                        widget.onUploadDocument(files);
-                      }
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
         ] else
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30),
