@@ -84,38 +84,40 @@ class DismissibleEntity extends StatelessWidget {
           ),
         ],
       ),
-      endActionPane: ActionPane(
-        motion: const DrawerMotion(),
-        children: [
-          if (entity.isActive)
-            SlidableAction(
-              label: localization.archive,
-              backgroundColor: Colors.orange,
-              foregroundColor: Colors.white,
-              icon: Icons.archive,
-              onPressed: (context) =>
-                  handleEntityAction(entity, EntityAction.archive),
+      endActionPane: entity.isDeletable
+          ? ActionPane(
+              motion: const DrawerMotion(),
+              children: [
+                if (entity.isActive)
+                  SlidableAction(
+                    label: localization.archive,
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                    icon: Icons.archive,
+                    onPressed: (context) =>
+                        handleEntityAction(entity, EntityAction.archive),
+                  )
+                else if (entity.isRestorable)
+                  SlidableAction(
+                    label: localization.restore,
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    icon: Icons.restore,
+                    onPressed: (context) =>
+                        handleEntityAction(entity, EntityAction.restore),
+                  ),
+                if (!entity.isDeleted)
+                  SlidableAction(
+                    label: localization.delete,
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    onPressed: (context) =>
+                        handleEntityAction(entity, EntityAction.delete),
+                  ),
+              ],
             )
-          else if (entity.isRestorable)
-            SlidableAction(
-              label: localization.restore,
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
-              icon: Icons.restore,
-              onPressed: (context) =>
-                  handleEntityAction(entity, EntityAction.restore),
-            ),
-          if (!entity.isDeleted)
-            SlidableAction(
-              label: localization.delete,
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              icon: Icons.delete,
-              onPressed: (context) =>
-                  handleEntityAction(entity, EntityAction.delete),
-            ),
-        ],
-      ),
+          : null,
       child: widget,
     );
   }

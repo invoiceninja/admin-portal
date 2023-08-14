@@ -83,26 +83,6 @@ class _DocumentGridState extends State<DocumentGrid> {
                 onDragExited: (detail) {
                   setState(() => _dragging = false);
                 },
-                /*
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    color: _dragging
-                        ? Colors.blue.withOpacity(0.4)
-                        : Theme.of(context).scaffoldBackgroundColor,
-                  ),
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(localization.dropFileHere),
-                  ),
-                ),
-                */
                 child: Stack(
                   children: [
                     Container(

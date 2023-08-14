@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
@@ -48,10 +49,11 @@ class DocumentListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: document.id ==
-          (uiState.isEditing
-              ? documentUIState.editing.id
-              : documentUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          document.id ==
+              (uiState.isEditing
+                  ? documentUIState.editing.id
+                  : documentUIState.selectedId),
       userCompany: userCompany,
       entity: document,
       child: ListTile(
@@ -75,12 +77,23 @@ class DocumentListItem extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: Text(
-                  document.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      document.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      formatDate(
+                          convertTimestampToDateString(document.createdAt),
+                          context),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
                 ),
               ),
-              Text(formatNumber(document.listDisplayAmount, context),
+              Text(document.prettySize,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

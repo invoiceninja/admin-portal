@@ -417,6 +417,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isOld => !isNew;
 
+  bool get isDeletable => true;
+
   bool get isActive => !isArchived && !isDeleted;
 
   bool get isNotActive => isArchived || isDeleted;

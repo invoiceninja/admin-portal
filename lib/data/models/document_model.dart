@@ -164,6 +164,9 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  @override
+  bool get isDeletable => false;
+
   String get prettySize => formatSize(size);
 
   String get downloadUrl => '/documents/$hash';
